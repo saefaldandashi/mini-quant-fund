@@ -1,0 +1,1682 @@
+{
+  "MeanReversion_TimeSeriesMomentum_risk_on": {
+    "attacker": "MeanReversion",
+    "defender": "TimeSeriesMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 104,
+    "times_succeeded": 104
+  },
+  "MeanReversion_RiskParityMinVar_risk_on": {
+    "attacker": "MeanReversion",
+    "defender": "RiskParityMinVar",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "MeanReversion_CrossSectionMomentum_risk_on": {
+    "attacker": "MeanReversion",
+    "defender": "CrossSectionMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "MeanReversion_TailRiskOverlay_risk_on": {
+    "attacker": "MeanReversion",
+    "defender": "TailRiskOverlay",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "MeanReversion_VolatilityRegimeVolTarget_risk_on": {
+    "attacker": "MeanReversion",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "MeanReversion_NewsSentimentEvent_risk_on": {
+    "attacker": "MeanReversion",
+    "defender": "NewsSentimentEvent",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "MeanReversion_ValueQualityTilt_risk_on": {
+    "attacker": "MeanReversion",
+    "defender": "ValueQualityTilt",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "TimeSeriesMomentum_RiskParityMinVar_risk_on": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "RiskParityMinVar",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "TimeSeriesMomentum_CrossSectionMomentum_risk_on": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "CrossSectionMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "TimeSeriesMomentum_TailRiskOverlay_risk_on": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "TailRiskOverlay",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "TimeSeriesMomentum_VolatilityRegimeVolTarget_risk_on": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "CrossSectionMomentum_RiskParityMinVar_risk_on": {
+    "attacker": "CrossSectionMomentum",
+    "defender": "RiskParityMinVar",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "Carry_RiskParityMinVar_risk_on": {
+    "attacker": "Carry",
+    "defender": "RiskParityMinVar",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "Carry_CrossSectionMomentum_risk_on": {
+    "attacker": "Carry",
+    "defender": "CrossSectionMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "Carry_TailRiskOverlay_risk_on": {
+    "attacker": "Carry",
+    "defender": "TailRiskOverlay",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "Carry_VolatilityRegimeVolTarget_risk_on": {
+    "attacker": "Carry",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "Carry_TimeSeriesMomentum_risk_on": {
+    "attacker": "Carry",
+    "defender": "TimeSeriesMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "Carry_NewsSentimentEvent_risk_on": {
+    "attacker": "Carry",
+    "defender": "NewsSentimentEvent",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 77,
+    "times_succeeded": 77
+  },
+  "Carry_ValueQualityTilt_risk_on": {
+    "attacker": "Carry",
+    "defender": "ValueQualityTilt",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "Carry_MeanReversion_risk_on": {
+    "attacker": "Carry",
+    "defender": "MeanReversion",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "TailRiskOverlay_RiskParityMinVar_risk_on": {
+    "attacker": "TailRiskOverlay",
+    "defender": "RiskParityMinVar",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "TailRiskOverlay_CrossSectionMomentum_risk_on": {
+    "attacker": "TailRiskOverlay",
+    "defender": "CrossSectionMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "NewsSentimentEvent_RiskParityMinVar_risk_on": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "RiskParityMinVar",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 77,
+    "times_succeeded": 77
+  },
+  "NewsSentimentEvent_CrossSectionMomentum_risk_on": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "CrossSectionMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "NewsSentimentEvent_TailRiskOverlay_risk_on": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "TailRiskOverlay",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 77,
+    "times_succeeded": 77
+  },
+  "NewsSentimentEvent_VolatilityRegimeVolTarget_risk_on": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "NewsSentimentEvent_TimeSeriesMomentum_risk_on": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "TimeSeriesMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 35,
+    "times_succeeded": 35
+  },
+  "VolatilityRegimeVolTarget_RiskParityMinVar_risk_on": {
+    "attacker": "VolatilityRegimeVolTarget",
+    "defender": "RiskParityMinVar",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "VolatilityRegimeVolTarget_CrossSectionMomentum_risk_on": {
+    "attacker": "VolatilityRegimeVolTarget",
+    "defender": "CrossSectionMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "VolatilityRegimeVolTarget_TailRiskOverlay_risk_on": {
+    "attacker": "VolatilityRegimeVolTarget",
+    "defender": "TailRiskOverlay",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 10,
+    "times_succeeded": 10
+  },
+  "ValueQualityTilt_RiskParityMinVar_risk_on": {
+    "attacker": "ValueQualityTilt",
+    "defender": "RiskParityMinVar",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "ValueQualityTilt_CrossSectionMomentum_risk_on": {
+    "attacker": "ValueQualityTilt",
+    "defender": "CrossSectionMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "ValueQualityTilt_TailRiskOverlay_risk_on": {
+    "attacker": "ValueQualityTilt",
+    "defender": "TailRiskOverlay",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "ValueQualityTilt_VolatilityRegimeVolTarget_risk_on": {
+    "attacker": "ValueQualityTilt",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "ValueQualityTilt_TimeSeriesMomentum_risk_on": {
+    "attacker": "ValueQualityTilt",
+    "defender": "TimeSeriesMomentum",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "ValueQualityTilt_NewsSentimentEvent_risk_on": {
+    "attacker": "ValueQualityTilt",
+    "defender": "NewsSentimentEvent",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 78,
+    "times_succeeded": 78
+  },
+  "TailRiskOverlay_VolatilityRegimeVolTarget_risk_on": {
+    "attacker": "TailRiskOverlay",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 68,
+    "times_succeeded": 68
+  },
+  "TimeSeriesMomentum_NewsSentimentEvent_risk_on": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "NewsSentimentEvent",
+    "regime": "risk_on",
+    "claim_type": "general",
+    "times_used": 42,
+    "times_succeeded": 42
+  },
+  "TimeSeriesMomentum_RiskParityMinVar_neutral": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "TimeSeriesMomentum_CrossSectionMomentum_neutral": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "TimeSeriesMomentum_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "TimeSeriesMomentum_TailRiskOverlay_neutral": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "TailRiskOverlay",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "TimeSeriesMomentum_NewsSentimentEvent_neutral": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "MeanReversion_RiskParityMinVar_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "MeanReversion_CrossSectionMomentum_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "MeanReversion_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "MeanReversion_TailRiskOverlay_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "TailRiskOverlay",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "MeanReversion_NewsSentimentEvent_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "MeanReversion_TimeSeriesMomentum_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "TimeSeriesMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 12,
+    "times_succeeded": 12
+  },
+  "MeanReversion_ValueQualityTilt_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "ValueQualityTilt",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "CrossSectionMomentum_RiskParityMinVar_neutral": {
+    "attacker": "CrossSectionMomentum",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "ValueQualityTilt_RiskParityMinVar_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "ValueQualityTilt_CrossSectionMomentum_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "ValueQualityTilt_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "ValueQualityTilt_TailRiskOverlay_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "TailRiskOverlay",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "ValueQualityTilt_NewsSentimentEvent_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "ValueQualityTilt_TimeSeriesMomentum_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "TimeSeriesMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 12,
+    "times_succeeded": 12
+  },
+  "Carry_RiskParityMinVar_neutral": {
+    "attacker": "Carry",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "Carry_CrossSectionMomentum_neutral": {
+    "attacker": "Carry",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "Carry_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "Carry",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "Carry_TailRiskOverlay_neutral": {
+    "attacker": "Carry",
+    "defender": "TailRiskOverlay",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "Carry_NewsSentimentEvent_neutral": {
+    "attacker": "Carry",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "Carry_TimeSeriesMomentum_neutral": {
+    "attacker": "Carry",
+    "defender": "TimeSeriesMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 12,
+    "times_succeeded": 12
+  },
+  "Carry_ValueQualityTilt_neutral": {
+    "attacker": "Carry",
+    "defender": "ValueQualityTilt",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "Carry_MeanReversion_neutral": {
+    "attacker": "Carry",
+    "defender": "MeanReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "TailRiskOverlay_RiskParityMinVar_neutral": {
+    "attacker": "TailRiskOverlay",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "TailRiskOverlay_CrossSectionMomentum_neutral": {
+    "attacker": "TailRiskOverlay",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "TailRiskOverlay_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "TailRiskOverlay",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "VolatilityRegimeVolTarget_RiskParityMinVar_neutral": {
+    "attacker": "VolatilityRegimeVolTarget",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "VolatilityRegimeVolTarget_CrossSectionMomentum_neutral": {
+    "attacker": "VolatilityRegimeVolTarget",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 2,
+    "times_succeeded": 2
+  },
+  "NewsSentimentEvent_RiskParityMinVar_neutral": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "NewsSentimentEvent_CrossSectionMomentum_neutral": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 12,
+    "times_succeeded": 12
+  },
+  "NewsSentimentEvent_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "NewsSentimentEvent_TailRiskOverlay_neutral": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "TailRiskOverlay",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 6,
+    "times_succeeded": 6
+  },
+  "CrossSectionMomentum_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "CrossSectionMomentum",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "NewsSentimentEvent_TimeSeriesMomentum_neutral": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "TimeSeriesMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 6,
+    "times_succeeded": 6
+  },
+  "MeanReversion_LS_TimeSeriesMomentum_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "TimeSeriesMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "QualityValue_LS_TimeSeriesMomentum_neutral": {
+    "attacker": "QualityValue_LS",
+    "defender": "TimeSeriesMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Carry_TimeSeriesMomentum_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "TimeSeriesMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Trend_TimeSeriesMomentum_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "TimeSeriesMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "RiskParityMinVar_CS_Momentum_LS_neutral": {
+    "attacker": "RiskParityMinVar",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "CrossSectionMomentum_CS_Momentum_LS_neutral": {
+    "attacker": "CrossSectionMomentum",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "CrossSectionMomentum_TS_Momentum_LS_neutral": {
+    "attacker": "CrossSectionMomentum",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "Carry_CS_Momentum_LS_neutral": {
+    "attacker": "Carry",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Carry_TS_Momentum_LS_neutral": {
+    "attacker": "Carry",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Carry_QualityValue_LS_neutral": {
+    "attacker": "Carry",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Carry_MeanReversion_LS_neutral": {
+    "attacker": "Carry",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "MeanReversion_CS_Momentum_LS_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "MeanReversion_TS_Momentum_LS_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "MeanReversion_QualityValue_LS_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "MeanReversion_MeanReversion_LS_neutral": {
+    "attacker": "MeanReversion",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "TimeSeriesMomentum_CS_Momentum_LS_neutral": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "TimeSeriesMomentum_TS_Momentum_LS_neutral": {
+    "attacker": "TimeSeriesMomentum",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "TailRiskOverlay_CS_Momentum_LS_neutral": {
+    "attacker": "TailRiskOverlay",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "TailRiskOverlay_TS_Momentum_LS_neutral": {
+    "attacker": "TailRiskOverlay",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "VolatilityRegimeVolTarget_CS_Momentum_LS_neutral": {
+    "attacker": "VolatilityRegimeVolTarget",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "TS_Momentum_LS_CS_Momentum_LS_neutral": {
+    "attacker": "TS_Momentum_LS",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "TS_Momentum_LS_RiskParityMinVar_neutral": {
+    "attacker": "TS_Momentum_LS",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "TS_Momentum_LS_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "TS_Momentum_LS",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "MeanReversion_LS_CS_Momentum_LS_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "MeanReversion_LS_RiskParityMinVar_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "MeanReversion_LS_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "MeanReversion_LS_TS_Momentum_LS_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "MeanReversion_LS_CrossSectionMomentum_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "MeanReversion_LS_TailRiskOverlay_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "TailRiskOverlay",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "MeanReversion_LS_NewsSentimentEvent_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "MeanReversion_LS_QualityValue_LS_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "QualityValue_LS_CS_Momentum_LS_neutral": {
+    "attacker": "QualityValue_LS",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "QualityValue_LS_RiskParityMinVar_neutral": {
+    "attacker": "QualityValue_LS",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "QualityValue_LS_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "QualityValue_LS",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "QualityValue_LS_TS_Momentum_LS_neutral": {
+    "attacker": "QualityValue_LS",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "QualityValue_LS_CrossSectionMomentum_neutral": {
+    "attacker": "QualityValue_LS",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "QualityValue_LS_TailRiskOverlay_neutral": {
+    "attacker": "QualityValue_LS",
+    "defender": "TailRiskOverlay",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "QualityValue_LS_NewsSentimentEvent_neutral": {
+    "attacker": "QualityValue_LS",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Carry_CS_Momentum_LS_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Carry_RiskParityMinVar_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Carry_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Carry_TS_Momentum_LS_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Carry_CrossSectionMomentum_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 7,
+    "times_succeeded": 7
+  },
+  "Futures_Carry_TailRiskOverlay_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "TailRiskOverlay",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Carry_NewsSentimentEvent_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Carry_QualityValue_LS_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Carry_MeanReversion_LS_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Carry_ValueQualityTilt_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "ValueQualityTilt",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Carry_MeanReversion_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "MeanReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Carry_Carry_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "Carry",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Trend_CS_Momentum_LS_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Trend_RiskParityMinVar_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "RiskParityMinVar",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Trend_VolatilityRegimeVolTarget_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "VolatilityRegimeVolTarget",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Trend_TS_Momentum_LS_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Trend_CrossSectionMomentum_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Trend_TailRiskOverlay_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "TailRiskOverlay",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Trend_NewsSentimentEvent_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Trend_QualityValue_LS_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Trend_MeanReversion_LS_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "Futures_Trend_ValueQualityTilt_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "ValueQualityTilt",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Trend_MeanReversion_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "MeanReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "Futures_Trend_Carry_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "Carry",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "NewsSentimentEvent_CS_Momentum_LS_neutral": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "NewsSentimentEvent_TS_Momentum_LS_neutral": {
+    "attacker": "NewsSentimentEvent",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 8,
+    "times_succeeded": 8
+  },
+  "ValueQualityTilt_CS_Momentum_LS_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "ValueQualityTilt_TS_Momentum_LS_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "ValueQualityTilt_QualityValue_LS_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "ValueQualityTilt_MeanReversion_LS_neutral": {
+    "attacker": "ValueQualityTilt",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 3,
+    "times_succeeded": 3
+  },
+  "TailRiskOverlay_NewsSentimentEvent_neutral": {
+    "attacker": "TailRiskOverlay",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 1,
+    "times_succeeded": 1
+  },
+  "OpeningRangeBreakout_CS_Momentum_LS_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_CrossSectionMomentum_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_TS_Momentum_LS_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_NewsSentimentEvent_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_QualityValue_LS_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_RelativeStrengthIntraday_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "RelativeStrengthIntraday",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_MeanReversion_LS_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_QuickMeanReversion_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "QuickMeanReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_IntradayMomentum_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "IntradayMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_VWAPReversion_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "VWAPReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "OpeningRangeBreakout_VolumeSpike_neutral": {
+    "attacker": "OpeningRangeBreakout",
+    "defender": "VolumeSpike",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VWAPReversion_CS_Momentum_LS_neutral": {
+    "attacker": "VWAPReversion",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VWAPReversion_CrossSectionMomentum_neutral": {
+    "attacker": "VWAPReversion",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VWAPReversion_TS_Momentum_LS_neutral": {
+    "attacker": "VWAPReversion",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VWAPReversion_NewsSentimentEvent_neutral": {
+    "attacker": "VWAPReversion",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VWAPReversion_QualityValue_LS_neutral": {
+    "attacker": "VWAPReversion",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VWAPReversion_RelativeStrengthIntraday_neutral": {
+    "attacker": "VWAPReversion",
+    "defender": "RelativeStrengthIntraday",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VWAPReversion_MeanReversion_LS_neutral": {
+    "attacker": "VWAPReversion",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VWAPReversion_QuickMeanReversion_neutral": {
+    "attacker": "VWAPReversion",
+    "defender": "QuickMeanReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VWAPReversion_IntradayMomentum_neutral": {
+    "attacker": "VWAPReversion",
+    "defender": "IntradayMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "TS_Momentum_LS_CrossSectionMomentum_neutral": {
+    "attacker": "TS_Momentum_LS",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 1,
+    "times_succeeded": 1
+  },
+  "RelativeStrengthIntraday_CS_Momentum_LS_neutral": {
+    "attacker": "RelativeStrengthIntraday",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "RelativeStrengthIntraday_CrossSectionMomentum_neutral": {
+    "attacker": "RelativeStrengthIntraday",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "RelativeStrengthIntraday_TS_Momentum_LS_neutral": {
+    "attacker": "RelativeStrengthIntraday",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "RelativeStrengthIntraday_NewsSentimentEvent_neutral": {
+    "attacker": "RelativeStrengthIntraday",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "RelativeStrengthIntraday_QualityValue_LS_neutral": {
+    "attacker": "RelativeStrengthIntraday",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "IntradayMomentum_CS_Momentum_LS_neutral": {
+    "attacker": "IntradayMomentum",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "IntradayMomentum_CrossSectionMomentum_neutral": {
+    "attacker": "IntradayMomentum",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "IntradayMomentum_TS_Momentum_LS_neutral": {
+    "attacker": "IntradayMomentum",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "IntradayMomentum_NewsSentimentEvent_neutral": {
+    "attacker": "IntradayMomentum",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "IntradayMomentum_QualityValue_LS_neutral": {
+    "attacker": "IntradayMomentum",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "IntradayMomentum_RelativeStrengthIntraday_neutral": {
+    "attacker": "IntradayMomentum",
+    "defender": "RelativeStrengthIntraday",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "IntradayMomentum_MeanReversion_LS_neutral": {
+    "attacker": "IntradayMomentum",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "IntradayMomentum_QuickMeanReversion_neutral": {
+    "attacker": "IntradayMomentum",
+    "defender": "QuickMeanReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_CS_Momentum_LS_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_CrossSectionMomentum_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_TS_Momentum_LS_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_NewsSentimentEvent_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_QualityValue_LS_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_RelativeStrengthIntraday_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "RelativeStrengthIntraday",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_MeanReversion_LS_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_QuickMeanReversion_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "QuickMeanReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_IntradayMomentum_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "IntradayMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "VolumeSpike_VWAPReversion_neutral": {
+    "attacker": "VolumeSpike",
+    "defender": "VWAPReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "QuickMeanReversion_CS_Momentum_LS_neutral": {
+    "attacker": "QuickMeanReversion",
+    "defender": "CS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "QuickMeanReversion_CrossSectionMomentum_neutral": {
+    "attacker": "QuickMeanReversion",
+    "defender": "CrossSectionMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "QuickMeanReversion_TS_Momentum_LS_neutral": {
+    "attacker": "QuickMeanReversion",
+    "defender": "TS_Momentum_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "QuickMeanReversion_NewsSentimentEvent_neutral": {
+    "attacker": "QuickMeanReversion",
+    "defender": "NewsSentimentEvent",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "QuickMeanReversion_RelativeStrengthIntraday_neutral": {
+    "attacker": "QuickMeanReversion",
+    "defender": "RelativeStrengthIntraday",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "QuickMeanReversion_MeanReversion_LS_neutral": {
+    "attacker": "QuickMeanReversion",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Carry_RelativeStrengthIntraday_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "RelativeStrengthIntraday",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Carry_QuickMeanReversion_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "QuickMeanReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Carry_IntradayMomentum_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "IntradayMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Carry_VWAPReversion_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "VWAPReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Carry_VolumeSpike_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "VolumeSpike",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Carry_OpeningRangeBreakout_neutral": {
+    "attacker": "Futures_Carry",
+    "defender": "OpeningRangeBreakout",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Trend_RelativeStrengthIntraday_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "RelativeStrengthIntraday",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Trend_QuickMeanReversion_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "QuickMeanReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Trend_IntradayMomentum_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "IntradayMomentum",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Trend_VWAPReversion_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "VWAPReversion",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Trend_VolumeSpike_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "VolumeSpike",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "Futures_Trend_OpeningRangeBreakout_neutral": {
+    "attacker": "Futures_Trend",
+    "defender": "OpeningRangeBreakout",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 5,
+    "times_succeeded": 5
+  },
+  "MeanReversion_LS_RelativeStrengthIntraday_neutral": {
+    "attacker": "MeanReversion_LS",
+    "defender": "RelativeStrengthIntraday",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 1,
+    "times_succeeded": 1
+  },
+  "QuickMeanReversion_QualityValue_LS_neutral": {
+    "attacker": "QuickMeanReversion",
+    "defender": "QualityValue_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 4,
+    "times_succeeded": 4
+  },
+  "RelativeStrengthIntraday_MeanReversion_LS_neutral": {
+    "attacker": "RelativeStrengthIntraday",
+    "defender": "MeanReversion_LS",
+    "regime": "neutral",
+    "claim_type": "general",
+    "times_used": 4,
+    "times_succeeded": 4
+  }
+}

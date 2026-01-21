@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backtest Report</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 40px; background: #1a1a2e; color: #eee; }
+        h1 { color: #00d4ff; }
+        h2 { color: #0099cc; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .metric { display: inline-block; margin: 10px 20px 10px 0; padding: 15px; background: #16213e; border-radius: 8px; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #00d4ff; }
+        .metric-label { font-size: 12px; color: #888; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        th { background: #0f3460; color: #00d4ff; }
+        tr:hover { background: #1a1a3e; }
+        .positive { color: #00ff88; }
+        .negative { color: #ff4444; }
+    </style>
+</head>
+<body>
+    <h1>Multi-Strategy Quant Debate Bot - Backtest Report</h1>
+    
+    <h2>Performance Summary</h2>
+    <div class="metric">
+        <div class="metric-value positive">23.90%</div>
+        <div class="metric-label">Total Return</div>
+    </div>
+    <div class="metric">
+        <div class="metric-value">23.92%</div>
+        <div class="metric-label">CAGR</div>
+    </div>
+    <div class="metric">
+        <div class="metric-value">6.43</div>
+        <div class="metric-label">Sharpe Ratio</div>
+    </div>
+    <div class="metric">
+        <div class="metric-value">9.02</div>
+        <div class="metric-label">Sortino Ratio</div>
+    </div>
+    <div class="metric">
+        <div class="metric-value negative">2.35%</div>
+        <div class="metric-label">Max Drawdown</div>
+    </div>
+    <div class="metric">
+        <div class="metric-value">6.55%</div>
+        <div class="metric-label">Avg Turnover</div>
+    </div>
+    
+    <h2>Strategy Contributions</h2>
+    <table>
+        <tr><th>Strategy</th><th>Avg Weight</th></tr>
+        <tr><td>RiskParityMinVar</td><td>15.11%</td></tr><tr><td>CrossSectionMomentum</td><td>14.53%</td></tr><tr><td>VolatilityRegimeVolTarget</td><td>14.31%</td></tr><tr><td>TailRiskOverlay</td><td>13.27%</td></tr><tr><td>TimeSeriesMomentum</td><td>13.24%</td></tr><tr><td>NewsSentimentEvent</td><td>8.43%</td></tr><tr><td>ValueQualityTilt</td><td>8.30%</td></tr><tr><td>Carry</td><td>6.56%</td></tr><tr><td>MeanReversion</td><td>6.25%</td></tr>
+    </table>
+    
+    <h2>Configuration</h2>
+    <table>
+        <tr><td>Start Date</td><td>2024-01-01 00:00:00</td></tr>
+        <tr><td>End Date</td><td>2024-12-31 00:00:00</td></tr>
+        <tr><td>Rebalance Frequency</td><td>weekly</td></tr>
+        <tr><td>Initial Capital</td><td>$100,000</td></tr>
+        <tr><td>Ensemble Mode</td><td>weighted_vote</td></tr>
+    </table>
+    
+    <footer style="margin-top: 50px; color: #666; font-size: 12px;">
+        Generated at 2026-01-19 15:40:33 | Runtime: 1.0s
+    </footer>
+</body>
+</html>

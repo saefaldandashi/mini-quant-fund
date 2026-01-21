@@ -1,0 +1,11 @@
+{
+  "TimeSeriesMomentum": 0.13243564123452842,
+  "CrossSectionMomentum": 0.14534319819887853,
+  "MeanReversion": 0.06246070881991487,
+  "VolatilityRegimeVolTarget": 0.14309702444188213,
+  "Carry": 0.06558355273471653,
+  "ValueQualityTilt": 0.08301953687439222,
+  "RiskParityMinVar": 0.1510576692629789,
+  "TailRiskOverlay": 0.13265267056500876,
+  "NewsSentimentEvent": 0.08434999786769966
+}

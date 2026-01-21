@@ -1,0 +1,245 @@
+[
+  {
+    "report_date": "2026-01-21",
+    "report_type": "daily",
+    "portfolio_value": 99919.24,
+    "return_1d": -0.0008075999999999476,
+    "return_1m": 0,
+    "alpha_1d": 0.01932022324532246,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": 0.0,
+    "regime_label": "neutral",
+    "vix": 20.09,
+    "risk_sentiment": "NEUTRAL",
+    "strategy_weights": {
+      "total_predictions": 0.1,
+      "strategies_tracked": 0.1,
+      "overall_accuracy": 0.1,
+      "best_strategy": 0.1
+    },
+    "strategy_win_rates": {
+      "total_predictions": 0.5,
+      "strategies_tracked": 0.5,
+      "overall_accuracy": 0.5,
+      "best_strategy": 0.5
+    },
+    "top_strategies": [
+      "total_predictions",
+      "strategies_tracked",
+      "overall_accuracy"
+    ],
+    "position_count": 6,
+    "total_pnl": 2.845333999999184,
+    "insight_count": 0,
+    "recommendations": [
+      "Low volatility, weak trend, oversold conditions",
+      "Low volatility with risk-on regime",
+      "High volatility with risk-off regime"
+    ]
+  },
+  {
+    "report_date": "2026-01-21",
+    "report_type": "daily",
+    "portfolio_value": 99919.24,
+    "return_1d": -0.0008075999999999476,
+    "return_1m": 0,
+    "alpha_1d": 0.01932022324532246,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": 0.0,
+    "regime_label": "neutral",
+    "vix": 20.09,
+    "risk_sentiment": "NEUTRAL",
+    "strategy_weights": {
+      "total_predictions": 0.1,
+      "strategies_tracked": 0.1,
+      "overall_accuracy": 0.1,
+      "best_strategy": 0.1
+    },
+    "strategy_win_rates": {
+      "total_predictions": 0.5,
+      "strategies_tracked": 0.5,
+      "overall_accuracy": 0.5,
+      "best_strategy": 0.5
+    },
+    "top_strategies": [
+      "total_predictions",
+      "strategies_tracked",
+      "overall_accuracy"
+    ],
+    "position_count": 6,
+    "total_pnl": 2.845333999999184,
+    "insight_count": 0,
+    "recommendations": [
+      "Low volatility, weak trend, oversold conditions",
+      "Low volatility with risk-on regime",
+      "High volatility with risk-off regime"
+    ]
+  },
+  {
+    "report_date": "2026-01-21",
+    "report_type": "daily",
+    "portfolio_value": 99919.24,
+    "return_1d": -0.0008075999999999476,
+    "return_1m": 0,
+    "alpha_1d": 0.01932022324532246,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": 0.0,
+    "regime_label": "neutral",
+    "vix": 20.09,
+    "risk_sentiment": "NEUTRAL",
+    "strategy_weights": {
+      "total_predictions": 0.1,
+      "strategies_tracked": 0.1,
+      "overall_accuracy": 0.1,
+      "best_strategy": 0.1
+    },
+    "strategy_win_rates": {
+      "total_predictions": 0.5,
+      "strategies_tracked": 0.5,
+      "overall_accuracy": 0.5,
+      "best_strategy": 0.5
+    },
+    "top_strategies": [
+      "total_predictions",
+      "strategies_tracked",
+      "overall_accuracy"
+    ],
+    "position_count": 6,
+    "total_pnl": 2.845333999999184,
+    "insight_count": 0,
+    "recommendations": [
+      "Low volatility, weak trend, oversold conditions",
+      "Low volatility with risk-on regime",
+      "High volatility with risk-off regime"
+    ]
+  },
+  {
+    "report_date": "2026-01-21",
+    "report_type": "daily",
+    "portfolio_value": 99919.24,
+    "return_1d": -0.0008075999999999476,
+    "return_1m": 0,
+    "alpha_1d": 0.01932022324532246,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": 0.0,
+    "regime_label": "neutral",
+    "vix": 20.09,
+    "risk_sentiment": "NEUTRAL",
+    "strategy_weights": {
+      "TimeSeriesMomentum": 0.08900511524726894,
+      "CrossSectionMomentum": 0.08900511524726894,
+      "MeanReversion": 0.08900511524726894,
+      "VolatilityRegimeVolTarget": 0.08900511524726894,
+      "Carry": 0.14676873655942446
+    },
+    "strategy_win_rates": {
+      "TimeSeriesMomentum": 0.5,
+      "CrossSectionMomentum": 0.5,
+      "MeanReversion": 0.5,
+      "VolatilityRegimeVolTarget": 0.5,
+      "Carry": 0.5
+    },
+    "top_strategies": [
+      "TimeSeriesMomentum",
+      "CrossSectionMomentum",
+      "MeanReversion"
+    ],
+    "position_count": 6,
+    "total_pnl": 2.845333999999184,
+    "insight_count": 0,
+    "recommendations": [
+      "Low volatility, weak trend, oversold conditions",
+      "Low volatility with risk-on regime",
+      "High volatility with risk-off regime",
+      "Portfolio returns are trending upward over the last 10 reports"
+    ]
+  },
+  {
+    "report_date": "2026-01-21",
+    "report_type": "weekly",
+    "portfolio_value": 99919.24,
+    "return_1d": -0.0008075999999999476,
+    "return_1m": 0,
+    "alpha_1d": 0.01932022324532246,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": 0.0,
+    "regime_label": "neutral",
+    "vix": 20.09,
+    "risk_sentiment": "NEUTRAL",
+    "strategy_weights": {
+      "TimeSeriesMomentum": 0.08900511524726894,
+      "CrossSectionMomentum": 0.08900511524726894,
+      "MeanReversion": 0.08900511524726894,
+      "VolatilityRegimeVolTarget": 0.08900511524726894,
+      "Carry": 0.14676873655942446
+    },
+    "strategy_win_rates": {
+      "TimeSeriesMomentum": 0.5,
+      "CrossSectionMomentum": 0.5,
+      "MeanReversion": 0.5,
+      "VolatilityRegimeVolTarget": 0.5,
+      "Carry": 0.5
+    },
+    "top_strategies": [
+      "TimeSeriesMomentum",
+      "CrossSectionMomentum",
+      "MeanReversion"
+    ],
+    "position_count": 6,
+    "total_pnl": 2.845333999999184,
+    "insight_count": 0,
+    "recommendations": [
+      "Low volatility, weak trend, oversold conditions",
+      "Low volatility with risk-on regime",
+      "High volatility with risk-off regime",
+      "Portfolio returns are trending upward over the last 10 reports"
+    ]
+  },
+  {
+    "report_date": "2026-01-21",
+    "report_type": "daily",
+    "portfolio_value": 99878.61,
+    "return_1d": -0.001213899999999994,
+    "return_1m": 0,
+    "alpha_1d": 0.018913923245322414,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": -0.0008113000000000466,
+    "regime_label": "bull_sideways",
+    "vix": 19.84,
+    "risk_sentiment": "NEUTRAL",
+    "strategy_weights": {
+      "TimeSeriesMomentum": 0.0890143773922059,
+      "CrossSectionMomentum": 0.0890143773922059,
+      "MeanReversion": 0.0890143773922059,
+      "VolatilityRegimeVolTarget": 0.0890143773922059,
+      "Carry": 0.14710401458589492
+    },
+    "strategy_win_rates": {
+      "TimeSeriesMomentum": 0.5,
+      "CrossSectionMomentum": 0.5,
+      "MeanReversion": 0.5,
+      "VolatilityRegimeVolTarget": 0.5,
+      "Carry": 0.5
+    },
+    "top_strategies": [
+      "TimeSeriesMomentum",
+      "CrossSectionMomentum",
+      "MeanReversion"
+    ],
+    "position_count": 6,
+    "total_pnl": 2.845333999999184,
+    "insight_count": 0,
+    "recommendations": [
+      "Low volatility, weak trend, oversold conditions",
+      "Low volatility with risk-on regime",
+      "High volatility with risk-off regime",
+      "Portfolio returns are trending upward over the last 10 reports"
+    ]
+  }
+]

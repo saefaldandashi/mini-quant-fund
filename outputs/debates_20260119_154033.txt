@@ -1,0 +1,465 @@
+============================================================
+DEBATE TRANSCRIPT - 2024-01-05 00:00:00
+============================================================
+
+MARKET REGIME: Strong uptrend (strength: 100.0%); normal volatility (50% percentile); correlation at -0.00; Risk-on environment
+
+--- STRATEGY EVALUATIONS ---
+
+CrossSectionMomentum: 0.51
+  Rationale: Expects 76.1% return, moderate risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 4.68)
+
+RiskParityMinVar: 0.47
+  Rationale: Modest return expectation (5.0%), low risk.
+  Strengths: Well diversified (21 positions)
+  Weaknesses: Against sentiment
+
+VolatilityRegimeVolTarget: 0.45
+  Rationale: Modest return expectation (2.5%), low risk.
+  Strengths: Well diversified (21 positions)
+  Weaknesses: Against sentiment
+
+TimeSeriesMomentum: 0.44
+  Rationale: Expects 36.1% return, low risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 5.42), Good regime fit, Well diversified (14 positions)
+  Weaknesses: Against sentiment
+
+TailRiskOverlay: 0.41
+  Rationale: Defensive positioning, moderate risk, high conviction.
+  Strengths: Good regime fit, Well diversified (21 positions)
+  Weaknesses: Against sentiment
+
+ValueQualityTilt: 0.29
+  Rationale: Modest return expectation (6.3%), moderate risk.
+
+NewsSentimentEvent: 0.26
+  Rationale: Defensive positioning, moderate risk.
+  Weaknesses: Concentrated (0 positions)
+
+Carry: 0.23
+  Rationale: Modest return expectation (3.5%), elevated risk.
+
+MeanReversion: 0.21
+  Rationale: Defensive positioning, moderate risk.
+  Weaknesses: Poor regime fit, Concentrated (0 positions)
+
+--- AGREEMENTS ---
+  + Strong consensus: LONG AAPL (6 strategies)
+  + Strong consensus: LONG MSFT (5 strategies)
+  + Strong consensus: LONG GOOGL (4 strategies)
+  + Strong consensus: LONG NVDA (4 strategies)
+  + Strong consensus: LONG TSLA (4 strategies)
+  + Strong consensus: LONG JPM (6 strategies)
+  + Strong consensus: LONG BAC (6 strategies)
+  + Strong consensus: LONG GS (5 strategies)
+  + Strong consensus: LONG CVX (6 strategies)
+  + Strong consensus: LONG JNJ (6 strategies)
+  + Strong consensus: LONG PFE (4 strategies)
+  + Strong consensus: LONG PG (5 strategies)
+  + Strong consensus: LONG DIS (4 strategies)
+  + Strong consensus: LONG NFLX (4 strategies)
+  + Strong consensus: LONG AMZN (3 strategies)
+  + Strong consensus: LONG META (3 strategies)
+  + Strong consensus: LONG XOM (5 strategies)
+  + Strong consensus: LONG KO (4 strategies)
+  + Strong consensus: LONG PEP (3 strategies)
+  + Strong consensus: LONG WMT (4 strategies)
+  + Strong consensus: LONG HD (4 strategies)
+
+--- TOP RISKS ---
+  1. Concentration risk: JNJ has 68.6% combined weight
+
+--- FINAL DECISION ---
+Winning strategies: CrossSectionMomentum, RiskParityMinVar, VolatilityRegimeVolTarget
+
+Preferred strategy: CrossSectionMomentum | Key consensus: Strong consensus: LONG AAPL (6 strategies) | Primary risk: Concentration risk: JNJ has 68.6% combined weight
+============================================================
+
+============================================================
+DEBATE TRANSCRIPT - 2024-01-12 00:00:00
+============================================================
+
+MARKET REGIME: Strong uptrend (strength: 100.0%); normal volatility (50% percentile); correlation at 0.00; Risk-on environment
+
+--- STRATEGY EVALUATIONS ---
+
+RiskParityMinVar: 0.54
+  Rationale: Modest return expectation (5.0%), low risk.
+  Strengths: Well diversified (21 positions)
+
+VolatilityRegimeVolTarget: 0.52
+  Rationale: Modest return expectation (2.5%), low risk.
+  Strengths: Well diversified (21 positions)
+
+CrossSectionMomentum: 0.51
+  Rationale: Expects 83.0% return, moderate risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 5.14)
+
+TimeSeriesMomentum: 0.50
+  Rationale: Expects 39.4% return, low risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 5.78), Good regime fit, Well diversified (14 positions)
+
+TailRiskOverlay: 0.48
+  Rationale: Defensive positioning, moderate risk, high conviction.
+  Strengths: Good regime fit, Well diversified (21 positions)
+
+ValueQualityTilt: 0.32
+  Rationale: Modest return expectation (6.3%), moderate risk.
+  Strengths: Aligned with sentiment
+
+NewsSentimentEvent: 0.31
+  Rationale: Modest return expectation (1.3%), low risk.
+  Strengths: Aligned with sentiment
+  Weaknesses: Concentrated (2 positions)
+
+Carry: 0.23
+  Rationale: Modest return expectation (3.5%), elevated risk.
+
+MeanReversion: 0.21
+  Rationale: Defensive positioning, moderate risk.
+  Weaknesses: Poor regime fit, Concentrated (0 positions)
+
+--- AGREEMENTS ---
+  + Strong consensus: LONG AAPL (6 strategies)
+  + Strong consensus: LONG MSFT (5 strategies)
+  + Strong consensus: LONG GOOGL (4 strategies)
+  + Strong consensus: LONG NVDA (4 strategies)
+  + Strong consensus: LONG TSLA (5 strategies)
+  + Strong consensus: LONG JPM (6 strategies)
+  + Strong consensus: LONG BAC (6 strategies)
+  + Strong consensus: LONG GS (5 strategies)
+  + Strong consensus: LONG CVX (6 strategies)
+  + Strong consensus: LONG JNJ (6 strategies)
+  + Strong consensus: LONG PFE (4 strategies)
+  + Strong consensus: LONG PG (6 strategies)
+  + Strong consensus: LONG DIS (4 strategies)
+  + Strong consensus: LONG NFLX (4 strategies)
+  + Strong consensus: LONG AMZN (3 strategies)
+  + Strong consensus: LONG META (3 strategies)
+  + Strong consensus: LONG XOM (5 strategies)
+  + Strong consensus: LONG KO (4 strategies)
+  + Strong consensus: LONG PEP (3 strategies)
+  + Strong consensus: LONG WMT (4 strategies)
+  + Strong consensus: LONG HD (4 strategies)
+
+--- TOP RISKS ---
+  1. Concentration risk: JNJ has 68.7% combined weight
+
+--- FINAL DECISION ---
+Winning strategies: RiskParityMinVar, VolatilityRegimeVolTarget, CrossSectionMomentum
+
+Preferred strategy: RiskParityMinVar | Key consensus: Strong consensus: LONG AAPL (6 strategies) | Primary risk: Concentration risk: JNJ has 68.7% combined weight
+============================================================
+
+============================================================
+DEBATE TRANSCRIPT - 2024-01-19 00:00:00
+============================================================
+
+MARKET REGIME: Strong uptrend (strength: 100.0%); normal volatility (50% percentile); correlation at 0.01; Risk-on environment
+
+--- STRATEGY EVALUATIONS ---
+
+RiskParityMinVar: 0.58
+  Rationale: Modest return expectation (5.0%), low risk.
+  Strengths: Well diversified (21 positions), Aligned with sentiment
+
+VolatilityRegimeVolTarget: 0.55
+  Rationale: Modest return expectation (2.5%), low risk.
+  Strengths: Well diversified (21 positions), Aligned with sentiment
+
+TimeSeriesMomentum: 0.53
+  Rationale: Expects 32.2% return, low risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 4.65), Good regime fit, Well diversified (14 positions), Aligned with sentiment
+
+TailRiskOverlay: 0.52
+  Rationale: Defensive positioning, moderate risk, high conviction.
+  Strengths: Good regime fit, Well diversified (21 positions), Aligned with sentiment
+
+CrossSectionMomentum: 0.51
+  Rationale: Expects 74.8% return, moderate risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 4.55)
+
+NewsSentimentEvent: 0.31
+  Rationale: Modest return expectation (0.9%), low risk.
+  Strengths: Aligned with sentiment
+  Weaknesses: Concentrated (1 positions)
+
+ValueQualityTilt: 0.29
+  Rationale: Modest return expectation (6.3%), moderate risk.
+
+Carry: 0.23
+  Rationale: Modest return expectation (3.5%), elevated risk.
+
+MeanReversion: 0.21
+  Rationale: Defensive positioning, moderate risk.
+  Weaknesses: Poor regime fit, Concentrated (0 positions)
+
+--- AGREEMENTS ---
+  + Strong consensus: LONG AAPL (6 strategies)
+  + Strong consensus: LONG MSFT (5 strategies)
+  + Strong consensus: LONG GOOGL (4 strategies)
+  + Strong consensus: LONG NVDA (4 strategies)
+  + Strong consensus: LONG TSLA (4 strategies)
+  + Strong consensus: LONG JPM (6 strategies)
+  + Strong consensus: LONG BAC (6 strategies)
+  + Strong consensus: LONG GS (5 strategies)
+  + Strong consensus: LONG JNJ (6 strategies)
+  + Strong consensus: LONG PFE (5 strategies)
+  + Strong consensus: LONG PG (5 strategies)
+  + Strong consensus: LONG WMT (5 strategies)
+  + Strong consensus: LONG DIS (4 strategies)
+  + Strong consensus: LONG NFLX (4 strategies)
+  + Strong consensus: LONG AMZN (3 strategies)
+  + Strong consensus: LONG META (3 strategies)
+  + Strong consensus: LONG XOM (5 strategies)
+  + Strong consensus: LONG CVX (5 strategies)
+  + Strong consensus: LONG KO (4 strategies)
+  + Strong consensus: LONG PEP (3 strategies)
+  + Strong consensus: LONG HD (4 strategies)
+
+--- TOP RISKS ---
+  1. Concentration risk: JNJ has 69.3% combined weight
+
+--- FINAL DECISION ---
+Winning strategies: RiskParityMinVar, VolatilityRegimeVolTarget, TimeSeriesMomentum, TailRiskOverlay, CrossSectionMomentum
+
+Preferred strategy: RiskParityMinVar | Key consensus: Strong consensus: LONG AAPL (6 strategies) | Primary risk: Concentration risk: JNJ has 69.3% combined weight
+============================================================
+
+============================================================
+DEBATE TRANSCRIPT - 2024-12-13 00:00:00
+============================================================
+
+MARKET REGIME: Range-bound (strength: 4.7%); normal volatility (70% percentile); correlation at -0.01; Neutral risk
+
+--- STRATEGY EVALUATIONS ---
+
+RiskParityMinVar: 0.53
+  Rationale: Modest return expectation (5.0%), low risk.
+  Strengths: Well diversified (21 positions)
+
+VolatilityRegimeVolTarget: 0.50
+  Rationale: Modest return expectation (2.5%), low risk.
+  Strengths: Well diversified (21 positions)
+
+CrossSectionMomentum: 0.50
+  Rationale: Expects 93.7% return, moderate risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 6.42)
+
+TailRiskOverlay: 0.46
+  Rationale: Defensive positioning, moderate risk, high conviction.
+  Strengths: Good regime fit, Well diversified (21 positions)
+
+TimeSeriesMomentum: 0.36
+  Rationale: Expects 46.0% return, low risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 5.61), Well diversified (13 positions)
+  Weaknesses: Poor regime fit, Against sentiment
+
+ValueQualityTilt: 0.32
+  Rationale: Modest return expectation (6.3%), moderate risk.
+
+NewsSentimentEvent: 0.31
+  Rationale: Modest return expectation (2.0%), low risk.
+  Strengths: Aligned with sentiment
+  Weaknesses: Concentrated (2 positions)
+
+MeanReversion: 0.29
+  Rationale: Defensive positioning, moderate risk.
+  Strengths: Good regime fit
+  Weaknesses: Concentrated (0 positions)
+
+Carry: 0.20
+  Rationale: Modest return expectation (3.5%), moderate risk.
+  Weaknesses: Against sentiment
+
+--- AGREEMENTS ---
+  + Strong consensus: LONG AAPL (6 strategies)
+  + Strong consensus: LONG MSFT (4 strategies)
+  + Strong consensus: LONG GOOGL (4 strategies)
+  + Strong consensus: LONG AMZN (4 strategies)
+  + Strong consensus: LONG META (5 strategies)
+  + Strong consensus: LONG TSLA (5 strategies)
+  + Strong consensus: LONG JPM (5 strategies)
+  + Strong consensus: LONG BAC (5 strategies)
+  + Strong consensus: LONG GS (4 strategies)
+  + Strong consensus: LONG PEP (5 strategies)
+  + Strong consensus: LONG PG (5 strategies)
+  + Strong consensus: LONG WMT (5 strategies)
+  + Strong consensus: LONG NFLX (5 strategies)
+  + Strong consensus: LONG NVDA (3 strategies)
+  + Strong consensus: LONG CVX (5 strategies)
+  + Strong consensus: LONG JNJ (5 strategies)
+  + Strong consensus: LONG PFE (3 strategies)
+  + Strong consensus: LONG KO (4 strategies)
+  + Strong consensus: LONG HD (5 strategies)
+  + Strong consensus: LONG DIS (3 strategies)
+
+--- TOP RISKS ---
+  1. Concentration risk: JNJ has 57.8% combined weight
+
+--- FINAL DECISION ---
+Winning strategies: RiskParityMinVar, VolatilityRegimeVolTarget, CrossSectionMomentum
+
+Preferred strategy: RiskParityMinVar | Key consensus: Strong consensus: LONG AAPL (6 strategies) | Primary risk: Concentration risk: JNJ has 57.8% combined weight
+============================================================
+
+============================================================
+DEBATE TRANSCRIPT - 2024-12-20 00:00:00
+============================================================
+
+MARKET REGIME: Weak downtrend (strength: 21.7%); elevated volatility (82% percentile); correlation at -0.01; Risk-off environment
+
+--- STRATEGY EVALUATIONS ---
+
+RiskParityMinVar: 0.53
+  Rationale: Modest return expectation (5.0%), low risk.
+  Strengths: Well diversified (21 positions)
+
+VolatilityRegimeVolTarget: 0.50
+  Rationale: Modest return expectation (2.5%), low risk.
+  Strengths: Well diversified (21 positions)
+
+TailRiskOverlay: 0.46
+  Rationale: Defensive positioning, moderate risk, high conviction.
+  Strengths: Good regime fit, Well diversified (21 positions)
+
+TimeSeriesMomentum: 0.42
+  Rationale: Expects 47.2% return, low risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 5.89), Well diversified (14 positions)
+  Weaknesses: Aggressive in risk-off environment, Poor regime fit
+
+CrossSectionMomentum: 0.40
+  Rationale: Expects 90.7% return, moderate risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 6.16)
+  Weaknesses: Aggressive in risk-off environment, Poor regime fit, Against sentiment
+
+ValueQualityTilt: 0.33
+  Rationale: Modest return expectation (6.3%), moderate risk.
+
+NewsSentimentEvent: 0.31
+  Rationale: Modest return expectation (0.8%), low risk.
+  Strengths: Aligned with sentiment
+  Weaknesses: Concentrated (1 positions)
+
+MeanReversion: 0.24
+  Rationale: Defensive positioning, moderate risk.
+  Weaknesses: Concentrated (0 positions)
+
+Carry: 0.23
+  Rationale: Modest return expectation (3.5%), moderate risk.
+
+--- AGREEMENTS ---
+  + Strong consensus: LONG AAPL (6 strategies)
+  + Strong consensus: LONG MSFT (4 strategies)
+  + Strong consensus: LONG GOOGL (4 strategies)
+  + Strong consensus: LONG AMZN (4 strategies)
+  + Strong consensus: LONG TSLA (5 strategies)
+  + Strong consensus: LONG BAC (6 strategies)
+  + Strong consensus: LONG GS (4 strategies)
+  + Strong consensus: LONG CVX (6 strategies)
+  + Strong consensus: LONG PEP (4 strategies)
+  + Strong consensus: LONG PG (5 strategies)
+  + Strong consensus: LONG WMT (5 strategies)
+  + Strong consensus: LONG HD (5 strategies)
+  + Strong consensus: LONG NFLX (5 strategies)
+  + Strong consensus: LONG NVDA (3 strategies)
+  + Strong consensus: LONG JPM (4 strategies)
+  + Strong consensus: LONG XOM (5 strategies)
+  + Strong consensus: LONG JNJ (5 strategies)
+  + Strong consensus: LONG PFE (3 strategies)
+  + Strong consensus: LONG KO (4 strategies)
+  + Strong consensus: LONG DIS (3 strategies)
+
+--- TOP RISKS ---
+  1. Elevated volatility: Monitor positions closely
+  2. Risk-off environment: Defensive positioning recommended
+  3. Concentration risk: JNJ has 57.5% combined weight
+
+--- FINAL DECISION ---
+Winning strategies: RiskParityMinVar, VolatilityRegimeVolTarget, TailRiskOverlay
+Constraints applied: Reduced leverage: 100.0% -> 100.0%
+
+Preferred strategy: RiskParityMinVar | Key consensus: Strong consensus: LONG AAPL (6 strategies) | Primary risk: Elevated volatility: Monitor positions closely
+============================================================
+
+============================================================
+DEBATE TRANSCRIPT - 2024-12-27 00:00:00
+============================================================
+
+MARKET REGIME: Weak downtrend (strength: 39.9%); extreme volatility (97% percentile); correlation at -0.01; Risk-off environment
+
+--- STRATEGY EVALUATIONS ---
+
+RiskParityMinVar: 0.61
+  Rationale: Modest return expectation (5.0%), low risk.
+  Strengths: Conservative in high-vol environment, Good regime fit, Well diversified (21 positions), Aligned with sentiment
+
+VolatilityRegimeVolTarget: 0.54
+  Rationale: Modest return expectation (1.2%), low risk.
+  Strengths: Conservative in high-vol environment, Well diversified (21 positions), Aligned with sentiment
+
+TailRiskOverlay: 0.52
+  Rationale: Defensive positioning, moderate risk, high conviction.
+  Strengths: Good regime fit, Well diversified (21 positions), Aligned with sentiment
+
+CrossSectionMomentum: 0.45
+  Rationale: Expects 95.4% return, moderate risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 6.18)
+  Weaknesses: Aggressive in risk-off environment, Poor regime fit
+
+TimeSeriesMomentum: 0.38
+  Rationale: Expects 49.6% return, low risk.
+  Strengths: Strong risk-adjusted return (Sharpe: 5.80), Conservative in high-vol environment, Well diversified (12 positions)
+  Weaknesses: Aggressive in risk-off environment, Against sentiment
+
+ValueQualityTilt: 0.33
+  Rationale: Modest return expectation (6.3%), moderate risk.
+
+NewsSentimentEvent: 0.32
+  Rationale: Modest return expectation (0.9%), low risk.
+  Strengths: Conservative in high-vol environment, Good regime fit, Aligned with sentiment
+  Weaknesses: Concentrated (1 positions)
+
+MeanReversion: 0.25
+  Rationale: Defensive positioning, moderate risk.
+  Weaknesses: Concentrated (0 positions)
+
+Carry: 0.23
+  Rationale: Modest return expectation (3.5%), moderate risk.
+
+--- AGREEMENTS ---
+  + Strong consensus: LONG AAPL (6 strategies)
+  + Strong consensus: LONG MSFT (5 strategies)
+  + Strong consensus: LONG GOOGL (4 strategies)
+  + Strong consensus: LONG AMZN (4 strategies)
+  + Strong consensus: LONG META (5 strategies)
+  + Strong consensus: LONG TSLA (5 strategies)
+  + Strong consensus: LONG BAC (5 strategies)
+  + Strong consensus: LONG CVX (6 strategies)
+  + Strong consensus: LONG PEP (4 strategies)
+  + Strong consensus: LONG WMT (5 strategies)
+  + Strong consensus: LONG HD (5 strategies)
+  + Strong consensus: LONG NFLX (5 strategies)
+  + Strong consensus: LONG NVDA (3 strategies)
+  + Strong consensus: LONG JPM (4 strategies)
+  + Strong consensus: LONG GS (4 strategies)
+  + Strong consensus: LONG XOM (5 strategies)
+  + Strong consensus: LONG JNJ (5 strategies)
+  + Strong consensus: LONG PFE (3 strategies)
+  + Strong consensus: LONG KO (4 strategies)
+  + Strong consensus: LONG PG (4 strategies)
+  + Strong consensus: LONG DIS (3 strategies)
+
+--- TOP RISKS ---
+  1. EXTREME VOLATILITY: Consider reducing overall exposure
+  2. Risk-off environment: Defensive positioning recommended
+  3. Concentration risk: CVX has 55.9% combined weight
+
+--- FINAL DECISION ---
+Winning strategies: RiskParityMinVar, VolatilityRegimeVolTarget, TailRiskOverlay
+Constraints applied: Scaled tech sector: 30.3% -> 30.0%
+
+Preferred strategy: RiskParityMinVar | Key consensus: Strong consensus: LONG AAPL (6 strategies) | Primary risk: EXTREME VOLATILITY: Consider reducing overall exposure
+============================================================
+

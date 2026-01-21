@@ -1,0 +1,93 @@
+# Long/Short Trading Configuration
+# ================================
+# 
+# This file configures Long/Short and Futures trading capabilities.
+# 
+# IMPORTANT: Futures strategies use ETF proxies and are for BACKTEST ONLY.
+# Live futures trading requires a broker that supports futures (not Alpaca).
+
+long_short:
+  # Master switches
+  enable_long_short: true       # Enable L/S strategies
+  enable_futures: true          # Enable futures strategies (backtest proxies)
+  enable_shorting: true         # Allow short selling
+  
+  # Exposure limits
+  max_gross_exposure: 2.0       # 200% max gross (|long| + |short|)
+  net_exposure_min: -0.3        # Can be 30% net short
+  net_exposure_max: 1.0         # Can be 100% net long
+  
+  # Position limits
+  max_single_long: 0.15         # 15% max per long position
+  max_single_short: 0.10        # 10% max per short position
+  max_total_short: 1.0          # 100% max total short exposure
+  
+  # Costs (annual rates, applied daily)
+  borrow_rate_default: 0.02     # 2% annual borrow cost for shorts
+  financing_rate: 0.05          # 5% annual financing for longs
+  
+  # Risk management
+  short_squeeze_check: true     # Monitor borrow availability before shorting
+  min_free_cash_pct: 0.10       # Keep 10% cash buffer
+
+# Strategy-specific configuration
+strategies:
+  cs_momentum:
+    lookback_days: 126          # 6-month momentum
+    long_quantile: 0.2          # Long top 20%
+    short_quantile: 0.2         # Short bottom 20%
+    target_gross: 1.0           # 100% gross exposure
+    target_net: 0.0             # Market neutral
+  
+  ts_momentum:
+    lookback_days: 126
+    vol_target: 0.10            # 10% volatility target
+    max_position: 0.15
+  
+  mean_reversion:
+    z_threshold: 1.5            # Z-score threshold
+    position_size: 0.05
+    max_positions: 10
+  
+  quality_value:
+    target_gross: 0.6
+    n_positions: 10
+
+# Futures configuration (Backtest Only)
+futures:
+  enabled: false
+  backtest_only: true           # Cannot be set to false (Alpaca doesn't support futures)
+  
+  # ETF proxies for futures exposure
+  proxies:
+    equity: SPY
+    bonds: TLT
+    gold: GLD
+    commodities: DBC
+    oil: USO
+  
+  # Contract specifications (for information/backtest)
+  contracts:
+    ES:
+      underlying: SPY
+      multiplier: 50
+      margin_initial: 15000
+      roll_days_before_expiry: 5
+    
+    NQ:
+      underlying: QQQ
+      multiplier: 20
+      margin_initial: 18000
+      roll_days_before_expiry: 5
+    
+    CL:
+      underlying: USO
+      multiplier: 1000
+      margin_initial: 7000
+      roll_days_before_expiry: 5
+    
+    GC:
+      underlying: GLD
+      multiplier: 100
+      margin_initial: 9000
+      roll_days_before_expiry: 5

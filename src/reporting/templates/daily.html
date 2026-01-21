@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Report - {{ report_date.strftime('%Y-%m-%d') }}</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 11pt;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2E86AB;
+            border-bottom: 3px solid #2E86AB;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #A23B72;
+            margin-top: 30px;
+            border-bottom: 2px solid #A23B72;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #6C757D;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        table th {
+            background-color: #2E86AB;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .metric-box {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-left: 4px solid #2E86AB;
+            min-width: 150px;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2E86AB;
+        }
+        .positive { color: #06A77D; }
+        .negative { color: #C73E1D; }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 9pt;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Daily Report - {{ report_date.strftime('%B %d, %Y') }}</h1>
+    </div>
+    
+    <!-- Executive Snapshot -->
+    <h2>Executive Snapshot</h2>
+    <div>
+        <div class="metric-box">
+            <div class="metric-label">Portfolio Return (1d)</div>
+            <div class="metric-value {{ 'positive' if portfolio_return_1d >= 0 else 'negative' }}">
+                {{ "%.2f"|format(portfolio_return_1d * 100) }}%
+            </div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-label">Benchmark Return (1d)</div>
+            <div class="metric-value {{ 'positive' if benchmark_return_1d >= 0 else 'negative' }}">
+                {{ "%.2f"|format(benchmark_return_1d * 100) }}%
+            </div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-label">Volatility (20d)</div>
+            <div class="metric-value">{{ "%.2f"|format(volatility_20d * 100) }}%</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-label">Current Drawdown</div>
+            <div class="metric-value negative">{{ "%.2f"|format(current_drawdown * 100) }}%</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-label">Regime</div>
+            <div class="metric-value">{{ regime_label }}</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-label">Portfolio Value</div>
+            <div class="metric-value">${{ "{:,.2f}"|format(portfolio_value) }}</div>
+        </div>
+    </div>
+    
+    <!-- Performance & Risk Visuals -->
+    <h2>Performance & Risk</h2>
+    {% if equity_chart %}
+    <img src="{{ equity_chart }}" alt="Equity Curve">
+    {% endif %}
+    {% if drawdown_chart %}
+    <img src="{{ drawdown_chart }}" alt="Drawdown Chart">
+    {% endif %}
+    {% if vol_chart %}
+    <img src="{{ vol_chart }}" alt="Rolling Volatility">
+    {% endif %}
+    
+    <!-- Holdings & Exposure -->
+    <h2>Holdings & Exposure</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Weight</th>
+                <th>Value</th>
+                <th>PnL</th>
+                <th>Contribution (1d)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for holding in top_holdings %}
+            <tr>
+                <td>{{ holding.symbol }}</td>
+                <td>{{ "%.2f"|format(holding.weight * 100) }}%</td>
+                <td>${{ "{:,.2f}"|format(holding.value) }}</td>
+                <td class="{{ 'positive' if holding.pnl >= 0 else 'negative' }}">
+                    ${{ "{:,.2f}"|format(holding.pnl) }}
+                </td>
+                <td class="{{ 'positive' if holding.contribution_1d >= 0 else 'negative' }}">
+                    {{ "%.2f"|format(holding.contribution_1d * 100) }}%
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if exposure_chart %}
+    <img src="{{ exposure_chart }}" alt="Exposure Breakdown">
+    {% endif %}
+    
+    <!-- Trades & Costs -->
+    <h2>Trades & Costs</h2>
+    {% if trades_today %}
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Symbol</th>
+                <th>Side</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Value</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trade in trades_today %}
+            <tr>
+                <td>{{ trade.timestamp.strftime('%H:%M:%S') }}</td>
+                <td>{{ trade.symbol }}</td>
+                <td>{{ trade.side.upper() }}</td>
+                <td>{{ trade.quantity }}</td>
+                <td>${{ "%.2f"|format(trade.price) }}</td>
+                <td>${{ "{:,.2f}"|format(trade.value) }}</td>
+                <td>${{ "%.2f"|format(trade.cost) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>Total Costs:</strong> ${{ "{:,.2f}"|format(total_costs) }}</p>
+    {% else %}
+    <p>No trades today.</p>
+    {% endif %}
+    
+    <!-- Strategy & Debate -->
+    <h2>Strategy & Debate</h2>
+    {% if strategy_chart %}
+    <img src="{{ strategy_chart }}" alt="Strategy Weights">
+    {% endif %}
+    
+    <h3>Top Strategies FOR Final Allocation</h3>
+    <ul>
+        {% for strategy in top_strategies_for %}
+        <li>{{ strategy }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h3>Top Strategies AGAINST Final Allocation</h3>
+    <ul>
+        {% for strategy in top_strategies_against %}
+        <li>{{ strategy }}</li>
+        {% endfor %}
+    </ul>
+    
+    <!-- Macro & News -->
+    <h2>Macro & News</h2>
+    <h3>Macro Indices</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Current Value</th>
+                <th>7d Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Inflation Pressure</td>
+                <td>{{ "%.2f"|format(macro_features.inflation_pressure_index) }}</td>
+                <td class="{{ 'positive' if macro_indices_7d_change.get('inflation_pressure_index', 0) >= 0 else 'negative' }}">
+                    {{ "%+.2f"|format(macro_indices_7d_change.get('inflation_pressure_index', 0)) }}
+                </td>
+            </tr>
+            <tr>
+                <td>Geopolitical Risk</td>
+                <td>{{ "%.2f"|format(macro_features.geopolitical_risk_index) }}</td>
+                <td class="{{ 'positive' if macro_indices_7d_change.get('geopolitical_risk_index', 0) >= 0 else 'negative' }}">
+                    {{ "%+.2f"|format(macro_indices_7d_change.get('geopolitical_risk_index', 0)) }}
+                </td>
+            </tr>
+            <tr>
+                <td>Financial Stress</td>
+                <td>{{ "%.2f"|format(macro_features.financial_stress_index) }}</td>
+                <td class="{{ 'positive' if macro_indices_7d_change.get('financial_stress_index', 0) >= 0 else 'negative' }}">
+                    {{ "%+.2f"|format(macro_indices_7d_change.get('financial_stress_index', 0)) }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Top News Events</h3>
+    <ul>
+        {% for event in top_news_events %}
+        <li>
+            <strong>{{ event.headline }}</strong> ({{ event.direction }}, impact: {{ "%.2f"|format(event.impact_score) }})
+            <br><small>{{ event.rationale }}</small>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <div class="footer">
+        <p>Generated on {{ generation_time }} | Mini Quant Fund Reporting System</p>
+    </div>
+</body>
+</html>

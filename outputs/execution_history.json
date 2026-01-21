@@ -1,0 +1,166 @@
+{
+  "symbols": {
+    "BAC": {
+      "total_orders": 21,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 2.4000523171520163,
+      "avg_improvement": 0.0
+    },
+    "T": {
+      "total_orders": 9,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 6.191919296507907,
+      "avg_improvement": 0.0
+    },
+    "VZ": {
+      "total_orders": 5,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 3.7097749886412488,
+      "avg_improvement": 0.0
+    },
+    "XOM": {
+      "total_orders": 16,
+      "limit_attempts": 1,
+      "limit_fills": 0,
+      "avg_spread": 3.0501132053046303,
+      "avg_improvement": 0.0
+    },
+    "KO": {
+      "total_orders": 32,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 2.153101852016606,
+      "avg_improvement": 0.0
+    },
+    "WMT": {
+      "total_orders": 56,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 0.044699158909606254,
+      "avg_improvement": 0.0
+    },
+    "AAPL": {
+      "total_orders": 47,
+      "limit_attempts": 6,
+      "limit_fills": 1,
+      "avg_spread": 0.027834518636973542,
+      "avg_improvement": -0.009727775195120648
+    },
+    "CVX": {
+      "total_orders": 35,
+      "limit_attempts": 1,
+      "limit_fills": 0,
+      "avg_spread": 2.842609229673687,
+      "avg_improvement": 0.0
+    },
+    "PG": {
+      "total_orders": 26,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 7.995676042125698,
+      "avg_improvement": 0.0
+    },
+    "JPM": {
+      "total_orders": 12,
+      "limit_attempts": 1,
+      "limit_fills": 0,
+      "avg_spread": 1.4710515851121588,
+      "avg_improvement": 0.0
+    },
+    "JNJ": {
+      "total_orders": 39,
+      "limit_attempts": 2,
+      "limit_fills": 2,
+      "avg_spread": 4.875848445762715,
+      "avg_improvement": -0.3166175231999867
+    },
+    "PFE": {
+      "total_orders": 2,
+      "limit_attempts": 2,
+      "limit_fills": 0,
+      "avg_spread": 0.21139166177334415,
+      "avg_improvement": 0.0
+    },
+    "GOOGL": {
+      "total_orders": 28,
+      "limit_attempts": 3,
+      "limit_fills": 2,
+      "avg_spread": 0.3553727393468557,
+      "avg_improvement": -0.0007041293574898294
+    },
+    "EA": {
+      "total_orders": 15,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 0.06594148437287183,
+      "avg_improvement": 0.0
+    },
+    "MS": {
+      "total_orders": 12,
+      "limit_attempts": 1,
+      "limit_fills": 1,
+      "avg_spread": 2.595934036820337,
+      "avg_improvement": -0.06794772480000022
+    },
+    "ALB": {
+      "total_orders": 15,
+      "limit_attempts": 7,
+      "limit_fills": 2,
+      "avg_spread": 2.4342417127926845,
+      "avg_improvement": 0.04938583244800013
+    },
+    "NVDA": {
+      "total_orders": 20,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 0.011572626133995104,
+      "avg_improvement": 0.0
+    },
+    "MDB": {
+      "total_orders": 16,
+      "limit_attempts": 16,
+      "limit_fills": 0,
+      "avg_spread": 0.09718525023289348,
+      "avg_improvement": 0.0
+    },
+    "STX": {
+      "total_orders": 7,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 7.282865253344517,
+      "avg_improvement": 0.0
+    },
+    "GS": {
+      "total_orders": 10,
+      "limit_attempts": 10,
+      "limit_fills": 0,
+      "avg_spread": 0.08926258176000003,
+      "avg_improvement": 0.0
+    },
+    "WDC": {
+      "total_orders": 19,
+      "limit_attempts": 19,
+      "limit_fills": 2,
+      "avg_spread": 0.19776750375080787,
+      "avg_improvement": -0.21138197504000222
+    },
+    "MNST": {
+      "total_orders": 2,
+      "limit_attempts": 2,
+      "limit_fills": 0,
+      "avg_spread": 0.0468800618657978,
+      "avg_improvement": 0.0
+    },
+    "AMD": {
+      "total_orders": 1,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 0.29778281275287316,
+      "avg_improvement": 0.0
+    }
+  },
+  "last_updated": "2026-01-21T23:17:35.935216"
+}

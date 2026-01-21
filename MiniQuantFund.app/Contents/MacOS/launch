@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# Mini Quant Fund Launcher
+# This script starts the Flask server and opens the browser
+
+# Fixed project directory path
+PROJECT_DIR="/Users/saef.aldandashi/Desktop/mini fund tool"
+
+# Change to project directory
+cd "$PROJECT_DIR"
+
+# Check if virtual environment exists
+if [ ! -d ".venv" ]; then
+    osascript -e 'display alert "Virtual Environment Not Found" message "The virtual environment is missing. Please open Terminal and run:\n\ncd \"'"$PROJECT_DIR"'\"\npython3 -m venv .venv\nsource .venv/bin/activate\npip install -r requirements.txt"'
+    exit 1
+fi
+
+# Kill any existing instance
+pkill -f "python app.py" 2>/dev/null
+sleep 1
+
+# Activate virtual environment and start server
+source .venv/bin/activate
+
+# Check if Flask is installed
+if ! python -c "import flask" 2>/dev/null; then
+    osascript -e 'display alert "Dependencies Missing" message "Please open Terminal and run:\n\ncd \"'"$PROJECT_DIR"'\"\nsource .venv/bin/activate\npip install -r requirements.txt"'
+    exit 1
+fi
+
+# Start the Flask server in background with logging
+python app.py > /tmp/mini_quant_fund.log 2>&1 &
+SERVER_PID=$!
+
+# Wait for server to start and verify it's responding
+MAX_WAIT=15
+WAITED=0
+SERVER_READY=0
+
+while [ $WAITED -lt $MAX_WAIT ]; do
+    sleep 1
+    WAITED=$((WAITED + 1))
+    
+    # Check if process is still running
+    if ! kill -0 $SERVER_PID 2>/dev/null; then
+        osascript -e 'display alert "Server Failed to Start" message "The server process died. Check /tmp/mini_quant_fund.log for errors."'
+        exit 1
+    fi
+    
+    # Check if server is responding
+    if curl -s http://localhost:5000 > /dev/null 2>&1; then
+        SERVER_READY=1
+        break
+    fi
+done
+
+# Check if server is ready
+if [ $SERVER_READY -eq 1 ]; then
+    # Open browser
+    open "http://localhost:5000"
+    
+    # Show a notification
+    osascript -e 'display notification "Mini Quant Fund is running on http://localhost:5000" with title "🤖 Mini Quant Fund" subtitle "Server Started"'
+    
+    # Wait for server to finish (keeps it running)
+    wait $SERVER_PID
+else
+    osascript -e 'display alert "Server Failed to Start" message "The server did not respond after 15 seconds. Check /tmp/mini_quant_fund.log for errors."'
+    kill $SERVER_PID 2>/dev/null
+    exit 1
+fi

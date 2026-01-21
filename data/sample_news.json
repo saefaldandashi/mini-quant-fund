@@ -1,0 +1,86 @@
+[
+  {
+    "timestamp": "2026-01-20T08:35:00",
+    "source": "Reuters",
+    "title": "U.S. CPI inflation rises 0.4% in December, above expectations",
+    "body": "U.S. consumer prices rose more than expected in December, with the Consumer Price Index climbing 0.4% month-over-month versus the 0.3% forecast. Core CPI, which excludes food and energy, increased 0.3%. Annual inflation stood at 3.4%, reinforcing expectations that the Federal Reserve will keep rates higher for longer. Markets reacted negatively to the upside surprise.",
+    "url": "https://reuters.com/example"
+  },
+  {
+    "timestamp": "2026-01-20T09:00:00",
+    "source": "Bloomberg",
+    "title": "Fed's Powell signals rates likely to stay elevated amid sticky inflation",
+    "body": "Federal Reserve Chair Jerome Powell indicated that interest rates will likely remain at restrictive levels for an extended period as inflation remains above the central bank's 2% target. Speaking at an economic forum, Powell emphasized that the Fed is 'not yet confident' that inflation is on a sustainable path to target. The hawkish comments sent Treasury yields higher.",
+    "url": "https://bloomberg.com/example"
+  },
+  {
+    "timestamp": "2026-01-19T14:30:00",
+    "source": "Wall Street Journal",
+    "title": "Oil prices surge as Middle East tensions escalate",
+    "body": "Oil prices jumped 4% to $82 per barrel as geopolitical tensions in the Middle East intensified. Attacks on shipping in the Red Sea have disrupted global trade routes, forcing vessels to take longer alternative paths. Analysts warn that continued disruptions could push oil prices above $90. Energy stocks rallied on the news.",
+    "url": "https://wsj.com/example"
+  },
+  {
+    "timestamp": "2026-01-19T11:00:00",
+    "source": "CNBC",
+    "title": "Regional bank stocks tumble on renewed concerns about commercial real estate",
+    "body": "Shares of regional banks fell sharply as investors grew increasingly worried about exposure to troubled commercial real estate loans. New York Community Bancorp led the decline, falling 15% after reporting a surprise quarterly loss. Credit rating agencies have warned of potential downgrades for banks with heavy CRE concentrations.",
+    "url": "https://cnbc.com/example"
+  },
+  {
+    "timestamp": "2026-01-18T16:00:00",
+    "source": "Financial Times",
+    "title": "China's GDP growth slows to 4.9% amid property sector struggles",
+    "body": "China's economy grew 4.9% in Q4, below the government's 5% target, as the property sector crisis continued to weigh on activity. Retail sales and industrial production also missed expectations. Economists are calling for more aggressive stimulus measures from Beijing. The yuan weakened against the dollar following the data release.",
+    "url": "https://ft.com/example"
+  },
+  {
+    "timestamp": "2026-01-18T10:00:00",
+    "source": "Reuters",
+    "title": "ECB's Lagarde pushes back against early rate cut expectations",
+    "body": "European Central Bank President Christine Lagarde said it is premature to discuss interest rate cuts, pushing back against market expectations for easing as early as April. Lagarde emphasized that inflation in the eurozone remains elevated and the ECB needs to see more evidence of sustained disinflation before adjusting policy.",
+    "url": "https://reuters.com/example2"
+  },
+  {
+    "timestamp": "2026-01-17T15:00:00",
+    "source": "Bloomberg",
+    "title": "U.S. retail sales beat expectations, consumer spending remains resilient",
+    "body": "U.S. retail sales increased 0.6% in December, beating the 0.4% consensus forecast. The strong reading suggests consumers remained resilient despite high interest rates and inflation. The data supports the case for a soft landing scenario, where the economy slows gradually without falling into recession.",
+    "url": "https://bloomberg.com/example2"
+  },
+  {
+    "timestamp": "2026-01-17T08:30:00",
+    "source": "Reuters",
+    "title": "U.S. jobless claims fall to lowest level in two months",
+    "body": "Initial jobless claims dropped to 187,000 last week, the lowest since early November and below expectations of 205,000. The tight labor market continues to support consumer spending but may also keep inflation elevated. Continuing claims also declined, suggesting workers who lose their jobs are finding new employment quickly.",
+    "url": "https://reuters.com/example3"
+  },
+  {
+    "timestamp": "2026-01-16T12:00:00",
+    "source": "Wall Street Journal",
+    "title": "Treasury announces larger-than-expected bond auction amid rising deficit concerns",
+    "body": "The U.S. Treasury said it will auction $121 billion in debt next week, more than previously anticipated. The increased supply comes as the federal deficit continues to widen. Bond yields rose on the announcement, with the 10-year Treasury climbing to 4.18%. Fiscal concerns are increasingly weighing on investor sentiment.",
+    "url": "https://wsj.com/example2"
+  },
+  {
+    "timestamp": "2026-01-16T09:00:00",
+    "source": "Financial Times",
+    "title": "Russia-Ukraine conflict: Sanctions target new sectors as fighting intensifies",
+    "body": "Western allies announced a new round of sanctions targeting Russia's metals and mining sectors as the conflict in Ukraine enters its third year. The measures aim to further restrict Moscow's ability to fund military operations. Aluminum and nickel prices rose on supply concerns. European energy markets remain volatile.",
+    "url": "https://ft.com/example2"
+  },
+  {
+    "timestamp": "2026-01-15T14:00:00",
+    "source": "CNBC",
+    "title": "Tech earnings season kicks off with mixed signals",
+    "body": "Major technology companies are set to report quarterly earnings this week, with analysts expecting a mixed picture. Cloud computing growth has slowed, but AI-related investments continue to drive optimism. Semiconductor stocks have rallied ahead of results, with NVIDIA up 15% in January. Valuations remain stretched relative to historical averages.",
+    "url": "https://cnbc.com/example2"
+  },
+  {
+    "timestamp": "2026-01-15T10:00:00",
+    "source": "Bloomberg",
+    "title": "OPEC+ extends production cuts as demand outlook weakens",
+    "body": "OPEC and its allies agreed to extend voluntary oil production cuts through the end of Q1, citing weaker-than-expected global demand growth. Saudi Arabia will continue its additional 1 million barrel per day cut. The decision aims to support oil prices amid concerns about Chinese economic weakness and rising non-OPEC supply.",
+    "url": "https://bloomberg.com/example3"
+  }
+]

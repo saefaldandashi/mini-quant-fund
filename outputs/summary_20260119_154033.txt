@@ -1,0 +1,20 @@
+==================================================
+BACKTEST RESULTS
+==================================================
+Total Return: 23.90%
+CAGR: 23.92%
+Sharpe Ratio: 6.43
+Sortino Ratio: 9.02
+Max Drawdown: 2.35%
+Avg Turnover: 6.55%
+==================================================
+STRATEGY CONTRIBUTIONS:
+  RiskParityMinVar: 15.11%
+  CrossSectionMomentum: 14.53%
+  VolatilityRegimeVolTarget: 14.31%
+  TailRiskOverlay: 13.27%
+  TimeSeriesMomentum: 13.24%
+  NewsSentimentEvent: 8.43%
+  ValueQualityTilt: 8.30%
+  Carry: 6.56%
+  MeanReversion: 6.25%

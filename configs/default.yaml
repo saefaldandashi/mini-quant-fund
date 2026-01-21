@@ -1,0 +1,127 @@
+# Multi-Strategy Quant Debate Bot - Default Configuration
+# =====================================================
+
+# Universe of tradeable assets
+universe:
+  - AAPL
+  - MSFT
+  - GOOGL
+  - AMZN
+  - META
+  - NVDA
+  - TSLA
+  - JPM
+  - BAC
+  - GS
+  - XOM
+  - CVX
+  - JNJ
+  - PFE
+  - UNH
+  - KO
+  - PEP
+  - PG
+  - WMT
+  - HD
+  - DIS
+  - NFLX
+  - AMD
+  - INTC
+
+# Data configuration
+data:
+  source: alpaca  # csv, parquet, alpaca, yahoo
+  data_path: data/ohlcv
+  news_path: data/news
+  sentiment_decay: 3.0  # Half-life in days for sentiment decay
+
+# Backtest configuration  
+backtest:
+  start_date: "2024-01-01"
+  end_date: "2025-01-01"
+  frequency: weekly  # daily, weekly, monthly
+  initial_capital: 100000
+  transaction_cost_bps: 10
+  slippage_bps: 5
+  ensemble_mode: weighted_vote  # weighted_vote, convex_optimization, stacking
+
+# Risk constraints
+risk:
+  max_position: 0.15  # Max 15% per position
+  max_sector: 0.30    # Max 30% per sector
+  max_leverage: 1.0   # No leverage by default
+  max_turnover: 0.50  # Max 50% turnover per rebalance
+  vol_target: 0.12    # 12% annualized vol target
+  max_drawdown_trigger: 0.15  # Reduce risk at 15% drawdown
+
+# Strategy configurations
+strategies:
+  time_series_momentum:
+    enabled: true
+    lookback: 126
+    vol_target: 0.10
+    long_only: true
+    
+  cross_section_momentum:
+    enabled: true
+    lookback: 126
+    top_n: 5
+    bottom_n: 0  # Long only
+    skip_recent: 21
+    
+  mean_reversion:
+    enabled: true
+    z_threshold: 2.0
+    ma_type: ma_20
+    max_position: 0.10
+    
+  volatility:
+    enabled: true
+    target_vol: 0.12
+    max_leverage: 1.5
+    min_leverage: 0.5
+    
+  carry:
+    enabled: true
+    # Uses dividend yield as carry proxy
+    
+  value_quality:
+    enabled: true
+    top_n: 10
+    # Uses hardcoded scores (stub)
+    
+  risk_parity:
+    enabled: true
+    mode: risk_parity  # risk_parity or min_var
+    max_weight: 0.15
+    
+  tail_risk:
+    enabled: true
+    vol_trigger: 0.25
+    corr_trigger: 0.7
+    min_exposure: 0.3
+    
+  sentiment:
+    enabled: true
+    sentiment_threshold: 0.3
+    min_confidence: 0.3
+    max_position: 0.10
+    
+  ml_ensemble:
+    enabled: false  # Disable by default (uses other strategies)
+    learning_rate: 0.1
+    lookback: 20
+    min_weight: 0.05
+
+# Debate engine configuration
+debate:
+  alpha_weight: 0.25
+  regime_weight: 0.25
+  diversification_weight: 0.20
+  drawdown_weight: 0.15
+  sentiment_weight: 0.15
+
+# Logging
+logging:
+  level: INFO
+  file: logs/quant_bot.log

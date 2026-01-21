@@ -1,0 +1,22 @@
+{
+  "bull_regime_winners": {
+    "observations": 1,
+    "strategy_performance": {
+      "TimeSeriesMomentum": [
+        0.5
+      ],
+      "CrossSectionMomentum": [
+        0.5
+      ],
+      "MeanReversion": [
+        0.5
+      ],
+      "VolatilityRegimeVolTarget": [
+        0.5
+      ],
+      "Carry": [
+        0.5
+      ]
+    }
+  }
+}

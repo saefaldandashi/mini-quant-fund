@@ -1,0 +1,104 @@
+{
+  "neutral": {
+    "total_predictions": {
+      "observations": 3,
+      "total_win_rate": 1.5,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T12:10:18.409433"
+    },
+    "strategies_tracked": {
+      "observations": 3,
+      "total_win_rate": 1.5,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T12:10:18.409443"
+    },
+    "overall_accuracy": {
+      "observations": 3,
+      "total_win_rate": 1.5,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T12:10:18.409445"
+    },
+    "best_strategy": {
+      "observations": 3,
+      "total_win_rate": 1.5,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T12:10:18.409448"
+    },
+    "TimeSeriesMomentum": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T12:18:52.544042"
+    },
+    "CrossSectionMomentum": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T12:18:52.544050"
+    },
+    "MeanReversion": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T12:18:52.544053"
+    },
+    "VolatilityRegimeVolTarget": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T12:18:52.544055"
+    },
+    "Carry": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T12:18:52.544057"
+    }
+  },
+  "bull_sideways": {
+    "TimeSeriesMomentum": {
+      "observations": 1,
+      "total_win_rate": 0.5,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T15:31:08.031898"
+    },
+    "CrossSectionMomentum": {
+      "observations": 1,
+      "total_win_rate": 0.5,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T15:31:08.031906"
+    },
+    "MeanReversion": {
+      "observations": 1,
+      "total_win_rate": 0.5,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T15:31:08.031908"
+    },
+    "VolatilityRegimeVolTarget": {
+      "observations": 1,
+      "total_win_rate": 0.5,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T15:31:08.031910"
+    },
+    "Carry": {
+      "observations": 1,
+      "total_win_rate": 0.5,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-21T15:31:08.031911"
+    }
+  }
+}
