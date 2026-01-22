@@ -10,6 +10,10 @@
 #    - EC2_HOST: Your EC2 public IP (e.g., 54.123.45.67)
 #    - EC2_SSH_KEY: The entire contents of your .pem private key file
 #    - EC2_USER: Usually "ec2-user" for Amazon Linux or "ubuntu" for Ubuntu
+#    - ALPACA_API_KEY: Your Alpaca API key
+#    - ALPACA_SECRET_KEY: Your Alpaca secret key
+#    - GEMINI_API_KEY: Your Gemini API key (optional)
+#    - ALPHA_VANTAGE_API_KEY: Your Alpha Vantage API key (optional)
 #
 # =============================================================================
 
@@ -33,12 +37,18 @@ jobs:
       
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+          ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script_stop: true
+          envs: ALPACA_API_KEY,ALPACA_SECRET_KEY,GEMINI_API_KEY,ALPHA_VANTAGE_API_KEY
           script: |
             echo "🚀 Starting deployment..."
             
@@ -48,6 +58,15 @@ jobs:
             # Pull latest code
             echo "📥 Pulling latest code..."
             git pull origin main
+            
+            # Create/update .env file with secrets
+            echo "🔐 Updating environment variables..."
+            cat > .env << EOF
+            ALPACA_API_KEY=$ALPACA_API_KEY
+            ALPACA_SECRET_KEY=$ALPACA_SECRET_KEY
+            GEMINI_API_KEY=$GEMINI_API_KEY
+            ALPHA_VANTAGE_API_KEY=$ALPHA_VANTAGE_API_KEY
+            EOF
             
             # Activate virtual environment
             source .venv/bin/activate

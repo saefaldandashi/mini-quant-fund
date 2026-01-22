@@ -103,39 +103,39 @@
   },
   "bull_trending": {
     "TimeSeriesMomentum": {
-      "observations": 2,
-      "total_win_rate": 1.0,
+      "observations": 4,
+      "total_win_rate": 2.0,
       "returns": [],
       "avg_win_rate": 0.5,
-      "last_updated": "2026-01-22T01:03:21.761833"
+      "last_updated": "2026-01-22T16:05:52.352845"
     },
     "CrossSectionMomentum": {
-      "observations": 2,
-      "total_win_rate": 1.0,
+      "observations": 4,
+      "total_win_rate": 2.0,
       "returns": [],
       "avg_win_rate": 0.5,
-      "last_updated": "2026-01-22T01:03:21.761842"
+      "last_updated": "2026-01-22T16:05:52.352856"
     },
     "MeanReversion": {
-      "observations": 2,
-      "total_win_rate": 1.0,
+      "observations": 4,
+      "total_win_rate": 2.0,
       "returns": [],
       "avg_win_rate": 0.5,
-      "last_updated": "2026-01-22T01:03:21.761846"
+      "last_updated": "2026-01-22T16:05:52.352858"
     },
     "VolatilityRegimeVolTarget": {
-      "observations": 2,
-      "total_win_rate": 1.0,
+      "observations": 4,
+      "total_win_rate": 2.0,
       "returns": [],
       "avg_win_rate": 0.5,
-      "last_updated": "2026-01-22T01:03:21.761848"
+      "last_updated": "2026-01-22T16:05:52.352860"
     },
     "Carry": {
-      "observations": 2,
-      "total_win_rate": 1.0,
+      "observations": 4,
+      "total_win_rate": 2.0,
       "returns": [],
       "avg_win_rate": 0.5,
-      "last_updated": "2026-01-22T01:03:21.761851"
+      "last_updated": "2026-01-22T16:05:52.352862"
     }
   }
 }

@@ -69,10 +69,10 @@
         "volatility_regime": "low",
         "trend_strength": "weak"
       },
-      "times_observed": 103,
-      "times_profitable": 84,
-      "avg_return": 0.006827646400570591,
-      "confidence": 0.8155339805825242,
+      "times_observed": 104,
+      "times_profitable": 85,
+      "avg_return": 0.006682107263279923,
+      "confidence": 0.8173076923076923,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "MeanReversion",
@@ -85,7 +85,8 @@
         "RelativeStrengthIntraday",
         "NewsSentimentEvent",
         "QualityValue_LS",
-        "VolumeSpike"
+        "VolumeSpike",
+        "OpeningRangeBreakout"
       ],
       "strategies_to_avoid": [
         "TimeSeriesMomentum",
@@ -122,10 +123,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 45,
-      "times_profitable": 44,
-      "avg_return": 0.006822412485169269,
-      "confidence": 0.9777777777777777,
+      "times_observed": 46,
+      "times_profitable": 45,
+      "avg_return": 0.006677396739418733,
+      "confidence": 0.9782608695652174,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "Carry",
@@ -136,7 +137,8 @@
         "RelativeStrengthIntraday",
         "NewsSentimentEvent",
         "QualityValue_LS",
-        "VolumeSpike"
+        "VolumeSpike",
+        "OpeningRangeBreakout"
       ],
       "strategies_to_avoid": [
         "QualityValue_LS",
@@ -152,9 +154,9 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 37,
-      "times_profitable": 37,
-      "avg_return": 0.006744783178941466,
+      "times_observed": 38,
+      "times_profitable": 38,
+      "avg_return": 0.0066075303638137095,
       "confidence": 1.0,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
@@ -165,7 +167,8 @@
         "MeanReversion_LS",
         "NewsSentimentEvent",
         "QualityValue_LS",
-        "VolumeSpike"
+        "VolumeSpike",
+        "OpeningRangeBreakout"
       ],
       "strategies_to_avoid": [
         "IntradayMomentum",
@@ -180,9 +183,9 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 38,
-      "times_profitable": 38,
-      "avg_return": 0.006744783178941466,
+      "times_observed": 39,
+      "times_profitable": 39,
+      "avg_return": 0.0066075303638137095,
       "confidence": 1.0,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
@@ -193,7 +196,8 @@
         "MeanReversion_LS",
         "NewsSentimentEvent",
         "QualityValue_LS",
-        "VolumeSpike"
+        "VolumeSpike",
+        "OpeningRangeBreakout"
       ],
       "strategies_to_avoid": [
         "IntradayMomentum",
@@ -208,9 +212,9 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 35,
-      "times_profitable": 35,
-      "avg_return": 0.006744783178941466,
+      "times_observed": 36,
+      "times_profitable": 36,
+      "avg_return": 0.0066075303638137095,
       "confidence": 1.0,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
@@ -221,7 +225,8 @@
         "MeanReversion_LS",
         "NewsSentimentEvent",
         "QualityValue_LS",
-        "VolumeSpike"
+        "VolumeSpike",
+        "OpeningRangeBreakout"
       ],
       "strategies_to_avoid": [
         "IntradayMomentum",
@@ -236,9 +241,9 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 35,
-      "times_profitable": 35,
-      "avg_return": 0.006744783178941466,
+      "times_observed": 36,
+      "times_profitable": 36,
+      "avg_return": 0.0066075303638137095,
       "confidence": 1.0,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
@@ -249,7 +254,8 @@
         "MeanReversion_LS",
         "NewsSentimentEvent",
         "QualityValue_LS",
-        "VolumeSpike"
+        "VolumeSpike",
+        "OpeningRangeBreakout"
       ],
       "strategies_to_avoid": [
         "IntradayMomentum",
@@ -264,9 +270,9 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 20,
-      "times_profitable": 20,
-      "avg_return": 0.004597951957390409,
+      "times_observed": 21,
+      "times_profitable": 21,
+      "avg_return": 0.004675382264417759,
       "confidence": 1.0,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
@@ -277,7 +283,8 @@
         "QualityValue_LS",
         "IntradayMomentum",
         "RelativeStrengthIntraday",
-        "VolumeSpike"
+        "VolumeSpike",
+        "OpeningRangeBreakout"
       ],
       "strategies_to_avoid": []
     },
@@ -288,10 +295,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 17,
-      "times_profitable": 16,
-      "avg_return": 0.004597951957390409,
-      "confidence": 0.9411764705882353,
+      "times_observed": 18,
+      "times_profitable": 17,
+      "avg_return": 0.004675382264417759,
+      "confidence": 0.9444444444444444,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "NewsSentimentEvent",
@@ -301,7 +308,8 @@
         "QualityValue_LS",
         "IntradayMomentum",
         "RelativeStrengthIntraday",
-        "VolumeSpike"
+        "VolumeSpike",
+        "OpeningRangeBreakout"
       ],
       "strategies_to_avoid": []
     },
@@ -312,10 +320,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 21,
-      "times_profitable": 16,
-      "avg_return": 0.001272548825373891,
-      "confidence": 0.7619047619047619,
+      "times_observed": 22,
+      "times_profitable": 17,
+      "avg_return": 0.0016825194456028926,
+      "confidence": 0.7727272727272727,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "QualityValue_LS",
@@ -323,7 +331,8 @@
         "TS_Momentum_LS",
         "VolumeSpike",
         "IntradayMomentum",
-        "CrossSectionMomentum"
+        "CrossSectionMomentum",
+        "OpeningRangeBreakout"
       ],
       "strategies_to_avoid": []
     }
@@ -2838,7 +2847,36 @@
       "outcome_return": 0.004695752123150889,
       "winning_strategies": [],
       "losing_strategies": []
+    },
+    {
+      "timestamp": "2026-01-22T15:51:24.098581",
+      "market_context": {
+        "regime": "neutral",
+        "volatility_regime": "low",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "RelativeStrengthIntraday": 0.6,
+        "IntradayMomentum": 0.65,
+        "CrossSectionMomentum": 0.65,
+        "TS_Momentum_LS": 0.6,
+        "OpeningRangeBreakout": 0.65,
+        "VolumeSpike": 0.7,
+        "QuickMeanReversion": 0.5,
+        "MeanReversion_LS": 0.5,
+        "QualityValue_LS": 0.5
+      },
+      "outcome_return": 0.005372255027663906,
+      "winning_strategies": [
+        "RelativeStrengthIntraday",
+        "IntradayMomentum",
+        "CrossSectionMomentum",
+        "TS_Momentum_LS",
+        "OpeningRangeBreakout",
+        "QualityValue_LS"
+      ],
+      "losing_strategies": []
     }
   ],
-  "last_updated": "2026-01-22T13:12:06.517194"
+  "last_updated": "2026-01-22T15:51:24.099008"
 }

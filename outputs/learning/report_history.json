@@ -325,5 +325,89 @@
       "IntradayMomentum excels in neutral low-vol conditions",
       "Portfolio returns are trending upward over the last 10 reports"
     ]
+  },
+  {
+    "report_date": "2026-01-22",
+    "report_type": "daily",
+    "portfolio_value": 100612.25,
+    "return_1d": 0.006939429959526211,
+    "return_1m": 0,
+    "alpha_1d": -0.0043936869427552636,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": 0.0,
+    "regime_label": "bull_trending",
+    "vix": 16.14,
+    "risk_sentiment": "RISK_ON",
+    "strategy_weights": {
+      "TimeSeriesMomentum": 0.21959333302512768,
+      "CrossSectionMomentum": 0.11935358607023741,
+      "MeanReversion": 0.056192559551453795,
+      "VolatilityRegimeVolTarget": 0.056192559551453795,
+      "Carry": 0.07406462827699482
+    },
+    "strategy_win_rates": {
+      "TimeSeriesMomentum": 0.5,
+      "CrossSectionMomentum": 0.5,
+      "MeanReversion": 0.5,
+      "VolatilityRegimeVolTarget": 0.5,
+      "Carry": 0.5
+    },
+    "top_strategies": [
+      "TimeSeriesMomentum",
+      "CrossSectionMomentum",
+      "MeanReversion"
+    ],
+    "position_count": 11,
+    "total_pnl": 283.84980499999847,
+    "insight_count": 9,
+    "recommendations": [
+      "TS_Momentum_LS excels in neutral low-vol conditions",
+      "CrossSectionMomentum excels in neutral low-vol conditions",
+      "IntradayMomentum excels in neutral low-vol conditions",
+      "Portfolio returns are trending upward over the last 10 reports"
+    ]
+  },
+  {
+    "report_date": "2026-01-22",
+    "report_type": "daily",
+    "portfolio_value": 100624.58,
+    "return_1d": 0.0070628300740391324,
+    "return_1m": 0,
+    "alpha_1d": -0.004270286828242342,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": 0.0,
+    "regime_label": "bull_trending",
+    "vix": 20.0,
+    "risk_sentiment": "RISK_ON",
+    "strategy_weights": {
+      "TimeSeriesMomentum": 0.21959333302512768,
+      "CrossSectionMomentum": 0.11935358607023741,
+      "MeanReversion": 0.056192559551453795,
+      "VolatilityRegimeVolTarget": 0.056192559551453795,
+      "Carry": 0.07406462827699482
+    },
+    "strategy_win_rates": {
+      "TimeSeriesMomentum": 0.5,
+      "CrossSectionMomentum": 0.5,
+      "MeanReversion": 0.5,
+      "VolatilityRegimeVolTarget": 0.5,
+      "Carry": 0.5
+    },
+    "top_strategies": [
+      "TimeSeriesMomentum",
+      "CrossSectionMomentum",
+      "MeanReversion"
+    ],
+    "position_count": 11,
+    "total_pnl": 283.84980499999847,
+    "insight_count": 9,
+    "recommendations": [
+      "TS_Momentum_LS excels in neutral low-vol conditions",
+      "CrossSectionMomentum excels in neutral low-vol conditions",
+      "IntradayMomentum excels in neutral low-vol conditions",
+      "Portfolio returns are trending upward over the last 10 reports"
+    ]
   }
 ]

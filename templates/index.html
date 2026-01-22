@@ -2047,7 +2047,15 @@
         
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
-            loadPortfolio();
+            console.log('🚀 Initializing Quant Fund UI...');
+            
+            try {
+                await loadPortfolio();
+                console.log('✓ Portfolio loaded');
+            } catch (e) {
+                console.error('❌ Portfolio failed:', e);
+            }
+            
             loadLLMStats();
             loadLearning();
             loadAccuracy();
@@ -2166,8 +2174,24 @@
         // Load Portfolio
         async function loadPortfolio() {
             try {
+                console.log('📊 Fetching portfolio...');
                 const res = await fetch('/api/portfolio');
+                
+                if (!res.ok) {
+                    console.error('❌ Portfolio API error:', res.status, res.statusText);
+                    return;
+                }
+                
                 const data = await res.json();
+                
+                if (data.error) {
+                    console.error('❌ Portfolio API returned error:', data.error);
+                    document.getElementById('positions-body').innerHTML = 
+                        `<tr><td colspan="7" style="text-align: center; color: var(--danger); padding: 30px;">
+                            Error: ${data.error}
+                        </td></tr>`;
+                    return;
+                }
                 
                 console.log('📊 Portfolio loaded:', {
                     equity: data.equity,
@@ -2196,9 +2220,11 @@
                 
                 // Positions table - store for filtering/sorting
                 allPositions = data.positions || [];
+                console.log('📈 Rendering', allPositions.length, 'positions');
                 
                 // Use unified render function
                 updatePositionsTable(allPositions);
+                console.log('✓ Positions table updated');
             } catch (e) {
                 console.error('Portfolio error:', e);
             }

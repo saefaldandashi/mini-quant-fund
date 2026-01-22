@@ -2,7 +2,7 @@
   "weights": {
     "TimeSeriesMomentum": {
       "strategy_name": "TimeSeriesMomentum",
-      "base_weight": 0.10773425452220813,
+      "base_weight": 0.10762395227926308,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -16,22 +16,22 @@
     },
     "CrossSectionMomentum": {
       "strategy_name": "CrossSectionMomentum",
-      "base_weight": 0.13603898481517024,
-      "ema_performance": 0.014219886273759558,
+      "base_weight": 0.13692353948364225,
+      "ema_performance": 0.014847668921440262,
       "ema_alpha": 0.1,
-      "times_selected": 42,
-      "cumulative_reward": 0.5754316400042052,
+      "times_selected": 43,
+      "cumulative_reward": 0.5959293527547718,
       "ucb_bonus": 0.0,
       "regime_weights": {
-        "neutral": 0.13905374788177416,
+        "neutral": 0.1400786335193025,
         "risk_on": 0.13617187180012683
       },
-      "learned_confidence": 0.8753083940270138,
-      "last_updated": "2026-01-22T12:05:26.478185"
+      "learned_confidence": 0.8484479650556183,
+      "last_updated": "2026-01-22T15:51:24.096016"
     },
     "MeanReversion": {
       "strategy_name": "MeanReversion",
-      "base_weight": 0.10774997300269507,
+      "base_weight": 0.10763965466659876,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -43,7 +43,7 @@
     },
     "VolatilityRegimeVolTarget": {
       "strategy_name": "VolatilityRegimeVolTarget",
-      "base_weight": 0.10774997300269507,
+      "base_weight": 0.10763965466659876,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -55,7 +55,7 @@
     },
     "Carry": {
       "strategy_name": "Carry",
-      "base_weight": 0.10523533992271394,
+      "base_weight": 0.1051275961593024,
       "ema_performance": -0.00026882398252459593,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -71,7 +71,7 @@
     },
     "ValueQualityTilt": {
       "strategy_name": "ValueQualityTilt",
-      "base_weight": 0.11046911281142412,
+      "base_weight": 0.11035601052122598,
       "ema_performance": 0.0007588578368238671,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -87,7 +87,7 @@
     },
     "RiskParityMinVar": {
       "strategy_name": "RiskParityMinVar",
-      "base_weight": 0.10773425452220813,
+      "base_weight": 0.10762395227926308,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -101,7 +101,7 @@
     },
     "TailRiskOverlay": {
       "strategy_name": "TailRiskOverlay",
-      "base_weight": 0.10774997300269507,
+      "base_weight": 0.10763965466659876,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -113,7 +113,7 @@
     },
     "NewsSentimentEvent": {
       "strategy_name": "NewsSentimentEvent",
-      "base_weight": 0.10953813439819035,
+      "base_weight": 0.10942598527750705,
       "ema_performance": 0.003584849420027366,
       "ema_alpha": 0.1,
       "times_selected": 62,
@@ -128,17 +128,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 105,
+  "total_rounds": 106,
   "reward_history": [
-    {
-      "timestamp": "2026-01-20T21:45:53.723585",
-      "returns": {
-        "Carry": -0.0006727669500199646,
-        "ValueQualityTilt": 0.0022190349828868686,
-        "NewsSentimentEvent": -0.0003504517001839838
-      },
-      "regime": "risk_on"
-    },
     {
       "timestamp": "2026-01-20T21:50:51.658531",
       "returns": {
@@ -1187,7 +1178,20 @@
         "MeanReversion_LS": 0.002046970007708987
       },
       "regime": "risk_on"
+    },
+    {
+      "timestamp": "2026-01-22T15:51:24.095935",
+      "returns": {
+        "RelativeStrengthIntraday": 0.025675660570532742,
+        "IntradayMomentum": 0.03266789346856574,
+        "CrossSectionMomentum": 0.020497712750566593,
+        "TS_Momentum_LS": 0.006661953175256625,
+        "OpeningRangeBreakout": 0.018683427672499742,
+        "MeanReversion_LS": 0.003143279514953712,
+        "QualityValue_LS": 0.00872729155700465
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-01-22T12:05:26.483137"
+  "last_updated": "2026-01-22T15:51:24.097257"
 }
