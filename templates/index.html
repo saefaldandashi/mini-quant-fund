@@ -720,11 +720,23 @@
         .sidebar-right {
             background: var(--bg-secondary);
             border-left: 1px solid var(--border);
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             overflow-y: auto;
+            overflow-x: hidden;
+            max-width: 350px;
+        }
+        
+        .sidebar-right .insight-card {
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+        
+        .sidebar-right * {
+            max-width: 100%;
+            box-sizing: border-box;
         }
         
         .insight-card {
@@ -1728,89 +1740,86 @@
             </div>
             
             <!-- Learning System - Enhanced -->
-            <div class="insight-card" style="grid-column: span 2;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="insight-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px;">
                     <h3><span>🧠</span> Learning System</h3>
-                    <span id="learning-maturity" style="font-size: 0.7em; padding: 3px 8px; border-radius: 10px; background: rgba(88, 166, 255, 0.2); color: var(--accent);">--</span>
+                    <span id="learning-maturity" style="font-size: 0.65em; padding: 3px 8px; border-radius: 10px; background: rgba(88, 166, 255, 0.2); color: var(--accent);">--</span>
                 </div>
                 
-                <!-- Core Metrics Row -->
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0;">
-                    <div style="text-align: center; padding: 10px; background: var(--card-bg); border-radius: 8px;">
-                        <div id="learning-trades" style="font-size: 1.5em; font-weight: bold; color: var(--accent);">--</div>
-                        <div style="font-size: 0.7em; color: var(--text-dim);">Trades Analyzed</div>
+                <!-- Core Metrics Row - 2x2 grid for sidebar -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0;">
+                    <div style="text-align: center; padding: 8px; background: var(--bg-card); border-radius: 6px;">
+                        <div id="learning-trades" style="font-size: 1.2em; font-weight: bold; color: var(--accent);">--</div>
+                        <div style="font-size: 0.65em; color: var(--text-dim);">Trades</div>
                     </div>
-                    <div style="text-align: center; padding: 10px; background: var(--card-bg); border-radius: 8px;">
-                        <div id="learning-winrate" style="font-size: 1.5em; font-weight: bold;" class="positive">--</div>
-                        <div style="font-size: 0.7em; color: var(--text-dim);">Win Rate</div>
+                    <div style="text-align: center; padding: 8px; background: var(--bg-card); border-radius: 6px;">
+                        <div id="learning-winrate" style="font-size: 1.2em; font-weight: bold;" class="positive">--</div>
+                        <div style="font-size: 0.65em; color: var(--text-dim);">Win Rate</div>
                     </div>
-                    <div style="text-align: center; padding: 10px; background: var(--card-bg); border-radius: 8px;">
-                        <div id="learning-patterns" style="font-size: 1.5em; font-weight: bold; color: var(--accent);">--</div>
-                        <div style="font-size: 0.7em; color: var(--text-dim);">Patterns Active</div>
+                    <div style="text-align: center; padding: 8px; background: var(--bg-card); border-radius: 6px;">
+                        <div id="learning-patterns" style="font-size: 1.2em; font-weight: bold; color: var(--accent);">--</div>
+                        <div style="font-size: 0.65em; color: var(--text-dim);">Patterns</div>
                     </div>
-                    <div style="text-align: center; padding: 10px; background: var(--card-bg); border-radius: 8px;">
-                        <div id="learning-pnl" style="font-size: 1.5em; font-weight: bold;">--</div>
-                        <div style="font-size: 0.7em; color: var(--text-dim);">Total P/L</div>
+                    <div style="text-align: center; padding: 8px; background: var(--bg-card); border-radius: 6px;">
+                        <div id="learning-pnl" style="font-size: 1.2em; font-weight: bold;">--</div>
+                        <div style="font-size: 0.65em; color: var(--text-dim);">P/L</div>
                     </div>
                 </div>
                 
                 <!-- Learning Influence Bar -->
-                <div style="margin: 15px 0;">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.75em; margin-bottom: 5px;">
-                        <span style="color: var(--text-dim);">Learning Influence</span>
+                <div style="margin: 10px 0;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7em; margin-bottom: 4px;">
+                        <span style="color: var(--text-dim);">Influence</span>
                         <span id="learning-influence-pct" style="color: var(--accent);">--</span>
                     </div>
-                    <div style="height: 8px; background: var(--card-bg); border-radius: 4px; overflow: hidden;">
+                    <div style="height: 6px; background: var(--bg-card); border-radius: 3px; overflow: hidden;">
                         <div id="learning-influence-bar" style="height: 100%; width: 30%; background: linear-gradient(90deg, var(--accent), #3fb950); transition: width 0.5s;"></div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.65em; margin-top: 3px; color: var(--text-dim);">
-                        <span>Debate Engine</span>
-                        <span>Learning System</span>
-                    </div>
                 </div>
                 
-                <!-- Top/Bottom Strategies -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;">
-                    <div style="padding: 10px; background: rgba(63, 185, 80, 0.1); border-radius: 8px; border-left: 3px solid #3fb950;">
-                        <div style="font-size: 0.75em; color: #3fb950; margin-bottom: 5px;">📈 Top Strategies</div>
-                        <div id="learning-top-strategies" style="font-size: 0.7em; color: var(--text);">
+                <!-- Top/Bottom Strategies - Compact layout -->
+                <div style="display: flex; flex-direction: column; gap: 8px; margin: 10px 0;">
+                    <div style="padding: 8px; background: rgba(63, 185, 80, 0.1); border-radius: 6px; border-left: 2px solid #3fb950;">
+                        <div style="font-size: 0.7em; color: #3fb950; margin-bottom: 4px;">📈 Top</div>
+                        <div id="learning-top-strategies" style="font-size: 0.65em; color: var(--text-primary); word-wrap: break-word; overflow-wrap: break-word; line-height: 1.4;">
                             Loading...
                         </div>
                     </div>
-                    <div style="padding: 10px; background: rgba(248, 81, 73, 0.1); border-radius: 8px; border-left: 3px solid #f85149;">
-                        <div style="font-size: 0.75em; color: #f85149; margin-bottom: 5px;">📉 Needs Improvement</div>
-                        <div id="learning-bottom-strategies" style="font-size: 0.7em; color: var(--text);">
+                    <div style="padding: 8px; background: rgba(248, 81, 73, 0.1); border-radius: 6px; border-left: 2px solid #f85149;">
+                        <div style="font-size: 0.7em; color: #f85149; margin-bottom: 4px;">📉 Low</div>
+                        <div id="learning-bottom-strategies" style="font-size: 0.65em; color: var(--text-primary); word-wrap: break-word; overflow-wrap: break-word; line-height: 1.4;">
                             Loading...
                         </div>
                     </div>
                 </div>
                 
-                <!-- Active Patterns -->
-                <div style="margin: 15px 0; padding: 10px; background: var(--card-bg); border-radius: 8px;">
-                    <div style="font-size: 0.75em; color: var(--accent); margin-bottom: 8px;">🔍 Active Patterns</div>
-                    <div id="learning-active-patterns" style="font-size: 0.7em; color: var(--text-dim);">
+                <!-- Active Patterns - Collapsible -->
+                <details style="margin: 10px 0;">
+                    <summary style="font-size: 0.7em; color: var(--accent); cursor: pointer; padding: 6px; background: var(--bg-card); border-radius: 6px;">🔍 Active Patterns</summary>
+                    <div id="learning-active-patterns" style="font-size: 0.65em; color: var(--text-dim); padding: 8px; max-height: 100px; overflow-y: auto;">
                         No patterns active
                     </div>
+                </details>
+                
+                <!-- Key Insight - Compact -->
+                <div id="learning-key-insight" style="margin: 10px 0; padding: 8px; background: rgba(88, 166, 255, 0.1); border-radius: 6px; border-left: 2px solid var(--accent); font-size: 0.65em; display: none;">
+                    <div id="learning-insight-text" style="color: var(--text-primary);"></div>
+                    <div id="learning-insight-action" style="color: #3fb950; margin-top: 4px; font-style: italic;"></div>
                 </div>
                 
-                <!-- Key Insight -->
-                <div id="learning-key-insight" style="margin: 15px 0; padding: 12px; background: rgba(88, 166, 255, 0.1); border-radius: 8px; border-left: 3px solid var(--accent); font-size: 0.75em; display: none;">
-                    <div style="color: var(--accent); margin-bottom: 5px;">💡 Key Insight</div>
-                    <div id="learning-insight-text" style="color: var(--text);"></div>
-                    <div id="learning-insight-action" style="color: #3fb950; margin-top: 5px; font-style: italic;"></div>
-                </div>
-                
-                <!-- Action Buttons -->
-                <div style="display: flex; gap: 10px; margin-top: 15px;">
-                    <button class="action-btn secondary" onclick="updateLearningOutcomes()" style="flex: 1; padding: 8px; font-size: 0.75em;">
-                        📊 Update Outcomes
-                    </button>
-                    <button class="action-btn" onclick="viewLearningReport()" style="flex: 1; padding: 8px; font-size: 0.75em;">
-                        📋 View Full Report
-                    </button>
-                    <button class="action-btn secondary" onclick="downloadLearningReport()" style="flex: 0.5; padding: 8px; font-size: 0.75em;">
-                        ⬇️
-                    </button>
+                <!-- Action Buttons - Stacked for sidebar -->
+                <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px;">
+                    <div style="display: flex; gap: 6px;">
+                        <button class="action-btn secondary" onclick="updateLearningOutcomes()" style="flex: 1; padding: 6px; font-size: 0.7em;">
+                            📊 Update
+                        </button>
+                        <button class="action-btn secondary" onclick="viewLearningReport()" style="flex: 1; padding: 6px; font-size: 0.7em;">
+                            📋 Report
+                        </button>
+                        <button class="action-btn secondary" onclick="downloadLearningReport()" style="padding: 6px 10px; font-size: 0.7em;">
+                            ⬇️
+                        </button>
+                    </div>
                 </div>
             </div>
             
@@ -1995,6 +2004,7 @@
         let autoEnabled = false;
         let autoInterval = null;
         let pollInterval = null;
+        let allPositions = [];  // For position filtering/sorting
         
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
@@ -2145,23 +2155,11 @@
                 // Last updated
                 document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
                 
-                // Positions table
-                const tbody = document.getElementById('positions-body');
-                if (data.positions && data.positions.length > 0) {
-                    tbody.innerHTML = data.positions.map(p => `
-                        <tr>
-                            <td class="ticker">${p.symbol}</td>
-                            <td>${p.qty}</td>
-                            <td>${formatCurrency(p.avg_entry_price)}</td>
-                            <td>${formatCurrency(p.current_price)}</td>
-                            <td>${formatCurrency(p.market_value)}</td>
-                            <td class="${p.unrealized_pl >= 0 ? 'positive' : 'negative'}">${formatCurrency(p.unrealized_pl)}</td>
-                            <td class="${p.unrealized_plpc >= 0 ? 'positive' : 'negative'}">${(p.unrealized_plpc * 100).toFixed(2)}%</td>
-                        </tr>
-                    `).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-dim); padding: 30px;">No positions</td></tr>';
-                }
+                // Positions table - store for filtering/sorting
+                allPositions = data.positions || [];
+                
+                // Use unified render function
+                updatePositionsTable(allPositions);
             } catch (e) {
                 console.error('Portfolio error:', e);
             }
@@ -2252,7 +2250,7 @@
                 if (data.active_patterns && data.active_patterns.length > 0) {
                     patternsEl.innerHTML = data.active_patterns.map(p => 
                         `<div style="margin-bottom: 5px; padding: 5px; background: rgba(88, 166, 255, 0.1); border-radius: 4px;">
-                            <div style="color: var(--text);">📌 ${p.description}</div>
+                            <div style="color: var(--text-primary);">📌 ${p.description}</div>
                             <div style="display: flex; justify-content: space-between; margin-top: 3px;">
                                 <span style="color: var(--accent);">${p.action.replace(/_/g, ' ')}</span>
                                 <span style="color: ${p.confidence >= 0.6 ? '#3fb950' : 'var(--text-dim)'}">${(p.confidence * 100).toFixed(0)}% conf</span>
@@ -3326,8 +3324,6 @@
         }
         
         // Store all positions for filtering
-        let allPositions = [];
-        
         function filterPositions(query) {
             query = query.toLowerCase().trim();
             const tbody = document.getElementById('positions-body');
@@ -3346,23 +3342,34 @@
         
         function updatePositionsTable(positions) {
             const tbody = document.getElementById('positions-body');
+            if (!tbody) {
+                console.error('positions-body element not found');
+                return;
+            }
+            
             if (positions && positions.length > 0) {
-                tbody.innerHTML = positions.map(p => `
-                    <tr>
-                        <td class="ticker">${p.symbol}</td>
-                        <td style="${parseFloat(p.qty) < 0 ? 'color: var(--warning);' : ''}">${p.qty}</td>
-                        <td>${formatCurrency(p.avg_entry_price)}</td>
-                        <td>${formatCurrency(p.current_price)}</td>
-                        <td>${formatCurrency(p.market_value)}</td>
-                        <td class="${p.unrealized_pl >= 0 ? 'positive' : 'negative'}">
-                            ${formatCurrency(p.unrealized_pl)}
-                            <div class="pnl-bar"><div class="pnl-bar-fill ${p.unrealized_pl >= 0 ? 'positive' : 'negative'}" style="width: ${Math.min(100, Math.abs(p.unrealized_plpc * 100) * 5)}%;"></div></div>
-                        </td>
-                        <td class="${p.unrealized_plpc >= 0 ? 'positive' : 'negative'}">${(p.unrealized_plpc * 100).toFixed(2)}%</td>
-                    </tr>
-                `).join('');
+                tbody.innerHTML = positions.map(p => {
+                    const pl = p.unrealized_pl || 0;
+                    const plpc = p.unrealized_plpc || 0;
+                    const plClass = pl >= 0 ? 'positive' : 'negative';
+                    const qty = p.qty || 0;
+                    const qtyStyle = parseFloat(qty) < 0 ? 'color: var(--warning);' : '';
+                    const barWidth = Math.min(100, Math.abs(plpc * 100) * 5);
+                    
+                    return `
+                        <tr>
+                            <td class="ticker">${p.symbol || '--'}</td>
+                            <td style="${qtyStyle}">${qty}</td>
+                            <td>${formatCurrency(p.avg_entry_price)}</td>
+                            <td>${formatCurrency(p.current_price)}</td>
+                            <td>${formatCurrency(p.market_value)}</td>
+                            <td class="${plClass}">${formatCurrency(pl)}</td>
+                            <td class="${plClass}">${(plpc * 100).toFixed(2)}%</td>
+                        </tr>
+                    `;
+                }).join('');
             } else {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-dim); padding: 30px;">No matching positions</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-dim); padding: 30px;">No positions</td></tr>';
             }
         }
         
@@ -3486,16 +3493,7 @@
         loadPortfolio = async function() {
             await originalLoadPortfolio();
             
-            // Fetch and store positions for filtering
-            try {
-                const res = await fetch('/api/portfolio');
-                const data = await res.json();
-                allPositions = data.positions || [];
-            } catch (e) {
-                console.log('Could not cache positions');
-            }
-            
-            // Update quick stats
+            // Update quick stats after portfolio loads
             loadQuickStats();
         };
         
