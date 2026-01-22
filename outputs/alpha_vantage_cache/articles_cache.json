@@ -1,6 +1,634 @@
 {
   "articles": [
     {
+      "id": "-3045612302044504574",
+      "timestamp": "2026-01-22T09:00:59",
+      "headline": "Jim Cramer on Simon Property's CEO: \"We Think David Simon's the Best Mall Operator There Is\"",
+      "summary": "Jim Cramer praised David Simon, CEO of Simon Property Group (SPG), calling him \"the best mall operator there is\" during a discussion about a club member's diversified portfolio. Cramer expressed concern about one of the REITs, VICI, suggesting it be replaced with a healthcare company like J&J for better diversification. He highlighted SPG's strengths in retail while also recommending consideration of AI stocks for greater upside and less risk.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/283359/jim-cramer-on-simon-propertys-ceo-we-think-david-simons-the-best-mall-operator-there-is",
+      "tickers": [
+        "SPG",
+        "AMZN",
+        "AVGO",
+        "JNJ"
+      ],
+      "topics": [
+        "financial_markets",
+        "real_estate",
+        "retail_wholesale",
+        "technology",
+        "finance"
+      ],
+      "overall_sentiment": 0.427134,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SPG",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.620239,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": 0.723408,
+          "sentiment_score": 0.407664,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AVGO",
+          "relevance_score": 0.710183,
+          "sentiment_score": 0.443514,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "JNJ",
+          "relevance_score": 0.615316,
+          "sentiment_score": 0.225722,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "SPG": 0.620239,
+        "AMZN": 0.407664,
+        "AVGO": 0.443514,
+        "JNJ": 0.225722
+      }
+    },
+    {
+      "id": "6696562810344540086",
+      "timestamp": "2026-01-22T08:58:46",
+      "headline": "Campbell & CO Investment Adviser LLC Sells 118,455 Shares of Manulife Financial Corp $MFC",
+      "summary": "Campbell & CO Investment Adviser LLC significantly reduced its stake in Manulife Financial Corp (MFC) by 87.1% in Q3, selling 118,455 shares and retaining 17,615 shares. Despite this, analyst sentiment remains positive, with an average \"Buy\" rating and a target price of $51.50. Manulife also increased its quarterly dividend to $0.44, offering an annualized yield of 4.8%.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-campbell-co-investment-adviser-llc-sells-118455-shares-of-manulife-financial-corp-mfc-2026-01-22/",
+      "tickers": [
+        "MFC"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.423496,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MFC",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.395844,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MFC": 0.395844
+      }
+    },
+    {
+      "id": "1985889731550070888",
+      "timestamp": "2026-01-22T08:57:41",
+      "headline": "Assessing Procter & Gamble (PG) Valuation After Recent Share Price Weakness",
+      "summary": "Procter & Gamble (PG) has seen recent share price weakness, with a 0.64% decline in one day and a 4.04% decline over 90 days. Despite this, long-term investors have seen gains. The article assesses PG's valuation using its Price-to-Earnings (P/E) ratio and a Discounted Cash Flow (DCF) model, noting that while the P/E ratio suggests it's expensive compared to the industry, the DCF model indicates a significant discount.",
+      "source": "Simply Wall Street",
+      "url": "https://simplywall.st/stocks/us/household/nyse-pg/procter-gamble/news/assessing-procter-gamble-pg-valuation-after-recent-share-pri",
+      "tickers": [
+        "PG",
+        "CL",
+        "CLX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "retail_wholesale",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.020224,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PG",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.001726,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "CL",
+          "relevance_score": 0.64778,
+          "sentiment_score": 0.024032,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "CLX",
+          "relevance_score": 0.645729,
+          "sentiment_score": 0.032593,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "PG": 0.001726,
+        "CL": 0.024032,
+        "CLX": 0.032593
+      }
+    },
+    {
+      "id": "-19153466390467",
+      "timestamp": "2026-01-22T08:56:22",
+      "headline": "Clarity Wealth Advisors LLC Acquires 2,701 Shares of Alphabet Inc. $GOOGL",
+      "summary": "Clarity Wealth Advisors LLC increased its stake in Alphabet Inc. (NASDAQ:GOOGL) by 5.1% in Q3, acquiring an additional 2,701 shares, bringing its total holdings to 55,577 shares valued at approximately $13.51 million. Alphabet now constitutes 3.0% of Clarity Wealth Advisors LLC's portfolio and is its ninth-largest holding. Wall Street analysts maintain a \"Moderate Buy\" consensus rating for Alphabet with an average price target of $330.94, even as insiders have recently been net sellers of the stock.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-clarity-wealth-advisors-llc-acquires-2701-shares-of-alphabet-inc-googl-2026-01-22/",
+      "tickers": [
+        "GOOGL",
+        "META",
+        "AVGO"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology",
+        "finance"
+      ],
+      "overall_sentiment": 0.249229,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GOOGL",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.281039,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "META",
+          "relevance_score": 0.600792,
+          "sentiment_score": 0.202876,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AVGO",
+          "relevance_score": 0.611972,
+          "sentiment_score": 0.207995,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "GOOGL": 0.281039,
+        "META": 0.202876,
+        "AVGO": 0.207995
+      }
+    },
+    {
+      "id": "4014561125019672844",
+      "timestamp": "2026-01-22T08:51:38",
+      "headline": "Progyny, Inc. (PGNY) supported by analysts as earnings visibility improves",
+      "summary": "This article from MSN suggests that analysts are showing support for Progyny, Inc. (PGNY). The improved earnings visibility for the company is cited as a key factor contributing to this positive sentiment.",
+      "source": "MSN",
+      "url": "https://www.msn.com/en-us/money/savingandinvesting/progyny-inc-pgny-supported-by-analysts-as-earnings-visibility-improves/ar-AA1UIqUv?ocid=finance-verthp-feeds",
+      "tickers": [
+        "PGNY"
+      ],
+      "topics": [
+        "earnings",
+        "life_sciences",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.510042,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PGNY",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.515208,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "PGNY": 0.515208
+      }
+    },
+    {
+      "id": "-3283334523720507317",
+      "timestamp": "2026-01-22T08:48:40",
+      "headline": "The Truth About PACCAR Inc.: Is This Quiet Truck Stock Low-Key a Power Move?",
+      "summary": "PACCAR Inc. is presented as a stable and potentially lucrative investment in the industrial sector, contrasting with the hype around AI and meme stocks. The article highlights PACCAR's strong price performance, real-world demand for its trucks and services, and its strategic entry into electric, autonomous, and connected truck technologies. It suggests that PACCAR offers a steady, long-term growth opportunity for investors seeking real assets and dividends, rather than speculative \"get rich quick\" plays.",
+      "source": "AD HOC NEWS",
+      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/the-truth-about-paccar-inc-is-this-quiet-truck-stock-low-key-a-power/68508814",
+      "tickers": [
+        "PCAR"
+      ],
+      "topics": [
+        "financial_markets",
+        "energy_transportation",
+        "manufacturing",
+        "economy_macro",
+        "finance"
+      ],
+      "overall_sentiment": 0.413372,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PCAR",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.41596,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "PCAR": 0.41596
+      }
+    },
+    {
+      "id": "7271035265477956248",
+      "timestamp": "2026-01-22T08:42:21",
+      "headline": "Goldman Sachs is Bullish on General Motors Company (GM)",
+      "summary": "Goldman Sachs has raised its price target for General Motors (GM) to $98 from $93 and maintained a Buy rating, based on recent auto sales data and growth projections. Despite regulatory changes affecting previous EV tax credits and emissions, GM's CEO Mary Barra confirmed the company still views EVs as the \"end game.\" GM plans to reduce EV investments by billions while increasing focus on combustion engines, though it will continue to prioritize EV development due to perceived customer benefits.",
+      "source": "Insider Monkey",
+      "url": "https://www.insidermonkey.com/blog/goldman-sachs-is-bullish-on-general-motors-company-gm-1678992/",
+      "tickers": [
+        "GM",
+        "GS",
+        "F"
+      ],
+      "topics": [
+        "financial_markets",
+        "energy_transportation",
+        "economy_fiscal"
+      ],
+      "overall_sentiment": 0.201661,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GM",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.306412,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GS",
+          "relevance_score": 0.733537,
+          "sentiment_score": 0.325197,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "F",
+          "relevance_score": 0.610245,
+          "sentiment_score": -0.139726,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "GM": 0.306412,
+        "GS": 0.325197,
+        "F": -0.139726
+      }
+    },
+    {
+      "id": "1136540750297130391",
+      "timestamp": "2026-01-22T08:42:16",
+      "headline": "EQT In Focus As Cold Snap Fuels Sharp Gas Price Spike",
+      "summary": "A severe cold snap in the U.S. has caused natural gas futures to surge over 50%, bringing EQT Corporation, the largest independent U.S. natural gas producer, into sharp focus. This event highlights how short-term weather conditions directly impact EQT's exposure to gas price and volume conditions, with key variables including the duration of the cold, supply infrastructure reliability, and price volatility's effect on contracts and hedging. While high spot prices could boost near-term revenue, investors should also consider risks like potential oversupply in 2027 and recent insider selling.",
+      "source": "Simply Wall Street",
+      "url": "https://simplywall.st/stocks/us/energy/nyse-eqt/eqt/news/eqt-in-focus-as-cold-snap-fuels-sharp-gas-price-spike",
+      "tickers": [
+        "EQT"
+      ],
+      "topics": [
+        "energy_transportation",
+        "financial_markets",
+        "earnings",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.320024,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "EQT",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.349461,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "EQT": 0.349461
+      }
+    },
+    {
+      "id": "-4596720190006712597",
+      "timestamp": "2026-01-22T08:41:32",
+      "headline": "Macquarie Keeps an Underperform Rating on Li Auto Inc. (LI)",
+      "summary": "Macquarie has maintained an \"Underperform\" rating on Li Auto Inc. (LI) and reduced its price target from $17 to $15, citing significant cash discounts on long-range EV models, rising input costs, and fierce competition in the BEV SUV market. Separately, Citi reaffirmed its \"Neutral\" rating but lowered its price target from $20.20 to $18.50 due to lower-than-expected January orders, an aging L series lineup, increased competition, and broader price concessions. Both firms express concerns regarding Li Auto's revenue growth and profitability in the highly competitive NEV market.",
+      "source": "Insider Monkey",
+      "url": "https://www.insidermonkey.com/blog/macquarie-keeps-an-underperform-rating-on-li-auto-inc-li-1678982/",
+      "tickers": [
+        "LI"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology",
+        "energy_transportation"
+      ],
+      "overall_sentiment": -0.417929,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "LI",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.420352,
+          "sentiment_label": "Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "LI": -0.420352
+      }
+    },
+    {
+      "id": "8403454424841091808",
+      "timestamp": "2026-01-22T08:41:21",
+      "headline": "Jim Cramer on GE HealthCare: \"I Just Don't Think It's What You Want to Own\"",
+      "summary": "Jim Cramer advised against owning GE HealthCare (GEHC) stock, suggesting investors consider medical device companies like Medtronic or Abbott instead. He noted that GE HealthCare's products, being discretionary capital expenditures, face challenges in external operating environments, particularly in China. Cooper Investors Global Equities Fund also exited their GEHC investment due to uncertainties and found better opportunities elsewhere.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/283361/jim-cramer-on-ge-healthcare-i-just-dont-think-its-what-you-want-to-own",
+      "tickers": [
+        "GEHC",
+        "MDT",
+        "ABT"
+      ],
+      "topics": [
+        "financial_markets",
+        "life_sciences",
+        "earnings"
+      ],
+      "overall_sentiment": 0.329714,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GEHC",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.261783,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MDT",
+          "relevance_score": 0.622665,
+          "sentiment_score": 0.326269,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ABT",
+          "relevance_score": 0.623167,
+          "sentiment_score": 0.332924,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "GEHC": 0.261783,
+        "MDT": 0.326269,
+        "ABT": 0.332924
+      }
+    },
+    {
+      "id": "-3999905538684592605",
+      "timestamp": "2026-01-22T08:38:35",
+      "headline": "Morgan Stanley pushes BoE rate cut call to March from February after inflation data By Reuters",
+      "summary": "Morgan Stanley has revised its forecast for the Bank of England's next interest rate cut, pushing it from February to March. This change follows data indicating that British inflation rose more than expected in December. UBS Global Research has made a similar adjustment to its own forecast.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/economy-news/morgan-stanley-pushes-boe-rate-cut-call-to-march-from-february-after-inflation-data-4459440",
+      "tickers": [
+        "MS"
+      ],
+      "topics": [
+        "economy_monetary",
+        "financial_markets",
+        "economy_macro",
+        "finance"
+      ],
+      "overall_sentiment": 0.038519,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MS",
+          "relevance_score": 0.329599,
+          "sentiment_score": 0.001572,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "MS": 0.001572
+      }
+    },
+    {
+      "id": "-8784087951004887353",
+      "timestamp": "2026-01-22T08:38:32",
+      "headline": "Bailard Inc. Acquires 19,714 Shares of Microchip Technology Incorporated $MCHP",
+      "summary": "Bailard Inc. significantly increased its stake in Microchip Technology by 55.9% in Q3, purchasing 19,714 shares to now hold 54,996 shares worth approximately $3.53 million. This comes as Microchip's CFO sold a portion of his shares, while institutional investors collectively own 91.51% of the semiconductor company. Microchip Technology recently beat Q3 EPS estimates despite a slight revenue decline, issued a quarterly dividend, and holds a consensus \"Moderate Buy\" analyst rating with a target price of $79.67.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-bailard-inc-acquires-19714-shares-of-microchip-technology-incorporated-mchp-2026-01-22/",
+      "tickers": [
+        "MCHP"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.418246,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MCHP",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.428511,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MCHP": 0.428511
+      }
+    },
+    {
+      "id": "9171731700128524788",
+      "timestamp": "2026-01-22T08:38:22",
+      "headline": "4,233 Shares in Alphabet Inc. $GOOG Bought by Avantra Family Wealth Inc.",
+      "summary": "Avantra Family Wealth Inc. recently acquired 4,233 shares of Alphabet Inc. (GOOG), valued at approximately $1.03 million, as per its latest 13F filing. This investment comes amidst positive AI momentum for Alphabet, including Apple's plan to integrate Google's Gemini into Siri and surging Gemini model sales, which have contributed to a consensus \"Buy\" rating and an average price target near $321.97. Despite significant insider selling activities, institutional investors now own 27.26% of the company's stock, underscoring continued confidence in its growth prospects.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-4233-shares-in-alphabet-inc-goog-bought-by-avantra-family-wealth-inc-2026-01-22/",
+      "tickers": [
+        "GOOGL",
+        "GOOG",
+        "AAPL",
+        "MSFT"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.224874,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GOOGL",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.288546,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GOOG",
+          "relevance_score": 0.989035,
+          "sentiment_score": 0.257336,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": 0.715309,
+          "sentiment_score": 0.325104,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": 0.569532,
+          "sentiment_score": 0.136619,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "GOOGL": 0.288546,
+        "GOOG": 0.257336,
+        "AAPL": 0.325104,
+        "MSFT": 0.136619
+      }
+    },
+    {
+      "id": "-36775428942904906",
+      "timestamp": "2026-01-22T08:37:52",
+      "headline": "Bailard Inc. Purchases Shares of 11,448 Take-Two Interactive Software, Inc. $TTWO",
+      "summary": "Bailard Inc. recently acquired 11,448 shares of Take-Two Interactive Software, Inc. (NASDAQ:TTWO) valued at approximately $2.96 million. Institutional investors now hold about 95.46% of the company's stock, while insiders have reduced their holdings with recent sales. Take-Two Interactive exceeded quarterly earnings and revenue estimates, and analysts maintain a positive outlook with a consensus price target of $272.68.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-bailard-inc-purchases-shares-of-11448-take-two-interactive-software-inc-ttwo-2026-01-22/",
+      "tickers": [
+        "TTWO",
+        "EA"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.254545,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TTWO",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.425764,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "EA",
+          "relevance_score": 0.603388,
+          "sentiment_score": 0.123106,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "TTWO": 0.425764,
+        "EA": 0.123106
+      }
+    },
+    {
+      "id": "-1133084099131515164",
+      "timestamp": "2026-01-22T08:35:24",
+      "headline": "Jim Cramer on Honeywell: \"It's Finally Getting Credit for All the Things It's Doing\"",
+      "summary": "Jim Cramer praised Honeywell International Inc. (NASDAQ: HON), noting it's finally receiving recognition for its diverse operations. He highlighted a caller's well-diversified portfolio including Honeywell, affirming his positive view on the stock. While acknowledging Honeywell's potential, the article suggests that certain AI stocks might offer greater upside and less risk, prompting a recommendation for a free report on undervalued AI stocks.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/283356/jim-cramer-on-honeywell-its-finally-getting-credit-for-all-the-things-its-doing",
+      "tickers": [
+        "HON",
+        "ABBV",
+        "MDT"
+      ],
+      "topics": [
+        "financial_markets",
+        "manufacturing",
+        "life_sciences",
+        "technology"
+      ],
+      "overall_sentiment": 0.341906,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "HON",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.400527,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "ABBV",
+          "relevance_score": 0.736574,
+          "sentiment_score": 0.327624,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MDT",
+          "relevance_score": 0.606696,
+          "sentiment_score": 0.345558,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "HON": 0.400527,
+        "ABBV": 0.327624,
+        "MDT": 0.345558
+      }
+    },
+    {
+      "id": "9129723701150245776",
+      "timestamp": "2026-01-22T08:35:19",
+      "headline": "Jim Cramer on FedEx Freight Spin-Off Plans: \"This Deserves a Lot of Attention\"",
+      "summary": "Jim Cramer highlighted FedEx's planned spin-off of FedEx Freight, stating it \"deserves a lot of attention\" and could be a compelling investment if priced reasonably. He praised FedEx CEO Raj Subramaniam for orchestrating a significant turnaround, pivoting the company towards the \"sticky\" business-to-business sector, particularly in pharma delivery and data centers, despite economic headwinds. Cramer maintained his bullish stance on FDX stock, recommending investors stay long and buy more on dips.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/283344/jim-cramer-on-fedex-freight-spin-off-plans-this-deserves-a-lot-of-attention",
+      "tickers": [
+        "FDX",
+        "NKE",
+        "UPS"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_macro",
+        "energy_transportation",
+        "retail_wholesale"
+      ],
+      "overall_sentiment": 0.308393,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "FDX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.506731,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "NKE",
+          "relevance_score": 0.619425,
+          "sentiment_score": 0.536596,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "UPS",
+          "relevance_score": 0.648555,
+          "sentiment_score": -0.119031,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "FDX": 0.506731,
+        "NKE": 0.536596,
+        "UPS": -0.119031
+      }
+    },
+    {
       "id": "2059252958009732788",
       "timestamp": "2026-01-22T08:28:16",
       "headline": "Assessing McGrath RentCorp (MGRC) Valuation After Recent Share Price Weakness",
@@ -90,6 +718,36 @@
       }
     },
     {
+      "id": "-4009930525904119087",
+      "timestamp": "2026-01-22T08:26:02",
+      "headline": "Anchor Capital Advisors LLC Makes New $2.30 Million Investment in Progress Software Corporation $PRGS",
+      "summary": "Anchor Capital Advisors LLC has made a new $2.30 million investment in Progress Software Corporation (NASDAQ:PRGS), acquiring 52,340 shares. This comes as Progress Software exceeded Q4 earnings and revenue expectations, with management raising FY-2026 targets, largely due to AI-driven demand. While the stock saw a significant gain post-earnings, concerns remain regarding the company's leverage, liquidity ratios, and elevated valuation.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-anchor-capital-advisors-llc-makes-new-230-million-investment-in-progress-software-corporation-prgs-2026-01-22/",
+      "tickers": [
+        "PRGS"
+      ],
+      "topics": [
+        "earnings",
+        "technology",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.310187,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PRGS",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.325991,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "PRGS": 0.325991
+      }
+    },
+    {
       "id": "-69566501131895381",
       "timestamp": "2026-01-22T08:23:20",
       "headline": "The Truth About EPAM Systems Inc: Why Wall Street Is Quietly Obsessed",
@@ -152,6 +810,196 @@
       ],
       "ticker_sentiments": {
         "CEG": -0.211044
+      }
+    },
+    {
+      "id": "-8523561620138300273",
+      "timestamp": "2026-01-22T08:21:18",
+      "headline": "Allstate Corp Purchases Shares of 6,969 Diamondback Energy, Inc. $FANG",
+      "summary": "Allstate Corp initiated a new stake in Diamondback Energy by purchasing 6,969 shares valued at approximately $997,000 during Q3. Meanwhile, Director Charles Alvin Meloy significantly reduced his holdings by selling over 377,000 shares for $52.38 million. Diamondback Energy surpassed Q3 earnings expectations, reporting $$3.08 EPS on $3.92 billion in revenue, leading analysts to maintain a \"Moderate Buy\" rating with an average target price of $186.24.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-allstate-corp-purchases-shares-of-6969-diamondback-energy-inc-fang-2026-01-22/",
+      "tickers": [
+        "FANG",
+        "ALL"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.30182,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "FANG",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.409696,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "ALL",
+          "relevance_score": 0.703587,
+          "sentiment_score": 0.188687,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "FANG": 0.409696,
+        "ALL": 0.188687
+      }
+    },
+    {
+      "id": "8333816671127234956",
+      "timestamp": "2026-01-22T08:20:39",
+      "headline": "Allstate Corp Buys Shares of 6,757 Old Dominion Freight Line, Inc. $ODFL",
+      "summary": "Allstate Corp initiated a new position in Old Dominion Freight Line (ODFL) during Q3, purchasing 6,757 shares valued at approximately $951,000. Institutional ownership of ODFL is high at 77.82%, with several major investors like Norges Bank, JPMorgan Chase & Co., and Bank of America Corp DE significantly increasing their stakes. Despite a consensus \"Hold\" rating from Wall Street analysts and an average price target of $163.33, the stock is currently trading around $178.40 with a relatively high P/E ratio of 35.90.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-allstate-corp-buys-shares-of-6757-old-dominion-freight-line-inc-odfl-2026-01-22/",
+      "tickers": [
+        "ODFL",
+        "ALL",
+        "BAC",
+        "JPM",
+        "C"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.17932,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ODFL",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.05756,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "ALL",
+          "relevance_score": 0.608456,
+          "sentiment_score": 0.130051,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "BAC",
+          "relevance_score": 0.570528,
+          "sentiment_score": 0.247711,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.560981,
+          "sentiment_score": 0.235668,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "C",
+          "relevance_score": 0.55588,
+          "sentiment_score": 0.244802,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ODFL": -0.05756,
+        "ALL": 0.130051,
+        "BAC": 0.247711,
+        "JPM": 0.235668,
+        "C": 0.244802
+      }
+    },
+    {
+      "id": "8803565459054702601",
+      "timestamp": "2026-01-22T08:19:53",
+      "headline": "Allstate Corp Invests $863,000 in Ulta Beauty Inc. $ULTA",
+      "summary": "Allstate Corp has acquired a new stake of 1,579 shares in Ulta Beauty Inc., valued at approximately $863,000, during the third quarter. This investment follows Ulta Beauty's strong Q3 results, which exceeded analyst expectations for both EPS and revenue, and positive FY2025 guidance. Several analysts have increased their target prices for Ulta Beauty, contributing to a \"Moderate Buy\" consensus rating for the stock.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-allstate-corp-invests-863000-in-ulta-beauty-inc-ulta-2026-01-22/",
+      "tickers": [
+        "ULTA",
+        "ALL"
+      ],
+      "topics": [
+        "earnings",
+        "retail_wholesale",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.336977,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ULTA",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.493762,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "ALL",
+          "relevance_score": 0.61535,
+          "sentiment_score": 0.107572,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ULTA": 0.493762,
+        "ALL": 0.107572
+      }
+    },
+    {
+      "id": "-4683646825142430360",
+      "timestamp": "2026-01-22T08:19:49",
+      "headline": "Allstate Corp Makes New $800,000 Investment in Teradyne, Inc. $TER",
+      "summary": "Allstate Corp has made a new investment of approximately $800,000 in Teradyne, Inc. (NASDAQ:TER) by acquiring 5,812 shares in the third quarter. Teradyne demonstrated a strong Q3 performance, beating EPS and revenue expectations. Analysts maintain a \"Moderate Buy\" rating for Teradyne, with a consensus target price of $200.44, amidst significant institutional ownership and recent insider trading activity.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-allstate-corp-makes-new-800000-investment-in-teradyne-inc-ter-2026-01-22/",
+      "tickers": [
+        "TER",
+        "ALL",
+        "MS",
+        "GS"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "technology"
+      ],
+      "overall_sentiment": 0.245208,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TER",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.30565,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ALL",
+          "relevance_score": 0.811059,
+          "sentiment_score": 0.26773,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MS",
+          "relevance_score": 0.566674,
+          "sentiment_score": 0.210746,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "GS",
+          "relevance_score": 0.581166,
+          "sentiment_score": 0.201006,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "TER": 0.30565,
+        "ALL": 0.26773,
+        "MS": 0.210746,
+        "GS": 0.201006
       }
     },
     {
@@ -534,6 +1382,51 @@
       "ticker_sentiments": {
         "SYF": 0.495435,
         "ALL": 0.297887
+      }
+    },
+    {
+      "id": "4701015860108540692",
+      "timestamp": "2026-01-22T08:18:39",
+      "headline": "Accredited Investors Inc. Has $9.88 Million Stock Holdings in Old National Bancorp $ONB",
+      "summary": "Accredited Investors Inc. significantly increased its stake in Old National Bancorp (ONB) by 20.7% in Q3, now holding 450,040 shares valued at $9.88 million. This comes as ONB reported better-than-expected Q4 results with adjusted EPS of $0.62 and revenue of $714.4 million, driven by strong loan growth and improved efficiency. Despite positive earnings and institutional investor interest, the company faces challenges such as core deposit declines and one-time charges, with analysts maintaining a \"Moderate Buy\" rating.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-accredited-investors-inc-has-988-million-stock-holdings-in-old-national-bancorp-onb-2026-01-22/",
+      "tickers": [
+        "ONB",
+        "AES",
+        "IBM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.133029,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ONB",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.300698,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AES",
+          "relevance_score": 0.639649,
+          "sentiment_score": -0.178395,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "IBM",
+          "relevance_score": 0.64636,
+          "sentiment_score": 0.131393,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ONB": 0.300698,
+        "AES": -0.178395,
+        "IBM": 0.131393
       }
     },
     {
@@ -1003,6 +1896,35 @@
       }
     },
     {
+      "id": "-8194630954714147256",
+      "timestamp": "2026-01-22T08:02:32",
+      "headline": "Minerals Technologies (MTX) Expected to Announce Earnings on Thursday",
+      "summary": "Minerals Technologies (MTX) is expected to report its Q4 2025 earnings after market close on Thursday, January 29th, with anticipated EPS of $1.28 and revenue of $517.8 million. The company previously exceeded estimates in Q3 2025 and has declared a quarterly dividend of $0.12, although recent insider selling has also been noted. Analysts project $7 EPS for the current fiscal year and $8 for the next.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/minerals-technologies-mtx-expected-to-announce-earnings-on-thursday-2026-01-22/",
+      "tickers": [
+        "MTX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing"
+      ],
+      "overall_sentiment": 0.239727,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MTX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.25842,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MTX": 0.25842
+      }
+    },
+    {
       "id": "4730715711951875900",
       "timestamp": "2026-01-22T08:02:30",
       "headline": "MP Materials Corp. (NYSE:MP) Given Consensus Rating of \"Moderate Buy\" by Analysts",
@@ -1106,6 +2028,58 @@
       ],
       "ticker_sentiments": {
         "PLD": 0.138116
+      }
+    },
+    {
+      "id": "834790159260929351",
+      "timestamp": "2026-01-22T07:41:48",
+      "headline": "Valero and Phillips 66 Secure First Venezuelan Crude Cargoes",
+      "summary": "US Gulf Coast refiners Valero Energy and Phillips 66 have purchased Venezuelan crude oil cargoes, marking the first such transactions since the US authorized the sale of up to 50 million barrels. These deals were facilitated by independent trading houses like Vitol, which secured special US licenses to market Venezuelan crude. The transactions indicate a strategic shift towards independent traders and the gradual re-entry of Venezuelan crude into global markets at discounted prices.",
+      "source": "Egypt Oil & Gas",
+      "url": "https://egyptoil-gas.com/news/valero-and-phillips-66-secure-first-venezuelan-crude-cargoes/",
+      "tickers": [
+        "PSX",
+        "VLO",
+        "CVX",
+        "APA"
+      ],
+      "topics": [
+        "energy_transportation",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.343352,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PSX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.408029,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "VLO",
+          "relevance_score": 0.912177,
+          "sentiment_score": 0.40148,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "CVX",
+          "relevance_score": 0.72998,
+          "sentiment_score": 0.209132,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "APA",
+          "relevance_score": 0.62169,
+          "sentiment_score": 0.319979,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "PSX": 0.408029,
+        "VLO": 0.40148,
+        "CVX": 0.209132,
+        "APA": 0.319979
       }
     },
     {
@@ -2232,6 +3206,35 @@
       }
     },
     {
+      "id": "3516233023476544201",
+      "timestamp": "2026-01-22T06:28:30",
+      "headline": "U.S. Backing Recasts MP Materials As Rare Earth Magnet Powerhouse",
+      "summary": "MP Materials has secured a landmark agreement with the U.S. government, positioning itself as a vital domestic rare earth infrastructure asset to ensure a reliable supply of rare earth magnets. This backing, which includes the U.S. Department of Defense becoming the largest shareholder, aims to reduce reliance on foreign imports. The market has responded positively, with NYSE:MP experiencing significant gains over the past year, reflecting its transition into a key player in U.S. industrial priorities.",
+      "source": "Simply Wall Street",
+      "url": "https://simplywall.st/stocks/us/materials/nyse-mp/mp-materials/news/us-backing-recasts-mp-materials-as-rare-earth-magnet-powerho",
+      "tickers": [
+        "MP"
+      ],
+      "topics": [
+        "economy_fiscal",
+        "financial_markets",
+        "manufacturing"
+      ],
+      "overall_sentiment": 0.584901,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MP",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.558857,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MP": 0.558857
+      }
+    },
+    {
       "id": "6858419664487119238",
       "timestamp": "2026-01-22T06:28:10",
       "headline": "Mesoblast (ASX:MSB) Is Down 6.4% After Encouraging FDA Feedback On Back Pain Cell Therapy Data \u2013 Has The Bull Case Changed?",
@@ -3084,6 +4087,171 @@
       }
     },
     {
+      "id": "145846839085298086",
+      "timestamp": "2026-01-22T05:28:39",
+      "headline": "A Look At PennyMac Mortgage Investment Trust (PMT) Valuation As Breakout Hopes And Dividend Appeal Draw Interest",
+      "summary": "PennyMac Mortgage Investment Trust (PMT) is attracting attention due to potential breakout hopes and its dividend appeal, despite trading near 52-week lows. The stock's P/E ratio of 14.5x suggests a premium over the typical mortgage REIT but a discount compared to broader markets. However, a discounted cash flow model indicates the stock might be overvalued, trading above an estimated future cash flow value of US$8.11, while its P/E is considered \"about right\" in comparison to peers.",
+      "source": "Simply Wall Street",
+      "url": "https://simplywall.st/stocks/us/diversified-financials/nyse-pmt/pennymac-mortgage-investment-trust/news/a-look-at-pennymac-mortgage-investment-trust-pmt-valuation-a",
+      "tickers": [
+        "PMTW"
+      ],
+      "topics": [
+        "financial_markets",
+        "finance",
+        "real_estate",
+        "earnings",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.027826,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PMTW",
+          "relevance_score": 0.325674,
+          "sentiment_score": 0.003411,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "PMTW": 0.003411
+      }
+    },
+    {
+      "id": "-195909300498374727",
+      "timestamp": "2026-01-22T05:28:39",
+      "headline": "Trump Is Doing 'An Excellent Job' On Housing Affordability, Says Opendoor CEO: Calls America's Housing Market 'Deeply Unfair'",
+      "summary": "Opendoor Technologies CEO Kaz Nejatian praised former President Donald Trump's efforts on housing affordability, particularly Trump's policies to block institutional investors from buying single-family homes and a proposed $200 billion plan to buy mortgage-backed securities to reduce interest rates. Nejatian believes these actions are \"one by one attacking\" the systemic issues making homeownership inaccessible for middle-class families, describing the current housing market as \"deeply unfair.\" However, economist Peter Schiff criticized Trump's $200 billion plan, arguing it would worsen affordability by encouraging buyers to \"overpay\" and that lower home prices are the only real solution.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/real-estate/26/01/50058733/trump-is-doing-an-excellent-job-on-housing-affordability-says-opendoor-ceo-calls-americas-housing-market-deeply-unfair",
+      "tickers": [
+        "OPEN"
+      ],
+      "topics": [
+        "real_estate",
+        "economy_fiscal"
+      ],
+      "overall_sentiment": 0.283411,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "OPEN",
+          "relevance_score": 0.901371,
+          "sentiment_score": 0.257346,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "OPEN": 0.257346
+      }
+    },
+    {
+      "id": "-8258758430997125899",
+      "timestamp": "2026-01-22T05:28:32",
+      "headline": "Pike County nuclear site experiences cleanup, new development",
+      "summary": "Oklo Inc. and Meta Platforms, Inc. are partnering to develop a 1.2 GW nuclear power campus on the former Portsmouth Gaseous Diffusion Plant site in Pike County, Ohio, to support Meta's data centers. The project aims to bring new energy infrastructure and thousands of jobs to the community, with the first phase expected by 2030 and full capacity by 2034. Community safety concerns regarding nuclear production and waste management are being addressed by Oklo, Meta, and the Southern Ohio Diversification Initiative, ensuring compliance with regulatory bodies.",
+      "source": "www.thepostathens.com",
+      "url": "https://www.thepostathens.com/article/2026/01/news-ports-nuclear-power-oklo-meta-data-center-pike-county",
+      "tickers": [
+        "OKLO",
+        "META"
+      ],
+      "topics": [
+        "energy_transportation",
+        "technology",
+        "manufacturing",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.248196,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "OKLO",
+          "relevance_score": 0.305827,
+          "sentiment_score": 0.036293,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "META",
+          "relevance_score": 0.808698,
+          "sentiment_score": 0.416918,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "OKLO": 0.036293,
+        "META": 0.416918
+      }
+    },
+    {
+      "id": "-35973347662404031",
+      "timestamp": "2026-01-22T05:28:15",
+      "headline": "MillerKnoll, Super Micro, Cogent, Avnet, and Cognex Stocks Trade Up, What You Need To Know",
+      "summary": "Several stocks, including MillerKnoll, Super Micro, Cogent, Avnet, and Cognex, saw significant jumps after President Trump called off scheduled tariffs on European allies following a productive meeting in Davos. This news provided a \"sigh of relief\" to the market, reversing the prior session's \"Sell America\" trade and leading to a recovery spearheaded by technology and semiconductor leaders. The rebound was also supported by a stabilization in the bond market as tariff-related inflation fears subsided.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/283044/millerknoll-super-micro-cogent-avnet-and-cognex-stocks-trade-up-what-you-need-to-know",
+      "tickers": [
+        "MLKN",
+        "SMCI"
+      ],
+      "topics": [
+        "financial_markets",
+        "economy_macro",
+        "technology",
+        "earnings",
+        "manufacturing"
+      ],
+      "overall_sentiment": 0.39713,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MLKN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.442388,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "SMCI",
+          "relevance_score": 0.700439,
+          "sentiment_score": 0.323166,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MLKN": 0.442388,
+        "SMCI": 0.323166
+      }
+    },
+    {
+      "id": "5991580432425476051",
+      "timestamp": "2026-01-22T05:27:59",
+      "headline": "Klarna\u2019s AI replaced 700 workers \u2014 Now the fintech CEO wants humans back after $40B fall",
+      "summary": "Klarna's CEO has expressed a desire to bring human interaction back into the company's customer service, despite previously replacing 700 customer service agents with AI. This shift comes after a significant drop in the fintech company's valuation from $45.6 billion to $6.7 billion. The move suggests a re-evaluation of the balance between AI efficiency and human customer experience in the wake of financial setbacks.",
+      "source": "MSN",
+      "url": "https://www.msn.com/en-in/money/topstories/klarna-s-ai-replaced-700-workers-now-the-fintech-ceo-wants-humans-back-after-40b-fall/ar-AA1F08eX?apiversion=v2&domshim=1&noservercache=1&noservertelemetry=1&batchservertelemetry=1&renderwebcomponents=1&wcseo=1",
+      "tickers": [
+        "KLAR"
+      ],
+      "topics": [
+        "technology",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.021193,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "KLAR",
+          "relevance_score": 0.342566,
+          "sentiment_score": 0.004248,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "KLAR": 0.004248
+      }
+    },
+    {
       "id": "1644669979038420176",
       "timestamp": "2026-01-22T05:27:58",
       "headline": "Kratos Facility Links Hypersonic Production To Key U.S. Defense Programs",
@@ -3784,6 +4952,83 @@
         "HON": 0.301684,
         "MMM": 0.117736,
         "NVDA": 0.12659
+      }
+    },
+    {
+      "id": "5584103865278331525",
+      "timestamp": "2026-01-22T04:07:00",
+      "headline": "Worrisome retail trends flagged at Dollar Tree",
+      "summary": "BNP Paribas has downgraded Dollar Tree's stock to \"underperform\" due to several headwinds. These include increased competition from larger rivals like Walmart, a decline in consumable sales and purchase volume, and external factors such as changes to SNAP benefits, the rise of GLP-1 weight-loss drugs, and agentic commerce. Additionally, the company faces business challenges like higher-cost inventory, rising freight costs, and potentially underestimated labor and remodeling expenses, leading to a lowered price target.",
+      "source": "Yahoo Finance Singapore",
+      "url": "https://sg.finance.yahoo.com/news/worrisome-retail-trends-flagged-dollar-040700566.html",
+      "tickers": [
+        "DLTR",
+        "WMT"
+      ],
+      "topics": [
+        "retail_wholesale",
+        "economy_macro",
+        "financial_markets",
+        "earnings",
+        "economy_monetary"
+      ],
+      "overall_sentiment": -0.146082,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "DLTR",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.413614,
+          "sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "WMT",
+          "relevance_score": 0.62447,
+          "sentiment_score": 0.211525,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "DLTR": -0.413614,
+        "WMT": 0.211525
+      }
+    },
+    {
+      "id": "-4250262334760683590",
+      "timestamp": "2026-01-22T03:28:33",
+      "headline": "Southern Copper (SCCO) Q1 2025 Earnings Transcript",
+      "summary": "Southern Copper (SCCO) reported robust Q1 2025 financial results, with net sales increasing by 20% to $3 billion and net income rising by 29% to $946 million, driven by higher copper, molybdenum, zinc, and silver prices and volumes. The company outlined an ambitious capital expenditure program exceeding $15 billion for the decade, focusing on growth projects in Mexico and Peru, including the Tia Maria project, which is progressing with strong local community support despite minor opposition. Management also discussed operational efficiency, maintaining a low cash cost of $0.77 per pound of copper after by-product credits, and projected future production growth with copper output expected to exceed 1 million tons by 2028.",
+      "source": "The Globe and Mail",
+      "url": "https://www.theglobeandmail.com/investing/markets/stocks/SCCO/pressreleases/37162479/southern-copper-scco-q1-2025-earnings-transcript/",
+      "tickers": [
+        "SCCO",
+        "NEM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_macro",
+        "manufacturing"
+      ],
+      "overall_sentiment": 0.278133,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SCCO",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.416933,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "NEM",
+          "relevance_score": 0.63393,
+          "sentiment_score": 0.114864,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "SCCO": 0.416933,
+        "NEM": 0.114864
       }
     },
     {
@@ -4824,6 +6069,36 @@
       ],
       "ticker_sentiments": {
         "LYV": -0.201544
+      }
+    },
+    {
+      "id": "341727893776636624",
+      "timestamp": "2026-01-22T00:27:33",
+      "headline": "Weyerhaeuser Announces Tax Treatment of 2025 Dividend Distributions",
+      "summary": "Weyerhaeuser Company has announced the tax treatment for its 2025 dividend distributions to shareholders, totaling $0.84 per share. All 2025 dividends are designated as capital gain distributions, which means they are not eligible for the 20 percent qualified business income deduction under section 199A of the Internal Revenue Code. Shareholders are advised to consult their tax advisors for personalized guidance.",
+      "source": "Lompoc Record",
+      "url": "https://lompocrecord.com/online_features/press_releases/weyerhaeuser-announces-tax-treatment-of-2025-dividend-distributions/article_5e3a1ed0-60fb-576d-bbc4-f6898601d0c0.amp.html",
+      "tickers": [
+        "WY"
+      ],
+      "topics": [
+        "earnings",
+        "economy_fiscal",
+        "finance",
+        "real_estate"
+      ],
+      "overall_sentiment": 0.018761,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "WY",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.003159,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "WY": 0.003159
       }
     },
     {
@@ -7350,6 +8625,52 @@
       "ticker_sentiments": {
         "IT": 0.224939,
         "NTAP": 0.322173
+      }
+    },
+    {
+      "id": "-2471281722568814814",
+      "timestamp": "2026-01-21T16:05:00",
+      "headline": "ScanSource, Robert Half, ManpowerGroup, Fair Isaac Corporation, and Driven Brands Shares Skyrocket, What You Need To Know",
+      "summary": "Shares of ScanSource, Robert Half, ManpowerGroup, Fair Isaac Corporation, and Driven Brands surged after President Trump canceled scheduled tariffs on European allies, easing fears of a transatlantic trade war. This news, following a productive meeting in Davos, caused a significant market rebound, particularly benefiting technology and semiconductor stocks like Nvidia and AMD. The market's reaction reversed the previous \"Sell America\" trend, with the Nasdaq Composite jumping and the S&P 500 erasing its 2026 losses.",
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/news/scansource-robert-half-manpowergroup-fair-210541799.html",
+      "tickers": [
+        "MAN",
+        "FICO",
+        "NVDA"
+      ],
+      "topics": [
+        "financial_markets",
+        "economy_monetary",
+        "economy_macro",
+        "technology"
+      ],
+      "overall_sentiment": 0.330344,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MAN",
+          "relevance_score": 0.956948,
+          "sentiment_score": 0.330323,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "FICO",
+          "relevance_score": 0.902806,
+          "sentiment_score": 0.320879,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": 0.648891,
+          "sentiment_score": 0.333928,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MAN": 0.330323,
+        "FICO": 0.320879,
+        "NVDA": 0.333928
       }
     },
     {
@@ -16088,1122 +17409,7 @@
         "RTX": 0.118344,
         "BA": 0.148113
       }
-    },
-    {
-      "id": "1624068676541380008",
-      "timestamp": "2026-01-21T06:33:13",
-      "headline": "Galaxy Digital secures $100m for new crypto fund - report",
-      "summary": "Galaxy Digital, a cryptocurrency group owned by Mike Novogratz, has secured $100 million for a new crypto fund from various investors including family offices, high net-worth individuals, and institutions. This fund, set to launch in Q1 2026, will be capable of betting on both rising and falling prices in the market. Its investment strategy will allocate up to 30% of assets to cryptocurrency tokens, with the remainder invested in financial services stocks.",
-      "source": "Investing.com",
-      "url": "https://www.investing.com/news/stock-market-news/galaxy-digital-secures-100m-for-new-crypto-fund--report-93CH-4456777",
-      "tickers": [
-        "GLXY"
-      ],
-      "topics": [
-        "blockchain",
-        "finance",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.498499,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "GLXY",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.466396,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "GLXY": 0.466396
-      }
-    },
-    {
-      "id": "6863171341008270459",
-      "timestamp": "2026-01-21T06:28:19",
-      "headline": "SLV Stock Price: In-Depth Analysis of iShares Silver Trust and Market Trends",
-      "summary": "This article provides an in-depth analysis of the SLV stock price, which tracks the performance of the iShares Silver Trust. It highlights how SLV offers a liquid way for investors to gain exposure to silver without physical ownership, driven by macroeconomic factors like inflation, interest rates, and industrial demand. The article also discusses SLV's historical volatility, its role in diversification, and future outlook based on economic conditions and monetary policy.",
-      "source": "vocal.media",
-      "url": "https://vocal.media/trader/slv-stock-price-in-depth-analysis-of-i-shares-silver-trust-and-market-trends",
-      "tickers": [
-        "SLV"
-      ],
-      "topics": [
-        "financial_markets",
-        "economy_monetary",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.329406,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "SLV",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.328982,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "SLV": 0.328982
-      }
-    },
-    {
-      "id": "9000219471019047577",
-      "timestamp": "2026-01-21T06:28:13",
-      "headline": "Hot Stocks: Everest Metals, Nova Minerals, WIN Metals",
-      "summary": "This article provides an update on three hot stocks: Everest Metals, Nova Minerals, and WIN Metals, amidst a backdrop of global market volatility caused by escalating trade and geopolitical tensions related to Greenland. The US share market experienced a sharp decline, impacting global markets including Australia. Each company has released positive news regarding grants, gold system potential, and project advancements respectively.",
-      "source": "Sharecafe",
-      "url": "https://www.sharecafe.com.au/2026/01/21/hot-stocks-everest-metals-nova-minerals-win-metals/",
-      "tickers": [
-        "NVA"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.305009,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "NVA",
-          "relevance_score": 0.936128,
-          "sentiment_score": 0.315097,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "NVA": 0.315097
-      }
-    },
-    {
-      "id": "9102163278653868342",
-      "timestamp": "2026-01-21T06:28:03",
-      "headline": "Community Health to Sell Crestwood Medical Center Assets",
-      "summary": "Community Health Systems (CYH) announced it will sell Crestwood Medical Center and related assets to Huntsville Hospital Health System for $450 million. This divestiture is part of Community Health Systems' broader portfolio-optimization strategy and is expected to close in Q2 2026. Despite a \"Sell\" rating from analysts with a $2.00 price target, TipRanks' AI Analyst Spark rates CYH as \"Neutral,\" citing a mix of positive earnings and corporate events, financial risks, and neutral technical indicators.",
-      "source": "TipRanks",
-      "url": "https://www.tipranks.com/news/company-announcements/community-health-to-sell-crestwood-medical-center-assets",
-      "tickers": [
-        "CYH"
-      ],
-      "topics": [
-        "mergers_and_acquisitions",
-        "life_sciences",
-        "earnings"
-      ],
-      "overall_sentiment": 0.016736,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CYH",
-          "relevance_score": 0.345,
-          "sentiment_score": 0.014014,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "CYH": 0.014014
-      }
-    },
-    {
-      "id": "1008306902898526892",
-      "timestamp": "2026-01-21T06:26:37",
-      "headline": "The Truth About Fortive Corp: Is This Quiet Tech Giant Your Next Power Play?",
-      "summary": "Fortive Corp is presented as a quiet but essential technology giant powering real-world infrastructure and industries. The article explores why this \"boring-looking beast\" might be a valuable long-term investment, emphasizing its focus on durable returns, recurring revenue, and quiet innovation in industrial tech and automation, rather than fleeting trends or viral hype. It suggests Fortive is a strong candidate for those building a serious long-term portfolio seeking stability and exposure to critical industrial technologies.",
-      "source": "AD HOC NEWS",
-      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/the-truth-about-fortive-corp-is-this-quiet-tech-giant-your-next-power/68505449",
-      "tickers": [
-        "FTV",
-        "DHR"
-      ],
-      "topics": [
-        "financial_markets",
-        "technology",
-        "manufacturing",
-        "economy_macro",
-        "finance"
-      ],
-      "overall_sentiment": 0.246965,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "FTV",
-          "relevance_score": 0.991066,
-          "sentiment_score": 0.322671,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "DHR",
-          "relevance_score": 0.701309,
-          "sentiment_score": 0.138623,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "FTV": 0.322671,
-        "DHR": 0.138623
-      }
-    },
-    {
-      "id": "-7720210773922313849",
-      "timestamp": "2026-01-21T06:25:20",
-      "headline": "BOK Financial Corp: Raymond James Increases Price Target from $115 to $140",
-      "summary": "Raymond James has increased its price target for BOK Financial Corp (BOKF) from $115 to $140. This update comes from a company update, as reported by Emily J. Thompson, a senior investment analyst at Intellectia.AI.",
-      "source": "Intellectia AI",
-      "url": "https://intellectia.ai/news/stock/bok-financial-corp--raymond-james-raises-target-price-to-140-from-115",
-      "tickers": [
-        "RJF"
-      ],
-      "topics": [
-        "finance",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.211316,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "RJF",
-          "relevance_score": 0.946188,
-          "sentiment_score": 0.208098,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "RJF": 0.208098
-      }
-    },
-    {
-      "id": "1629193404938153892",
-      "timestamp": "2026-01-21T06:20:36",
-      "headline": "The Truth About Fidelity National Info (FIS): Quiet Fintech Giant That Might Be Seriously Underprice",
-      "summary": "This article analyzes Fidelity National Information Services (FIS), a fintech giant that, despite being less flashy than trending stocks, provides essential financial infrastructure. It discusses FIS's business model, stock performance, and future upside after spinning off Worldpay, positioning it as a potential value play rather than a high-growth, high-hype investment. The piece compares FIS to competitors like Fiserv and Global Payments, concluding it's a \"know what you own\" stock for long-term, fundamentals-focused investors interested in steady cash flow and a turnaround story.",
-      "source": "AD HOC NEWS",
-      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/the-truth-about-fidelity-national-info-fis-quiet-fintech-giant-that/68505435",
-      "tickers": [
-        "FIS",
-        "FI",
-        "GPN"
-      ],
-      "topics": [
-        "finance",
-        "financial_markets",
-        "technology"
-      ],
-      "overall_sentiment": 0.192713,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "FIS",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.337311,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "FI",
-          "relevance_score": 0.639149,
-          "sentiment_score": 0.120914,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "GPN",
-          "relevance_score": 0.564282,
-          "sentiment_score": 0.1283,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "FIS": 0.337311,
-        "FI": 0.120914,
-        "GPN": 0.1283
-      }
-    },
-    {
-      "id": "2853307565447763747",
-      "timestamp": "2026-01-21T06:16:58",
-      "headline": "Top Wall Street Forecasters Revamp Halliburton Expectations Ahead Of Q4 Earnings",
-      "summary": "Ahead of its Q4 earnings release on January 21, analysts have adjusted their expectations for Halliburton (NYSE: HAL). The company is projected to report earnings of 55 cents per share on revenue of $5.41 billion, down from the previous year. Several Wall Street analysts have recently updated their ratings and price targets for Halliburton, with most maintaining positive outlooks but some downgrading their ratings.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/news/26/01/50026790/top-wall-street-forecasters-revamp-halliburton-expectations-ahead-of-q4-earnings",
-      "tickers": [
-        "HAL"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "energy_transportation"
-      ],
-      "overall_sentiment": 0.27087,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "HAL",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.295324,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "HAL": 0.295324
-      }
-    },
-    {
-      "id": "6852519750164495849",
-      "timestamp": "2026-01-21T06:12:57",
-      "headline": "Is Genuine Parts Stock Quietly Gearing Up For Its Next Move?",
-      "summary": "Genuine Parts Company (GPC) is portrayed as a stable, dividend-focused investment, consistently delivering value despite market volatility. The article highlights its solid one-year performance driven by dividends and capital gains, recent fundamental strength in its core automotive and industrial segments, and a balanced \"Hold to soft Buy\" rating from Wall Street. Future prospects are tied to the aging North American vehicle fleet, potential industrial upswings, and strategic investments in technology to enhance its distribution network and customer loyalty.",
-      "source": "AD HOC NEWS",
-      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/is-genuine-parts-stock-quietly-gearing-up-for-its-next-move/68505417",
-      "tickers": [
-        "GPC",
-        "ORLY",
-        "AZO"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "manufacturing",
-        "retail_wholesale",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.14284,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "GPC",
-          "relevance_score": 0.973621,
-          "sentiment_score": 0.292428,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "ORLY",
-          "relevance_score": 0.630725,
-          "sentiment_score": 0.110868,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "AZO",
-          "relevance_score": 0.556126,
-          "sentiment_score": 0.066715,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "GPC": 0.292428,
-        "ORLY": 0.110868,
-        "AZO": 0.066715
-      }
-    },
-    {
-      "id": "9217578227073444365",
-      "timestamp": "2026-01-21T06:05:55",
-      "headline": "FIS Stock Falls -11% With A 7-day Losing Spree On Price Target Cut",
-      "summary": "FIS stock has fallen 11% following a seven-day losing streak, attributed to a recent price target cut. This article highlights the immediate impact of analyst revisions on the company's stock performance.",
-      "source": "Trefis",
-      "url": "https://www.trefis.com/data/companies/FIS/no-login-required/L1sEBQZ4/FIS-Stock-Falls-11-With-A-7-day-Losing-Spree-On-Price-Target-Cut",
-      "tickers": [
-        "FIS"
-      ],
-      "topics": [
-        "financial_markets",
-        "earnings"
-      ],
-      "overall_sentiment": -0.629171,
-      "overall_sentiment_label": "Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "FIS",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.630826,
-          "sentiment_label": "Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "FIS": -0.630826
-      }
-    },
-    {
-      "id": "-2080995760789746794",
-      "timestamp": "2026-01-21T06:05:48",
-      "headline": "Judge Allows Virginia Offshore Wind Project to Restart in Another Setback for Trump",
-      "summary": "A federal judge has permitted Dominion Energy to resume construction on its 11.2 billion dollar Virginia offshore wind project, marking the third legal defeat for President Trump's anti-offshore wind policies this week. The judge ruled that the Interior Department's stop-work order was too broad and failed to address specific risks related to Dominion's project construction. This decision is significant for the multi-billion dollar projects in question, although ongoing lawsuits and the administration's stance on offshore wind continue to pose challenges for the sector.",
-      "source": "Insurance Journal",
-      "url": "https://www.insurancejournal.com/news/east/2026/01/21/854924.htm",
-      "tickers": [
-        "D"
-      ],
-      "topics": [
-        "energy_transportation",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.400233,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "D",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.432058,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "D": 0.432058
-      }
-    },
-    {
-      "id": "-3322172687495002749",
-      "timestamp": "2026-01-21T06:04:34",
-      "headline": "Apple Slides 3.45% as Trump\u2019s Greenland Tariff Warning",
-      "summary": "Apple Inc. (AAPL) shares fell 3.45% to $246.70 after renewed geopolitical concerns, including Trump's tariff warnings regarding Greenland, and ongoing questions about Apple's product and AI roadmap. The decline occurred amidst a broader market downturn driven by \"risk-off\" sentiment and overshadowing positive indicators like the anticipated iPhone 17 cycle and strong December quarter demand. Investors are closely watching the $244.50\u2013$246.70 range for clues on market conviction, particularly ahead of Apple's January 29 earnings report and the iPhone Fold launch.",
-      "source": "Eudaimonia and Co",
-      "url": "https://eand.co/apple-slides-3-45-as-trumps-greenland-tariff-warning",
-      "tickers": [
-        "AAPL",
-        "JPM",
-        "GS",
-        "GOOGL"
-      ],
-      "topics": [
-        "financial_markets",
-        "technology",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.047927,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "AAPL",
-          "relevance_score": 0.97672,
-          "sentiment_score": -0.411407,
-          "sentiment_label": "Bearish"
-        },
-        {
-          "ticker": "JPM",
-          "relevance_score": 0.629219,
-          "sentiment_score": 0.291532,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "GS",
-          "relevance_score": 0.552979,
-          "sentiment_score": 0.26439,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "GOOGL",
-          "relevance_score": 0.564241,
-          "sentiment_score": 0.104408,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "AAPL": -0.411407,
-        "JPM": 0.291532,
-        "GS": 0.26439,
-        "GOOGL": 0.104408
-      }
-    },
-    {
-      "id": "3818935837971421231",
-      "timestamp": "2026-01-21T06:01:16",
-      "headline": "Apple Inc. (AAPL) UBS Securities Maintains \u201cHold\u201d Rating",
-      "summary": "UBS Securities has maintained a \"Hold\" rating on Apple Inc. (AAPL) with a $280.00 price target. Analyst David Vogt believes that while Apple's strong ecosystem and recurring services revenue are long-term strengths, much of this upside is already factored into the stock's current valuation. Near-term uncertainties include iPhone upgrade cycles and softer consumer spending, limiting significant upside without new catalysts for earnings growth.",
-      "source": "The Globe and Mail",
-      "url": "https://www.theglobeandmail.com/investing/markets/stocks/AAPL/pressreleases/37141387/apple-inc-aapl-ubs-securities-maintains-hold-rating/",
-      "tickers": [
-        "AAPL"
-      ],
-      "topics": [
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.049363,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "AAPL",
-          "relevance_score": 0.969639,
-          "sentiment_score": 0.047603,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "AAPL": 0.047603
-      }
-    },
-    {
-      "id": "4131913488397508594",
-      "timestamp": "2026-01-21T05:58:29",
-      "headline": "Press Release: Public Storage to Release Fourth Quarter 2025 Earnings Results and Host Quarterly Conference Call",
-      "summary": "Public Storage is set to release its fourth-quarter 2025 earnings results and will host a quarterly conference call. Concurrently, Unity Software (U.US) reported fourth-quarter revenue of $609 million, exceeding estimates, despite a quarterly loss of 66 cents per share. The article highlights these financial updates and mentions the temporary unavailability of Dow Jones news for automatic translation due to copyright.",
-      "source": "\u5bcc\u9014\u8d44\u8baf",
-      "url": "https://news.futunn.com/en/post/67658653/press-release-public-storage-to-release-fourth-quarter-2025-earnings",
-      "tickers": [
-        "PSA"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.142889,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PSA",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.126508,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "PSA": 0.126508
-      }
-    },
-    {
-      "id": "2956394416252839914",
-      "timestamp": "2026-01-21T05:58:01",
-      "headline": "HSBC Warns Yen\u2019s Surging Risk Premium Has Few Easy Fixes",
-      "summary": "HSBC Holdings Plc strategists have reversed their yen forecasts due to fears of steep government spending and resurgent inflation in Japan. These concerns are causing a breakdown in the yen's traditional correlation with the dollar and government-bond yields. The yen traditionally finds support when interest-rate differentials narrow against US Treasuries, a link that is now weakening.",
-      "source": "Bloomberg.com",
-      "url": "https://www.bloomberg.com/news/articles/2026-01-20/hsbc-warns-yen-s-surging-risk-premium-has-few-easy-fixes",
-      "tickers": [
-        "HSBC"
-      ],
-      "topics": [
-        "financial_markets",
-        "economy_monetary",
-        "economy_macro"
-      ],
-      "overall_sentiment": -0.226841,
-      "overall_sentiment_label": "Somewhat-Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "HSBC",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.229397,
-          "sentiment_label": "Somewhat-Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "HSBC": -0.229397
-      }
-    },
-    {
-      "id": "-6267734319775179290",
-      "timestamp": "2026-01-21T05:57:56",
-      "headline": "Green Plains (NASDAQ:GPRE) Stock Price Down 6.7% - Here's What Happened",
-      "summary": "Green Plains (NASDAQ:GPRE) shares fell by 6.7% on Tuesday, trading at $10.85 with significantly lower than average trading volume. This drop occurred despite the company reporting better-than-expected earnings of $0.35 EPS, which beat the consensus estimate of -$0.13, though revenue declined by 22.8% year-over-year to $508.5 million. Analysts hold a \"Hold\" consensus rating with a $10 price target, with some recent rating changes including an upgrade to \"Buy\" from Tudor Pickering and an \"Outperform\" rating from Oppenheimer.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/green-plains-nasdaqgpre-stock-price-down-67-heres-what-happened-2026-01-20/",
-      "tickers": [
-        "GPRE"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": -0.332049,
-      "overall_sentiment_label": "Somewhat-Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "GPRE",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.311571,
-          "sentiment_label": "Somewhat-Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "GPRE": -0.311571
-      }
-    },
-    {
-      "id": "-11858915944843113",
-      "timestamp": "2026-01-21T05:57:46",
-      "headline": "Rosenblatt initiates Credo Technology stock coverage with Neutral rating",
-      "summary": "Rosenblatt Securities has initiated coverage on Credo Technology Group Holding Ltd (NASDAQ:CRDO) with a Neutral rating and a $170 price target, despite anticipating significant revenue and earnings growth for the company in fiscal year 2026. The firm acknowledges Credo's strong position in AI data center connectivity due to its SerDes/DSP/retimer technology and first-mover advantage in AECs. Other analysts like TD Cowen, Needham, Stifel, and Mizuho have expressed a more bullish outlook, forecasting substantial growth and increased adoption of Credo's technology among hyperscalers.",
-      "source": "Investing.com",
-      "url": "https://www.investing.com/news/analyst-ratings/rosenblatt-initiates-credo-technology-stock-coverage-with-neutral-rating-93CH-4456639",
-      "tickers": [
-        "CRDO"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "technology"
-      ],
-      "overall_sentiment": 0.117352,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CRDO",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.101495,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "CRDO": 0.101495
-      }
-    },
-    {
-      "id": "8632214100616701025",
-      "timestamp": "2026-01-21T05:57:34",
-      "headline": "|\u3010\u5373\u6642\u65b0\u805e\u3011First Trust S&P 500 Economic Moat ETF\u5ba3\u4f48\u6d3e\u767c\u534a\u5e74\u5ea6\u80a1\u606f | CMoney\u6295\u8cc7\u7db2\u8a8c",
-      "summary": "|First Trust S&P 500 Economic Moat ETF (EMOT) has announced its semi-annual dividend, with the payment date set for December 31st and the record date for December 12th. The ETF, which focuses on companies with economic moats, saw its stock close at $24.08 with a 0.53% increase after the announcement, though trading volume significantly decreased by 83.64%. Investors are advised to note the ex-dividend date in early January to qualify for the dividend.",
-      "source": "CMoney\u6295\u8cc7\u7db2\u8a8c",
-      "url": "https://cmnews.com.tw/article/newsyoudeservetoknow-abb1f8ab-e292-11f0-a721-4a122d340fdb",
-      "tickers": [
-        "EMOT"
-      ],
-      "topics": [
-        "financial_markets",
-        "earnings"
-      ],
-      "overall_sentiment": 0.120196,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "EMOT",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.122304,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "EMOT": 0.122304
-      }
-    },
-    {
-      "id": "-2290066042188766778",
-      "timestamp": "2026-01-21T05:57:21",
-      "headline": "Home BancShares appoints John W. Allison II to board",
-      "summary": "Home BancShares (HOMB) has announced the appointment of John W. Allison II to its Board of Directors, effective January 16, 2026. John W. Allison II is the son of the current CEO and Chairman, John W. Allison. The board currently holds a \"Buy\" rating with a $35.00 price target from analysts, and TipRanks\u2019 AI Analyst, Spark, rates HOMB as \"Outperform\" due to its solid financial performance and supportive valuation.",
-      "source": "TipRanks",
-      "url": "https://www.tipranks.com/news/company-announcements/home-bancshares-appoints-john-w-allison-ii-to-board",
-      "tickers": [
-        "HOMB"
-      ],
-      "topics": [
-        "finance",
-        "earnings"
-      ],
-      "overall_sentiment": 0.470925,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "HOMB",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.490393,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "HOMB": 0.490393
-      }
-    },
-    {
-      "id": "-6391598225838115968",
-      "timestamp": "2026-01-21T05:57:13",
-      "headline": "Galaxy Digital Crypto Hedge Fund: A Groundbreaking Bridge Between Digital and Traditional Finance",
-      "summary": "Galaxy Digital, founded by Mike Novogratz, is launching a crypto hedge fund in Q1 2025, securing $100 million in initial commitments. The fund will allocate up to 30% to cryptocurrencies like Bitcoin and Ethereum, with the remaining 70% invested in financial sector stocks impacted by crypto technology and regulation. This hybrid model aims to bridge digital assets and established financial markets, offering investors a risk-managed approach to crypto exposure.",
-      "source": "Bitcoin world",
-      "url": "https://bitcoinworld.co.in/galaxy-digital-crypto-hedge-fund-launch/",
-      "tickers": [
-        "GLXY",
-        "BLK",
-        "MS",
-        "GS"
-      ],
-      "topics": [
-        "blockchain",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.443009,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "GLXY",
-          "relevance_score": 0.956239,
-          "sentiment_score": 0.72094,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "BLK",
-          "relevance_score": 0.623436,
-          "sentiment_score": 0.305824,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "MS",
-          "relevance_score": 0.563694,
-          "sentiment_score": 0.315327,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "GS",
-          "relevance_score": 0.56959,
-          "sentiment_score": 0.346139,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "GLXY": 0.72094,
-        "BLK": 0.305824,
-        "MS": 0.315327,
-        "GS": 0.346139
-      }
-    },
-    {
-      "id": "810710856136853630",
-      "timestamp": "2026-01-21T05:54:00",
-      "headline": "Short, C. H. Robinson president, sells $215k in CHRW stock By Investing.com",
-      "summary": "Michael John Short, President of Global Forwarding at C. H. Robinson Worldwide Inc, sold 1,230 shares of CHRW stock for $215,250 on January 15, 2026, through a pre-arranged trading plan. This transaction follows positive company news including exceeding analyst expectations for Q3 2025 earnings, an upgraded stock rating from Barclays, and an increased quarterly dividend. The company's strategic advancements and financial performance are highlighted amidst a challenging market.",
-      "source": "Investing.com Canada",
-      "url": "https://ca.investing.com/news/insider-trading-news/short-c-h-robinson-president-sells-215k-in-chrw-stock-93CH-4410484",
-      "tickers": [
-        "CHRW"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.114569,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CHRW",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.123731,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "CHRW": 0.123731
-      }
-    },
-    {
-      "id": "595555474343528105",
-      "timestamp": "2026-01-21T05:47:48",
-      "headline": "Pentagon Investment And Spin Off Put L3Harris Valuation In Focus",
-      "summary": "The Pentagon is investing US$1 billion into L3Harris Technologies' Missile Solutions unit, which produces solid rocket motors. This unit will be spun off later this year as a new, publicly traded company, with the U.S. Defense Department taking an ownership stake. This move signifies a major restructuring for L3Harris in the missile supply chain and introduces a new defense player closely tied to the original company.",
-      "source": "Simply Wall Street",
-      "url": "https://simplywall.st/stocks/us/capital-goods/nyse-lhx/l3harris-technologies/news/pentagon-investment-and-spin-off-put-l3harris-valuation-in-f",
-      "tickers": [
-        "LHX",
-        "RTX"
-      ],
-      "topics": [
-        "ipo",
-        "earnings",
-        "financial_markets",
-        "mergers_and_acquisitions"
-      ],
-      "overall_sentiment": 0.219171,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "LHX",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.345902,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "RTX",
-          "relevance_score": 0.611679,
-          "sentiment_score": 0.123166,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "LHX": 0.345902,
-        "RTX": 0.123166
-      }
-    },
-    {
-      "id": "-7943053508563227215",
-      "timestamp": "2026-01-21T05:47:44",
-      "headline": "Assessing Illinois Tool Works (ITW) Valuation After Deutsche Bank Issues Catalyst Call Sell Rating",
-      "summary": "Deutsche Bank issued a \"Catalyst Call: Sell\" rating on Illinois Tool Works (ITW), leading to a slight share price dip. Despite this, the article indicates that ITW's P/E ratio suggests it's undervalued compared to peers and the industry, and a Discounted Cash Flow (DCF) model points to a significant undervaluation of about 55%. Investors are encouraged to consider these valuation metrics alongside potential risks from future earnings reports.",
-      "source": "Simply Wall Street",
-      "url": "https://simplywall.st/stocks/us/capital-goods/nyse-itw/illinois-tool-works/news/assessing-illinois-tool-works-itw-valuation-after-deutsche-b",
-      "tickers": [
-        "ITW",
-        "DOV",
-        "SNA"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "manufacturing"
-      ],
-      "overall_sentiment": -0.075969,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ITW",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.214393,
-          "sentiment_label": "Somewhat-Bearish"
-        },
-        {
-          "ticker": "DOV",
-          "relevance_score": 0.625123,
-          "sentiment_score": 0.032961,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "SNA",
-          "relevance_score": 0.631375,
-          "sentiment_score": 0.046352,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "ITW": -0.214393,
-        "DOV": 0.032961,
-        "SNA": 0.046352
-      }
-    },
-    {
-      "id": "2909181838154549413",
-      "timestamp": "2026-01-21T05:36:47",
-      "headline": "Loews Corp stock: Quiet climber with a cautious Wall Street watching",
-      "summary": "Loews Corp (L) has shown steady, low-volatility growth over the past year, outperforming inflation and broadly matching the broader market. Despite its solid performance driven by its diversified portfolio including CNA Financial, Loews Hotels, and energy interests, Wall Street maintains a cautious \"Hold\" rating, citing the persistent conglomerate discount and limited short-term catalysts. The company's future depends on the property and casualty insurance cycle, capital allocation strategy, and macroeconomic conditions.",
-      "source": "AD HOC NEWS",
-      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/loews-corp-stock-quiet-climber-with-a-cautious-wall-street-watching/68505295",
-      "tickers": [
-        "L",
-        "BAC",
-        "JPM",
-        "MS"
-      ],
-      "topics": [
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.184314,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "L",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.288624,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "BAC",
-          "relevance_score": 0.647701,
-          "sentiment_score": 0.148242,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "JPM",
-          "relevance_score": 0.628947,
-          "sentiment_score": 0.135701,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "MS",
-          "relevance_score": 0.608484,
-          "sentiment_score": 0.112,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "L": 0.288624,
-        "BAC": 0.148242,
-        "JPM": 0.135701,
-        "MS": 0.112
-      }
-    },
-    {
-      "id": "-7113183941857805423",
-      "timestamp": "2026-01-21T05:34:36",
-      "headline": "FedEx names Board for new independent FedEx Freight",
-      "summary": "FedEx Corp. has announced the ten-member board for FedEx Freight ahead of its spin-off on June 1, 2026. R. Brad Martin will serve as chairman, and the incoming FedEx Freight CEO, John Smith, will also join the board. The board members bring diverse expertise in transportation, logistics, finance, and technology to guide the company as it becomes a standalone entity and aims to strengthen its position as North America\u2019s largest LTL freight carrier.",
-      "source": "Container News",
-      "url": "https://container-news.com/fedex-names-board-for-new-independent-fedex-freight/",
-      "tickers": [
-        "FDX"
-      ],
-      "topics": [
-        "energy_transportation",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.253877,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "FDX",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.256277,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "FDX": 0.256277
-      }
-    },
-    {
-      "id": "-6952757149918744813",
-      "timestamp": "2026-01-21T05:28:47",
-      "headline": "Lucid\u2019s Saudi Expansion Raises Questions On Funding, Cash Runway And Value",
-      "summary": "Lucid Group is expanding its electric vehicle manufacturing to Saudi Arabia with a new full-scale production facility, marking its first major hub outside the US. This move deepens its ties with Saudi Arabia's Public Investment Fund but also raises questions about the company's funding, cash runway, and overall valuation given its reliance on external funding and ongoing financial pressures. Investors are watching how this expansion will impact Lucid's cost structure, production volume, and future funding needs, especially considering the stock's significant decline over recent periods.",
-      "source": "Simply Wall Street",
-      "url": "https://simplywall.st/stocks/us/automobiles/nasdaq-lcid/lucid-group/news/lucids-saudi-expansion-raises-questions-on-funding-cash-runw",
-      "tickers": [
-        "LCID"
-      ],
-      "topics": [
-        "manufacturing",
-        "energy_transportation",
-        "financial_markets",
-        "finance",
-        "technology"
-      ],
-      "overall_sentiment": 0.015762,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "LCID",
-          "relevance_score": 0.312792,
-          "sentiment_score": 0.034803,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "LCID": 0.034803
-      }
-    },
-    {
-      "id": "-5732967825120830251",
-      "timestamp": "2026-01-21T05:28:38",
-      "headline": "Assessing Kratos Defense & Security Solutions (KTOS) Valuation After New Hypersonic Facility And Contract Momentum",
-      "summary": "Kratos Defense & Security Solutions (KTOS) has opened a new 55,000-square-foot hypersonic facility, leading to significant stock momentum with a 70.69% 30-day return. Despite this growth and positive contract updates, the company's Price-to-Sales ratio of 16.9x is considerably higher than industry and peer averages, suggesting it may be overvalued. Investors should consider this valuation premium and Kratos's modest net income relative to revenue.",
-      "source": "Simply Wall Street",
-      "url": "https://simplywall.st/stocks/us/capital-goods/nasdaq-ktos/kratos-defense-security-solutions/news/assessing-kratos-defense-security-solutions-ktos-valuation-a-1",
-      "tickers": [
-        "KTOS"
-      ],
-      "topics": [
-        "financial_markets",
-        "technology"
-      ],
-      "overall_sentiment": 0.136205,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "KTOS",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.147261,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "KTOS": 0.147261
-      }
-    },
-    {
-      "id": "2688867107718120722",
-      "timestamp": "2026-01-21T05:28:32",
-      "headline": "Novartis ADR: Defensive Giant Tests Investor Patience As Rally Cools",
-      "summary": "Novartis AG's U.S.-listed ADR (NVS) has experienced a short-term dip after a strong multi-month rally, leading investors to question if this is a pause or a more significant downturn. Despite recent pullback, its one-year performance remains positive, fueled by its focus on innovative medicines and strong cash generation. Wall Street's verdict is cautiously optimistic, viewing NVS as a high-quality, stable investment rather than a rapid growth stock.",
-      "source": "AD HOC NEWS",
-      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/novartis-adr-defensive-giant-tests-investor-patience-as-rally-cools/68505291",
-      "tickers": [
-        "NVS"
-      ],
-      "topics": [
-        "life_sciences",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.130216,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "NVS",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.141097,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "NVS": 0.141097
-      }
-    },
-    {
-      "id": "1778109553987851035",
-      "timestamp": "2026-01-21T05:28:17",
-      "headline": "Hut 8 (HUT) Is Down 5.2% After Expanded Anthropic AI Deal And New Capacity Rollouts",
-      "summary": "Hut 8's stock declined by 5.2% despite an expanded partnership with AI firm Anthropic and new capacity rollouts at its Corpus Christi and River Bend sites, which strengthen its position as a digital infrastructure provider for AI. The article highlights the company's evolution from Bitcoin mining to AI and cloud workloads, but also notes risks like high earnings multiple, forecast earnings declines, and fresh leverage. There's a wide range of fair value estimates, suggesting that investors should compare multiple viewpoints.",
-      "source": "Simply Wall Street",
-      "url": "https://simplywall.st/stocks/us/software/nasdaq-hut/hut-8/news/hut-8-hut-is-down-52-after-expanded-anthropic-ai-deal-and-ne",
-      "tickers": [
-        "HUT"
-      ],
-      "topics": [
-        "financial_markets",
-        "technology",
-        "blockchain",
-        "earnings"
-      ],
-      "overall_sentiment": -0.240428,
-      "overall_sentiment_label": "Somewhat-Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "HUT",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.243339,
-          "sentiment_label": "Somewhat-Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "HUT": -0.243339
-      }
-    },
-    {
-      "id": "-2505904148198836692",
-      "timestamp": "2026-01-21T05:28:17",
-      "headline": "Goldman Sachs BDC repays $500 million in notes with new credit facility borrowing",
-      "summary": "Goldman Sachs BDC, Inc. (NYSE:GSBD) has repaid $500 million in senior notes due 2026 by borrowing $505 million from its senior secured revolving credit facility on January 15. This action fully satisfied its obligations under the matured notes, leaving approximately $526 million in remaining borrowing capacity. The company recently reported better-than-expected third-quarter earnings, surpassing analyst forecasts for both EPS and revenue.",
-      "source": "Investing.com South Africa",
-      "url": "https://m.za.investing.com/news/sec-filings/goldman-sachs-bdc-repays-500-million-in-notes-with-new-credit-facility-borrowing-93CH-4070377?ampMode=1",
-      "tickers": [
-        "GSBD"
-      ],
-      "topics": [
-        "finance",
-        "earnings"
-      ],
-      "overall_sentiment": 0.452692,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "GSBD",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.474211,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "GSBD": 0.474211
-      }
-    },
-    {
-      "id": "-1939981401919240118",
-      "timestamp": "2026-01-21T05:27:58",
-      "headline": "Karooooo Ltd.: Fiscal Q3 Earnings Snapshot",
-      "summary": "Karooooo Ltd. (KARO) reported a net income of $15.2 million for its fiscal third quarter, translating to 49 cents per share. The Singapore-based company also announced revenues of $81.4 million for the same period. This financial snapshot was generated using data from Zacks Investment Research.",
-      "source": "kens5.com",
-      "url": "https://www.kens5.com/article/syndication/associatedpress/karooooo-ltd-fiscal-q3-earnings-snapshot/616-0e89daf2-b33c-4d52-9e5e-c1a0268e75cc",
-      "tickers": [
-        "KARO"
-      ],
-      "topics": [
-        "earnings",
-        "finance"
-      ],
-      "overall_sentiment": 0.345827,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "KARO",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.344266,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "KARO": 0.344266
-      }
-    },
-    {
-      "id": "1417153712040703071",
-      "timestamp": "2026-01-21T05:27:53",
-      "headline": "Eldorado Gold Achieves Higher-End of 2025 Production Guidance; Appoints Dr. Sally Eyre to the Board of Directors; Details 2026 Reporting Schedule and Provides Q4 2025 Conference Call Details",
-      "summary": "Eldorado Gold announced preliminary gold production of 488,268 ounces for 2025, reaching the higher end of its guidance, with strong fourth-quarter performance driven by the Lamaque Complex and improved stability at Olympias. The company also announced the appointment of Dr. Sally Eyre to its Board of Directors, bringing extensive mining and finance experience. Eldorado Gold detailed its 2026 reporting schedule and provided information for the upcoming Q4 and full-year 2025 financial results conference call.",
-      "source": "GlobeNewswire",
-      "url": "https://www.globenewswire.com/news-release/2026/01/20/3222328/0/en/eldorado-gold-achieves-higher-end-of-2025-production-guidance-appoints-dr-sally-eyre-to-the-board-of-directors-details-2026-reporting-schedule-and-provides-q4-2025-conference-call-.html",
-      "tickers": [
-        "EGO"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.429712,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "EGO",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.40712,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "EGO": 0.40712
-      }
-    },
-    {
-      "id": "-5844939479549334358",
-      "timestamp": "2026-01-21T05:27:53",
-      "headline": "Greek copper-gold project Skouries nears first output in early 2026",
-      "summary": "Eldorado Gold (NYSE:EGO) anticipates first concentrate production from its Skouries project in Greece by late Q1 2026, with commercial production following mid-2026. The project is 90% complete overall (78% for phase 2), with a revised capital estimate of $1.06 billion fully funded by existing loan facilities. Concurrently, the Olympias mill expansion is slated for completion in Q3 2026, and the Perama Hill project is advancing with an Environmental Impact Assessment submission.",
-      "source": "Stock Titan",
-      "url": "https://www.stocktitan.net/news/EGO/eldorado-gold-transformational-growth-in-greece-in-1bsph9q05f5x.html",
-      "tickers": [
-        "EGO"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "economy_macro",
-        "manufacturing"
-      ],
-      "overall_sentiment": 0.041773,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "EGO",
-          "relevance_score": 0.30825,
-          "sentiment_score": 0.01675,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "EGO": 0.01675
-      }
-    },
-    {
-      "id": "-935948428288918912",
-      "timestamp": "2026-01-21T05:27:53",
-      "headline": "Half-million ounces of gold and a new director at Eldorado Gold",
-      "summary": "Eldorado Gold announced preliminary 2025 gold production of 488,268 ounces, hitting the higher end of its guidance, with strong contributions from Lamaque and improved stability at Olympias. The company also appointed Dr. Sally Eyre to its Board of Directors, effective January 1, 2026, bringing extensive experience in geology, mining finance, and capital markets. Full 2025 financial results and 2026 guidance are scheduled for release on February 19, 2026.",
-      "source": "Stock Titan",
-      "url": "https://www.stocktitan.net/news/EGO/eldorado-gold-achieves-higher-end-of-2025-production-guidance-xeg4qknr5ht8.html",
-      "tickers": [
-        "EGO"
-      ],
-      "topics": [
-        "earnings",
-        "finance"
-      ],
-      "overall_sentiment": 0.483318,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "EGO",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.458425,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "EGO": 0.458425
-      }
     }
   ],
-  "last_updated": "2026-01-22T12:48:01.211314"
+  "last_updated": "2026-01-22T13:12:10.752966"
 }
