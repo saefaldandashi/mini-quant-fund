@@ -2006,6 +2006,45 @@
         let pollInterval = null;
         let allPositions = [];  // For position filtering/sorting
         
+        // Helper: Format currency
+        function formatCurrency(val) {
+            if (val == null) return '$--';
+            return '$' + parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        
+        // Render positions table - defined early to ensure availability
+        function updatePositionsTable(positions) {
+            const tbody = document.getElementById('positions-body');
+            if (!tbody) {
+                console.error('positions-body element not found');
+                return;
+            }
+            
+            if (positions && positions.length > 0) {
+                tbody.innerHTML = positions.map(p => {
+                    const pl = p.unrealized_pl || 0;
+                    const plpc = p.unrealized_plpc || 0;
+                    const plClass = pl >= 0 ? 'positive' : 'negative';
+                    const qty = p.qty || 0;
+                    const qtyStyle = parseFloat(qty) < 0 ? 'color: var(--warning);' : '';
+                    
+                    return `
+                        <tr>
+                            <td class="ticker">${p.symbol || '--'}</td>
+                            <td style="${qtyStyle}">${qty}</td>
+                            <td>${formatCurrency(p.avg_entry_price)}</td>
+                            <td>${formatCurrency(p.current_price)}</td>
+                            <td>${formatCurrency(p.market_value)}</td>
+                            <td class="${plClass}">${formatCurrency(pl)}</td>
+                            <td class="${plClass}">${(plpc * 100).toFixed(2)}%</td>
+                        </tr>
+                    `;
+                }).join('');
+            } else {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-dim); padding: 30px;">No positions</td></tr>';
+            }
+        }
+        
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             loadPortfolio();
@@ -3170,12 +3209,6 @@
             }
         }
         
-        // Helpers
-        function formatCurrency(val) {
-            if (val == null) return '$--';
-            return '$' + parseFloat(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-        
         // ========== TOAST NOTIFICATION SYSTEM ==========
         function showToast(type, title, message, duration = 5000) {
             const container = document.getElementById('toast-container');
@@ -3338,39 +3371,6 @@
                 p.symbol.toLowerCase().includes(query)
             );
             updatePositionsTable(filtered);
-        }
-        
-        function updatePositionsTable(positions) {
-            const tbody = document.getElementById('positions-body');
-            if (!tbody) {
-                console.error('positions-body element not found');
-                return;
-            }
-            
-            if (positions && positions.length > 0) {
-                tbody.innerHTML = positions.map(p => {
-                    const pl = p.unrealized_pl || 0;
-                    const plpc = p.unrealized_plpc || 0;
-                    const plClass = pl >= 0 ? 'positive' : 'negative';
-                    const qty = p.qty || 0;
-                    const qtyStyle = parseFloat(qty) < 0 ? 'color: var(--warning);' : '';
-                    const barWidth = Math.min(100, Math.abs(plpc * 100) * 5);
-                    
-                    return `
-                        <tr>
-                            <td class="ticker">${p.symbol || '--'}</td>
-                            <td style="${qtyStyle}">${qty}</td>
-                            <td>${formatCurrency(p.avg_entry_price)}</td>
-                            <td>${formatCurrency(p.current_price)}</td>
-                            <td>${formatCurrency(p.market_value)}</td>
-                            <td class="${plClass}">${formatCurrency(pl)}</td>
-                            <td class="${plClass}">${(plpc * 100).toFixed(2)}%</td>
-                        </tr>
-                    `;
-                }).join('');
-            } else {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-dim); padding: 30px;">No positions</td></tr>';
-            }
         }
         
         // ========== TRADE HISTORY ==========
