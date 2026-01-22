@@ -354,6 +354,7 @@ auto_rebalance_settings = {
     "interval_minutes": 60,
     "dry_run": True,
     "allow_after_hours": True,
+    "exposure_pct": 0.8,  # 80% default
     "last_run": None,
     "next_run": None,
 }
@@ -2941,25 +2942,36 @@ def run_bot_endpoint():
     return jsonify({"status": "started", "message": f"{mode_str}Multi-strategy bot initiated ({int(exposure_pct*100)}% exposure)"})
 
 
-@app.route('/api/auto-rebalance', methods=['POST'])
+@app.route('/api/auto-rebalance', methods=['POST', 'GET'])
 @requires_auth
 def set_auto_rebalance():
-    """Configure automatic rebalancing."""
+    """Configure or get automatic rebalancing settings."""
     global auto_rebalance_settings
     
+    # GET request - return current settings
+    if request.method == 'GET':
+        return jsonify({
+            "status": "ok",
+            "settings": auto_rebalance_settings
+        })
+    
+    # POST request - update settings
     data = request.get_json() or {}
     
     auto_rebalance_settings["enabled"] = data.get('enabled', False)
     auto_rebalance_settings["interval_minutes"] = data.get('interval_minutes', 60)
     auto_rebalance_settings["dry_run"] = data.get('dry_run', True)
     auto_rebalance_settings["allow_after_hours"] = data.get('allow_after_hours', True)
+    auto_rebalance_settings["exposure_pct"] = data.get('exposure_pct', 0.8)
     
     if auto_rebalance_settings["enabled"]:
         interval = auto_rebalance_settings["interval_minutes"]
         auto_rebalance_settings["next_run"] = datetime.now() + timedelta(minutes=interval)
+        logging.info(f"🔄 AUTO-REBALANCE ENABLED: every {interval} minutes, exposure={auto_rebalance_settings['exposure_pct']*100:.0f}%, dry_run={auto_rebalance_settings['dry_run']}")
         message = f"Auto-rebalance enabled: every {interval} minutes"
     else:
         auto_rebalance_settings["next_run"] = None
+        logging.info("🔄 AUTO-REBALANCE DISABLED")
         message = "Auto-rebalance disabled"
     
     return jsonify({

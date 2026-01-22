@@ -2147,6 +2147,40 @@
             }
         }
         
+        // Load auto-rebalance status from SERVER
+        async function loadAutoRebalanceStatus() {
+            try {
+                const response = await fetch('/api/auto-rebalance');
+                if (!response.ok) return;
+                
+                const data = await response.json();
+                const settings = data.settings || {};
+                
+                autoEnabled = settings.enabled || false;
+                const btn = document.getElementById('auto-btn');
+                const intervalInput = document.getElementById('auto-interval');
+                
+                if (settings.interval_minutes) {
+                    intervalInput.value = settings.interval_minutes;
+                }
+                
+                if (autoEnabled) {
+                    btn.textContent = `Disable (${settings.interval_minutes}m)`;
+                    btn.classList.add('danger');
+                    btn.classList.remove('secondary');
+                    updateStatus('success', `Auto: ${settings.interval_minutes}m (SERVER-SIDE)`);
+                    console.log('✓ Server auto-rebalance is ENABLED:', settings);
+                } else {
+                    btn.textContent = 'Enable';
+                    btn.classList.remove('danger');
+                    btn.classList.add('secondary');
+                    console.log('✓ Server auto-rebalance is DISABLED');
+                }
+            } catch (e) {
+                console.error('Could not load auto-rebalance status:', e);
+            }
+        }
+        
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             console.log('🚀 Initializing Quant Fund UI...');
@@ -2157,6 +2191,9 @@
             } catch (e) {
                 console.error('❌ Portfolio failed:', e);
             }
+            
+            // Load server-side auto-rebalance status
+            await loadAutoRebalanceStatus();
             
             loadLLMStats();
             loadLearning();
@@ -2912,39 +2949,65 @@
             }
         }
         
-        // Toggle Auto - runs automatically WITHOUT confirmation dialogs
-        function toggleAuto() {
-            autoEnabled = !autoEnabled;
+        // Toggle Auto - CALLS SERVER API for true background automation
+        async function toggleAuto() {
             const btn = document.getElementById('auto-btn');
+            const interval = parseInt(document.getElementById('auto-interval').value) || 60;
+            const dryRun = document.getElementById('dry-run').checked;
             
-            if (autoEnabled) {
-                const interval = parseInt(document.getElementById('auto-interval').value) || 60;
-                btn.textContent = `Disable (${interval}m)`;
-                btn.classList.add('danger');
-                btn.classList.remove('secondary');
+            // Toggle state
+            autoEnabled = !autoEnabled;
+            
+            try {
+                // CRITICAL: Call server API to enable server-side auto-rebalance
+                // This runs on the server even when browser is closed!
+                const response = await fetch('/api/auto-rebalance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        enabled: autoEnabled,
+                        interval_minutes: interval,
+                        dry_run: dryRun,
+                        allow_after_hours: true,
+                        exposure_pct: getExposurePercent() / 100
+                    })
+                });
                 
-                // Run immediately on enable
-                if (!isRunning) {
-                    console.log('⚡ Auto-rebalance: Running immediately (no confirmation)');
-                    runRebalance(true);  // skipConfirmation = true
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
                 }
                 
-                // Then schedule regular runs
-                autoInterval = setInterval(() => {
+                const result = await response.json();
+                console.log('Server auto-rebalance response:', result);
+                
+                if (autoEnabled) {
+                    btn.textContent = `Disable (${interval}m)`;
+                    btn.classList.add('danger');
+                    btn.classList.remove('secondary');
+                    
+                    // Run immediately on enable (no confirmation in auto mode)
                     if (!isRunning) {
-                        console.log(`⚡ Auto-rebalance: Scheduled run (every ${interval}m)`);
-                        runRebalance(true);  // skipConfirmation = true for auto mode
+                        console.log('⚡ Auto-rebalance: Running immediately (no confirmation)');
+                        runRebalance(true);
                     }
-                }, interval * 60 * 1000);
+                    
+                    showToast('success', 'Auto-Rebalance Enabled', 
+                        `Server will run every ${interval} minutes, even when browser is closed!`);
+                    updateStatus('success', `Auto: ${interval}m (SERVER-SIDE)`);
+                } else {
+                    btn.textContent = 'Enable';
+                    btn.classList.remove('danger');
+                    btn.classList.add('secondary');
+                    
+                    showToast('info', 'Auto-Rebalance Disabled', 'Server-side automation stopped');
+                    updateStatus('idle', 'Auto-rebalance disabled');
+                }
                 
-                updateStatus('success', `Auto-rebalance enabled (every ${interval} min)`);
-            } else {
-                btn.textContent = 'Enable';
-                btn.classList.remove('danger');
-                btn.classList.add('secondary');
-                
-                if (autoInterval) clearInterval(autoInterval);
-                updateStatus('idle', 'Auto-rebalance disabled');
+            } catch (e) {
+                console.error('Auto-rebalance toggle error:', e);
+                showToast('error', 'Auto-Rebalance Failed', e.message);
+                // Revert state on error
+                autoEnabled = !autoEnabled;
             }
         }
         
