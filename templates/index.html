@@ -2074,6 +2074,25 @@
     </script>
     
     <script>
+        // ========== GLOBAL FETCH OVERRIDE ==========
+        // Override fetch to always include credentials for authenticated API calls
+        const originalFetch = window.fetch;
+        window.fetch = function(url, options = {}) {
+            // For API calls, always include credentials
+            if (typeof url === 'string' && url.startsWith('/api')) {
+                options = {
+                    ...options,
+                    credentials: 'include',
+                    headers: {
+                        ...options.headers,
+                        'Accept': 'application/json',
+                    }
+                };
+            }
+            return originalFetch.call(this, url, options);
+        };
+        console.log('✅ Global fetch configured with credentials');
+        
         // State
         let isRunning = false;
         let autoEnabled = false;
@@ -2197,6 +2216,16 @@
                 const response = await fetch(`/api/run?force=${force}&cancel_previous=${cancel}&exposure=${exposure}&dry_run=${dryRun}&risk_appetite=${riskAppetite}&fast_mode=${fastMode}`, {
                     method: 'POST'
                 });
+                
+                // Check for errors in response
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: response.statusText }));
+                    throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                console.log('Rebalance started:', result);
+                document.getElementById('execution-log').textContent += `\n${result.message || 'Bot started...'}\n`;
                 
                 // Poll for log updates
                 const logPoll = setInterval(async () => {
