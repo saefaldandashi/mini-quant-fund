@@ -2850,8 +2850,9 @@ def get_learned_patterns():
 @app.route('/api/learning/update-outcomes', methods=['POST'])
 def update_learning_outcomes():
     """
-    Manually trigger outcome update for learning.
-    This fetches current prices and updates P/L for open positions.
+    Manually trigger comprehensive outcome update for learning.
+    This fetches current prices, updates P/L for ALL positions (open and recently closed),
+    and ensures learning data is complete.
     """
     try:
         api_key = os.getenv("ALPACA_API_KEY")
@@ -2861,14 +2862,68 @@ def update_learning_outcomes():
             return jsonify({"error": "API keys not configured"}), 400
         
         broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+        
+        # Get current positions from broker
         positions = broker.get_positions()
+        current_position_symbols = set(positions.keys()) if positions else set()
         
-        if not positions:
-            return jsonify({"message": "No open positions to update", "updated": 0})
+        # Get current prices for all symbols we have trades for
+        all_trade_symbols = set(t.symbol for t in learning_engine.trade_memory.trades)
+        symbols_to_fetch = all_trade_symbols | current_position_symbols
         
-        # Calculate returns for each position
+        # Get latest prices
+        current_prices = {}
+        if symbols_to_fetch:
+            try:
+                # Get historical bars for price data
+                price_data = broker.get_historical_bars(list(symbols_to_fetch), days=5)
+                for symbol, df in price_data.items():
+                    if df is not None and not df.empty:
+                        current_prices[symbol] = df['close'].iloc[-1]
+            except Exception as e:
+                logging.warning(f"Could not fetch all prices: {e}")
+        
+        # Also get prices from current positions (more accurate)
+        if positions:
+            for symbol, pos in positions.items():
+                current_prices[symbol] = pos.get('current_price', pos.get('avg_entry_price', 0))
+        
+        # Update open positions with current prices
+        updated_count = 0
+        closed_count = 0
+        
+        # 1. Update all open positions in trade memory with current prices
+        for symbol, trade in list(learning_engine.trade_memory.open_positions.items()):
+            if symbol in current_prices:
+                price = current_prices[symbol]
+                if trade.side == 'buy':
+                    trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
+                    trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
+                    trade.was_profitable = trade.pnl_dollars > 0
+                    updated_count += 1
+                
+                # If this position is no longer held by broker, close it
+                if symbol not in current_position_symbols:
+                    learning_engine.trade_memory._close_position(trade, price, 'position_closed')
+                    del learning_engine.trade_memory.open_positions[symbol]
+                    closed_count += 1
+        
+        # 2. Update trades that don't have PnL yet
+        for trade in learning_engine.trade_memory.trades:
+            if trade.pnl_percent is None and trade.symbol in current_prices:
+                price = current_prices[trade.symbol]
+                if trade.side == 'buy':
+                    trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
+                    trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
+                    trade.was_profitable = trade.pnl_dollars > 0
+                    updated_count += 1
+        
+        # Save updated trade memory
+        learning_engine.trade_memory._save()
+        
+        # Calculate returns for pattern learning
         symbol_returns = {}
-        for symbol, pos in positions.items():
+        for symbol, pos in (positions or {}).items():
             cost_basis = pos.get('cost_basis', 0)
             current_value = pos.get('current_value', pos.get('market_value', 0))
             if cost_basis > 0:
@@ -2913,15 +2968,25 @@ def update_learning_outcomes():
             'spy_change': spy_change,
         }
         
-        # Record outcomes
-        learning_engine.record_outcomes(symbol_returns, market_context)
+        # Record outcomes for pattern learning
+        if symbol_returns:
+            learning_engine.record_outcomes(symbol_returns, market_context)
+        
+        # Get updated statistics
+        stats = learning_engine.trade_memory.get_statistics()
         
         return jsonify({
             "message": "Outcomes updated successfully",
-            "updated": len(symbol_returns),
-            "positions": list(symbol_returns.keys())
+            "trades_updated": updated_count,
+            "positions_closed": closed_count,
+            "total_trades": stats.get('total_trades', 0),
+            "trades_with_pnl": stats.get('closed_trades', 0),
+            "win_rate": stats.get('win_rate', 0),
+            "total_pnl": stats.get('total_pnl', 0),
+            "current_positions": list(current_position_symbols),
         })
     except Exception as e:
+        logging.error(f"Error updating learning outcomes: {e}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -2950,6 +3015,172 @@ def learning_config():
                 return jsonify({"error": "learning_influence must be between 0 and 1"}), 400
         
         return jsonify({"error": "No valid configuration provided"}), 400
+
+
+@app.route('/api/learning/report')
+def get_learning_report():
+    """Generate comprehensive learning report with all insights."""
+    try:
+        from src.learning import LearningReportGenerator
+        
+        report_gen = LearningReportGenerator(outputs_dir="outputs")
+        report = report_gen.generate_full_report()
+        
+        return jsonify(report)
+    except Exception as e:
+        logging.error(f"Error generating learning report: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/learning/report/html')
+def get_learning_report_html():
+    """Generate and return HTML learning report."""
+    try:
+        from src.learning import LearningReportGenerator
+        
+        report_gen = LearningReportGenerator(outputs_dir="outputs")
+        html = report_gen.generate_html_report()
+        
+        return html, 200, {'Content-Type': 'text/html'}
+    except Exception as e:
+        logging.error(f"Error generating HTML learning report: {e}")
+        return f"<html><body><h1>Error</h1><p>{str(e)}</p></body></html>", 500
+
+
+@app.route('/api/learning/report/download')
+def download_learning_report():
+    """Generate and download HTML learning report."""
+    try:
+        from src.learning import LearningReportGenerator
+        from flask import Response
+        from datetime import datetime
+        
+        report_gen = LearningReportGenerator(outputs_dir="outputs")
+        html = report_gen.generate_html_report()
+        
+        filename = f"learning_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html"
+        
+        return Response(
+            html,
+            mimetype='text/html',
+            headers={'Content-Disposition': f'attachment;filename={filename}'}
+        )
+    except Exception as e:
+        logging.error(f"Error downloading learning report: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/learning/realtime')
+def get_realtime_learning_stats():
+    """Get real-time learning statistics for dashboard display."""
+    try:
+        # Get trade statistics
+        trade_stats = learning_engine.trade_memory.get_statistics()
+        
+        # Get current learning influence
+        current_influence = learning_engine.get_adaptive_learning_influence()
+        
+        # Get pattern learner summary
+        pattern_summary = learning_engine.pattern_learner.get_learning_summary()
+        
+        # Get performance tracker summary
+        perf_summary = learning_engine.performance_tracker.get_summary()
+        
+        # Get strategy ranking
+        try:
+            ranking = learning_engine.performance_tracker.get_strategy_ranking()
+        except Exception:
+            ranking = []
+        
+        # Get active patterns
+        market_context = {
+            'regime': last_run_status.get('regime', 'neutral'),
+            'volatility_regime': 'medium',
+            'trend_strength': 0.0,
+        }
+        
+        try:
+            active_patterns = learning_engine.pattern_learner.get_active_patterns(market_context)
+            active_pattern_list = [
+                {
+                    'description': p.description if hasattr(p, 'description') else str(p),
+                    'confidence': p.confidence if hasattr(p, 'confidence') else 0.5,
+                    'action': p.recommended_action if hasattr(p, 'recommended_action') else 'hold',
+                }
+                for p in active_patterns[:3]
+            ]
+        except Exception:
+            active_pattern_list = []
+        
+        # Get top and bottom strategies
+        weights_summary = learning_engine.adaptive_weights.get_learning_summary()
+        current_weights = weights_summary.get('current_weights', {})
+        
+        sorted_strategies = sorted(
+            current_weights.items(),
+            key=lambda x: x[1],
+            reverse=True
+        )
+        
+        top_strategies = sorted_strategies[:3]
+        bottom_strategies = sorted_strategies[-3:] if len(sorted_strategies) > 3 else []
+        
+        return jsonify({
+            "timestamp": datetime.now().isoformat(),
+            
+            # Core stats
+            "total_trades": trade_stats.get('total_trades', 0),
+            "win_rate": trade_stats.get('win_rate', 0.5),
+            "total_pnl": trade_stats.get('total_pnl', 0),
+            "avg_pnl_percent": trade_stats.get('avg_pnl_percent', 0),
+            
+            # Learning influence
+            "learning_influence": current_influence,
+            "debate_influence": 1 - current_influence,
+            
+            # Pattern stats
+            "patterns_discovered": pattern_summary.get('discovered_patterns', 0),
+            "patterns_active": len(active_pattern_list),
+            "active_patterns": active_pattern_list,
+            
+            # Strategy stats
+            "strategies_tracked": perf_summary.get('strategies_tracked', 0),
+            "overall_accuracy": perf_summary.get('overall_accuracy', 0.5),
+            "best_strategy": perf_summary.get('best_strategy'),
+            
+            "top_strategies": [
+                {"name": name, "weight": weight}
+                for name, weight in top_strategies
+            ],
+            "bottom_strategies": [
+                {"name": name, "weight": weight}
+                for name, weight in bottom_strategies
+            ],
+            
+            # Strategy ranking
+            "strategy_ranking": [
+                {"strategy": name, "score": score}
+                for name, score in ranking[:5]
+            ] if ranking else [],
+            
+            # Maturity indicator
+            "learning_maturity": _get_learning_maturity(trade_stats.get('total_trades', 0)),
+        })
+    except Exception as e:
+        logging.error(f"Error getting realtime learning stats: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+def _get_learning_maturity(total_trades):
+    """Calculate learning maturity level."""
+    if total_trades < 20:
+        return {"level": "early", "description": "Early Stage - Gathering initial data"}
+    elif total_trades < 100:
+        return {"level": "developing", "description": "Developing - Patterns emerging"}
+    elif total_trades < 500:
+        return {"level": "maturing", "description": "Maturing - High confidence learnings"}
+    else:
+        return {"level": "mature", "description": "Mature - Learnings are primary drivers"}
 
 
 # ============================================================

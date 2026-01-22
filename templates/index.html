@@ -941,32 +941,90 @@
                 </div>
             </div>
             
-            <!-- Learning System -->
-            <div class="insight-card">
-                <h3><span>📚</span> Learning System</h3>
-                <div style="font-size: 0.85em;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: var(--text-dim);">Trades Analyzed</span>
-                        <span id="learning-trades">--</span>
+            <!-- Learning System - Enhanced -->
+            <div class="insight-card" style="grid-column: span 2;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3><span>🧠</span> Learning System</h3>
+                    <span id="learning-maturity" style="font-size: 0.7em; padding: 3px 8px; border-radius: 10px; background: rgba(88, 166, 255, 0.2); color: var(--accent);">--</span>
+                </div>
+                
+                <!-- Core Metrics Row -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0;">
+                    <div style="text-align: center; padding: 10px; background: var(--card-bg); border-radius: 8px;">
+                        <div id="learning-trades" style="font-size: 1.5em; font-weight: bold; color: var(--accent);">--</div>
+                        <div style="font-size: 0.7em; color: var(--text-dim);">Trades Analyzed</div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: var(--text-dim);">Win Rate</span>
-                        <span id="learning-winrate" class="positive">--</span>
+                    <div style="text-align: center; padding: 10px; background: var(--card-bg); border-radius: 8px;">
+                        <div id="learning-winrate" style="font-size: 1.5em; font-weight: bold;" class="positive">--</div>
+                        <div style="font-size: 0.7em; color: var(--text-dim);">Win Rate</div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: var(--text-dim);">Patterns Found</span>
-                        <span id="learning-patterns">--</span>
+                    <div style="text-align: center; padding: 10px; background: var(--card-bg); border-radius: 8px;">
+                        <div id="learning-patterns" style="font-size: 1.5em; font-weight: bold; color: var(--accent);">--</div>
+                        <div style="font-size: 0.7em; color: var(--text-dim);">Patterns Active</div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: var(--text-dim);">Total P/L</span>
-                        <span id="learning-pnl">--</span>
+                    <div style="text-align: center; padding: 10px; background: var(--card-bg); border-radius: 8px;">
+                        <div id="learning-pnl" style="font-size: 1.5em; font-weight: bold;">--</div>
+                        <div style="font-size: 0.7em; color: var(--text-dim);">Total P/L</div>
                     </div>
                 </div>
-                <button class="action-btn secondary" onclick="updateLearningOutcomes()" style="width: 100%; margin-top: 8px; padding: 6px; font-size: 0.7em;">
-                    📊 Update Outcomes
-                </button>
-                <div id="learning-patterns-detail" style="margin-top: 10px; font-size: 0.7em; color: var(--text-dim);">
-                    <!-- Pattern details will be loaded here -->
+                
+                <!-- Learning Influence Bar -->
+                <div style="margin: 15px 0;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75em; margin-bottom: 5px;">
+                        <span style="color: var(--text-dim);">Learning Influence</span>
+                        <span id="learning-influence-pct" style="color: var(--accent);">--</span>
+                    </div>
+                    <div style="height: 8px; background: var(--card-bg); border-radius: 4px; overflow: hidden;">
+                        <div id="learning-influence-bar" style="height: 100%; width: 30%; background: linear-gradient(90deg, var(--accent), #3fb950); transition: width 0.5s;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.65em; margin-top: 3px; color: var(--text-dim);">
+                        <span>Debate Engine</span>
+                        <span>Learning System</span>
+                    </div>
+                </div>
+                
+                <!-- Top/Bottom Strategies -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;">
+                    <div style="padding: 10px; background: rgba(63, 185, 80, 0.1); border-radius: 8px; border-left: 3px solid #3fb950;">
+                        <div style="font-size: 0.75em; color: #3fb950; margin-bottom: 5px;">📈 Top Strategies</div>
+                        <div id="learning-top-strategies" style="font-size: 0.7em; color: var(--text);">
+                            Loading...
+                        </div>
+                    </div>
+                    <div style="padding: 10px; background: rgba(248, 81, 73, 0.1); border-radius: 8px; border-left: 3px solid #f85149;">
+                        <div style="font-size: 0.75em; color: #f85149; margin-bottom: 5px;">📉 Needs Improvement</div>
+                        <div id="learning-bottom-strategies" style="font-size: 0.7em; color: var(--text);">
+                            Loading...
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Active Patterns -->
+                <div style="margin: 15px 0; padding: 10px; background: var(--card-bg); border-radius: 8px;">
+                    <div style="font-size: 0.75em; color: var(--accent); margin-bottom: 8px;">🔍 Active Patterns</div>
+                    <div id="learning-active-patterns" style="font-size: 0.7em; color: var(--text-dim);">
+                        No patterns active
+                    </div>
+                </div>
+                
+                <!-- Key Insight -->
+                <div id="learning-key-insight" style="margin: 15px 0; padding: 12px; background: rgba(88, 166, 255, 0.1); border-radius: 8px; border-left: 3px solid var(--accent); font-size: 0.75em; display: none;">
+                    <div style="color: var(--accent); margin-bottom: 5px;">💡 Key Insight</div>
+                    <div id="learning-insight-text" style="color: var(--text);"></div>
+                    <div id="learning-insight-action" style="color: #3fb950; margin-top: 5px; font-style: italic;"></div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="action-btn secondary" onclick="updateLearningOutcomes()" style="flex: 1; padding: 8px; font-size: 0.75em;">
+                        📊 Update Outcomes
+                    </button>
+                    <button class="action-btn" onclick="viewLearningReport()" style="flex: 1; padding: 8px; font-size: 0.75em;">
+                        📋 View Full Report
+                    </button>
+                    <button class="action-btn secondary" onclick="downloadLearningReport()" style="flex: 0.5; padding: 8px; font-size: 0.75em;">
+                        ⬇️
+                    </button>
                 </div>
             </div>
             
@@ -1270,63 +1328,122 @@
             }
         }
         
-        // Load Learning
+        // Load Learning - Comprehensive version
         async function loadLearning() {
             try {
-                const res = await fetch('/api/learning/summary');
+                // Fetch real-time learning stats
+                const res = await fetch('/api/learning/realtime');
                 const data = await res.json();
                 
-                // Update learning stats
+                if (data.error) {
+                    console.error('Learning API error:', data.error);
+                    return;
+                }
+                
+                // Update core metrics
                 document.getElementById('learning-trades').textContent = data.total_trades || 0;
+                
                 const winRate = ((data.win_rate || 0) * 100);
-                document.getElementById('learning-winrate').textContent = winRate.toFixed(0) + '%';
-                document.getElementById('learning-winrate').style.color = winRate >= 50 ? 'var(--success)' : 'var(--danger)';
-                document.getElementById('learning-patterns').textContent = data.patterns_found || 0;
+                const winRateEl = document.getElementById('learning-winrate');
+                winRateEl.textContent = winRate.toFixed(0) + '%';
+                winRateEl.className = winRate >= 52 ? 'positive' : winRate < 48 ? 'negative' : '';
+                
+                document.getElementById('learning-patterns').textContent = data.patterns_active || 0;
                 
                 // Show P/L
                 const pnl = data.total_pnl || 0;
                 const pnlEl = document.getElementById('learning-pnl');
-                pnlEl.textContent = `$${pnl.toFixed(2)}`;
+                pnlEl.textContent = pnl >= 0 ? `$${pnl.toFixed(0)}` : `-$${Math.abs(pnl).toFixed(0)}`;
                 pnlEl.className = pnl >= 0 ? 'positive' : 'negative';
                 
-                // Load and show pattern details
-                const patternRes = await fetch('/api/learning/patterns');
-                const patternData = await patternRes.json();
-                
-                const patternContainer = document.getElementById('learning-patterns-detail');
-                if (patternData.top_patterns && patternData.top_patterns.length > 0) {
-                    const activePatterns = patternData.top_patterns.filter(p => p.observations > 0);
-                    if (activePatterns.length > 0) {
-                        patternContainer.innerHTML = `
-                            <div style="border-top: 1px solid var(--border); padding-top: 8px; margin-top: 8px;">
-                                <div style="font-weight: 500; margin-bottom: 5px;">Active Patterns:</div>
-                                ${activePatterns.slice(0, 3).map(p => `
-                                    <div style="margin-bottom: 4px;">
-                                        📌 ${p.description.substring(0, 35)}...
-                                        <span style="color: ${p.confidence >= 0.5 ? 'var(--success)' : 'var(--text-dim)'}">(${(p.confidence * 100).toFixed(0)}%)</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        `;
-                    } else {
-                        patternContainer.innerHTML = '<div style="margin-top: 8px;">Run more rebalances to discover patterns</div>';
-                    }
+                // Update learning maturity badge
+                const maturityEl = document.getElementById('learning-maturity');
+                if (data.learning_maturity) {
+                    maturityEl.textContent = data.learning_maturity.description || data.learning_maturity.level;
+                    maturityEl.style.background = data.learning_maturity.level === 'mature' ? 'rgba(63, 185, 80, 0.2)' :
+                                                  data.learning_maturity.level === 'maturing' ? 'rgba(88, 166, 255, 0.2)' :
+                                                  'rgba(139, 148, 158, 0.2)';
                 }
                 
-                // Show additional info in console for debugging
-                console.log('📊 Learning Summary:', {
+                // Update learning influence bar
+                const influence = ((data.learning_influence || 0.3) * 100);
+                document.getElementById('learning-influence-pct').textContent = influence.toFixed(0) + '% from learning';
+                document.getElementById('learning-influence-bar').style.width = influence + '%';
+                
+                // Update top strategies
+                const topStrategiesEl = document.getElementById('learning-top-strategies');
+                if (data.top_strategies && data.top_strategies.length > 0) {
+                    topStrategiesEl.innerHTML = data.top_strategies.map(s => 
+                        `<div style="margin-bottom: 3px;">• ${s.name.replace(/_/g, ' ')} <span style="color: #3fb950;">(${(s.weight * 100).toFixed(1)}%)</span></div>`
+                    ).join('');
+                } else {
+                    topStrategiesEl.innerHTML = '<div>Gathering data...</div>';
+                }
+                
+                // Update bottom strategies
+                const bottomStrategiesEl = document.getElementById('learning-bottom-strategies');
+                if (data.bottom_strategies && data.bottom_strategies.length > 0) {
+                    bottomStrategiesEl.innerHTML = data.bottom_strategies.map(s => 
+                        `<div style="margin-bottom: 3px;">• ${s.name.replace(/_/g, ' ')} <span style="color: #f85149;">(${(s.weight * 100).toFixed(1)}%)</span></div>`
+                    ).join('');
+                } else {
+                    bottomStrategiesEl.innerHTML = '<div>Gathering data...</div>';
+                }
+                
+                // Update active patterns
+                const patternsEl = document.getElementById('learning-active-patterns');
+                if (data.active_patterns && data.active_patterns.length > 0) {
+                    patternsEl.innerHTML = data.active_patterns.map(p => 
+                        `<div style="margin-bottom: 5px; padding: 5px; background: rgba(88, 166, 255, 0.1); border-radius: 4px;">
+                            <div style="color: var(--text);">📌 ${p.description}</div>
+                            <div style="display: flex; justify-content: space-between; margin-top: 3px;">
+                                <span style="color: var(--accent);">${p.action.replace(/_/g, ' ')}</span>
+                                <span style="color: ${p.confidence >= 0.6 ? '#3fb950' : 'var(--text-dim)'}">${(p.confidence * 100).toFixed(0)}% conf</span>
+                            </div>
+                        </div>`
+                    ).join('');
+                } else {
+                    patternsEl.innerHTML = '<div style="color: var(--text-dim);">No patterns currently active. Run more rebalances to discover patterns.</div>';
+                }
+                
+                // Fetch key insights for the insight card
+                try {
+                    const reportRes = await fetch('/api/learning/report');
+                    const reportData = await reportRes.json();
+                    
+                    if (reportData.key_insights && reportData.key_insights.length > 0) {
+                        const insight = reportData.key_insights[0];
+                        const insightCard = document.getElementById('learning-key-insight');
+                        insightCard.style.display = 'block';
+                        document.getElementById('learning-insight-text').textContent = insight.description;
+                        document.getElementById('learning-insight-action').textContent = '→ ' + insight.action;
+                    }
+                } catch (e) {
+                    console.log('Could not load key insights:', e);
+                }
+                
+                // Console log for debugging
+                console.log('🧠 Learning Dashboard Updated:', {
                     trades: data.total_trades,
                     winRate: winRate.toFixed(1) + '%',
-                    totalPnL: '$' + (data.total_pnl || 0).toFixed(2),
-                    bestTrade: data.best_trade,
-                    worstTrade: data.worst_trade,
-                    openPositions: data.open_positions,
-                    closedTrades: data.closed_trades,
-                    patterns: patternData
+                    influence: influence.toFixed(0) + '%',
+                    patterns: data.patterns_active,
+                    maturity: data.learning_maturity?.level
                 });
+                
             } catch (e) {
                 console.error('Learning error:', e);
             }
+        }
+        
+        // View full learning report
+        function viewLearningReport() {
+            window.open('/api/learning/report/html', '_blank');
+        }
+        
+        // Download learning report
+        function downloadLearningReport() {
+            window.location.href = '/api/learning/report/download';
         }
         
         async function updateLearningOutcomes() {

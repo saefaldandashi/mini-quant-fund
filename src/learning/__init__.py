@@ -18,6 +18,7 @@ from .performance_tracker import PerformanceTracker, StrategyMetrics
 from .adaptive_weights import AdaptiveWeightLearner
 from .pattern_learner import PatternLearner
 from .learning_engine import LearningEngine
+from .learning_report import LearningReportGenerator
 from .debate_learner import DebateLearner, DebateRecord, StrategyDebateProfile
 from .outcome_tracker import OutcomeTracker
 from .signal_validator import SignalValidator
@@ -31,6 +32,7 @@ __all__ = [
     'AdaptiveWeightLearner',
     'PatternLearner',
     'LearningEngine',
+    'LearningReportGenerator',
     'DebateLearner',
     'DebateRecord',
     'StrategyDebateProfile',
