@@ -97,8 +97,8 @@
         78
       ],
       "neutral": [
-        27,
-        27
+        57,
+        57
       ]
     },
     "defense_success_by_regime": {
@@ -108,12 +108,12 @@
       ],
       "neutral": [
         0,
-        111
+        276
       ]
     },
-    "debates_won": 29,
-    "debates_lost": 99,
-    "debates_participated": 128,
+    "debates_won": 31,
+    "debates_lost": 120,
+    "debates_participated": 151,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -213,8 +213,8 @@
         345
       ],
       "neutral": [
-        54,
-        54
+        99,
+        99
       ]
     },
     "defense_success_by_regime": {
@@ -224,12 +224,12 @@
       ],
       "neutral": [
         0,
-        87
+        237
       ]
     },
     "debates_won": 3,
-    "debates_lost": 125,
-    "debates_participated": 128,
+    "debates_lost": 148,
+    "debates_participated": 151,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -267,12 +267,12 @@
     "defense_success_by_regime": {
       "neutral": [
         0,
-        112
+        307
       ]
     },
-    "debates_won": 20,
+    "debates_won": 43,
     "debates_lost": 0,
-    "debates_participated": 20,
+    "debates_participated": 43,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -282,19 +282,19 @@
     "strategy_name": "TS_Momentum_LS",
     "attack_success_by_regime": {
       "neutral": [
-        15,
-        15
+        30,
+        30
       ]
     },
     "defense_success_by_regime": {
       "neutral": [
         0,
-        92
+        272
       ]
     },
     "debates_won": 0,
-    "debates_lost": 20,
-    "debates_participated": 20,
+    "debates_lost": 43,
+    "debates_participated": 43,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -304,19 +304,19 @@
     "strategy_name": "MeanReversion_LS",
     "attack_success_by_regime": {
       "neutral": [
-        58,
-        58
+        133,
+        133
       ]
     },
     "defense_success_by_regime": {
       "neutral": [
         0,
-        54
+        174
       ]
     },
     "debates_won": 0,
-    "debates_lost": 20,
-    "debates_participated": 20,
+    "debates_lost": 43,
+    "debates_participated": 43,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -326,19 +326,19 @@
     "strategy_name": "QualityValue_LS",
     "attack_success_by_regime": {
       "neutral": [
-        49,
-        49
+        109,
+        109
       ]
     },
     "defense_success_by_regime": {
       "neutral": [
         0,
-        62
+        197
       ]
     },
     "debates_won": 0,
-    "debates_lost": 20,
-    "debates_participated": 20,
+    "debates_lost": 43,
+    "debates_participated": 43,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -348,14 +348,14 @@
     "strategy_name": "Futures_Carry",
     "attack_success_by_regime": {
       "neutral": [
-        103,
-        103
+        283,
+        283
       ]
     },
     "defense_success_by_regime": {},
-    "debates_won": 13,
-    "debates_lost": 7,
-    "debates_participated": 20,
+    "debates_won": 35,
+    "debates_lost": 8,
+    "debates_participated": 43,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -365,14 +365,14 @@
     "strategy_name": "Futures_Trend",
     "attack_success_by_regime": {
       "neutral": [
-        104,
-        104
+        284,
+        284
       ]
     },
     "defense_success_by_regime": {},
-    "debates_won": 10,
-    "debates_lost": 10,
-    "debates_participated": 20,
+    "debates_won": 31,
+    "debates_lost": 12,
+    "debates_participated": 43,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -382,19 +382,19 @@
     "strategy_name": "RelativeStrengthIntraday",
     "attack_success_by_regime": {
       "neutral": [
-        29,
-        29
+        119,
+        119
       ]
     },
     "defense_success_by_regime": {
       "neutral": [
         0,
-        36
+        141
       ]
     },
     "debates_won": 0,
-    "debates_lost": 12,
-    "debates_participated": 12,
+    "debates_lost": 35,
+    "debates_participated": 35,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -404,19 +404,19 @@
     "strategy_name": "QuickMeanReversion",
     "attack_success_by_regime": {
       "neutral": [
-        34,
-        34
+        139,
+        139
       ]
     },
     "defense_success_by_regime": {
       "neutral": [
         0,
-        30
+        120
       ]
     },
     "debates_won": 2,
-    "debates_lost": 10,
-    "debates_participated": 12,
+    "debates_lost": 33,
+    "debates_participated": 35,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -426,19 +426,19 @@
     "strategy_name": "VolumeSpike",
     "attack_success_by_regime": {
       "neutral": [
-        50,
-        50
+        200,
+        200
       ]
     },
     "defense_success_by_regime": {
       "neutral": [
         0,
-        15
+        60
       ]
     },
     "debates_won": 0,
-    "debates_lost": 12,
-    "debates_participated": 12,
+    "debates_lost": 35,
+    "debates_participated": 35,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -448,19 +448,19 @@
     "strategy_name": "IntradayMomentum",
     "attack_success_by_regime": {
       "neutral": [
-        40,
-        40
+        160,
+        160
       ]
     },
     "defense_success_by_regime": {
       "neutral": [
         0,
-        25
+        100
       ]
     },
     "debates_won": 0,
-    "debates_lost": 12,
-    "debates_participated": 12,
+    "debates_lost": 35,
+    "debates_participated": 35,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -470,19 +470,19 @@
     "strategy_name": "VWAPReversion",
     "attack_success_by_regime": {
       "neutral": [
-        45,
-        45
+        180,
+        180
       ]
     },
     "defense_success_by_regime": {
       "neutral": [
         0,
-        20
+        80
       ]
     },
     "debates_won": 0,
-    "debates_lost": 12,
-    "debates_participated": 12,
+    "debates_lost": 35,
+    "debates_participated": 35,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,
@@ -492,19 +492,31 @@
     "strategy_name": "OpeningRangeBreakout",
     "attack_success_by_regime": {
       "neutral": [
-        55,
-        55
+        220,
+        220
       ]
     },
     "defense_success_by_regime": {
       "neutral": [
         0,
-        10
+        40
       ]
     },
     "debates_won": 0,
-    "debates_lost": 12,
-    "debates_participated": 12,
+    "debates_lost": 35,
+    "debates_participated": 35,
+    "accurate_wins": 0,
+    "inaccurate_wins": 0,
+    "accurate_losses": 0,
+    "inaccurate_losses": 0
+  },
+  "Futures_Macro": {
+    "strategy_name": "Futures_Macro",
+    "attack_success_by_regime": {},
+    "defense_success_by_regime": {},
+    "debates_won": 1,
+    "debates_lost": 2,
+    "debates_participated": 3,
     "accurate_wins": 0,
     "inaccurate_wins": 0,
     "accurate_losses": 0,

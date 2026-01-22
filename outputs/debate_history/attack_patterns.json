@@ -572,8 +572,8 @@
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 12,
-    "times_succeeded": 12
+    "times_used": 27,
+    "times_succeeded": 27
   },
   "NewsSentimentEvent_VolatilityRegimeVolTarget_neutral": {
     "attacker": "NewsSentimentEvent",
@@ -652,16 +652,16 @@
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "CrossSectionMomentum_TS_Momentum_LS_neutral": {
     "attacker": "CrossSectionMomentum",
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 7,
-    "times_succeeded": 7
+    "times_used": 22,
+    "times_succeeded": 22
   },
   "Carry_CS_Momentum_LS_neutral": {
     "attacker": "Carry",
@@ -772,8 +772,8 @@
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "TS_Momentum_LS_RiskParityMinVar_neutral": {
     "attacker": "TS_Momentum_LS",
@@ -796,8 +796,8 @@
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "MeanReversion_LS_RiskParityMinVar_neutral": {
     "attacker": "MeanReversion_LS",
@@ -820,16 +820,16 @@
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "MeanReversion_LS_CrossSectionMomentum_neutral": {
     "attacker": "MeanReversion_LS",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "MeanReversion_LS_TailRiskOverlay_neutral": {
     "attacker": "MeanReversion_LS",
@@ -844,24 +844,24 @@
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "MeanReversion_LS_QualityValue_LS_neutral": {
     "attacker": "MeanReversion_LS",
     "defender": "QualityValue_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "QualityValue_LS_CS_Momentum_LS_neutral": {
     "attacker": "QualityValue_LS",
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "QualityValue_LS_RiskParityMinVar_neutral": {
     "attacker": "QualityValue_LS",
@@ -884,16 +884,16 @@
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "QualityValue_LS_CrossSectionMomentum_neutral": {
     "attacker": "QualityValue_LS",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "QualityValue_LS_TailRiskOverlay_neutral": {
     "attacker": "QualityValue_LS",
@@ -908,16 +908,16 @@
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Carry_CS_Momentum_LS_neutral": {
     "attacker": "Futures_Carry",
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Carry_RiskParityMinVar_neutral": {
     "attacker": "Futures_Carry",
@@ -940,16 +940,16 @@
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Carry_CrossSectionMomentum_neutral": {
     "attacker": "Futures_Carry",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 7,
-    "times_succeeded": 7
+    "times_used": 22,
+    "times_succeeded": 22
   },
   "Futures_Carry_TailRiskOverlay_neutral": {
     "attacker": "Futures_Carry",
@@ -964,24 +964,24 @@
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Carry_QualityValue_LS_neutral": {
     "attacker": "Futures_Carry",
     "defender": "QualityValue_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Carry_MeanReversion_LS_neutral": {
     "attacker": "Futures_Carry",
     "defender": "MeanReversion_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Carry_ValueQualityTilt_neutral": {
     "attacker": "Futures_Carry",
@@ -1012,8 +1012,8 @@
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Trend_RiskParityMinVar_neutral": {
     "attacker": "Futures_Trend",
@@ -1036,16 +1036,16 @@
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Trend_CrossSectionMomentum_neutral": {
     "attacker": "Futures_Trend",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Trend_TailRiskOverlay_neutral": {
     "attacker": "Futures_Trend",
@@ -1060,24 +1060,24 @@
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Trend_QualityValue_LS_neutral": {
     "attacker": "Futures_Trend",
     "defender": "QualityValue_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Trend_MeanReversion_LS_neutral": {
     "attacker": "Futures_Trend",
     "defender": "MeanReversion_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "Futures_Trend_ValueQualityTilt_neutral": {
     "attacker": "Futures_Trend",
@@ -1108,16 +1108,16 @@
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "NewsSentimentEvent_TS_Momentum_LS_neutral": {
     "attacker": "NewsSentimentEvent",
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 8,
-    "times_succeeded": 8
+    "times_used": 23,
+    "times_succeeded": 23
   },
   "ValueQualityTilt_CS_Momentum_LS_neutral": {
     "attacker": "ValueQualityTilt",
@@ -1164,160 +1164,160 @@
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_CrossSectionMomentum_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_TS_Momentum_LS_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_NewsSentimentEvent_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_QualityValue_LS_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "QualityValue_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_RelativeStrengthIntraday_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "RelativeStrengthIntraday",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_MeanReversion_LS_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "MeanReversion_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_QuickMeanReversion_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "QuickMeanReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_IntradayMomentum_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "IntradayMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_VWAPReversion_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "VWAPReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "OpeningRangeBreakout_VolumeSpike_neutral": {
     "attacker": "OpeningRangeBreakout",
     "defender": "VolumeSpike",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VWAPReversion_CS_Momentum_LS_neutral": {
     "attacker": "VWAPReversion",
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VWAPReversion_CrossSectionMomentum_neutral": {
     "attacker": "VWAPReversion",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VWAPReversion_TS_Momentum_LS_neutral": {
     "attacker": "VWAPReversion",
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VWAPReversion_NewsSentimentEvent_neutral": {
     "attacker": "VWAPReversion",
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VWAPReversion_QualityValue_LS_neutral": {
     "attacker": "VWAPReversion",
     "defender": "QualityValue_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VWAPReversion_RelativeStrengthIntraday_neutral": {
     "attacker": "VWAPReversion",
     "defender": "RelativeStrengthIntraday",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VWAPReversion_MeanReversion_LS_neutral": {
     "attacker": "VWAPReversion",
     "defender": "MeanReversion_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VWAPReversion_QuickMeanReversion_neutral": {
     "attacker": "VWAPReversion",
     "defender": "QuickMeanReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VWAPReversion_IntradayMomentum_neutral": {
     "attacker": "VWAPReversion",
     "defender": "IntradayMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "TS_Momentum_LS_CrossSectionMomentum_neutral": {
     "attacker": "TS_Momentum_LS",
@@ -1332,328 +1332,328 @@
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "RelativeStrengthIntraday_CrossSectionMomentum_neutral": {
     "attacker": "RelativeStrengthIntraday",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "RelativeStrengthIntraday_TS_Momentum_LS_neutral": {
     "attacker": "RelativeStrengthIntraday",
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "RelativeStrengthIntraday_NewsSentimentEvent_neutral": {
     "attacker": "RelativeStrengthIntraday",
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "RelativeStrengthIntraday_QualityValue_LS_neutral": {
     "attacker": "RelativeStrengthIntraday",
     "defender": "QualityValue_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "IntradayMomentum_CS_Momentum_LS_neutral": {
     "attacker": "IntradayMomentum",
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "IntradayMomentum_CrossSectionMomentum_neutral": {
     "attacker": "IntradayMomentum",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "IntradayMomentum_TS_Momentum_LS_neutral": {
     "attacker": "IntradayMomentum",
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "IntradayMomentum_NewsSentimentEvent_neutral": {
     "attacker": "IntradayMomentum",
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "IntradayMomentum_QualityValue_LS_neutral": {
     "attacker": "IntradayMomentum",
     "defender": "QualityValue_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "IntradayMomentum_RelativeStrengthIntraday_neutral": {
     "attacker": "IntradayMomentum",
     "defender": "RelativeStrengthIntraday",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "IntradayMomentum_MeanReversion_LS_neutral": {
     "attacker": "IntradayMomentum",
     "defender": "MeanReversion_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "IntradayMomentum_QuickMeanReversion_neutral": {
     "attacker": "IntradayMomentum",
     "defender": "QuickMeanReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_CS_Momentum_LS_neutral": {
     "attacker": "VolumeSpike",
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_CrossSectionMomentum_neutral": {
     "attacker": "VolumeSpike",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_TS_Momentum_LS_neutral": {
     "attacker": "VolumeSpike",
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_NewsSentimentEvent_neutral": {
     "attacker": "VolumeSpike",
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_QualityValue_LS_neutral": {
     "attacker": "VolumeSpike",
     "defender": "QualityValue_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_RelativeStrengthIntraday_neutral": {
     "attacker": "VolumeSpike",
     "defender": "RelativeStrengthIntraday",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_MeanReversion_LS_neutral": {
     "attacker": "VolumeSpike",
     "defender": "MeanReversion_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_QuickMeanReversion_neutral": {
     "attacker": "VolumeSpike",
     "defender": "QuickMeanReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_IntradayMomentum_neutral": {
     "attacker": "VolumeSpike",
     "defender": "IntradayMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "VolumeSpike_VWAPReversion_neutral": {
     "attacker": "VolumeSpike",
     "defender": "VWAPReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "QuickMeanReversion_CS_Momentum_LS_neutral": {
     "attacker": "QuickMeanReversion",
     "defender": "CS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "QuickMeanReversion_CrossSectionMomentum_neutral": {
     "attacker": "QuickMeanReversion",
     "defender": "CrossSectionMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "QuickMeanReversion_TS_Momentum_LS_neutral": {
     "attacker": "QuickMeanReversion",
     "defender": "TS_Momentum_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "QuickMeanReversion_NewsSentimentEvent_neutral": {
     "attacker": "QuickMeanReversion",
     "defender": "NewsSentimentEvent",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "QuickMeanReversion_RelativeStrengthIntraday_neutral": {
     "attacker": "QuickMeanReversion",
     "defender": "RelativeStrengthIntraday",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "QuickMeanReversion_MeanReversion_LS_neutral": {
     "attacker": "QuickMeanReversion",
     "defender": "MeanReversion_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Carry_RelativeStrengthIntraday_neutral": {
     "attacker": "Futures_Carry",
     "defender": "RelativeStrengthIntraday",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Carry_QuickMeanReversion_neutral": {
     "attacker": "Futures_Carry",
     "defender": "QuickMeanReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Carry_IntradayMomentum_neutral": {
     "attacker": "Futures_Carry",
     "defender": "IntradayMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Carry_VWAPReversion_neutral": {
     "attacker": "Futures_Carry",
     "defender": "VWAPReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Carry_VolumeSpike_neutral": {
     "attacker": "Futures_Carry",
     "defender": "VolumeSpike",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Carry_OpeningRangeBreakout_neutral": {
     "attacker": "Futures_Carry",
     "defender": "OpeningRangeBreakout",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Trend_RelativeStrengthIntraday_neutral": {
     "attacker": "Futures_Trend",
     "defender": "RelativeStrengthIntraday",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Trend_QuickMeanReversion_neutral": {
     "attacker": "Futures_Trend",
     "defender": "QuickMeanReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Trend_IntradayMomentum_neutral": {
     "attacker": "Futures_Trend",
     "defender": "IntradayMomentum",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Trend_VWAPReversion_neutral": {
     "attacker": "Futures_Trend",
     "defender": "VWAPReversion",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Trend_VolumeSpike_neutral": {
     "attacker": "Futures_Trend",
     "defender": "VolumeSpike",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "Futures_Trend_OpeningRangeBreakout_neutral": {
     "attacker": "Futures_Trend",
     "defender": "OpeningRangeBreakout",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 5,
-    "times_succeeded": 5
+    "times_used": 20,
+    "times_succeeded": 20
   },
   "MeanReversion_LS_RelativeStrengthIntraday_neutral": {
     "attacker": "MeanReversion_LS",
@@ -1668,15 +1668,15 @@
     "defender": "QualityValue_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 4,
-    "times_succeeded": 4
+    "times_used": 19,
+    "times_succeeded": 19
   },
   "RelativeStrengthIntraday_MeanReversion_LS_neutral": {
     "attacker": "RelativeStrengthIntraday",
     "defender": "MeanReversion_LS",
     "regime": "neutral",
     "claim_type": "general",
-    "times_used": 4,
-    "times_succeeded": 4
+    "times_used": 19,
+    "times_succeeded": 19
   }
 }

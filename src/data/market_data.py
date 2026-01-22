@@ -1,6 +1,8 @@
 """
 Market data loading and preprocessing.
 Supports OHLCV data from CSV/parquet with adapters for external APIs.
+
+Now includes intraday bar fetching for HFT-lite strategies.
 """
 import pandas as pd
 import numpy as np
@@ -8,6 +10,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Union
 from datetime import datetime, timedelta
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -204,6 +207,174 @@ class MarketDataLoader:
         """
         # TODO: Load from FRED or data file
         return 0.0001  # ~2.5% annual as daily rate
+    
+    def load_intraday_bars(
+        self,
+        symbols: List[str],
+        timeframe: str = "15Min",
+        days_back: int = 1,
+    ) -> Dict[str, pd.DataFrame]:
+        """
+        Fetch intraday bars from Alpaca.
+        
+        CRITICAL for HFT-lite strategies - provides real 15/30-min bars
+        instead of falling back to daily data.
+        
+        Args:
+            symbols: List of symbols
+            timeframe: "1Min", "5Min", "15Min", "30Min", "1Hour"
+            days_back: How many days of intraday data
+        
+        Returns:
+            Dict of symbol -> DataFrame with OHLCV + VWAP columns
+        """
+        try:
+            from alpaca.data.historical import StockHistoricalDataClient
+            from alpaca.data.requests import StockBarsRequest
+            from alpaca.data.timeframe import TimeFrame, TimeFrameUnit
+            import pytz
+            
+            api_key = os.getenv('ALPACA_API_KEY')
+            secret_key = os.getenv('ALPACA_SECRET_KEY')
+            
+            if not api_key or not secret_key:
+                logger.warning("No Alpaca API keys for intraday data")
+                return {}
+            
+            # Map timeframe strings to Alpaca TimeFrame objects
+            timeframe_map = {
+                "1Min": TimeFrame(1, TimeFrameUnit.Minute),
+                "5Min": TimeFrame(5, TimeFrameUnit.Minute),
+                "15Min": TimeFrame(15, TimeFrameUnit.Minute),
+                "30Min": TimeFrame(30, TimeFrameUnit.Minute),
+                "1Hour": TimeFrame(1, TimeFrameUnit.Hour),
+            }
+            
+            if timeframe not in timeframe_map:
+                logger.warning(f"Unknown timeframe {timeframe}, using 15Min")
+                timeframe = "15Min"
+            
+            client = StockHistoricalDataClient(api_key, secret_key)
+            
+            end = datetime.now(pytz.UTC)
+            start = end - timedelta(days=days_back)
+            
+            from alpaca.data.enums import DataFeed
+            
+            request = StockBarsRequest(
+                symbol_or_symbols=symbols,
+                timeframe=timeframe_map[timeframe],
+                start=start,
+                end=end,
+                feed=DataFeed.IEX,  # Use IEX feed (free tier compatible)
+            )
+            
+            bars = client.get_stock_bars(request)
+            
+            result = {}
+            for symbol in symbols:
+                if bars and hasattr(bars, 'data') and symbol in bars.data:
+                    symbol_bars = bars.data[symbol]
+                    if symbol_bars:
+                        df = pd.DataFrame([
+                            {
+                                'timestamp': b.timestamp,
+                                'open': b.open,
+                                'high': b.high,
+                                'low': b.low,
+                                'close': b.close,
+                                'volume': b.volume,
+                                'vwap': getattr(b, 'vwap', b.close),  # VWAP if available
+                            }
+                            for b in symbol_bars
+                        ])
+                        df.set_index('timestamp', inplace=True)
+                        df = df.sort_index()
+                        result[symbol] = df
+            
+            logger.info(f"Loaded intraday {timeframe} bars for {len(result)} symbols")
+            return result
+            
+        except Exception as e:
+            logger.warning(f"Failed to load intraday bars: {e}")
+            return {}
+    
+    def get_intraday_features(
+        self,
+        symbols: List[str],
+        timeframe: str = "15Min",
+    ) -> Dict[str, Dict]:
+        """
+        Compute intraday features from intraday bars.
+        
+        Returns features needed by HFT-lite strategies:
+        - intraday_returns: Return over the last timeframe period
+        - volume_ratio: Current volume vs average
+        - vwap: Current VWAP
+        - vwap_deviation: Price deviation from VWAP
+        - opening_high: High of first 30 minutes
+        - opening_low: Low of first 30 minutes
+        
+        Args:
+            symbols: List of symbols
+            timeframe: Timeframe for bars
+        
+        Returns:
+            Dict with intraday features for each symbol
+        """
+        bars = self.load_intraday_bars(symbols, timeframe, days_back=1)
+        
+        features = {
+            'intraday_returns': {},
+            'volume_ratio': {},
+            'vwap': {},
+            'vwap_deviation': {},
+            'opening_high': {},
+            'opening_low': {},
+            'current_prices': {},
+        }
+        
+        for symbol, df in bars.items():
+            if len(df) < 2:
+                continue
+            
+            try:
+                # Current price
+                current_price = df['close'].iloc[-1]
+                features['current_prices'][symbol] = current_price
+                
+                # Intraday return (last bar vs previous bar)
+                if len(df) >= 2:
+                    features['intraday_returns'][symbol] = (
+                        df['close'].iloc[-1] / df['close'].iloc[-2] - 1
+                    )
+                
+                # Volume ratio (current vs average)
+                avg_volume = df['volume'].mean()
+                current_volume = df['volume'].iloc[-1]
+                if avg_volume > 0:
+                    features['volume_ratio'][symbol] = current_volume / avg_volume
+                
+                # VWAP
+                features['vwap'][symbol] = df['vwap'].iloc[-1]
+                
+                # VWAP deviation
+                if features['vwap'][symbol] > 0:
+                    features['vwap_deviation'][symbol] = (
+                        current_price - features['vwap'][symbol]
+                    ) / features['vwap'][symbol]
+                
+                # Opening range (first ~2 bars assuming 15min = 30min opening)
+                opening_bars = df.head(2)
+                if len(opening_bars) >= 1:
+                    features['opening_high'][symbol] = opening_bars['high'].max()
+                    features['opening_low'][symbol] = opening_bars['low'].min()
+                    
+            except Exception as e:
+                logger.debug(f"Could not compute intraday features for {symbol}: {e}")
+                continue
+        
+        return features
     
     def generate_sample_data(
         self,

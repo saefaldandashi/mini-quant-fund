@@ -100,5 +100,42 @@
       "avg_win_rate": 0.5,
       "last_updated": "2026-01-21T15:31:08.031911"
     }
+  },
+  "bull_trending": {
+    "TimeSeriesMomentum": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-22T01:03:21.761833"
+    },
+    "CrossSectionMomentum": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-22T01:03:21.761842"
+    },
+    "MeanReversion": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-22T01:03:21.761846"
+    },
+    "VolatilityRegimeVolTarget": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-22T01:03:21.761848"
+    },
+    "Carry": {
+      "observations": 2,
+      "total_win_rate": 1.0,
+      "returns": [],
+      "avg_win_rate": 0.5,
+      "last_updated": "2026-01-22T01:03:21.761851"
+    }
   }
 }

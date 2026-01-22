@@ -34,6 +34,14 @@ class Features:
     returns_126d: Dict[str, float] = field(default_factory=dict)
     returns_252d: Dict[str, float] = field(default_factory=dict)
     
+    # INTRADAY FEATURES (Critical for HFT-lite strategies)
+    intraday_returns: Dict[str, float] = field(default_factory=dict)  # Last 15-30 min return
+    volume_ratio: Dict[str, float] = field(default_factory=dict)  # Current vol vs average
+    vwap: Dict[str, float] = field(default_factory=dict)  # Current VWAP
+    vwap_deviation: Dict[str, float] = field(default_factory=dict)  # Price deviation from VWAP
+    opening_high: Dict[str, float] = field(default_factory=dict)  # First 30-min high
+    opening_low: Dict[str, float] = field(default_factory=dict)  # First 30-min low
+    
     # Volatility features
     volatility_21d: Dict[str, float] = field(default_factory=dict)
     volatility_63d: Dict[str, float] = field(default_factory=dict)
@@ -61,6 +69,9 @@ class Features:
     # Macro features from News Intelligence Pipeline
     macro_features: Optional[Any] = None  # DailyMacroFeatures
     risk_sentiment: Optional[Any] = None  # RiskSentiment
+    
+    # Flag indicating if intraday data is available
+    has_intraday_data: bool = False
 
 
 class FeatureStore:
@@ -310,6 +321,49 @@ class FeatureStore:
         
         features.correlation_matrix = recent_returns.corr()
         features.covariance_matrix = recent_returns.cov() * 252  # Annualized
+    
+    def add_intraday_features(
+        self,
+        features: Features,
+        symbols: List[str],
+        timeframe: str = "15Min",
+    ) -> Features:
+        """
+        Add intraday features to an existing Features object.
+        
+        This is CRITICAL for HFT-lite strategies - without this,
+        intraday strategies fall back to daily data and are essentially random.
+        
+        Args:
+            features: Existing Features object
+            symbols: Symbols to get intraday data for
+            timeframe: Intraday timeframe
+            
+        Returns:
+            Features object with intraday data populated
+        """
+        try:
+            intraday = self.market_loader.get_intraday_features(symbols, timeframe)
+            
+            if intraday and intraday.get('intraday_returns'):
+                features.intraday_returns = intraday.get('intraday_returns', {})
+                features.volume_ratio = intraday.get('volume_ratio', {})
+                features.vwap = intraday.get('vwap', {})
+                features.vwap_deviation = intraday.get('vwap_deviation', {})
+                features.opening_high = intraday.get('opening_high', {})
+                features.opening_low = intraday.get('opening_low', {})
+                features.has_intraday_data = True
+                
+                logger.info(f"Added intraday features for {len(features.intraday_returns)} symbols")
+            else:
+                logger.warning("No intraday data available, strategies will use fallback")
+                features.has_intraday_data = False
+                
+        except Exception as e:
+            logger.warning(f"Could not add intraday features: {e}")
+            features.has_intraday_data = False
+        
+        return features
     
     def get_rebalance_dates(
         self,

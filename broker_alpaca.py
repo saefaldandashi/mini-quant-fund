@@ -747,3 +747,243 @@ class AlpacaBroker:
             'gross': long_exposure + short_exposure,
             'net': long_exposure - short_exposure,
         }
+    
+    def get_current_quotes(self, symbols: List[str]) -> Dict[str, Dict]:
+        """
+        Get real-time bid-ask quotes from Alpaca.
+        
+        This provides ACTUAL spreads instead of estimated ones,
+        improving transaction cost accuracy significantly.
+        
+        Args:
+            symbols: List of symbols to get quotes for
+            
+        Returns:
+            Dict of symbol -> {'bid': float, 'ask': float, 'spread_pct': float, 'mid': float}
+        """
+        try:
+            from alpaca.data.requests import StockLatestQuoteRequest
+            
+            # Batch request for all symbols
+            request = StockLatestQuoteRequest(symbol_or_symbols=symbols)
+            quotes = self.data_client.get_stock_latest_quote(request)
+            
+            result = {}
+            for symbol in symbols:
+                if symbol in quotes:
+                    q = quotes[symbol]
+                    bid = float(q.bid_price) if q.bid_price else 0
+                    ask = float(q.ask_price) if q.ask_price else 0
+                    
+                    # Calculate mid and spread
+                    if bid > 0 and ask > 0:
+                        mid = (bid + ask) / 2
+                        spread_pct = ((ask - bid) / mid) * 100 if mid > 0 else 0.05
+                    else:
+                        mid = ask if ask > 0 else bid
+                        spread_pct = 0.05  # Default 5 bps if no bid-ask
+                    
+                    result[symbol] = {
+                        'bid': bid,
+                        'ask': ask,
+                        'mid': mid,
+                        'spread_pct': spread_pct,
+                        'bid_size': int(q.bid_size) if q.bid_size else 0,
+                        'ask_size': int(q.ask_size) if q.ask_size else 0,
+                    }
+            
+            logging.info(f"Fetched real-time quotes for {len(result)} symbols")
+            return result
+            
+        except Exception as e:
+            logging.warning(f"Could not fetch quotes: {e}")
+            # Return empty - caller should use estimated spreads
+            return {}
+    
+    def get_spread_for_symbol(self, symbol: str) -> float:
+        """
+        Get the current bid-ask spread percentage for a symbol.
+        
+        Args:
+            symbol: Stock symbol
+            
+        Returns:
+            Spread as percentage (e.g., 0.05 for 5 basis points)
+        """
+        quotes = self.get_current_quotes([symbol])
+        if symbol in quotes:
+            return quotes[symbol]['spread_pct']
+        return 0.05  # Default 5 bps
+    
+    def get_order_status(self, order_id: str) -> Dict:
+        """
+        Get the status of an order.
+        
+        Args:
+            order_id: The order ID to check
+            
+        Returns:
+            Dict with order status details
+        """
+        try:
+            order = self.client.get_order_by_id(order_id)
+            
+            return {
+                'order_id': str(order.id),
+                'symbol': order.symbol,
+                'side': str(order.side),
+                'status': str(order.status),
+                'qty': int(order.qty) if order.qty else 0,
+                'filled_qty': int(order.filled_qty) if order.filled_qty else 0,
+                'filled_avg_price': float(order.filled_avg_price) if order.filled_avg_price else 0,
+                'created_at': order.created_at.isoformat() if order.created_at else None,
+                'filled_at': order.filled_at.isoformat() if order.filled_at else None,
+                'type': str(order.type),
+                'time_in_force': str(order.time_in_force),
+            }
+        except Exception as e:
+            logging.warning(f"Could not get order status for {order_id}: {e}")
+            return {'order_id': order_id, 'status': 'unknown', 'error': str(e)}
+    
+    def wait_for_fill(
+        self, 
+        order_id: str, 
+        max_wait_seconds: int = 30,
+        check_interval: float = 1.0,
+    ) -> Dict:
+        """
+        Wait for an order to fill, with status monitoring.
+        
+        Args:
+            order_id: The order ID to monitor
+            max_wait_seconds: Maximum time to wait for fill
+            check_interval: How often to check status (seconds)
+            
+        Returns:
+            Dict with final order status and fill details
+        """
+        import time
+        
+        start_time = time.time()
+        last_status = None
+        
+        while time.time() - start_time < max_wait_seconds:
+            status = self.get_order_status(order_id)
+            
+            order_status = status.get('status', '').lower()
+            
+            if order_status == 'filled':
+                return {
+                    'success': True,
+                    'status': 'filled',
+                    'order_id': order_id,
+                    'filled_qty': status.get('filled_qty', 0),
+                    'filled_avg_price': status.get('filled_avg_price', 0),
+                    'filled_at': status.get('filled_at'),
+                    'wait_time': time.time() - start_time,
+                }
+            
+            elif order_status == 'partially_filled':
+                # Log progress
+                filled = status.get('filled_qty', 0)
+                total = status.get('qty', 0)
+                logging.info(f"Order {order_id}: Partial fill {filled}/{total}")
+                last_status = status
+            
+            elif order_status in ['cancelled', 'canceled', 'rejected', 'expired']:
+                return {
+                    'success': False,
+                    'status': order_status,
+                    'order_id': order_id,
+                    'filled_qty': status.get('filled_qty', 0),
+                    'reason': order_status,
+                    'wait_time': time.time() - start_time,
+                }
+            
+            time.sleep(check_interval)
+        
+        # Timeout - return partial fill status if any
+        final_status = self.get_order_status(order_id)
+        filled_qty = final_status.get('filled_qty', 0)
+        
+        return {
+            'success': filled_qty > 0,
+            'status': 'timeout',
+            'order_id': order_id,
+            'filled_qty': filled_qty,
+            'filled_avg_price': final_status.get('filled_avg_price', 0),
+            'partial': filled_qty > 0 and filled_qty < final_status.get('qty', 0),
+            'wait_time': time.time() - start_time,
+        }
+    
+    def submit_order_with_monitoring(
+        self,
+        symbol: str,
+        side: str,
+        quantity: int,
+        order_type: str = 'market',
+        limit_price: Optional[float] = None,
+        max_wait: int = 30,
+    ) -> Dict:
+        """
+        Submit an order and monitor it until filled or timeout.
+        
+        This provides better fill tracking than fire-and-forget orders.
+        
+        Args:
+            symbol: Stock symbol
+            side: 'buy' or 'sell'
+            quantity: Number of shares
+            order_type: 'market' or 'limit'
+            limit_price: Price for limit orders
+            max_wait: Maximum seconds to wait for fill
+            
+        Returns:
+            Dict with order result and fill details
+        """
+        # Submit the order
+        if order_type == 'limit' and limit_price:
+            from alpaca.trading.requests import LimitOrderRequest
+            request = LimitOrderRequest(
+                symbol=symbol,
+                qty=quantity,
+                side=OrderSide.BUY if side.lower() == 'buy' else OrderSide.SELL,
+                time_in_force=TimeInForce.DAY,
+                limit_price=limit_price,
+            )
+            order = self.client.submit_order(request)
+        else:
+            request = MarketOrderRequest(
+                symbol=symbol,
+                qty=quantity,
+                side=OrderSide.BUY if side.lower() == 'buy' else OrderSide.SELL,
+                time_in_force=TimeInForce.DAY,
+            )
+            order = self.client.submit_order(request)
+        
+        order_id = str(order.id)
+        logging.info(f"Submitted {order_type} order {order_id}: {side} {quantity} {symbol}")
+        
+        # Monitor for fill
+        result = self.wait_for_fill(order_id, max_wait_seconds=max_wait)
+        
+        # If timeout and not filled, cancel and retry with market order
+        if result['status'] == 'timeout' and result['filled_qty'] == 0 and order_type == 'limit':
+            logging.warning(f"Limit order {order_id} timed out, converting to market order")
+            
+            # Cancel the limit order
+            try:
+                self.client.cancel_order_by_id(order_id)
+            except:
+                pass
+            
+            # Submit as market order
+            return self.submit_order_with_monitoring(
+                symbol=symbol,
+                side=side,
+                quantity=quantity,
+                order_type='market',
+                max_wait=10,
+            )
+        
+        return result

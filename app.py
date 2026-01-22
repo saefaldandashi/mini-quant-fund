@@ -11,7 +11,7 @@ import time
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Tuple
 
 from flask import Flask, render_template, jsonify, request, send_file
 
@@ -53,6 +53,7 @@ from src.debate.debate_engine import DebateEngine
 from src.debate.ensemble import EnsembleOptimizer, EnsembleMode
 from src.debate.adversarial import AdversarialDebateEngine, AdversarialTranscript
 from src.risk.risk_manager import RiskManager, RiskConstraints
+from src.risk.realtime_monitor import RealtimeRiskMonitor, RiskMonitorConfig, RiskLevel
 from src.learning import LearningEngine, DebateLearner
 from src.learning.outcome_tracker import OutcomeTracker
 from src.learning.signal_validator import SignalValidator
@@ -78,6 +79,10 @@ from src.news_intelligence import (
 )
 from src.execution import SmartExecutor, ExecutionStrategy, SpreadAnalyzer
 from src.execution.transaction_costs import TransactionCostModel, transaction_cost_model
+
+# Parallel data fetching utilities
+import asyncio
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 app = Flask(__name__)
 
@@ -368,6 +373,130 @@ def create_strategies(enable_long_short=False, enable_futures=False, trading_mod
 
 # Global trading mode setting
 trading_mode_setting = 'intraday'  # 'intraday' or 'position'
+dynamic_mode_enabled = True  # Enable dynamic mode switching based on VIX/regime
+
+
+def get_dynamic_trading_mode(
+    vix_level: float,
+    regime: str = 'neutral',
+    spy_trend: str = 'neutral',
+) -> Tuple[str, str]:
+    """
+    Dynamically select trading mode based on market conditions.
+    
+    LOGIC:
+    - High VIX (>25): Use intraday (quick in/out, reduce exposure time)
+    - Low VIX (<15) + Trending: Use position (hold longer, capture trends)
+    - High VIX + Range-bound: Use intraday (quick mean reversion)
+    - Default: Hybrid blend
+    
+    Returns:
+        Tuple of (mode, explanation)
+    """
+    # High volatility = intraday (quick in/out to reduce risk exposure)
+    if vix_level > 30:
+        return "intraday", f"VIX={vix_level:.0f} (>30) → INTRADAY: High vol, quick trades"
+    
+    if vix_level > 25:
+        return "intraday", f"VIX={vix_level:.0f} (25-30) → INTRADAY: Elevated vol"
+    
+    # Low volatility + trending = position (hold longer)
+    if vix_level < 15 and 'trend' in regime.lower():
+        return "position", f"VIX={vix_level:.0f} (<15) + {regime} → POSITION: Low vol, trending"
+    
+    # Low volatility + mean reverting = hybrid
+    if vix_level < 15 and 'range' in regime.lower():
+        return "hybrid", f"VIX={vix_level:.0f} (<15) + {regime} → HYBRID: Low vol, range-bound"
+    
+    # Moderate volatility = intraday (default for HFT-lite focus)
+    if 15 <= vix_level <= 20:
+        return "intraday", f"VIX={vix_level:.0f} (15-20) → INTRADAY: Normal conditions, HFT-lite"
+    
+    # Slightly elevated = intraday with caution
+    if 20 < vix_level <= 25:
+        return "intraday", f"VIX={vix_level:.0f} (20-25) → INTRADAY: Slightly elevated vol"
+    
+    # Default: intraday (HFT-lite focus)
+    return "intraday", f"VIX={vix_level:.0f} → INTRADAY: Default HFT-lite mode"
+
+
+def get_strategy_blend_weights(mode: str, vix_level: float) -> Dict[str, float]:
+    """
+    Get strategy category weight multipliers based on mode.
+    
+    Returns multipliers for each strategy category.
+    """
+    if mode == "intraday":
+        return {
+            "intraday_strategies": 0.70,    # Primary focus
+            "position_strategies": 0.15,    # Some position for diversification
+            "ls_strategies": 0.15,          # L/S for market neutral
+        }
+    elif mode == "position":
+        return {
+            "intraday_strategies": 0.20,    # Some intraday for quick trades
+            "position_strategies": 0.55,    # Primary focus
+            "ls_strategies": 0.25,          # More L/S for hedging
+        }
+    else:  # hybrid
+        return {
+            "intraday_strategies": 0.45,
+            "position_strategies": 0.35,
+            "ls_strategies": 0.20,
+        }
+
+
+# ============================================================
+# REAL-TIME RISK MONITOR (Background Thread)
+# ============================================================
+# Monitors portfolio risk continuously and auto-reduces exposure on drawdowns
+
+risk_monitor: RealtimeRiskMonitor = None  # Initialized when broker is available
+risk_monitor_enabled = True  # Enable/disable risk monitoring
+
+def init_risk_monitor(broker):
+    """Initialize the real-time risk monitor with the broker."""
+    global risk_monitor
+    
+    config = RiskMonitorConfig(
+        check_interval_seconds=60,  # Check every minute
+        drawdown_warning=0.05,      # 5% drawdown = alert
+        drawdown_reduce=0.08,       # 8% = reduce 30%
+        drawdown_critical=0.10,     # 10% = reduce 50%, halt
+        vix_elevated=25.0,
+        vix_high=30.0,
+        vix_critical=35.0,
+    )
+    
+    def on_risk_alert(alert):
+        """Callback for risk alerts - log to queue for UI."""
+        log_queue.put(f"🚨 RISK ALERT: {alert.message}")
+    
+    risk_monitor = RealtimeRiskMonitor(
+        broker=broker,
+        config=config,
+        on_alert=on_risk_alert,
+    )
+    
+    return risk_monitor
+
+def start_risk_monitor():
+    """Start the background risk monitoring thread."""
+    global risk_monitor
+    if risk_monitor and not risk_monitor.is_running:
+        risk_monitor.start()
+        logging.info("🛡️ Real-time risk monitor started")
+        return True
+    return False
+
+def stop_risk_monitor():
+    """Stop the risk monitoring thread."""
+    global risk_monitor
+    if risk_monitor and risk_monitor.is_running:
+        risk_monitor.stop()
+        logging.info("🛡️ Real-time risk monitor stopped")
+        return True
+    return False
 
 
 def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_rebalance=True, cancel_orders=True, fast_mode=False, ultra_fast=False):
@@ -384,7 +513,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
     
     Returns tuple of (success: bool, output: str, error: str or None, debate_info: dict)
     """
-    global last_ticker_sentiments  # Declare at top for ultra-fast caching
+    global last_ticker_sentiments, trading_mode_setting  # Declare at top for ultra-fast caching
     
     # Ultra fast implies fast mode
     if ultra_fast:
@@ -425,6 +554,13 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         log("Connecting to Alpaca...")
         broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
         log("Connected to Alpaca (paper trading)")
+        
+        # Initialize and start real-time risk monitor
+        global risk_monitor
+        if risk_monitor_enabled and risk_monitor is None:
+            init_risk_monitor(broker)
+            start_risk_monitor()
+            log("🛡️ Real-time risk monitor ACTIVE (checking every 60s)")
         
         # Cancel previous orders if requested
         if cancel_orders:
@@ -481,18 +617,72 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         log(f"Fetching data for {len(config.UNIVERSE)} stocks...")
         
-        # Use price cache for market data (avoids redundant API calls)
-        cached_data = price_cache.get_prices(config.UNIVERSE, days=300, end_date=end_date)
+        # ============================================================
+        # PARALLEL DATA FETCHING (Reduces 40s -> ~15s)
+        # ============================================================
+        # Fetch price data and news in parallel using ThreadPoolExecutor
         
-        if cached_data is not None:
-            price_data = cached_data
-            log(f"📦 Using cached price data ({len(price_data)} stocks)")
+        import time as time_module
+        data_fetch_start = time_module.time()
+        
+        def fetch_price_data():
+            """Fetch price data from cache or Alpaca."""
+            cached = price_cache.get_prices(config.UNIVERSE, days=300, end_date=end_date)
+            if cached is not None:
+                return cached, True  # (data, was_cached)
+            else:
+                data = broker.get_historical_bars(config.UNIVERSE, days=300)
+                price_cache.set_prices(config.UNIVERSE, days=300, data=data, end_date=end_date)
+                return data, False
+        
+        def fetch_news_data():
+            """Fetch news from Alpha Vantage."""
+            if ultra_fast and load_ultrafast_cache(max_age_minutes=30) is not None:
+                return [], True  # Skip news fetch in ultra-fast mode
+            try:
+                articles = alpha_vantage_news.fetch_market_news(days_back=7)
+                return articles, False
+            except Exception as e:
+                logging.warning(f"News fetch error: {e}")
+                return [], False
+        
+        # Execute in parallel
+        price_data = None
+        av_articles_parallel = []
+        
+        if not ultra_fast:
+            with ThreadPoolExecutor(max_workers=2) as executor:
+                price_future = executor.submit(fetch_price_data)
+                news_future = executor.submit(fetch_news_data)
+                
+                # Get results
+                try:
+                    price_data, was_cached = price_future.result(timeout=60)
+                    if was_cached:
+                        log(f"📦 Using cached price data ({len(price_data)} stocks)")
+                    else:
+                        log(f"Received data for {len(price_data)} stocks from Alpaca (cached)")
+                except Exception as e:
+                    log(f"Price fetch error: {e}")
+                    price_data = {}
+                
+                try:
+                    av_articles_parallel, was_cached = news_future.result(timeout=60)
+                    if not was_cached and av_articles_parallel:
+                        log(f"📰 Pre-fetched {len(av_articles_parallel)} news articles")
+                except Exception as e:
+                    log(f"News prefetch error: {e}")
+                    av_articles_parallel = []
         else:
-            # Fetch from Alpaca
-            price_data = broker.get_historical_bars(config.UNIVERSE, days=300)
-            # Cache the data
-            price_cache.set_prices(config.UNIVERSE, days=300, data=price_data, end_date=end_date)
-            log(f"Received data for {len(price_data)} stocks from Alpaca (cached)")
+            # Ultra-fast: just fetch prices (news from cache)
+            price_data, was_cached = fetch_price_data()
+            if was_cached:
+                log(f"📦 Using cached price data ({len(price_data)} stocks)")
+            else:
+                log(f"Received data for {len(price_data)} stocks from Alpaca (cached)")
+        
+        data_fetch_time = time_module.time() - data_fetch_start
+        log(f"⚡ Parallel data fetch completed in {data_fetch_time:.1f}s")
         
         # Convert to feature store format
         for symbol, prices in price_data.items():
@@ -533,8 +723,13 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             try:
                 symbols_with_data = list(feature_store._price_history.keys())
                 
-                log("Fetching market news from Alpha Vantage...")
-                av_articles = alpha_vantage_news.fetch_market_news(days_back=7)
+                # Use pre-fetched articles from parallel fetch, or fetch now
+                if av_articles_parallel:
+                    av_articles = av_articles_parallel
+                    log(f"Using pre-fetched {len(av_articles)} news articles")
+                else:
+                    log("Fetching market news from Alpha Vantage...")
+                    av_articles = alpha_vantage_news.fetch_market_news(days_back=7)
             
                 # Also fetch ticker-specific news for top symbols
                 if symbols_with_data and len(av_articles) < 20:
@@ -694,6 +889,25 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         log("Computing features and market regime...")
         features = feature_store.get_features(end_date, list(feature_store._price_history.keys()))
         
+        # === CRITICAL: Add intraday data for HFT-lite strategies ===
+        # Without this, intraday strategies fall back to daily data and perform poorly
+        # Note: effective_trading_mode is determined later, so we load intraday if setting is intraday
+        # or if it's hybrid (which uses some intraday strategies)
+        if trading_mode_setting in ['intraday', 'hybrid']:
+            log("📊 Loading INTRADAY data (15-min bars) for HFT-lite strategies...")
+            try:
+                symbols_for_intraday = list(feature_store._price_history.keys())[:50]  # Top 50 to avoid API limits
+                features = feature_store.add_intraday_features(features, symbols_for_intraday, timeframe="15Min")
+                
+                if features.has_intraday_data:
+                    log(f"✅ Loaded intraday data for {len(features.intraday_returns)} symbols")
+                    log(f"   Volume ratio range: {min(features.volume_ratio.values()):.2f}x - {max(features.volume_ratio.values()):.2f}x" 
+                        if features.volume_ratio else "   No volume ratio data")
+                else:
+                    log("⚠️ No intraday data available - strategies will use daily fallback")
+            except Exception as e:
+                log(f"⚠️ Could not load intraday data: {e} - using daily fallback")
+        
         # Now attach macro features to the features object AND store globally
         if macro_features_temp:
             features.macro_features = macro_features_temp
@@ -731,9 +945,37 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         log("")
         
+        # === DYNAMIC TRADING MODE (VIX-based) ===
+        effective_trading_mode = trading_mode_setting  # Start with static setting
+        
+        if dynamic_mode_enabled:
+            # Get VIX for dynamic mode decision
+            early_vix = 20.0  # Default
+            try:
+                if macro_features_temp and hasattr(macro_features_temp, 'vix') and macro_features_temp.vix:
+                    early_vix = macro_features_temp.vix
+                elif market_indicators and hasattr(market_indicators, 'vix') and market_indicators.vix:
+                    early_vix = market_indicators.vix
+            except:
+                pass
+            
+            # Get regime description
+            regime_desc = features.regime.description if hasattr(features, 'regime') and features.regime else 'neutral'
+            
+            # Determine dynamic trading mode
+            effective_trading_mode, mode_explanation = get_dynamic_trading_mode(
+                vix_level=early_vix,
+                regime=regime_desc,
+            )
+            
+            log("")
+            log(f"🎯 DYNAMIC TRADING MODE: {effective_trading_mode.upper()}")
+            log(f"   Reason: {mode_explanation}")
+            log("")
+        
         # === CREATE AND RUN STRATEGIES (PARALLEL) ===
         log("=" * 60)
-        log("RUNNING 9 STRATEGIES (Parallel Execution)")
+        log("RUNNING STRATEGIES (Parallel Execution)")
         log("=" * 60)
         
         import time as time_module
@@ -742,7 +984,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         strategies = create_strategies(
             enable_long_short=long_short_settings.get('enable_long_short', False),
             enable_futures=long_short_settings.get('enable_futures', False),
-            trading_mode=trading_mode_setting,  # 'intraday' for 15-30 min trading
+            trading_mode=effective_trading_mode,  # Use dynamic mode
         )
         log(f"Loaded {len(strategies)} strategies (L/S: {long_short_settings.get('enable_long_short')}, Futures: {long_short_settings.get('enable_futures')})")
         
@@ -750,16 +992,36 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         macro_ctx = features.macro_features if hasattr(features, 'macro_features') else None
         risk_ctx = features.risk_sentiment if hasattr(features, 'risk_sentiment') else None
         
+        # Convert last_ticker_sentiments to format expected by strategies
+        # Format: {symbol: score} and {symbol: confidence}
+        sentiment_scores = {}
+        sentiment_confidence = {}
+        
+        if last_ticker_sentiments:
+            for symbol, data in last_ticker_sentiments.items():
+                if isinstance(data, dict):
+                    sentiment_scores[symbol] = data.get('score', 0)
+                    sentiment_confidence[symbol] = data.get('confidence', 0.5)
+                elif isinstance(data, (int, float)):
+                    sentiment_scores[symbol] = float(data)
+                    sentiment_confidence[symbol] = 0.5
+        
+        strategies_with_sentiment = 0
+        
         for strategy in strategies:
             # Inject macro context to ALL strategies
             strategy.set_macro_context(macro_ctx, risk_ctx)
             
-            # Inject ticker sentiment to sentiment strategy
-            if strategy.name == "NewsSentimentEvent":
+            # Inject ticker sentiment to ALL strategies (not just NewsSentimentEvent)
+            if hasattr(strategy, 'set_sentiment_data'):
+                strategy.set_sentiment_data(sentiment_scores, sentiment_confidence)
+                strategies_with_sentiment += 1
+            elif hasattr(strategy, 'ticker_sentiments'):
+                # Fallback for NewsSentimentEvent
                 strategy.ticker_sentiments = last_ticker_sentiments
-                log(f"  Injected {len(last_ticker_sentiments)} ticker sentiments into NewsSentimentEvent")
         
         log(f"  Injected macro context to {len(strategies)} strategies")
+        log(f"  Injected {len(sentiment_scores)} ticker sentiments to {strategies_with_sentiment} strategies")
         
         # PHASE 1: Generate initial signals (parallel)
         signals, errors = parallel_executor.execute_all(strategies, features, end_date)
@@ -1648,6 +1910,11 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         except:
             vix_level = 20.0
         
+        # Update risk monitor with current VIX
+        if risk_monitor and vix_level:
+            risk_monitor.update_vix(vix_level)
+            log(f"🛡️ Risk monitor updated: VIX={vix_level:.1f}, can_trade={risk_monitor.can_trade()}")
+        
         # Initialize Smart Executor with VIX awareness
         smart_executor = SmartExecutor(
             broker=broker,
@@ -1671,6 +1938,18 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         log("TRANSACTION COST ANALYSIS")
         log("=" * 60)
         log(f"VIX Level: {vix_level:.1f} (cost multiplier: {transaction_cost_model.get_vix_multiplier():.1f}x)")
+        
+        # BULK FETCH real bid-ask spreads for all symbols (much faster than per-symbol)
+        real_quotes = {}
+        try:
+            symbols_to_quote = [s for s in all_symbols if s in current_prices and current_prices[s] > 0]
+            if symbols_to_quote:
+                real_quotes = broker.get_current_quotes(symbols_to_quote[:100])  # Limit to 100
+                if real_quotes:
+                    avg_spread = sum(q['spread_pct'] for q in real_quotes.values()) / len(real_quotes)
+                    log(f"📊 Real-time quotes fetched: {len(real_quotes)} symbols, avg spread: {avg_spread:.3f}%")
+        except Exception as e:
+            log(f"⚠️ Could not fetch real quotes: {e} - using estimates")
         
         for symbol in sorted(all_symbols):
             current_qty = current_shares.get(symbol, 0)
@@ -1704,18 +1983,12 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                     # Use the strategy's expected return weighted by confidence
                     expected_return = max(expected_return, signal.expected_return * signal.confidence)
             
-            # Estimate spread from recent quotes (default to 5bps for liquid stocks)
-            spread_pct = 0.05  # Default 5 bps
-            try:
-                from alpaca.data.requests import StockLatestQuoteRequest
-                quotes_req = StockLatestQuoteRequest(symbol_or_symbols=[symbol])
-                quotes = broker.data_client.get_stock_latest_quote(quotes_req)
-                if symbol in quotes:
-                    q = quotes[symbol]
-                    if q.bid_price and q.ask_price and q.bid_price > 0:
-                        spread_pct = ((q.ask_price - q.bid_price) / ((q.ask_price + q.bid_price) / 2)) * 100
-            except:
-                pass
+            # Use REAL bid-ask spread from pre-fetched quotes (much more accurate)
+            if symbol in real_quotes:
+                spread_pct = real_quotes[symbol]['spread_pct']
+            else:
+                # Fallback to default estimate based on likely liquidity
+                spread_pct = 0.05  # Default 5 bps for liquid stocks
             
             # Estimate transaction cost
             cost_estimate = transaction_cost_model.estimate_trade_cost(
@@ -1899,6 +2172,15 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         except Exception as e:
             log(f"⚠️ Could not record outcomes for pattern learning: {e}")
         
+        # Save transaction cost learned data
+        try:
+            transaction_cost_model.save_learned_data()
+            learning_stats = transaction_cost_model.get_learning_stats()
+            if learning_stats.get('symbols_with_learning', 0) > 0:
+                log(f"💰 Cost Learning: {learning_stats['symbols_with_learning']} symbols using learned estimates, {learning_stats['estimation_improvement']}")
+        except Exception as e:
+            log(f"⚠️ Could not save cost learning data: {e}")
+        
         return True, "\n".join(output_lines), None, debate_info
         
     except Exception as e:
@@ -2031,6 +2313,53 @@ def health_check():
         "last_run": last_run_status.get("timestamp"),
         "uptime_check": "ok",
     })
+
+
+@app.route('/api/risk-monitor')
+def get_risk_monitor_status():
+    """Get real-time risk monitor status."""
+    global risk_monitor
+    
+    if risk_monitor is None:
+        return jsonify({
+            "enabled": False,
+            "status": "not_initialized",
+            "message": "Risk monitor will start with first rebalance",
+        })
+    
+    status = risk_monitor.get_status()
+    
+    return jsonify({
+        "enabled": True,
+        "is_running": status.get('is_running', False),
+        "risk_level": status.get('risk_level', 'unknown'),
+        "halt_trading": status.get('halt_trading', False),
+        "can_trade": risk_monitor.can_trade(),
+        "position_size_multiplier": status.get('position_size_multiplier', 1.0),
+        "peak_equity": status.get('peak_equity', 0),
+        "last_vix": status.get('last_vix', 0),
+        "recent_alerts": status.get('recent_alerts', []),
+    })
+
+
+@app.route('/api/risk-monitor/toggle', methods=['POST'])
+def toggle_risk_monitor():
+    """Enable or disable the risk monitor."""
+    global risk_monitor_enabled, risk_monitor
+    
+    data = request.get_json() or {}
+    enable = data.get('enabled', True)
+    
+    if enable:
+        risk_monitor_enabled = True
+        if risk_monitor:
+            start_risk_monitor()
+        return jsonify({"success": True, "message": "Risk monitor enabled"})
+    else:
+        risk_monitor_enabled = False
+        if risk_monitor:
+            stop_risk_monitor()
+        return jsonify({"success": True, "message": "Risk monitor disabled"})
 
 
 @app.route('/api/status')

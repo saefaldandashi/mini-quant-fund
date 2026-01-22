@@ -70,13 +70,26 @@ class IntradayMomentumStrategy(Strategy):
             intraday_ret = features.intraday_returns.get(symbol, 0)
             volume_ratio = features.volume_ratio.get(symbol, 1.0) if hasattr(features, 'volume_ratio') else 1.0
             
+            # Get sentiment if available (boost/filter based on news)
+            sentiment = self.ticker_sentiments.get(symbol, 0) if self.ticker_sentiments else 0
+            
             # Strong upward momentum with volume confirmation
+            # Boost if positive sentiment, skip if very negative
             if intraday_ret > self.momentum_threshold and volume_ratio > self.volume_multiplier:
-                long_candidates.append((symbol, intraday_ret, volume_ratio))
+                if sentiment < -0.5:  # Skip if sentiment is very negative
+                    continue
+                # Boost score by sentiment
+                score = intraday_ret * (1 + sentiment * 0.3)  # Up to 30% boost
+                long_candidates.append((symbol, score, volume_ratio))
             
             # Strong downward momentum with volume confirmation (for shorting or avoiding)
+            # More likely to short if negative sentiment
             elif intraday_ret < -self.momentum_threshold and volume_ratio > self.volume_multiplier:
-                short_candidates.append((symbol, intraday_ret, volume_ratio))
+                if sentiment > 0.5:  # Skip shorting if sentiment very positive
+                    continue
+                # Boost short score by negative sentiment
+                score = intraday_ret * (1 - sentiment * 0.3)
+                short_candidates.append((symbol, score, volume_ratio))
         
         # Sort by momentum strength
         long_candidates.sort(key=lambda x: x[1], reverse=True)

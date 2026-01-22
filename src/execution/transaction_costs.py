@@ -247,7 +247,41 @@ class TransactionCostModel:
         notional: float,
         liquidity: LiquidityCategory,
     ) -> float:
-        """Estimate slippage based on liquidity and volatility."""
+        """
+        Estimate slippage based on liquidity, volatility, and LEARNED data.
+        
+        Uses historical actual slippage for this symbol if available,
+        otherwise falls back to model-based estimates.
+        """
+        # === LEARNING: Use historical data if available ===
+        if symbol in self.symbol_data and self.symbol_data[symbol]['trades'] >= 3:
+            # We have enough historical data for this symbol
+            learned_slippage_bps = self.symbol_data[symbol]['avg_slippage_bps']
+            
+            # Adjust for VIX (learned data might be from different conditions)
+            vix_mult = self.get_vix_multiplier()
+            
+            # Weight learning vs model (more trades = more trust in learned)
+            trade_count = self.symbol_data[symbol]['trades']
+            learning_weight = min(0.8, trade_count / 10)  # Max 80% weight to learned
+            
+            # Model-based estimate
+            base_slippage_bps = self.params['base_slippage_bps']
+            liq_mult = self.LIQUIDITY_MULTIPLIERS[liquidity]
+            model_slippage_bps = base_slippage_bps * liq_mult * vix_mult
+            
+            # Blend learned and model
+            blended_slippage_bps = (
+                learned_slippage_bps * learning_weight + 
+                model_slippage_bps * (1 - learning_weight)
+            )
+            
+            logger.debug(f"{symbol}: Using learned slippage ({trade_count} trades): "
+                        f"{learned_slippage_bps:.1f}bps → {blended_slippage_bps:.1f}bps blended")
+            
+            return notional * blended_slippage_bps / 10000
+        
+        # === MODEL-BASED: Fall back to model if no history ===
         base_slippage_bps = self.params['base_slippage_bps']
         
         # Adjust for liquidity
@@ -528,9 +562,13 @@ class TransactionCostModel:
                 'total_trades_analyzed': 0,
                 'avg_slippage_bps': 0,
                 'avg_estimation_error_bps': 0,
+                'symbols_with_learned_data': 0,
             }
         
         recent = self.estimation_history[-100:]  # Last 100 trades
+        
+        # Count symbols with enough data to use learning
+        symbols_with_learning = sum(1 for s, d in self.symbol_data.items() if d.get('trades', 0) >= 3)
         
         return {
             'total_trades_analyzed': len(self.estimation_history),
@@ -538,8 +576,84 @@ class TransactionCostModel:
             'avg_estimation_error_bps': np.mean([h['estimation_error_bps'] for h in recent]),
             'vix_level': self.vix_level,
             'vix_multiplier': self.get_vix_multiplier(),
+            'symbols_with_learned_data': symbols_with_learning,
+            'learning_status': f"{symbols_with_learning} symbols using learned estimates",
+        }
+    
+    def save_learned_data(self, filepath: str = "outputs/cost_model_learned.json"):
+        """Save learned cost data to file for persistence."""
+        import json
+        from pathlib import Path
+        
+        Path(filepath).parent.mkdir(parents=True, exist_ok=True)
+        
+        data = {
+            'symbol_data': self.symbol_data,
+            'last_updated': datetime.now().isoformat(),
+            'total_trades': len(self.estimation_history),
+        }
+        
+        with open(filepath, 'w') as f:
+            json.dump(data, f, indent=2)
+        
+        logger.info(f"Saved cost model learned data: {len(self.symbol_data)} symbols")
+    
+    def load_learned_data(self, filepath: str = "outputs/cost_model_learned.json"):
+        """Load learned cost data from file."""
+        import json
+        from pathlib import Path
+        
+        if not Path(filepath).exists():
+            logger.info("No learned cost data found, starting fresh")
+            return
+        
+        try:
+            with open(filepath, 'r') as f:
+                data = json.load(f)
+            
+            self.symbol_data = data.get('symbol_data', {})
+            logger.info(f"Loaded cost model learned data: {len(self.symbol_data)} symbols")
+        except Exception as e:
+            logger.warning(f"Could not load learned cost data: {e}")
+    
+    def get_learning_stats(self) -> Dict[str, Any]:
+        """Get statistics about the learning process."""
+        if not self.symbol_data:
+            return {
+                'symbols_tracked': 0,
+                'symbols_with_learning': 0,
+                'avg_trades_per_symbol': 0,
+                'estimation_improvement': 'N/A',
+            }
+        
+        symbols_with_learning = sum(1 for s, d in self.symbol_data.items() if d.get('trades', 0) >= 3)
+        total_trades = sum(d.get('trades', 0) for d in self.symbol_data.values())
+        
+        # Calculate estimation improvement from history
+        if len(self.estimation_history) >= 10:
+            early = self.estimation_history[:10]
+            recent = self.estimation_history[-10:]
+            early_error = np.mean([abs(h['estimation_error_bps']) for h in early])
+            recent_error = np.mean([abs(h['estimation_error_bps']) for h in recent])
+            improvement = ((early_error - recent_error) / early_error * 100) if early_error > 0 else 0
+            improvement_str = f"{improvement:.1f}% improvement" if improvement > 0 else f"{-improvement:.1f}% worse"
+        else:
+            improvement_str = "Collecting data..."
+        
+        return {
+            'symbols_tracked': len(self.symbol_data),
+            'symbols_with_learning': symbols_with_learning,
+            'total_trades_recorded': total_trades,
+            'avg_trades_per_symbol': total_trades / len(self.symbol_data) if self.symbol_data else 0,
+            'estimation_improvement': improvement_str,
         }
 
 
 # Global instance for use across modules
 transaction_cost_model = TransactionCostModel()
+
+# Try to load any existing learned data on startup
+try:
+    transaction_cost_model.load_learned_data()
+except Exception as e:
+    logger.debug(f"Could not load learned data on startup: {e}")

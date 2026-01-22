@@ -74,53 +74,66 @@ class FuturesCarryStrategy(Strategy):
         return carry_estimates
     
     def generate_signals(self, features: Features, t: datetime) -> SignalOutput:
-        """Generate carry-based signals."""
-        
-        carry = self._estimate_carry(features)
-        
-        if not carry:
+        """Generate carry-based signals with graceful error handling."""
+        try:
+            carry = self._estimate_carry(features)
+            
+            if not carry:
+                return SignalOutput(
+                    strategy_name=self.name,
+                    timestamp=t,
+                    confidence=0.0,
+                    explanation={"error": "Could not estimate carry - missing data"}
+                )
+            
+            weights = {}
+            
+            for asset, carry_signal in carry.items():
+                proxy = self.asset_proxies[asset]
+                
+                # Check if proxy is in available data
+                if not features.prices or proxy not in features.prices:
+                    logging.debug(f"{self.name}: {proxy} not in available prices, skipping")
+                    continue
+                
+                # Long positive carry, short negative carry
+                if carry_signal > 0.5:  # Threshold for positive carry
+                    weights[proxy] = self.position_size
+                elif carry_signal < -0.5:  # Strong negative carry
+                    weights[proxy] = -self.position_size * 0.5  # Smaller short
+                # Else flat
+            
+            if not weights:
+                return SignalOutput(
+                    strategy_name=self.name,
+                    timestamp=t,
+                    confidence=0.1,
+                    explanation={"message": "No strong carry signals or missing ETF data"}
+                )
+            
+            return SignalOutput(
+                strategy_name=self.name,
+                timestamp=t,
+                desired_weights=weights,
+                expected_return=0.05,
+                risk_estimate=0.08,
+                confidence=0.5,
+                regime_fit=0.6,
+                diversification_score=0.8,
+                explanation={
+                    "type": "Futures Carry (Backtest Only)",
+                    "carry_signals": {k: f"{v:.2f}" for k, v in carry.items()},
+                    "positions": len(weights),
+                }
+            )
+        except Exception as e:
+            logging.warning(f"{self.name} error: {e}")
             return SignalOutput(
                 strategy_name=self.name,
                 timestamp=t,
                 confidence=0.0,
-                explanation={"error": "Could not estimate carry"}
+                explanation={"error": f"Strategy disabled: {str(e)[:50]}"}
             )
-        
-        weights = {}
-        
-        for asset, carry_signal in carry.items():
-            proxy = self.asset_proxies[asset]
-            
-            # Long positive carry, short negative carry
-            if carry_signal > 0.5:  # Threshold for positive carry
-                weights[proxy] = self.position_size
-            elif carry_signal < -0.5:  # Strong negative carry
-                weights[proxy] = -self.position_size * 0.5  # Smaller short
-            # Else flat
-        
-        if not weights:
-            return SignalOutput(
-                strategy_name=self.name,
-                timestamp=t,
-                confidence=0.1,
-                explanation={"message": "No strong carry signals"}
-            )
-        
-        return SignalOutput(
-            strategy_name=self.name,
-            timestamp=t,
-            desired_weights=weights,
-            expected_return=0.05,
-            risk_estimate=0.08,
-            confidence=0.5,
-            regime_fit=0.6,
-            diversification_score=0.8,
-            explanation={
-                "type": "Futures Carry (Backtest Only)",
-                "carry_signals": {k: f"{v:.2f}" for k, v in carry.items()},
-                "positions": len(weights),
-            }
-        )
 
 
 class FuturesMacroOverlay(Strategy):
@@ -150,74 +163,104 @@ class FuturesMacroOverlay(Strategy):
         self._required_features = ['regime', 'prices']
     
     def generate_signals(self, features: Features, t: datetime) -> SignalOutput:
-        """Generate macro overlay signals based on regime."""
-        
-        weights = {}
-        regime = features.regime if hasattr(features, 'regime') else None
-        
-        # Determine regime allocation
-        if regime:
-            trend_strength = regime.trend_strength if hasattr(regime, 'trend_strength') else 0.5
-            vol_percentile = regime.volatility_percentile if hasattr(regime, 'volatility_percentile') else 50
+        """Generate macro overlay signals based on regime with graceful error handling."""
+        try:
+            weights = {}
+            regime = features.regime if hasattr(features, 'regime') else None
             
-            # Risk-on/off based on trend and vol
-            if trend_strength > 0.5 and vol_percentile < 60:
-                # Risk-on: Long equity, short bonds
-                weights[self.proxies['equity']] = self.max_position
-                weights[self.proxies['bonds']] = -self.max_position * 0.5
-                weights[self.proxies['gold']] = 0.0
-                regime_type = "risk_on"
+            # Check if proxies are available in the data
+            available_proxies = {k: v for k, v in self.proxies.items() 
+                                 if features.prices and v in features.prices}
+            
+            if not available_proxies:
+                return SignalOutput(
+                    strategy_name=self.name,
+                    timestamp=t,
+                    confidence=0.0,
+                    explanation={"error": "No ETF proxies available in data"}
+                )
+            
+            # Determine regime allocation
+            if regime:
+                trend_strength = regime.trend_strength if hasattr(regime, 'trend_strength') else 0.5
+                vol_percentile = regime.volatility_percentile if hasattr(regime, 'volatility_percentile') else 50
                 
-            elif vol_percentile > 70:
-                # Risk-off: Short equity, long bonds, long gold
-                weights[self.proxies['equity']] = -self.max_position * 0.5
-                weights[self.proxies['bonds']] = self.max_position
-                weights[self.proxies['gold']] = self.max_position * 0.5
-                regime_type = "risk_off"
-                
+                # Risk-on/off based on trend and vol
+                if trend_strength > 0.5 and vol_percentile < 60:
+                    # Risk-on: Long equity, short bonds
+                    if 'equity' in available_proxies:
+                        weights[self.proxies['equity']] = self.max_position
+                    if 'bonds' in available_proxies:
+                        weights[self.proxies['bonds']] = -self.max_position * 0.5
+                    regime_type = "risk_on"
+                    
+                elif vol_percentile > 70:
+                    # Risk-off: Short equity, long bonds, long gold
+                    if 'equity' in available_proxies:
+                        weights[self.proxies['equity']] = -self.max_position * 0.5
+                    if 'bonds' in available_proxies:
+                        weights[self.proxies['bonds']] = self.max_position
+                    if 'gold' in available_proxies:
+                        weights[self.proxies['gold']] = self.max_position * 0.5
+                    regime_type = "risk_off"
+                    
+                else:
+                    # Neutral
+                    if 'equity' in available_proxies:
+                        weights[self.proxies['equity']] = self.max_position * 0.3
+                    if 'bonds' in available_proxies:
+                        weights[self.proxies['bonds']] = self.max_position * 0.3
+                    regime_type = "neutral"
             else:
-                # Neutral
-                weights[self.proxies['equity']] = self.max_position * 0.3
-                weights[self.proxies['bonds']] = self.max_position * 0.3
-                regime_type = "neutral"
-        else:
-            # Default balanced allocation
-            weights[self.proxies['equity']] = self.max_position * 0.4
-            weights[self.proxies['bonds']] = self.max_position * 0.4
-            regime_type = "default"
-        
-        # Use macro features if available
-        if self.macro_features:
-            # Adjust based on inflation expectation
-            inflation_pressure = self.macro_features.get('macro_inflation_pressure_index', 0)
+                # Default balanced allocation
+                if 'equity' in available_proxies:
+                    weights[self.proxies['equity']] = self.max_position * 0.4
+                if 'bonds' in available_proxies:
+                    weights[self.proxies['bonds']] = self.max_position * 0.4
+                regime_type = "default"
             
-            if inflation_pressure > 0.5:
-                # Inflationary: Add commodities, reduce bonds
-                weights[self.proxies['commodities']] = weights.get(self.proxies['commodities'], 0) + self.max_position * 0.3
-                weights[self.proxies['bonds']] = weights.get(self.proxies['bonds'], 0) * 0.5
-            elif inflation_pressure < -0.5:
-                # Deflationary: Add bonds, reduce commodities
-                weights[self.proxies['bonds']] = weights.get(self.proxies['bonds'], 0) + self.max_position * 0.3
-                weights[self.proxies['commodities']] = weights.get(self.proxies['commodities'], 0) * 0.5
-        
-        # Clean up small weights
-        weights = {k: v for k, v in weights.items() if abs(v) > 0.01}
-        
-        return SignalOutput(
-            strategy_name=self.name,
-            timestamp=t,
-            desired_weights=weights,
-            expected_return=0.06,
-            risk_estimate=0.10,
-            confidence=0.55,
-            regime_fit=0.8,
-            diversification_score=0.9,
-            explanation={
-                "type": "Futures Macro Overlay (Backtest Only)",
-                "regime": regime_type,
-                "allocations": {k: f"{v:.1%}" for k, v in weights.items()},
-            }
-        )
+            # Use macro features if available
+            if self.macro_features:
+                # Adjust based on inflation expectation
+                inflation_pressure = self.macro_features.get('macro_inflation_pressure_index', 0)
+                
+                if inflation_pressure > 0.5 and 'commodities' in available_proxies:
+                    # Inflationary: Add commodities, reduce bonds
+                    weights[self.proxies['commodities']] = weights.get(self.proxies['commodities'], 0) + self.max_position * 0.3
+                    if 'bonds' in weights:
+                        weights[self.proxies['bonds']] = weights.get(self.proxies['bonds'], 0) * 0.5
+                elif inflation_pressure < -0.5 and 'bonds' in available_proxies:
+                    # Deflationary: Add bonds, reduce commodities
+                    weights[self.proxies['bonds']] = weights.get(self.proxies['bonds'], 0) + self.max_position * 0.3
+                    if 'commodities' in weights:
+                        weights[self.proxies['commodities']] = weights.get(self.proxies['commodities'], 0) * 0.5
+            
+            # Clean up small weights
+            weights = {k: v for k, v in weights.items() if abs(v) > 0.01}
+            
+            return SignalOutput(
+                strategy_name=self.name,
+                timestamp=t,
+                desired_weights=weights,
+                expected_return=0.06,
+                risk_estimate=0.10,
+                confidence=0.55 if weights else 0.0,
+                regime_fit=0.8,
+                diversification_score=0.9,
+                explanation={
+                    "type": "Futures Macro Overlay (Backtest Only)",
+                    "regime": regime_type,
+                    "allocations": {k: f"{v:.1%}" for k, v in weights.items()},
+                }
+            )
+        except Exception as e:
+            logging.warning(f"{self.name} error: {e}")
+            return SignalOutput(
+                strategy_name=self.name,
+                timestamp=t,
+                confidence=0.0,
+                explanation={"error": f"Strategy disabled: {str(e)[:50]}"}
+            )
 
 
 class FuturesTrendFollowing(Strategy):
@@ -241,74 +284,94 @@ class FuturesTrendFollowing(Strategy):
         self._required_features = ['returns_126d', 'volatility_21d', 'prices']
     
     def generate_signals(self, features: Features, t: datetime) -> SignalOutput:
-        """Generate trend following signals."""
-        
-        momentum = features.returns_126d if hasattr(features, 'returns_126d') else {}
-        volatility = features.volatility_21d if hasattr(features, 'volatility_21d') else {}
-        
-        if not momentum:
+        """Generate trend following signals with graceful error handling."""
+        try:
+            momentum = features.returns_126d if hasattr(features, 'returns_126d') else {}
+            volatility = features.volatility_21d if hasattr(features, 'volatility_21d') else {}
+            
+            if not momentum:
+                return SignalOutput(
+                    strategy_name=self.name,
+                    timestamp=t,
+                    confidence=0.0,
+                    explanation={"error": "No momentum data available"}
+                )
+            
+            # Only use assets that are in the data
+            available_assets = [a for a in self.assets 
+                               if features.prices and a in features.prices]
+            
+            if not available_assets:
+                return SignalOutput(
+                    strategy_name=self.name,
+                    timestamp=t,
+                    confidence=0.0,
+                    explanation={"error": "No ETF assets available in data"}
+                )
+            
+            weights = {}
+            
+            for asset in available_assets:
+                mom = momentum.get(asset)
+                vol = volatility.get(asset, 0.15)
+                
+                if mom is None or vol is None:
+                    continue
+                
+                # Direction from trend
+                direction = 1 if mom > 0 else -1
+                
+                # Size based on vol targeting
+                vol_scalar = self.vol_target / vol if vol > 0 else 0.5
+                
+                # Trend strength
+                strength = min(1.0, abs(mom) / 0.2)  # Full strength at 20% momentum
+                
+                # Final weight
+                raw_weight = direction * vol_scalar * strength * self.max_position
+                weight = max(-self.max_position, min(self.max_position, raw_weight))
+                
+                if abs(weight) > 0.01:
+                    weights[asset] = weight
+            
+            if not weights:
+                return SignalOutput(
+                    strategy_name=self.name,
+                    timestamp=t,
+                    confidence=0.0,
+                    explanation={"error": "No valid trend signals"}
+                )
+            
+            n_long = sum(1 for w in weights.values() if w > 0)
+            n_short = sum(1 for w in weights.values() if w < 0)
+            gross = sum(abs(w) for w in weights.values())
+            net = sum(weights.values())
+            
+            return SignalOutput(
+                strategy_name=self.name,
+                timestamp=t,
+                desired_weights=weights,
+                expected_return=0.08,
+                risk_estimate=self.vol_target,
+                confidence=0.6,
+                regime_fit=0.7,  # Trend following works in trending markets
+                diversification_score=0.8,
+                explanation={
+                    "type": "Futures Trend Following (Backtest Only)",
+                    "n_long": n_long,
+                    "n_short": n_short,
+                    "gross_exposure": f"{gross:.1%}",
+                    "net_exposure": f"{net:.1%}",
+                }
+            )
+        except Exception as e:
+            logging.warning(f"{self.name} error: {e}")
             return SignalOutput(
                 strategy_name=self.name,
                 timestamp=t,
                 confidence=0.0,
-                explanation={"error": "No momentum data"}
+                explanation={"error": f"Strategy disabled: {str(e)[:50]}"}
             )
-        
-        weights = {}
-        
-        for asset in self.assets:
-            mom = momentum.get(asset)
-            vol = volatility.get(asset, 0.15)
-            
-            if mom is None or vol is None:
-                continue
-            
-            # Direction from trend
-            direction = 1 if mom > 0 else -1
-            
-            # Size based on vol targeting
-            vol_scalar = self.vol_target / vol if vol > 0 else 0.5
-            
-            # Trend strength
-            strength = min(1.0, abs(mom) / 0.2)  # Full strength at 20% momentum
-            
-            # Final weight
-            raw_weight = direction * vol_scalar * strength * self.max_position
-            weight = max(-self.max_position, min(self.max_position, raw_weight))
-            
-            if abs(weight) > 0.01:
-                weights[asset] = weight
-        
-        if not weights:
-            return SignalOutput(
-                strategy_name=self.name,
-                timestamp=t,
-                confidence=0.0,
-                explanation={"error": "No valid trend signals"}
-            )
-        
-        n_long = sum(1 for w in weights.values() if w > 0)
-        n_short = sum(1 for w in weights.values() if w < 0)
-        gross = sum(abs(w) for w in weights.values())
-        net = sum(weights.values())
-        
-        return SignalOutput(
-            strategy_name=self.name,
-            timestamp=t,
-            desired_weights=weights,
-            expected_return=0.08,
-            risk_estimate=self.vol_target,
-            confidence=0.6,
-            regime_fit=0.7,  # Trend following works in trending markets
-            diversification_score=0.8,
-            explanation={
-                "type": "Futures Trend Following (Backtest Only)",
-                "n_long": n_long,
-                "n_short": n_short,
-                "gross_exposure": f"{gross:.1%}",
-                "net_exposure": f"{net:.1%}",
-            }
-        )
 
 
 # === FACTORY FUNCTION ===

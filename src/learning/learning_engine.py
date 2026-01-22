@@ -47,10 +47,11 @@ class LearningEngine:
         Args:
             strategy_names: List of strategy names to track
             outputs_dir: Directory for persisting learning data
-            learning_influence: How much learned weights influence final weights (0-1)
+            learning_influence: Base learning influence (0-1), will scale up with data
         """
         self.strategy_names = strategy_names
-        self.learning_influence = learning_influence
+        self.base_learning_influence = learning_influence
+        self.learning_influence = learning_influence  # Will be updated dynamically
         
         # Initialize components
         self.trade_memory = TradeMemory(f"{outputs_dir}/trade_memory.json")
@@ -66,6 +67,45 @@ class LearningEngine:
         self.pending_predictions: Dict[str, List[Dict]] = {}
         
         logging.info(f"Learning engine initialized for {len(strategy_names)} strategies")
+    
+    def get_adaptive_learning_influence(self) -> float:
+        """
+        Dynamically adjust learning influence based on data collected.
+        
+        The more data we have, the more we trust the learning system.
+        This allows the system to gradually increase influence as it gains experience.
+        
+        Returns:
+            Learning influence factor (0.2 to 0.7)
+        """
+        try:
+            stats = self.trade_memory.get_statistics()
+            total_trades = stats.get('total_trades', 0)
+            win_rate = stats.get('win_rate', 0.5)
+        except Exception:
+            total_trades = 0
+            win_rate = 0.5
+        
+        # Scale influence based on number of trades
+        if total_trades < 10:
+            influence = 0.2  # Low influence, still learning
+        elif total_trades < 30:
+            influence = 0.35  # Moderate influence
+        elif total_trades < 100:
+            influence = 0.5  # High influence
+        else:
+            influence = 0.65  # Strong influence - trust the learning
+        
+        # Boost further if win rate is good
+        if win_rate > 0.55 and total_trades >= 30:
+            influence = min(0.7, influence * 1.15)
+        
+        # Reduce if win rate is poor
+        if win_rate < 0.45 and total_trades >= 30:
+            influence = max(0.2, influence * 0.85)
+        
+        self.learning_influence = influence
+        return influence
     
     def record_signals(
         self,
@@ -277,6 +317,9 @@ class LearningEngine:
         Blends debate engine scores with learned weights based on
         historical performance.
         
+        The learning influence is DYNAMIC - it increases as we collect more data
+        and have higher confidence in what we've learned.
+        
         Args:
             debate_scores: Scores from the debate engine
             market_context: Current market conditions
@@ -286,27 +329,69 @@ class LearningEngine:
         """
         regime = market_context.get('regime', 'unknown')
         
-        # Get base learned weights
+        # Get ADAPTIVE learning influence based on data collected
+        current_influence = self.get_adaptive_learning_influence()
+        
+        # Get base learned weights with adaptive influence
         learned_weights = self.adaptive_weights.blend_with_debate_scores(
             debate_scores=debate_scores,
             regime=regime,
-            learned_weight_influence=self.learning_influence,
+            learned_weight_influence=current_influence,
         )
         
-        # Apply pattern-based adjustments
+        logging.debug(f"Learning influence: {current_influence:.1%} (adaptive)")
+        
+        # ============================================================
+        # PATTERN-BASED ADJUSTMENTS (More aggressive)
+        # ============================================================
+        # Get strategy recommendations from pattern learner
         recommended, to_avoid = self.pattern_learner.get_strategy_recommendations(
             market_context
         )
         
-        # Boost recommended strategies slightly
-        for strategy in recommended:
-            if strategy in learned_weights:
-                learned_weights[strategy] *= 1.1
+        # Get active patterns for even stronger adjustments
+        active_patterns = self.pattern_learner.get_active_patterns(market_context)
         
-        # Reduce weight of strategies to avoid
+        # Track applied adjustments for logging
+        adjustments_applied = []
+        
+        # Apply pattern-based boosts/penalties
+        for pattern in active_patterns:
+            if pattern.confidence >= 0.6 and pattern.times_observed >= 5:
+                # This is a high-confidence pattern - apply stronger adjustments
+                
+                # Boost recommended strategies
+                for strategy in pattern.recommended_strategies:
+                    if strategy in learned_weights:
+                        boost = 1.3 if pattern.confidence > 0.75 else 1.2
+                        learned_weights[strategy] *= boost
+                        adjustments_applied.append(f"+{(boost-1)*100:.0f}% {strategy} (pattern: {pattern.description[:30]})")
+                
+                # Penalize strategies to avoid
+                for strategy in pattern.strategies_to_avoid:
+                    if strategy in learned_weights:
+                        penalty = 0.7 if pattern.confidence > 0.75 else 0.8
+                        learned_weights[strategy] *= penalty
+                        adjustments_applied.append(f"-{(1-penalty)*100:.0f}% {strategy} (avoid: {pattern.description[:30]})")
+        
+        # Apply general recommendations with moderate adjustments
+        for strategy in recommended:
+            if strategy in learned_weights and strategy not in [
+                s for p in active_patterns for s in p.recommended_strategies
+            ]:
+                learned_weights[strategy] *= 1.15  # 15% boost
+        
         for strategy in to_avoid:
-            if strategy in learned_weights:
-                learned_weights[strategy] *= 0.9
+            if strategy in learned_weights and strategy not in [
+                s for p in active_patterns for s in p.strategies_to_avoid
+            ]:
+                learned_weights[strategy] *= 0.85  # 15% penalty
+        
+        # Log adjustments if any were made
+        if adjustments_applied:
+            logging.info(f"Pattern-based adjustments: {len(adjustments_applied)} applied")
+            for adj in adjustments_applied[:3]:  # Log top 3
+                logging.debug(f"  {adj}")
         
         # Renormalize
         total = sum(learned_weights.values())

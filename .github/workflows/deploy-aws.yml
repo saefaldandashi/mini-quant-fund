@@ -1,0 +1,88 @@
+# =============================================================================
+# GitHub Actions - Auto Deploy to AWS EC2
+# =============================================================================
+# 
+# This workflow automatically deploys your code to AWS EC2 when you push to main.
+#
+# SETUP REQUIRED:
+# 1. Go to GitHub repo → Settings → Secrets and variables → Actions
+# 2. Add these secrets:
+#    - EC2_HOST: Your EC2 public IP (e.g., 54.123.45.67)
+#    - EC2_SSH_KEY: The entire contents of your .pem private key file
+#    - EC2_USER: Usually "ec2-user" for Amazon Linux or "ubuntu" for Ubuntu
+#
+# =============================================================================
+
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches: [main]
+  
+  # Allow manual trigger from GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script_stop: true
+          script: |
+            echo "🚀 Starting deployment..."
+            
+            # Navigate to app directory
+            cd ~/mini-fund-tool
+            
+            # Pull latest code
+            echo "📥 Pulling latest code..."
+            git pull origin main
+            
+            # Activate virtual environment
+            source .venv/bin/activate
+            
+            # Install any new dependencies
+            echo "📦 Installing dependencies..."
+            pip install -r requirements.txt -q
+            
+            # Restart the service
+            echo "🔄 Restarting service..."
+            sudo systemctl restart quantfund
+            
+            # Wait for service to start
+            sleep 5
+            
+            # Check service status
+            if sudo systemctl is-active --quiet quantfund; then
+              echo "✅ Deployment successful! Service is running."
+              
+              # Health check
+              HEALTH=$(curl -s http://localhost:5000/api/health | python3 -c "import sys,json; print(json.load(sys.stdin).get('status', 'unknown'))")
+              echo "🏥 Health: $HEALTH"
+            else
+              echo "❌ Service failed to start!"
+              sudo journalctl -u quantfund -n 50 --no-pager
+              exit 1
+            fi
+
+      - name: Notify Success
+        if: success()
+        run: |
+          echo "✅ Deployment to AWS EC2 completed successfully!"
+          echo "🌐 App URL: http://${{ secrets.EC2_HOST }}:5000"
+      
+      - name: Notify Failure
+        if: failure()
+        run: |
+          echo "❌ Deployment failed! Check the logs above."

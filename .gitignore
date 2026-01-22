@@ -49,3 +49,12 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+
+# Outputs and cache (don't commit to git)
+outputs/
+*.pkl
+*.parquet
+
+# Deployment keys (NEVER commit these!)
+*.pem
+deploy-key*

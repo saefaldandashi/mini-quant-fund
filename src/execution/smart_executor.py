@@ -796,16 +796,42 @@ class SmartExecutor:
         results = []
         total_improvement = 0.0
         
+        twap_used = 0
+        
         for i, order in enumerate(optimized_orders, 1):
             self.log(f"[{i}/{len(optimized_orders)}]")
             
-            result = self.execute_order(
-                symbol=order['symbol'],
-                side=order['side'],
-                quantity=order['quantity'],
-                current_price=order['price'],
-                conviction=order.get('conviction', 0.5),
-            )
+            # Check if this order should use TWAP (large order)
+            if self.should_use_twap(order):
+                self.log(f"  📊 Large order detected - using TWAP execution")
+                twap_result = self.execute_twap(
+                    symbol=order['symbol'],
+                    side=order['side'],
+                    total_quantity=order['quantity'],
+                    slices=5,
+                    interval_seconds=15 if self.dry_run else 30,
+                )
+                twap_used += 1
+                
+                # Convert TWAP result to ExecutionResult
+                result = ExecutionResult(
+                    symbol=order['symbol'],
+                    side=order['side'],
+                    quantity=twap_result['filled_quantity'],
+                    success=twap_result['success'],
+                    fill_price=twap_result['avg_price'],
+                    order_type=OrderType.MARKET,  # TWAP uses market orders
+                    filled_at_limit=False,
+                    execution_time_ms=0,
+                )
+            else:
+                result = self.execute_order(
+                    symbol=order['symbol'],
+                    side=order['side'],
+                    quantity=order['quantity'],
+                    current_price=order['price'],
+                    conviction=order.get('conviction', 0.5),
+                )
             results.append(result)
             total_improvement += result.price_improvement
             self.log("")
@@ -1081,3 +1107,131 @@ class SmartExecutor:
             ],
             'avg_improvement': sum(h.avg_improvement for _, h in symbols_with_history) / len(symbols_with_history),
         }
+    
+    def execute_twap(
+        self,
+        symbol: str,
+        side: str,
+        total_quantity: int,
+        slices: int = 5,
+        interval_seconds: int = 30,
+    ) -> Dict[str, Any]:
+        """
+        Execute a large order using Time-Weighted Average Price (TWAP).
+        
+        Splits order into smaller slices executed over time to minimize
+        market impact.
+        
+        Args:
+            symbol: Stock symbol
+            side: 'buy' or 'sell'
+            total_quantity: Total shares to trade
+            slices: Number of slices to split the order into
+            interval_seconds: Time between slices
+        
+        Returns:
+            Dict with execution results
+        """
+        self.log(f"📊 TWAP EXECUTION: {side.upper()} {total_quantity} {symbol} in {slices} slices")
+        
+        slice_quantity = total_quantity // slices
+        remaining = total_quantity
+        fills = []
+        total_value = 0.0
+        total_filled = 0
+        
+        for i in range(slices):
+            # Calculate this slice quantity
+            qty = slice_quantity if i < slices - 1 else remaining
+            if qty <= 0:
+                break
+            
+            # Get current price
+            try:
+                from alpaca.data.requests import StockLatestQuoteRequest
+                if hasattr(self.broker, 'data_client') and self.broker.data_client:
+                    request = StockLatestQuoteRequest(symbol_or_symbols=[symbol])
+                    quotes = self.broker.data_client.get_stock_latest_quote(request)
+                    if symbol in quotes:
+                        current_price = float(quotes[symbol].ask_price) if side == 'buy' else float(quotes[symbol].bid_price)
+                    else:
+                        current_price = 0
+                else:
+                    current_price = 0
+            except:
+                current_price = 0
+            
+            self.log(f"  Slice {i+1}/{slices}: {qty} shares @ ~${current_price:.2f}")
+            
+            # Execute this slice
+            result = self.execute_order(
+                symbol=symbol,
+                side=side,
+                quantity=qty,
+                current_price=current_price,
+                conviction=0.6,  # Medium conviction for TWAP
+            )
+            
+            fills.append({
+                'slice': i + 1,
+                'quantity': qty,
+                'success': result.success,
+                'fill_price': result.fill_price,
+                'execution_time_ms': result.execution_time_ms,
+            })
+            
+            if result.success and result.fill_price:
+                total_filled += qty
+                total_value += qty * result.fill_price
+                remaining -= qty
+            
+            if remaining <= 0:
+                break
+            
+            # Wait before next slice (unless it's the last one)
+            if i < slices - 1:
+                if not self.dry_run:
+                    self.log(f"    Waiting {interval_seconds}s before next slice...")
+                    time.sleep(interval_seconds)
+                else:
+                    self.log(f"    [DRY RUN] Would wait {interval_seconds}s")
+        
+        # Calculate VWAP of all fills
+        avg_price = total_value / total_filled if total_filled > 0 else 0
+        fill_rate = total_filled / total_quantity if total_quantity > 0 else 0
+        
+        self.log(f"  ✅ TWAP Complete: {total_filled}/{total_quantity} filled @ ${avg_price:.2f} avg")
+        
+        return {
+            'success': total_filled > 0,
+            'symbol': symbol,
+            'side': side,
+            'total_quantity': total_quantity,
+            'filled_quantity': total_filled,
+            'fill_rate': fill_rate,
+            'avg_price': avg_price,
+            'slices_executed': len(fills),
+            'fills': fills,
+        }
+    
+    def should_use_twap(self, order: Dict) -> bool:
+        """
+        Determine if an order should use TWAP execution.
+        
+        Criteria:
+        - Order value > $50,000
+        - Or quantity > 1000 shares
+        - Or symbol has low liquidity
+        """
+        value = order.get('value', 0)
+        quantity = order.get('quantity', 0)
+        
+        # Large orders by value
+        if value > 50000:
+            return True
+        
+        # Large orders by share count
+        if quantity > 1000:
+            return True
+        
+        return False

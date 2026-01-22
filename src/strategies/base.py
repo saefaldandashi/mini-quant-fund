@@ -86,6 +86,11 @@ class Strategy(ABC):
         # NEW: Macro context (set externally)
         self.macro_features: Optional[Any] = None
         self.risk_sentiment: Optional[Any] = None
+        
+        # NEW: Ticker sentiment data (set externally)
+        # Dict of symbol -> sentiment score (-1 to 1)
+        self.ticker_sentiments: Dict[str, float] = {}
+        self.sentiment_confidence: Dict[str, float] = {}
     
     @property
     def required_features(self) -> List[str]:
@@ -106,6 +111,53 @@ class Strategy(ABC):
         """
         self.macro_features = macro_features
         self.risk_sentiment = risk_sentiment
+    
+    def set_sentiment_data(
+        self, 
+        sentiments: Dict[str, float],
+        confidence: Optional[Dict[str, float]] = None
+    ) -> None:
+        """
+        Set ticker sentiment data for the strategy.
+        
+        Args:
+            sentiments: Dict of symbol -> sentiment score (-1 to 1)
+            confidence: Optional dict of symbol -> confidence (0 to 1)
+        """
+        self.ticker_sentiments = sentiments or {}
+        self.sentiment_confidence = confidence or {}
+    
+    def get_sentiment_adjustment(self, symbol: str, base_weight: float) -> tuple:
+        """
+        Get sentiment-adjusted weight for a symbol.
+        
+        Returns:
+            (adjusted_weight, adjustment_reason)
+        """
+        if not self.ticker_sentiments or symbol not in self.ticker_sentiments:
+            return (base_weight, None)
+        
+        sentiment = self.ticker_sentiments[symbol]
+        confidence = self.sentiment_confidence.get(symbol, 0.5)
+        
+        # Only adjust if sentiment is strong and confident
+        if abs(sentiment) < 0.3 or confidence < 0.4:
+            return (base_weight, None)
+        
+        # Calculate adjustment factor
+        # Strong positive sentiment = boost longs, reduce shorts
+        # Strong negative sentiment = reduce longs, boost shorts
+        adjustment_factor = 1.0 + (sentiment * confidence * 0.2)  # Max 20% adjustment
+        
+        adjusted = base_weight * adjustment_factor
+        
+        # Cap the adjustment
+        max_single = 0.15
+        adjusted = max(-max_single, min(max_single, adjusted))
+        
+        reason = f"Sentiment {sentiment:+.2f} (conf: {confidence:.0%}) → {adjustment_factor:.2f}x"
+        
+        return (adjusted, reason)
     
     def get_peer_consensus(self, symbol: str) -> tuple:
         """
