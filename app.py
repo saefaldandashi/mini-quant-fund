@@ -2688,6 +2688,64 @@ def get_portfolio():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/api/trade-history')
+def get_alpaca_trade_history():
+    """Get trade history from Alpaca and learning system."""
+    try:
+        trades = []
+        
+        # Try to get trades from learning system first
+        try:
+            trades_df = learning_engine.trade_memory.to_dataframe()
+            if not trades_df.empty:
+                for _, row in trades_df.iterrows():
+                    trades.append({
+                        "timestamp": row.get('timestamp', row.get('entry_time', '')),
+                        "symbol": row.get('symbol', ''),
+                        "side": row.get('side', 'buy'),
+                        "qty": row.get('qty', row.get('quantity', 0)),
+                        "price": row.get('entry_price', row.get('price', 0)),
+                        "notional": row.get('notional', 0),
+                        "pnl": row.get('pnl', row.get('realized_pnl', None))
+                    })
+        except Exception as e:
+            print(f"Could not get learning trades: {e}")
+        
+        # Also try Alpaca orders
+        try:
+            api_key = os.getenv("ALPACA_API_KEY")
+            secret_key = os.getenv("ALPACA_SECRET_KEY")
+            
+            if api_key and secret_key:
+                broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+                orders = broker.api.get_orders(status='closed', limit=50)
+                
+                for order in orders:
+                    if order.filled_at:
+                        trades.append({
+                            "timestamp": str(order.filled_at),
+                            "symbol": order.symbol,
+                            "side": order.side,
+                            "qty": float(order.filled_qty) if order.filled_qty else 0,
+                            "price": float(order.filled_avg_price) if order.filled_avg_price else 0,
+                            "notional": float(order.filled_qty or 0) * float(order.filled_avg_price or 0),
+                            "pnl": None  # Alpaca orders don't include PnL
+                        })
+        except Exception as e:
+            print(f"Could not get Alpaca orders: {e}")
+        
+        # Sort by timestamp (most recent first)
+        trades.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+        
+        return jsonify({
+            "trades": trades[:100],  # Limit to 100 most recent
+            "count": len(trades)
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e), "trades": []}), 500
+
+
 @app.route('/api/data-sources')
 def get_data_sources():
     """Get information about data sources."""
