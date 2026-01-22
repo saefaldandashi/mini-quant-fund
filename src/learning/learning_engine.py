@@ -170,6 +170,8 @@ class LearningEngine:
         leverage_used: float = 1.0,
         margin_cost_daily: float = 0.0,
         leverage_state: str = 'healthy',
+        intended_holding_minutes: int = 0,
+        entry_strategy: str = '',
     ):
         """
         Record an executed trade.
@@ -184,6 +186,8 @@ class LearningEngine:
             leverage_used: Leverage ratio at trade time (1.0 = no leverage)
             margin_cost_daily: Daily margin interest cost for leveraged trades
             leverage_state: State of leverage manager at trade time
+            intended_holding_minutes: Expected holding period (0 = no limit)
+            entry_strategy: Primary strategy that triggered this trade
         """
         # Store leverage info for trade memory
         self._leverage_info = {
@@ -226,6 +230,8 @@ class LearningEngine:
             leverage_used=leverage_used,
             margin_cost_daily=margin_cost_daily,
             leverage_state=leverage_state,
+            intended_holding_minutes=intended_holding_minutes,
+            entry_strategy=entry_strategy,
         )
     
     def record_outcomes(

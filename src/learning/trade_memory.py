@@ -13,7 +13,7 @@ import logging
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Any, Tuple
 import pandas as pd
 
 
@@ -67,6 +67,11 @@ class TradeRecord:
     margin_cost_daily: float = 0.0      # Daily margin interest cost
     was_leveraged: bool = False         # True if leverage > 1.0
     leverage_state: str = 'healthy'     # Leverage state at entry
+    
+    # Holding period tracking (for auto-exit)
+    intended_holding_minutes: int = 0   # Strategy's intended holding period (0 = no limit)
+    entry_strategy: str = ''            # Primary strategy that triggered this trade
+    should_auto_exit: bool = False      # True if position exceeded intended holding
     
     # Outcome tracking (filled in later)
     exit_price: Optional[float] = None
@@ -164,6 +169,8 @@ class TradeMemory:
         leverage_used: float = 1.0,
         margin_cost_daily: float = 0.0,
         leverage_state: str = 'healthy',
+        intended_holding_minutes: int = 0,
+        entry_strategy: str = '',
     ) -> TradeRecord:
         """
         Record a new trade with full context.
@@ -180,6 +187,8 @@ class TradeMemory:
             leverage_used: Leverage ratio at trade time
             margin_cost_daily: Daily margin interest cost
             leverage_state: Leverage manager state at trade time
+            intended_holding_minutes: Expected holding period for auto-exit
+            entry_strategy: Primary strategy that triggered trade
         
         Returns:
             The created TradeRecord
@@ -225,6 +234,8 @@ class TradeMemory:
             margin_cost_daily=margin_cost_daily,
             was_leveraged=leverage_used > 1.0,
             leverage_state=leverage_state,
+            intended_holding_minutes=intended_holding_minutes,
+            entry_strategy=entry_strategy,
         )
         
         self.trades.append(trade)
@@ -275,7 +286,103 @@ class TradeMemory:
         
         trade.was_profitable = trade.pnl_dollars > 0
         
+        # === MISTAKE CLASSIFICATION ===
+        # Analyze what went wrong for learning
+        if not trade.was_profitable:
+            trade.mistake_category, trade.lessons_learned = self._classify_mistake(trade)
+            logging.info(f"Trade mistake classification for {trade.symbol}: {trade.mistake_category}")
+        else:
+            trade.mistake_category = 'none'
+            trade.lessons_learned = []
+        
         self._save()
+    
+    def _classify_mistake(self, trade: 'TradeRecord') -> Tuple[str, List[str]]:
+        """
+        Classify what type of mistake led to a losing trade.
+        
+        Categories:
+        - timing: Entered too early or too late
+        - sizing: Position too large or too small
+        - direction: Bet against the trend
+        - regime: Wrong strategy for market conditions
+        - execution: Poor fill price increased losses
+        - conviction: Low confidence position that failed
+        
+        Returns:
+            (mistake_category, lessons_learned)
+        """
+        lessons = []
+        
+        # Get holding period context
+        holding_days = trade.holding_period_days or 0
+        pnl_pct = trade.pnl_percent or 0
+        
+        # === TIMING MISTAKES ===
+        # Very short hold with loss = entered too late / chased
+        if holding_days == 0 and pnl_pct < -1:
+            lessons.append("Avoid chasing momentum; wait for pullback entries")
+            return ('timing', lessons)
+        
+        # Long hold with small loss = held too long
+        if holding_days > 5 and -3 < pnl_pct < 0:
+            lessons.append("Consider tighter stop-losses for intraday strategies")
+            return ('timing', lessons)
+        
+        # === DIRECTION MISTAKES ===
+        # Large loss quickly = wrong direction entirely
+        if holding_days <= 1 and pnl_pct < -3:
+            lessons.append("Direction was wrong; review signals for false positives")
+            
+            # Check if sentiment disagreed
+            if trade.market_context:
+                regime = trade.market_context.regime
+                if trade.side == 'buy' and regime in ['risk_off', 'crisis']:
+                    lessons.append(f"Avoid longs in {regime} regime")
+                elif trade.side == 'sell' and regime in ['risk_on', 'euphoria']:
+                    lessons.append(f"Avoid shorts in {regime} regime")
+            
+            return ('direction', lessons)
+        
+        # === REGIME MISTAKES ===
+        # Check if entry strategy was wrong for regime
+        if trade.market_context and trade.entry_strategy:
+            regime = trade.market_context.regime
+            strategy = trade.entry_strategy
+            
+            # Momentum strategies in mean-reverting markets
+            if 'Momentum' in strategy and regime in ['choppy', 'ranging']:
+                lessons.append(f"Momentum strategies underperform in {regime} markets")
+                return ('regime', lessons)
+            
+            # Mean reversion in trending markets
+            if 'MeanReversion' in strategy and regime in ['trending_up', 'trending_down']:
+                lessons.append(f"Mean reversion doesn't work in strong trends")
+                return ('regime', lessons)
+        
+        # === CONVICTION MISTAKES ===
+        # Low confidence positions that failed
+        low_confidence_signals = [
+            s for s in trade.strategy_signals 
+            if s.confidence < 0.4 and abs(s.weight_proposed) > 0.01
+        ]
+        if low_confidence_signals:
+            lessons.append("Low-confidence signals should be skipped or sized smaller")
+            return ('conviction', lessons)
+        
+        # === SIZING MISTAKES ===
+        # Large position that had outsized loss impact
+        if trade.ensemble_weight > 0.1 and pnl_pct < -2:
+            lessons.append("Reduce position sizes for higher-risk trades")
+            return ('sizing', lessons)
+        
+        # === EXECUTION MISTAKES ===
+        # If we have execution data showing poor fill
+        # (This would need execution report data which may not be available)
+        
+        # Default: unclassified
+        lessons.append("Review trade thesis; conditions may have changed unexpectedly")
+        return ('other', lessons)
     
     def update_position_prices(self, current_prices: Dict[str, float]):
         """
@@ -292,6 +399,25 @@ class TradeMemory:
                     trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
                 trade.was_profitable = trade.pnl_dollars > 0
         self._save()
+    
+    def get_recent_trades(self, n: int = 10) -> List[TradeRecord]:
+        """
+        Get the N most recent trades (both open and closed).
+        Used for LLM context to learn from recent outcomes.
+        
+        Args:
+            n: Number of trades to return
+            
+        Returns:
+            List of recent TradeRecords sorted by timestamp descending
+        """
+        # Sort by timestamp descending
+        sorted_trades = sorted(
+            self.trades,
+            key=lambda t: t.timestamp,
+            reverse=True
+        )
+        return sorted_trades[:n]
     
     def get_closed_trades(self, days: Optional[int] = None) -> List[TradeRecord]:
         """Get all closed trades, optionally filtered by recency."""
@@ -360,6 +486,44 @@ class TradeMemory:
             'worst_trade': min(closed, key=lambda t: t.pnl_percent or 0).symbol if closed else None,
             'avg_holding_days': sum(t.holding_period_days or 0 for t in closed) / len(closed),
         }
+    
+    def get_expired_positions(self) -> List[Tuple[str, TradeRecord]]:
+        """
+        Get positions that have exceeded their intended holding period.
+        These should be auto-exited to maintain strategy integrity.
+        
+        Returns:
+            List of (symbol, TradeRecord) tuples for expired positions
+        """
+        expired = []
+        now = datetime.now()
+        
+        for symbol, trade in self.open_positions.items():
+            # Skip if no holding period specified
+            if trade.intended_holding_minutes <= 0:
+                continue
+            
+            # Calculate how long position has been held
+            try:
+                entry_time = datetime.fromisoformat(trade.timestamp.replace('Z', '+00:00'))
+                # Handle timezone-naive comparison
+                if entry_time.tzinfo:
+                    entry_time = entry_time.replace(tzinfo=None)
+                
+                held_minutes = (now - entry_time).total_seconds() / 60
+                
+                # Check if exceeded intended holding period
+                if held_minutes > trade.intended_holding_minutes:
+                    trade.should_auto_exit = True
+                    expired.append((symbol, trade))
+                    logging.info(
+                        f"Position {symbol} exceeded holding period: "
+                        f"{held_minutes:.0f}m vs intended {trade.intended_holding_minutes}m"
+                    )
+            except Exception as e:
+                logging.warning(f"Could not check holding period for {symbol}: {e}")
+        
+        return expired
     
     def to_dataframe(self) -> pd.DataFrame:
         """Convert trade history to DataFrame for analysis."""

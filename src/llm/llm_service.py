@@ -108,6 +108,11 @@ class LLMService:
         self.cache_hits = 0
         self.cache_misses = 0
         
+        # Confidence calibration
+        self.predictions: List[Dict] = []  # Track predictions and outcomes
+        self.calibration_accuracy = 0.5  # Historical accuracy (starts neutral)
+        self._load_calibration()
+        
         # Load usage tracking
         self._load_usage()
         
@@ -179,6 +184,92 @@ class LLMService:
                 }, f)
         except Exception as e:
             logger.warning(f"Could not save usage: {e}")
+    
+    def _load_calibration(self):
+        """Load historical prediction accuracy for confidence calibration."""
+        calibration_file = self.cache_dir / "calibration.json"
+        if calibration_file.exists():
+            try:
+                with open(calibration_file) as f:
+                    data = json.load(f)
+                self.predictions = data.get('predictions', [])[-100:]  # Keep last 100
+                self.calibration_accuracy = data.get('accuracy', 0.5)
+            except:
+                pass
+    
+    def _save_calibration(self):
+        """Save calibration data."""
+        calibration_file = self.cache_dir / "calibration.json"
+        try:
+            with open(calibration_file, 'w') as f:
+                json.dump({
+                    'predictions': self.predictions[-100:],
+                    'accuracy': self.calibration_accuracy,
+                }, f)
+        except:
+            pass
+    
+    def record_prediction(self, prediction_id: str, confidence: float, direction: str, symbol: str):
+        """
+        Record a prediction made by LLM for later calibration.
+        
+        Args:
+            prediction_id: Unique ID for this prediction
+            confidence: LLM's stated confidence (0-1)
+            direction: 'bullish' or 'bearish'
+            symbol: Stock symbol
+        """
+        self.predictions.append({
+            'id': prediction_id,
+            'confidence': confidence,
+            'direction': direction,
+            'symbol': symbol,
+            'timestamp': datetime.now().isoformat(),
+            'outcome': None,  # Will be filled later
+        })
+        self._save_calibration()
+    
+    def record_outcome(self, prediction_id: str, was_correct: bool):
+        """
+        Record the outcome of a previous prediction.
+        
+        Args:
+            prediction_id: ID of the prediction
+            was_correct: True if the prediction was correct
+        """
+        for pred in self.predictions:
+            if pred['id'] == prediction_id:
+                pred['outcome'] = was_correct
+                break
+        
+        # Recalculate calibration accuracy
+        outcomes = [p for p in self.predictions if p['outcome'] is not None]
+        if outcomes:
+            self.calibration_accuracy = sum(1 for p in outcomes if p['outcome']) / len(outcomes)
+        
+        self._save_calibration()
+    
+    def get_calibrated_confidence(self, raw_confidence: float) -> float:
+        """
+        Adjust LLM confidence based on historical accuracy.
+        
+        If LLM is overconfident (high confidence but low accuracy),
+        we dial down the confidence. If underconfident, we boost it.
+        
+        Args:
+            raw_confidence: LLM's stated confidence
+            
+        Returns:
+            Calibrated confidence
+        """
+        # Simple linear calibration
+        # If accuracy is 0.5 (random), return raw_confidence
+        # If accuracy is higher, boost confidence; if lower, reduce it
+        
+        calibration_factor = self.calibration_accuracy / 0.5  # 1.0 if 50% accurate
+        calibrated = raw_confidence * min(1.5, max(0.5, calibration_factor))
+        
+        return max(0.1, min(0.95, calibrated))  # Clamp to 0.1-0.95
     
     def _make_cache_key(self, prompt: str, system: str) -> str:
         """Create cache key from prompt."""

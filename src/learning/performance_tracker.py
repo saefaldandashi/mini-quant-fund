@@ -80,6 +80,13 @@ class PerformanceTracker:
         self.storage_path = Path(storage_path)
         self.metrics: Dict[str, StrategyMetrics] = {}
         self.prediction_history: Dict[str, List[Dict]] = defaultdict(list)
+        
+        # Per-symbol performance tracking
+        # Maps strategy -> symbol -> {wins, losses, total_pnl}
+        self.symbol_performance: Dict[str, Dict[str, Dict[str, float]]] = defaultdict(
+            lambda: defaultdict(lambda: {'wins': 0, 'losses': 0, 'total_pnl': 0.0})
+        )
+        
         self._load()
     
     def _load(self):
@@ -178,6 +185,14 @@ class PerformanceTracker:
                     pred['outcome'] = 'correct' if actual_return < 0 else 'incorrect'
                 else:
                     pred['outcome'] = 'correct' if abs(actual_return) < 0.02 else 'incorrect'
+                
+                # Update per-symbol performance
+                sym_perf = self.symbol_performance[strategy_name][symbol]
+                if pred['outcome'] == 'correct':
+                    sym_perf['wins'] += 1
+                else:
+                    sym_perf['losses'] += 1
+                sym_perf['total_pnl'] += actual_return
                 
                 break
         

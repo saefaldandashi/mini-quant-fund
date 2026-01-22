@@ -108,14 +108,29 @@ class EnsembleOptimizer:
         Returns:
             Tuple of (final_weights, metadata)
         """
+        # Calculate strategy correlation penalties to encourage diversification
+        correlation_adjustments = self._calculate_strategy_correlations(signals, scores)
+        
+        # Apply correlation penalties to scores
+        adjusted_scores = {}
+        for name, score in scores.items():
+            penalty = correlation_adjustments.get(name, 0.0)
+            # Create a modified score with correlation penalty
+            adjusted_scores[name] = StrategyScore(
+                name=score.name,
+                total_score=max(0.1, score.total_score * (1.0 - penalty)),
+                thesis=score.thesis,
+                components=score.components,
+            )
+        
         if mode == EnsembleMode.WEIGHTED_VOTE:
-            raw_weights = self._weighted_vote(signals, scores, strategy_weights)
+            raw_weights = self._weighted_vote(signals, adjusted_scores, strategy_weights)
         elif mode == EnsembleMode.CONVEX_OPTIMIZATION:
-            raw_weights = self._convex_optimization(signals, scores, features, strategy_weights)
+            raw_weights = self._convex_optimization(signals, adjusted_scores, features, strategy_weights)
         elif mode == EnsembleMode.STACKING:
-            raw_weights = self._stacking(signals, scores, features, strategy_weights)
+            raw_weights = self._stacking(signals, adjusted_scores, features, strategy_weights)
         else:
-            raw_weights = self._weighted_vote(signals, scores, strategy_weights)
+            raw_weights = self._weighted_vote(signals, adjusted_scores, strategy_weights)
         
         # Apply constraints
         final_weights, constraints_applied = self._apply_constraints(
@@ -482,6 +497,91 @@ class EnsembleOptimizer:
         ) / 2
         
         return turnover
+    
+    def _calculate_strategy_correlations(
+        self,
+        signals: Dict[str, SignalOutput],
+        scores: Dict[str, StrategyScore]
+    ) -> Dict[str, float]:
+        """
+        Calculate correlation-based penalties for strategies.
+        
+        Strategies with highly correlated signal outputs get penalized
+        to encourage portfolio diversification and reduce redundancy.
+        
+        Returns:
+            Dict of strategy_name -> penalty (0.0 to 0.5)
+        """
+        if len(signals) < 2:
+            return {}
+        
+        # Build signal vectors for each strategy
+        # Each vector contains weights for all symbols
+        all_symbols = set()
+        for signal in signals.values():
+            all_symbols.update(signal.desired_weights.keys())
+        
+        all_symbols = sorted(list(all_symbols))
+        if not all_symbols:
+            return {}
+        
+        # Create weight matrix: strategies x symbols
+        strategy_names = list(signals.keys())
+        n_strategies = len(strategy_names)
+        n_symbols = len(all_symbols)
+        
+        weight_matrix = np.zeros((n_strategies, n_symbols))
+        for i, name in enumerate(strategy_names):
+            for j, symbol in enumerate(all_symbols):
+                weight_matrix[i, j] = signals[name].desired_weights.get(symbol, 0.0)
+        
+        # Calculate correlation matrix between strategies
+        # Using Pearson correlation of signal vectors
+        penalties = {}
+        
+        for i, name in enumerate(strategy_names):
+            my_vector = weight_matrix[i]
+            my_norm = np.linalg.norm(my_vector)
+            if my_norm < 1e-8:
+                penalties[name] = 0.0
+                continue
+            
+            # Calculate average correlation with other strategies
+            correlations = []
+            for j, other_name in enumerate(strategy_names):
+                if i == j:
+                    continue
+                
+                other_vector = weight_matrix[j]
+                other_norm = np.linalg.norm(other_vector)
+                
+                if other_norm < 1e-8:
+                    continue
+                
+                # Cosine similarity (correlation for centered data)
+                correlation = np.dot(my_vector, other_vector) / (my_norm * other_norm)
+                
+                # Weight by the other strategy's score (high correlation with good strategy is less bad)
+                other_score = scores.get(other_name, StrategyScore(name=other_name, total_score=0.5, thesis="", components={}))
+                score_factor = other_score.total_score
+                
+                # Only penalize positive correlations (same signals)
+                if correlation > 0.3:  # Threshold for "correlated"
+                    correlations.append(correlation * (1 - score_factor * 0.5))
+            
+            if correlations:
+                # Average correlation with others, scaled to penalty
+                avg_corr = np.mean(correlations)
+                # Max penalty of 0.3 (30% reduction) for perfect correlation
+                penalty = min(0.3, avg_corr * 0.5)
+                penalties[name] = penalty
+                
+                if penalty > 0.1:
+                    logger.debug(f"Strategy {name} correlation penalty: {penalty:.2%}")
+            else:
+                penalties[name] = 0.0
+        
+        return penalties
     
     def _estimate_portfolio_vol(
         self,

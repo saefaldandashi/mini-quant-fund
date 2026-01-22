@@ -43,6 +43,9 @@ class SignalOutput:
     regime_fit: float = 0.5  # How well this strategy fits current regime
     diversification_score: float = 0.5  # Contribution to diversification
     
+    # Holding period for intraday strategies (0 = no limit / position trade)
+    holding_period_minutes: int = 0  # Auto-exit after this many minutes
+    
     def normalize_weights(self, target_sum: float = 1.0) -> None:
         """Normalize weights to sum to target."""
         total = sum(abs(w) for w in self.desired_weights.values())

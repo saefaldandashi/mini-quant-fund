@@ -1638,6 +1638,18 @@
                             <value id="position-count">--</value>
                         </div>
                     </div>
+                    
+                    <!-- Equity Curve Chart -->
+                    <div id="equity-curve-container" style="margin-top: 16px; padding: 12px; background: var(--bg-inset); border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <h3 style="margin: 0; font-size: 0.9em; color: var(--text-dim);">📈 30-Day Equity Curve</h3>
+                            <span id="equity-summary" style="font-size: 0.75em; color: var(--text-dim);">--</span>
+                        </div>
+                        <div id="equity-chart" style="height: 80px; position: relative;">
+                            <!-- SVG chart will be rendered here -->
+                            <svg id="equity-svg" width="100%" height="100%" preserveAspectRatio="none"></svg>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -2192,6 +2204,14 @@
                 console.error('❌ Portfolio failed:', e);
             }
             
+            // Load equity curve
+            try {
+                await loadEquityCurve();
+                console.log('✓ Equity curve loaded');
+            } catch (e) {
+                console.error('❌ Equity curve failed:', e);
+            }
+            
             // Load server-side auto-rebalance status
             await loadAutoRebalanceStatus();
             
@@ -2218,6 +2238,7 @@
             pollInterval = setInterval(() => {
                 if (!isRunning) {
                     loadPortfolio();
+                    loadEquityCurve();  // Keep equity curve updated
                     loadMacro();  // Keep macro updated
                     loadRegime(); // Keep regime updated
                     loadMarketData(); // Keep market data updated
@@ -3035,6 +3056,73 @@
             document.getElementById('execution-log').textContent = '';
         }
         
+        // Load Equity Curve
+        async function loadEquityCurve() {
+            try {
+                const res = await fetch('/api/equity-curve');
+                if (!res.ok) return;
+                
+                const data = await res.json();
+                if (data.error || !data.curve || data.curve.length === 0) return;
+                
+                const curve = data.curve;
+                const summary = data.summary || {};
+                
+                // Update summary text
+                const summaryEl = document.getElementById('equity-summary');
+                if (summaryEl && summary.total_pnl_30d !== undefined) {
+                    const pnl = summary.total_pnl_30d;
+                    const pnlClass = pnl >= 0 ? 'positive' : 'negative';
+                    const pnlSign = pnl >= 0 ? '+' : '';
+                    summaryEl.innerHTML = `<span class="${pnlClass}">${pnlSign}${formatCurrency(pnl)}</span> (30d) | ${summary.total_trades || 0} trades`;
+                }
+                
+                // Render SVG chart
+                const svg = document.getElementById('equity-svg');
+                if (!svg) return;
+                
+                // Calculate dimensions
+                const width = svg.parentElement.clientWidth || 400;
+                const height = 80;
+                const padding = 4;
+                
+                // Get equity values
+                const equities = curve.map(d => d.equity);
+                const minEquity = Math.min(...equities) * 0.999;
+                const maxEquity = Math.max(...equities) * 1.001;
+                const range = maxEquity - minEquity || 1;
+                
+                // Calculate points for line
+                const points = curve.map((d, i) => {
+                    const x = padding + (i / (curve.length - 1)) * (width - 2 * padding);
+                    const y = height - padding - ((d.equity - minEquity) / range) * (height - 2 * padding);
+                    return `${x},${y}`;
+                }).join(' ');
+                
+                // Create gradient colors based on overall trend
+                const startEquity = curve[0]?.equity || 0;
+                const endEquity = curve[curve.length - 1]?.equity || 0;
+                const isPositive = endEquity >= startEquity;
+                const color = isPositive ? 'var(--success)' : 'var(--danger)';
+                
+                // Render SVG
+                svg.innerHTML = `
+                    <defs>
+                        <linearGradient id="equityGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="${color}" stop-opacity="0.3"/>
+                            <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <polygon fill="url(#equityGradient)" 
+                        points="${padding},${height - padding} ${points} ${width - padding},${height - padding}"/>
+                    <polyline fill="none" stroke="${color}" stroke-width="2" points="${points}"/>
+                `;
+                
+            } catch (e) {
+                console.error('Error loading equity curve:', e);
+            }
+        }
+        
         // Load News Headlines
         async function loadNews(forceRefresh = false) {
             try {
@@ -3462,6 +3550,76 @@
             return toast;
         }
         
+        // Browser Notification Support (for when tab is not focused)
+        let notificationsEnabled = false;
+        
+        async function requestNotificationPermission() {
+            if (!('Notification' in window)) {
+                console.log('Browser does not support notifications');
+                return false;
+            }
+            
+            if (Notification.permission === 'granted') {
+                notificationsEnabled = true;
+                return true;
+            }
+            
+            if (Notification.permission !== 'denied') {
+                const permission = await Notification.requestPermission();
+                notificationsEnabled = (permission === 'granted');
+                return notificationsEnabled;
+            }
+            
+            return false;
+        }
+        
+        function showBrowserNotification(title, body, options = {}) {
+            // Only show browser notification if tab is not focused
+            if (document.hasFocus()) return null;
+            
+            if (!notificationsEnabled) return null;
+            
+            const notification = new Notification(title, {
+                body: body,
+                icon: '/static/icon-192.png',
+                badge: '/static/icon-96.png',
+                tag: options.tag || 'quant-fund',
+                requireInteraction: options.requireInteraction || false,
+                ...options
+            });
+            
+            notification.onclick = () => {
+                window.focus();
+                notification.close();
+            };
+            
+            // Auto-close after 10 seconds
+            setTimeout(() => notification.close(), options.timeout || 10000);
+            
+            return notification;
+        }
+        
+        // Request permission on page load
+        requestNotificationPermission().then(granted => {
+            if (granted) {
+                console.log('✅ Browser notifications enabled');
+            }
+        });
+        
+        // Enhanced notification function that uses both toast and browser notification
+        function notifyUser(type, title, message, options = {}) {
+            // Always show toast
+            showToast(type, title, message, options.duration || 5000);
+            
+            // Also show browser notification for important events
+            if (type === 'success' || type === 'error' || options.urgent) {
+                showBrowserNotification(title, message, {
+                    tag: options.tag || `${type}-${Date.now()}`,
+                    requireInteraction: type === 'error',
+                });
+            }
+        }
+        
         // ========== KEYBOARD SHORTCUTS ==========
         document.addEventListener('keydown', function(e) {
             // Don't trigger shortcuts when typing in inputs
@@ -3805,7 +3963,7 @@
         const originalRunRebalance = runRebalance;
         runRebalance = async function(skipConfirmation = false) {
             console.log('Wrapper runRebalance called with skipConfirmation =', skipConfirmation);
-            showToast('info', 'Rebalancing Started', 'Running portfolio optimization...');
+            notifyUser('info', 'Rebalancing Started', 'Running portfolio optimization...', {urgent: true});
             try {
                 // CRITICAL: Pass through the skip flag exactly as received
                 await originalRunRebalance(skipConfirmation === true ? true : false);

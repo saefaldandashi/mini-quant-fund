@@ -44,6 +44,7 @@ class MarketRegime:
     correlation_regime: float  # Average pairwise correlation
     risk_regime: RiskRegime
     description: str
+    spy_tlt_correlation: float = 0.0  # SPY/TLT correlation (negative = normal, positive = crisis)
 
 
 class RegimeClassifier:
@@ -116,8 +117,11 @@ class RegimeClassifier:
         # Correlation regime
         corr_regime = self._calculate_correlation_regime(prices)
         
-        # Risk regime (composite)
-        risk_regime = self._classify_risk(trend, vol_regime, corr_regime)
+        # SPY/TLT correlation (flight to safety indicator)
+        spy_tlt_corr = self._calculate_spy_tlt_correlation(prices)
+        
+        # Risk regime (composite) - now includes SPY/TLT correlation
+        risk_regime = self._classify_risk(trend, vol_regime, corr_regime, spy_tlt_corr)
         
         # Generate description
         description = self._generate_description(
@@ -133,6 +137,7 @@ class RegimeClassifier:
             correlation_regime=corr_regime,
             risk_regime=risk_regime,
             description=description,
+            spy_tlt_correlation=spy_tlt_corr,
         )
     
     def _classify_trend(self, prices: pd.Series) -> Tuple[TrendRegime, float]:
@@ -214,11 +219,37 @@ class RegimeClassifier:
         
         return avg_corr
     
+    def _calculate_spy_tlt_correlation(self, prices: pd.DataFrame) -> float:
+        """
+        Calculate SPY/TLT correlation.
+        
+        This is a key flight-to-safety indicator:
+        - Negative correlation (-0.3 to -0.5): Normal markets, stocks/bonds inversely correlated
+        - Near zero (0 to 0.2): Transition period, uncertainty
+        - Positive correlation (> 0.3): Crisis regime, both selling off (rare but dangerous)
+        
+        Returns:
+            Correlation between SPY and TLT over the correlation window
+        """
+        if 'SPY' not in prices.columns or 'TLT' not in prices.columns:
+            return 0.0  # No data
+        
+        returns = prices[['SPY', 'TLT']].pct_change().dropna()
+        
+        if len(returns) < self.corr_window:
+            return 0.0
+        
+        recent = returns.tail(self.corr_window)
+        corr = recent['SPY'].corr(recent['TLT'])
+        
+        return corr if not np.isnan(corr) else 0.0
+    
     def _classify_risk(
         self,
         trend: TrendRegime,
         vol: VolatilityRegime,
-        corr: float
+        corr: float,
+        spy_tlt_corr: float = 0.0
     ) -> RiskRegime:
         """Composite risk regime classification."""
         score = 0
@@ -238,6 +269,14 @@ class RegimeClassifier:
         # Correlation contribution (high corr = risk off)
         if corr > 0.7:
             score -= 0.5
+        
+        # SPY/TLT correlation (crisis indicator)
+        # Positive correlation means both stocks and bonds selling = severe risk off
+        if spy_tlt_corr > 0.3:
+            score -= 1.0  # Strong risk-off signal
+            logger.warning(f"Crisis indicator: SPY/TLT correlation = {spy_tlt_corr:.2f}")
+        elif spy_tlt_corr < -0.3:
+            score += 0.3  # Normal inverse relationship = healthy market
             
         if score > 0.5:
             return RiskRegime.RISK_ON

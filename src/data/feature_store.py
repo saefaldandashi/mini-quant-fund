@@ -51,6 +51,12 @@ class Features:
     ma_50: Dict[str, float] = field(default_factory=dict)
     ma_200: Dict[str, float] = field(default_factory=dict)
     
+    # Technical indicators for intraday
+    rsi_14: Dict[str, float] = field(default_factory=dict)  # 14-period RSI
+    
+    # Volume profile (for intraday strategies)
+    volume_profile: Dict[str, Dict[str, float]] = field(default_factory=dict)  # symbol -> {avg, ratio, trend}
+    
     # Regime
     regime: Optional[MarketRegime] = None
     
@@ -179,6 +185,7 @@ class FeatureStore:
         self._compute_price_features(features, price_df, symbols)
         self._compute_volatility_features(features, price_df, symbols)
         self._compute_ma_features(features, price_df, symbols)
+        self._compute_rsi_features(features, price_df, symbols)  # RSI for intraday
         self._compute_correlation_features(features, price_df)
         
         # Regime classification
@@ -304,6 +311,54 @@ class FeatureStore:
                 features.ma_50[symbol] = prices.tail(50).mean()
             if len(prices) >= 200:
                 features.ma_200[symbol] = prices.tail(200).mean()
+    
+    def _compute_rsi_features(
+        self,
+        features: Features,
+        price_df: pd.DataFrame,
+        symbols: List[str],
+        period: int = 14
+    ) -> None:
+        """
+        Compute RSI (Relative Strength Index) for all symbols.
+        
+        RSI = 100 - (100 / (1 + RS))
+        Where RS = Average Gain / Average Loss over the period
+        
+        RSI < 30 = Oversold (buy signal)
+        RSI > 70 = Overbought (sell signal)
+        """
+        for symbol in symbols:
+            if symbol not in price_df.columns:
+                continue
+            
+            prices = price_df[symbol].dropna()
+            if len(prices) < period + 1:
+                continue
+            
+            # Calculate price changes
+            delta = prices.diff()
+            
+            # Separate gains and losses
+            gains = delta.copy()
+            losses = delta.copy()
+            gains[gains < 0] = 0
+            losses[losses > 0] = 0
+            losses = abs(losses)
+            
+            # Calculate average gain/loss (using EMA for smoothing)
+            avg_gain = gains.ewm(span=period, adjust=False).mean()
+            avg_loss = losses.ewm(span=period, adjust=False).mean()
+            
+            # Avoid division by zero
+            avg_loss = avg_loss.replace(0, 0.001)
+            
+            # Calculate RS and RSI
+            rs = avg_gain / avg_loss
+            rsi = 100 - (100 / (1 + rs))
+            
+            # Store latest RSI value
+            features.rsi_14[symbol] = rsi.iloc[-1]
     
     def _compute_correlation_features(
         self,

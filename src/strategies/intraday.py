@@ -70,43 +70,54 @@ class IntradayMomentumStrategy(Strategy):
             intraday_ret = features.intraday_returns.get(symbol, 0)
             volume_ratio = features.volume_ratio.get(symbol, 1.0) if hasattr(features, 'volume_ratio') else 1.0
             
+            # Get RSI for confirmation (added for better signal quality)
+            rsi = features.rsi_14.get(symbol, 50) if hasattr(features, 'rsi_14') else 50
+            
             # Get sentiment if available (boost/filter based on news)
             sentiment = self.ticker_sentiments.get(symbol, 0) if self.ticker_sentiments else 0
             
             # Strong upward momentum with volume confirmation
             # Boost if positive sentiment, skip if very negative
+            # RSI filter: Skip if already overbought (RSI > 75)
             if intraday_ret > self.momentum_threshold and volume_ratio > self.volume_multiplier:
                 if sentiment < -0.5:  # Skip if sentiment is very negative
                     continue
-                # Boost score by sentiment
-                score = intraday_ret * (1 + sentiment * 0.3)  # Up to 30% boost
-                long_candidates.append((symbol, score, volume_ratio))
+                if rsi > 75:  # Skip overbought stocks (avoid chasing)
+                    continue
+                # Boost score by sentiment and RSI (lower RSI = more room to run)
+                rsi_boost = (70 - rsi) / 100 if rsi < 70 else 0  # Up to 0.4 boost
+                score = intraday_ret * (1 + sentiment * 0.3 + rsi_boost)
+                long_candidates.append((symbol, score, volume_ratio, rsi))
             
             # Strong downward momentum with volume confirmation (for shorting or avoiding)
             # More likely to short if negative sentiment
+            # RSI filter: Prefer shorting overbought stocks (RSI > 70)
             elif intraday_ret < -self.momentum_threshold and volume_ratio > self.volume_multiplier:
                 if sentiment > 0.5:  # Skip shorting if sentiment very positive
                     continue
-                # Boost short score by negative sentiment
-                score = intraday_ret * (1 - sentiment * 0.3)
-                short_candidates.append((symbol, score, volume_ratio))
+                if rsi < 25:  # Skip already oversold stocks
+                    continue
+                # Boost short score by negative sentiment and RSI (higher RSI = better short)
+                rsi_boost = (rsi - 30) / 100 if rsi > 30 else 0  # Up to 0.4 boost
+                score = intraday_ret * (1 - sentiment * 0.3 + rsi_boost)
+                short_candidates.append((symbol, score, volume_ratio, rsi))
         
         # Sort by momentum strength
         long_candidates.sort(key=lambda x: x[1], reverse=True)
         short_candidates.sort(key=lambda x: x[1])  # Most negative first
         
         # Take top N
-        for symbol, ret, vol in long_candidates[:self.max_positions]:
+        for symbol, ret, vol, rsi in long_candidates[:self.max_positions]:
             # Weight by momentum strength
             weight = self.position_weight * min(2.0, abs(ret) / self.momentum_threshold)
             desired_weights[symbol] = weight
         
         explanation = {
             "strategy": self.name,
-            "logic": f"Long stocks with >{self.momentum_threshold*100:.1f}% move and {self.volume_multiplier}x volume",
+            "logic": f"Long stocks with >{self.momentum_threshold*100:.1f}% move and {self.volume_multiplier}x volume, RSI filtered",
             "long_candidates": len(long_candidates),
             "short_candidates": len(short_candidates),
-            "top_longs": [(s, f"{r*100:.2f}%") for s, r, _ in long_candidates[:5]],
+            "top_longs": [(s, f"{r*100:.2f}% RSI:{rsi:.0f}") for s, r, _, rsi in long_candidates[:5]],
             "holding_period": f"{self.lookback_minutes} minutes",
         }
         

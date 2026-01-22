@@ -1157,10 +1157,42 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             except Exception as e:
                 logging.warning(f"Could not write strategy outputs: {e}")
         
+        # Build holding period map (symbol -> (minutes, strategy))
+        # Used for auto-exit tracking
+        holding_periods = {}
+        for name, signal in signals.items():
+            holding_mins = getattr(signal, 'holding_period_minutes', 0)
+            if holding_mins > 0:
+                for symbol in signal.desired_weights.keys():
+                    if abs(signal.desired_weights[symbol]) > 0.01:
+                        # Store if not already set or if this strategy has shorter period
+                        if symbol not in holding_periods or holding_mins < holding_periods[symbol][0]:
+                            holding_periods[symbol] = (holding_mins, name)
+        
         # === DEBATE ENGINE ===
         log("=" * 60)
         log("STRATEGY DEBATE - PHASE 1: INITIAL SCORING")
         log("=" * 60)
+        
+        # Fetch recent trades for LLM context (improves debate quality)
+        recent_trades_for_llm = []
+        try:
+            recent = learning_engine.trade_memory.get_recent_trades(10)
+            for trade in recent:
+                recent_trades_for_llm.append({
+                    'symbol': trade.symbol,
+                    'side': trade.side,
+                    'quantity': trade.quantity,
+                    'entry_price': trade.entry_price,
+                    'pnl_percent': trade.pnl_percent,
+                    'was_profitable': trade.was_profitable,
+                    'entry_strategy': trade.entry_strategy,
+                    'exit_reason': trade.exit_reason,
+                })
+            if recent_trades_for_llm:
+                log(f"📚 Loaded {len(recent_trades_for_llm)} recent trades for LLM context")
+        except Exception as e:
+            logging.debug(f"Could not load recent trades for LLM: {e}")
         
         # ULTRA-FAST MODE: Use rule-based fast debate
         if ultra_fast:
@@ -2368,6 +2400,11 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                         margin_cost = 0.0
                         lev_state = 'healthy'
                     
+                    # Get holding period for this symbol (if any)
+                    hp_info = holding_periods.get(result.symbol, (0, ''))
+                    intended_holding = hp_info[0] if hp_info else 0
+                    entry_strat = hp_info[1] if hp_info else ''
+                    
                     learning_engine.record_trade(
                         symbol=result.symbol,
                         side=result.side,
@@ -2378,6 +2415,8 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                         leverage_used=trade_leverage,
                         margin_cost_daily=margin_cost,
                         leverage_state=lev_state,
+                        intended_holding_minutes=intended_holding,
+                        entry_strategy=entry_strat,
                     )
                     
                     # Write trade to parquet storage for reports
@@ -2538,14 +2577,49 @@ def run_bot_threaded(dry_run=True, allow_after_hours=False, force_rebalance=True
 
 
 def auto_rebalance_scheduler():
-    """Background thread for automatic rebalancing and outcome tracking."""
+    """Background thread for automatic rebalancing, holding period checks, and outcome tracking."""
     global auto_rebalance_settings
     
     last_outcome_check = datetime.now()
+    last_holding_check = datetime.now()
     outcome_check_interval = timedelta(hours=1)  # Check outcomes hourly
+    holding_check_interval = timedelta(minutes=5)  # Check holding periods every 5 mins
     
     while not scheduler_stop_event.is_set():
         now = datetime.now()
+        
+        # === HOLDING PERIOD AUTO-EXIT CHECK ===
+        if now - last_holding_check >= holding_check_interval:
+            try:
+                expired = learning_engine.trade_memory.get_expired_positions()
+                if expired:
+                    logging.warning(f"⏰ Found {len(expired)} positions exceeding holding period!")
+                    
+                    # Force a rebalance to exit expired positions
+                    # The rebalance will naturally close these positions
+                    # because strategies should no longer be signaling for them
+                    expired_symbols = [s for s, _ in expired]
+                    logging.info(f"⏰ Positions to auto-exit: {expired_symbols}")
+                    
+                    # Record the auto-exit trigger
+                    for symbol, trade in expired:
+                        trade.exit_reason = 'holding_period_exceeded'
+                    
+                    # If not already running, trigger a rebalance
+                    if not last_run_status["running"]:
+                        logging.info("⏰ Triggering auto-exit rebalance for expired positions...")
+                        run_bot_threaded(
+                            dry_run=auto_rebalance_settings.get("dry_run", True),
+                            allow_after_hours=True,  # Allow after hours for risk management
+                            force_rebalance=True,
+                            cancel_orders=True,
+                            exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
+                            fast_mode=True,
+                        )
+                        
+                last_holding_check = now
+            except Exception as e:
+                logging.error(f"Holding period check error: {e}")
         
         # === AUTO-REBALANCE CHECK ===
         if auto_rebalance_settings["enabled"]:
@@ -2661,6 +2735,83 @@ def health_check():
         "last_run": last_run_status.get("timestamp"),
         "uptime_check": "ok",
     })
+
+
+@app.route('/api/equity-curve')
+@requires_auth
+def get_equity_curve():
+    """
+    Get equity curve data for charting.
+    Returns daily portfolio values and P/L.
+    """
+    try:
+        from datetime import timedelta
+        
+        # Get trade history for P/L data
+        trades = learning_engine.trade_memory.get_closed_trades(days=30)
+        
+        # Get current account value
+        account = broker.get_account()
+        current_equity = float(account.get('equity', 0))
+        
+        # Build daily P/L from trades
+        daily_pnl = {}
+        cumulative_pnl = 0.0
+        
+        for trade in sorted(trades, key=lambda t: t.timestamp):
+            if trade.pnl_dollars:
+                date_str = trade.timestamp[:10]  # YYYY-MM-DD
+                if date_str not in daily_pnl:
+                    daily_pnl[date_str] = {'pnl': 0.0, 'trades': 0}
+                daily_pnl[date_str]['pnl'] += trade.pnl_dollars
+                daily_pnl[date_str]['trades'] += 1
+        
+        # Build equity curve going backwards from current value
+        curve_data = []
+        running_equity = current_equity
+        
+        # Add today
+        today = datetime.now().strftime('%Y-%m-%d')
+        curve_data.append({
+            'date': today,
+            'equity': running_equity,
+            'daily_pnl': daily_pnl.get(today, {}).get('pnl', 0),
+            'trades': daily_pnl.get(today, {}).get('trades', 0),
+        })
+        
+        # Go back 30 days
+        for i in range(1, 31):
+            d = (datetime.now() - timedelta(days=i)).strftime('%Y-%m-%d')
+            day_pnl = daily_pnl.get(d, {}).get('pnl', 0)
+            running_equity -= day_pnl  # Subtract to go backwards
+            curve_data.append({
+                'date': d,
+                'equity': max(0, running_equity),
+                'daily_pnl': day_pnl,
+                'trades': daily_pnl.get(d, {}).get('trades', 0),
+            })
+        
+        # Reverse to chronological order
+        curve_data.reverse()
+        
+        # Calculate summary stats
+        total_pnl = sum(d['daily_pnl'] for d in curve_data)
+        winning_days = len([d for d in curve_data if d['daily_pnl'] > 0])
+        losing_days = len([d for d in curve_data if d['daily_pnl'] < 0])
+        
+        return jsonify({
+            'curve': curve_data,
+            'summary': {
+                'current_equity': current_equity,
+                'total_pnl_30d': total_pnl,
+                'winning_days': winning_days,
+                'losing_days': losing_days,
+                'total_trades': sum(d['trades'] for d in curve_data),
+            }
+        })
+    except Exception as e:
+        logging.error(f"Error getting equity curve: {e}")
+        return jsonify({'error': str(e), 'curve': [], 'summary': {}}), 500
 
 
 @app.route('/api/risk-monitor')

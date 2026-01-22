@@ -48,6 +48,36 @@ class LLMDebateArgumentGenerator:
         # Stats
         self.arguments_generated = 0
         self.llm_calls = 0
+        
+        # Recent trades context (set externally)
+        self.recent_trades: List[Dict] = []
+    
+    def set_recent_trades(self, trades: List[Dict]) -> None:
+        """
+        Set recent trades context for LLM prompts.
+        
+        Args:
+            trades: List of recent trade dicts with:
+                - symbol, side, quantity, entry_price, pnl, was_profitable
+        """
+        self.recent_trades = trades[:10]  # Keep last 10
+    
+    def _format_recent_trades(self) -> str:
+        """Format recent trades for prompt injection."""
+        if not self.recent_trades:
+            return "No recent trades."
+        
+        lines = ["RECENT TRADE HISTORY (learn from these):"]
+        for trade in self.recent_trades[:10]:
+            symbol = trade.get('symbol', '?')
+            side = trade.get('side', '?')
+            pnl = trade.get('pnl_percent', 0) or 0
+            was_win = trade.get('was_profitable', False)
+            strategy = trade.get('entry_strategy', 'unknown')
+            outcome = "✓ WIN" if was_win else "✗ LOSS"
+            lines.append(f"  {outcome}: {side.upper()} {symbol} ({strategy}) → {pnl:+.1%}")
+        
+        return "\n".join(lines)
     
     def generate_support_argument(
         self,
@@ -139,6 +169,9 @@ class LLMDebateArgumentGenerator:
         
         self.llm_calls += 1
         
+        # Include recent trades for learning context
+        trades_context = self._format_recent_trades()
+        
         prompt = f"""You are a portfolio manager defending your trading strategy in an investment committee debate.
 
 STRATEGY: {strategy_name}
@@ -147,8 +180,11 @@ CONFIDENCE: {signal.get('confidence', 0.5):.0%}
 EXPECTED RETURN: {signal.get('expected_return', 0):.1%}
 CURRENT REGIME: {regime}
 
+{trades_context}
+
+Learn from recent trades above. If similar positions lost money, explain why this time is different.
 Generate a compelling 2-3 sentence argument defending this position. Include:
-1. Why now is the right time
+1. Why now is the right time (considering past trade outcomes)
 2. What market evidence supports this
 3. Why the risk/reward is attractive
 
@@ -274,6 +310,9 @@ Respond in JSON:
         )[:3]
         position_str = ", ".join([f"{t}: {w:.1%}" for t, w in target_positions])
         
+        # Include recent trades for learning context
+        trades_context = self._format_recent_trades()
+        
         prompt = f"""You are a portfolio manager challenging a competitor's strategy in an investment committee debate.
 
 YOUR STRATEGY: {attacker}
@@ -282,8 +321,11 @@ OPPONENT'S POSITIONS: {position_str}
 OPPONENT'S CONFIDENCE: {target_signal.get('confidence', 0.5):.0%}
 CURRENT REGIME: {regime}
 
+{trades_context}
+
+Use recent trade outcomes above to identify patterns of failure in similar positions.
 Generate a 2-3 sentence challenge to the opponent's proposal. Be specific about:
-1. Why their approach is flawed in current conditions
+1. Why their approach is flawed in current conditions (cite recent losses if relevant)
 2. What risks they're overlooking
 3. Historical precedent for failure
 

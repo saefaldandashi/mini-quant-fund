@@ -208,6 +208,8 @@ class FREDLoader:
         "financial_stress": "STLFSI4",     # St. Louis Fed Financial Stress Index
         "gdp_growth": "A191RL1Q225SBEA",   # Real GDP growth (%)
         "pce": "PCEPI",                    # PCE inflation
+        "treasury_2y": "DGS2",             # 2-Year Treasury Constant Maturity Rate
+        "treasury_10y": "DGS10",           # 10-Year Treasury Constant Maturity Rate
     }
     
     def __init__(self, api_key: Optional[str] = None):
@@ -278,6 +280,16 @@ class FREDLoader:
         """Get St. Louis Fed Financial Stress Index."""
         value = self._fetch_series(self.SERIES["financial_stress"])
         return value if value else 0.0  # 0 is normal
+    
+    def get_treasury_2y(self) -> float:
+        """Get 2-Year Treasury rate from FRED (more accurate than Yahoo)."""
+        value = self._fetch_series(self.SERIES["treasury_2y"])
+        return value if value else 4.0  # Default
+    
+    def get_treasury_10y(self) -> float:
+        """Get 10-Year Treasury rate from FRED."""
+        value = self._fetch_series(self.SERIES["treasury_10y"])
+        return value if value else 4.5  # Default
 
 
 class MacroDataLoader:
@@ -317,11 +329,22 @@ class MacroDataLoader:
         fed_funds = self.fred.get_fed_funds_rate() if self.fred.is_available() else 0.0
         financial_stress = self.fred.get_financial_stress_index() if self.fred.is_available() else 0.0
         
+        # Get actual Treasury yields from FRED (more accurate than Yahoo proxies)
+        if self.fred.is_available():
+            treasury_2y = self.fred.get_treasury_2y()
+            treasury_10y_fred = self.fred.get_treasury_10y()
+            if treasury_10y_fred > 0:
+                treasury_10y = treasury_10y_fred  # Use FRED data if available
+        else:
+            treasury_2y = treasury_10y - 0.5  # Fallback approximation
+        
+        treasury_spread = treasury_10y - treasury_2y  # 10Y - 2Y spread
+        
         # Calculate risk score
         risk_score = self._calculate_risk_score(
             vix=vix,
             spy_change=spy_change,
-            treasury_spread=treasury_10y - 2.0,  # Approximate 2y
+            treasury_spread=treasury_spread,
             financial_stress=financial_stress,
         )
         
@@ -330,8 +353,8 @@ class MacroDataLoader:
             vix=vix,
             vix_change=vix_change,
             treasury_10y=treasury_10y,
-            treasury_2y=treasury_10y - 0.5,  # Approximate
-            treasury_spread=0.5,  # Approximate
+            treasury_2y=treasury_2y,
+            treasury_spread=treasury_spread
             spy_price=spy_price,
             spy_change_pct=spy_change,
             spy_vs_200ma=spy_vs_ma,

@@ -1,6 +1,341 @@
 {
   "articles": [
     {
+      "id": "-1656993938746091539",
+      "timestamp": "2026-01-22T16:49:26",
+      "headline": "General Electric Posts Q4 Beat, Announces In-Line 2026 Guidance",
+      "summary": "General Electric (GE) exceeded fourth-quarter expectations for revenue, margins, and earnings, as reported by Goldman Sachs. Analyst Noah Poponak reiterated a Buy rating and a $338 price target, noting GE's adjusted earnings of $1.57 per share against a consensus of $1.43. The company also provided 2026 guidance that was broadly in-line with estimates, projecting low-double-digit percentage revenue growth and operating profit between $9.85-10.25 billion.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/analyst-stock-ratings/analyst-color/26/01/50074869/general-electric-posts-q4-beat-announces-in-line-2026-guidance",
+      "tickers": [
+        "GE"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_macro",
+        "manufacturing",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.441669,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GE",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.405822,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "GE": 0.405822
+      }
+    },
+    {
+      "id": "2516923793391652719",
+      "timestamp": "2026-01-22T16:47:40",
+      "headline": "Credo Technology Group Holding Ltd and 3M Company Enter into Patent License Agreement",
+      "summary": "Credo Technology Group Holding Ltd has entered into a patent license and mutual covenant agreement with 3M Company. This agreement involves Credo licensing certain of its active electrical cable technology patents to 3M Company. The news was published on January 22, 2026, at 11:46 am EST.",
+      "source": "marketscreener.com",
+      "url": "https://www.marketscreener.com/news/credo-technology-group-holding-ltd-and-3m-company-enter-into-patent-license-agreement-ce7e58d3db8fff24",
+      "tickers": [
+        "MMM"
+      ],
+      "topics": [
+        "technology",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.296593,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MMM",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.276719,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MMM": 0.276719
+      }
+    },
+    {
+      "id": "-4226820768845139304",
+      "timestamp": "2026-01-22T16:47:22",
+      "headline": "EQT's Price Target Lowered by Stephens & Co. Amidst Overweight R",
+      "summary": "Stephens & Co. has lowered its price target for EQT to $68.00 from $69.00 but maintained an Overweight rating. This adjustment is part of a recent trend of varied analyst ratings and price target changes for EQT. Despite the target reduction, the average target price from 24 analysts remains $64.20, implying a 17.20% upside from its current price, and the consensus brokerage recommendation is \"Outperform.\"",
+      "source": "GuruFocus",
+      "url": "https://www.gurufocus.com/news/8544539/eqts-price-target-lowered-by-stephens-co-amidst-overweight-rating-eqt-stock-news",
+      "tickers": [
+        "EQT"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.131907,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "EQT",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.132729,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "EQT": 0.132729
+      }
+    },
+    {
+      "id": "8257516621540990864",
+      "timestamp": "2026-01-22T16:44:36",
+      "headline": "Analysts Estimate L3Harris (LHX) to Report a Decline in Earnings: What to Look Out for",
+      "summary": "L3Harris (LHX) is anticipated to report a year-over-year decline in earnings but higher revenues for the quarter ending December 2025. With a Zacks Earnings ESP of -0.20% and a Zacks Rank of #3, it's difficult to conclusively predict an earnings beat, despite a history of surpassing consensus EPS estimates in the last four quarters. Investors are advised to consider other factors beyond just the earnings surprise.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/284112/analysts-estimate-l3harris-lhx-to-report-a-decline-in-earnings-what-to-look-out-for",
+      "tickers": [
+        "LHX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.025302,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "LHX",
+          "relevance_score": 0.324931,
+          "sentiment_score": 0.04812,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "LHX": 0.04812
+      }
+    },
+    {
+      "id": "-329187274111237770",
+      "timestamp": "2026-01-22T16:40:48",
+      "headline": "CGNX (Cognex Corporation, NASDAQ) +6.86% intraday 22 Jan 2026: AI vision demand may lift outlook",
+      "summary": "Cognex Corporation (CGNX) stock rose 6.86% intraday due to renewed interest in AI-enabled machine vision, despite a stretched valuation. While short-term momentum is positive, trading volume was below average, and analysts' price targets vary widely. Meyka AI gives CGNX a \"BUY\" rating but forecasts significant downside risk over the next year, urging caution due to valuation and upcoming Q4 2025 earnings.",
+      "source": "Meyka",
+      "url": "https://meyka.com/blog/cgnx-cognex-corporation-nasdaq-686-intraday-22-jan-2026-ai-vision-demand-may-lift-outlook-2201/",
+      "tickers": [
+        "CGNX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.224208,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CGNX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.241489,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CGNX": 0.241489
+      }
+    },
+    {
+      "id": "-1696284298746367493",
+      "timestamp": "2026-01-22T16:39:29",
+      "headline": "Huntington Bancshares (NASDAQ:HBAN) Trading Down 3.7% on Disappointing Earnings",
+      "summary": "Huntington Bancshares (NASDAQ:HBAN) shares fell 3.7% after reporting Q4 earnings per share of $0.37 and revenue of $2.19 billion, both missing analyst expectations. Despite the disappointing results and recent insider selling, analysts maintain a \"Moderate Buy\" consensus rating with an average price target of $20.08. Institutional investors hold a significant 80.72% stake in the banking company.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/huntington-bancshares-nasdaqhban-trading-down-37-on-disappointing-earnings-2026-01-22/",
+      "tickers": [
+        "HBAN"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": -0.390468,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "HBAN",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.421003,
+          "sentiment_label": "Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "HBAN": -0.421003
+      }
+    },
+    {
+      "id": "-3341158798411465934",
+      "timestamp": "2026-01-22T16:32:52",
+      "headline": "Charles Schwab (NYSE:SCHW) Hits New 52-Week High Following Better-Than-Expected Earnings",
+      "summary": "Charles Schwab (NYSE:SCHW) reached a new 52-week high after reporting better-than-expected Q4 earnings, with EPS of $1.39 and revenue of $6.34 billion, an 18.9% year-over-year increase. The company also raised its FY 2026 guidance, reported record assets of $11.9 trillion, and saw a significant jump in trading volumes. Analysts maintain a \"Moderate Buy\" consensus rating with an average price target of $115.45, reflecting positive sentiment despite some internal concerns about revenue metrics and rising expenses.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/charles-schwab-nyseschw-hits-new-52-week-high-following-better-than-expected-earnings-2026-01-22/",
+      "tickers": [
+        "SCHW"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.02536,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SCHW",
+          "relevance_score": 0.310937,
+          "sentiment_score": 0.019688,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "SCHW": 0.019688
+      }
+    },
+    {
+      "id": "-4846171784878876818",
+      "timestamp": "2026-01-22T16:32:10",
+      "headline": "Caterpillar (NYSE:CAT) Hits New 52-Week High Following Analyst Upgrade",
+      "summary": "Caterpillar (NYSE:CAT) shares reached a new 52-week high after Rothschild & Co Redburn raised its price target to $650, contributing to a \"Moderate Buy\" consensus among analysts with an average target of $633.35. The company's expanded AI partnership with Nvidia is expected to enhance product differentiation and recurring revenue. However, significant insider selling, including shares worth $31.1 million in the last quarter, raises questions about corporate insider sentiment.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/caterpillar-nysecat-hits-new-52-week-high-following-analyst-upgrade-2026-01-22/",
+      "tickers": [
+        "CAT"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing",
+        "technology"
+      ],
+      "overall_sentiment": 0.022674,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CAT",
+          "relevance_score": 0.306904,
+          "sentiment_score": 0.010813,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "CAT": 0.010813
+      }
+    },
+    {
+      "id": "5257923398680833148",
+      "timestamp": "2026-01-22T16:28:31",
+      "headline": "Intuit Stock Now 25% Cheaper, Time To Buy",
+      "summary": "Intuit (INTU) stock is presented as a potential buying opportunity due to its high margins, consistent profits, and a 25% discount based on its P/S ratio compared to a year ago. The article highlights strong fundamentals such as profitability, revenue growth, and recent business successes like QuickBooks Online price increases and AI integration. Despite past volatility during market downturns, the stock's discounted valuation and strong performance criteria make it attractive, alongside other companies like Visa, Salesforce, and T-Mobile US that share similar investment characteristics.",
+      "source": "Trefis",
+      "url": "https://www.trefis.com/stock/intu/articles2/588313/intuit-stock-now-25-cheaper-time-to-buy/2026-01-22",
+      "tickers": [
+        "INTU",
+        "CRM",
+        "PAYX",
+        "ROP",
+        "PTC"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.319013,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "INTU",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.433712,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "CRM",
+          "relevance_score": 0.622348,
+          "sentiment_score": 0.349749,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "PAYX",
+          "relevance_score": 0.593665,
+          "sentiment_score": 0.289722,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ROP",
+          "relevance_score": 0.578965,
+          "sentiment_score": 0.25004,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "PTC",
+          "relevance_score": 0.586079,
+          "sentiment_score": 0.245024,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "INTU": 0.433712,
+        "CRM": 0.349749,
+        "PAYX": 0.289722,
+        "ROP": 0.25004,
+        "PTC": 0.245024
+      }
+    },
+    {
+      "id": "-5462289231488605256",
+      "timestamp": "2026-01-22T16:27:10",
+      "headline": "Analysts Estimate Caterpillar (CAT) to Report a Decline in Earnings: What to Look Out for",
+      "summary": "Analysts expect Caterpillar (CAT) to report a year-over-year decline in earnings but higher revenues for the quarter ended December 2025. The company's upcoming earnings report on January 29 will reveal if actual results beat or miss estimates, with a current Zacks Earnings ESP of -0.20% and a Zacks Rank of #3 making a conclusive prediction of an earnings beat difficult.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/284129/analysts-estimate-caterpillar-cat-to-report-a-decline-in-earnings-what-to-look-out-for",
+      "tickers": [
+        "CAT",
+        "DE"
+      ],
+      "topics": [
+        "earnings",
+        "manufacturing",
+        "financial_markets",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.011558,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CAT",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.103874,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "DE",
+          "relevance_score": 0.647465,
+          "sentiment_score": 0.108674,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "CAT": -0.103874,
+        "DE": 0.108674
+      }
+    },
+    {
       "id": "-8364239849628990109",
       "timestamp": "2026-01-22T16:20:53",
       "headline": "Altria (MO) Reports Next Week: Wall Street Expects Earnings Growth",
@@ -408,6 +743,74 @@
       }
     },
     {
+      "id": "-7205592378907850337",
+      "timestamp": "2026-01-22T16:02:32",
+      "headline": "Kaplan Fox Reminds Investors of Beta Bionics, Inc. (BBNX) to an Investigation of Potential Securities Law Violations",
+      "summary": "Kaplan Fox & Kilsheimer LLP is investigating potential securities violations against Beta Bionics, Inc. (NASDAQ: BBNX) after the company announced preliminary Q4 2025 financial results showing new patient starts below analyst expectations. This news led to a 37% drop in Beta Bionics' stock price. The law firm is seeking investors who suffered losses to join their investigation.",
+      "source": "The Globe and Mail",
+      "url": "https://www.theglobeandmail.com/investing/markets/markets-news/TheNewswire.com/37177340/kaplan-fox-reminds-investors-of-beta-bionics-inc-bbnx-to-an-investigation-of-potential-securities-law-violations/",
+      "tickers": [
+        "BBNX"
+      ],
+      "topics": [
+        "earnings",
+        "life_sciences",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": -0.704263,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BBNX",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.708038,
+          "sentiment_label": "Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "BBNX": -0.708038
+      }
+    },
+    {
+      "id": "7680215688418238810",
+      "timestamp": "2026-01-22T16:02:26",
+      "headline": "GE stock today falls over 6% despite GE Aerospace beating Q4 earnings and revenue estimates \u2013 here\u2019s what investors are watching",
+      "summary": "GE Aerospace's stock fell over 6% despite beating Q4 earnings and revenue expectations and providing strong 2026 guidance. Investors are concerned about a potential slowdown in the company's rapid growth rate, as forecasted growth for key segments like commercial engines and services is expected to moderate in 2026 compared to 2025. Despite these concerns, CEO Larry Culp anticipates continued EPS and cash flow growth driven by strong demand in the air travel sector.",
+      "source": "The Economic Times",
+      "url": "https://m.economictimes.com/news/international/us/ge-stock-today-falls-over-6-despite-ge-aerospace-beating-q4-earnings-and-revenue-estimates-heres-what-investors-are-watching/articleshow/127170594.cms",
+      "tickers": [
+        "GE",
+        "JPM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_macro",
+        "manufacturing"
+      ],
+      "overall_sentiment": -0.117816,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GE",
+          "relevance_score": 0.958044,
+          "sentiment_score": -0.30077,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.645291,
+          "sentiment_score": 0.112092,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "GE": -0.30077,
+        "JPM": 0.112092
+      }
+    },
+    {
       "id": "-8267889895851084283",
       "timestamp": "2026-01-22T16:01:10",
       "headline": "Vertex Pharma upgraded at RBC Capital Markets citing upside in 2026",
@@ -467,6 +870,118 @@
       }
     },
     {
+      "id": "-2001034017624248957",
+      "timestamp": "2026-01-22T15:57:41",
+      "headline": "Hannon Armstrong stock hits 52-week high at 34.71 USD",
+      "summary": "Hannon Armstrong Sustainable Infrastructure Capital Inc. (HASI) stock has reached a new 52-week high of $34.71, driven by a 34.32% one-year price return and investor confidence in sustainable investments. The company also offers a 4.89% dividend yield and is considered undervalued according to InvestingPro. Recent developments include a $500 million joint venture with Sunrun Inc. and an increased revolving credit facility, further enhancing its financial flexibility and growth prospects.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/company-news/hannon-armstrong-stock-hits-52week-high-at-3471-usd-93CH-4460784",
+      "tickers": [
+        "HASI",
+        "KKR",
+        "JPM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.274641,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "HASI",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.497274,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "KKR",
+          "relevance_score": 0.635888,
+          "sentiment_score": 0.268498,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.612969,
+          "sentiment_score": 0.115491,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "HASI": 0.497274,
+        "KKR": 0.268498,
+        "JPM": 0.115491
+      }
+    },
+    {
+      "id": "25477036365350012",
+      "timestamp": "2026-01-22T15:57:10",
+      "headline": "Assessing Donnelley Financial Solutions (DFIN) Valuation After Q3 Earnings Beat And Software Growth Pivot",
+      "summary": "Donnelley Financial Solutions (DFIN) is gaining investor attention after beating Q3 earnings expectations and announcing a strategic pivot to generate 60% of sales from software solutions by 2028. Despite recent share price gains, the company's valuation, evidenced by a P/E of 44.6x, appears overvalued when compared to industry peers and its estimated fair P/E. A Discounted Cash Flow model also suggests the current share price of $54.67 is slightly above its intrinsic value of $52.72, signaling that future growth might already be priced in.",
+      "source": "Simply Wall Street",
+      "url": "https://simplywall.st/stocks/us/diversified-financials/nyse-dfin/donnelley-financial-solutions/news/assessing-donnelley-financial-solutions-dfin-valuation-after",
+      "tickers": [
+        "DFIN",
+        "BR"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "technology"
+      ],
+      "overall_sentiment": 0.040961,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "DFIN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.12661,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "BR",
+          "relevance_score": 0.625068,
+          "sentiment_score": -0.119984,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "DFIN": 0.12661,
+        "BR": -0.119984
+      }
+    },
+    {
+      "id": "7639114960185591640",
+      "timestamp": "2026-01-22T15:57:08",
+      "headline": "Cabaletta Bio Sees Unusually Large Options Volume (NASDAQ:CABA)",
+      "summary": "Cabaletta Bio (NASDAQ:CABA) experienced unusually high options trading volume and a 29.3% increase in its stock price, driven by significant insider buying from its CEO and other executives. The company is accelerating its autoimmune CAAR-T program, targeting a 2027 FDA filing, which analysts believe could de-risk its value despite inherent clinical and regulatory risks. Institutional investors have also increased their positions, with analysts maintaining a \"Moderate Buy\" rating and an average price target of $16.25.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/cabaletta-bio-sees-unusually-large-options-volume-nasdaqcaba-2026-01-22/",
+      "tickers": [
+        "CABA"
+      ],
+      "topics": [
+        "life_sciences",
+        "financial_markets",
+        "earnings",
+        "finance"
+      ],
+      "overall_sentiment": 0.490884,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CABA",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.499705,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CABA": 0.499705
+      }
+    },
+    {
       "id": "-6441691546123955495",
       "timestamp": "2026-01-22T15:56:47",
       "headline": "Stock Traders Purchase High Volume of Put Options on Howmet Aerospace (NYSE:HWM)",
@@ -493,6 +1008,71 @@
       ],
       "ticker_sentiments": {
         "HWM": 0.015648
+      }
+    },
+    {
+      "id": "-9183121010680104344",
+      "timestamp": "2026-01-22T15:56:11",
+      "headline": "Church & Dwight stock holds steady as UBS maintains Neutral rating By Investing.com",
+      "summary": "UBS has maintained its Neutral rating and $92 price target for Church & Dwight (NYSE: CHD) ahead of its Q4 earnings report, forecasting EPS slightly above consensus. The investment firm notes the company faces a challenging operating environment and investor focus will be on initial guidance that might fall short of long-term targets. Despite mixed analyst views, recent developments include better-than-expected Q3 earnings, the divestiture of its VMS brands, and several analyst upgrades reflecting positive performance and sector valuation resets.",
+      "source": "Investing.com South Africa",
+      "url": "https://za.investing.com/news/analyst-ratings/church--dwight-stock-holds-steady-as-ubs-maintains-neutral-rating-93CH-4074348",
+      "tickers": [
+        "CHD",
+        "RJF"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "retail_wholesale"
+      ],
+      "overall_sentiment": 0.217714,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CHD",
+          "relevance_score": 0.990507,
+          "sentiment_score": 0.139051,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "RJF",
+          "relevance_score": 0.614784,
+          "sentiment_score": 0.259109,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CHD": 0.139051,
+        "RJF": 0.259109
+      }
+    },
+    {
+      "id": "-3727514337804167055",
+      "timestamp": "2026-01-22T15:56:00",
+      "headline": "March 6th Options Now Available For AbbVie (ABBV)",
+      "summary": "New options contracts for AbbVie (ABBV) with a March 6th expiration are now available. BNK Invest's YieldBoost formula highlights a put contract at a $190.00 strike price and a call contract at a $220.00 strike price, detailing potential returns and risks for investors interested in buying shares or implementing a covered call strategy. The analysis includes implied volatility and historical trading data for ABBV.",
+      "source": "Nasdaq",
+      "url": "https://www.nasdaq.com/articles/march-6th-options-now-available-abbvie-abbv",
+      "tickers": [
+        "ABBV"
+      ],
+      "topics": [
+        "financial_markets",
+        "life_sciences"
+      ],
+      "overall_sentiment": 0.240187,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ABBV",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.229561,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ABBV": 0.229561
       }
     },
     {
@@ -17007,617 +17587,7 @@
       "ticker_sentiments": {
         "CRM": 0.02564
       }
-    },
-    {
-      "id": "-7609612489337708958",
-      "timestamp": "2026-01-21T14:13:55",
-      "headline": "RTX\u2019s Collins Aerospace expands distribution network for C-130 parts",
-      "summary": "RTX's Collins Aerospace has expanded its C-130 parts distribution network through new three-year agreements with Integrated Procurement Technologies, S3 AeroDefense, and Derco. This move aims to enhance hardware and logistics support for C-130 Hercules wheels and brakes for international operators. The partnerships are expected to improve fleet readiness for the widely used military transport aircraft.",
-      "source": "Investing.com",
-      "url": "https://www.investing.com/news/company-news/rtxs-collins-aerospace-expands-distribution-network-for-c130-parts-93CH-4457816",
-      "tickers": [
-        "RTX"
-      ],
-      "topics": [
-        "manufacturing",
-        "financial_markets",
-        "energy_transportation",
-        "earnings"
-      ],
-      "overall_sentiment": 0.039755,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "RTX",
-          "relevance_score": 0.325377,
-          "sentiment_score": 0.034112,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "RTX": 0.034112
-      }
-    },
-    {
-      "id": "-2166090885181707986",
-      "timestamp": "2026-01-21T14:13:24",
-      "headline": "Fiber/Small Cell Business Sale Sparks Confidence for Crown Castle (CCI)",
-      "summary": "Crown Castle Inc. (CCI) is gaining confidence from analysts following the sale of its fiber/small cell segment, allowing it to become a pure-play tower business. KeyBanc assigned an Overweight rating with a $120 price target, citing a 32% upside and contribution from a share buyback program. Wells Fargo maintained an Overweight rating despite a lowered price target due to potential proceeds from a lawsuit against DISH Wireless.",
-      "source": "Finviz",
-      "url": "https://finviz.com/news/282243/fibersmall-cell-business-sale-sparks-confidence-for-crown-castle-cci",
-      "tickers": [
-        "CCI",
-        "TMUS"
-      ],
-      "topics": [
-        "real_estate",
-        "financial_markets",
-        "mergers_and_acquisitions",
-        "finance",
-        "technology"
-      ],
-      "overall_sentiment": 0.283675,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CCI",
-          "relevance_score": 0.99521,
-          "sentiment_score": 0.450479,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "TMUS",
-          "relevance_score": 0.635481,
-          "sentiment_score": 0.129106,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "CCI": 0.450479,
-        "TMUS": 0.129106
-      }
-    },
-    {
-      "id": "2993125249989444831",
-      "timestamp": "2026-01-21T14:11:38",
-      "headline": "Hershey unites Olympians and families in tear-jerking campaign",
-      "summary": "Hershey has launched its first major creative push since 2018 with the \"Hershey. It\u2019s Your Happy Place\" campaign, ahead of the 2026 Winter Olympics. The campaign's hero spot features U.S. Olympic and Paralympic athletes and their families, highlighting the emotional support behind their success, culminating in surprise in-person reunions and limited-edition chocolate medals. This Olympic effort kicks off a year of cultural moments for Hershey, including FIFA World Cup activations, America's 250th birthday, and a biopic about founder Milton Hershey.",
-      "source": "Campaign US",
-      "url": "https://www.campaignlive.com/article/hershey-unites-olympians-families-tear-jerking-campaign/1945853",
-      "tickers": [
-        "HSY",
-        "IPG",
-        "OMC"
-      ],
-      "topics": [
-        "retail_wholesale",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.275394,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "HSY",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.409004,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "IPG",
-          "relevance_score": 0.605699,
-          "sentiment_score": 0.216635,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "OMC",
-          "relevance_score": 0.612665,
-          "sentiment_score": 0.205069,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "HSY": 0.409004,
-        "IPG": 0.216635,
-        "OMC": 0.205069
-      }
-    },
-    {
-      "id": "-8311811038249735894",
-      "timestamp": "2026-01-21T14:11:24",
-      "headline": "KeyBanc Lowers Price Target for Crown Castle (CCI) to $115, Main",
-      "summary": "KeyBanc analyst Brandon Nispel has reaffirmed an Overweight rating for Crown Castle (CCI) but reduced the price target from $120 to $115. This adjustment follows similar price target reductions from other major firms like Goldman Sachs, UBS, and JP Morgan in January 2026. Crown Castle, a REIT, primarily operates wireless towers and is expected to divest its fiber business in 2026 to focus solely on towers.",
-      "source": "GuruFocus",
-      "url": "https://www.gurufocus.com/news/8538453/keybanc-lowers-price-target-for-crown-castle-cci-to-115-maintains-overweight-rating-cci-stock-news",
-      "tickers": [
-        "CCI",
-        "T",
-        "TMUS",
-        "VZ",
-        "JPM"
-      ],
-      "topics": [
-        "financial_markets",
-        "real_estate",
-        "finance"
-      ],
-      "overall_sentiment": -0.108355,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CCI",
-          "relevance_score": 0.969569,
-          "sentiment_score": -0.132789,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "T",
-          "relevance_score": 0.650019,
-          "sentiment_score": -0.092286,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "TMUS",
-          "relevance_score": 0.656714,
-          "sentiment_score": -0.050541,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "VZ",
-          "relevance_score": 0.67514,
-          "sentiment_score": -0.067414,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "JPM",
-          "relevance_score": 0.589329,
-          "sentiment_score": -0.137649,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "CCI": -0.132789,
-        "T": -0.092286,
-        "TMUS": -0.050541,
-        "VZ": -0.067414,
-        "JPM": -0.137649
-      }
-    },
-    {
-      "id": "-5475739754079358191",
-      "timestamp": "2026-01-21T14:09:34",
-      "headline": "Bernstein reiterates Underperform rating on Fastenal stock amid onsite closures",
-      "summary": "Bernstein has reiterated an Underperform rating on Fastenal (NASDAQ:FAST) stock, setting a $38.00 price target despite the company's 11% sales growth in Q4 2025. Although Fastenal\u2019s earnings per share met consensus, the industrial distributor missed gross margin and operating profit projections and closed 25% of its U.S. onsite locations in 2025, marking the first decline since 2014. The reiteration of the Underperform rating is supported by InvestingPro data showing Fastenal trading above its Fair Value and at a high P/E ratio relative to near-term earnings growth.",
-      "source": "Investing.com",
-      "url": "https://www.investing.com/news/analyst-ratings/bernstein-reiterates-underperform-rating-on-fastenal-stock-amid-onsite-closures-93CH-4457694",
-      "tickers": [
-        "FAST"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "manufacturing",
-        "retail_wholesale"
-      ],
-      "overall_sentiment": -0.482786,
-      "overall_sentiment_label": "Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "FAST",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.464777,
-          "sentiment_label": "Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "FAST": -0.464777
-      }
-    },
-    {
-      "id": "7304996406244570281",
-      "timestamp": "2026-01-21T14:08:51",
-      "headline": "PepsiCo, Inc. $PEP Shares Sold by Stock Yards Bank & Trust Co.",
-      "summary": "Stock Yards Bank & Trust Co. decreased its stake in PepsiCo, Inc. by 7.0% in the third quarter of 2025, selling 7,264 shares and ending with 97,210 shares valued at $13.65 million. Despite this sale, large institutions generally increased their holdings, with institutional ownership reaching 73.07%. Analysts are mixed on PEP, holding a consensus \"Hold\" rating and an average price target of $161.32.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-pepsico-inc-pep-shares-sold-by-stock-yards-bank-trust-co-2026-01-21/",
-      "tickers": [
-        "PEP",
-        "KDP",
-        "COST"
-      ],
-      "topics": [
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.082224,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PEP",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.093086,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "KDP",
-          "relevance_score": 0.716415,
-          "sentiment_score": 0.321684,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "COST",
-          "relevance_score": 0.580115,
-          "sentiment_score": -0.168442,
-          "sentiment_label": "Somewhat-Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "PEP": 0.093086,
-        "KDP": 0.321684,
-        "COST": -0.168442
-      }
-    },
-    {
-      "id": "-2618210712154763811",
-      "timestamp": "2026-01-21T14:08:51",
-      "headline": "Barclays Adjusts Price Target on Public Service Enterprise Group to $81 From $87, Maintains Equalweight Rating",
-      "summary": "Barclays has lowered its price target for Public Service Enterprise Group (PEG) to $81 from $87, while maintaining an \"Equalweight\" rating on the stock. This adjustment reflects a moderated outlook for the utility company. The article also lists other recent analyst activities for Public Service Enterprise Group, showing a mix of upgrades, downgrades, and price target changes from various firms.",
-      "source": "marketscreener.com",
-      "url": "https://www.marketscreener.com/news/barclays-adjusts-price-target-on-public-service-enterprise-group-to-81-from-87-maintains-equalwei-ce7e58d2d98df52c",
-      "tickers": [
-        "PEG",
-        "WFC"
-      ],
-      "topics": [
-        "financial_markets",
-        "earnings",
-        "energy_transportation",
-        "finance"
-      ],
-      "overall_sentiment": 0.036897,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PEG",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.252848,
-          "sentiment_label": "Somewhat-Bearish"
-        },
-        {
-          "ticker": "WFC",
-          "relevance_score": 0.643683,
-          "sentiment_score": 0.280056,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "PEG": -0.252848,
-        "WFC": 0.280056
-      }
-    },
-    {
-      "id": "-6686075988965260911",
-      "timestamp": "2026-01-21T14:08:44",
-      "headline": "Stock Yards Bank & Trust Co. Has $56.80 Million Stock Holdings in ASML Holding N.V. $ASML",
-      "summary": "Stock Yards Bank & Trust Co. increased its stake in ASML Holding N.V. by 3.4% in the third quarter, bringing its total holdings to 58,674 shares valued at $56.80 million, making ASML its 15th largest holding. Wall Street analysts have a \"Moderate Buy\" consensus rating for ASML with a target price of $1,392.75, driven by catalysts like TSMC's increased AI-focused capital expenditure. However, geopolitical risks and U.S.-China trade tensions present potential downside threats for the semiconductor company.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-stock-yards-bank-trust-co-has-5680-million-stock-holdings-in-asml-holding-nv-asml-2026-01-21/",
-      "tickers": [
-        "ASML",
-        "AMAT"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "technology"
-      ],
-      "overall_sentiment": 0.222194,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ASML",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.341749,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "AMAT",
-          "relevance_score": 0.640537,
-          "sentiment_score": 0.108561,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "ASML": 0.341749,
-        "AMAT": 0.108561
-      }
-    },
-    {
-      "id": "-1971184796726631735",
-      "timestamp": "2026-01-21T14:08:29",
-      "headline": "Stock Yards Bank & Trust Co. Has $7.06 Million Stock Position in Danaher Corporation $DHR",
-      "summary": "Stock Yards Bank & Trust Co. reduced its stake in Danaher Corporation by 15.8% in Q3, bringing its total holding to 35,623 shares valued at approximately $7.06 million. Meanwhile, company insiders sold over 30,000 shares worth $6.61 million in the last three months. Analysts maintain a \"Moderate Buy\" rating for Danaher, with an average price target of $251.87.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-stock-yards-bank-trust-co-has-706-million-stock-position-in-danaher-corporation-dhr-2026-01-21/",
-      "tickers": [
-        "DHR",
-        "A",
-        "JCI"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "life_sciences"
-      ],
-      "overall_sentiment": 0.121071,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "DHR",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.181896,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "A",
-          "relevance_score": 0.560975,
-          "sentiment_score": 0.107626,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "JCI",
-          "relevance_score": 0.577307,
-          "sentiment_score": 0.097765,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "DHR": 0.181896,
-        "A": 0.107626,
-        "JCI": 0.097765
-      }
-    },
-    {
-      "id": "-2454222067106471405",
-      "timestamp": "2026-01-21T14:08:24",
-      "headline": "Register Financial Advisors LLC Raises Stock Position in Beazer Homes USA, Inc. $BZH",
-      "summary": "Register Financial Advisors LLC significantly increased its stake in Beazer Homes USA (NYSE:BZH) by 54.7% in the third quarter, now holding 152,152 shares valued at approximately $3.735 million. This makes Beazer Homes its 11th largest holding, and other institutional investors have also boosted their positions. Despite strong institutional ownership at 85.65% and a recent earnings beat, the stock currently holds a \"Hold\" rating from Wall Street analysts with a consensus price target of $31.33.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-register-financial-advisors-llc-raises-stock-position-in-beazer-homes-usa-inc-bzh-2026-01-21/",
-      "tickers": [
-        "BZH"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "real_estate",
-        "finance"
-      ],
-      "overall_sentiment": 0.223974,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "BZH",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.211411,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "BZH": 0.211411
-      }
-    },
-    {
-      "id": "2389843521182297590",
-      "timestamp": "2026-01-21T14:08:19",
-      "headline": "Arista Networks, Inc. $ANET Stake Increased by Stock Yards Bank & Trust Co.",
-      "summary": "Stock Yards Bank & Trust Co. significantly increased its stake in Arista Networks (ANET) by 123.2% in the third quarter of 2025, now owning 31,229 shares valued at $4.55 million. This increase contributes to the 82.47% institutional ownership of the stock, while company insiders have been net sellers, disposing of over 160,000 shares worth approximately $20.49 million. Analysts maintain a \"Moderate Buy\" rating for Arista Networks with a consensus target price of $164.44, following the company's recent beat on quarterly earnings estimates.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-arista-networks-inc-anet-stake-increased-by-stock-yards-bank-trust-co-2026-01-21/",
-      "tickers": [
-        "ANET"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "technology",
-        "finance"
-      ],
-      "overall_sentiment": 0.301683,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ANET",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.346801,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "ANET": 0.346801
-      }
-    },
-    {
-      "id": "7270967678890988329",
-      "timestamp": "2026-01-21T14:08:18",
-      "headline": "American Electric Power Company, Inc. to Issue Quarterly Dividend of $0.95 (NASDAQ:AEP)",
-      "summary": "American Electric Power (NASDAQ:AEP) has announced a quarterly dividend of $0.95 per share, payable on March 10th to shareholders of record on February 10th. This translates to an annualized dividend of $3.80 and a yield of 3.2%. The company has a strong dividend history, having raised its payout for 15 consecutive years, with a payout ratio around 60.4% which is well-covered by expected earnings.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/american-electric-power-company-inc-to-issue-quarterly-dividend-of-095-nasdaqaep-2026-01-21/",
-      "tickers": [
-        "AEP"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "energy_transportation"
-      ],
-      "overall_sentiment": 0.413912,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "AEP",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.405156,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "AEP": 0.405156
-      }
-    },
-    {
-      "id": "-125034175072309917",
-      "timestamp": "2026-01-21T14:07:44",
-      "headline": "Lam Research To Rally Around 17%? Here Are 10 Top Analyst Forecasts For Wednesday",
-      "summary": "This article compiles ten top analyst forecasts for Wednesday, highlighting price target changes and rating adjustments for various companies. Notably, Deutsche Bank increased Lam Research Corp's price target, suggesting a potential 17% rally. Other companies covered include Ardelyx Inc, Southern Copper Corp, Waste Management Inc, Carter's Inc, Netflix Inc, 3M Co, ServiceNow Inc, Westlake Corp, and Chipotle Mexican Grill Inc.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/01/50034627/lam-research-to-rally-around-17-here-are-10-top-analyst-forecasts-for-wednesday",
-      "tickers": [
-        "LRCX"
-      ],
-      "topics": [
-        "financial_markets",
-        "technology",
-        "life_sciences",
-        "retail_wholesale"
-      ],
-      "overall_sentiment": 0.030592,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "LRCX",
-          "relevance_score": 0.331048,
-          "sentiment_score": 0.030222,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "LRCX": 0.030222
-      }
-    },
-    {
-      "id": "5232556538239309386",
-      "timestamp": "2026-01-21T14:06:48",
-      "headline": "Netflix Shares Fall After Earnings, Q1 Guidance Below Estimates",
-      "summary": "Netflix (NASDAQ: NFLX) shares dropped after the company released fourth-quarter financial results and first-quarter guidance that fell below analyst estimates. Despite beating Q4 EPS and revenue expectations, several firms lowered their price targets on the stock. Technical analysis indicates a challenging environment with the stock trading below key moving averages, though an oversold RSI suggests a potential rebound.",
-      "source": "Benzinga",
-      "url": "https://www.benzinga.com/trading-ideas/movers/26/01/50034609/netflix-shares-fall-after-earnings-q1-guidance-below-estimates",
-      "tickers": [
-        "NFLX"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "technology"
-      ],
-      "overall_sentiment": -0.722367,
-      "overall_sentiment_label": "Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "NFLX",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.740461,
-          "sentiment_label": "Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "NFLX": -0.740461
-      }
-    },
-    {
-      "id": "-310040540767247054",
-      "timestamp": "2026-01-21T14:04:42",
-      "headline": "Deutsche Bank Raises Price Target on KLA Corp. to $1,560 From $1,250, Keeps Hold Rating",
-      "summary": "Deutsche Bank has increased its price target for KLA Corp. (KLAC) to $1,560 from $1,250, while maintaining a Hold rating on the stock. This adjustment reflects a positive outlook for the company's valuation by the financial institution. The report was published on January 21, 2026, at 09:03 am EST.",
-      "source": "marketscreener.com",
-      "url": "https://www.marketscreener.com/news/deutsche-bank-raises-price-target-on-kla-corp-to-1-560-from-1-250-keeps-hold-rating-ce7e58d2d98af12d",
-      "tickers": [
-        "KLAC"
-      ],
-      "topics": [
-        "financial_markets",
-        "technology"
-      ],
-      "overall_sentiment": 0.267572,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "KLAC",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.267321,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "KLAC": 0.267321
-      }
-    },
-    {
-      "id": "3797894911303711785",
-      "timestamp": "2026-01-21T14:04:22",
-      "headline": "Venus Concept to exit NASDAQ and end SEC reporting obligations",
-      "summary": "Venus Concept Inc. announced its decision to delist from The Nasdaq Stock Market and deregister its common stock with the SEC. The company plans to file Form 25 with the SEC on or about January 29, 2026, and Form 15 shortly after, which will suspend its reporting obligations. This move aims to reduce costs and administrative burdens, with the company expecting to pay a one-time termination fee of $50,000 to NASDAQ.",
-      "source": "MSN",
-      "url": "https://www.msn.com/en-us/money/companies/venus-concept-to-exit-nasdaq-and-end-sec-reporting-obligations/ar-AA1UEWcO?ocid=finance-verthp-feeds",
-      "tickers": [
-        "VERO",
-        "NDAQ"
-      ],
-      "topics": [
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": -0.362417,
-      "overall_sentiment_label": "Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "VERO",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.641531,
-          "sentiment_label": "Bearish"
-        },
-        {
-          "ticker": "NDAQ",
-          "relevance_score": 0.647641,
-          "sentiment_score": -0.135318,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "VERO": -0.641531,
-        "NDAQ": -0.135318
-      }
-    },
-    {
-      "id": "1790546712856335700",
-      "timestamp": "2026-01-21T14:02:38",
-      "headline": "Hershey Debuts 'Happy Place' Olympic Push 01/21/2026",
-      "summary": "Hershey is launching its first Hershey's brand campaign since 2018, increasing its marketing budget by 20% to support \"Hershey's. It's Your Happy Place.\" The campaign debuts ahead of the 2026 Winter Olympics and Paralympics, introducing five U.S. Olympians and Paralympians with a focus on happiness beyond medals. This initiative signals a broader shift in the company's brand storytelling, integrating paid, earned, shared, and owned channels, moving away from a primary focus on paid media.",
-      "source": "MediaPost",
-      "url": "https://www.mediapost.com/publications/article/412159/hershey-debuts-happy-place-olympic-push.html?edition=141321",
-      "tickers": [
-        "HSY"
-      ],
-      "topics": [
-        "retail_wholesale",
-        "financial_markets",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.404377,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "HSY",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.39624,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "HSY": 0.39624
-      }
     }
   ],
-  "last_updated": "2026-01-22T20:45:49.374781"
+  "last_updated": "2026-01-22T21:16:11.711839"
 }

@@ -116,6 +116,13 @@ class ReportChartGenerator:
         if data.positions:
             charts['pnl_breakdown'] = self.pnl_breakdown_chart(data.positions)
         
+        # 6. Daily P/L vs SPY comparison
+        if len(data.equity_curve) > 2 and len(data.benchmark_curve) > 2:
+            charts['daily_pnl_vs_spy'] = self.daily_pnl_vs_spy_chart(
+                data.equity_curve,
+                data.benchmark_curve,
+            )
+        
         return charts
     
     def equity_curve_chart(
@@ -164,6 +171,76 @@ class ReportChartGenerator:
                        xy=(0.98, 0.95), xycoords='axes fraction',
                        fontsize=14, fontweight='bold', color=color,
                        ha='right', va='top')
+        
+        plt.tight_layout()
+        return _fig_to_base64(fig)
+    
+    def daily_pnl_vs_spy_chart(
+        self,
+        equity: pd.Series,
+        benchmark: pd.Series,
+    ) -> str:
+        """
+        Generate daily P/L vs SPY comparison bar chart.
+        
+        Shows daily returns of portfolio vs SPY side by side.
+        """
+        _apply_dark_theme()
+        fig, ax = plt.subplots(figsize=(12, 5))
+        
+        # Calculate daily returns
+        if len(equity) < 2 or len(benchmark) < 2:
+            ax.text(0.5, 0.5, 'Insufficient data for daily P/L comparison',
+                   ha='center', va='center', fontsize=12, color=DARK_THEME['muted'])
+            plt.tight_layout()
+            return _fig_to_base64(fig)
+        
+        portfolio_returns = equity.pct_change().dropna() * 100
+        benchmark_returns = benchmark.pct_change().dropna() * 100
+        
+        # Align dates
+        common_dates = portfolio_returns.index.intersection(benchmark_returns.index)
+        if len(common_dates) < 2:
+            ax.text(0.5, 0.5, 'No overlapping dates for comparison',
+                   ha='center', va='center', fontsize=12, color=DARK_THEME['muted'])
+            plt.tight_layout()
+            return _fig_to_base64(fig)
+        
+        portfolio_returns = portfolio_returns.loc[common_dates][-20:]  # Last 20 days
+        benchmark_returns = benchmark_returns.loc[common_dates][-20:]
+        
+        x = np.arange(len(portfolio_returns))
+        width = 0.35
+        
+        # Portfolio bars
+        portfolio_colors = [DARK_THEME['success'] if r >= 0 else DARK_THEME['danger'] 
+                          for r in portfolio_returns.values]
+        bars1 = ax.bar(x - width/2, portfolio_returns.values, width, 
+                      color=portfolio_colors, label='Portfolio', alpha=0.8)
+        
+        # SPY bars
+        spy_colors = [DARK_THEME['secondary'] if r >= 0 else '#6b7280' 
+                     for r in benchmark_returns.values]
+        bars2 = ax.bar(x + width/2, benchmark_returns.values, width,
+                      color=spy_colors, label='SPY', alpha=0.6)
+        
+        # Calculate alpha (excess return)
+        alpha = portfolio_returns.values - benchmark_returns.values
+        cumulative_alpha = np.sum(alpha)
+        
+        ax.axhline(y=0, color=DARK_THEME['muted'], linewidth=0.5)
+        ax.set_xlabel('Date')
+        ax.set_ylabel('Daily Return (%)')
+        ax.set_title(f'Daily P/L: Portfolio vs SPY | Cumulative Alpha: {cumulative_alpha:+.2f}%',
+                    fontweight='bold')
+        ax.legend(loc='upper left')
+        ax.grid(True, alpha=0.3, axis='y')
+        
+        # X-axis labels
+        if len(portfolio_returns) <= 20:
+            ax.set_xticks(x)
+            ax.set_xticklabels([d.strftime('%m/%d') for d in portfolio_returns.index],
+                              rotation=45, ha='right', fontsize=8)
         
         plt.tight_layout()
         return _fig_to_base64(fig)

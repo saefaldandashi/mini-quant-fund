@@ -1250,19 +1250,19 @@ class SmartExecutor:
         Determine if an order should use TWAP execution.
         
         Criteria:
-        - Order value > $50,000
-        - Or quantity > 1000 shares
+        - Order value > $5,000 (for intraday trading)
+        - Or quantity > 500 shares
         - Or symbol has low liquidity
         """
         value = order.get('value', 0)
         quantity = order.get('quantity', 0)
         
-        # Large orders by value
-        if value > 50000:
+        # Large orders by value (lowered threshold for HFT-lite)
+        if value > 5000:
             return True
         
         # Large orders by share count
-        if quantity > 1000:
+        if quantity > 500:
             return True
         
         return False
