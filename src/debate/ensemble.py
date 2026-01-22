@@ -305,7 +305,16 @@ class EnsembleOptimizer:
         
         if total_score > 0:
             for name, signal in signals.items():
-                score = scores.get(name, StrategyScore(name, 0, 0, 0, 0, 0, 0, ""))
+                score = scores.get(name, StrategyScore(
+                    strategy_name=name,
+                    alpha_score=0.0,
+                    regime_fit_score=0.0,
+                    diversification_score=0.0,
+                    drawdown_score=0.0,
+                    sentiment_score=0.0,
+                    total_score=0.0,
+                    rationale="Default score"
+                ))
                 weight = score.total_score / total_score
                 
                 for i, symbol in enumerate(symbols):
@@ -568,7 +577,16 @@ class EnsembleOptimizer:
                 correlation = np.dot(my_vector, other_vector) / (my_norm * other_norm)
                 
                 # Weight by the other strategy's score (high correlation with good strategy is less bad)
-                other_score = scores.get(other_name, StrategyScore(name=other_name, total_score=0.5, thesis="", components={}))
+                other_score = scores.get(other_name, StrategyScore(
+                    strategy_name=other_name,
+                    alpha_score=0.0,
+                    regime_fit_score=0.0,
+                    diversification_score=0.0,
+                    drawdown_score=0.0,
+                    sentiment_score=0.0,
+                    total_score=0.5,
+                    rationale="Default score"
+                ))
                 score_factor = other_score.total_score
                 
                 # Only penalize positive correlations (same signals)
