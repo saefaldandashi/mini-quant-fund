@@ -55,9 +55,10 @@ jobs:
             # Navigate to app directory
             cd ~/mini-fund-tool
             
-            # Pull latest code
+            # Pull latest code (force reset to remote to avoid divergence issues)
             echo "📥 Pulling latest code..."
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
             
             # Create/update .env file with secrets
             echo "🔐 Updating environment variables..."
