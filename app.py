@@ -348,6 +348,23 @@ auto_rebalance_settings = {
 # Background scheduler thread
 scheduler_thread = None
 scheduler_stop_event = threading.Event()
+_scheduler_started = False  # Flag to prevent double-start
+
+def start_auto_rebalance_scheduler():
+    """Start the auto-rebalance scheduler thread. Safe to call multiple times."""
+    global scheduler_thread, _scheduler_started
+    if _scheduler_started and scheduler_thread and scheduler_thread.is_alive():
+        return False  # Already running
+    
+    # Import is deferred because function is defined later
+    from threading import Thread
+    scheduler_thread = Thread(target=auto_rebalance_scheduler, daemon=True)
+    scheduler_thread.start()
+    _scheduler_started = True
+    logging.info("🔄 Auto-rebalance scheduler STARTED (background thread)")
+    return True
+
+# NOTE: Scheduler is started AFTER auto_rebalance_scheduler function is defined (at end of file)
 
 
 def create_strategies(enable_long_short=False, enable_futures=False, trading_mode='intraday'):
@@ -2005,14 +2022,96 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             if price <= 0:
                 continue
             
-            if current_qty > target_qty:
-                # Sell
-                qty = current_qty - target_qty
-                side = 'sell'
+            # ================================================================
+            # PROPER SHORT SELLING LOGIC
+            # ================================================================
+            # Handle all position transitions:
+            #   Long -> Longer (buy more)
+            #   Long -> Smaller Long (sell some) 
+            #   Long -> Flat (sell all)
+            #   Long -> Short (sell all + open short)
+            #   Flat -> Long (buy)
+            #   Flat -> Short (open short)
+            #   Short -> Shorter (short more)
+            #   Short -> Smaller Short (cover some)
+            #   Short -> Flat (cover all)
+            #   Short -> Long (cover all + buy)
+            # ================================================================
+            
+            is_short_order = False
+            
+            if current_qty >= 0 and target_qty >= 0:
+                # Both non-negative: simple long-only trading
+                if current_qty > target_qty:
+                    qty = current_qty - target_qty
+                    side = 'sell'
+                else:
+                    qty = target_qty - current_qty
+                    side = 'buy'
+                    
+            elif current_qty >= 0 and target_qty < 0:
+                # Currently long (or flat), want to go short
+                # Step 1: Close long position (if any)
+                if current_qty > 0:
+                    # First add a SELL order to close the long
+                    orders_to_execute.append({
+                        'symbol': symbol,
+                        'side': 'sell',
+                        'quantity': current_qty,
+                        'price': price,
+                        'value': current_qty * price,
+                        'conviction': min(1.0, abs(final_weights.get(symbol, 0)) * 5),
+                        'is_short': False,
+                        'description': f"Close long before shorting",
+                    })
+                    log(f"  📉 {symbol}: Closing long {current_qty} shares before shorting")
+                
+                # Step 2: Open short position
+                qty = abs(target_qty)  # target_qty is negative, we short this many
+                side = 'short'  # TRUE SHORT ORDER
+                is_short_order = True
+                log(f"  📉 {symbol}: Opening SHORT position for {qty} shares (betting on decline)")
+                
+            elif current_qty < 0 and target_qty >= 0:
+                # Currently short, want to go long (or flat)
+                # Step 1: Cover the short position
+                cover_qty = abs(current_qty)
+                orders_to_execute.append({
+                    'symbol': symbol,
+                    'side': 'cover',  # TRUE COVER ORDER
+                    'quantity': cover_qty,
+                    'price': price,
+                    'value': cover_qty * price,
+                    'conviction': min(1.0, abs(final_weights.get(symbol, 0)) * 5),
+                    'is_short': True,  # This is closing a short
+                    'description': f"Cover short position",
+                })
+                log(f"  📈 {symbol}: Covering short {cover_qty} shares")
+                
+                # Step 2: Go long if target > 0
+                if target_qty > 0:
+                    qty = target_qty
+                    side = 'buy'
+                else:
+                    continue  # Just covering, no need to buy
+                    
+            elif current_qty < 0 and target_qty < 0:
+                # Both short: adjust short size
+                if abs(current_qty) < abs(target_qty):
+                    # Short more
+                    qty = abs(target_qty) - abs(current_qty)
+                    side = 'short'
+                    is_short_order = True
+                    log(f"  📉 {symbol}: Increasing short by {qty} shares")
+                else:
+                    # Cover some
+                    qty = abs(current_qty) - abs(target_qty)
+                    side = 'cover'
+                    is_short_order = True
+                    log(f"  📈 {symbol}: Reducing short by covering {qty} shares")
             else:
-                # Buy
-                qty = target_qty - current_qty
-                side = 'buy'
+                # Shouldn't happen
+                continue
             
             value = qty * price
             
@@ -2069,6 +2168,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 'cost_estimate': cost_estimate,
                 'expected_benefit': cost_result.expected_benefit,
                 'net_value': cost_result.net_expected_value,
+                'is_short': is_short_order,  # TRUE for short/cover orders
             })
         
         # Log cost summary
@@ -2321,6 +2421,14 @@ def auto_rebalance_scheduler():
         
         # Check every 10 seconds
         time.sleep(10)
+
+
+# Start the scheduler now that the function is defined
+# This runs when the module is imported (works with Gunicorn)
+try:
+    start_auto_rebalance_scheduler()
+except Exception as e:
+    logging.error(f"Failed to start auto-rebalance scheduler: {e}")
 
 
 @app.route('/')
@@ -4903,9 +5011,9 @@ def download_report(filename):
 
 
 if __name__ == '__main__':
-    # Start auto-rebalance scheduler
-    scheduler_thread = threading.Thread(target=auto_rebalance_scheduler, daemon=True)
-    scheduler_thread.start()
+    # Scheduler already started above when app is loaded
+    # Just ensure it's running
+    start_auto_rebalance_scheduler()
     
     port = int(os.getenv("PORT", 5000))
     debug = os.getenv("FLASK_DEBUG", "0") == "1"

@@ -2025,16 +2025,24 @@
                     const pl = p.unrealized_pl || 0;
                     const plpc = p.unrealized_plpc || 0;
                     const plClass = pl >= 0 ? 'positive' : 'negative';
-                    const qty = p.qty || 0;
-                    const qtyStyle = parseFloat(qty) < 0 ? 'color: var(--warning);' : '';
+                    const qty = parseFloat(p.qty) || 0;
+                    
+                    // Detect SHORT positions (negative quantity)
+                    const isShort = qty < 0;
+                    const qtyDisplay = isShort 
+                        ? `<span style="color: var(--negative);">📉 ${Math.abs(qty)} SHORT</span>`
+                        : `<span style="color: var(--positive);">${qty}</span>`;
+                    
+                    // For shorts: profit when price goes DOWN
+                    const shortLabel = isShort ? '<span style="font-size: 0.7em; color: var(--warning);">SHORT</span>' : '';
                     
                     return `
-                        <tr>
-                            <td class="ticker">${p.symbol || '--'}</td>
-                            <td style="${qtyStyle}">${qty}</td>
+                        <tr style="${isShort ? 'background: rgba(239, 68, 68, 0.1);' : ''}">
+                            <td class="ticker">${p.symbol || '--'} ${shortLabel}</td>
+                            <td>${qtyDisplay}</td>
                             <td>${formatCurrency(p.avg_entry_price)}</td>
                             <td>${formatCurrency(p.current_price)}</td>
-                            <td>${formatCurrency(p.market_value)}</td>
+                            <td>${formatCurrency(Math.abs(p.market_value))}</td>
                             <td class="${plClass}">${formatCurrency(pl)}</td>
                             <td class="${plClass}">${(plpc * 100).toFixed(2)}%</td>
                         </tr>

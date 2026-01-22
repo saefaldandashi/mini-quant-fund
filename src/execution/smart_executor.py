@@ -380,16 +380,28 @@ class SmartExecutor:
         Optimize the order of execution.
         
         Strategy:
-        1. Execute SELLS first (free up capital)
-        2. Within each side, order by:
+        1. Execute SELLS first (free up capital) 
+        2. Execute SHORTS second (open short positions)
+        3. Execute COVERS third (close short positions)
+        4. Execute BUYS last (use freed capital)
+        
+        Within each side, order by:
            - Priority (high conviction first)
            - Spread (tight spreads first - faster execution)
         """
         sells = [o for o in orders if o['side'] == 'sell']
+        shorts = [o for o in orders if o['side'] == 'short']
+        covers = [o for o in orders if o['side'] == 'cover']
         buys = [o for o in orders if o['side'] == 'buy']
         
         # Sort sells: high value first (free up more capital)
         sells.sort(key=lambda x: x['value'], reverse=True)
+        
+        # Sort shorts: high conviction first
+        shorts.sort(key=lambda x: -x.get('conviction', 0.5))
+        
+        # Sort covers: largest positions first (reduce risk)
+        covers.sort(key=lambda x: x['value'], reverse=True)
         
         # Sort buys: high conviction first, then by spread (tightest first)
         buys.sort(key=lambda x: (
@@ -397,8 +409,8 @@ class SmartExecutor:
             x.get('spread_pct', 0.1),   # Lower spread first
         ))
         
-        # Sells first, then buys
-        optimized = sells + buys
+        # Order: sells -> shorts -> covers -> buys
+        optimized = sells + shorts + covers + buys
         
         return optimized
     
@@ -550,9 +562,20 @@ class SmartExecutor:
         """Execute a simple market order."""
         from alpaca.trading.enums import OrderSide
         
-        order_side = OrderSide.BUY if side.lower() == 'buy' else OrderSide.SELL
+        # Handle all order types: buy, sell, short, cover
+        side_lower = side.lower()
+        if side_lower in ['buy', 'cover']:
+            order_side = OrderSide.BUY
+        else:  # 'sell' or 'short'
+            order_side = OrderSide.SELL
         
-        self.log(f"    → MARKET ORDER: {side.upper()} {quantity} @ ~${current_price:.2f}")
+        # Log with appropriate emoji for short orders
+        if side_lower == 'short':
+            self.log(f"    → 📉 SHORT SELL: {quantity} @ ~${current_price:.2f}")
+        elif side_lower == 'cover':
+            self.log(f"    → 📈 COVER SHORT: {quantity} @ ~${current_price:.2f}")
+        else:
+            self.log(f"    → MARKET ORDER: {side.upper()} {quantity} @ ~${current_price:.2f}")
         
         if self.dry_run:
             fill_price = current_price
@@ -604,10 +627,16 @@ class SmartExecutor:
         from alpaca.trading.enums import OrderSide, TimeInForce
         from alpaca.trading.requests import LimitOrderRequest
         
-        order_side = OrderSide.BUY if side.lower() == 'buy' else OrderSide.SELL
+        # Handle all order types: buy, sell, short, cover
+        side_lower = side.lower()
+        if side_lower in ['buy', 'cover']:
+            order_side = OrderSide.BUY
+        else:  # 'sell' or 'short'
+            order_side = OrderSide.SELL
         
         improvement = abs(current_price - limit_price)
-        self.log(f"    → LIMIT ORDER: {side.upper()} {quantity} @ ${limit_price:.2f}")
+        order_label = "SHORT SELL" if side_lower == 'short' else ("COVER" if side_lower == 'cover' else side.upper())
+        self.log(f"    → LIMIT ORDER: {order_label} {quantity} @ ${limit_price:.2f}")
         self.log(f"      (potential savings: ${improvement:.2f}/share, timeout: {timeout_seconds}s)")
         
         if self.dry_run:
@@ -787,7 +816,9 @@ class SmartExecutor:
         
         sells_count = len([o for o in orders if o['side'] == 'sell'])
         buys_count = len([o for o in orders if o['side'] == 'buy'])
-        self.log(f"Order sequence: {sells_count} sells first, then {buys_count} buys")
+        shorts_count = len([o for o in orders if o['side'] == 'short'])
+        covers_count = len([o for o in orders if o['side'] == 'cover'])
+        self.log(f"Order sequence: {sells_count} sells, {shorts_count} shorts, {covers_count} covers, {buys_count} buys")
         self.log("")
         
         # Clear session records
