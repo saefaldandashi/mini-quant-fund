@@ -14,7 +14,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, Tuple
 
-from flask import Flask, render_template, jsonify, request, send_file
+from flask import Flask, render_template, jsonify, request, send_file, Response
+from functools import wraps
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -86,6 +87,47 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 app = Flask(__name__)
+
+# =============================================================================
+# AUTHENTICATION SETUP
+# =============================================================================
+# Get credentials from environment variables (set these in .env or GitHub Secrets)
+AUTH_USERNAME = os.environ.get('APP_USERNAME', 'admin')
+AUTH_PASSWORD = os.environ.get('APP_PASSWORD', '')  # No default = auth disabled if not set
+
+def check_auth(username, password):
+    """Check if username/password combination is valid."""
+    if not AUTH_PASSWORD:
+        # If no password set, authentication is disabled
+        return True
+    return username == AUTH_USERNAME and password == AUTH_PASSWORD
+
+def authenticate():
+    """Send a 401 response to prompt for credentials."""
+    return Response(
+        'Authentication required. Please provide valid credentials.',
+        401,
+        {'WWW-Authenticate': 'Basic realm="Mini Quant Fund - Login Required"'}
+    )
+
+def requires_auth(f):
+    """Decorator to require authentication for a route."""
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not AUTH_PASSWORD:
+            # Auth disabled if no password configured
+            return f(*args, **kwargs)
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
+
+# Log authentication status
+if AUTH_PASSWORD:
+    logging.info(f"🔐 Authentication ENABLED - Username: {AUTH_USERNAME}")
+else:
+    logging.warning("⚠️ Authentication DISABLED - Set APP_PASSWORD environment variable to enable")
 
 # Initialize reporting system (uses LIVE data, no parquet dependency)
 try:
@@ -2282,12 +2324,14 @@ def auto_rebalance_scheduler():
 
 
 @app.route('/')
+@requires_auth
 def index():
     """Main page."""
     return render_template('index.html')
 
 
 @app.route('/api/health')
+# NOTE: Health check is intentionally NOT protected - needed for monitoring
 def health_check():
     """Health check endpoint for cloud deployment monitoring."""
     import pytz
@@ -2317,6 +2361,7 @@ def health_check():
 
 
 @app.route('/api/risk-monitor')
+@requires_auth
 def get_risk_monitor_status():
     """Get real-time risk monitor status."""
     global risk_monitor
@@ -2344,6 +2389,7 @@ def get_risk_monitor_status():
 
 
 @app.route('/api/risk-monitor/toggle', methods=['POST'])
+@requires_auth
 def toggle_risk_monitor():
     """Enable or disable the risk monitor."""
     global risk_monitor_enabled, risk_monitor
@@ -2364,6 +2410,7 @@ def toggle_risk_monitor():
 
 
 @app.route('/api/status')
+@requires_auth
 def get_status():
     """Get current bot status."""
     new_messages = []
@@ -2481,6 +2528,7 @@ def get_transaction_costs():
 
 
 @app.route('/api/run', methods=['POST'])
+@requires_auth
 def run_bot_endpoint():
     """Trigger bot run."""
     # Accept both JSON body and query parameters
@@ -2546,6 +2594,7 @@ def run_bot_endpoint():
 
 
 @app.route('/api/auto-rebalance', methods=['POST'])
+@requires_auth
 def set_auto_rebalance():
     """Configure automatic rebalancing."""
     global auto_rebalance_settings
@@ -2573,6 +2622,7 @@ def set_auto_rebalance():
 
 
 @app.route('/api/cancel-orders', methods=['POST'])
+@requires_auth
 def cancel_orders_endpoint():
     """Cancel all open orders."""
     try:
@@ -2628,6 +2678,7 @@ def get_universe():
 
 
 @app.route('/api/portfolio')
+@requires_auth
 def get_portfolio():
     """Get current portfolio information."""
     try:
@@ -2689,6 +2740,7 @@ def get_portfolio():
 
 
 @app.route('/api/trade-history')
+@requires_auth
 def get_alpaca_trade_history():
     """Get trade history from Alpaca and learning system."""
     try:
@@ -2798,6 +2850,7 @@ def get_data_sources():
 # ============================================================
 
 @app.route('/api/learning/summary')
+@requires_auth
 def get_learning_summary():
     """Get comprehensive learning summary."""
     try:
@@ -4704,6 +4757,7 @@ def get_execution_history():
 # ===============================================================================
 
 @app.route('/api/reports/generate', methods=['POST'])
+@requires_auth
 def generate_report_endpoint():
     """Generate a report (daily/weekly/monthly) using LIVE data."""
     try:
@@ -4780,6 +4834,7 @@ def generate_report_endpoint():
 
 
 @app.route('/api/reports/view/<filename>')
+@requires_auth
 def view_report(filename):
     """View a generated report."""
     from pathlib import Path
@@ -4799,6 +4854,7 @@ def view_report(filename):
 
 
 @app.route('/api/reports/list')
+@requires_auth
 def list_reports():
     """List available reports."""
     try:
@@ -4825,6 +4881,7 @@ def list_reports():
 
 
 @app.route('/api/reports/download/<filename>')
+@requires_auth
 def download_report(filename):
     """Download a report PDF."""
     try:

@@ -15,9 +15,11 @@ alpaca-py>=0.10.0
 # Configuration
 python-dotenv>=1.0.0
 PyYAML>=6.0
+pytz>=2024.1  # Timezone support
 
 # Web Framework (for existing UI)
 Flask>=3.0.0
+Flask-HTTPAuth>=4.8.0  # Basic authentication
 gunicorn>=21.0.0  # Production WSGI server for cloud deployment
 
 # Testing
