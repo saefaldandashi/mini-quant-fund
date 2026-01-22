@@ -2751,6 +2751,12 @@ def get_equity_curve():
         trades = learning_engine.trade_memory.get_closed_trades(days=30)
         
         # Get current account value
+        api_key = os.environ.get('ALPACA_API_KEY')
+        secret_key = os.environ.get('ALPACA_SECRET_KEY')
+        if not api_key or not secret_key:
+            return jsonify({'error': 'API keys not configured', 'curve': [], 'summary': {}}), 500
+        
+        broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
         account = broker.get_account()
         current_equity = float(account.get('equity', 0))
         

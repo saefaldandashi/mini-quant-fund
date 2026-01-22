@@ -254,20 +254,28 @@ class RealtimeRiskMonitor:
             )
             self._trigger_alert(alert)
     
-    def _check_concentration(self, positions: List[Dict], equity: float):
+    def _check_concentration(self, positions, equity: float):
         """Check position concentration risk."""
         if equity <= 0 or not positions:
             return
         
+        # Handle both Dict[str, Dict] and List[Dict] formats
+        if isinstance(positions, dict):
+            position_items = [(symbol, pos) for symbol, pos in positions.items()]
+        else:
+            position_items = [(pos.get('symbol', 'UNKNOWN'), pos) for pos in positions]
+        
         # Check single position concentration
-        for pos in positions:
-            market_value = float(pos.get('market_value', 0))
+        for symbol, pos in position_items:
+            if isinstance(pos, str):
+                continue  # Skip malformed entries
+            market_value = float(pos.get('market_value', 0)) if isinstance(pos, dict) else 0
             pct = abs(market_value) / equity
             
             if pct > self.config.max_single_position_pct:
                 alert = self._create_alert(
                     level=RiskLevel.ELEVATED,
-                    message=f"Position {pos.get('symbol')} is {pct:.1%} of portfolio (max: {self.config.max_single_position_pct:.0%})",
+                    message=f"Position {symbol} is {pct:.1%} of portfolio (max: {self.config.max_single_position_pct:.0%})",
                     metric_name="position_concentration",
                     current_value=pct,
                     threshold=self.config.max_single_position_pct,
@@ -292,9 +300,16 @@ class RealtimeRiskMonitor:
         try:
             positions = self.broker.get_positions()
             
-            for pos in positions:
-                symbol = pos.get('symbol')
-                current_qty = int(pos.get('qty', 0))
+            # Handle Dict[str, Dict] format from broker
+            if isinstance(positions, dict):
+                position_items = [(symbol, pos) for symbol, pos in positions.items()]
+            else:
+                position_items = [(pos.get('symbol', 'UNKNOWN'), pos) for pos in positions]
+            
+            for symbol, pos in position_items:
+                if isinstance(pos, str):
+                    continue
+                current_qty = int(pos.get('qty', 0)) if isinstance(pos, dict) else 0
                 
                 if current_qty <= 0:
                     continue

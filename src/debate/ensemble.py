@@ -115,12 +115,18 @@ class EnsembleOptimizer:
         adjusted_scores = {}
         for name, score in scores.items():
             penalty = correlation_adjustments.get(name, 0.0)
-            # Create a modified score with correlation penalty
+            # Create a modified score with correlation penalty (copy all fields, adjust total_score)
             adjusted_scores[name] = StrategyScore(
-                name=score.name,
+                strategy_name=score.strategy_name,
+                alpha_score=score.alpha_score,
+                regime_fit_score=score.regime_fit_score,
+                diversification_score=score.diversification_score,
+                drawdown_score=score.drawdown_score,
+                sentiment_score=score.sentiment_score,
                 total_score=max(0.1, score.total_score * (1.0 - penalty)),
-                thesis=score.thesis,
-                components=score.components,
+                rationale=score.rationale,
+                strengths=score.strengths,
+                weaknesses=score.weaknesses,
             )
         
         if mode == EnsembleMode.WEIGHTED_VOTE:
