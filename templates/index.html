@@ -1238,6 +1238,81 @@
         </div>
     </div>
     
+    <!-- Leverage Details Modal -->
+    <div class="shortcuts-modal" id="leverage-modal" onclick="if(event.target===this)this.classList.remove('show')">
+        <div class="shortcuts-content" style="max-width: 600px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>💰 Leverage & Margin</h2>
+                <button onclick="document.getElementById('leverage-modal').classList.remove('show')" style="background: none; border: none; color: white; font-size: 1.5em; cursor: pointer;">×</button>
+            </div>
+            
+            <div id="leverage-modal-content">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                    <div style="background: var(--bg-darker); padding: 15px; border-radius: 8px;">
+                        <div style="color: var(--text-secondary); font-size: 0.8em; margin-bottom: 5px;">Current Leverage</div>
+                        <div id="lev-current" style="font-size: 1.8em; font-weight: bold; color: var(--accent);">1.0x</div>
+                    </div>
+                    <div style="background: var(--bg-darker); padding: 15px; border-radius: 8px;">
+                        <div style="color: var(--text-secondary); font-size: 0.8em; margin-bottom: 5px;">Max Allowed</div>
+                        <div id="lev-max" style="font-size: 1.8em; font-weight: bold; color: var(--text-primary);">2.0x</div>
+                    </div>
+                    <div style="background: var(--bg-darker); padding: 15px; border-radius: 8px;">
+                        <div style="color: var(--text-secondary); font-size: 0.8em; margin-bottom: 5px;">Margin Used</div>
+                        <div id="lev-margin-used" style="font-size: 1.8em; font-weight: bold;">0%</div>
+                    </div>
+                    <div style="background: var(--bg-darker); padding: 15px; border-radius: 8px;">
+                        <div style="color: var(--text-secondary); font-size: 0.8em; margin-bottom: 5px;">Margin Buffer</div>
+                        <div id="lev-margin-buffer" style="font-size: 1.8em; font-weight: bold; color: var(--green);">100%</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h3 style="margin-bottom: 15px; color: var(--text-primary);">Dynamic Limits</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px 0; color: var(--text-secondary);">VIX Level</td>
+                            <td id="lev-vix" style="text-align: right; padding: 10px 0;">--</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px 0; color: var(--text-secondary);">VIX-Adjusted Max</td>
+                            <td id="lev-vix-max" style="text-align: right; padding: 10px 0;">--</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px 0; color: var(--text-secondary);">Drawdown</td>
+                            <td id="lev-drawdown" style="text-align: right; padding: 10px 0;">--</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px 0; color: var(--text-secondary);">Drawdown-Adjusted Max</td>
+                            <td id="lev-dd-max" style="text-align: right; padding: 10px 0;">--</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px 0; color: var(--text-secondary);">Buying Power</td>
+                            <td id="lev-buying-power" style="text-align: right; padding: 10px 0;">--</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px 0; color: var(--text-secondary);">Daily P/L</td>
+                            <td id="lev-daily-pnl" style="text-align: right; padding: 10px 0;">--</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div id="kill-switch-section" style="margin-top: 20px; padding: 15px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; display: none;">
+                    <h3 style="color: var(--red); margin-bottom: 10px;">🚨 Kill Switch Active</h3>
+                    <p id="kill-switch-reason" style="color: var(--text-secondary);"></p>
+                </div>
+                
+                <div style="margin-top: 25px; display: flex; gap: 10px; justify-content: center;">
+                    <button class="action-btn secondary" onclick="loadLeverageStatus()">
+                        ↻ Refresh
+                    </button>
+                    <button class="action-btn" style="background: var(--red); color: white;" onclick="toggleKillSwitch()">
+                        🚨 Emergency Kill Switch
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Keyboard Shortcuts Modal -->
     <div class="shortcuts-modal" id="shortcuts-modal" onclick="if(event.target===this)this.classList.remove('show')">
         <div class="shortcuts-content">
@@ -1325,15 +1400,15 @@
             <div class="quick-stat-value" id="qs-winrate">--</div>
             <div class="quick-stat-change" id="qs-trades">0 trades</div>
         </div>
-        <div class="quick-stat">
-            <div class="quick-stat-label">Sharpe (Est)</div>
-            <div class="quick-stat-value" id="qs-sharpe">--</div>
-            <div class="quick-stat-change">Annualized</div>
+        <div class="quick-stat" id="qs-leverage-card" title="Click for leverage details">
+            <div class="quick-stat-label">Leverage</div>
+            <div class="quick-stat-value" id="qs-leverage">1.0x</div>
+            <div class="quick-stat-change" id="qs-leverage-state">healthy</div>
         </div>
         <div class="quick-stat">
-            <div class="quick-stat-label">vs SPY</div>
-            <div class="quick-stat-value" id="qs-spy">--</div>
-            <div class="quick-stat-change" id="qs-spy-pct">Benchmark</div>
+            <div class="quick-stat-label">Margin Buffer</div>
+            <div class="quick-stat-value" id="qs-margin">--</div>
+            <div class="quick-stat-change" id="qs-buying-power">Available</div>
         </div>
     </div>
     
@@ -3440,9 +3515,10 @@
         // ========== QUICK STATS ==========
         async function loadQuickStats() {
             try {
-                const [portfolioRes, learningRes] = await Promise.all([
+                const [portfolioRes, learningRes, leverageRes] = await Promise.all([
                     fetch('/api/portfolio'),
-                    fetch('/api/learning/realtime')
+                    fetch('/api/learning/realtime'),
+                    fetch('/api/leverage')
                 ]);
                 
                 const portfolio = await portfolioRes.json();
@@ -3468,30 +3544,113 @@
                 document.getElementById('qs-winrate').className = `quick-stat-value ${winRate >= 52 ? 'positive' : winRate < 48 ? 'negative' : ''}`;
                 document.getElementById('qs-trades').textContent = `${learning.total_trades || 0} trades`;
                 
-                // Sharpe Ratio estimate
-                if (learning.total_trades > 10 && learning.win_rate) {
-                    const sharpeEst = ((learning.win_rate - 0.5) * 2 * Math.sqrt(252)).toFixed(2);
-                    document.getElementById('qs-sharpe').textContent = sharpeEst;
-                    document.getElementById('qs-sharpe').className = `quick-stat-value ${parseFloat(sharpeEst) >= 1 ? 'positive' : parseFloat(sharpeEst) < 0 ? 'negative' : ''}`;
-                }
-                
-                // SPY comparison
-                try {
-                    const marketRes = await fetch('/api/market-data');
-                    const market = await marketRes.json();
-                    if (market.data && market.data.spy_change_pct !== undefined) {
-                        const spyChange = market.data.spy_change_pct;
-                        const alpha = todayPct - spyChange;
-                        document.getElementById('qs-spy').textContent = `${alpha >= 0 ? '+' : ''}${alpha.toFixed(2)}%`;
-                        document.getElementById('qs-spy').className = `quick-stat-value ${alpha >= 0 ? 'positive' : 'negative'}`;
-                        document.getElementById('qs-spy-pct').textContent = `SPY: ${spyChange >= 0 ? '+' : ''}${spyChange.toFixed(2)}%`;
-                    }
-                } catch (e) {
-                    console.log('Could not load SPY comparison');
+                // Leverage data
+                if (leverageRes.ok) {
+                    const leverage = await leverageRes.json();
+                    updateLeverageDisplay(leverage);
                 }
                 
             } catch (e) {
                 console.error('Quick stats error:', e);
+            }
+        }
+        
+        // ========== LEVERAGE DISPLAY ==========
+        function updateLeverageDisplay(leverage) {
+            // Quick stats
+            const currentLev = leverage.current_leverage || 1.0;
+            const maxLev = leverage.effective_max_leverage || 2.0;
+            const state = leverage.state || 'healthy';
+            const marginBuffer = leverage.margin_buffer_pct || 100;
+            const buyingPower = leverage.buying_power || 0;
+            
+            document.getElementById('qs-leverage').textContent = `${currentLev.toFixed(2)}x`;
+            document.getElementById('qs-leverage').className = `quick-stat-value ${currentLev > 1.5 ? 'negative' : currentLev > 1.0 ? 'warning' : ''}`;
+            document.getElementById('qs-leverage-state').textContent = state;
+            document.getElementById('qs-leverage-state').className = `quick-stat-change ${state === 'healthy' ? 'positive' : state === 'caution' ? 'warning' : 'negative'}`;
+            
+            document.getElementById('qs-margin').textContent = `${marginBuffer.toFixed(0)}%`;
+            document.getElementById('qs-margin').className = `quick-stat-value ${marginBuffer > 50 ? 'positive' : marginBuffer > 25 ? 'warning' : 'negative'}`;
+            document.getElementById('qs-buying-power').textContent = formatCurrency(buyingPower);
+            
+            // Add click handler for leverage card to open modal
+            const leverageCard = document.getElementById('qs-leverage-card');
+            if (leverageCard && !leverageCard.onclick) {
+                leverageCard.onclick = () => {
+                    loadLeverageStatus();
+                    document.getElementById('leverage-modal').classList.add('show');
+                };
+                leverageCard.style.cursor = 'pointer';
+            }
+        }
+        
+        async function loadLeverageStatus() {
+            try {
+                const res = await fetch('/api/leverage');
+                if (!res.ok) return;
+                
+                const leverage = await res.json();
+                
+                // Update modal
+                document.getElementById('lev-current').textContent = `${(leverage.current_leverage || 0).toFixed(2)}x`;
+                document.getElementById('lev-max').textContent = `${(leverage.effective_max_leverage || 2).toFixed(2)}x`;
+                document.getElementById('lev-margin-used').textContent = `${(leverage.margin_used_pct || 0).toFixed(1)}%`;
+                document.getElementById('lev-margin-buffer').textContent = `${(leverage.margin_buffer_pct || 100).toFixed(1)}%`;
+                
+                // Color based on state
+                const state = leverage.state || 'healthy';
+                const stateColors = {
+                    'healthy': 'var(--green)',
+                    'caution': '#f59e0b',
+                    'warning': '#f97316',
+                    'critical': 'var(--red)',
+                    'emergency': 'var(--red)'
+                };
+                document.getElementById('lev-current').style.color = stateColors[state] || 'var(--accent)';
+                
+                // Dynamic limits table
+                const limits = leverage.limits || {};
+                document.getElementById('lev-vix').textContent = `${(leverage.vix || 20).toFixed(1)}`;
+                document.getElementById('lev-vix-max').textContent = `${(limits.vix_adjusted || 2).toFixed(2)}x`;
+                document.getElementById('lev-drawdown').textContent = `${(leverage.drawdown_pct || 0).toFixed(2)}%`;
+                document.getElementById('lev-dd-max').textContent = `${(limits.drawdown_adjusted || 2).toFixed(2)}x`;
+                document.getElementById('lev-buying-power').textContent = formatCurrency(leverage.buying_power || 0);
+                document.getElementById('lev-daily-pnl').textContent = `${(leverage.daily_pnl_pct || 0) >= 0 ? '+' : ''}${(leverage.daily_pnl_pct || 0).toFixed(2)}%`;
+                
+                // Kill switch
+                const killSection = document.getElementById('kill-switch-section');
+                if (leverage.kill_switch_active) {
+                    killSection.style.display = 'block';
+                    document.getElementById('kill-switch-reason').textContent = leverage.kill_switch_reason || 'Activated';
+                } else {
+                    killSection.style.display = 'none';
+                }
+                
+            } catch (e) {
+                console.error('Error loading leverage status:', e);
+            }
+        }
+        
+        async function toggleKillSwitch() {
+            if (!confirm('⚠️ Are you sure you want to activate the emergency kill switch? This will restrict leverage for 24 hours.')) {
+                return;
+            }
+            
+            try {
+                const res = await fetch('/api/leverage/kill-switch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ activate: true, reason: 'Manual activation from UI' })
+                });
+                
+                if (res.ok) {
+                    showToast('warning', 'Kill Switch Activated', 'Leverage has been restricted for 24 hours');
+                    loadLeverageStatus();
+                } else {
+                    showToast('error', 'Failed', 'Could not activate kill switch');
+                }
+            } catch (e) {
+                showToast('error', 'Error', e.message);
             }
         }
         

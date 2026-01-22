@@ -62,6 +62,12 @@ class TradeRecord:
     # Market context
     market_context: Optional[MarketContextSnapshot] = None
     
+    # Leverage tracking (for leveraged trades)
+    leverage_used: float = 1.0          # Leverage at time of trade
+    margin_cost_daily: float = 0.0      # Daily margin interest cost
+    was_leveraged: bool = False         # True if leverage > 1.0
+    leverage_state: str = 'healthy'     # Leverage state at entry
+    
     # Outcome tracking (filled in later)
     exit_price: Optional[float] = None
     exit_timestamp: Optional[str] = None
@@ -155,6 +161,9 @@ class TradeMemory:
         ensemble_weight: float,
         ensemble_mode: str,
         market_context: Dict,
+        leverage_used: float = 1.0,
+        margin_cost_daily: float = 0.0,
+        leverage_state: str = 'healthy',
     ) -> TradeRecord:
         """
         Record a new trade with full context.
@@ -168,6 +177,9 @@ class TradeMemory:
             ensemble_weight: Final ensemble weight for this symbol
             ensemble_mode: Ensemble mode used
             market_context: Market conditions dict
+            leverage_used: Leverage ratio at trade time
+            margin_cost_daily: Daily margin interest cost
+            leverage_state: Leverage manager state at trade time
         
         Returns:
             The created TradeRecord
@@ -209,6 +221,10 @@ class TradeMemory:
             ensemble_weight=ensemble_weight,
             ensemble_mode=ensemble_mode,
             market_context=ctx,
+            leverage_used=leverage_used,
+            margin_cost_daily=margin_cost_daily,
+            was_leveraged=leverage_used > 1.0,
+            leverage_state=leverage_state,
         )
         
         self.trades.append(trade)
@@ -228,24 +244,36 @@ class TradeMemory:
         return trade
     
     def _close_position(self, trade: TradeRecord, exit_price: float, exit_reason: str):
-        """Update a trade with exit information."""
+        """Update a trade with exit information, including leverage-adjusted P/L."""
         trade.exit_price = exit_price
         trade.exit_timestamp = datetime.now().isoformat()
         trade.exit_reason = exit_reason
         
-        # Calculate P/L
-        if trade.side == 'buy':
-            trade.pnl_dollars = (exit_price - trade.entry_price) * trade.quantity
-            trade.pnl_percent = (exit_price - trade.entry_price) / trade.entry_price * 100
-        else:
-            trade.pnl_dollars = (trade.entry_price - exit_price) * trade.quantity
-            trade.pnl_percent = (trade.entry_price - exit_price) / trade.entry_price * 100
-        
-        trade.was_profitable = trade.pnl_dollars > 0
-        
-        # Calculate holding period
+        # Calculate holding period first (needed for margin cost)
         entry_dt = datetime.fromisoformat(trade.timestamp)
         trade.holding_period_days = (datetime.now() - entry_dt).days
+        
+        # Calculate raw P/L
+        if trade.side == 'buy':
+            raw_pnl_dollars = (exit_price - trade.entry_price) * trade.quantity
+            raw_pnl_percent = (exit_price - trade.entry_price) / trade.entry_price * 100
+        else:
+            raw_pnl_dollars = (trade.entry_price - exit_price) * trade.quantity
+            raw_pnl_percent = (trade.entry_price - exit_price) / trade.entry_price * 100
+        
+        # Calculate total margin cost for holding period
+        if trade.was_leveraged and trade.margin_cost_daily > 0:
+            total_margin_cost = trade.margin_cost_daily * max(1, trade.holding_period_days)
+            trade.pnl_dollars = raw_pnl_dollars - total_margin_cost
+            # Adjust percent to include margin cost
+            position_value = trade.entry_price * trade.quantity
+            trade.pnl_percent = (trade.pnl_dollars / position_value) * 100 if position_value > 0 else 0
+            logging.info(f"Leverage-adjusted P/L for {trade.symbol}: ${raw_pnl_dollars:.2f} - ${total_margin_cost:.2f} margin = ${trade.pnl_dollars:.2f}")
+        else:
+            trade.pnl_dollars = raw_pnl_dollars
+            trade.pnl_percent = raw_pnl_percent
+        
+        trade.was_profitable = trade.pnl_dollars > 0
         
         self._save()
     

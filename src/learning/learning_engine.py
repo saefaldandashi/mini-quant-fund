@@ -167,6 +167,9 @@ class LearningEngine:
         price: float,
         ensemble_weight: float,
         ensemble_mode: str,
+        leverage_used: float = 1.0,
+        margin_cost_daily: float = 0.0,
+        leverage_state: str = 'healthy',
     ):
         """
         Record an executed trade.
@@ -178,7 +181,16 @@ class LearningEngine:
             price: Execution price
             ensemble_weight: Final weight from ensemble
             ensemble_mode: Mode used by ensemble
+            leverage_used: Leverage ratio at trade time (1.0 = no leverage)
+            margin_cost_daily: Daily margin interest cost for leveraged trades
+            leverage_state: State of leverage manager at trade time
         """
+        # Store leverage info for trade memory
+        self._leverage_info = {
+            'leverage_used': leverage_used,
+            'margin_cost_daily': margin_cost_daily,
+            'leverage_state': leverage_state,
+        }
         # Build strategy signals list from last recorded signals
         strategy_signals = []
         for strategy_name, signal in self.last_signals.items():
@@ -211,6 +223,9 @@ class LearningEngine:
             ensemble_weight=ensemble_weight,
             ensemble_mode=ensemble_mode,
             market_context=market_context,
+            leverage_used=leverage_used,
+            margin_cost_daily=margin_cost_daily,
+            leverage_state=leverage_state,
         )
     
     def record_outcomes(

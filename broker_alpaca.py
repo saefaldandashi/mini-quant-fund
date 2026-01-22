@@ -104,6 +104,69 @@ class AlpacaBroker:
             "portfolio_value": float(account.portfolio_value),
         }
     
+    def get_margin_data(self) -> Dict:
+        """
+        Get comprehensive margin data for leverage management.
+        
+        Returns:
+            Dict with all margin-related fields from Alpaca account
+        """
+        account = self.trading_client.get_account()
+        
+        # Calculate gross exposure (sum of absolute position values)
+        positions = self.trading_client.get_all_positions()
+        long_value = sum(
+            float(p.market_value) for p in positions 
+            if float(p.qty) > 0
+        )
+        short_value = sum(
+            abs(float(p.market_value)) for p in positions 
+            if float(p.qty) < 0
+        )
+        gross_exposure = long_value + short_value
+        net_exposure = long_value - short_value
+        
+        equity = float(account.equity)
+        
+        return {
+            # Core account values
+            "equity": equity,
+            "cash": float(account.cash),
+            "portfolio_value": float(account.portfolio_value),
+            
+            # Buying power (margin available)
+            "buying_power": float(account.buying_power),
+            "regt_buying_power": float(getattr(account, 'regt_buying_power', account.buying_power)),
+            "daytrading_buying_power": float(getattr(account, 'daytrading_buying_power', account.buying_power)),
+            
+            # Margin requirements
+            "initial_margin": float(getattr(account, 'initial_margin', 0)),
+            "maintenance_margin": float(getattr(account, 'maintenance_margin', 0)),
+            "last_maintenance_margin": float(getattr(account, 'last_maintenance_margin', 0)),
+            
+            # Position values
+            "long_market_value": float(getattr(account, 'long_market_value', long_value)),
+            "short_market_value": float(getattr(account, 'short_market_value', short_value)),
+            "gross_exposure": gross_exposure,
+            "net_exposure": net_exposure,
+            
+            # Leverage calculations
+            "current_leverage": gross_exposure / equity if equity > 0 else 0,
+            "net_leverage": net_exposure / equity if equity > 0 else 0,
+            
+            # Account status
+            "status": str(account.status),
+            "trading_blocked": bool(getattr(account, 'trading_blocked', False)),
+            "account_blocked": bool(getattr(account, 'account_blocked', False)),
+            "pattern_day_trader": bool(getattr(account, 'pattern_day_trader', False)),
+            
+            # SMA (Special Memorandum Account) - available margin
+            "sma": float(getattr(account, 'sma', 0)),
+            
+            # Multiplier (1 for cash, 2 for RegT margin, 4 for portfolio margin)
+            "multiplier": float(getattr(account, 'multiplier', 1)),
+        }
+    
     def get_positions(self) -> Dict[str, Dict]:
         """
         Get current positions with detailed info including current price and P/L.

@@ -56,6 +56,7 @@ from src.debate.ensemble import EnsembleOptimizer, EnsembleMode
 from src.debate.adversarial import AdversarialDebateEngine, AdversarialTranscript
 from src.risk.risk_manager import RiskManager, RiskConstraints
 from src.risk.realtime_monitor import RealtimeRiskMonitor, RiskMonitorConfig, RiskLevel
+from src.risk.leverage_manager import LeverageManager, LeverageConfig, LeverageState
 from src.learning import LearningEngine, DebateLearner
 from src.learning.outcome_tracker import OutcomeTracker
 from src.learning.signal_validator import SignalValidator
@@ -162,6 +163,18 @@ learning_engine = LearningEngine(
 # Initialize debate learner (learns from debate outcomes)
 debate_learner = DebateLearner(outputs_dir="outputs"
 )
+
+# Initialize leverage manager for margin-aware trading
+leverage_manager = LeverageManager(
+    config=LeverageConfig(
+        max_leverage_absolute=2.0,
+        max_overnight_leverage=1.5,
+        min_margin_buffer_pct=20.0,
+        margin_interest_rate=0.07,  # 7% annual
+    ),
+    storage_path="outputs/leverage_state.json"
+)
+logging.info("💰 Leverage Manager initialized (max 2x, 20% margin buffer)")
 
 # Initialize performance optimizations (persist across requests)
 parallel_executor = ParallelStrategyExecutor(max_workers=4, timeout_seconds=30)
@@ -1643,19 +1656,34 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         log("RISK CHECK")
         log("=" * 60)
         
-        # Create risk manager with shorting enabled from settings
+        # Get dynamic leverage limit from leverage manager
+        try:
+            dynamic_max_leverage = leverage_manager.get_effective_leverage_limit()
+            can_leverage, leverage_reason = leverage_manager.can_use_leverage()
+            if not can_leverage:
+                log(f"  ⚠️ Leverage restricted to 1.0x: {leverage_reason}")
+                dynamic_max_leverage = 1.0
+        except Exception as e:
+            log(f"  ⚠️ Could not get leverage limit: {e}")
+            dynamic_max_leverage = 1.0
+        
+        # Create risk manager with dynamic leverage and shorting from settings
         risk_manager = RiskManager(RiskConstraints(
-            max_position_size=0.15,
-            max_sector_exposure=0.30,
-            max_leverage=1.0,
+            max_position_size=0.15 if dynamic_max_leverage <= 1.0 else 0.10,  # Tighter with leverage
+            max_sector_exposure=0.30 if dynamic_max_leverage <= 1.0 else 0.20,  # Tighter with leverage
+            max_leverage=dynamic_max_leverage,
             vol_target=0.12,
             enable_shorting=long_short_settings.get("enable_shorting", True),
-            max_gross_exposure=long_short_settings.get("max_gross_exposure", 2.0),
+            max_gross_exposure=min(
+                long_short_settings.get("max_gross_exposure", 2.0),
+                dynamic_max_leverage  # Cap by leverage limit
+            ),
             net_exposure_min=long_short_settings.get("net_exposure_min", -0.3),
             net_exposure_max=long_short_settings.get("net_exposure_max", 1.0),
             max_short_position=long_short_settings.get("max_short_per_position", 0.10),
         ))
         log(f"  ✓ Shorting: {'ENABLED' if long_short_settings.get('enable_shorting', True) else 'DISABLED'}")
+        log(f"  ✓ Max Leverage: {dynamic_max_leverage:.2f}x (dynamic based on VIX/drawdown)")
         
         risk_result = risk_manager.check_and_approve(
             combined_weights, features, current_weights, equity
@@ -1975,6 +2003,44 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             risk_monitor.update_vix(vix_level)
             log(f"🛡️ Risk monitor updated: VIX={vix_level:.1f}, can_trade={risk_monitor.can_trade()}")
         
+        # === LEVERAGE MANAGER UPDATE ===
+        # Update leverage manager with VIX and margin data
+        try:
+            leverage_manager.update_vix(vix_level)
+            
+            # Get margin data from broker
+            margin_data = broker.get_margin_data()
+            leverage_manager.update_margin_data(
+                equity=margin_data['equity'],
+                buying_power=margin_data['buying_power'],
+                regt_buying_power=margin_data['regt_buying_power'],
+                daytrading_buying_power=margin_data['daytrading_buying_power'],
+                initial_margin=margin_data['initial_margin'],
+                maintenance_margin=margin_data['maintenance_margin'],
+                cash=margin_data['cash'],
+            )
+            
+            # Get leverage status
+            lev_status = leverage_manager.get_status()
+            effective_max_lev = lev_status['effective_max_leverage']
+            current_lev = lev_status['current_leverage']
+            lev_state = lev_status['state']
+            
+            log(f"💰 Leverage: {current_lev:.2f}x / {effective_max_lev:.2f}x max [{lev_state}]")
+            log(f"   Margin used: {lev_status['margin_used_pct']:.1f}%, Buffer: {lev_status['margin_buffer_pct']:.1f}%")
+            
+            # Check if leverage is disabled
+            can_leverage, lev_reason = leverage_manager.can_use_leverage()
+            if not can_leverage:
+                log(f"   ⚠️ Leverage restricted: {lev_reason}")
+            
+            # Check for kill switch
+            if lev_status['kill_switch_active']:
+                log(f"   🚨 LEVERAGE KILL SWITCH ACTIVE: {lev_status['kill_switch_reason']}")
+        except Exception as e:
+            log(f"⚠️ Could not update leverage manager: {e}")
+            effective_max_lev = 1.0
+        
         # Initialize Smart Executor with VIX awareness
         smart_executor = SmartExecutor(
             broker=broker,
@@ -2190,6 +2256,64 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             log("  No trades needed - portfolio already aligned")
             orders_executed = 0
         else:
+            # === LEVERAGE/MARGIN PRE-EXECUTION VALIDATION ===
+            log("")
+            log("=" * 60)
+            log("LEVERAGE & MARGIN VALIDATION")
+            log("=" * 60)
+            
+            try:
+                # Calculate total order value requiring margin
+                buy_orders = [o for o in orders_to_execute if o['side'] in ['buy', 'short']]
+                total_margin_needed = sum(o['value'] for o in buy_orders)
+                
+                # Get current margin status
+                lev_status = leverage_manager.get_status()
+                available_margin = lev_status.get('buying_power', 0) * 0.8  # 20% buffer
+                
+                log(f"  Orders requiring margin: {len(buy_orders)}")
+                log(f"  Total margin needed: ${total_margin_needed:,.0f}")
+                log(f"  Available margin (80%): ${available_margin:,.0f}")
+                
+                # Scale down orders if exceeding margin
+                if total_margin_needed > available_margin and available_margin > 0:
+                    scale_factor = available_margin / total_margin_needed
+                    log(f"  ⚠️ Scaling down orders by {scale_factor:.1%} to fit margin")
+                    
+                    for order in orders_to_execute:
+                        if order['side'] in ['buy', 'short']:
+                            original_qty = order['quantity']
+                            order['quantity'] = max(1, int(order['quantity'] * scale_factor))
+                            order['value'] = order['quantity'] * order['price']
+                            if order['quantity'] != original_qty:
+                                log(f"    {order['symbol']}: {original_qty} → {order['quantity']} shares")
+                else:
+                    log(f"  ✅ All orders within margin limits")
+                
+                # Validate post-trade leverage
+                current_pos_value = lev_status.get('equity', 0) - lev_status.get('buying_power', 0) / 2
+                post_trade_value = current_pos_value + total_margin_needed
+                post_trade_leverage = post_trade_value / lev_status.get('equity', 1)
+                max_leverage = lev_status.get('effective_max_leverage', 1.0)
+                
+                log(f"  Post-trade leverage: {post_trade_leverage:.2f}x (max: {max_leverage:.2f}x)")
+                
+                if post_trade_leverage > max_leverage:
+                    log(f"  ⚠️ Would exceed leverage limit - reducing order sizes")
+                    # Further scale down to meet leverage limit
+                    allowed_increase = (max_leverage * lev_status.get('equity', 0)) - current_pos_value
+                    if allowed_increase > 0 and total_margin_needed > 0:
+                        extra_scale = allowed_increase / total_margin_needed
+                        for order in orders_to_execute:
+                            if order['side'] in ['buy', 'short']:
+                                order['quantity'] = max(1, int(order['quantity'] * extra_scale))
+                                order['value'] = order['quantity'] * order['price']
+                
+            except Exception as e:
+                log(f"  ⚠️ Margin validation error: {e} - proceeding with caution")
+            
+            log("")
+            
             # Use batch execution for optimized ordering
             results, exec_summary = smart_executor.execute_batch(orders_to_execute)
             
@@ -2226,6 +2350,23 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                             actual_slippage = abs(fill_price - mid_price_at_decision) * result.quantity
                             total_actual_cost += actual_slippage + cost_estimate.spread_cost
                     
+                    # Get current leverage status for this trade
+                    try:
+                        lev_status = leverage_manager.get_status()
+                        trade_leverage = lev_status.get('current_leverage', 1.0)
+                        lev_state = lev_status.get('state', 'healthy')
+                        # Calculate daily margin cost for this specific position
+                        position_value = fill_price * result.quantity
+                        if trade_leverage > 1.0:
+                            borrowed = position_value * (1 - 1/trade_leverage)
+                            margin_cost = leverage_manager.calculate_daily_margin_cost(borrowed)
+                        else:
+                            margin_cost = 0.0
+                    except Exception:
+                        trade_leverage = 1.0
+                        margin_cost = 0.0
+                        lev_state = 'healthy'
+                    
                     learning_engine.record_trade(
                         symbol=result.symbol,
                         side=result.side,
@@ -2233,6 +2374,9 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                         price=fill_price,
                         ensemble_weight=final_weights.get(result.symbol, 0),
                         ensemble_mode=metadata.get('mode', 'weighted_vote'),
+                        leverage_used=trade_leverage,
+                        margin_cost_daily=margin_cost,
+                        leverage_state=lev_state,
                     )
                     
                     # Write trade to parquet storage for reports
@@ -2515,6 +2659,102 @@ def toggle_risk_monitor():
         if risk_monitor:
             stop_risk_monitor()
         return jsonify({"success": True, "message": "Risk monitor disabled"})
+
+
+@app.route('/api/leverage')
+@requires_auth
+def get_leverage_status():
+    """Get current leverage and margin status."""
+    try:
+        # Update with fresh data from broker
+        api_key = os.environ.get("ALPACA_API_KEY")
+        secret_key = os.environ.get("ALPACA_SECRET_KEY")
+        
+        if api_key and secret_key:
+            broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+            margin_data = broker.get_margin_data()
+            
+            leverage_manager.update_margin_data(
+                equity=margin_data['equity'],
+                buying_power=margin_data['buying_power'],
+                regt_buying_power=margin_data['regt_buying_power'],
+                daytrading_buying_power=margin_data['daytrading_buying_power'],
+                initial_margin=margin_data['initial_margin'],
+                maintenance_margin=margin_data['maintenance_margin'],
+                cash=margin_data['cash'],
+            )
+        
+        status = leverage_manager.get_status()
+        can_leverage, reason = leverage_manager.can_use_leverage()
+        
+        return jsonify({
+            **status,
+            'can_use_leverage': can_leverage,
+            'leverage_reason': reason,
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/leverage/config', methods=['GET', 'POST'])
+@requires_auth
+def manage_leverage_config():
+    """Get or update leverage configuration."""
+    if request.method == 'POST':
+        data = request.get_json() or {}
+        
+        # Update config
+        if 'max_leverage' in data:
+            leverage_manager.config.max_leverage_absolute = float(data['max_leverage'])
+        if 'min_margin_buffer' in data:
+            leverage_manager.config.min_margin_buffer_pct = float(data['min_margin_buffer'])
+        if 'daily_loss_halt' in data:
+            leverage_manager.config.daily_loss_halt_pct = float(data['daily_loss_halt'])
+        
+        # Recalculate limits
+        leverage_manager._update_limits()
+        
+        return jsonify({
+            "success": True,
+            "message": "Leverage config updated",
+            "new_limits": leverage_manager.get_status()['limits']
+        })
+    
+    # GET - return current config
+    return jsonify({
+        'max_leverage_absolute': leverage_manager.config.max_leverage_absolute,
+        'max_overnight_leverage': leverage_manager.config.max_overnight_leverage,
+        'min_margin_buffer_pct': leverage_manager.config.min_margin_buffer_pct,
+        'margin_interest_rate': leverage_manager.config.margin_interest_rate,
+        'daily_loss_halt_pct': leverage_manager.config.daily_loss_halt_pct,
+        'daily_loss_close_pct': leverage_manager.config.daily_loss_close_pct,
+        'vix_thresholds': leverage_manager.config.vix_thresholds,
+        'drawdown_thresholds': leverage_manager.config.drawdown_thresholds,
+        'strategy_leverage_limits': leverage_manager.config.strategy_leverage_limits,
+    })
+
+
+@app.route('/api/leverage/kill-switch', methods=['POST'])
+@requires_auth
+def toggle_leverage_kill_switch():
+    """Activate or deactivate the leverage kill switch."""
+    data = request.get_json() or {}
+    
+    if data.get('activate'):
+        reason = data.get('reason', 'Manual activation')
+        duration = data.get('duration_hours', 24)
+        leverage_manager._activate_kill_switch(reason, duration)
+        return jsonify({
+            "success": True,
+            "message": f"Kill switch activated for {duration} hours",
+            "reason": reason
+        })
+    else:
+        leverage_manager.deactivate_kill_switch()
+        return jsonify({
+            "success": True,
+            "message": "Kill switch deactivated"
+        })
 
 
 @app.route('/api/status')
