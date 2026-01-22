@@ -1,6 +1,537 @@
 {
   "articles": [
     {
+      "id": "-8364239849628990109",
+      "timestamp": "2026-01-22T16:20:53",
+      "headline": "Altria (MO) Reports Next Week: Wall Street Expects Earnings Growth",
+      "summary": "Altria (MO) is expected to announce quarterly earnings of $1.32 per share, a 2.3% year-over-year increase, despite an anticipated 2% revenue decline to $5 billion for the quarter ended December 2025. Analysts have recently become more bullish, with a Most Accurate Estimate suggesting Altria will likely beat the consensus EPS estimate, supported by a positive Earnings ESP of +3.55% and a Zacks Rank #3 (Hold). The company has a strong record of beating EPS estimates, having done so in the last four consecutive quarters.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/284133/altria-mo-reports-next-week-wall-street-expects-earnings-growth",
+      "tickers": [
+        "MO"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.39436,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MO",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.385504,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MO": 0.385504
+      }
+    },
+    {
+      "id": "-8979408793043777582",
+      "timestamp": "2026-01-22T16:18:51",
+      "headline": "Lululemon stock rating reiterated at Buy by BTIG, citing execution opportunities",
+      "summary": "BTIG has reiterated its Buy rating and $303.00 price target on Lululemon (NASDAQ: LULU), focusing on execution improvements rather than solely new product innovation. Despite tempered expectations for new products, InvestingPro data shows six analysts have recently revised earnings upwards. The firm noted early positive changes in product and marketing, expecting them to translate into improved sales, while other analysts maintain more cautious ratings due to concerns about sales growth and governance issues.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/analyst-ratings/lululemon-stock-rating-reiterated-at-buy-by-btig-citing-execution-opportunities-93CH-4460904",
+      "tickers": [
+        "LULU"
+      ],
+      "topics": [
+        "earnings",
+        "retail_wholesale",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.348662,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "LULU",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.319177,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "LULU": 0.319177
+      }
+    },
+    {
+      "id": "-1903061059891272510",
+      "timestamp": "2026-01-22T16:17:07",
+      "headline": "Travelers Companies (NYSE:TRV) Price Target Lowered to $285.00 at Wells Fargo & Company",
+      "summary": "Wells Fargo & Company has lowered its price target for Travelers Companies (NYSE:TRV) from $307.00 to $285.00, while maintaining an \"equal weight\" rating. This adjustment implies a potential upside of 3.26% from the stock's previous close. The change follows Travelers' strong Q4 performance, reporting EPS of $11.13 and revenues of $12.43 billion, and the announcement of a $5.0 billion share repurchase program alongside a $1.10 quarterly dividend.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/travelers-companies-nysetrv-price-target-lowered-to-28500-at-wells-fargo-company-2026-01-22/",
+      "tickers": [
+        "TRV",
+        "WFC",
+        "MS",
+        "JPM",
+        "GS"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.111166,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TRV",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.291112,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "WFC",
+          "relevance_score": 0.713285,
+          "sentiment_score": 0.046747,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "MS",
+          "relevance_score": 0.570002,
+          "sentiment_score": -0.135302,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.570432,
+          "sentiment_score": 0.130293,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "GS",
+          "relevance_score": 0.584704,
+          "sentiment_score": 0.147629,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "TRV": 0.291112,
+        "WFC": 0.046747,
+        "MS": -0.135302,
+        "JPM": 0.130293,
+        "GS": 0.147629
+      }
+    },
+    {
+      "id": "-3145225610798845069",
+      "timestamp": "2026-01-22T16:17:01",
+      "headline": "Regeneron Pharmaceuticals (NASDAQ:REGN) Price Target Raised to $875.00 at Evercore ISI",
+      "summary": "Evercore ISI has raised its price target for Regeneron Pharmaceuticals (NASDAQ:REGN) to $875.00 from $750.00, maintaining an \"outperform\" rating and implying a potential 15.55% upside. This follows Regeneron's strong Q3 earnings, where it surpassed analyst estimates for both EPS and revenue. The biopharmaceutical company currently holds an average \"Moderate Buy\" rating from analysts with a consensus target price of $794.70.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/regeneron-pharmaceuticals-nasdaqregn-price-target-raised-to-87500-at-evercore-isi-2026-01-22/",
+      "tickers": [
+        "REGN",
+        "PFE"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences"
+      ],
+      "overall_sentiment": 0.432709,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "REGN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.638417,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "PFE",
+          "relevance_score": 0.570885,
+          "sentiment_score": 0.293754,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "REGN": 0.638417,
+        "PFE": 0.293754
+      }
+    },
+    {
+      "id": "8644799971752325699",
+      "timestamp": "2026-01-22T16:16:42",
+      "headline": "Citizens Jmp Boosts Cherry Hill Mortgage Investment (NYSE:CHMI) Price Target to $3.00",
+      "summary": "Citizens Jmp has increased its price target for Cherry Hill Mortgage Investment (CHMI) to $3.00, up from $2.75, while maintaining a \"market outperform\" rating. This new target suggests a potential upside of approximately 10.91% from the stock's previous closing price. The consensus among analysts for CHMI is currently a \"Hold,\" with an average price target of $3.00, aligning with Citizens Jmp's and Credit Suisse's assessments.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/citizens-jmp-boosts-cherry-hill-mortgage-investment-nysechmi-price-target-to-300-2026-01-22/",
+      "tickers": [
+        "CHMI"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "real_estate",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.228813,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CHMI",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.222456,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CHMI": 0.222456
+      }
+    },
+    {
+      "id": "7382894689385883773",
+      "timestamp": "2026-01-22T16:14:10",
+      "headline": "Vertex Pharma Stock Is Quietly Going Off \u2013 But Is It Actually Worth Your Money?",
+      "summary": "The article analyzes Vertex Pharmaceuticals (VRTX), a biotech company gaining significant attention for its strong performance and pipeline. It discusses the enthusiasm surrounding VRTX, driven by its established cystic fibrosis franchise, promising gene-editing pipeline, and consistent profitability, positioning it as a \"compounding machine\" for long-term investors despite potential volatility and valuation concerns. The piece advises on the stock's potential as a \"cop\" (buy) for long-term holders, especially on dips, rather than a short-term \"YOLO moonshot.\"",
+      "source": "AD HOC NEWS",
+      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/vertex-pharma-stock-is-quietly-going-off-but-is-it-actually-worth-your/68509822",
+      "tickers": [
+        "VRTX",
+        "REGN"
+      ],
+      "topics": [
+        "life_sciences",
+        "financial_markets",
+        "finance",
+        "earnings"
+      ],
+      "overall_sentiment": 0.462932,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "VRTX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.614522,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "REGN",
+          "relevance_score": 0.747034,
+          "sentiment_score": 0.302542,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "VRTX": 0.614522,
+        "REGN": 0.302542
+      }
+    },
+    {
+      "id": "1011190247191937504",
+      "timestamp": "2026-01-22T16:12:01",
+      "headline": "REGN: Evercore ISI Group Raises Price Target to $875, Maintains Outperform Rating | REGN Stock News",
+      "summary": "Evercore ISI Group has raised its price target for Regeneron Pharmaceuticals (REGN) to $875, maintaining an \"Outperform\" rating. This increase reflects strong confidence in the company's future performance, following a series of positive adjustments from other brokerage firms. Regeneron Pharmaceuticals specializes in developing and commercializing products for various diseases, including eye conditions, cardiovascular disease, cancer, and inflammation.",
+      "source": "GuruFocus",
+      "url": "https://www.gurufocus.com/news/8544411/regn-evercore-isi-group-raises-price-target-to-875-maintains-outperform-rating-regn-stock-news",
+      "tickers": [
+        "REGN"
+      ],
+      "topics": [
+        "financial_markets",
+        "life_sciences",
+        "finance"
+      ],
+      "overall_sentiment": 0.496827,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "REGN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.536859,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "REGN": 0.536859
+      }
+    },
+    {
+      "id": "5525451982716827356",
+      "timestamp": "2026-01-22T16:11:10",
+      "headline": "RBC Capital Upgrades Vertex Pharmaceuticals (VRTX) Rating to 'Outperform'",
+      "summary": "RBC Capital has upgraded Vertex Pharmaceuticals (VRTX) from 'Sector Perform' to 'Outperform', increasing its price target to $546 due to growing confidence in the company's potential. This follows a trend of positive analyst ratings, with an average target price of $497.63 from 26 analysts and an average brokerage recommendation of 2.2, indicating \"Outperform\" status. Vertex Pharmaceuticals' diverse portfolio, including therapies for cystic fibrosis and gene-editing treatments, underpins this optimistic market outlook.",
+      "source": "GuruFocus",
+      "url": "https://www.gurufocus.com/news/8544404/rbc-capital-upgrades-vertex-pharmaceuticals-vrtx-rating-to-outperform-vrtx-stock-news",
+      "tickers": [
+        "VRTX"
+      ],
+      "topics": [
+        "financial_markets",
+        "life_sciences",
+        "earnings"
+      ],
+      "overall_sentiment": 0.025197,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "VRTX",
+          "relevance_score": 0.305341,
+          "sentiment_score": 0.024453,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "VRTX": 0.024453
+      }
+    },
+    {
+      "id": "8356465315706500844",
+      "timestamp": "2026-01-22T16:09:11",
+      "headline": "Western Digital (WDC) Reports Next Week: Wall Street Expects Earnings Growth",
+      "summary": "Western Digital (WDC) is projected to show a year-over-year increase in earnings and lower revenues for the quarter ended December 2025. With a Zacks Rank #1 (Strong Buy) and an Earnings ESP of +2.34%, the company is highly likely to beat the consensus EPS estimate. Investors are advised to consider other factors in addition to the earnings report when making investment decisions.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/284117/western-digital-wdc-reports-next-week-wall-street-expects-earnings-growth",
+      "tickers": [
+        "WDC"
+      ],
+      "topics": [
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.393998,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "WDC",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.40512,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "WDC": 0.40512
+      }
+    },
+    {
+      "id": "2332189368972665255",
+      "timestamp": "2026-01-22T16:03:58",
+      "headline": "Principal Financial Group stock hits 52-week high at 92.52 USD",
+      "summary": "Principal Financial Group stock reached a new 52-week high of $92.52, marking a 15.88% total return over the past year. The company boasts a P/E ratio of 13.31 and a 3.47% dividend yield, maintaining dividend payments for 24 consecutive years and increasing them for 17. Recent strong Q3 2025 earnings surpassed analyst expectations, with an adjusted EPS of $2.32 and revenue at $4.14 billion, despite a recent downgrade from JPMorgan from Overweight to Neutral based on perceived better value in other life insurance stocks.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/company-news/principal-financial-group-stock-hits-52week-high-at-9252-usd-93CH-4460912",
+      "tickers": [
+        "PFG",
+        "JPM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.235753,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PFG",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.54596,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.633903,
+          "sentiment_score": -0.133748,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "PFG": 0.54596,
+        "JPM": -0.133748
+      }
+    },
+    {
+      "id": "-1082712516956751240",
+      "timestamp": "2026-01-22T16:03:42",
+      "headline": "F5 Shareholder Alert: ClaimsFiler Reminds Investors With",
+      "summary": "ClaimsFiler is reminding F5 (NasdaqGS: FFIV) investors that they have until February 17, 2026, to file as lead plaintiff in a securities class action lawsuit. The lawsuit alleges that F5 and its executives failed to disclose material information regarding declining growth expectations, sales reductions, and increased expenses, partly due to a security breach, which led to a significant drop in F5's stock price. Investors who purchased F5 securities between October 28, 2024, and October 27, 2025, may be eligible.",
+      "source": "GlobeNewswire",
+      "url": "https://www.globenewswire.com/news-release/2026/01/22/3224042/35454/en/F5-Shareholder-Alert-ClaimsFiler-Reminds-Investors-With-Losses-In-Excess-Of-100-000-Of-Lead-Plaintiff-Deadline-In-Class-Action-Lawsuits-Against-F5-Inc-FFIV.html",
+      "tickers": [
+        "FFIV"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "technology"
+      ],
+      "overall_sentiment": -0.709149,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "FFIV",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.713122,
+          "sentiment_label": "Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "FFIV": -0.713122
+      }
+    },
+    {
+      "id": "-4103877148410834226",
+      "timestamp": "2026-01-22T16:03:32",
+      "headline": "News Explorer \u2014 BlackRock CEO Larry Fink Advocates for Financial World to Use a Single Blockchain",
+      "summary": "BlackRock CEO Larry Fink is advocating for the financial world to adopt a single blockchain to streamline processes, reduce fees, and improve accessibility through tokenization. Fink believes that despite current modest progress, this approach could significantly reshape the financial system by 2030. The article highlights how tokenization, supported by BlackRock, aims to revolutionize finance through blockchain technology.",
+      "source": "Decrypt",
+      "url": "https://decrypt.co/news-explorer?pinned=1290076&title=blackrock-ceo-larry-fink-advocates-for-financial-world-to-use-a-single-blockchain",
+      "tickers": [
+        "BLK"
+      ],
+      "topics": [
+        "blockchain",
+        "finance",
+        "technology",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.017549,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BLK",
+          "relevance_score": 0.344778,
+          "sentiment_score": 0.006261,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "BLK": 0.006261
+      }
+    },
+    {
+      "id": "-8267889895851084283",
+      "timestamp": "2026-01-22T16:01:10",
+      "headline": "Vertex Pharma upgraded at RBC Capital Markets citing upside in 2026",
+      "summary": "RBC Capital Markets upgraded Vertex Pharmaceuticals (VRTX) to Outperform from Sector Perform. The upgrade is based on the biotech's potential for upside in 2026, driven by its strong cystic fibrosis franchise. Analyst Brian highlighted the company's robust position.",
+      "source": "Seeking Alpha",
+      "url": "https://seekingalpha.com/news/4541614-vertex-pharma-upgraded-rbc-capital-markets",
+      "tickers": [
+        "VRTX"
+      ],
+      "topics": [
+        "life_sciences",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.464146,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "VRTX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.471182,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "VRTX": 0.471182
+      }
+    },
+    {
+      "id": "1741285289637361968",
+      "timestamp": "2026-01-22T15:57:47",
+      "headline": "Lobbying Update: $140,000 of HOWMET AEROSPACE INC FORMALLY KNOWN AS ARCONIC INC lobbying was just disclosed",
+      "summary": "Howmet Aerospace Inc. (HWM) disclosed $140,000 in lobbying expenditures for Q4 2025, covering issues such as defense appropriations, critical materials, and economic development. The report also details recent HWM stock trading by members of Congress and company insiders, along with hedge fund activity and analyst ratings, showing a median price target of $227.0.",
+      "source": "Quiver Quantitative",
+      "url": "https://www.quiverquant.com/news/Lobbying+Update%3A+%24140%2C000+of+HOWMET+AEROSPACE+INC+FORMALLY+KNOWN+AS+ARCONIC+INC+lobbying+was+just+disclosed",
+      "tickers": [
+        "HWM"
+      ],
+      "topics": [
+        "economy_fiscal",
+        "financial_markets",
+        "manufacturing",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.005019,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "HWM",
+          "relevance_score": 0.343361,
+          "sentiment_score": 0.029061,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "HWM": 0.029061
+      }
+    },
+    {
+      "id": "-6441691546123955495",
+      "timestamp": "2026-01-22T15:56:47",
+      "headline": "Stock Traders Purchase High Volume of Put Options on Howmet Aerospace (NYSE:HWM)",
+      "summary": "Howmet Aerospace (NYSE:HWM) experienced unusually high put option trading activity on Thursday, with 3,553 put options purchased, representing a 47% increase over the typical volume. This surge in bearish options trading occurred as the company's shares slid by $6.36 to $218.64, although the stock remains near its 52-week high. Despite the increased put volume and stock decline, Howmet Aerospace reported solid fundamentals, beating quarterly EPS estimates, showing revenue growth, and providing strong FY2025 EPS guidance, alongside a consistent quarterly dividend.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/stock-traders-purchase-high-volume-of-put-options-on-howmet-aerospace-nysehwm-2026-01-22/",
+      "tickers": [
+        "HWM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing"
+      ],
+      "overall_sentiment": 0.041192,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "HWM",
+          "relevance_score": 0.325865,
+          "sentiment_score": 0.015648,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "HWM": 0.015648
+      }
+    },
+    {
+      "id": "-4313326400592051550",
+      "timestamp": "2026-01-22T15:55:29",
+      "headline": "Arista Networks Is the S&P 500\u2019s Top Stock Today. It\u2019s Not Clear Why.",
+      "summary": "Arista Networks (ANET) saw its stock spike significantly, making it the S&P 500's top performer for the day. Despite the strong performance, the specific catalyst driving this large move was not immediately apparent. The company had previously been a stock pick by Barron's in June.",
+      "source": "Barron's",
+      "url": "https://www.barrons.com/articles/arista-networks-stock-rally-e5d2a641?gaa_at=eafs&gaa_n=AWEtsqfCjAw0wxiAtQWu2JleF8Pf_faTkfgxGd8XRd_Ki9dro3Df0dr0tBNq&gaa_ts=697252b6&gaa_sig=qph2NPMXSBSxDbp5TpdfmQUM4lccmw-b3V2AZSRpETMgnvYJJnQvIyjqrAGGE_jLJU0xZMyb11r0D3T62RzABw%3D%3D",
+      "tickers": [
+        "ANET",
+        "CSCO"
+      ],
+      "topics": [
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.135462,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ANET",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.136244,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "CSCO",
+          "relevance_score": 0.608378,
+          "sentiment_score": 0.1258,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ANET": 0.136244,
+        "CSCO": 0.1258
+      }
+    },
+    {
       "id": "-571473264819968589",
       "timestamp": "2026-01-22T15:55:23",
       "headline": "Charles Schwab (SCHW) Maintains Buy Rating as UBS Raises Price Target",
@@ -303,6 +834,37 @@
       }
     },
     {
+      "id": "-6001500850130101169",
+      "timestamp": "2026-01-22T15:41:08",
+      "headline": "DA Davidson reiterates Buy rating on Tractor Supply stock ahead of earnings",
+      "summary": "DA Davidson has reiterated its Buy rating and $60.00 price target for Tractor Supply Company (NASDAQ:TSCO) ahead of its Q4 earnings report on January 29. Despite softer trends in some leading indicators, causing a slight reduction in comparable sales estimates for Q4 2025, the firm maintains a positive outlook, projecting 2026 as a rebound year with improved inflationary trends and margin improvement. This comes amidst recent developments including new store openings, varying analyst ratings from UBS and Jefferies, and political comments regarding farming equipment costs.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/analyst-ratings/da-davidson-reiterates-buy-rating-on-tractor-supply-stock-ahead-of-earnings-93CH-4460726",
+      "tickers": [
+        "TSCO"
+      ],
+      "topics": [
+        "earnings",
+        "retail_wholesale",
+        "financial_markets",
+        "economy_macro",
+        "economy_fiscal"
+      ],
+      "overall_sentiment": 0.330085,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TSCO",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.324406,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "TSCO": 0.324406
+      }
+    },
+    {
       "id": "-4309903785802158129",
       "timestamp": "2026-01-22T15:41:07",
       "headline": "March 6th Options Now Available For Lowe's Companies",
@@ -328,6 +890,101 @@
       ],
       "ticker_sentiments": {
         "LOW": 0.143082
+      }
+    },
+    {
+      "id": "1253653853230834701",
+      "timestamp": "2026-01-22T15:40:32",
+      "headline": "March 6th Options Now Available For Conagra Brands (CAG)",
+      "summary": "New options contracts for Conagra Brands (CAG) with a March 6th expiration date are now available. Stock Options Channel has identified a put contract at a $15.00 strike price and a call contract at an $18.00 strike price that could be of interest to investors. These options offer potential strategies such as selling-to-open a put to reduce the cost basis of shares or executing a covered call to generate additional income.",
+      "source": "Nasdaq",
+      "url": "https://www.nasdaq.com/articles/march-6th-options-now-available-conagra-brands-cag",
+      "tickers": [
+        "CAG"
+      ],
+      "topics": [
+        "financial_markets",
+        "retail_wholesale"
+      ],
+      "overall_sentiment": 0.200871,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CAG",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.213982,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CAG": 0.213982
+      }
+    },
+    {
+      "id": "3377109071887343436",
+      "timestamp": "2026-01-22T15:38:56",
+      "headline": "Earnings call transcript: Northern Trust beats Q4 2025 expectations",
+      "summary": "Northern Trust (NTRS) reported strong financial results for Q4 2025, exceeding analyst expectations with an EPS of $2.42 and revenue of $2.14 billion. The company achieved a net income of $466 million, a 15.4% return on average common equity, and saw its stock rise by 4.56% in pre-market trading. Northern Trust highlighted key strategic initiatives, including the launch of tokenized money market funds, operational efficiencies through AI, and strong performance in the Global Family Office segment, leading to boosted medium-term financial targets.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/transcripts/earnings-call-transcript-northern-trust-beats-q4-2025-expectations-93CH-4460819",
+      "tickers": [
+        "NTRS",
+        "V"
+      ],
+      "topics": [
+        "earnings",
+        "finance",
+        "financial_markets",
+        "technology",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.414755,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "NTRS",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.733299,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "V",
+          "relevance_score": 0.641722,
+          "sentiment_score": 0.129578,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "NTRS": 0.733299,
+        "V": 0.129578
+      }
+    },
+    {
+      "id": "971945525041177962",
+      "timestamp": "2026-01-22T15:38:55",
+      "headline": "March 6th Options Now Available For NextEra Energy (NEE)",
+      "summary": "New options contracts for NextEra Energy (NEE) expiring on March 6th are now available. BNK Invest highlights a put contract at the $79.00 strike offering a potential 1.11% return if it expires worthless, and a covered call contract at the $87.00 strike that could yield 5.21% if the stock is called away. The article provides detailed analysis of both options, their implied volatilities, and historical stock performance.",
+      "source": "Nasdaq",
+      "url": "https://www.nasdaq.com/articles/march-6th-options-now-available-nextera-energy-nee",
+      "tickers": [
+        "NEE"
+      ],
+      "topics": [
+        "financial_markets",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.267381,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "NEE",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.276539,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "NEE": 0.276539
       }
     },
     {
@@ -359,6 +1016,98 @@
       ],
       "ticker_sentiments": {
         "L": 0.031648
+      }
+    },
+    {
+      "id": "-434543607123607703",
+      "timestamp": "2026-01-22T15:37:40",
+      "headline": "Earnings call transcript: FB Financial beats Q4 2025 forecasts, stock steady",
+      "summary": "FB Financial Corp (FBK) surpassed Q4 2025 analyst earnings and revenue forecasts with an adjusted EPS of $1.16 on revenues of $178.6 million, yet its stock remained stable in after-hours trading. The company reported significant year-over-year growth in loans (29%) and deposits (25%), driven by strategic expansion and the acquisition of Southern States Bank. FB Financial outlined a positive outlook for 2026, projecting high single-digit growth in loans and deposits, and maintaining its focus on customer experience and potential M&A in the southeastern U.S.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/transcripts/earnings-call-transcript-fb-financial-beats-q4-2025-forecasts-stock-steady-93CH-4460820",
+      "tickers": [
+        "FBK"
+      ],
+      "topics": [
+        "earnings",
+        "finance",
+        "financial_markets",
+        "mergers_and_acquisitions",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.611283,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "FBK",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.614797,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "FBK": 0.614797
+      }
+    },
+    {
+      "id": "-3999852710717489827",
+      "timestamp": "2026-01-22T15:36:17",
+      "headline": "Arriola Dennis V buys $149k in Commercial Metals Co (CM) stock",
+      "summary": "Director Arriola Dennis V. of Commercial Metals Co (NYSE:CMC) recently purchased 2,000 shares of the company's common stock for $149,380. This transaction increases his direct ownership to 9,238 shares. This insider activity follows positive financial results for Q1 2026, where Commercial Metals exceeded analyst expectations for both EPS and revenue, and a price target upgrade by Jefferies.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/insider-trading-news/arriola-dennis-v-buys-149k-in-commercial-metals-co-cm-stock-93CH-4460847",
+      "tickers": [
+        "CMC",
+        "AMD",
+        "META",
+        "NVDA",
+        "TSLA"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing"
+      ],
+      "overall_sentiment": 0.280309,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CMC",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.441304,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AMD",
+          "relevance_score": 0.565677,
+          "sentiment_score": 0.289062,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "META",
+          "relevance_score": 0.566251,
+          "sentiment_score": 0.317233,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": 0.591871,
+          "sentiment_score": 0.221013,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "TSLA",
+          "relevance_score": 0.570489,
+          "sentiment_score": 0.243632,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CMC": 0.441304,
+        "AMD": 0.289062,
+        "META": 0.317233,
+        "NVDA": 0.221013,
+        "TSLA": 0.243632
       }
     },
     {
@@ -405,6 +1154,220 @@
         "GFF": 0.709735,
         "INTC": -0.113609,
         "NVDA": 0.203068
+      }
+    },
+    {
+      "id": "1162697760321376159",
+      "timestamp": "2026-01-22T15:35:25",
+      "headline": "Castle Biosciences stock hits 52-week high at $42.25",
+      "summary": "Castle Biosciences Inc. (CSTL) reached a 52-week high of $42.25, marking a significant 55.81% increase over the past year and a 151.1% price return in the last six months. The company, despite not being profitable in the last twelve months, has an \"GREAT\" financial health rating from InvestingPro and is projecting over $340 million in revenue for 2025. This growth is supported by strong performances of its DecisionDx-UM and DecisionDx-Melanoma tests and positive analyst ratings.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/company-news/castle-biosciences-stock-hits-52week-high-at-4225-93CH-4460780",
+      "tickers": [
+        "CSTL",
+        "MRNA",
+        "ANET",
+        "ENPH",
+        "DDOG"
+      ],
+      "topics": [
+        "earnings",
+        "life_sciences",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.338664,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CSTL",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.840894,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "MRNA",
+          "relevance_score": 0.594757,
+          "sentiment_score": 0.229101,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ANET",
+          "relevance_score": 0.585188,
+          "sentiment_score": 0.230877,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ENPH",
+          "relevance_score": 0.575194,
+          "sentiment_score": 0.244697,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "DDOG",
+          "relevance_score": 0.558439,
+          "sentiment_score": 0.203935,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CSTL": 0.840894,
+        "MRNA": 0.229101,
+        "ANET": 0.230877,
+        "ENPH": 0.244697,
+        "DDOG": 0.203935
+      }
+    },
+    {
+      "id": "2585607738366024530",
+      "timestamp": "2026-01-22T15:27:33",
+      "headline": "Assessing Five9 (FIVN) Valuation After New Google Cloud AI Alliance Announcement",
+      "summary": "Five9 (FIVN) has announced an expanded partnership with Google Cloud for an Enterprise CX AI solution, drawing fresh investor attention despite recent stock declines. The article assesses FIVN's valuation, noting its P/E ratio of 43.5x is above industry averages and fair value estimates. However, a discounted cash flow (DCF) model suggests a significantly higher fair value, raising questions about market pessimism or cash flow assumptions.",
+      "source": "Simply Wall Street",
+      "url": "https://simplywall.st/stocks/us/software/nasdaq-fivn/five9/news/assessing-five9-fivn-valuation-after-new-google-cloud-ai-all",
+      "tickers": [
+        "FIVN",
+        "GOOGL",
+        "CRM"
+      ],
+      "topics": [
+        "earnings",
+        "technology",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.133237,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "FIVN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.140589,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "GOOGL",
+          "relevance_score": 0.745787,
+          "sentiment_score": 0.270998,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "CRM",
+          "relevance_score": 0.599175,
+          "sentiment_score": -0.125009,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "FIVN": 0.140589,
+        "GOOGL": 0.270998,
+        "CRM": -0.125009
+      }
+    },
+    {
+      "id": "5019072644951685808",
+      "timestamp": "2026-01-22T15:27:27",
+      "headline": "Dow Jumps 300 Points; Procter & Gamble Shares Gain After Q2 Results",
+      "summary": "U.S. stocks traded higher with the Dow Jones index gaining around 300 points. Procter & Gamble Company saw its stock rise after reporting mixed second-quarter results, with adjusted EPS beating estimates but sales missing expectations. Several other companies also experienced significant stock movements, including 60 Degrees Pharmaceuticals and Creative Media & Community Trust Corporation seeing gains, while C3is Inc. and Mingteng International Corporation Inc. faced drops following reverse stock splits.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/market-summary/26/01/50069593/dow-jumps-300-points-procter-gamble-shares-gain-after-q2-results",
+      "tickers": [
+        "CISSV",
+        "PG"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_macro",
+        "life_sciences",
+        "retail_wholesale"
+      ],
+      "overall_sentiment": 0.178526,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CISSV",
+          "relevance_score": 0.346797,
+          "sentiment_score": 0.043271,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "PG",
+          "relevance_score": 0.918222,
+          "sentiment_score": 0.312466,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CISSV": 0.043271,
+        "PG": 0.312466
+      }
+    },
+    {
+      "id": "-8836407959061253023",
+      "timestamp": "2026-01-22T15:27:20",
+      "headline": "Portnoy Law Firm Announces Class Action on Behalf of CoreWeave, Inc. Investors",
+      "summary": "The Portnoy Law Firm has announced a class action lawsuit against CoreWeave, Inc. (NASDAQ: CRWV) on behalf of investors who purchased securities between March 28, 2025, and December 15, 2025. The lawsuit alleges that CoreWeave made misleading statements regarding its ability to meet customer demand and underestimated risks associated with reliance on a single third-party data center supplier, which negatively impacted its revenue. Investors have until March 13, 2026, to file a lead plaintiff motion.",
+      "source": "GlobeNewswire",
+      "url": "https://www.globenewswire.com/news-release/2026/01/22/3223914/0/en/Portnoy-Law-Firm-Announces-Class-Action-on-Behalf-of-CoreWeave-Inc-Investors.html",
+      "tickers": [
+        "CRWV",
+        "CSX"
+      ],
+      "topics": [
+        "ipo",
+        "mergers_and_acquisitions",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": -0.382429,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CRWV",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.643853,
+          "sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "CSX",
+          "relevance_score": 0.628411,
+          "sentiment_score": -0.14793,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "CRWV": -0.643853,
+        "CSX": -0.14793
+      }
+    },
+    {
+      "id": "7444065082006212453",
+      "timestamp": "2026-01-22T15:26:40",
+      "headline": "Stephens lowers EQT stock price target to $68 on updated prices",
+      "summary": "Stephens has lowered its price target for EQT Corp. (NYSE:EQT) to $68 from $69 while maintaining an Overweight rating. This adjustment is based on updated prices and reflects EQT's anticipated net debt reduction and insights into its Deep Utica wells, where drilling costs have been reduced. The firm expects EQT to maintain its premium valuation due to its integrated assets and low-cost structure.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/analyst-ratings/stephens-lowers-eqt-stock-price-target-to-68-on-updated-prices-93CH-4460797",
+      "tickers": [
+        "EQT"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "energy_transportation",
+        "real_estate",
+        "life_sciences"
+      ],
+      "overall_sentiment": 0.039295,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "EQT",
+          "relevance_score": 0.342203,
+          "sentiment_score": 0.038107,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "EQT": 0.038107
       }
     },
     {
@@ -16654,945 +17617,7 @@
       "ticker_sentiments": {
         "HSY": 0.39624
       }
-    },
-    {
-      "id": "889912219877607700",
-      "timestamp": "2026-01-21T14:01:55",
-      "headline": "New RTX parts deals expand support to keep C-130 fleets mission-ready",
-      "summary": "Collins Aerospace, an RTX business, has signed three-year parts distribution agreements with Integrated Procurement Technologies, S3 AeroDefense, and Derco to enhance hardware and logistics support for C-130 Hercules wheels and brakes. These agreements aim to expand Collins' distribution network globally, ensuring improved fleet readiness for the C-130, an aircraft operated by over 70 countries. The DURACARB\u00ae brakes, produced in Troy, Ohio, offer longer life and reduced maintenance for the C-130 and other commercial and military aircraft.",
-      "source": "Stock Titan",
-      "url": "https://www.stocktitan.net/news/RTX/rtx-s-collins-aerospace-signs-three-year-parts-distribution-od2wr2yjkdqy.html",
-      "tickers": [
-        "RTX",
-        "LMT"
-      ],
-      "topics": [
-        "manufacturing",
-        "financial_markets",
-        "economy_macro",
-        "earnings"
-      ],
-      "overall_sentiment": 0.205983,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "RTX",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.273969,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "LMT",
-          "relevance_score": 0.716665,
-          "sentiment_score": 0.126376,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "RTX": 0.273969,
-        "LMT": 0.126376
-      }
-    },
-    {
-      "id": "-8033714171387506068",
-      "timestamp": "2026-01-21T14:01:49",
-      "headline": "New double-stack rail link cuts Chicago\u2013New England trips by up to 10 hours",
-      "summary": "Norfolk Southern has launched its \"East Edge\" double-stack intermodal corridor, connecting Chicago and New England, a $64 million investment aiming to reduce transit times by up to 10 hours. This new route enables fully double-stacked 9,000-foot trains, significantly increasing capacity and modernizing freight transport into New England. The project involved extensive infrastructure upgrades and is expected to boost intermodal growth and support the regional economy.",
-      "source": "Stock Titan",
-      "url": "https://www.stocktitan.net/news/NSC/norfolk-southern-launches-east-edge-double-stack-service-connecting-eydvmux3svja.html",
-      "tickers": [
-        "NSC",
-        "UNP",
-        "CSX"
-      ],
-      "topics": [
-        "energy_transportation",
-        "financial_markets",
-        "manufacturing",
-        "mergers_and_acquisitions"
-      ],
-      "overall_sentiment": 0.261873,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "NSC",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.437132,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "UNP",
-          "relevance_score": 0.630167,
-          "sentiment_score": 0.236123,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "CSX",
-          "relevance_score": 0.615656,
-          "sentiment_score": 0.121071,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "NSC": 0.437132,
-        "UNP": 0.236123,
-        "CSX": 0.121071
-      }
-    },
-    {
-      "id": "5808660288136745802",
-      "timestamp": "2026-01-21T14:01:49",
-      "headline": "Norfolk Southern Launches East Edge Double-Stack Service Connecting Chicago and New England",
-      "summary": "Norfolk Southern has launched its new East Edge double-stack intermodal corridor, connecting Chicago and New England. This $64 million investment significantly reduces transit times by up to 10 hours and substantially increases freight capacity into a key eastern market, addressing rising consumer demand and e-commerce growth in New England. The project involved extensive infrastructure upgrades and coordination with multiple partners, marking a major milestone in Norfolk Southern's network modernization strategy.",
-      "source": "PR Newswire",
-      "url": "https://www.prnewswire.com/news-releases/norfolk-southern-launches-east-edge-double-stack-service-connecting-chicago-and-new-england-302666280.html",
-      "tickers": [
-        "NSC",
-        "CSX",
-        "UNP"
-      ],
-      "topics": [
-        "energy_transportation",
-        "manufacturing",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.245385,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "NSC",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.47706,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "CSX",
-          "relevance_score": 0.594548,
-          "sentiment_score": 0.120441,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "UNP",
-          "relevance_score": 0.596371,
-          "sentiment_score": 0.135255,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "NSC": 0.47706,
-        "CSX": 0.120441,
-        "UNP": 0.135255
-      }
-    },
-    {
-      "id": "6184185192359722043",
-      "timestamp": "2026-01-21T14:01:38",
-      "headline": "HERSHEY'S CELEBRATES HAPPINESS AS 'THE REAL GOLD' WITH NEW TEAM USA CAMPAIGN AND LIMITED-EDITION CHOCOLATE MEDALS DURING THE OLYMPIC AND PARALYMPIC WINTER GAMES MILANO CORTINA 2026",
-      "summary": "Hershey's has launched a new campaign, \"Hershey's. It's Your Happy Place,\" for the Olympic and Paralympic Winter Games Milano Cortina 2026, celebrating happiness as \"the real gold\" beyond athletic achievements. The campaign features five Team USA athletes sharing their stories of finding joy and will introduce limited-edition chocolate medals to commemorate everyday moments of happiness. These initiatives reinforce Hershey's role in inspiring human connection and optimism.",
-      "source": "PR Newswire",
-      "url": "https://www.prnewswire.com/news-releases/hersheys-celebrates-happiness-as-the-real-gold-with-new-team-usa-campaign-and-limited-edition-chocolate-medals-during-the-olympic-and-paralympic-winter-games-milano-cortina-2026-302666729.html",
-      "tickers": [
-        "HSY"
-      ],
-      "topics": [
-        "retail_wholesale",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.458275,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "HSY",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.477248,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "HSY": 0.477248
-      }
-    },
-    {
-      "id": "3558117883187713699",
-      "timestamp": "2026-01-21T14:01:17",
-      "headline": "What Makes American Homes 4 Rent (AMH) Attractive",
-      "summary": "American Homes 4 Rent (AMH) is considered an attractive real estate investment trust by hedge funds. While Keefe Bruyette upgraded its rating to Outperform with a $37 price target, BMO Capital downgraded AMH to Market Perform, also with a $37 price target, due to President Trump's proposal to ban institutional investment in single-family homes. American Homes 4 Rent operates and leases single-family rental homes and manages an online platform for tenants.",
-      "source": "Insider Monkey",
-      "url": "https://www.insidermonkey.com/blog/what-makes-american-homes-4-rent-amh-attractive-1678450/",
-      "tickers": [
-        "AMH-P-H"
-      ],
-      "topics": [
-        "real_estate",
-        "financial_markets",
-        "finance",
-        "economy_fiscal"
-      ],
-      "overall_sentiment": 0.029965,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "AMH-P-H",
-          "relevance_score": 0.304322,
-          "sentiment_score": 0.048405,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "AMH-P-H": 0.048405
-      }
-    },
-    {
-      "id": "7436412198273199838",
-      "timestamp": "2026-01-21T13:59:55",
-      "headline": "Charles Schwab\u2019s profit rises on higher interest income, trading revenues",
-      "summary": "Charles Schwab reported a rise in fourth-quarter profit, driven by increased interest income and strong trading revenues amid market volatility. The company's net revenue climbed 19% to US$6.34-billion, slightly below analyst estimates, while net income reached US$2.46-billion. Schwab also saw record core net new assets for the quarter, bringing its total asset gathering for the year 2025 to over half a trillion U.S. dollars.",
-      "source": "The Globe and Mail",
-      "url": "https://www.theglobeandmail.com/business/article-charles-schwab-results-fourth-quarter/",
-      "tickers": [
-        "SCHW"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "economy_monetary"
-      ],
-      "overall_sentiment": 0.612321,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "SCHW",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.647734,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "SCHW": 0.647734
-      }
-    },
-    {
-      "id": "8376375347025747842",
-      "timestamp": "2026-01-21T13:58:18",
-      "headline": "Mercer International (NASDAQ:MERC) Cut to Sell at TD Cowen",
-      "summary": "TD Cowen has downgraded Mercer International (NASDAQ:MERC) from a \"hold\" to a \"sell\" rating, setting a new price target of $2.25, indicating an 11.42% potential downside from its last closing price. Other analysts, including Royal Bank of Canada and Weiss Ratings, have also issued negative ratings, contributing to an overall \"Reduce\" consensus. The company recently reported quarterly earnings that missed analysts' estimates, with a reported EPS of ($0.97) against an estimated ($0.89), and it has a negative net margin and return on equity.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/mercer-international-nasdaqmerc-cut-to-sell-at-td-cowen-2026-01-21/",
-      "tickers": [
-        "COWNL"
-      ],
-      "topics": [
-        "financial_markets",
-        "earnings",
-        "finance"
-      ],
-      "overall_sentiment": 0.049662,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "COWNL",
-          "relevance_score": 0.309144,
-          "sentiment_score": 0.044164,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "COWNL": 0.044164
-      }
-    },
-    {
-      "id": "4220768453158532902",
-      "timestamp": "2026-01-21T13:58:18",
-      "headline": "TD Cowen Lowers Netflix Price Target to $112 Amid Q1 Outlook Miss",
-      "summary": "TD Cowen has lowered Netflix's price target to $112 from $115, while maintaining a 'Buy' rating, due to the company's disappointing Q1 revenue and EPS outlook. This adjustment comes as Netflix forecasts Q1 revenue slightly below consensus and EPS below Wall Street expectations, with concerns also arising from the expense outlook related to its Warner Bros. Discovery acquisition. Other analysts, including Pivotal Research, Wolfe Research, and Canaccord, have also reduced their price targets for Netflix, citing similar concerns regarding financial guidance and acquisition impact.",
-      "source": "Intellectia AI",
-      "url": "https://intellectia.ai/news/stock/td-cowen-lowers-netflix-price-target-to-112-amid-q1-outlook-miss",
-      "tickers": [
-        "COWNL",
-        "NFLX",
-        "WBD",
-        "PSKY"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "mergers_and_acquisitions",
-        "technology"
-      ],
-      "overall_sentiment": -0.167807,
-      "overall_sentiment_label": "Somewhat-Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "COWNL",
-          "relevance_score": 0.349815,
-          "sentiment_score": 0.010957,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "NFLX",
-          "relevance_score": 0.991787,
-          "sentiment_score": -0.336825,
-          "sentiment_label": "Somewhat-Bearish"
-        },
-        {
-          "ticker": "WBD",
-          "relevance_score": 0.667597,
-          "sentiment_score": -0.246626,
-          "sentiment_label": "Somewhat-Bearish"
-        },
-        {
-          "ticker": "PSKY",
-          "relevance_score": 0.565713,
-          "sentiment_score": -0.122053,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "COWNL": 0.010957,
-        "NFLX": -0.336825,
-        "WBD": -0.246626,
-        "PSKY": -0.122053
-      }
-    },
-    {
-      "id": "4045468481036180904",
-      "timestamp": "2026-01-21T13:58:17",
-      "headline": "American Homes 4 Rent's (AMH) Market Outperform Rating Reiterated at Citizens Jmp",
-      "summary": "Citizens Jmp has reiterated a \"Market Outperform\" rating for American Homes 4 Rent (AMH) with a $41.00 price target, suggesting a 29% upside. While analysts are mixed, the company recently surpassed quarterly earnings estimates and increased its FY2025 guidance. Insider transactions show directors acquiring shares, indicating confidence in the real estate investment trust.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/american-homes-4-rents-amh-market-outperform-rating-reiterated-at-citizens-jmp-2026-01-21/",
-      "tickers": [
-        "AMH-P-H"
-      ],
-      "topics": [
-        "earnings",
-        "real_estate",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.020074,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "AMH-P-H",
-          "relevance_score": 0.310775,
-          "sentiment_score": 0.024401,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "AMH-P-H": 0.024401
-      }
-    },
-    {
-      "id": "-2090584062389879369",
-      "timestamp": "2026-01-21T13:57:49",
-      "headline": "Greene County Bancorp, Inc. Delivers Net Income of $10.3 Million for the Quarter Ended December 31, 2025, the Highest Quarterly Earnings in the Bank\u2019s 137-Year History",
-      "summary": "Greene County Bancorp, Inc. reported record-breaking net income of $10.3 million for the quarter ended December 31, 2025, marking the highest quarterly earnings in its 137-year history. The company also achieved record highs in total assets at $3.1 billion and net loans at $1.7 billion. This strong financial performance was attributed to strategic balance sheet management, including focusing on higher-yielding assets and adjusting deposit rates, and the successful launch of a new Saratoga County office.",
-      "source": "Yahoo! Finance Canada",
-      "url": "https://ca.finance.yahoo.com/news/greene-county-bancorp-inc-delivers-141800649.html",
-      "tickers": [
-        "GCBC"
-      ],
-      "topics": [
-        "earnings",
-        "finance",
-        "economy_monetary"
-      ],
-      "overall_sentiment": 0.890572,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "GCBC",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.888574,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "GCBC": 0.888574
-      }
-    },
-    {
-      "id": "5152029021795481949",
-      "timestamp": "2026-01-21T13:56:50",
-      "headline": "Form 424B5 PNC FINANCIAL SERVICES",
-      "summary": "PNC Financial Services Group, Inc. has filed Form 424B5 with the SEC, detailing a new offering of Fixed Rate/Floating Rate Senior Notes and Senior Floating Rate Notes, both due in January 2029. These notes will be redeemable by PNC on January 2028 or within 30 days of the maturity date. The document provides detailed terms of the notes, including interest rates, payment dates, risk factors, and U.S. federal income tax consequences, emphasizing that the notes are not bank deposits and are not FDIC-insured.",
-      "source": "StreetInsider",
-      "url": "https://www.streetinsider.com/SEC+Filings/Form+424B5+PNC+FINANCIAL+SERVICES/25871698.html",
-      "tickers": [
-        "PNC"
-      ],
-      "topics": [
-        "finance",
-        "financial_markets",
-        "earnings",
-        "economy_macro",
-        "economy_monetary"
-      ],
-      "overall_sentiment": 0.297857,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PNC",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.299384,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "PNC": 0.299384
-      }
-    },
-    {
-      "id": "-5219048725347505968",
-      "timestamp": "2026-01-21T13:56:23",
-      "headline": "Abbott Laboratories (ABT) Q4 Earnings Report Preview: What To Look For",
-      "summary": "Abbott Laboratories (ABT) is set to announce its Q4 earnings, with analysts expecting a 7.6% year-on-year revenue growth to $11.8 billion and adjusted earnings of $1.49 per share. The company met revenue expectations last quarter, and analysts have reconfirmed their estimates. Despite positive sentiment in the healthcare equipment segment, ABT stock is down 2.7% over the last month, heading into earnings with an average analyst price target of $144.75 against a current share price of $121.14.",
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/news/abbott-laboratories-abt-q4-earnings-103534783.html",
-      "tickers": [
-        "ABT"
-      ],
-      "topics": [
-        "earnings",
-        "life_sciences",
-        "financial_markets"
-      ],
-      "overall_sentiment": -0.062963,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ABT",
-          "relevance_score": 0.963322,
-          "sentiment_score": -0.084862,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "ABT": -0.084862
-      }
-    },
-    {
-      "id": "-3916041166972253471",
-      "timestamp": "2026-01-21T13:52:58",
-      "headline": "Prologis shares up after Q4 beat on strong warehouse leasing By Investing.com",
-      "summary": "Prologis Inc (NYSE:PLD) reported better-than-expected fourth-quarter profits and revenue, driven by robust warehouse leasing activity. The company signed a record 228 million square feet of leases in 2025, positioning it for strong earnings growth in 2026, and also expanded power capacity for data center demand. Prologis provided optimistic guidance for 2026 net earnings and core FFO.",
-      "source": "Investing.com Nigeria",
-      "url": "https://ng.investing.com/news/earnings/prologis-shares-up-after-q4-beat-on-strong-warehouse-leasing-2298716",
-      "tickers": [
-        "PLD"
-      ],
-      "topics": [
-        "earnings",
-        "real_estate",
-        "financial_markets",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.486056,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PLD",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.475483,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "PLD": 0.475483
-      }
-    },
-    {
-      "id": "-441928499404909425",
-      "timestamp": "2026-01-21T13:50:48",
-      "headline": "Kroger to remain open during storms, stock shelves once cleared, spokesman says",
-      "summary": "Kroger announced it will remain open during the potential upcoming winter storm in the Mid-South, reassuring customers there's no need for panic buying. The grocery chain plans to stock shelves diligently, with trucks positioned strategically before and after the storm. While stores aim for normal hours, they might close early on a case-by-case basis for employee safety, advising customers to check the Kroger app for updates.",
-      "source": "FOX13 Memphis",
-      "url": "https://www.fox13memphis.com/news/kroger-to-remain-open-during-storms-stock-shelves-once-cleared-spokesman-says/article_55585db3-cff2-4dc7-81df-815ab200ae2c.html",
-      "tickers": [
-        "KR"
-      ],
-      "topics": [
-        "retail_wholesale",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.288699,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "KR",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.270831,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "KR": 0.270831
-      }
-    },
-    {
-      "id": "3582843221470113644",
-      "timestamp": "2026-01-21T13:50:42",
-      "headline": "Kroger to remain open during storm, stock shelves once cleared, spokesman says",
-      "summary": "Kroger announced it will remain open during the upcoming winter storm and plans to keep shelves stocked, assuring customers there is no need to panic buy. The company will have trucks positioned strategically and stores will operate normal hours, with potential early closings on a case-by-case basis for employee safety. Customers are advised to check the Kroger app for real-time updates on store hours.",
-      "source": "FOX13 Memphis",
-      "url": "https://www.fox13memphis.com/news/kroger-to-remain-open-during-storm-stock-shelves-once-cleared-spokesman-says/article_55585db3-cff2-4dc7-81df-815ab200ae2c.html",
-      "tickers": [
-        "KR"
-      ],
-      "topics": [
-        "retail_wholesale",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.044852,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "KR",
-          "relevance_score": 0.334819,
-          "sentiment_score": 0.000626,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "KR": 0.000626
-      }
-    },
-    {
-      "id": "-8767119280639414428",
-      "timestamp": "2026-01-21T13:50:00",
-      "headline": "This Microcap Company Announced Plans To Delist Just Days After The Stock Surged 450% \u2014 What Happened?",
-      "summary": "Venus Concept Inc. (VERO) stock crashed over 50% after the company announced plans to voluntarily delist from Nasdaq and deregister with the SEC. This decision, made after Madryn Asset Management acquired a 91% stake, prioritizes reducing compliance costs over the benefits of a public listing. The shares had surged 450% just days before the delisting announcement.",
-      "source": "Stocktwits",
-      "url": "https://stocktwits.com/news-articles/markets/equity/why-did-vero-stock-fall-over-50-in-premarket-today/cmUDrzHR4fX",
-      "tickers": [
-        "VERO",
-        "PLTR"
-      ],
-      "topics": [
-        "financial_markets",
-        "mergers_and_acquisitions",
-        "life_sciences",
-        "finance"
-      ],
-      "overall_sentiment": -0.319531,
-      "overall_sentiment_label": "Somewhat-Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "VERO",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.832989,
-          "sentiment_label": "Bearish"
-        },
-        {
-          "ticker": "PLTR",
-          "relevance_score": 0.607432,
-          "sentiment_score": 0.224277,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "VERO": -0.832989,
-        "PLTR": 0.224277
-      }
-    },
-    {
-      "id": "5152793637610130223",
-      "timestamp": "2026-01-21T13:48:27",
-      "headline": "Nvidia, Broadcom, Micron among JPMorgan's favorite chip stocks going into earnings (NVDA:NASDAQ)",
-      "summary": "J.P. Morgan has named Nvidia, Broadcom, and Micron as its top semiconductor stock picks ahead of the coming earnings season. The investment bank anticipates that companies will report strong results for Q4 2025 and provide optimistic guidance. J.P. Morgan also foresees significant growth in the AI accelerator market and a general industry revenue increase of over 15% for the year, driven by market recovery and lean inventories.",
-      "source": "Seeking Alpha",
-      "url": "https://seekingalpha.com/news/4540920-nvidia-broadcom-micron-among-jpmorgans-favorite-chip-stocks-going-into-earnings",
-      "tickers": [
-        "AVGO",
-        "NVDA",
-        "MU",
-        "ADI",
-        "KLAC"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "technology"
-      ],
-      "overall_sentiment": 0.405143,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "AVGO",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.533225,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "NVDA",
-          "relevance_score": 0.991058,
-          "sentiment_score": 0.51862,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "MU",
-          "relevance_score": 0.836102,
-          "sentiment_score": 0.400468,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "ADI",
-          "relevance_score": 0.624261,
-          "sentiment_score": 0.34006,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "KLAC",
-          "relevance_score": 0.592671,
-          "sentiment_score": 0.34756,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "AVGO": 0.533225,
-        "NVDA": 0.51862,
-        "MU": 0.400468,
-        "ADI": 0.34006,
-        "KLAC": 0.34756
-      }
-    },
-    {
-      "id": "-385431763264299830",
-      "timestamp": "2026-01-21T13:48:00",
-      "headline": "Royal Caribbean\u2019s Haiti cruise suspension leaves hundreds in Labadie jobless",
-      "summary": "Royal Caribbean has extended its suspension of cruise stops to Labadie, Haiti, through the end of 2026 due to ongoing security concerns, devastating the local economy. This decision has left roughly 1,000 residents without cruise-related jobs, forcing them into lower-paying local trades. The prolonged suspension highlights the community's over-reliance on a single foreign employer and has sparked calls for broader economic diversification.",
-      "source": "The Haitian Times",
-      "url": "https://haitiantimes.com/2026/01/21/haiti-labadee-cruises-extension-royal-caribbean/",
-      "tickers": [
-        "RCL"
-      ],
-      "topics": [
-        "economy_macro",
-        "finance",
-        "retail_wholesale"
-      ],
-      "overall_sentiment": -0.445745,
-      "overall_sentiment_label": "Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "RCL",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.406694,
-          "sentiment_label": "Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "RCL": -0.406694
-      }
-    },
-    {
-      "id": "-3501785912270858020",
-      "timestamp": "2026-01-21T13:46:35",
-      "headline": "BNP Paribas Exane Downgrades Dollar Tree to Underperform From Neutral, Adjusts Price Target to $87 From $118",
-      "summary": "BNP Paribas Exane has downgraded Dollar Tree (DLTR) from \"Neutral\" to \"Underperform\" and significantly reduced its price target from $118 to $87. This comes amidst other recent analyst adjustments for Dollar Tree, with some maintaining buy ratings while others have also lowered their outlooks. Dollar Tree, a leading American discount retailer, operates a large network of stores across the US and Canada.",
-      "source": "marketscreener.com",
-      "url": "https://www.marketscreener.com/news/bnp-paribas-exane-downgrades-dollar-tree-to-underperform-from-neutral-adjusts-price-target-to-87-f-ce7e58d2d989f12c",
-      "tickers": [
-        "DLTR"
-      ],
-      "topics": [
-        "financial_markets",
-        "retail_wholesale",
-        "earnings"
-      ],
-      "overall_sentiment": -0.428279,
-      "overall_sentiment_label": "Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "DLTR",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.408745,
-          "sentiment_label": "Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "DLTR": -0.408745
-      }
-    },
-    {
-      "id": "-6313592550262908857",
-      "timestamp": "2026-01-21T13:45:48",
-      "headline": "Netflix Earnings Were a Flop. Why the Warner Bros. Bidding War Is Spooking Wall Street.",
-      "summary": "Netflix's fourth-quarter earnings report failed to impress investors, as weak margin guidance led to a decline in share prices. The article suggests that investor concerns might also be linked to the ongoing bidding war for Warner Bros. and its potential implications for the streaming industry.",
-      "source": "Barron's",
-      "url": "https://www.barrons.com/articles/netflix-earnings-stock-reaction-a93d0280?gaa_at=eafs&gaa_n=AWEtsqcCA864NkJLLkNBAsoU8nwOEKYX8Zy8iuMJEzIb94mhB8RPkZJK2jVt&gaa_ts=6970e538&gaa_sig=5Ud9WXW3ZzA4tqpnIZ9GcnEI8ICrQ_QED-xF2OXqny_1hZozG-JVSe1_nCto1ZvDG3IzAFysxoh83WJnDCwp_g%3D%3D",
-      "tickers": [
-        "NFLX",
-        "WBD",
-        "PSKY"
-      ],
-      "topics": [
-        "earnings",
-        "mergers_and_acquisitions",
-        "financial_markets",
-        "technology"
-      ],
-      "overall_sentiment": -0.243413,
-      "overall_sentiment_label": "Somewhat-Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "NFLX",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.440682,
-          "sentiment_label": "Bearish"
-        },
-        {
-          "ticker": "WBD",
-          "relevance_score": 0.877207,
-          "sentiment_score": -0.207435,
-          "sentiment_label": "Somewhat-Bearish"
-        },
-        {
-          "ticker": "PSKY",
-          "relevance_score": 0.645637,
-          "sentiment_score": 0.021038,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "NFLX": -0.440682,
-        "WBD": -0.207435,
-        "PSKY": 0.021038
-      }
-    },
-    {
-      "id": "-5998091622314363032",
-      "timestamp": "2026-01-21T13:44:01",
-      "headline": "Ulta Beauty price target raised to $750 from $675 at Oppenheimer",
-      "summary": "Oppenheimer has increased its price target for Ulta Beauty (ULTA) to $750 from $675, while maintaining an Outperform rating. This adjustment reflects a recent re-rating in discretionary consumer stocks and increased confidence in Ulta's new product pipeline for FY26, including the forthcoming Rare Beauty launch. The firm also highlighted other drivers for top-line growth, such as merchandising and digital initiatives, and expressed strong confidence in CEO Kecia Steelman's leadership.",
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/news/ulta-beauty-price-target-raised-134229543.html",
-      "tickers": [
-        "ULTA"
-      ],
-      "topics": [
-        "financial_markets",
-        "retail_wholesale"
-      ],
-      "overall_sentiment": 0.707337,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ULTA",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.711618,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "ULTA": 0.711618
-      }
-    },
-    {
-      "id": "1623036424322344043",
-      "timestamp": "2026-01-21T13:41:35",
-      "headline": "Fortinet price target lowered to $88 from $95 at Truist",
-      "summary": "Truist has lowered its price target for Fortinet (FTNT) to $88 from $95, while maintaining a Buy rating on the shares. This adjustment comes as part of a broader research note previewing the fourth quarter for cybersecurity companies. The firm anticipates strong Q4 reports and a conservative guidance approach, noting that market pressure has shifted toward AI hardware despite continued momentum in Security & AI initiatives.",
-      "source": "Yahoo Finance",
-      "url": "https://finance.yahoo.com/news/fortinet-price-target-lowered-88-133936565.html",
-      "tickers": [
-        "FTNT",
-        "TFC",
-        "CRM",
-        "NVDA"
-      ],
-      "topics": [
-        "financial_markets",
-        "technology",
-        "economy_monetary"
-      ],
-      "overall_sentiment": 0.02235,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "FTNT",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.265408,
-          "sentiment_label": "Somewhat-Bearish"
-        },
-        {
-          "ticker": "TFC",
-          "relevance_score": 0.716634,
-          "sentiment_score": 0.113906,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "CRM",
-          "relevance_score": 0.628413,
-          "sentiment_score": 0.140754,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "NVDA",
-          "relevance_score": 0.625215,
-          "sentiment_score": 0.103295,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "FTNT": -0.265408,
-        "TFC": 0.113906,
-        "CRM": 0.140754,
-        "NVDA": 0.103295
-      }
-    },
-    {
-      "id": "-8236564136711758620",
-      "timestamp": "2026-01-21T13:40:47",
-      "headline": "Rakuten Investment Management Inc. Invests $42.32 Million in KKR & Co. Inc. $KKR",
-      "summary": "Rakuten Investment Management Inc. has initiated a new position in KKR & Co. Inc., acquiring 325,663 shares valued at approximately $42.32 million during the third quarter. This investment highlights strong institutional interest, with major firms like Vanguard and Massachusetts Financial Services also increasing their stakes. KKR recently surpassed earnings estimates and maintains a \"Moderate Buy\" consensus rating from analysts.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-invests-4232-million-in-kkr-co-inc-kkr-2026-01-21/",
-      "tickers": [
-        "KKR"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.441051,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "KKR",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.434415,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "KKR": 0.434415
-      }
-    },
-    {
-      "id": "-1805233847769852206",
-      "timestamp": "2026-01-21T13:40:43",
-      "headline": "Rakuten Investment Management Inc. Takes Position in W.W. Grainger, Inc. $GWW",
-      "summary": "Rakuten Investment Management Inc. has acquired a new position of 67,068 shares, valued at approximately $63.9 million, in W.W. Grainger, Inc. during the third quarter. This move makes Rakuten Investment Management a 0.14% owner of W.W. Grainger, an industrial products company that recently surpassed its Q3 earnings and revenue estimates. Despite institutional investor interest, insider activity shows sales totaling over $26 million, and analysts have a \"Reduce\" rating for the stock with an average price target of $1,016.57.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-takes-position-in-ww-grainger-inc-gww-2026-01-21/",
-      "tickers": [
-        "GWW"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "manufacturing",
-        "finance"
-      ],
-      "overall_sentiment": -0.289691,
-      "overall_sentiment_label": "Somewhat-Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "GWW",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.255297,
-          "sentiment_label": "Somewhat-Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "GWW": -0.255297
-      }
-    },
-    {
-      "id": "7699550921445390337",
-      "timestamp": "2026-01-21T13:40:40",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Acquires 27,434 Shares of Fiserv, Inc. $FISV",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH increased its stake in Fiserv, Inc. (NASDAQ:FISV) by 5.0%, acquiring an additional 27,434 shares and now owning 575,866 shares valued at $74,246,000. Other institutional investors have also adjusted their positions in Fiserv. Additionally, recent insider transactions show Director Lance M. Fritz and CFO Paul M. Todd purchasing significant amounts of company stock.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-acquires-27434-shares-of-fiserv-inc-fisv-2026-01-21/",
-      "tickers": [
-        "FI"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "technology"
-      ],
-      "overall_sentiment": -0.110722,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "FI",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.144072,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "FI": -0.144072
-      }
-    },
-    {
-      "id": "1063852943002454300",
-      "timestamp": "2026-01-21T13:40:39",
-      "headline": "Rakuten Investment Management Inc. Takes $18.09 Million Position in Freeport-McMoRan Inc. $FCX",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 461,276 shares in Freeport-McMoRan Inc. (NYSE:FCX), valued at approximately $18.09 million during the third quarter. Institutional investors now collectively own about 80.77% of the company, while Wall Street analysts maintain a consensus \"Buy\" rating with a target price of $54.30. Freeport-McMoRan recently declared a quarterly dividend of $0.075, and its stock was trading near $60.05.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-takes-1809-million-position-in-freeport-mcmoran-inc-fcx-2026-01-21/",
-      "tickers": [
-        "FCX"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "economy_macro",
-        "energy_transportation"
-      ],
-      "overall_sentiment": 0.213999,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "FCX",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.223977,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "FCX": 0.223977
-      }
-    },
-    {
-      "id": "-8336499330541251476",
-      "timestamp": "2026-01-21T13:40:37",
-      "headline": "Rakuten Investment Management Inc. Buys New Position in Equinix, Inc. $EQIX",
-      "summary": "Rakuten Investment Management Inc. has initiated a new position in Equinix, Inc. (EQIX) during the third quarter, acquiring 52,689 shares valued at approximately $41.3 million. This new investment represents about 0.05% of Equinix's stock. The article also notes significant insider selling ($15.4 million) by key executives on January 16th, which likely contributed to the stock's recent 2.2% decline, alongside details of other institutional investor activity, recent financial performance, and analyst ratings.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-buys-new-position-in-equinix-inc-eqix-2026-01-21/",
-      "tickers": [
-        "EQIX"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.063347,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "EQIX",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.091066,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "EQIX": 0.091066
-      }
     }
   ],
-  "last_updated": "2026-01-22T20:15:06.775257"
+  "last_updated": "2026-01-22T20:45:49.374781"
 }

@@ -356,13 +356,17 @@ class AlpacaBroker:
         """
         Calculate target share quantities given target weights and current prices.
         
+        SUPPORTS BOTH LONG AND SHORT POSITIONS:
+        - Positive weight = LONG position (buy shares)
+        - Negative weight = SHORT position (negative shares in result)
+        
         Args:
-            target_weights: Dict of symbol -> weight (e.g., 0.10 for 10% allocation)
+            target_weights: Dict of symbol -> weight (e.g., 0.10 for 10%, -0.05 for 5% short)
             equity: Total account equity
             cash_buffer_pct: Cash buffer percentage
         
         Returns:
-            Dict mapping symbol to target share quantity (whole shares)
+            Dict mapping symbol to target share quantity (positive for long, NEGATIVE for short)
         """
         if not target_weights:
             return {}
@@ -375,7 +379,8 @@ class AlpacaBroker:
         result = {}
         
         for symbol, weight in target_weights.items():
-            if weight <= 0.001:
+            # Skip insignificant weights (but check absolute value for shorts!)
+            if abs(weight) <= 0.001:
                 continue
                 
             if symbol not in prices:
@@ -387,15 +392,27 @@ class AlpacaBroker:
                 logging.warning(f"Invalid price for {symbol}: {price}, skipping")
                 continue
             
-            # Calculate target notional based on actual weight
+            # Calculate target notional based on actual weight (preserves sign for shorts)
             target_notional = investable_equity * weight
-            shares = int(target_notional / price)  # Floor to whole shares
             
-            if shares > 0:
-                result[symbol] = shares
-                logging.info(
-                    f"{symbol}: weight={weight:.1%}, target ${target_notional:.2f} / ${price:.2f} = {shares} shares"
-                )
+            # For SHORTS: weight is negative, so target_notional is negative
+            # We want shares to be NEGATIVE to signal a short position
+            if weight > 0:
+                # LONG: positive shares
+                shares = int(target_notional / price)  # Floor to whole shares
+                if shares > 0:
+                    result[symbol] = shares
+                    logging.info(
+                        f"LONG {symbol}: weight={weight:.1%}, target ${target_notional:.2f} / ${price:.2f} = {shares} shares"
+                    )
+            else:
+                # SHORT: negative shares (note: target_notional is already negative)
+                shares = int(target_notional / price)  # This will be negative
+                if shares < 0:
+                    result[symbol] = shares  # NEGATIVE VALUE = SHORT POSITION
+                    logging.info(
+                        f"SHORT {symbol}: weight={weight:.1%}, target ${target_notional:.2f} / ${price:.2f} = {shares} shares"
+                    )
         
         return result
     

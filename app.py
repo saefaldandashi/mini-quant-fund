@@ -2538,18 +2538,23 @@ def run_bot_threaded(dry_run=True, allow_after_hours=False, force_rebalance=True
 
 
 def auto_rebalance_scheduler():
-    """Background thread for automatic rebalancing."""
+    """Background thread for automatic rebalancing and outcome tracking."""
     global auto_rebalance_settings
     
+    last_outcome_check = datetime.now()
+    outcome_check_interval = timedelta(hours=1)  # Check outcomes hourly
+    
     while not scheduler_stop_event.is_set():
+        now = datetime.now()
+        
+        # === AUTO-REBALANCE CHECK ===
         if auto_rebalance_settings["enabled"]:
-            now = datetime.now()
             next_run = auto_rebalance_settings.get("next_run")
             
             if next_run and now >= next_run:
                 # Time to run
                 if not last_run_status["running"]:
-                    logging.info("Auto-rebalance triggered (fast mode)")
+                    logging.info("🔄 Auto-rebalance triggered (fast mode)")
                     run_bot_threaded(
                         dry_run=auto_rebalance_settings.get("dry_run", True),
                         allow_after_hours=auto_rebalance_settings.get("allow_after_hours", True),
@@ -2563,6 +2568,51 @@ def auto_rebalance_scheduler():
                 # Schedule next run
                 interval = auto_rebalance_settings["interval_minutes"]
                 auto_rebalance_settings["next_run"] = now + timedelta(minutes=interval)
+                logging.info(f"🔄 Next auto-rebalance scheduled for: {auto_rebalance_settings['next_run']}")
+        
+        # === OUTCOME TRACKING CHECK (runs every hour) ===
+        if now - last_outcome_check >= outcome_check_interval:
+            try:
+                logging.info("📊 Checking signal outcomes for accuracy tracking...")
+                
+                # Get price returns for all tracked tickers
+                api_key = os.environ.get("ALPACA_API_KEY")
+                secret_key = os.environ.get("ALPACA_SECRET_KEY")
+                
+                if api_key and secret_key:
+                    from src.data.market_data import get_market_data_loader
+                    
+                    # Get tickers that need outcome updates
+                    pending_tickers = [
+                        s.ticker for s in outcome_tracker.signals 
+                        if s.outcome_5d is None
+                    ][:50]  # Limit to 50 at a time
+                    
+                    if pending_tickers:
+                        md = get_market_data_loader(api_key, secret_key)
+                        price_returns = {}
+                        
+                        for ticker in pending_tickers:
+                            try:
+                                # Get 1d and 5d returns
+                                prices = md.fetch_prices([ticker], lookback_days=10)
+                                if prices is not None and not prices.empty and ticker in prices.columns:
+                                    ts = prices[ticker].dropna()
+                                    if len(ts) >= 2:
+                                        ret_1d = (ts.iloc[-1] / ts.iloc[-2] - 1) * 100
+                                        ret_5d = (ts.iloc[-1] / ts.iloc[0] - 1) * 100 if len(ts) >= 5 else ret_1d
+                                        price_returns[ticker] = {'1d': ret_1d, '5d': ret_5d}
+                            except Exception as e:
+                                pass
+                        
+                        if price_returns:
+                            updated = outcome_tracker.update_outcomes(price_returns)
+                            logging.info(f"📊 Updated {updated} signal outcomes. Accuracy metrics refreshed.")
+                
+                last_outcome_check = now
+            except Exception as e:
+                logging.error(f"Outcome tracking error: {e}")
+                last_outcome_check = now  # Don't retry immediately
         
         # Check every 10 seconds
         time.sleep(10)

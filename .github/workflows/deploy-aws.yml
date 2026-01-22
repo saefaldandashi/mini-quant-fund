@@ -14,6 +14,7 @@
 #    - ALPACA_SECRET_KEY: Your Alpaca secret key
 #    - GEMINI_API_KEY: Your Gemini API key (optional)
 #    - ALPHA_VANTAGE_API_KEY: Your Alpha Vantage API key (optional)
+#    - FRED_API_KEY: Your FRED API key for economic data (optional)
 #    - APP_USERNAME: Username for web authentication (default: admin)
 #    - APP_PASSWORD: Password for web authentication (REQUIRED for security)
 #
@@ -44,6 +45,7 @@ jobs:
           ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           APP_USERNAME: ${{ secrets.APP_USERNAME }}
           APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
         with:
@@ -52,7 +54,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script_stop: true
-          envs: ALPACA_API_KEY,ALPACA_SECRET_KEY,GEMINI_API_KEY,ALPHA_VANTAGE_API_KEY,APP_USERNAME,APP_PASSWORD
+          envs: ALPACA_API_KEY,ALPACA_SECRET_KEY,GEMINI_API_KEY,ALPHA_VANTAGE_API_KEY,FRED_API_KEY,APP_USERNAME,APP_PASSWORD
           script: |
             echo "🚀 Starting deployment..."
             
@@ -71,6 +73,7 @@ jobs:
             ALPACA_SECRET_KEY=$ALPACA_SECRET_KEY
             GEMINI_API_KEY=$GEMINI_API_KEY
             ALPHA_VANTAGE_API_KEY=$ALPHA_VANTAGE_API_KEY
+            FRED_API_KEY=$FRED_API_KEY
             APP_USERNAME=$APP_USERNAME
             APP_PASSWORD=$APP_PASSWORD
             EOF
