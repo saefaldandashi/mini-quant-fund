@@ -474,17 +474,38 @@ class ReportRenderer:
     def _build_strategy_table(self, strategies) -> str:
         """Build strategy performance table HTML."""
         if not strategies:
-            return '<p style="color: #888;">No strategy data available</p>'
+            return '<p style="color: #888;">No strategy data available. Run a rebalance to generate strategy analysis.</p>'
         
         rows = ""
         for s in strategies:
-            wr_class = 'positive' if s.win_rate >= 0.5 else 'negative'
+            # Format win rate - show N/A if no data (0%)
+            if s.win_rate > 0:
+                wr_class = 'positive' if s.win_rate >= 0.5 else 'negative'
+                wr_display = f'{s.win_rate*100:.0f}%'
+            else:
+                wr_class = 'neutral'
+                wr_display = 'N/A'
+            
+            # Format confidence - show N/A if no data
+            if s.confidence > 0:
+                conf_display = f'{s.confidence*100:.0f}%'
+            else:
+                conf_display = 'N/A'
+            
+            # Format debate score - highlight if non-zero
+            if s.debate_score > 0:
+                ds_class = 'positive' if s.debate_score >= 0.5 else ''
+                ds_display = f'{s.debate_score:.2f}'
+            else:
+                ds_class = 'neutral'
+                ds_display = '--'
+            
             rows += f"""<tr>
                 <td><strong>{s.name}</strong></td>
                 <td>{s.weight*100:.0f}%</td>
-                <td class="{wr_class}">{s.win_rate*100:.0f}%</td>
-                <td>{s.confidence*100:.0f}%</td>
-                <td>{s.debate_score:.2f}</td>
+                <td class="{wr_class}">{wr_display}</td>
+                <td>{conf_display}</td>
+                <td class="{ds_class}">{ds_display}</td>
             </tr>"""
         
         return f"""<table>

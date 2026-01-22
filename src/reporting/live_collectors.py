@@ -648,55 +648,96 @@ class LiveDataCollector:
         """Collect strategy performance from learning engine and app state."""
         strategies = []
         try:
-            # First try to get from app state (most reliable source)
-            if 'last_run_status' in self.app_state:
-                debate_info = self.app_state['last_run_status'].get('debate_info', {})
-                scores = debate_info.get('scores', {})
-                final_weights = debate_info.get('final_weights', {})
-                
-                if isinstance(scores, dict):
-                    for name, score in scores.items():
-                        # Skip non-strategy keys
-                        if name in ['total_predictions', 'strategies_tracked', 'overall_accuracy', 'best_strategy']:
-                            continue
-                        strategies.append(StrategyPerformance(
-                            name=name,
-                            weight=final_weights.get(name, 0.1),
-                            win_rate=0.5,  # Will be updated by learning engine
-                            contribution=0,
-                            confidence=0.5,
-                            debate_score=float(score) if isinstance(score, (int, float)) else 0,
-                        ))
+            # Get actual performance metrics from learning engine's performance tracker
+            perf_metrics = {}
+            if self.learning_engine:
+                try:
+                    # Access the actual performance tracker for real win rates
+                    tracker = self.learning_engine.performance_tracker
+                    for name, metrics in tracker.metrics.items():
+                        perf_metrics[name] = {
+                            'win_rate': metrics.win_rate if metrics.total_predictions > 0 else 0.5,
+                            'accuracy': metrics.accuracy,
+                            'confidence': metrics.avg_confidence_when_right if metrics.avg_confidence_when_right > 0 else 0.5,
+                            'predictions': metrics.total_predictions,
+                        }
+                except Exception as e:
+                    logging.debug(f"Could not get performance tracker metrics: {e}")
             
-            # Enhance with learning engine data if available
-            if self.learning_engine and strategies:
+            # Get debate scores and weights from app state
+            # The app stores these directly in last_run_status (NOT nested under debate_info)
+            debate_scores = {}
+            final_weights = {}
+            last_run = self.app_state.get('last_run_status', {})
+            
+            # Primary source: debate_scores or strategy_scores (they contain the same data)
+            raw_scores = last_run.get('debate_scores') or last_run.get('strategy_scores') or {}
+            final_weights = last_run.get('final_weights', {})
+            
+            logging.debug(f"Raw debate scores from app_state: {raw_scores}")
+            logging.debug(f"Final weights from app_state: {final_weights}")
+            
+            if isinstance(raw_scores, dict):
+                for name, score in raw_scores.items():
+                    # Skip non-strategy keys
+                    if name in ['total_predictions', 'strategies_tracked', 'overall_accuracy', 'best_strategy']:
+                        continue
+                    debate_scores[name] = float(score) if isinstance(score, (int, float)) else 0.0
+            
+            # Combine all strategy names from different sources
+            all_strategy_names = set()
+            all_strategy_names.update(perf_metrics.keys())
+            all_strategy_names.update(debate_scores.keys())
+            all_strategy_names.update(final_weights.keys())
+            
+            # Get learned weights as additional source
+            learned_weights = {}
+            if self.learning_engine:
                 try:
                     summary = self.learning_engine.get_learning_summary()
                     learned_weights = summary.get('learned_weights', {}).get('current_weights', {})
-                    
-                    # Update strategies with learned data
-                    for s in strategies:
-                        if s.name in learned_weights:
-                            s.weight = learned_weights[s.name]
-                except Exception as e:
-                    logging.debug(f"Could not enhance with learning data: {e}")
+                    all_strategy_names.update(learned_weights.keys())
+                except Exception:
+                    pass
             
-            # If still no strategies, try to get from learning engine directly
-            if not strategies and self.learning_engine:
-                summary = self.learning_engine.get_learning_summary()
-                learned_weights = summary.get('learned_weights', {}).get('current_weights', {})
+            # Build strategy list with actual data
+            for name in all_strategy_names:
+                perf = perf_metrics.get(name, {})
                 
-                for name, weight in learned_weights.items():
-                    strategies.append(StrategyPerformance(
-                        name=name,
-                        weight=weight,
-                        win_rate=0.5,
-                        contribution=0,
-                        confidence=0.5,
-                        debate_score=0,
-                    ))
+                # Get actual win rate (use accuracy as fallback)
+                actual_win_rate = perf.get('win_rate', 0.0)
+                if actual_win_rate == 0 and perf.get('predictions', 0) == 0:
+                    # No data yet - use neutral but NOT 50% exactly to indicate no data
+                    actual_win_rate = 0.0
+                
+                # Get actual confidence from calibration data
+                actual_confidence = perf.get('confidence', 0.0)
+                if actual_confidence == 0 and perf.get('predictions', 0) == 0:
+                    actual_confidence = 0.0
+                
+                # Get debate score
+                actual_debate_score = debate_scores.get(name, 0.0)
+                
+                # Get weight from best available source
+                weight = final_weights.get(name) or learned_weights.get(name, 0.1)
+                
+                strategies.append(StrategyPerformance(
+                    name=name,
+                    weight=weight,
+                    win_rate=actual_win_rate,
+                    contribution=0,  # Would need trade-level data to calculate
+                    confidence=actual_confidence,
+                    debate_score=actual_debate_score,
+                ))
             
-            strategies.sort(key=lambda s: s.debate_score, reverse=True)
+            # Sort by debate score, then by win rate
+            strategies.sort(key=lambda s: (s.debate_score, s.win_rate), reverse=True)
+            
+            # Log what we found for debugging
+            logging.info(f"Collected {len(strategies)} strategies: " + 
+                        ", ".join([f"{s.name}(wr={s.win_rate:.0%}, ds={s.debate_score:.2f})" 
+                                   for s in strategies[:3]]))
+            
         except Exception as e:
             logging.warning(f"Could not collect strategy performance: {e}")
             import traceback

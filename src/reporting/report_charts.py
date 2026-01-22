@@ -254,6 +254,20 @@ class ReportChartGenerator:
         _apply_dark_theme()
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
         
+        if not strategies:
+            ax1.text(0.5, 0.5, 'No Strategy Data', ha='center', va='center', 
+                     color=DARK_THEME['text_muted'], fontsize=12)
+            ax1.set_xlim(0, 1)
+            ax1.set_ylim(0, 1)
+            ax1.axis('off')
+            ax2.text(0.5, 0.5, 'Run a rebalance to generate\nstrategy debate scores', 
+                     ha='center', va='center', color=DARK_THEME['text_muted'], fontsize=12)
+            ax2.set_xlim(0, 1)
+            ax2.set_ylim(0, 1)
+            ax2.axis('off')
+            plt.tight_layout()
+            return _fig_to_base64(fig)
+        
         names = [s.name[:15] for s in strategies]
         weights = [max(s.weight, 0.01) for s in strategies]
         scores = [s.debate_score for s in strategies]
@@ -279,16 +293,25 @@ class ReportChartGenerator:
         
         ax1.set_title('Strategy Weights', fontweight='bold')
         
-        # Bar chart for debate scores
+        # Bar chart for debate scores - handle all-zero case
+        has_debate_scores = any(s > 0 for s in scores)
         y_pos = np.arange(len(names))
-        bars = ax2.barh(y_pos, scores, color=colors, alpha=0.8)
         
-        ax2.set_yticks(y_pos)
-        ax2.set_yticklabels(names)
-        ax2.set_xlabel('Debate Score')
-        ax2.set_title('Strategy Debate Scores', fontweight='bold')
-        ax2.grid(axis='x', alpha=0.3)
-        ax2.invert_yaxis()
+        if has_debate_scores:
+            bars = ax2.barh(y_pos, scores, color=colors, alpha=0.8)
+            ax2.set_yticks(y_pos)
+            ax2.set_yticklabels(names)
+            ax2.set_xlabel('Debate Score')
+            ax2.set_title('Strategy Debate Scores', fontweight='bold')
+            ax2.grid(axis='x', alpha=0.3)
+            ax2.invert_yaxis()
+        else:
+            # Show message that debate hasn't run yet
+            ax2.text(0.5, 0.5, 'No debate scores yet.\nRun a rebalance to\ngenerate debate analysis.', 
+                     ha='center', va='center', color=DARK_THEME['text_muted'], fontsize=11,
+                     transform=ax2.transAxes, linespacing=1.5)
+            ax2.set_title('Strategy Debate Scores', fontweight='bold')
+            ax2.axis('off')
         
         plt.tight_layout()
         return _fig_to_base64(fig)
