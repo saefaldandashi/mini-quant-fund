@@ -1,6 +1,413 @@
 {
   "articles": [
     {
+      "id": "-571473264819968589",
+      "timestamp": "2026-01-22T15:55:23",
+      "headline": "Charles Schwab (SCHW) Maintains Buy Rating as UBS Raises Price Target",
+      "summary": "UBS analyst Michael Brown has reiterated a Buy rating for Charles Schwab (SCHW) and increased the price target from $123 to $125. This positive adjustment reflects an optimistic outlook for the stock, aligning with similar upward revisions from other analysts in recent weeks. Charles Schwab, a major financial-services company, commands significant client assets and holds a dominant position in registered investment advisor custody.",
+      "source": "GuruFocus",
+      "url": "https://www.gurufocus.com/news/8543638/charles-schwab-schw-maintains-buy-rating-as-ubs-raises-price-target-schw-stock-news",
+      "tickers": [
+        "SCHW"
+      ],
+      "topics": [
+        "finance",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.036055,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SCHW",
+          "relevance_score": 0.325524,
+          "sentiment_score": 0.020239,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "SCHW": 0.020239
+      }
+    },
+    {
+      "id": "-3518455361211940714",
+      "timestamp": "2026-01-22T15:54:05",
+      "headline": "Loews Hotels Opens Third Property in Arlington with 507 Rooms and 83,000 Sq Ft of Meeting Space",
+      "summary": "Loews Hotels has opened Americana by Loews in Arlington's Entertainment District, marking its third property in the area. This new hotel replaces the Sheraton Arlington and features 507 guest rooms, 39 suites, and over 83,000 square feet of meeting and event space, signaling Loews' confidence in Arlington's continued growth and its investment strategy in the region. The grand opening reinforces Loews' market position and commitment to American hospitality, with analysts projecting a positive outlook for Loews' stock (L) based on these strategic developments.",
+      "source": "Intellectia AI",
+      "url": "https://intellectia.ai/news/stock/loews-hotels-opens-third-property-in-arlington-with-507-rooms-and-83000-sq-ft-of-meeting-space",
+      "tickers": [
+        "L"
+      ],
+      "topics": [
+        "real_estate",
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.002044,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "L",
+          "relevance_score": 0.327482,
+          "sentiment_score": 0.00177,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "L": 0.00177
+      }
+    },
+    {
+      "id": "3968494234246255439",
+      "timestamp": "2026-01-22T15:53:56",
+      "headline": "Darling Ingredients stock hits 52-week high at 42.16 USD",
+      "summary": "Darling Ingredients Inc. (DAR) stock has reached a new 52-week high of $42.16, reflecting investor confidence and strong market momentum with a 19.12% one-year return. Despite a high P/E ratio, InvestingPro analysis suggests the stock may be undervalued. Recent developments include a raised price target from Jefferies, significant sales of production tax credits, and a joint venture in collagen and gelatin businesses.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/company-news/darling-ingredients-stock-hits-52week-high-at-4216-usd-93CH-4460882",
+      "tickers": [
+        "DAR"
+      ],
+      "topics": [
+        "earnings",
+        "mergers_and_acquisitions",
+        "financial_markets",
+        "energy_transportation",
+        "finance"
+      ],
+      "overall_sentiment": 0.740331,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "DAR",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.716104,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "DAR": 0.716104
+      }
+    },
+    {
+      "id": "7507778305228407523",
+      "timestamp": "2026-01-22T15:53:09",
+      "headline": "US Open: Rebound attempt on Wall Street \ud83d\udcc8Meta Platforms surges 3.5%",
+      "summary": "US stock index futures are trading higher, with Meta Platforms surging 3.5% after Jefferies analysts recommended buying the dip. The rebound is partly driven by President Trump signaling a reversal in tariff rhetoric, which has improved market sentiment. However, the overall market remains fragile due to unresolved geopolitical issues and upcoming US inflation data.",
+      "source": "XTB.com",
+      "url": "https://www.xtb.com/int/market-analysis/news-and-research/us-open-rebound-attempt-on-wall-street-meta-platforms-surges-3-5",
+      "tickers": [
+        "META",
+        "MSFT",
+        "NVDA",
+        "TSLA",
+        "AMD"
+      ],
+      "topics": [
+        "financial_markets",
+        "economy_macro",
+        "economy_monetary",
+        "earnings",
+        "technology"
+      ],
+      "overall_sentiment": 0.226161,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "META",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.443536,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": 0.611492,
+          "sentiment_score": 0.129854,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": 0.644161,
+          "sentiment_score": 0.127642,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TSLA",
+          "relevance_score": 0.617262,
+          "sentiment_score": 0.100594,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AMD",
+          "relevance_score": 0.721663,
+          "sentiment_score": 0.431467,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "META": 0.443536,
+        "MSFT": 0.129854,
+        "NVDA": 0.127642,
+        "TSLA": 0.100594,
+        "AMD": 0.431467
+      }
+    },
+    {
+      "id": "-5852879494500762465",
+      "timestamp": "2026-01-22T15:52:42",
+      "headline": "Vital Farms Target of Unusually High Options Trading (NASDAQ:VITL)",
+      "summary": "Vital Farms (NASDAQ:VITL) experienced unusually high options trading, with traders purchasing 2,402 call options, a 94% increase from average, coinciding with a 6.3% rise in its stock price to $29.01. The company recently reported strong quarterly earnings, beating analyst expectations with $0.36 EPS and $198.94 million in revenue, a 37.2% year-over-year increase. Despite a \"Moderate Buy\" analyst consensus and a target price of $49.91, insiders have sold over 100,000 shares in the past 90 days.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/vital-farms-target-of-unusually-high-options-trading-nasdaqvitl-2026-01-22/",
+      "tickers": [
+        "VITL"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "retail_wholesale",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.225515,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "VITL",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.244805,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "VITL": 0.244805
+      }
+    },
+    {
+      "id": "4477578560680499851",
+      "timestamp": "2026-01-22T15:52:24",
+      "headline": "From AI to EVs: How Copper is Powering the Next Industrial Revolution",
+      "summary": "S&P Global's new outlook report projects a 50 percent increase in global copper demand by 2040, driven by electrification, AI, core economic growth, and the energy transition. The report warns of a potential 10 million metric ton shortfall in copper supply by 2040 without significant investment in new mining and processing. Copper is increasingly viewed as a strategic asset crucial for future energy, technology, and national security, emphasizing the need for diversification and multilateral cooperation to address the supply-demand imbalance.",
+      "source": "Investing News Network",
+      "url": "https://investingnews.com/sp-global-coppers-strategic-value/",
+      "tickers": [
+        "SPGI",
+        "FCX",
+        "AMD",
+        "NVDA",
+        "TSLA"
+      ],
+      "topics": [
+        "economy_macro",
+        "energy_transportation",
+        "manufacturing",
+        "technology",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.296174,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SPGI",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.262666,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "FCX",
+          "relevance_score": 0.853951,
+          "sentiment_score": 0.436002,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AMD",
+          "relevance_score": 0.633036,
+          "sentiment_score": 0.277661,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": 0.61021,
+          "sentiment_score": 0.25574,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "TSLA",
+          "relevance_score": 0.588202,
+          "sentiment_score": 0.226618,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "SPGI": 0.262666,
+        "FCX": 0.436002,
+        "AMD": 0.277661,
+        "NVDA": 0.25574,
+        "TSLA": 0.226618
+      }
+    },
+    {
+      "id": "601509065877958324",
+      "timestamp": "2026-01-22T15:47:14",
+      "headline": "Northern Trust Q4 earnings, revenue beats helped by NII, servicing fee growth (NTRS:NASDAQ)",
+      "summary": "Northern Trust (NTRS) reported a double beat in Q4, with GAAP EPS of $2.42 against a $2.35 consensus, and revenue of $2.14B exceeding the $2.06B estimate. The positive results were driven by strong net interest income growth, robust asset servicing income, and effective expense management. Management consequently raised its return on equity target to mid-teens and pretax margin target to 33%.",
+      "source": "Seeking Alpha",
+      "url": "https://seekingalpha.com/news/4541541-northern-trust-q4-earnings-revenue-beats-helped-by-nii-servicing-fee-growth",
+      "tickers": [
+        "NTRS"
+      ],
+      "topics": [
+        "earnings",
+        "finance",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.524321,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "NTRS",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.524231,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "NTRS": 0.524231
+      }
+    },
+    {
+      "id": "-5103977052366014391",
+      "timestamp": "2026-01-22T15:46:52",
+      "headline": "F5, INC. (NASDAQ: FFIV) DEADLINE ALERT \u2013 Bernstein Liebhard",
+      "summary": "Bernstein Liebhard LLP has issued a deadline alert for investors of F5, Inc. (NASDAQ: FFIV) who purchased shares between October 28, 2024, and October 27, 2025. The alert relates to a securities fraud class action lawsuit alleging misrepresentations regarding F5's security capabilities. Investors have until February 17, 2026, to file papers to serve as lead plaintiff.",
+      "source": "GlobeNewswire",
+      "url": "https://www.globenewswire.com/news-release/2026/01/22/3224000/0/en/F5-INC-NASDAQ-FFIV-DEADLINE-ALERT-Bernstein-Liebhard-LLP-Reminds-F5-Inc-Investors-of-Upcoming-Deadline.html",
+      "tickers": [
+        "FFIV"
+      ],
+      "topics": [
+        "finance",
+        "financial_markets"
+      ],
+      "overall_sentiment": -0.745938,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "FFIV",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.714305,
+          "sentiment_label": "Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "FFIV": -0.714305
+      }
+    },
+    {
+      "id": "-4309903785802158129",
+      "timestamp": "2026-01-22T15:41:07",
+      "headline": "March 6th Options Now Available For Lowe's Companies",
+      "summary": "New options contracts for Lowe's Companies (LOW) with a March 6th expiration are now trading. The article highlights a put contract at a $275.00 strike price and a call contract at a $280.00 strike price, analyzing potential returns and risks for investors. These options provide strategies for investors looking to buy shares at a discount or generate income through covered calls.",
+      "source": "Nasdaq",
+      "url": "https://www.nasdaq.com/articles/march-6th-options-now-available-lowes-companies",
+      "tickers": [
+        "LOW"
+      ],
+      "topics": [
+        "financial_markets",
+        "retail_wholesale"
+      ],
+      "overall_sentiment": 0.112132,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "LOW",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.143082,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "LOW": 0.143082
+      }
+    },
+    {
+      "id": "-5402651602147667856",
+      "timestamp": "2026-01-22T15:38:05",
+      "headline": "Loews Hotels Announces Third Property in Arlington's Entertainment District, Signaling Growth Commitment",
+      "summary": "Loews Hotels is expanding its presence in Arlington's Entertainment District by opening its third hotel, highlighting the company's confidence in the region's growth potential. This development aims to capitalize on Arlington's status as a hub for events and entertainment, boosting Loews' brand influence and market share. The new hotel is also expected to contribute positively to the local economy through job creation and increased tourism.",
+      "source": "Intellectia AI",
+      "url": "https://intellectia.ai/news/stock/loews-hotels-announces-third-property-in-arlingtons-entertainment-district-signaling-growth-commitment",
+      "tickers": [
+        "L"
+      ],
+      "topics": [
+        "real_estate",
+        "earnings",
+        "financial_markets",
+        "economy_macro",
+        "finance"
+      ],
+      "overall_sentiment": 0.02596,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "L",
+          "relevance_score": 0.303488,
+          "sentiment_score": 0.031648,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "L": 0.031648
+      }
+    },
+    {
+      "id": "-729938262856349565",
+      "timestamp": "2026-01-22T15:36:07",
+      "headline": "Griffon Corp stock hits 52-week high at 86.11 USD",
+      "summary": "Griffon Corporation's stock reached a new 52-week high of $86.11, reflecting positive momentum with a 9.6% increase over the past year and a 16.27% year-to-date return in 2026. This performance is supported by aggressive share buybacks and 15 consecutive years of dividend payments, with analysts setting price targets as high as $115. The company recently reported strong Q4 2025 earnings, surpassing analyst expectations for both EPS and revenue, further bolstered by Stephens raising its price target to $92.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/company-news/griffon-corp-stock-hits-52week-high-at-8611-usd-93CH-4460748",
+      "tickers": [
+        "GFF",
+        "INTC",
+        "NVDA"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.277328,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GFF",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.709735,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "INTC",
+          "relevance_score": 0.614073,
+          "sentiment_score": -0.113609,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": 0.611706,
+          "sentiment_score": 0.203068,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "GFF": 0.709735,
+        "INTC": -0.113609,
+        "NVDA": 0.203068
+      }
+    },
+    {
       "id": "7340972289998179748",
       "timestamp": "2026-01-22T15:15:14",
       "headline": "Eagle Bancorp Posts Upbeat Q4 Results, Joins Corcept Therapeutics, LSI Industries And Other Big Stocks Moving Higher On Thursday",
@@ -95,6 +502,36 @@
       "ticker_sentiments": {
         "QCOM": 0.111108,
         "AAPL": -0.226041
+      }
+    },
+    {
+      "id": "3216207094036402655",
+      "timestamp": "2026-01-22T15:12:52",
+      "headline": "Freeport-McMoRan profit beats as high copper prices offset Grasberg hit",
+      "summary": "Freeport-McMoRan surpassed Wall Street's expectations for fourth-quarter profit, largely due to elevated copper and gold prices. This performance occurred despite a significant drop in production attributed to an incident at Indonesia\u2019s Grasberg mine, which resulted in seven fatalities. The company's shares experienced a premarket dip following the production decrease.",
+      "source": "Mining.com",
+      "url": "https://www.mining.com/web/freeport-mcmoran-profit-beats-as-high-copper-prices-offset-grasberg-hit/",
+      "tickers": [
+        "FCX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_macro",
+        "manufacturing"
+      ],
+      "overall_sentiment": 0.255419,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "FCX",
+          "relevance_score": 0.980547,
+          "sentiment_score": 0.285409,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "FCX": 0.285409
       }
     },
     {
@@ -266,6 +703,36 @@
       }
     },
     {
+      "id": "-7858235023858705036",
+      "timestamp": "2026-01-22T15:03:49",
+      "headline": "Engaging In Options Activity, George Yuhas Exercises Options Valued At $204K In Central Garden & Pet",
+      "summary": "George Yuhas, General Counsel at Central Garden & Pet (NASDAQ: CENT), recently exercised 20,833 company stock options valued at $204,788. This transaction, detailed in an SEC Form 4 filing, involved shares currently trading up 0.99% at $32.63. The article also provides a financial overview of Central Garden & Pet, highlighting its revenue growth, profitability challenges, debt management, and valuation metrics.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/insights/news/26/01/50069839/engaging-in-options-activity-george-yuhas-exercises-options-valued-at-204k-in-central-garden-pet",
+      "tickers": [
+        "CENT"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "retail_wholesale"
+      ],
+      "overall_sentiment": 0.033187,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CENT",
+          "relevance_score": 0.340704,
+          "sentiment_score": 0.006181,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "CENT": 0.006181
+      }
+    },
+    {
       "id": "-5157627724340065266",
       "timestamp": "2026-01-22T15:03:43",
       "headline": "Thomas Tray Decides To Exercise Options At Incyte Worth $0",
@@ -323,6 +790,34 @@
       ],
       "ticker_sentiments": {
         "INCY": 0.125937
+      }
+    },
+    {
+      "id": "-6220323241087205638",
+      "timestamp": "2026-01-22T15:02:17",
+      "headline": "INVESTOR ALERT: Pomerantz Law Firm Investigates Claims On Behalf of Investors of BigBear.ai Holdings, Inc. - BBAI",
+      "summary": "Pomerantz LLP is investigating potential securities fraud claims against BigBear.ai Holdings, Inc. (NYSE: BBAI). This investigation follows Cantor analysts downgrading BigBear to Neutral from Overweight due to a significant revenue decline and elevated execution risk from government contracts. The downgrade led to a 6.55% drop in BigBear's stock price on January 7, 2026.",
+      "source": "PR Newswire",
+      "url": "https://www.prnewswire.com/news-releases/investor-alert-pomerantz-law-firm-investigates-claims-on-behalf-of-investors-of-bigbearai-holdings-inc---bbai-302666416.html",
+      "tickers": [
+        "BBAI"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings"
+      ],
+      "overall_sentiment": -0.455999,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BBAI",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.468908,
+          "sentiment_label": "Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "BBAI": -0.468908
       }
     },
     {
@@ -393,6 +888,91 @@
       }
     },
     {
+      "id": "-504801765472423743",
+      "timestamp": "2026-01-22T14:58:16",
+      "headline": "Premier American Uranium Announces Upsize of Bought Deal Private Placement to C$13 Million",
+      "summary": "Premier American Uranium Inc. announced an upsize of its bought deal private placement to C$13 million due to strong investor demand. The company entered into an amended agreement with Red Cloud Securities Inc., as lead underwriter, to purchase 14,444,444 units at C$0.90 per unit. The net proceeds are intended for the exploration and advancement of the company's uranium projects in New Mexico and Wyoming, as well as for working capital and general corporate purposes.",
+      "source": "ACCESS Newswire",
+      "url": "https://www.accessnewswire.com/newsroom/en/metals-and-mining/premier-american-uranium-announces-upsize-of-bought-deal-private-placement-to-c13-1129980",
+      "tickers": [
+        "ACCS"
+      ],
+      "topics": [
+        "finance",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.007468,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ACCS",
+          "relevance_score": 0.33255,
+          "sentiment_score": 0.044247,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ACCS": 0.044247
+      }
+    },
+    {
+      "id": "-1684380332090542793",
+      "timestamp": "2026-01-22T14:58:12",
+      "headline": "Why Denison Mines\u2019 stock price is up premarket as 2026 uranium drilling plans roll out",
+      "summary": "Denison Mines' stock price increased premarket due to new uranium exploration plans for 2026 in Saskatchewan and the ongoing drive for secure nuclear fuel sources. The company and its joint venture partners, Skyharbour Resources and Cosa Resources, plan extensive diamond drilling programs in the Athabasca Basin. Additionally, Denison is moving forward with its Phoenix in-situ recovery uranium mine construction, with first production targeted for mid-2028, and has secured grid power, reducing construction risks.",
+      "source": "TechStock\u00b2",
+      "url": "https://ts2.tech/en/why-denison-mines-stock-price-is-up-premarket-as-2026-uranium-drilling-plans-roll-out/",
+      "tickers": [
+        "DNN"
+      ],
+      "topics": [
+        "energy_transportation",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.475073,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "DNN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.485761,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "DNN": 0.485761
+      }
+    },
+    {
+      "id": "-7167503298778186312",
+      "timestamp": "2026-01-22T14:58:08",
+      "headline": "Viavi Solutions stock hits 52-week high at 19.78 USD",
+      "summary": "Viavi Solutions Inc. (VIAV) recently hit a 52-week high of $19.78, reflecting an 82.1% increase over the last year and an 86.54% gain over six months, with its stock trading significantly above its fair value according to InvestingPro data. The company is actively expanding its technological capabilities. Recent developments include enhancements to its XEdge cloud platform, a new testing solution for hollow core fiber networks, a raised price target from Stifel to $20, convertible note exchanges, and a partnership with QNu Labs for quantum-safe security.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/company-news/viavi-solutions-stock-hits-52week-high-at-1978-usd-93CH-4460643",
+      "tickers": [
+        "VIAV"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings",
+        "technology"
+      ],
+      "overall_sentiment": 0.861339,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "VIAV",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.895072,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "VIAV": 0.895072
+      }
+    },
+    {
       "id": "-1137316578667797547",
       "timestamp": "2026-01-22T14:58:06",
       "headline": "DBRG Stock Price, News & Analysis",
@@ -421,6 +1001,35 @@
       ],
       "ticker_sentiments": {
         "DBRG": 0.383594
+      }
+    },
+    {
+      "id": "-7989679263375161689",
+      "timestamp": "2026-01-22T14:58:01",
+      "headline": "Axogen (AXGN) Increases Stock Offering to $124 Million",
+      "summary": "Axogen, Inc. (AXGN) has increased its common stock offering from $85 million to $124 million, signaling strong investor interest and providing capital for growth initiatives. Despite a robust gross margin of 74.76%, the company faces challenges in profitability, with a negative net margin and EPS. While Axogen exhibits strong liquidity and a low debt-to-equity ratio, insider selling and premium valuation metrics suggest caution for investors.",
+      "source": "GuruFocus",
+      "url": "https://www.gurufocus.com/news/8542999/axogen-axgn-increases-stock-offering-to-124-million",
+      "tickers": [
+        "AXGN"
+      ],
+      "topics": [
+        "financial_markets",
+        "life_sciences",
+        "earnings"
+      ],
+      "overall_sentiment": 0.211922,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "AXGN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.185802,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "AXGN": 0.185802
       }
     },
     {
@@ -557,6 +1166,68 @@
       "ticker_sentiments": {
         "EQT": 0.49588,
         "COF": 0.324207
+      }
+    },
+    {
+      "id": "-6088652955864478565",
+      "timestamp": "2026-01-22T14:56:28",
+      "headline": "Autodesk announces global restructuring with 7% workforce reduction",
+      "summary": "Autodesk (NASDAQ:ADSK) has announced a global restructuring plan that will cut approximately 7% of its workforce, impacting about 1,000 employees, primarily in customer-facing sales roles. This move is the final step in the company's sales and marketing optimization efforts, with anticipated pre-tax restructuring charges of $135 million to $160 million. Despite the reductions, Autodesk expects its Q4 and full-year fiscal 2026 financial results to exceed previous guidance, and savings from the layoffs will be reinvested into strategic priorities.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/sec-filings/autodesk-announces-global-restructuring-with-7-workforce-reduction-93CH-4460545",
+      "tickers": [
+        "ADSK",
+        "ANET",
+        "MRNA",
+        "ENPH",
+        "DDOG"
+      ],
+      "topics": [
+        "earnings",
+        "technology",
+        "financial_markets",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.314686,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ADSK",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.266937,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ANET",
+          "relevance_score": 0.625661,
+          "sentiment_score": 0.312491,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MRNA",
+          "relevance_score": 0.616472,
+          "sentiment_score": 0.328257,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ENPH",
+          "relevance_score": 0.635467,
+          "sentiment_score": 0.307304,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "DDOG",
+          "relevance_score": 0.619757,
+          "sentiment_score": 0.345783,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ADSK": 0.266937,
+        "ANET": 0.312491,
+        "MRNA": 0.328257,
+        "ENPH": 0.307304,
+        "DDOG": 0.345783
       }
     },
     {
@@ -16921,579 +17592,7 @@
       "ticker_sentiments": {
         "EQIX": 0.091066
       }
-    },
-    {
-      "id": "-2950934781200936578",
-      "timestamp": "2026-01-21T13:40:37",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Grows Stake in Ecolab Inc. $ECL",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH increased its stake in Ecolab Inc. by 8.3% during the third quarter, bringing its total ownership to 262,636 shares valued at $71.93 million. This article details the institutional ownership changes, Ecolab's financial performance, recent dividend increase, insider trading activities, and analyst ratings for the company.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-grows-stake-in-ecolab-inc-ecl-2026-01-21/",
-      "tickers": [
-        "ECL"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.002945,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ECL",
-          "relevance_score": 0.301264,
-          "sentiment_score": 0.028602,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "ECL": 0.028602
-      }
-    },
-    {
-      "id": "-1435165179230736873",
-      "timestamp": "2026-01-21T13:40:36",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Sells 71,104 Shares of Electronic Arts Inc. $EA",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH reduced its stake in Electronic Arts Inc. by 16.0% during the third quarter, selling 71,104 shares and now owning 371,964 shares valued at $75,025,000. Other institutional investors have also adjusted their positions in EA, with some increasing and others initiating new stakes. Meanwhile, Electronic Arts has seen insider selling from its director Jeff Huber and CEO Andrew Wilson, while analysts hold a consensus \"Hold\" rating with a target price of $182.17.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-sells-71104-shares-of-electronic-arts-inc-ea-2026-01-21/",
-      "tickers": [
-        "EA"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "technology"
-      ],
-      "overall_sentiment": -0.116187,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "EA",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.132444,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "EA": -0.132444
-      }
-    },
-    {
-      "id": "145770570282081099",
-      "timestamp": "2026-01-21T13:40:36",
-      "headline": "Rakuten Investment Management Inc. Takes $57.95 Million Position in Darden Restaurants, Inc. $DRI",
-      "summary": "Rakuten Investment Management Inc. has acquired a new position in Darden Restaurants, purchasing 304,411 shares valued at approximately $57.95 million. This coincides with recent insider selling by Darden executives, including CFO Rajesh Vennam and SVP Susan M. Connelly. Darden's recent quarterly earnings slightly missed EPS estimates but saw a revenue increase, and the company announced FY2026 EPS guidance and a quarterly dividend.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-takes-5795-million-position-in-darden-restaurants-inc-dri-2026-01-21/",
-      "tickers": [
-        "DRI"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "retail_wholesale"
-      ],
-      "overall_sentiment": -0.084693,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "DRI",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.0586,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "DRI": -0.0586
-      }
-    },
-    {
-      "id": "-2683487918691996253",
-      "timestamp": "2026-01-21T13:40:35",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Decreases Stake in Fortinet, Inc. $FTNT",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH significantly reduced its stake in Fortinet, Inc., selling 21.3% of its shares. This move aligns with a broader trend of analyst downgrades and insider selling, despite other institutional investors increasing their positions. Fortinet's stock performance shows a 50-day moving average of $80.35 and a 200-day moving average of $84.76, while the company reported strong Q3 earnings, surpassing analyst expectations.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-decreases-stake-in-fortinet-inc-ftnt-2026-01-21/",
-      "tickers": [
-        "FTNT"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "technology"
-      ],
-      "overall_sentiment": -0.288548,
-      "overall_sentiment_label": "Somewhat-Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "FTNT",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.267357,
-          "sentiment_label": "Somewhat-Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "FTNT": -0.267357
-      }
-    },
-    {
-      "id": "-1919943713091101420",
-      "timestamp": "2026-01-21T13:40:33",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Sells 32,597 Shares of Cintas Corporation $CTAS",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH reduced its stake in Cintas Corporation by 8.7% in the third quarter, selling 32,597 shares and retaining 343,240 shares worth $70.45 million. Other institutional investors like Norges Bank and Los Angeles Capital Management LLC increased their holdings. Cintas recently announced a stock repurchase plan of $1 billion and a quarterly dividend of $0.45 per share, with analysts forecasting growth and holding a consensus \"Hold\" rating with an average target price of $214.86.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-sells-32597-shares-of-cintas-corporation-ctas-2026-01-21/",
-      "tickers": [
-        "CTAS"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.301721,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CTAS",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.347747,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "CTAS": 0.347747
-      }
-    },
-    {
-      "id": "2347735918804652284",
-      "timestamp": "2026-01-21T13:40:33",
-      "headline": "Rakuten Investment Management Inc. Makes New $32.54 Million Investment in Cintas Corporation $CTAS",
-      "summary": "Rakuten Investment Management Inc. has initiated a new position in Cintas Corporation (NASDAQ:CTAS) during the third quarter, acquiring 158,513 shares valued at approximately $32.54 million. This investment comes as Cintas reported slightly better-than-expected quarterly earnings and revenue, alongside announcing a quarterly dividend of $0.45 per share and a $1 billion share repurchase program. The company's stock has also seen recent upgrades from analysts, contributing to a \"Hold\" consensus rating.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-makes-new-3254-million-investment-in-cintas-corporation-ctas-2026-01-21/",
-      "tickers": [
-        "CTAS"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.489131,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CTAS",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.473087,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "CTAS": 0.473087
-      }
-    },
-    {
-      "id": "-8494331788830550453",
-      "timestamp": "2026-01-21T13:40:32",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Sells 164,938 Shares of Chipotle Mexican Grill, Inc. $CMG",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH reduced its stake in Chipotle Mexican Grill (NYSE:CMG) by 7.7% in the third quarter, selling 164,938 shares. The fund now owns 1,972,709 shares valued at $77.31 million. Other hedge funds also adjusted their positions, while analyst ratings on CMG are generally a \"Moderate Buy\" with a consensus target price of $50.16.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-sells-164938-shares-of-chipotle-mexican-grill-inc-cmg-2026-01-21/",
-      "tickers": [
-        "CMG"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "retail_wholesale"
-      ],
-      "overall_sentiment": 0.046464,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CMG",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.042943,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "CMG": 0.042943
-      }
-    },
-    {
-      "id": "985313422973622514",
-      "timestamp": "2026-01-21T13:40:31",
-      "headline": "Rakuten Investment Management Inc. Acquires Shares of 228,498 Church & Dwight Co., Inc. $CHD",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 228,498 shares in Church & Dwight Co., Inc. (NYSE:CHD), valued at approximately $20 million, representing about 0.09% ownership. Church & Dwight recently surpassed Q3 earnings and revenue estimates, reporting EPS of $0.81 and revenue of $1.59 billion, and issued positive guidance for Q4 and FY2025. The company maintains an average analyst rating of \"Hold\" with a consensus target price of $98.65, and recently paid a quarterly dividend of $0.295.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-acquires-shares-of-228498-church-dwight-co-inc-chd-2026-01-21/",
-      "tickers": [
-        "CHD"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.412212,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CHD",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.412264,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "CHD": 0.412264
-      }
-    },
-    {
-      "id": "1438400312246026550",
-      "timestamp": "2026-01-21T13:40:31",
-      "headline": "Rakuten Investment Management Inc. Takes $17.48 Million Position in Elevance Health, Inc. $ELV",
-      "summary": "Rakuten Investment Management Inc. has initiated a new $17.48 million position in Elevance Health, Inc. by purchasing 54,091 shares during the third quarter. Elevance Health, which recently reported strong Q3 earnings, beating analyst expectations with $6.03 EPS and $50.09 billion in revenue, continues to be rated a \"Moderate Buy\" by analysts. The company has a current market capitalization of $81.48 billion and approximately 89.24% of its shares are held by institutional investors.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-takes-1748-million-position-in-elevance-health-inc-elv-2026-01-21/",
-      "tickers": [
-        "ELV"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "life_sciences",
-        "finance"
-      ],
-      "overall_sentiment": 0.329254,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ELV",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.308601,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "ELV": 0.308601
-      }
-    },
-    {
-      "id": "2111321710945756732",
-      "timestamp": "2026-01-21T13:40:30",
-      "headline": "Rakuten Investment Management Inc. Acquires Shares of 126,814 Cboe Global Markets, Inc. $CBOE",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 126,814 shares in Cboe Global Markets, Inc. during the third quarter, valued at approximately $31.1 million. This investment represents about 0.12% of Cboe Global Markets. Despite beating Q3 earnings expectations, analysts currently have a \"Hold\" rating on Cboe, with a consensus target price of $268.36, while institutional investors hold 82.67% of the company's stock.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-acquires-shares-of-126814-cboe-global-markets-inc-cboe-2026-01-21/",
-      "tickers": [
-        "CBOE"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": -0.079603,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "CBOE",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.067346,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "CBOE": -0.067346
-      }
-    },
-    {
-      "id": "-875974887245463431",
-      "timestamp": "2026-01-21T13:40:29",
-      "headline": "Rakuten Investment Management Inc. Takes Position in Brown & Brown, Inc. $BRO",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 241,414 shares in Brown & Brown (NYSE: BRO) during the third quarter, valued at approximately $22.64 million. This new position represents about 0.07% of Brown & Brown's stock. Other institutional investors also adjusted their holdings, and the company recently reported Q3 earnings that beat estimates with $1.05 EPS and revenue up 35.4% year-over-year.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-takes-position-in-brown-brown-inc-bro-2026-01-21/",
-      "tickers": [
-        "BRO"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.236617,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "BRO",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.220155,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "BRO": 0.220155
-      }
-    },
-    {
-      "id": "6044506509817822558",
-      "timestamp": "2026-01-21T13:40:27",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Has $75.36 Million Stock Position in AutoZone, Inc. $AZO",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH reduced its stake in AutoZone (NYSE:AZO) by 2.9% in the third quarter, now owning 17,565 shares valued at $75.36 million. Despite this reduction, other institutional investors increased their holdings, and the stock is trading up 1.5%. Analyst ratings are mixed but lean towards \"Moderate Buy\" with a consensus target price of $4,264.12.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-has-7536-million-stock-position-in-autozone-inc-azo-2026-01-21/",
-      "tickers": [
-        "AZO"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "retail_wholesale",
-        "finance",
-        "economy_macro"
-      ],
-      "overall_sentiment": -0.051768,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "AZO",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.069767,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "AZO": -0.069767
-      }
-    },
-    {
-      "id": "1002585199568275663",
-      "timestamp": "2026-01-21T13:40:27",
-      "headline": "Rakuten Investment Management Inc. Invests $28.95 Million in American Express Company $AXP",
-      "summary": "Rakuten Investment Management Inc. initiated a new position in American Express Company (AXP) during the third quarter, purchasing 87,149 shares valued at approximately $28.95 million. This investment comes amidst mixed analyst ratings and concerns about a proposed 10% credit-card APR cap which could negatively impact issuer margins. American Express recently missed its quarterly EPS estimate significantly, with the stock falling about 3.5%.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-invests-2895-million-in-american-express-company-axp-2026-01-21/",
-      "tickers": [
-        "AXP"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "economy_fiscal",
-        "economy_macro"
-      ],
-      "overall_sentiment": -0.241304,
-      "overall_sentiment_label": "Somewhat-Bearish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "AXP",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.223076,
-          "sentiment_label": "Somewhat-Bearish"
-        }
-      ],
-      "ticker_sentiments": {
-        "AXP": -0.223076
-      }
-    },
-    {
-      "id": "6219167073511896667",
-      "timestamp": "2026-01-21T13:40:27",
-      "headline": "34,883 Shares in AutoZone, Inc. $AZO Bought by Rakuten Investment Management Inc.",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 34,883 shares in AutoZone, Inc. (NYSE:AZO) during the third quarter, valued at approximately $149.65 million. This purchase makes AutoZone the 17th largest position in Rakuten's portfolio, representing about 0.5% of its total holdings. The article also details recent analyst ratings, stock performance, and insider trading activity for AutoZone.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-34883-shares-in-autozone-inc-azo-bought-by-rakuten-investment-management-inc-2026-01-21/",
-      "tickers": [
-        "AZO"
-      ],
-      "topics": [
-        "earnings",
-        "retail_wholesale",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.19116,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "AZO",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.216949,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "AZO": 0.216949
-      }
-    },
-    {
-      "id": "-1330034588003012804",
-      "timestamp": "2026-01-21T13:40:24",
-      "headline": "Rakuten Investment Management Inc. Buys New Position in Autodesk, Inc. $ADSK",
-      "summary": "Rakuten Investment Management Inc. has acquired a new position in Autodesk, Inc. (NASDAQ:ADSK) during the third quarter, purchasing 845,685 shares valued at approximately $268.6 million, making it their 10th largest holding. Other institutional investors also adjusted their stakes in Autodesk, which currently holds a \"Moderate Buy\" rating with a consensus target price of $369.97. The company recently reported strong Q3 earnings, beating analyst estimates, and has provided positive guidance for FY 2026.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-buys-new-position-in-autodesk-inc-adsk-2026-01-21/",
-      "tickers": [
-        "ADSK"
-      ],
-      "topics": [
-        "earnings",
-        "technology",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.310244,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ADSK",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.331332,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "ADSK": 0.331332
-      }
-    },
-    {
-      "id": "-6030309971803609454",
-      "timestamp": "2026-01-21T13:40:12",
-      "headline": "Rakuten Investment Management Inc. Makes New $37.31 Million Investment in Zimmer Biomet Holdings, Inc. $ZBH",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 378,752 shares in Zimmer Biomet Holdings, Inc. (NYSE:ZBH), valued at approximately $37.31 million. This investment represents about 0.19% of Zimmer Biomet, a medical device company specializing in musculoskeletal healthcare. The company recently reported quarterly EPS of $1.90, beating consensus estimates, and announced a quarterly dividend of $0.24 per share.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-makes-new-3731-million-investment-in-zimmer-biomet-holdings-inc-zbh-2026-01-21/",
-      "tickers": [
-        "ZBH",
-        "ISRG",
-        "BSX"
-      ],
-      "topics": [
-        "earnings",
-        "life_sciences",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.217525,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ZBH",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.415242,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "ISRG",
-          "relevance_score": 0.610841,
-          "sentiment_score": 0.101529,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "BSX",
-          "relevance_score": 0.580252,
-          "sentiment_score": 0.063565,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "ZBH": 0.415242,
-        "ISRG": 0.101529,
-        "BSX": 0.063565
-      }
-    },
-    {
-      "id": "8968117845260890725",
-      "timestamp": "2026-01-21T13:40:12",
-      "headline": "Rakuten Investment Management Inc. Takes $51.16 Million Position in Wynn Resorts, Limited $WYNN",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 398,868 shares, valued at approximately $51.16 million, in Wynn Resorts, Limited during the third quarter. This investment represents about 0.38% ownership of the casino operator. Other institutional investors have also adjusted their holdings in Wynn Resorts, which reported $1.83 billion in revenue and trades near $111 per share with a \"Moderate Buy\" consensus rating and a $1.00 annual dividend.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-takes-5116-million-position-in-wynn-resorts-limited-wynn-2026-01-21/",
-      "tickers": [
-        "WYNN"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.300924,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "WYNN",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.300294,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "WYNN": 0.300294
-      }
-    },
-    {
-      "id": "-8324769465156247572",
-      "timestamp": "2026-01-21T13:40:11",
-      "headline": "Rakuten Investment Management Inc. Takes $57.03 Million Position in WEC Energy Group, Inc. $WEC",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 497,671 shares, valued at approximately $57.03 million, in WEC Energy Group, Inc. This investment represents about 0.15% of the company. WEC Energy Group recently increased its quarterly dividend to $0.9525, leading to an annualized dividend of $3.81 and a yield of roughly 3.5%. The company also reported strong Q3 earnings, surpassing analyst estimates for both EPS and revenue, and provided positive FY2025 EPS guidance.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-takes-5703-million-position-in-wec-energy-group-inc-wec-2026-01-21/",
-      "tickers": [
-        "WEC"
-      ],
-      "topics": [
-        "financial_markets",
-        "earnings",
-        "finance",
-        "energy_transportation"
-      ],
-      "overall_sentiment": 0.314015,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "WEC",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.339682,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "WEC": 0.339682
-      }
-    },
-    {
-      "id": "-3680933681872727901",
-      "timestamp": "2026-01-21T13:40:08",
-      "headline": "Rakuten Investment Management Inc. Buys Shares of 131,681 Ulta Beauty Inc. $ULTA",
-      "summary": "Rakuten Investment Management Inc. has acquired 131,681 shares of Ulta Beauty Inc. (NASDAQ:ULTA), a new institutional position valued at approximately $72 million, representing about 0.29% of the company. This comes as Ulta Beauty exceeded Q3 earnings expectations with $5.14 EPS and $2.86 billion in revenue, also providing strong FY2025 guidance. Wall Street analysts have maintained a \"Moderate Buy\" consensus and an average target price of $618.04 for ULTA.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-buys-shares-of-131681-ulta-beauty-inc-ulta-2026-01-21/",
-      "tickers": [
-        "ULTA"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "retail_wholesale",
-        "finance"
-      ],
-      "overall_sentiment": 0.436544,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ULTA",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.412433,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "ULTA": 0.412433
-      }
     }
   ],
-  "last_updated": "2026-01-22T19:44:37.749120"
+  "last_updated": "2026-01-22T20:15:06.775257"
 }

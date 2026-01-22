@@ -2228,6 +2228,8 @@
         
         // Run Rebalance
         async function runRebalance(skipConfirmation = false) {
+            console.log('runRebalance called with skipConfirmation =', skipConfirmation);
+            
             const btn = document.getElementById('run-btn');
             const dryRun = document.getElementById('dry-run').checked;
             const force = document.getElementById('force-rebalance').checked;
@@ -2236,11 +2238,15 @@
             const riskAppetite = document.getElementById('risk-appetite').value;
             const fastMode = document.getElementById('fast-mode')?.checked ?? true;
             
-            // Confirm if NOT dry run (live trading) - unless skipConfirmation is true (auto mode)
-            if (!dryRun && !skipConfirmation) {
+            // Confirm ONLY if: (1) NOT dry run AND (2) NOT auto-mode (skipConfirmation=false)
+            // When skipConfirmation is TRUE (auto-mode), NEVER show confirmation
+            if (!dryRun && skipConfirmation !== true) {
+                console.log('Showing confirmation dialog because dryRun=false and skipConfirmation=', skipConfirmation);
                 if (!confirm('⚠️ LIVE TRADING MODE!\n\nThis will place REAL orders with REAL money.\n\nAre you sure you want to continue?')) {
                     return;
                 }
+            } else {
+                console.log('Skipping confirmation: dryRun=', dryRun, 'skipConfirmation=', skipConfirmation);
             }
             
             btn.disabled = true;
@@ -2951,63 +2957,76 @@
         
         // Toggle Auto - CALLS SERVER API for true background automation
         async function toggleAuto() {
+            console.log('=== toggleAuto() called ===');
             const btn = document.getElementById('auto-btn');
             const interval = parseInt(document.getElementById('auto-interval').value) || 60;
             const dryRun = document.getElementById('dry-run').checked;
+            const exposure = getExposurePercent() / 100;
             
             // Toggle state
-            autoEnabled = !autoEnabled;
+            const newState = !autoEnabled;
+            console.log('Toggling auto-rebalance:', autoEnabled, '->', newState);
+            console.log('Settings: interval=', interval, 'dryRun=', dryRun, 'exposure=', exposure);
             
             try {
                 // CRITICAL: Call server API to enable server-side auto-rebalance
                 // This runs on the server even when browser is closed!
+                const requestBody = {
+                    enabled: newState,
+                    interval_minutes: interval,
+                    dry_run: dryRun,
+                    allow_after_hours: true,
+                    exposure_pct: exposure
+                };
+                console.log('Sending to /api/auto-rebalance:', JSON.stringify(requestBody));
+                
                 const response = await fetch('/api/auto-rebalance', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        enabled: autoEnabled,
-                        interval_minutes: interval,
-                        dry_run: dryRun,
-                        allow_after_hours: true,
-                        exposure_pct: getExposurePercent() / 100
-                    })
+                    body: JSON.stringify(requestBody)
                 });
                 
+                console.log('Response status:', response.status);
+                
                 if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
+                    const errorText = await response.text();
+                    console.error('Server error response:', errorText);
+                    throw new Error(`Server error ${response.status}: ${errorText}`);
                 }
                 
                 const result = await response.json();
                 console.log('Server auto-rebalance response:', result);
+                
+                // Only update state AFTER successful server response
+                autoEnabled = newState;
                 
                 if (autoEnabled) {
                     btn.textContent = `Disable (${interval}m)`;
                     btn.classList.add('danger');
                     btn.classList.remove('secondary');
                     
-                    // Run immediately on enable (no confirmation in auto mode)
-                    if (!isRunning) {
-                        console.log('⚡ Auto-rebalance: Running immediately (no confirmation)');
-                        runRebalance(true);
-                    }
+                    showToast('success', 'Auto-Rebalance ENABLED', 
+                        `Server will run every ${interval} minutes automatically!`);
+                    updateStatus('success', `Auto: ${interval}m (SERVER)`);
                     
-                    showToast('success', 'Auto-Rebalance Enabled', 
-                        `Server will run every ${interval} minutes, even when browser is closed!`);
-                    updateStatus('success', `Auto: ${interval}m (SERVER-SIDE)`);
+                    // Run immediately - PASS TRUE explicitly to skip confirmation
+                    if (!isRunning) {
+                        console.log('⚡ Running first rebalance immediately with skipConfirmation=true');
+                        setTimeout(() => runRebalance(true), 500);  // Slight delay to let UI update
+                    }
                 } else {
                     btn.textContent = 'Enable';
                     btn.classList.remove('danger');
                     btn.classList.add('secondary');
                     
-                    showToast('info', 'Auto-Rebalance Disabled', 'Server-side automation stopped');
-                    updateStatus('idle', 'Auto-rebalance disabled');
+                    showToast('info', 'Auto-Rebalance DISABLED', 'Server automation stopped');
+                    updateStatus('idle', 'Auto disabled');
                 }
                 
             } catch (e) {
-                console.error('Auto-rebalance toggle error:', e);
+                console.error('Auto-rebalance toggle FAILED:', e);
                 showToast('error', 'Auto-Rebalance Failed', e.message);
-                // Revert state on error
-                autoEnabled = !autoEnabled;
+                // DON'T change state on error
             }
         }
         
@@ -3785,9 +3804,11 @@
         // ========== SHOW TOAST ON ACTIONS ==========
         const originalRunRebalance = runRebalance;
         runRebalance = async function(skipConfirmation = false) {
+            console.log('Wrapper runRebalance called with skipConfirmation =', skipConfirmation);
             showToast('info', 'Rebalancing Started', 'Running portfolio optimization...');
             try {
-                await originalRunRebalance(skipConfirmation);  // Pass through the skip flag!
+                // CRITICAL: Pass through the skip flag exactly as received
+                await originalRunRebalance(skipConfirmation === true ? true : false);
             } catch (e) {
                 showToast('error', 'Rebalance Failed', e.message || 'Check console for details');
                 throw e;
