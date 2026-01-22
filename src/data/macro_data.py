@@ -354,7 +354,7 @@ class MacroDataLoader:
             vix_change=vix_change,
             treasury_10y=treasury_10y,
             treasury_2y=treasury_2y,
-            treasury_spread=treasury_spread
+            treasury_spread=treasury_spread,
             spy_price=spy_price,
             spy_change_pct=spy_change,
             spy_vs_200ma=spy_vs_ma,
