@@ -3721,10 +3721,10 @@
         
         // ========== SHOW TOAST ON ACTIONS ==========
         const originalRunRebalance = runRebalance;
-        runRebalance = async function() {
+        runRebalance = async function(skipConfirmation = false) {
             showToast('info', 'Rebalancing Started', 'Running portfolio optimization...');
             try {
-                await originalRunRebalance();
+                await originalRunRebalance(skipConfirmation);  // Pass through the skip flag!
             } catch (e) {
                 showToast('error', 'Rebalance Failed', e.message || 'Check console for details');
                 throw e;

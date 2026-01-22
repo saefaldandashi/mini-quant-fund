@@ -1,6 +1,103 @@
 {
   "articles": [
     {
+      "id": "7340972289998179748",
+      "timestamp": "2026-01-22T15:15:14",
+      "headline": "Eagle Bancorp Posts Upbeat Q4 Results, Joins Corcept Therapeutics, LSI Industries And Other Big Stocks Moving Higher On Thursday",
+      "summary": "Eagle Bancorp Inc. reported better-than-expected fourth-quarter financial results, with earnings of 25 cents per share and sales of $68.303 million, leading to a significant jump in its stock. Several other companies, including Corcept Therapeutics and LSI Industries, also saw their stocks rise on Thursday due to positive financial news or trial results. The overall U.S. stock market was higher, with the Dow Jones gaining around 200 points.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/trading-ideas/movers/26/01/50070458/eagle-bancorp-posts-upbeat-q4-results-joins-corcept-therapeutics-lsi-industries-and-other-big-stocks-moving-higher-on-thursday",
+      "tickers": [
+        "ANET"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "life_sciences",
+        "technology"
+      ],
+      "overall_sentiment": 0.007707,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ANET",
+          "relevance_score": 0.305169,
+          "sentiment_score": 0.047917,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ANET": 0.047917
+      }
+    },
+    {
+      "id": "-1971137118921101301",
+      "timestamp": "2026-01-22T15:13:16",
+      "headline": "Here's What to Expect From American Water Works' Next Earnings Report",
+      "summary": "American Water Works Company, Inc. (AWK) is set to announce its fiscal Q4 2025 earnings on February 18, with analysts expecting a 4.9% increase in EPS to $1.28. Despite outperforming EPS estimates in three of the last four quarters and exceeding revenue expectations in Q3, the stock has underperformed market indices over the past year. Wall Street holds a \"Hold\" rating for AWK, with a consensus price target suggesting a 9.2% upside.",
+      "source": "Barchart.com",
+      "url": "https://www.barchart.com/story/news/37176116/here-s-what-to-expect-from-american-water-works-next-earnings-report",
+      "tickers": [
+        "AWK"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.139582,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "AWK",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.130357,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "AWK": 0.130357
+      }
+    },
+    {
+      "id": "1770000196802055439",
+      "timestamp": "2026-01-22T15:13:05",
+      "headline": "Should You Buy the Dip in Qualcomm Stock?",
+      "summary": "Qualcomm (QCOM) stock has seen a recent dip following a downgrade by Mizuho analysts due to pressures in the mobile handset market and Apple's move towards in-house modem tech. Despite these headwinds, Qualcomm's Automotive and Internet of Things businesses are experiencing strong demand, and the company is venturing into AI chips and data centers. Analysts have mixed views, but the overall consensus is a \"Moderate Buy,\" suggesting the current dip might be a buying opportunity given its robust growth areas.",
+      "source": "Barchart.com",
+      "url": "https://www.barchart.com/story/news/37176112/should-you-buy-the-dip-in-qualcomm-stock",
+      "tickers": [
+        "QCOM",
+        "AAPL"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": -0.093951,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "QCOM",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.111108,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AAPL",
+          "relevance_score": 0.72393,
+          "sentiment_score": -0.226041,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "QCOM": 0.111108,
+        "AAPL": -0.226041
+      }
+    },
+    {
       "id": "5983190760570238599",
       "timestamp": "2026-01-22T15:11:59",
       "headline": "BNP Paribas eyes stronger demand for analog; upgrades Texas Instruments, Onsemi, Microchip",
@@ -46,6 +143,94 @@
       }
     },
     {
+      "id": "-5953094523889401842",
+      "timestamp": "2026-01-22T15:10:15",
+      "headline": "UAL: Argus Research Lowers Price Target to $135, Maintains Buy R",
+      "summary": "Argus Research has maintained a \"Buy\" rating for United Airlines (UAL) but lowered its price target to $135 from $140. This adjustment comes amidst several recent positive analyst revisions for UAL, indicating overall confidence in the company's performance. The average analyst price target for UAL is $133.76, suggesting an upside, although GuruFocus estimates a potential downside based on its GF Value.",
+      "source": "GuruFocus",
+      "url": "https://www.gurufocus.com/news/8543228/ual-argus-research-lowers-price-target-to-135-maintains-buy-rating-ual-stock-news",
+      "tickers": [
+        "UAL"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.134197,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "UAL",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.129742,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "UAL": 0.129742
+      }
+    },
+    {
+      "id": "6977465339101378094",
+      "timestamp": "2026-01-22T15:09:13",
+      "headline": "Allegion plc: Turning Dumb Doors Smart in a World Obsessed With Access",
+      "summary": "Allegion plc is transforming from a traditional hardware manufacturer into an access-technology platform company by integrating electromechanical locks with cloud platforms and AI-driven analytics. The company is positioning itself as a leader in physical access solutions, catering to evolving needs in hybrid work, smart homes, and building regulations. Allegion's strategy emphasizes owning the hardware while expanding into software, services, and integrations, creating a strong market position against competitors.",
+      "source": "AD HOC NEWS",
+      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/allegion-plc-turning-dumb-doors-smart-in-a-world-obsessed-with-access/68509657",
+      "tickers": [
+        "ALLE"
+      ],
+      "topics": [
+        "technology",
+        "manufacturing",
+        "real_estate",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.032762,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ALLE",
+          "relevance_score": 0.343717,
+          "sentiment_score": 0.002207,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ALLE": 0.002207
+      }
+    },
+    {
+      "id": "-4898770953714028677",
+      "timestamp": "2026-01-22T15:05:52",
+      "headline": "What to Expect From Medtronic's Next Quarterly Earnings Report",
+      "summary": "Medtronic plc (MDT) is set to release its fiscal Q3 2026 earnings on Tuesday, February 17th, with analysts expecting a slight dip in profit to $1.33 per share, down 4.3% year-over-year. Despite this, the company has consistently beaten Wall Street's bottom-line estimates and raised its fiscal 2026 guidance after a strong Q2 performance. Analysts maintain a \"Moderate Buy\" rating for MDT, predicting a potential upside of 10.4% from current price levels.",
+      "source": "Barchart.com",
+      "url": "https://www.barchart.com/story/news/37175883/what-to-expect-from-medtronic-s-next-quarterly-earnings-report",
+      "tickers": [
+        "MDT"
+      ],
+      "topics": [
+        "earnings",
+        "life_sciences",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.330943,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MDT",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.332518,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MDT": 0.332518
+      }
+    },
+    {
       "id": "-5343823608248290734",
       "timestamp": "2026-01-22T15:04:16",
       "headline": "Dow up nearly 325 points on gains in shares of American Express, Procter & Gamble",
@@ -81,6 +266,133 @@
       }
     },
     {
+      "id": "-5157627724340065266",
+      "timestamp": "2026-01-22T15:03:43",
+      "headline": "Thomas Tray Decides To Exercise Options At Incyte Worth $0",
+      "summary": "Thomas Tray, Principal Accounting Officer at Incyte, exercised stock options for 0 shares of INCY stock with an exercise price of $0.0 per share, as revealed in an SEC filing on January 21. Despite the options being \"worth $0,\" the disclosure highlights an insider transaction and Incyte's current stock performance, which was up 0.35% at $105.04. The article also provides a company overview, financial performance details including revenue growth, profitability, debt management, and valuation metrics, along with an explanation of why insider transactions are important for investors.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/insights/news/26/01/50069886/thomas-tray-decides-to-exercise-options-at-incyte-worth-0",
+      "tickers": [
+        "INCY"
+      ],
+      "topics": [
+        "life_sciences",
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.262394,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "INCY",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.279553,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "INCY": 0.279553
+      }
+    },
+    {
+      "id": "-5683674389133931508",
+      "timestamp": "2026-01-22T15:03:43",
+      "headline": "Engaging In Insider Activity, Patrick Mayes At Incyte Exercises Options Worth $0",
+      "summary": "Incyte EVP & Chief Scientific Officer Patrick Mayes exercised stock options for 0 shares of INCY, resulting in a transaction value of $0, as disclosed in a recent SEC filing. The company's financials show strong revenue growth and gross margin, but its EPS and market capitalization are below industry averages. Insider transactions, while not the sole basis for investment decisions, provide valuable insights into a company's prospects.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/insights/news/26/01/50069890/engaging-in-insider-activity-patrick-mayes-at-incyte-exercises-options-worth-0",
+      "tickers": [
+        "INCY"
+      ],
+      "topics": [
+        "earnings",
+        "life_sciences",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.148417,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "INCY",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.125937,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "INCY": 0.125937
+      }
+    },
+    {
+      "id": "-6666703231021955305",
+      "timestamp": "2026-01-22T14:59:20",
+      "headline": "Jefferies Financial Group Issues Positive Forecast for Cardinal Health (NYSE:CAH) Stock Price",
+      "summary": "Jefferies Financial Group has raised its price target for Cardinal Health (NYSE:CAH) to $270 from $220, maintaining a \"buy\" rating and indicating a potential upside of approximately 29%. This positive forecast comes after Cardinal Health surpassed quarterly EPS and revenue estimates, and analysts broadly hold a \"Moderate Buy\" consensus based on similar upgrades from other firms like Wall Street Zen, Leerink Partners, TD Cowen, Citigroup, and Barclays. The company's recent strong financial performance and positive analyst sentiment suggest continued growth.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/jefferies-financial-group-issues-positive-forecast-for-cardinal-health-nysecah-stock-price-2026-01-22/",
+      "tickers": [
+        "CAH",
+        "JPM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences"
+      ],
+      "overall_sentiment": 0.593465,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CAH",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.876071,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.57172,
+          "sentiment_score": 0.281973,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CAH": 0.876071,
+        "JPM": 0.281973
+      }
+    },
+    {
+      "id": "475948414235171352",
+      "timestamp": "2026-01-22T14:59:11",
+      "headline": "Autodesk Announces Global Restructuring and Raises Financial Outlook",
+      "summary": "Autodesk announced a global restructuring plan that will eliminate approximately 7% of its workforce, or 1,000 roles, primarily in sales, as part of its go-to-market transformation. The company expects to incur $135 million to $160 million in pre-tax restructuring charges but anticipates exceeding its prior financial guidance for the fourth quarter and full fiscal year 2026. Autodesk plans to reallocate cost savings to strategic priorities like AI, platforms, and industry clouds, with an analyst rating of Buy and Spark\u2019s AI Analyst calling the stock an Outperform.",
+      "source": "TipRanks",
+      "url": "https://www.tipranks.com/news/company-announcements/autodesk-announces-global-restructuring-and-raises-financial-outlook",
+      "tickers": [
+        "ADSK"
+      ],
+      "topics": [
+        "earnings",
+        "technology",
+        "financial_markets",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.604103,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ADSK",
+          "relevance_score": 0.993119,
+          "sentiment_score": 0.639564,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ADSK": 0.639564
+      }
+    },
+    {
       "id": "-1137316578667797547",
       "timestamp": "2026-01-22T14:58:06",
       "headline": "DBRG Stock Price, News & Analysis",
@@ -109,6 +421,142 @@
       ],
       "ticker_sentiments": {
         "DBRG": 0.383594
+      }
+    },
+    {
+      "id": "-4506768950041494573",
+      "timestamp": "2026-01-22T14:57:53",
+      "headline": "Credo Technology signs patent license agreement with 3M",
+      "summary": "Credo Technology Group Holding Ltd (NASDAQ:CRDO) has signed a patent license and mutual covenant agreement with 3M Company, focusing on active electrical cable technology. While financial details were not disclosed, Credo, a semiconductor firm with substantial profit margins and stock growth, specializes in high-speed connectivity solutions for AI and cloud computing markets. Analysts like Needham and Stifel have reiterated Buy ratings, anticipating strong growth driven by AEC technology adoption and new product introductions.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/company-news/credo-technology-signs-patent-license-agreement-with-3m-93CH-4460502",
+      "tickers": [
+        "MMM",
+        "NVDA",
+        "AMZN"
+      ],
+      "topics": [
+        "technology",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.293265,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MMM",
+          "relevance_score": 0.917806,
+          "sentiment_score": 0.236982,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": 0.613856,
+          "sentiment_score": 0.32895,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": 0.562971,
+          "sentiment_score": 0.276572,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MMM": 0.236982,
+        "NVDA": 0.32895,
+        "AMZN": 0.276572
+      }
+    },
+    {
+      "id": "5491411721792423071",
+      "timestamp": "2026-01-22T14:56:37",
+      "headline": "General Dynamics (NYSE:GD) Given New $444.00 Price Target at Seaport Research Partners",
+      "summary": "Seaport Research Partners has increased its price target for General Dynamics (NYSE:GD) to $444.00 from $376.00, reiterating a \"buy\" rating and suggesting a 21.9% upside. This adjustment follows several other firms raising their targets or upgrading the stock, contributing to an overall \"Moderate Buy\" consensus. The optimism is supported by General Dynamics' strong Q4 earnings beat and positive FY2025 guidance.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/general-dynamics-nysegd-given-new-44400-price-target-at-seaport-research-partners-2026-01-22/",
+      "tickers": [
+        "GD",
+        "BAC",
+        "JPM",
+        "CVX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.278784,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GD",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.46726,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "BAC",
+          "relevance_score": 0.634091,
+          "sentiment_score": 0.308086,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.565236,
+          "sentiment_score": 0.146017,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "CVX",
+          "relevance_score": 0.596773,
+          "sentiment_score": 0.133318,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "GD": 0.46726,
+        "BAC": 0.308086,
+        "JPM": 0.146017,
+        "CVX": 0.133318
+      }
+    },
+    {
+      "id": "953507706582363811",
+      "timestamp": "2026-01-22T14:56:33",
+      "headline": "Capital One Financial Issues Positive Forecast for EQT (NYSE:EQT) Stock Price",
+      "summary": "Capital One Financial has raised its price target for EQT (NYSE:EQT) to $55 from $52, maintaining an \"overweight\" rating and suggesting a 1.26% upside. This positive forecast comes amidst broad analyst optimism, with a consensus \"Moderate Buy\" rating and an average price target of $63.86 for EQT. Key factors driving this outlook include EQT's recent earnings beat, its planned acquisition of Coller Capital for $3.7 billion to diversify earnings, and significant institutional investor activity in its stock.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/capital-one-financial-issues-positive-forecast-for-eqt-nyseeqt-stock-price-2026-01-22/",
+      "tickers": [
+        "EQT",
+        "COF"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "mergers_and_acquisitions",
+        "energy_transportation",
+        "finance"
+      ],
+      "overall_sentiment": 0.416735,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "EQT",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.49588,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "COF",
+          "relevance_score": 0.64712,
+          "sentiment_score": 0.324207,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "EQT": 0.49588,
+        "COF": 0.324207
       }
     },
     {
@@ -229,6 +677,97 @@
       }
     },
     {
+      "id": "-8123189281226766675",
+      "timestamp": "2026-01-22T14:53:14",
+      "headline": "Amgen stock hits 52-week high at $346.41",
+      "summary": "Amgen Inc. (AMGN) reached a new 52-week high of $346.41, demonstrating robust performance with a 29.75% one-year return and low volatility. The biotechnology company, with a market cap of $186 billion and \"GREAT\" financial health, has also recently acquired Dark Blue Therapeutics, received a credit rating upgrade from Fitch, and is actively engaging in strategic developments including drug pricing agreements with the U.S. government. Analysts have varied ratings, with UBS issuing a \"Buy\" and BofA Securities maintaining an \"Underperform.\"",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/company-news/amgen-stock-hits-52week-high-at-34641-93CH-4460749",
+      "tickers": [
+        "AMGN"
+      ],
+      "topics": [
+        "financial_markets",
+        "life_sciences",
+        "earnings",
+        "mergers_and_acquisitions"
+      ],
+      "overall_sentiment": 0.495519,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "AMGN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.455742,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "AMGN": 0.455742
+      }
+    },
+    {
+      "id": "-5978551523332062642",
+      "timestamp": "2026-01-22T14:52:45",
+      "headline": "Johnson & Johnson stock holds steady as Guggenheim reiterates Buy rating",
+      "summary": "Guggenheim reiterated a Buy rating and a $227.00 price target for Johnson & Johnson (NYSE:JNJ) after the healthcare giant reported strong Q4 2025 financial results. The company's sales of $24.564 billion and EPS of $2.46 exceeded or met analyst expectations, driven by strong performance in its Innovative Medicine and MedTech segments. Despite potential for muted stock reaction due to recent gains, J&J issued a positive 2026 sales and EPS guidance.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/analyst-ratings/johnson--johnson-stock-holds-steady-as-guggenheim-reiterates-buy-rating-93CH-4460074",
+      "tickers": [
+        "JNJ",
+        "MRNA",
+        "ABT",
+        "GE",
+        "HBAN"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences"
+      ],
+      "overall_sentiment": -0.114959,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "JNJ",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.464584,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "MRNA",
+          "relevance_score": 0.598445,
+          "sentiment_score": 0.134979,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "ABT",
+          "relevance_score": 0.603225,
+          "sentiment_score": -0.332429,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "GE",
+          "relevance_score": 0.58739,
+          "sentiment_score": -0.333027,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "HBAN",
+          "relevance_score": 0.599978,
+          "sentiment_score": -0.300326,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "JNJ": 0.464584,
+        "MRNA": 0.134979,
+        "ABT": -0.332429,
+        "GE": -0.333027,
+        "HBAN": -0.300326
+      }
+    },
+    {
       "id": "-9210010914281878683",
       "timestamp": "2026-01-22T14:52:29",
       "headline": "Emerson Electric stock hits all-time high at 151.39 USD",
@@ -301,6 +840,59 @@
       ],
       "ticker_sentiments": {
         "ASB": 0.42313
+      }
+    },
+    {
+      "id": "8999292706758726442",
+      "timestamp": "2026-01-22T14:52:23",
+      "headline": "The Truth About CenterPoint Energy Inc: Is This \u2018Boring\u2019 Utility Stock a Secret Power Play?",
+      "summary": "CenterPoint Energy Inc (CNP) is highlighted as a \"boring but stable\" utility stock, appealing to investors seeking defensive plays and steady dividends amidst market volatility. While it lacks viral social media hype, its focus on essential energy infrastructure and regulated business model positions it as a reliable long-term investment rather than a speculative short-term gain. The article suggests it is suitable for balancing portfolios that might be overly exposed to high-growth, high-risk assets.",
+      "source": "AD HOC NEWS",
+      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/the-truth-about-centerpoint-energy-inc-is-this-boring-utility-stock/68509598",
+      "tickers": [
+        "CNP",
+        "NEE",
+        "DUK",
+        "SO"
+      ],
+      "topics": [
+        "financial_markets",
+        "energy_transportation",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.203849,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CNP",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.325419,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "NEE",
+          "relevance_score": 0.749816,
+          "sentiment_score": 0.251308,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "DUK",
+          "relevance_score": 0.614714,
+          "sentiment_score": 0.106047,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "SO",
+          "relevance_score": 0.619857,
+          "sentiment_score": 0.12084,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "CNP": 0.325419,
+        "NEE": 0.251308,
+        "DUK": 0.106047,
+        "SO": 0.12084
       }
     },
     {
@@ -540,6 +1132,50 @@
       }
     },
     {
+      "id": "-2122221182163916327",
+      "timestamp": "2026-01-22T14:47:17",
+      "headline": "Franklin Templeton Launches Templeton Emerging Markets Debt ETF (TEMD)",
+      "summary": "Franklin Templeton has launched the Templeton Emerging Markets Debt ETF (TEMD), an actively managed exchange-traded fund. TEMD aims to provide investors with interest income and capital appreciation from emerging market debt by dynamically managing currency risk and allocating across both hard and local currency segments. The ETF expands Franklin Templeton's active fixed income offerings, leveraging over three decades of emerging markets expertise from its Templeton Global Macro team.",
+      "source": "www.marketscreener.com",
+      "url": "https://www.marketscreener.com/news/franklin-templeton-launches-templeton-emerging-markets-debt-etf-temd-ce7e58d3d88af72c",
+      "tickers": [
+        "BEN",
+        "JPM",
+        "MSCI"
+      ],
+      "topics": [
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.18369,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BEN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.457578,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.615608,
+          "sentiment_score": 0.094579,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "MSCI",
+          "relevance_score": 0.60478,
+          "sentiment_score": 0.056936,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "BEN": 0.457578,
+        "JPM": 0.094579,
+        "MSCI": 0.056936
+      }
+    },
+    {
       "id": "-4897242391164909792",
       "timestamp": "2026-01-22T14:45:50",
       "headline": "Top European Aerospace & Defense Stocks: Morgan Stanley\u2019s 2026 Picks",
@@ -573,6 +1209,58 @@
       "ticker_sentiments": {
         "MS": 0.256515,
         "BA": 0.132827
+      }
+    },
+    {
+      "id": "5632968024888389075",
+      "timestamp": "2026-01-22T14:45:32",
+      "headline": "AstraZeneca plc Stock Is Quietly Going Off \u2014 Is This Your Next Power Move?",
+      "summary": "AstraZeneca plc is gaining attention among younger investors, moving beyond its traditional \"boomer stock\" image. The article examines AstraZeneca's potential as a long-term investment, highlighting its robust drug pipeline in oncology and rare diseases, established brand trust, and stable price performance compared to its competitors. It concludes that AstraZeneca offers a balanced risk profile and strong growth potential for investors building a \"grown-up portfolio.\"",
+      "source": "AD HOC NEWS",
+      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/astrazeneca-plc-stock-is-quietly-going-off-is-this-your-next-power/68509583",
+      "tickers": [
+        "AZN",
+        "PFE",
+        "JNJ",
+        "MRK"
+      ],
+      "topics": [
+        "financial_markets",
+        "life_sciences"
+      ],
+      "overall_sentiment": 0.222714,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "AZN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.474379,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "PFE",
+          "relevance_score": 0.718193,
+          "sentiment_score": 0.124419,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "JNJ",
+          "relevance_score": 0.69807,
+          "sentiment_score": 0.135795,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "MRK",
+          "relevance_score": 0.642403,
+          "sentiment_score": 0.147342,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "AZN": 0.474379,
+        "PFE": 0.124419,
+        "JNJ": 0.135795,
+        "MRK": 0.147342
       }
     },
     {
@@ -949,6 +1637,152 @@
       ],
       "ticker_sentiments": {
         "ADSK": 0.208161
+      }
+    },
+    {
+      "id": "6762869517101386153",
+      "timestamp": "2026-01-22T14:27:34",
+      "headline": "Flutter Entertainment (NYSE:FLUT) Price Target Lowered to $210.00 at Bank of America",
+      "summary": "Bank of America has lowered its price target for Flutter Entertainment (NYSE:FLUT) to $210.00 from $250.00, while maintaining a \"neutral\" rating. Despite the reduction, the new target still suggests a 15.9% upside from its previous close. Other analysts show mixed views, with an overall \"Moderate Buy\" consensus and an average target of $291.76, but some firms have also lowered targets.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/flutter-entertainment-nyseflut-price-target-lowered-to-21000-at-bank-of-america-2026-01-22/",
+      "tickers": [
+        "FLUT",
+        "BAC",
+        "AXP"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings"
+      ],
+      "overall_sentiment": -0.11577,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "FLUT",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.261306,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "BAC",
+          "relevance_score": 0.730367,
+          "sentiment_score": 0.044143,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AXP",
+          "relevance_score": 0.558621,
+          "sentiment_score": 0.004182,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "FLUT": -0.261306,
+        "BAC": 0.044143,
+        "AXP": 0.004182
+      }
+    },
+    {
+      "id": "-296634776126584456",
+      "timestamp": "2026-01-22T14:27:25",
+      "headline": "The Truth About Cenovus Energy (CVE): Is This Oil Stock Still Worth the Hype?",
+      "summary": "This article examines Cenovus Energy (CVE), an oil stock gaining quiet attention amidst a market focused on meme stocks. It evaluates CVE's stock performance, risks associated with the oil and gas sector, and its standing against competitors like Canadian Natural Resources (CNQ). The analysis concludes that Cenovus is a legitimate candidate for long-term investors seeking energy exposure without excessive hype, despite its inherent volatility.",
+      "source": "AD HOC NEWS",
+      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/the-truth-about-cenovus-energy-cve-is-this-oil-stock-still-worth-the/68509530",
+      "tickers": [
+        "CVE",
+        "XOM",
+        "CVX"
+      ],
+      "topics": [
+        "financial_markets",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.263284,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CVE",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.416884,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "XOM",
+          "relevance_score": 0.615903,
+          "sentiment_score": 0.179392,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "CVX",
+          "relevance_score": 0.630238,
+          "sentiment_score": 0.150826,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CVE": 0.416884,
+        "XOM": 0.179392,
+        "CVX": 0.150826
+      }
+    },
+    {
+      "id": "8920324891595014845",
+      "timestamp": "2026-01-22T14:26:51",
+      "headline": "Microchip Technology (NASDAQ:MCHP) Stock Rating Upgraded by BNP Paribas Exane",
+      "summary": "BNP Paribas Exane has upgraded Microchip Technology (NASDAQ:MCHP) stock from \"neutral\" to \"outperform,\" setting a price target of $90, which suggests an 18.11% upside. This upgrade follows Microchip's recent earnings beat and positive Q3 2026 guidance. The company maintains a \"Moderate Buy\" consensus rating from analysts, with institutional investors holding a significant portion of its shares.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/microchip-technology-nasdaqmchp-stock-rating-upgraded-by-bnp-paribas-exane-2026-01-22/",
+      "tickers": [
+        "MCHP"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology",
+        "finance"
+      ],
+      "overall_sentiment": 0.545995,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MCHP",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.511896,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MCHP": 0.511896
+      }
+    },
+    {
+      "id": "-8731634884915452636",
+      "timestamp": "2026-01-22T14:26:48",
+      "headline": "Seaport Global Securities Adjusts L3Harris Technologies Price Target to $443 From $324, Maintains Buy Rating",
+      "summary": "Seaport Global Securities has raised its price target for L3Harris Technologies (LHX) to $443 from $324, while reiterating a Buy rating on the stock. This adjustment reflects an updated outlook from the firm regarding the aerospace and defense company. The article also notes other recent analyst rating changes for L3Harris, indicating broader analyst activity for the company.",
+      "source": "marketscreener.com",
+      "url": "https://www.marketscreener.com/news/seaport-global-securities-adjusts-l3harris-technologies-price-target-to-443-from-324-maintains-bu-ce7e58d3d98ef023",
+      "tickers": [
+        "LHX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.403732,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "LHX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.401223,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "LHX": 0.401223
       }
     },
     {
@@ -16659,709 +17493,7 @@
       "ticker_sentiments": {
         "ULTA": 0.412433
       }
-    },
-    {
-      "id": "-7103916158622084054",
-      "timestamp": "2026-01-21T13:40:07",
-      "headline": "Rakuten Investment Management Inc. Invests $112.05 Million in The Travelers Companies, Inc. $TRV",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 401,300 shares in The Travelers Companies, valued at approximately $112.05 million. This represents 0.18% ownership of Travelers and constitutes 0.4% of Rakuten's portfolio. Despite significant insider selling from Travelers' executives, the company reported strong quarterly results, beating EPS and revenue estimates, while analysts maintain a \"Hold\" rating with an average target price of $299.69.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-invests-11205-million-in-the-travelers-companies-inc-trv-2026-01-21/",
-      "tickers": [
-        "TRV"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.260804,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "TRV",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.268219,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "TRV": 0.268219
-      }
-    },
-    {
-      "id": "-1109522694656001577",
-      "timestamp": "2026-01-21T13:40:06",
-      "headline": "Rakuten Investment Management Inc. Takes $108.58 Million Position in Teledyne Technologies Incorporated $TDY",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 185,271 shares in Teledyne Technologies Incorporated ($TDY) during Q3, valued at approximately $108.58 million. This position represents about 0.39% of Rakuten's portfolio and makes TDY its 23rd-largest holding. Teledyne Technologies has high institutional ownership and recently reported strong Q4 net sales and non-GAAP EPS, though GAAP EPS slightly missed consensus and cash declined.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-takes-10858-million-position-in-teledyne-technologies-incorporated-tdy-2026-01-21/",
-      "tickers": [
-        "TDY"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": -0.097449,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "TDY",
-          "relevance_score": 1.0,
-          "sentiment_score": -0.060871,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "TDY": -0.060871
-      }
-    },
-    {
-      "id": "-8181969671807474212",
-      "timestamp": "2026-01-21T13:40:05",
-      "headline": "Rakuten Investment Management Inc. Invests $24.06 Million in Transdigm Group Incorporated $TDG",
-      "summary": "Rakuten Investment Management Inc. has acquired a new position in Transdigm Group Incorporated (NYSE:TDG), purchasing 18,256 shares valued at approximately $24.06 million in the third quarter. Despite significant insider selling totaling $265.1 million, including a large sale by Director Robert J. Small, Transdigm Group exceeded Q3 earnings estimates with $10.82 EPS on $2.44 billion revenue and analysts maintain a \"Moderate Buy\" rating with a target price of $1,597.00. Institutional investors now own 95.78% of the company's stock.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-invests-2406-million-in-transdigm-group-incorporated-tdg-2026-01-21/",
-      "tickers": [
-        "TDG"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.349159,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "TDG",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.313659,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "TDG": 0.313659
-      }
-    },
-    {
-      "id": "-2937066121570107814",
-      "timestamp": "2026-01-21T13:40:03",
-      "headline": "176,418 Shares in Snap-On Incorporated $SNA Bought by Rakuten Investment Management Inc.",
-      "summary": "Rakuten Investment Management Inc. recently acquired 176,418 shares of Snap-On Incorporated, a new stake valued at approximately $61.13 million, representing 0.34% of the company. Despite insider selling, institutional investors collectively own 84.88% of Snap-On. The company also increased its quarterly dividend to $2.44, resulting in an annualized dividend of $9.76 and a yield near 2.7%.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-176418-shares-in-snap-on-incorporated-sna-bought-by-rakuten-investment-management-inc-2026-01-21/",
-      "tickers": [
-        "SNA"
-      ],
-      "topics": [
-        "financial_markets",
-        "earnings",
-        "finance"
-      ],
-      "overall_sentiment": 0.240552,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "SNA",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.235932,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "SNA": 0.235932
-      }
-    },
-    {
-      "id": "-4138252405869246005",
-      "timestamp": "2026-01-21T13:40:02",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Acquires 36,583 Shares of Starbucks Corporation $SBUX",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH increased its stake in Starbucks Corporation by 4.4% in the third quarter, holding 866,734 shares worth $73.33 million. Other institutional investors also adjusted their positions, and insider Director Jorgen Vig Knudstorp purchased 11,700 shares. Starbucks recently announced a quarterly dividend of $0.62 per share and has an average analyst rating of \"Moderate Buy\" with a target price of $102.56.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-acquires-36583-shares-of-starbucks-corporation-sbux-2026-01-21/",
-      "tickers": [
-        "SBUX"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "retail_wholesale",
-        "finance"
-      ],
-      "overall_sentiment": 0.007195,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "SBUX",
-          "relevance_score": 0.302231,
-          "sentiment_score": 0.04359,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "SBUX": 0.04359
-      }
-    },
-    {
-      "id": "5089938008496076698",
-      "timestamp": "2026-01-21T13:40:01",
-      "headline": "Rakuten Investment Management Inc. Makes New Investment in RTX Corporation $RTX",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake in RTX Corporation, purchasing 105,571 shares valued at approximately $17.67 million during the third quarter. RTX, an aerospace and defense company, recently exceeded quarterly earnings expectations with an EPS of $1.70 and revenue of $22.48 billion, an 11.9% year-over-year increase. Analysts forecast an annual EPS of 6.11 and a consensus price target of $186.88 for the company, which also pays a quarterly dividend of $0.68.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-makes-new-investment-in-rtx-corporation-rtx-2026-01-21/",
-      "tickers": [
-        "RTX",
-        "NOC"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.396383,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "RTX",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.432475,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "NOC",
-          "relevance_score": 0.600068,
-          "sentiment_score": 0.342085,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "RTX": 0.432475,
-        "NOC": 0.342085
-      }
-    },
-    {
-      "id": "-2526356202797139926",
-      "timestamp": "2026-01-21T13:40:00",
-      "headline": "58,906 Shares in Regeneron Pharmaceuticals, Inc. $REGN Acquired by Rakuten Investment Management Inc.",
-      "summary": "Rakuten Investment Management Inc. has acquired a new position of 58,906 shares in Regeneron Pharmaceuticals (NASDAQ:REGN) during Q3, valued at approximately $33.12 million. Other institutional investors also adjusted their holdings, while company insiders sold shares totaling over $5.7 million in the last 90 days. Regeneron Pharmaceuticals beat its Q3 earnings and revenue estimates, and analysts currently maintain a \"Moderate Buy\" consensus rating for the stock.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-58906-shares-in-regeneron-pharmaceuticals-inc-regn-acquired-by-rakuten-investment-management-inc-2026-01-21/",
-      "tickers": [
-        "REGN"
-      ],
-      "topics": [
-        "earnings",
-        "life_sciences",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.439644,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "REGN",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.400105,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "REGN": 0.400105
-      }
-    },
-    {
-      "id": "-5474183153336261227",
-      "timestamp": "2026-01-21T13:39:59",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Has $68.58 Million Stock Position in Public Storage $PSA",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH decreased its stake in Public Storage (NYSE:PSA) by 28.0% in the third quarter, reducing its holdings to 237,432 shares valued at $68.58 million. Despite this reduction, many other institutional investors increased their positions in the real estate investment trust. Public Storage reported earnings per share of $4.31, beating analyst estimates, and announced a quarterly dividend of $3.00, resulting in a 4.2% annualized yield.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-has-6858-million-stock-position-in-public-storage-psa-2026-01-21/",
-      "tickers": [
-        "PSA"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "real_estate"
-      ],
-      "overall_sentiment": 0.123788,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PSA",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.102747,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "PSA": 0.102747
-      }
-    },
-    {
-      "id": "7435923016342224203",
-      "timestamp": "2026-01-21T13:39:58",
-      "headline": "Rakuten Investment Management Inc. Invests $21.04 Million in Prologis, Inc. $PLD",
-      "summary": "Rakuten Investment Management Inc. has purchased a new stake of 183,730 shares, valued at approximately $21.04 million, in Prologis, Inc. (NYSE:PLD) during the third quarter. Prologis reported quarterly earnings in line with estimates and provided a positive outlook for FY 2026, leading to a \"Moderate Buy\" consensus rating from analysts with an average price target of $133. Institutional investors hold a significant portion of the company's stock, though some insider selling has also occurred.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-invests-2104-million-in-prologis-inc-pld-2026-01-21/",
-      "tickers": [
-        "PLD"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "real_estate"
-      ],
-      "overall_sentiment": 0.544883,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PLD",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.531708,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "PLD": 0.531708
-      }
-    },
-    {
-      "id": "-3518876315752000967",
-      "timestamp": "2026-01-21T13:39:58",
-      "headline": "Rakuten Investment Management Inc. Makes New $66.24 Million Investment in Philip Morris International Inc. $PM",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 370,332 shares in Philip Morris International (NYSE:PM) during Q3, valued at approximately $66.24 million. This investment contributes to institutional investors owning about 78.63% of Philip Morris stock. Despite a \"Moderate Buy\" consensus rating and a recent Q3 earnings beat, the company's high dividend payout ratio of 106.52% raises concerns about its sustainability.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-makes-new-6624-million-investment-in-philip-morris-international-inc-pm-2026-01-21/",
-      "tickers": [
-        "PM"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.17636,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PM",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.164173,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "PM": 0.164173
-      }
-    },
-    {
-      "id": "-3258728970664974240",
-      "timestamp": "2026-01-21T13:39:57",
-      "headline": "Rakuten Investment Management Inc. Makes New Investment in Parker-Hannifin Corporation $PH",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 22,866 shares in Parker-Hannifin Corporation, valued at approximately $17.34 million, during Q3. Institutional investors now own about 82.44% of the stock. Wall Street analysts are largely bullish on PH, with a consensus \"Moderate Buy\" rating and an average price target of $946.17, following a recent earnings beat.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-makes-new-investment-in-parker-hannifin-corporation-ph-2026-01-21/",
-      "tickers": [
-        "PH",
-        "AMP",
-        "JPM"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "manufacturing"
-      ],
-      "overall_sentiment": 0.35059,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PH",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.418411,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "AMP",
-          "relevance_score": 0.603625,
-          "sentiment_score": 0.316121,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "JPM",
-          "relevance_score": 0.60348,
-          "sentiment_score": 0.320275,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "PH": 0.418411,
-        "AMP": 0.316121,
-        "JPM": 0.320275
-      }
-    },
-    {
-      "id": "2865074163972890823",
-      "timestamp": "2026-01-21T13:39:57",
-      "headline": "223,450 Shares in Principal Financial Group, Inc. $PFG Bought by Rakuten Investment Management Inc.",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 223,450 shares in Principal Financial Group, Inc. (NYSE:PFG), valued at approximately $18.53 million, representing about 0.10% of the company. Principal Financial Group recently surpassed quarterly EPS estimates and increased its quarterly dividend to $0.79 per share. Despite a consensus \"Reduce\" rating from analysts, other institutional investors have also adjusted their holdings in PFG.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-223450-shares-in-principal-financial-group-inc-pfg-bought-by-rakuten-investment-management-inc-2026-01-21/",
-      "tickers": [
-        "PFG"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "economy_macro"
-      ],
-      "overall_sentiment": 0.338811,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "PFG",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.348784,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "PFG": 0.348784
-      }
-    },
-    {
-      "id": "1606490713999686468",
-      "timestamp": "2026-01-21T13:39:56",
-      "headline": "Rakuten Investment Management Inc. Takes Position in O'Reilly Automotive, Inc. $ORLY",
-      "summary": "Rakuten Investment Management Inc. has acquired a new position in O'Reilly Automotive, Inc. (NASDAQ:ORLY) during the third quarter, purchasing 3,389,453 shares valued at approximately $365.42 million. This investment makes O'Reilly Automotive the firm's ninth-largest holding, representing about 1.2% of its portfolio. Other hedge funds have also significantly increased their stakes in ORLY, while analysts have largely given the stock \"Buy\" or \"Strong Buy\" ratings with an average target price of $111.80.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-takes-position-in-oreilly-automotive-inc-orly-2026-01-21/",
-      "tickers": [
-        "ORLY"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "retail_wholesale"
-      ],
-      "overall_sentiment": 0.408795,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "ORLY",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.422878,
-          "sentiment_label": "Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "ORLY": 0.422878
-      }
-    },
-    {
-      "id": "-2758966473683409602",
-      "timestamp": "2026-01-21T13:39:55",
-      "headline": "6,459 Shares in NVR, Inc. $NVR Purchased by Rakuten Investment Management Inc.",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 6,459 shares in NVR, Inc. (NYSE:NVR) during the third quarter, valued at approximately $51.9 million, representing about 0.23% of the company. NVR recently reported strong Q3 EPS (beating estimates with $112.33) on $2.64 billion revenue, despite a year-over-year decrease. Analyst consensus on MarketBeat is \"Moderate Buy\" with an average price target of $8,443.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-6459-shares-in-nvr-inc-nvr-purchased-by-rakuten-investment-management-inc-2026-01-21/",
-      "tickers": [
-        "NVR"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "real_estate"
-      ],
-      "overall_sentiment": 0.283148,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "NVR",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.299616,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "NVR": 0.299616
-      }
-    },
-    {
-      "id": "2855938634816563624",
-      "timestamp": "2026-01-21T13:39:53",
-      "headline": "Rakuten Investment Management Inc. Buys Shares of 98,583 Mettler-Toledo International, Inc. $MTD",
-      "summary": "Rakuten Investment Management Inc. has acquired a new position of 98,583 shares in Mettler-Toledo International, Inc. (NYSE: MTD), valued at approximately $121 million, making it the 21st-largest holding in Rakuten's portfolio. Mettler-Toledo recently exceeded quarterly earnings expectations, reporting an EPS of $11.15 against an expected $10.62 and revenue of $1.03 billion, surpassing the $997.36 million consensus. Despite some insider selling activity, institutional investors collectively own 95.07% of the company's stock, and analysts maintain a consensus \"Hold\" rating with an average target price of $1,441.67.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-buys-shares-of-98583-mettler-toledo-international-inc-mtd-2026-01-21/",
-      "tickers": [
-        "MTD"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "life_sciences"
-      ],
-      "overall_sentiment": 0.279765,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "MTD",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.26511,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "MTD": 0.26511
-      }
-    },
-    {
-      "id": "-1702904457208804595",
-      "timestamp": "2026-01-21T13:39:52",
-      "headline": "659,529 Shares in Altria Group, Inc. $MO Bought by Rakuten Investment Management Inc.",
-      "summary": "Rakuten Investment Management Inc. recently acquired 659,529 shares of Altria Group, Inc. (NYSE:MO) valued at approximately $43.57 million in Q3. This comes as Altria approved a $2.00 billion share buyback and offers a 6.9% dividend yield. Analyst sentiment for Altria is mixed, with an average \"Hold\" rating, though some firms like Goldman Sachs and UBS have raised their price targets.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-659529-shares-in-altria-group-inc-mo-bought-by-rakuten-investment-management-inc-2026-01-21/",
-      "tickers": [
-        "MO"
-      ],
-      "topics": [
-        "financial_markets",
-        "earnings",
-        "finance"
-      ],
-      "overall_sentiment": 0.192227,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "MO",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.22473,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "MO": 0.22473
-      }
-    },
-    {
-      "id": "2443173089201317472",
-      "timestamp": "2026-01-21T13:39:52",
-      "headline": "Rakuten Investment Management Inc. Acquires New Position in Monster Beverage Corporation $MNST",
-      "summary": "Rakuten Investment Management Inc. has acquired a new position in Monster Beverage Corporation (NASDAQ:MNST), purchasing 999,381 shares valued at approximately $67.27 million during the third quarter. The investment represents 0.10% ownership of Monster Beverage. Additionally, other institutional investors have adjusted their holdings, while analysts maintain a \"Moderate Buy\" rating for the stock with a consensus target of $75.74.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-acquires-new-position-in-monster-beverage-corporation-mnst-2026-01-21/",
-      "tickers": [
-        "MNST",
-        "KO"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "retail_wholesale",
-        "finance"
-      ],
-      "overall_sentiment": 0.228639,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "MNST",
-          "relevance_score": 0.997787,
-          "sentiment_score": 0.31141,
-          "sentiment_label": "Somewhat-Bullish"
-        },
-        {
-          "ticker": "KO",
-          "relevance_score": 0.630471,
-          "sentiment_score": 0.110284,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "MNST": 0.31141,
-        "KO": 0.110284
-      }
-    },
-    {
-      "id": "-7663880983603005780",
-      "timestamp": "2026-01-21T13:39:51",
-      "headline": "Rakuten Investment Management Inc. Makes New $38.16 Million Investment in Mohawk Industries, Inc. $MHK",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 296,006 shares, valued at $38.16 million, in Mohawk Industries Inc. This investment represents approximately 0.48% of the company. Analyst sentiment for MHK is mixed, with a \"Moderate Buy\" consensus rating and a target price of $133.83, while the company reported Q3 EPS of $2.67 on $2.76 billion revenue and provided Q4 2025 EPS guidance between $1.90 and $2.00.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-makes-new-3816-million-investment-in-mohawk-industries-inc-mhk-2026-01-21/",
-      "tickers": [
-        "MHK",
-        "RJF"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets"
-      ],
-      "overall_sentiment": 0.188323,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "MHK",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.095945,
-          "sentiment_label": "Neutral"
-        },
-        {
-          "ticker": "RJF",
-          "relevance_score": 0.612676,
-          "sentiment_score": 0.282645,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "MHK": 0.095945,
-        "RJF": 0.282645
-      }
-    },
-    {
-      "id": "-4006064007851001597",
-      "timestamp": "2026-01-21T13:39:50",
-      "headline": "Rakuten Investment Management Inc. Invests $21.13 Million in Mid-America Apartment Communities, Inc. $MAA",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 151,234 shares in Mid-America Apartment Communities (NYSE:MAA), valued at approximately $21.13 million. This new position represents about 0.13% ownership in the company. Mid-America Apartment Communities also recently increased its quarterly dividend to $1.53, leading to an annualized dividend of $6.12 and a yield of approximately 4.6%.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-invests-2113-million-in-mid-america-apartment-communities-inc-maa-2026-01-21/",
-      "tickers": [
-        "MAA"
-      ],
-      "topics": [
-        "real_estate",
-        "earnings",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.137062,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "MAA",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.107397,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "MAA": 0.107397
-      }
-    },
-    {
-      "id": "3500866792961846775",
-      "timestamp": "2026-01-21T13:39:49",
-      "headline": "Rakuten Investment Management Inc. Invests $66.85 Million in L3Harris Technologies Inc $LHX",
-      "summary": "Rakuten Investment Management Inc. has acquired a new stake of 218,879 shares in L3Harris Technologies Inc (NYSE:LHX), valued at approximately $66.85 million. This investment represents about 0.12% of L3Harris Technologies. Wall Street analysts maintain a \"Moderate Buy\" consensus rating for L3Harris, with a target price of $315.73, and some firms recently increased their price targets for the stock.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-invests-6685-million-in-l3harris-technologies-inc-lhx-2026-01-21/",
-      "tickers": [
-        "LHX",
-        "JPM"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance",
-        "economy_macro",
-        "technology"
-      ],
-      "overall_sentiment": 0.359224,
-      "overall_sentiment_label": "Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "LHX",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.401863,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "JPM",
-          "relevance_score": 0.617316,
-          "sentiment_score": 0.275556,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "LHX": 0.401863,
-        "JPM": 0.275556
-      }
-    },
-    {
-      "id": "-5291144134682914316",
-      "timestamp": "2026-01-21T13:39:44",
-      "headline": "Rakuten Investment Management Inc. Purchases Shares of 117,436 Hubbell Inc $HUBB",
-      "summary": "Rakuten Investment Management Inc. has acquired a new position in Hubbell Inc. (NYSE:HUBB), purchasing 117,436 shares valued at approximately $47.77 million, representing 0.22% of the company. Hubbell Inc. recently reported strong earnings, beating EPS estimates, and has a \"Moderate Buy\" consensus rating from analysts with a target price of $497.25. The company also increased its quarterly dividend to $1.42 per share.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-rakuten-investment-management-inc-purchases-shares-of-117436-hubbell-inc-hubb-2026-01-21/",
-      "tickers": [
-        "HUBB",
-        "ROK"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "manufacturing",
-        "finance"
-      ],
-      "overall_sentiment": 0.272973,
-      "overall_sentiment_label": "Somewhat-Bullish",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "HUBB",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.393365,
-          "sentiment_label": "Bullish"
-        },
-        {
-          "ticker": "ROK",
-          "relevance_score": 0.640514,
-          "sentiment_score": 0.199713,
-          "sentiment_label": "Somewhat-Bullish"
-        }
-      ],
-      "ticker_sentiments": {
-        "HUBB": 0.393365,
-        "ROK": 0.199713
-      }
-    },
-    {
-      "id": "-2115031318446056217",
-      "timestamp": "2026-01-21T13:38:51",
-      "headline": "Universal Beteiligungs und Servicegesellschaft mbH Sells 7,506 Shares of Moody's Corporation $MCO",
-      "summary": "Universal Beteiligungs und Servicegesellschaft mbH reduced its stake in Moody's Corporation (NYSE:MCO) by 3.6% in the third quarter, selling 7,506 shares and retaining 202,364 shares valued at $96.42 million. Several other institutional investors also adjusted their holdings in Moody's. The company reported strong Q3 earnings, beating analyst estimates, and currently holds a \"Moderate Buy\" rating with a consensus price target of $560.94 among analysts.",
-      "source": "MarketBeat",
-      "url": "https://www.marketbeat.com/instant-alerts/filing-universal-beteiligungs-und-servicegesellschaft-mbh-sells-7506-shares-of-moodys-corporation-mco-2026-01-21/",
-      "tickers": [
-        "MCO"
-      ],
-      "topics": [
-        "earnings",
-        "financial_markets",
-        "finance"
-      ],
-      "overall_sentiment": 0.134908,
-      "overall_sentiment_label": "Neutral",
-      "ticker_sentiment_details": [
-        {
-          "ticker": "MCO",
-          "relevance_score": 1.0,
-          "sentiment_score": 0.131135,
-          "sentiment_label": "Neutral"
-        }
-      ],
-      "ticker_sentiments": {
-        "MCO": 0.131135
-      }
     }
   ],
-  "last_updated": "2026-01-22T19:29:33.336694"
+  "last_updated": "2026-01-22T19:44:37.749120"
 }
