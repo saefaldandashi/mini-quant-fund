@@ -280,14 +280,31 @@ class AlpacaBroker:
                     if symbol in bars_dict:
                         symbol_bars = bars_dict[symbol]
                         
-                        # symbol_bars is a list of Bar objects
+                        # symbol_bars is a list of Bar objects with OHLCV data
                         if symbol_bars and len(symbol_bars) > 0:
+                            # Extract full OHLCV data (not just close)
+                            opens = [bar.open for bar in symbol_bars]
+                            highs = [bar.high for bar in symbol_bars]
+                            lows = [bar.low for bar in symbol_bars]
                             closes = [bar.close for bar in symbol_bars]
+                            volumes = [bar.volume for bar in symbol_bars]
                             timestamps = [bar.timestamp for bar in symbol_bars]
                             
-                            df = pd.DataFrame({'close': closes}, index=pd.DatetimeIndex(timestamps))
+                            df = pd.DataFrame({
+                                'open': opens,
+                                'high': highs,
+                                'low': lows,
+                                'close': closes,
+                                'volume': volumes
+                            }, index=pd.DatetimeIndex(timestamps))
                             df = df.sort_index()
+                            # Return close Series for backwards compatibility
+                            # but store full OHLCV in a cache for strategies that need it
                             result[symbol] = df["close"]
+                            # Store full OHLCV data
+                            if not hasattr(self, '_ohlcv_cache'):
+                                self._ohlcv_cache = {}
+                            self._ohlcv_cache[symbol] = df
                 except Exception as e:
                     logging.debug(f"Error processing {symbol}: {e}")
                     continue
@@ -319,12 +336,23 @@ class AlpacaBroker:
                     if symbol in bars_dict:
                         symbol_bars = bars_dict[symbol]
                         if symbol_bars and len(symbol_bars) > 0:
+                            # Extract full OHLCV data
+                            opens = [bar.open for bar in symbol_bars]
+                            highs = [bar.high for bar in symbol_bars]
+                            lows = [bar.low for bar in symbol_bars]
                             closes = [bar.close for bar in symbol_bars]
+                            volumes = [bar.volume for bar in symbol_bars]
                             timestamps = [bar.timestamp for bar in symbol_bars]
                             
-                            df = pd.DataFrame({'close': closes}, index=pd.DatetimeIndex(timestamps))
+                            df = pd.DataFrame({
+                                'open': opens, 'high': highs, 'low': lows,
+                                'close': closes, 'volume': volumes
+                            }, index=pd.DatetimeIndex(timestamps))
                             df = df.sort_index()
                             result[symbol] = df["close"]
+                            if not hasattr(self, '_ohlcv_cache'):
+                                self._ohlcv_cache = {}
+                            self._ohlcv_cache[symbol] = df
                 except Exception as e:
                     continue
             

@@ -805,14 +805,20 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         data_fetch_time = time_module.time() - data_fetch_start
         log(f"⚡ Parallel data fetch completed in {data_fetch_time:.1f}s")
         
-        # Convert to feature store format
+        # Convert to feature store format - use full OHLCV if available
         for symbol, prices in price_data.items():
             if len(prices) > 0:
-                df = prices.to_frame(name='close')
-                df['open'] = df['close']
-                df['high'] = df['close']
-                df['low'] = df['close']
-                df['volume'] = 1000000
+                # Check if broker has cached OHLCV data
+                if hasattr(broker, '_ohlcv_cache') and symbol in broker._ohlcv_cache:
+                    # Use full OHLCV data for better strategy signals
+                    df = broker._ohlcv_cache[symbol]
+                else:
+                    # Fallback to close-only (copy to OHLC)
+                    df = prices.to_frame(name='close')
+                    df['open'] = df['close']
+                    df['high'] = df['close']
+                    df['low'] = df['close']
+                    df['volume'] = 1000000
                 feature_store._price_history[symbol] = df
         
         log(f"Loaded price data for {len(feature_store._price_history)} symbols")
@@ -859,13 +865,24 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                     ticker_articles = alpha_vantage_news.fetch_ticker_news(top_symbols, days_back=7)
                     av_articles.extend(ticker_articles)
                 
-                # Deduplicate
+                # Deduplicate by ID AND headline similarity (same news from different sources)
                 seen_ids = set()
+                seen_headlines = set()
                 unique_articles = []
                 for a in av_articles:
-                    if a.id not in seen_ids:
-                        seen_ids.add(a.id)
-                        unique_articles.append(a)
+                    # Normalize headline for comparison (lowercase, strip spaces)
+                    headline_key = a.headline.lower().strip()[:80] if a.headline else ""
+                    
+                    # Skip if we've seen this ID or very similar headline
+                    if a.id in seen_ids:
+                        continue
+                    if headline_key and headline_key in seen_headlines:
+                        continue
+                    
+                    seen_ids.add(a.id)
+                    if headline_key:
+                        seen_headlines.add(headline_key)
+                    unique_articles.append(a)
                 
                 log(f"Received {len(unique_articles)} articles from Alpha Vantage")
             
@@ -1596,10 +1613,22 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         )
         
         # Blend with Thompson Sampling for smarter exploration
+        # Adaptive Thompson influence - explore more early, exploit more with experience
+        trade_stats = learning_engine.trade_memory.get_statistics()
+        total_trades = trade_stats.get('total_trades', 0)
+        if total_trades < 20:
+            thompson_inf = 0.35  # 35% exploration when learning
+        elif total_trades < 50:
+            thompson_inf = 0.25  # 25% moderate exploration
+        elif total_trades < 100:
+            thompson_inf = 0.15  # 15% some exploration
+        else:
+            thompson_inf = 0.10  # 10% minimal exploration (mostly exploit)
+        
         thompson_weights = thompson_sampler.blend_with_debate(
             debate_scores={name: s.total_score for name, s in scores.items()},
             regime=market_context_for_learning['regime'],
-            thompson_influence=0.2,  # 20% Thompson, 80% debate
+            thompson_influence=thompson_inf,
         )
         
         # Combine learned weights with Thompson weights
