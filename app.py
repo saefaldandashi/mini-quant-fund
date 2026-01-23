@@ -84,8 +84,18 @@ from src.news_intelligence import (
 from src.execution import SmartExecutor, ExecutionStrategy, SpreadAnalyzer
 from src.execution.transaction_costs import TransactionCostModel, transaction_cost_model
 
+# Advanced Analytics (NEW)
+from src.analytics import (
+    CrossCorrelationEngine, get_cross_correlation_engine,
+    MultiTimeframeFusion, get_multi_timeframe_fusion,
+    EventCalendar, get_event_calendar,
+    FactorExposureManager, get_factor_manager,
+)
+from src.analytics.dynamic_weights import DynamicWeightOptimizer, get_dynamic_optimizer
+
 # Parallel data fetching utilities
 import asyncio
+import pandas as pd
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 app = Flask(__name__)
@@ -1817,6 +1827,75 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         log(f"Constraints applied: {len(metadata.get('constraints_applied', []))}")
         for constraint in metadata.get('constraints_applied', []):
             log(f"  - {constraint}")
+        
+        log("")
+        
+        # === ADVANCED ANALYTICS INTEGRATION ===
+        log("=" * 60)
+        log("ADVANCED ANALYTICS")
+        log("=" * 60)
+        
+        analytics_adjustments = []
+        
+        try:
+            # 1. Cross-Correlation Signals
+            cross_corr = get_cross_correlation_engine()
+            cross_corr.update_prices({
+                s: feature_store._price_history.get(s, {}).get('close', pd.Series())
+                for s in list(combined_weights.keys())[:50]
+            })
+            cross_corr.calculate_correlations()
+            cross_signals = cross_corr.generate_signals()
+            
+            if cross_signals:
+                log(f"📊 Cross-Correlation: {len(cross_signals)} signals")
+                for sig in cross_signals[:3]:
+                    log(f"   {sig.signal_type}: {sig.direction} ({sig.driver_asset})")
+                    
+                    # Apply cross-asset signal adjustments
+                    for symbol in sig.affected_symbols:
+                        if symbol in combined_weights:
+                            if sig.direction == "bullish":
+                                combined_weights[symbol] *= (1 + sig.strength * 0.2)
+                            elif sig.direction == "bearish":
+                                combined_weights[symbol] *= (1 - sig.strength * 0.2)
+                            analytics_adjustments.append(f"{symbol}: {sig.signal_type} adj")
+            
+            # 2. Event Calendar Risk Adjustment
+            calendar = get_event_calendar()
+            market_risk_factor, risk_reason = calendar.get_market_risk_factor()
+            
+            if market_risk_factor < 1.0:
+                log(f"📅 Event Calendar: {risk_reason}")
+                log(f"   Reducing exposure by {(1-market_risk_factor)*100:.0f}%")
+                
+                # Scale all positions by risk factor
+                combined_weights = {s: w * market_risk_factor for s, w in combined_weights.items()}
+                analytics_adjustments.append(f"Event: {risk_reason}")
+            
+            # 3. Factor Exposure Check
+            factor_mgr = get_factor_manager()
+            exposure = factor_mgr.calculate_portfolio_exposure(combined_weights)
+            
+            if not exposure.is_compliant():
+                log(f"⚠️ Factor Violations: {len(exposure.violations)}")
+                for v in exposure.violations[:3]:
+                    log(f"   - {v}")
+                
+                # Adjust weights for compliance
+                combined_weights, factor_adj = factor_mgr.adjust_weights_for_compliance(combined_weights)
+                analytics_adjustments.extend(factor_adj[:3])
+            else:
+                log(f"✅ Factor Exposure: Compliant (div score: {factor_mgr.get_diversification_score(combined_weights):.2f})")
+            
+            # Log sector breakdown
+            log(f"   Sectors: {exposure.sector_count} ({', '.join(f'{s}:{w*100:.0f}%' for s, w in list(exposure.sector_weights.items())[:5])})")
+            
+        except Exception as e:
+            log(f"⚠️ Analytics integration error: {e}")
+        
+        if analytics_adjustments:
+            log(f"📈 Analytics Adjustments: {len(analytics_adjustments)} applied")
         
         log("")
         
@@ -5830,6 +5909,207 @@ def download_report(filename):
         )
     
     except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# =============================================================================
+# ADVANCED ANALYTICS ENDPOINTS
+# =============================================================================
+
+@app.route('/api/analytics/cross-correlation')
+@requires_auth
+def get_cross_correlation():
+    """Get cross-asset correlation analysis."""
+    try:
+        engine = get_cross_correlation_engine()
+        
+        # Calculate correlations
+        pairs = engine.calculate_correlations()
+        
+        # Generate signals
+        signals = engine.generate_signals()
+        
+        return jsonify({
+            "success": True,
+            "summary": engine.get_summary(),
+            "top_correlations": [
+                p.to_dict() for p in sorted(
+                    pairs.values(),
+                    key=lambda x: abs(x.corr_20d),
+                    reverse=True
+                )[:20]
+            ],
+            "anomalies": [
+                p.to_dict() for p in pairs.values() if p.is_anomaly
+            ],
+            "signals": [s.to_dict() for s in signals],
+        })
+    except Exception as e:
+        logging.error(f"Cross-correlation error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/analytics/multi-timeframe/<symbol>')
+@requires_auth
+def get_multi_timeframe_analysis(symbol):
+    """Get multi-timeframe analysis for a symbol."""
+    try:
+        fusion = get_multi_timeframe_fusion()
+        
+        # Generate fused signal
+        signal = fusion.generate_fused_signal(symbol)
+        
+        if signal:
+            return jsonify({
+                "success": True,
+                "symbol": symbol,
+                "signal": signal.to_dict(),
+                "timeframe_analyses": {
+                    tf: analysis.__dict__ if analysis else None
+                    for tf, analysis in fusion.analysis_cache.get(symbol, {}).items()
+                },
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "error": f"No data available for {symbol}",
+            }), 404
+    except Exception as e:
+        logging.error(f"Multi-timeframe error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/analytics/event-calendar')
+@requires_auth
+def get_calendar_events():
+    """Get upcoming market events."""
+    try:
+        calendar = get_event_calendar()
+        
+        days_ahead = request.args.get('days', 7, type=int)
+        upcoming = calendar.get_upcoming_events(days_ahead)
+        
+        # Get market risk factor for today
+        risk_factor, reason = calendar.get_market_risk_factor()
+        
+        return jsonify({
+            "success": True,
+            "summary": calendar.get_summary(),
+            "market_risk_factor": risk_factor,
+            "market_risk_reason": reason,
+            "upcoming_events": [e.to_dict() for e in upcoming],
+            "active_today": [e.to_dict() for e in calendar.get_active_events()],
+        })
+    except Exception as e:
+        logging.error(f"Event calendar error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/analytics/factor-exposure')
+@requires_auth
+def get_factor_exposure():
+    """Get portfolio factor exposure analysis."""
+    try:
+        manager = get_factor_manager()
+        
+        # Get current positions
+        api_key = os.getenv("ALPACA_API_KEY")
+        secret_key = os.getenv("ALPACA_SECRET_KEY")
+        
+        if api_key and secret_key:
+            broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+            positions = broker.get_positions()
+            
+            # Convert to weights
+            total_value = sum(p.get('market_value', 0) for p in positions.values())
+            weights = {
+                symbol: pos.get('market_value', 0) / total_value
+                for symbol, pos in positions.items()
+            } if total_value > 0 else {}
+            
+            # Calculate exposure
+            exposure = manager.calculate_portfolio_exposure(weights)
+            suggestions = manager.get_rebalancing_suggestions(weights)
+            div_score = manager.get_diversification_score(weights)
+            
+            return jsonify({
+                "success": True,
+                "exposure": exposure.to_dict(),
+                "diversification_score": div_score,
+                "suggestions": suggestions,
+                "positions_analyzed": len(weights),
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "error": "API keys not configured",
+            }), 400
+    except Exception as e:
+        logging.error(f"Factor exposure error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/analytics/dynamic-weights')
+@requires_auth
+def get_dynamic_weights():
+    """Get dynamic strategy weight optimization."""
+    try:
+        optimizer = get_dynamic_optimizer(list(learning_engine.strategy_names))
+        
+        return jsonify({
+            "success": True,
+            "summary": optimizer.get_summary(),
+            "current_weights": optimizer.current_weights,
+        })
+    except Exception as e:
+        logging.error(f"Dynamic weights error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/analytics/optimize-weights', methods=['POST'])
+@requires_auth
+def optimize_strategy_weights():
+    """Run dynamic weight optimization."""
+    try:
+        data = request.get_json() or {}
+        base_weights = data.get('base_weights', {})
+        regime = data.get('regime')
+        
+        if not base_weights:
+            # Use current learned weights
+            base_weights = learning_engine.adaptive_weights.get_current_weights()
+        
+        optimizer = get_dynamic_optimizer(list(base_weights.keys()))
+        
+        result = optimizer.optimize_weights(
+            base_weights=base_weights,
+            regime=regime,
+        )
+        
+        return jsonify({
+            "success": True,
+            "result": result.to_dict(),
+        })
+    except Exception as e:
+        logging.error(f"Weight optimization error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/analytics/summary')
+@requires_auth
+def get_analytics_summary():
+    """Get summary of all analytics modules."""
+    try:
+        return jsonify({
+            "success": True,
+            "cross_correlation": get_cross_correlation_engine().get_summary(),
+            "multi_timeframe": get_multi_timeframe_fusion().get_summary(),
+            "event_calendar": get_event_calendar().get_summary(),
+            "factor_exposure": get_factor_manager().get_summary(),
+            "dynamic_weights": get_dynamic_optimizer([]).get_summary(),
+        })
+    except Exception as e:
+        logging.error(f"Analytics summary error: {e}")
         return jsonify({"error": str(e)}), 500
 
 
