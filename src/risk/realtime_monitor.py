@@ -64,6 +64,16 @@ class RiskMonitorConfig:
     
     # Correlation monitoring
     high_correlation_threshold: float = 0.85  # Positions too correlated
+    
+    # MARGIN/LEVERAGE CIRCUIT BREAKERS
+    margin_alert_pct: float = 70.0        # Alert when 70% margin used
+    margin_reduce_pct: float = 85.0       # Reduce exposure at 85% margin used
+    margin_emergency_pct: float = 95.0    # Emergency at 95% margin used
+    
+    # Daily loss circuit breaker
+    daily_loss_alert_pct: float = 2.0     # Alert at 2% daily loss
+    daily_loss_halt_pct: float = 4.0      # Halt trading at 4% daily loss
+    daily_loss_delever_pct: float = 5.0   # Close leveraged positions at 5% daily loss
 
 
 class RealtimeRiskMonitor:
@@ -152,7 +162,7 @@ class RealtimeRiskMonitor:
             # Get current account state
             try:
                 account = self.broker.get_account()
-                equity = account.get('equity', 0)
+                equity = float(account.get('equity', 0))
                 positions = self.broker.get_positions()
             except Exception as e:
                 logger.warning(f"Could not get account data: {e}")
@@ -173,6 +183,12 @@ class RealtimeRiskMonitor:
             
             # Check position concentration
             self._check_concentration(positions, equity)
+            
+            # Check margin usage (circuit breaker)
+            self._check_margin(account, equity)
+            
+            # Check daily loss (circuit breaker)
+            self._check_daily_loss(account, equity)
     
     def _check_drawdown(self, drawdown: float, equity: float):
         """Check drawdown thresholds and take action."""
@@ -281,6 +297,142 @@ class RealtimeRiskMonitor:
                     threshold=self.config.max_single_position_pct,
                 )
                 self._trigger_alert(alert)
+    
+    def _check_margin(self, account: Dict, equity: float):
+        """Check margin usage and trigger circuit breakers."""
+        if equity <= 0:
+            return
+        
+        # Calculate margin usage percentage
+        buying_power = float(account.get('buying_power', equity * 2))
+        initial_margin = float(account.get('initial_margin', 0))
+        maintenance_margin = float(account.get('maintenance_margin', 0))
+        
+        # Margin used % = (equity * 2 - buying_power) / (equity * 2) * 100
+        # Simplified: how much of our leverage capacity are we using
+        total_capacity = equity * 2  # Assuming 2x leverage max
+        used = total_capacity - buying_power
+        margin_used_pct = (used / total_capacity) * 100 if total_capacity > 0 else 0
+        
+        if margin_used_pct >= self.config.margin_emergency_pct:
+            # EMERGENCY: Close leveraged positions immediately
+            alert = self._create_alert(
+                level=RiskLevel.CRITICAL,
+                message=f"🚨 MARGIN EMERGENCY: {margin_used_pct:.1f}% used (threshold: {self.config.margin_emergency_pct:.0f}%)",
+                metric_name="margin_usage",
+                current_value=margin_used_pct,
+                threshold=self.config.margin_emergency_pct,
+            )
+            self._trigger_alert(alert)
+            self._reduce_exposure(0.40, "margin_emergency")
+            self.halt_trading = True
+            self.current_risk_level = RiskLevel.CRITICAL
+            
+        elif margin_used_pct >= self.config.margin_reduce_pct:
+            # HIGH: Reduce exposure by 25%
+            alert = self._create_alert(
+                level=RiskLevel.HIGH,
+                message=f"⚠️ MARGIN HIGH: {margin_used_pct:.1f}% used (threshold: {self.config.margin_reduce_pct:.0f}%)",
+                metric_name="margin_usage",
+                current_value=margin_used_pct,
+                threshold=self.config.margin_reduce_pct,
+            )
+            self._trigger_alert(alert)
+            self._reduce_exposure(0.25, "high_margin_usage")
+            self.current_risk_level = RiskLevel.HIGH
+            
+        elif margin_used_pct >= self.config.margin_alert_pct:
+            # ELEVATED: Alert only
+            alert = self._create_alert(
+                level=RiskLevel.ELEVATED,
+                message=f"Margin usage elevated: {margin_used_pct:.1f}%",
+                metric_name="margin_usage",
+                current_value=margin_used_pct,
+                threshold=self.config.margin_alert_pct,
+            )
+            self._trigger_alert(alert)
+    
+    def _check_daily_loss(self, account: Dict, equity: float):
+        """Check daily P/L and trigger circuit breakers."""
+        if equity <= 0:
+            return
+        
+        # Get daily P/L
+        last_equity = float(account.get('last_equity', equity))
+        daily_pnl = equity - last_equity
+        daily_pnl_pct = (daily_pnl / last_equity) * 100 if last_equity > 0 else 0
+        
+        if daily_pnl_pct <= -self.config.daily_loss_delever_pct:
+            # CRITICAL: Close all leveraged positions
+            alert = self._create_alert(
+                level=RiskLevel.CRITICAL,
+                message=f"🚨 DAILY LOSS CRITICAL: {daily_pnl_pct:.2f}% (threshold: {-self.config.daily_loss_delever_pct:.0f}%)",
+                metric_name="daily_pnl",
+                current_value=daily_pnl_pct,
+                threshold=-self.config.daily_loss_delever_pct,
+            )
+            self._trigger_alert(alert)
+            self._close_leveraged_positions("daily_loss_critical")
+            self.halt_trading = True
+            self.current_risk_level = RiskLevel.CRITICAL
+            
+        elif daily_pnl_pct <= -self.config.daily_loss_halt_pct:
+            # HIGH: Halt new trades
+            alert = self._create_alert(
+                level=RiskLevel.HIGH,
+                message=f"⚠️ DAILY LOSS HIGH: {daily_pnl_pct:.2f}% (threshold: {-self.config.daily_loss_halt_pct:.0f}%)",
+                metric_name="daily_pnl",
+                current_value=daily_pnl_pct,
+                threshold=-self.config.daily_loss_halt_pct,
+            )
+            self._trigger_alert(alert)
+            self.halt_trading = True
+            self.current_risk_level = RiskLevel.HIGH
+            
+        elif daily_pnl_pct <= -self.config.daily_loss_alert_pct:
+            # ELEVATED: Alert only
+            alert = self._create_alert(
+                level=RiskLevel.ELEVATED,
+                message=f"Daily loss warning: {daily_pnl_pct:.2f}%",
+                metric_name="daily_pnl",
+                current_value=daily_pnl_pct,
+                threshold=-self.config.daily_loss_alert_pct,
+            )
+            self._trigger_alert(alert)
+    
+    def _close_leveraged_positions(self, reason: str):
+        """Close all positions that are using leverage (above 1x equity)."""
+        logger.warning(f"🚨 CLOSING LEVERAGED POSITIONS due to {reason}")
+        
+        try:
+            account = self.broker.get_account()
+            equity = float(account.get('equity', 0))
+            
+            if equity <= 0:
+                return
+            
+            positions = self.broker.get_positions()
+            
+            # Handle Dict format
+            if isinstance(positions, dict):
+                position_items = list(positions.items())
+            else:
+                position_items = [(pos.get('symbol'), pos) for pos in positions]
+            
+            # Calculate total position value
+            total_position_value = sum(
+                abs(float(pos.get('market_value', 0)))
+                for _, pos in position_items
+                if isinstance(pos, dict)
+            )
+            
+            # If position value exceeds equity (leveraged), close excess
+            if total_position_value > equity:
+                excess_pct = (total_position_value - equity) / total_position_value
+                self._reduce_exposure(excess_pct + 0.1, reason)  # +10% buffer
+                
+        except Exception as e:
+            logger.error(f"Error closing leveraged positions: {e}")
     
     def _reduce_exposure(self, reduction_pct: float, reason: str):
         """

@@ -90,21 +90,33 @@ class SignalValidator:
             
             # Check if signal direction matches sentiment
             if signal_direction == 'long' and sent_score < -0.2:
-                # Going long but sentiment is bearish
+                # Going long but sentiment is bearish - this IS concerning
                 warnings.append(f"Long signal but bearish sentiment ({sent_score:.2f})")
                 confidence_score *= 0.7
                 adjustments['sentiment_conflict'] = True
             
             elif signal_direction == 'short' and sent_score > 0.2:
                 # Going short but sentiment is bullish
-                warnings.append(f"Short signal but bullish sentiment ({sent_score:.2f})")
-                confidence_score *= 0.7
-                adjustments['sentiment_conflict'] = True
+                # FOR VALUE SHORTS: This is actually a CONTRARIAN opportunity!
+                # Market is overly optimistic about potentially overvalued stock
+                # Don't penalize - just note it as a contrarian trade
+                warnings.append(f"Contrarian short: bullish sentiment ({sent_score:.2f}) on short candidate")
+                adjustments['contrarian_short'] = True
+                # SLIGHT boost for contrarian shorts (value opportunity)
+                if sent_score > 0.4:
+                    confidence_score = min(1.0, confidence_score * 1.1)
+                    adjustments['contrarian_boost'] = True
             
             elif signal_direction == 'long' and sent_score > 0.3 and sent_conf > 0.5:
                 # Signal and sentiment agree strongly - boost confidence
                 confidence_score = min(1.0, confidence_score * 1.2)
                 adjustments['sentiment_confirmation'] = True
+            
+            elif signal_direction == 'short' and sent_score < -0.3 and sent_conf > 0.5:
+                # Short signal with bearish sentiment - strong confirmation!
+                confidence_score = min(1.0, confidence_score * 1.25)
+                adjustments['sentiment_confirmation'] = True
+                adjustments['short_confirmed'] = True
             
             # Check sentiment freshness
             freshness = ticker_sentiment.get('freshness_hours', 999)

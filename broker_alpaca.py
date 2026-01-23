@@ -351,7 +351,8 @@ class AlpacaBroker:
         self,
         target_weights: Dict[str, float],
         equity: float,
-        cash_buffer_pct: float = config.CASH_BUFFER_PCT
+        cash_buffer_pct: float = config.CASH_BUFFER_PCT,
+        leverage: float = 1.0
     ) -> Dict[str, int]:
         """
         Calculate target share quantities given target weights and current prices.
@@ -374,7 +375,9 @@ class AlpacaBroker:
         symbols = list(target_weights.keys())
         prices = self.get_current_prices(symbols)
         
-        investable_equity = equity * (1.0 - cash_buffer_pct)
+        investable_equity = equity * leverage * (1.0 - cash_buffer_pct)
+        
+        logging.info(f"📊 Position sizing: equity=${equity:,.0f}, leverage={leverage:.2f}x, investable=${investable_equity:,.0f}")
         
         result = {}
         

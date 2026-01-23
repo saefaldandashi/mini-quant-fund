@@ -222,3 +222,94 @@ LEARNING_SETTINGS = {
     "lookback_days": 30,    # Days to consider for performance
     "min_trades": 5,        # Min trades before adjusting
 }
+
+# ============================================================
+# LEVERAGE SETTINGS
+# ============================================================
+LEVERAGE_SETTINGS = {
+    # USER-CONFIGURABLE MAX LEVERAGE
+    # Options: 1.0 (no leverage), 2.0 (overnight max), 4.0 (intraday PDT max)
+    "max_leverage": 2.0,  # Default: 2x (Alpaca overnight max for RegT)
+    
+    # LEVERAGE MODE
+    # "manual" = always use max_leverage
+    # "dynamic" = calculate optimal leverage based on conditions
+    "mode": "dynamic",
+    
+    # DYNAMIC LEVERAGE PARAMETERS
+    "dynamic": {
+        # VIX-based adjustments (percentage of max leverage)
+        "vix_factors": {
+            15: 1.00,   # VIX < 15: 100% of max leverage
+            20: 0.80,   # VIX 15-20: 80% of max leverage
+            25: 0.60,   # VIX 20-25: 60% of max leverage
+            30: 0.40,   # VIX 25-30: 40% of max leverage
+            100: 0.20,  # VIX > 30: 20% of max leverage
+        },
+        # Drawdown-based adjustments
+        "drawdown_factors": {
+            3: 1.00,    # DD < 3%: 100% leverage
+            5: 0.80,    # DD 3-5%: 80% leverage
+            10: 0.50,   # DD 5-10%: 50% leverage
+            15: 0.25,   # DD 10-15%: 25% leverage
+            100: 0.00,  # DD > 15%: no leverage
+        },
+        # Confidence adjustment range
+        "min_confidence_factor": 0.7,
+        "max_confidence_factor": 1.2,
+    },
+    
+    # RISK CONTROLS
+    "risk_controls": {
+        # Daily loss limits
+        "daily_loss_halt_pct": 3.0,     # Halt new leveraged trades at 3% daily loss
+        "daily_loss_delever_pct": 5.0,  # Close leveraged positions at 5% daily loss
+        
+        # Margin buffer
+        "min_margin_buffer_pct": 25.0,  # Always keep 25% margin buffer
+        "margin_alert_pct": 70.0,       # Alert when 70% margin used
+        "margin_auto_reduce_pct": 85.0, # Auto-reduce at 85% margin used
+        
+        # Position limits with leverage
+        "max_leveraged_position_pct": 15.0,  # Max 15% per position when leveraged
+        "max_leveraged_sector_pct": 30.0,    # Max 30% per sector when leveraged
+    },
+    
+    # MARGIN COSTS
+    "margin_interest_rate": 0.07,  # 7% annual margin interest rate
+}
+
+# ============================================================
+# SHORT SELLING SETTINGS
+# ============================================================
+SHORT_SETTINGS = {
+    # Enable/disable shorting
+    "enabled": True,
+    
+    # Maximum exposure
+    "max_short_exposure_pct": 40.0,  # Max 40% of portfolio in shorts
+    "max_single_short_pct": 5.0,     # Max 5% per short position
+    
+    # Short signal sources
+    "signal_sources": {
+        "news_driven": True,       # Shorts from negative news
+        "valuation_based": True,   # Shorts from high valuation
+        "technical_breakdown": True,  # Shorts from technical breakdowns
+    },
+    
+    # Valuation thresholds for short signals
+    "valuation_thresholds": {
+        "pe_vs_sector_ratio": 2.0,      # Short if P/E > 2x sector average
+        "price_above_200ma_pct": 50.0,  # Short if price > 50% above 200 DMA
+    },
+    
+    # Technical breakdown thresholds
+    "technical_thresholds": {
+        "below_200ma_days": 5,          # Must be below 200 DMA for 5 days
+        "rsi_overbought": 70,           # RSI above 70 = overbought
+        "death_cross_lookback": 20,     # Days to detect death cross
+    },
+    
+    # Borrow cost limits
+    "max_borrow_rate_pct": 10.0,  # Skip if borrow rate > 10% annually
+}

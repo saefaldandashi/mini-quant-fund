@@ -61,6 +61,7 @@ from src.learning import LearningEngine, DebateLearner
 from src.learning.outcome_tracker import OutcomeTracker
 from src.learning.signal_validator import SignalValidator
 from src.learning.feedback_loop import FeedbackLoop
+from src.strategies.short_scanner import ShortScanner, get_short_scanner
 
 # Try to import LLM components (optional - requires API key)
 try:
@@ -1660,22 +1661,71 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         debate_info["final_weights"] = combined_weights
         
+        # === FUNDAMENTAL SHORT SCANNER ===
+        # Add shorts from fundamental analysis (valuation, news, technicals)
+        short_settings = getattr(config, 'SHORT_SETTINGS', {})
+        if short_settings.get('enabled', True):
+            try:
+                short_scanner = get_short_scanner()
+                
+                # Prepare data for scanner
+                scanner_sentiments = {}
+                if last_ticker_sentiments:
+                    for sym, sent in last_ticker_sentiments.items():
+                        if hasattr(sent, 'sentiment_score'):
+                            scanner_sentiments[sym] = {
+                                'sentiment_score': sent.sentiment_score,
+                                'sentiment_confidence': sent.confidence,
+                            }
+                        elif isinstance(sent, dict):
+                            scanner_sentiments[sym] = sent
+                
+                # Get RSI and 200 DMA from features if available
+                rsi_values = features.rsi_14 if hasattr(features, 'rsi_14') else {}
+                ma_200_values = {}  # Would need to calculate from prices
+                
+                # Get current prices
+                scanner_prices = broker.get_current_prices(config.UNIVERSE[:100])
+                
+                # Run short scan
+                short_candidates = short_scanner.scan(
+                    symbols=config.UNIVERSE[:100],  # Scan top 100
+                    news_sentiments=scanner_sentiments,
+                    features={'rsi_14': rsi_values} if rsi_values else None,
+                    prices=scanner_prices,
+                    ma_200=ma_200_values,
+                    rsi_values=rsi_values,
+                )
+                
+                # Add fundamental shorts to combined_weights
+                scanner_shorts = short_scanner.get_short_weights()
+                if scanner_shorts:
+                    log(f"🎯 Short Scanner found {len(scanner_shorts)} fundamental short candidates:")
+                    for sym, wt in list(scanner_shorts.items())[:5]:
+                        log(f"    {sym}: {wt*100:+.2f}%")
+                        # Only add if not already in combined_weights or if scanner has stronger conviction
+                        if sym not in combined_weights or abs(combined_weights.get(sym, 0)) < abs(wt):
+                            combined_weights[sym] = wt
+                
+            except Exception as e:
+                log(f"⚠️ Short scanner error: {e}")
+        
         # Log short positions from ensemble (before risk/cost filtering)
         short_positions = {k: v for k, v in combined_weights.items() if v < 0}
         long_positions = {k: v for k, v in combined_weights.items() if v > 0}
         if short_positions:
-            log(f"📉 Ensemble produced {len(short_positions)} SHORT positions:")
+            log(f"📉 Total SHORT positions (ensemble + scanner): {len(short_positions)}")
             for sym, wt in sorted(short_positions.items(), key=lambda x: x[1])[:5]:
                 log(f"    {sym}: {wt*100:+.2f}%")
         else:
-            log(f"⚠️ Ensemble produced NO short positions")
+            log(f"⚠️ NO short positions produced")
             # Debug: Check what L/S strategies are producing
             for name, signal in signals.items():
                 if '_LS' in name:
                     shorts = {k: v for k, v in signal.desired_weights.items() if v < 0}
                     if shorts:
                         log(f"  → {name} has {len(shorts)} shorts (e.g., {list(shorts.items())[:3]})")
-        log(f"📈 Ensemble produced {len(long_positions)} LONG positions")
+        log(f"📈 Total LONG positions: {len(long_positions)}")
         
         log(f"Ensemble mode: {metadata['mode']}")
         log(f"Constraints applied: {len(metadata.get('constraints_applied', []))}")
@@ -1989,10 +2039,41 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             log(f"")
             log(f"💵 Capital Exposure: {capital_exposure_pct*100:.0f}% × {regime_multiplier*100:.0f}% regime = ${effective_equity:,.2f} available")
             
+            # === CALCULATE DYNAMIC LEVERAGE ===
+            # Get leverage settings from config
+            leverage_settings = getattr(config, 'LEVERAGE_SETTINGS', {})
+            max_leverage = leverage_settings.get('max_leverage', 2.0)
+            leverage_mode = leverage_settings.get('mode', 'dynamic')
+            
+            # Update leverage manager with current VIX
+            if vix_level:
+                leverage_manager.update_vix(vix_level)
+            
+            # Calculate dynamic leverage if in dynamic mode
+            if leverage_mode == 'dynamic':
+                # Get strategy weights for blended leverage limit
+                strategy_weight_dict = {name: abs(score.total_score) for name, score in scores.items()}
+                dynamic_leverage = leverage_manager.calculate_blended_leverage_limit(strategy_weight_dict)
+                
+                # Apply to max leverage
+                effective_leverage = min(dynamic_leverage, max_leverage)
+            else:
+                # Manual mode: use max leverage directly
+                effective_leverage = max_leverage
+            
+            # Check if leverage is allowed
+            can_use_lev, lev_reason = leverage_manager.can_use_leverage()
+            if not can_use_lev:
+                effective_leverage = 1.0
+                log(f"⚠️ Leverage disabled: {lev_reason}")
+            else:
+                log(f"📈 Leverage: {effective_leverage:.2f}x (mode: {leverage_mode}, max: {max_leverage}x)")
+            
             target_shares = broker.calculate_target_shares(
                 enhanced_weights,
                 effective_equity,
-                cash_buffer_pct=config.CASH_BUFFER_PCT
+                cash_buffer_pct=config.CASH_BUFFER_PCT,
+                leverage=effective_leverage
             )
             
             # Log sizing adjustments
@@ -2963,6 +3044,71 @@ def toggle_leverage_kill_switch():
             "success": True,
             "message": "Kill switch deactivated"
         })
+
+
+@app.route('/api/leverage/settings', methods=['POST'])
+@requires_auth
+def update_leverage_settings():
+    """Update leverage settings (max leverage, margin buffer, etc.)."""
+    data = request.get_json() or {}
+    
+    try:
+        if 'max_leverage' in data:
+            max_lev = float(data['max_leverage'])
+            # Validate range (1x to 4x)
+            if 1.0 <= max_lev <= 4.0:
+                leverage_manager.config.max_leverage_absolute = max_lev
+                # Also update config if available
+                if hasattr(config, 'LEVERAGE_SETTINGS'):
+                    config.LEVERAGE_SETTINGS['max_leverage'] = max_lev
+                logging.info(f"Max leverage updated to {max_lev}x")
+            else:
+                return jsonify({"error": "Max leverage must be between 1.0 and 4.0"}), 400
+        
+        if 'min_margin_buffer' in data:
+            leverage_manager.config.min_margin_buffer_pct = float(data['min_margin_buffer'])
+        
+        if 'daily_loss_halt' in data:
+            leverage_manager.config.daily_loss_halt_pct = float(data['daily_loss_halt'])
+        
+        leverage_manager._update_limits()
+        leverage_manager._save()
+        
+        return jsonify({
+            "success": True,
+            "message": "Leverage settings updated",
+            "new_settings": {
+                "max_leverage": leverage_manager.config.max_leverage_absolute,
+                "effective_max": leverage_manager.get_effective_leverage_limit(),
+            }
+        })
+    except Exception as e:
+        logging.error(f"Error updating leverage settings: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/leverage/mode', methods=['POST'])
+@requires_auth
+def update_leverage_mode():
+    """Update leverage mode (dynamic vs manual)."""
+    data = request.get_json() or {}
+    mode = data.get('mode', 'dynamic')
+    
+    try:
+        # Update config
+        if hasattr(config, 'LEVERAGE_SETTINGS'):
+            config.LEVERAGE_SETTINGS['mode'] = mode
+        
+        logging.info(f"Leverage mode updated to {mode}")
+        
+        return jsonify({
+            "success": True,
+            "message": f"Leverage mode set to {mode}",
+            "mode": mode
+        })
+    except Exception as e:
+        logging.error(f"Error updating leverage mode: {e}")
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route('/api/status')

@@ -113,6 +113,10 @@ class StrategyEnhancer:
         - Investment floor scaling
         - Maximum positions limit
         
+        PROPERLY HANDLES BOTH LONGS AND SHORTS:
+        - Longs: positive weights
+        - Shorts: negative weights (preserved through entire flow)
+        
         Returns:
             Enhanced weights and reasons for each adjustment
         """
@@ -121,54 +125,92 @@ class StrategyEnhancer:
         if not base_weights:
             return {}, {}
         
-        # Step 1: Apply Kelly multiplier
-        adjusted = {}
-        for symbol, weight in base_weights.items():
+        # Step 1: Separate longs and shorts
+        longs = {s: w for s, w in base_weights.items() if w > 0}
+        shorts = {s: w for s, w in base_weights.items() if w < 0}
+        
+        logger.info(f"Position sizing: {len(longs)} longs, {len(shorts)} shorts")
+        
+        # Step 2: Apply Kelly multiplier to BOTH longs and shorts
+        adjusted_longs = {}
+        adjusted_shorts = {}
+        
+        for symbol, weight in longs.items():
             confidence = confidences.get(symbol, 0.5)
-            # Recalibrate confidence (current scores are too conservative)
             calibrated_confidence = self._calibrate_confidence(confidence)
-            
-            # Apply Kelly multiplier
             new_weight = weight * self.config.kelly_multiplier * calibrated_confidence
-            adjusted[symbol] = new_weight
-            reasons[symbol] = f"Kelly {self.config.kelly_multiplier}x, conf {calibrated_confidence:.2f}"
+            adjusted_longs[symbol] = new_weight
+            reasons[symbol] = f"LONG: Kelly {self.config.kelly_multiplier}x, conf {calibrated_confidence:.2f}"
         
-        # Step 2: Take top N positions by weight first (before min filter)
-        sorted_stocks = sorted(adjusted.items(), key=lambda x: -x[1])
-        top_positions = dict(sorted_stocks[:self.config.max_positions])
+        for symbol, weight in shorts.items():
+            confidence = confidences.get(symbol, 0.5)
+            calibrated_confidence = self._calibrate_confidence(confidence)
+            # For shorts, weight is negative - preserve the sign
+            new_weight = weight * self.config.kelly_multiplier * calibrated_confidence
+            adjusted_shorts[symbol] = new_weight
+            reasons[symbol] = f"SHORT: Kelly {self.config.kelly_multiplier}x, conf {calibrated_confidence:.2f}"
         
-        for s in set(adjusted.keys()) - set(top_positions.keys()):
-            reasons[s] = f"Not in top {self.config.max_positions}"
+        # Step 3: Take top N positions by ABSOLUTE VALUE (handles both longs and shorts)
+        # Allocate positions: e.g., 80% longs, 20% shorts of max_positions
+        max_longs = int(self.config.max_positions * 0.75)  # 75% for longs
+        max_shorts = int(self.config.max_positions * 0.25)  # 25% for shorts
+        max_shorts = max(max_shorts, 5)  # At least 5 short positions allowed
         
-        # Step 3: Apply investment floor BEFORE min position filter
-        # This ensures we have enough allocation to meet minimums
-        total_weight = sum(top_positions.values())
-        if total_weight < self.config.min_investment_floor and total_weight > 0:
-            scale_factor = self.config.min_investment_floor / total_weight
-            top_positions = {s: w * scale_factor for s, w in top_positions.items()}
-            for s in top_positions:
+        # Sort longs by weight (highest first)
+        sorted_longs = sorted(adjusted_longs.items(), key=lambda x: -x[1])
+        top_longs = dict(sorted_longs[:max_longs])
+        
+        # Sort shorts by absolute weight (most negative = strongest conviction)
+        sorted_shorts = sorted(adjusted_shorts.items(), key=lambda x: x[1])  # Most negative first
+        top_shorts = dict(sorted_shorts[:max_shorts])
+        
+        for s in set(adjusted_longs.keys()) - set(top_longs.keys()):
+            reasons[s] = f"Not in top {max_longs} longs"
+        for s in set(adjusted_shorts.keys()) - set(top_shorts.keys()):
+            reasons[s] = f"Not in top {max_shorts} shorts"
+        
+        # Step 4: Apply investment floor to LONGS only (shorts are separate exposure)
+        total_long_weight = sum(top_longs.values())
+        if total_long_weight < self.config.min_investment_floor and total_long_weight > 0:
+            scale_factor = self.config.min_investment_floor / total_long_weight
+            top_longs = {s: w * scale_factor for s, w in top_longs.items()}
+            for s in top_longs:
                 reasons[s] = f"{reasons.get(s, '')} | Scaled {scale_factor:.2f}x for floor"
-            logger.info(f"Applied investment floor: scaled {scale_factor:.2f}x to reach {self.config.min_investment_floor*100:.0f}%")
+            logger.info(f"Applied investment floor to longs: scaled {scale_factor:.2f}x")
         
-        # Step 4: Now filter by minimum position size
+        # Step 5: Filter by minimum position size (use ABSOLUTE VALUE for shorts)
         min_weight = self.config.min_position_pct
-        filtered = {s: w for s, w in top_positions.items() if w >= min_weight}
+        filtered_longs = {s: w for s, w in top_longs.items() if w >= min_weight}
+        filtered_shorts = {s: w for s, w in top_shorts.items() if abs(w) >= min_weight}
         
-        # If min filter removes too many, keep at least some positions
-        if len(filtered) < 5 and len(top_positions) >= 5:
-            # Keep top 5-10 regardless of min size
-            sorted_remaining = sorted(top_positions.items(), key=lambda x: -x[1])
-            filtered = dict(sorted_remaining[:min(10, len(sorted_remaining))])
-            logger.info(f"Relaxed min position filter to keep {len(filtered)} positions")
+        # If min filter removes too many longs, keep at least some
+        if len(filtered_longs) < 5 and len(top_longs) >= 5:
+            sorted_remaining = sorted(top_longs.items(), key=lambda x: -x[1])
+            filtered_longs = dict(sorted_remaining[:min(10, len(sorted_remaining))])
+            logger.info(f"Relaxed min position filter to keep {len(filtered_longs)} longs")
         
-        for s in set(top_positions.keys()) - set(filtered.keys()):
+        # Same for shorts - if we have shorts, keep at least the top ones
+        if len(filtered_shorts) < len(top_shorts) and len(top_shorts) > 0:
+            # Keep all shorts that passed top N filter (they're high conviction)
+            sorted_shorts_remaining = sorted(top_shorts.items(), key=lambda x: x[1])
+            filtered_shorts = dict(sorted_shorts_remaining[:min(5, len(sorted_shorts_remaining))])
+            logger.info(f"Kept {len(filtered_shorts)} short positions")
+        
+        for s in set(top_longs.keys()) - set(filtered_longs.keys()):
             if s not in reasons or "Scaled" not in reasons.get(s, ''):
                 reasons[s] = f"Below min position {min_weight*100:.1f}%"
         
-        # Step 5: Normalize if exceeds 100%
-        total_weight = sum(filtered.values())
-        if total_weight > 1.0:
-            filtered = {s: w / total_weight for s, w in filtered.items()}
+        # Step 6: Combine longs and shorts
+        filtered = {**filtered_longs, **filtered_shorts}
+        
+        # Step 7: Normalize if GROSS exposure exceeds 150% (allow leverage for L/S)
+        gross_exposure = sum(abs(w) for w in filtered.values())
+        if gross_exposure > 1.5:
+            scale = 1.5 / gross_exposure
+            filtered = {s: w * scale for s, w in filtered.items()}
+            logger.info(f"Scaled down gross exposure from {gross_exposure:.1%} to 150%")
+        
+        logger.info(f"Final positions: {len(filtered_longs)} longs, {len(filtered_shorts)} shorts")
         
         return filtered, reasons
     

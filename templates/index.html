@@ -1163,6 +1163,54 @@
             opacity: 1;
             visibility: visible;
         }
+        
+        /* Leverage Button Styles */
+        .lev-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            background: var(--bg-darker);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            flex: 1;
+        }
+        
+        .lev-btn:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+        
+        .lev-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        .mode-btn {
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            background: var(--bg-darker);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .mode-btn:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+        
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            color: white;
+            border-color: transparent;
+        }
     </style>
 </head>
 <body>
@@ -1263,6 +1311,44 @@
                     <div style="background: var(--bg-darker); padding: 15px; border-radius: 8px;">
                         <div style="color: var(--text-secondary); font-size: 0.8em; margin-bottom: 5px;">Margin Buffer</div>
                         <div id="lev-margin-buffer" style="font-size: 1.8em; font-weight: bold; color: var(--green);">100%</div>
+                    </div>
+                </div>
+                
+                <!-- Leverage Settings Controls -->
+                <div style="margin-top: 20px; padding: 15px; background: rgba(139, 92, 246, 0.1); border-radius: 8px;">
+                    <h3 style="margin-bottom: 15px; color: var(--accent);">⚙️ Leverage Settings</h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <!-- Max Leverage Selector -->
+                        <div>
+                            <label style="color: var(--text-secondary); font-size: 0.85em; display: block; margin-bottom: 8px;">Maximum Leverage</label>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="lev-btn" data-lev="1.0" onclick="setMaxLeverage(1.0)">1x</button>
+                                <button class="lev-btn" data-lev="1.5" onclick="setMaxLeverage(1.5)">1.5x</button>
+                                <button class="lev-btn active" data-lev="2.0" onclick="setMaxLeverage(2.0)">2x</button>
+                                <button class="lev-btn" data-lev="3.0" onclick="setMaxLeverage(3.0)">3x</button>
+                                <button class="lev-btn" data-lev="4.0" onclick="setMaxLeverage(4.0)">4x</button>
+                            </div>
+                            <div style="color: var(--text-secondary); font-size: 0.75em; margin-top: 5px;">
+                                ⚠️ 4x requires Pattern Day Trader status (intraday only)
+                            </div>
+                        </div>
+                        
+                        <!-- Leverage Mode -->
+                        <div>
+                            <label style="color: var(--text-secondary); font-size: 0.85em; display: block; margin-bottom: 8px;">Leverage Mode</label>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="mode-btn active" id="mode-dynamic" onclick="setLeverageMode('dynamic')">
+                                    🤖 Dynamic (Auto)
+                                </button>
+                                <button class="mode-btn" id="mode-manual" onclick="setLeverageMode('manual')">
+                                    ✋ Manual (Fixed)
+                                </button>
+                            </div>
+                            <div style="color: var(--text-secondary); font-size: 0.75em; margin-top: 5px;">
+                                Dynamic mode adjusts leverage based on VIX, drawdown, and confidence
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -3917,6 +4003,59 @@
                     loadLeverageStatus();
                 } else {
                     showToast('error', 'Failed', 'Could not activate kill switch');
+                }
+            } catch (e) {
+                showToast('error', 'Error', e.message);
+            }
+        }
+        
+        // ========== LEVERAGE SETTINGS ==========
+        async function setMaxLeverage(value) {
+            try {
+                // Update UI
+                document.querySelectorAll('.lev-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (parseFloat(btn.dataset.lev) === value) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Send to server
+                const res = await fetch('/api/leverage/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ max_leverage: value })
+                });
+                
+                if (res.ok) {
+                    showToast('success', 'Leverage Updated', `Maximum leverage set to ${value}x`);
+                    loadLeverageStatus();
+                } else {
+                    showToast('error', 'Failed', 'Could not update leverage settings');
+                }
+            } catch (e) {
+                showToast('error', 'Error', e.message);
+            }
+        }
+        
+        async function setLeverageMode(mode) {
+            try {
+                // Update UI
+                document.getElementById('mode-dynamic').classList.remove('active');
+                document.getElementById('mode-manual').classList.remove('active');
+                document.getElementById(`mode-${mode}`).classList.add('active');
+                
+                // Send to server
+                const res = await fetch('/api/leverage/mode', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mode: mode })
+                });
+                
+                if (res.ok) {
+                    showToast('success', 'Mode Updated', `Leverage mode set to ${mode}`);
+                } else {
+                    showToast('error', 'Failed', 'Could not update leverage mode');
                 }
             } catch (e) {
                 showToast('error', 'Error', e.message);
