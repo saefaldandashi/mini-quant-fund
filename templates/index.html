@@ -1211,6 +1211,55 @@
             color: white;
             border-color: transparent;
         }
+        
+        /* Quick Leverage Buttons (Sidebar) */
+        .lev-quick-btn {
+            padding: 6px 0;
+            border: 1px solid var(--border);
+            background: var(--bg-darker);
+            color: var(--text-secondary);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 0.75em;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .lev-quick-btn:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+        
+        .lev-quick-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        .lev-mode-btn {
+            padding: 5px 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-darker);
+            color: var(--text-secondary);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.7em;
+            text-align: center;
+        }
+        
+        .lev-mode-btn:hover {
+            background: var(--bg-card);
+        }
+        
+        .lev-mode-btn.active {
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            color: white;
+            border-color: transparent;
+        }
     </style>
 </head>
 <body>
@@ -1532,6 +1581,39 @@
             <div class="checkbox-row">
                 <input type="checkbox" id="cancel-previous" checked>
                 <label for="cancel-previous">Cancel previous orders</label>
+            </div>
+            
+            <!-- LEVERAGE CONTROL - Visible on Main UI -->
+            <div class="mini-card" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1)); border: 1px solid rgba(139, 92, 246, 0.3);">
+                <h3 style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.2em;">💰</span> Leverage
+                    <span id="current-leverage-display" style="margin-left: auto; background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.9em; font-weight: bold;">2.0x</span>
+                </h3>
+                
+                <div style="display: flex; gap: 4px; margin-top: 10px;">
+                    <button class="lev-quick-btn" data-lev="1.0" onclick="setLeverageQuick(1.0)" title="No leverage">1x</button>
+                    <button class="lev-quick-btn" data-lev="1.5" onclick="setLeverageQuick(1.5)" title="1.5x leverage">1.5x</button>
+                    <button class="lev-quick-btn active" data-lev="2.0" onclick="setLeverageQuick(2.0)" title="2x leverage (overnight max)">2x</button>
+                    <button class="lev-quick-btn" data-lev="4.0" onclick="setLeverageQuick(4.0)" title="4x leverage (PDT intraday)">4x</button>
+                </div>
+                
+                <div style="display: flex; gap: 6px; margin-top: 8px;">
+                    <button id="lev-mode-auto" class="lev-mode-btn active" onclick="setLeverageModeQuick('dynamic')" style="flex: 1;">
+                        🤖 Auto
+                    </button>
+                    <button id="lev-mode-manual" class="lev-mode-btn" onclick="setLeverageModeQuick('manual')" style="flex: 1;">
+                        ✋ Fixed
+                    </button>
+                </div>
+                
+                <div style="margin-top: 8px; font-size: 0.7em; color: var(--text-dim);">
+                    <span id="leverage-status-text">Auto: Adjusts based on VIX/drawdown</span>
+                </div>
+                
+                <div style="margin-top: 6px; display: flex; justify-content: space-between; font-size: 0.7em;">
+                    <span style="color: var(--text-dim);">Margin Used:</span>
+                    <span id="sidebar-margin-used" style="color: var(--green);">0%</span>
+                </div>
             </div>
             
             <div class="mini-card">
@@ -2312,6 +2394,8 @@
             loadUniverseStats();
             loadMarketData();
             loadDataSources();
+            loadLeverageStatus();  // Load leverage status on startup
+            loadLeverageConfig();  // Load and sync leverage settings/mode
             
             // Refresh macro data on page load to get latest values
             try {
@@ -2328,6 +2412,7 @@
                     loadMacro();  // Keep macro updated
                     loadRegime(); // Keep regime updated
                     loadMarketData(); // Keep market data updated
+                    loadLeverageStatus();  // Keep leverage/margin updated
                 }
                 checkStatus();
             }, 5000);
@@ -3952,6 +4037,27 @@
                 document.getElementById('lev-margin-used').textContent = `${(leverage.margin_used_pct || 0).toFixed(1)}%`;
                 document.getElementById('lev-margin-buffer').textContent = `${(leverage.margin_buffer_pct || 100).toFixed(1)}%`;
                 
+                // UPDATE SIDEBAR - Show current leverage and margin
+                const sidebarMargin = document.getElementById('sidebar-margin-used');
+                if (sidebarMargin) {
+                    const marginPct = leverage.margin_used_pct || 0;
+                    sidebarMargin.textContent = `${marginPct.toFixed(0)}%`;
+                    if (marginPct > 80) {
+                        sidebarMargin.style.color = 'var(--red)';
+                    } else if (marginPct > 60) {
+                        sidebarMargin.style.color = '#f59e0b';
+                    } else {
+                        sidebarMargin.style.color = 'var(--green)';
+                    }
+                }
+                
+                // Update sidebar leverage display with EFFECTIVE leverage
+                const effMax = leverage.effective_max_leverage || 2;
+                const currentDisplay = document.getElementById('current-leverage-display');
+                if (currentDisplay) {
+                    currentDisplay.textContent = `${effMax.toFixed(1)}x`;
+                }
+                
                 // Color based on state
                 const state = leverage.state || 'healthy';
                 const stateColors = {
@@ -4010,6 +4116,101 @@
         }
         
         // ========== LEVERAGE SETTINGS ==========
+        let currentLeverageSetting = 2.0;
+        let currentLeverageMode = 'dynamic';
+        
+        // Load leverage config and sync UI on startup
+        async function loadLeverageConfig() {
+            try {
+                const res = await fetch('/api/leverage/config');
+                if (!res.ok) return;
+                const config = await res.json();
+                
+                // Update current settings
+                currentLeverageSetting = config.max_leverage_absolute || 2.0;
+                currentLeverageMode = config.mode || 'dynamic';
+                
+                // Sync sidebar buttons
+                document.querySelectorAll('.lev-quick-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (parseFloat(btn.dataset.lev) === currentLeverageSetting) {
+                        btn.classList.add('active');
+                    }
+                });
+                document.getElementById('current-leverage-display').textContent = `${currentLeverageSetting}x`;
+                
+                // Sync mode buttons
+                document.getElementById('lev-mode-auto').classList.remove('active');
+                document.getElementById('lev-mode-manual').classList.remove('active');
+                if (currentLeverageMode === 'dynamic') {
+                    document.getElementById('lev-mode-auto').classList.add('active');
+                    document.getElementById('leverage-status-text').textContent = 'Auto: Adjusts based on VIX/drawdown';
+                } else {
+                    document.getElementById('lev-mode-manual').classList.add('active');
+                    document.getElementById('leverage-status-text').textContent = `Fixed at ${currentLeverageSetting}x leverage`;
+                }
+                
+                // Sync modal buttons too
+                document.querySelectorAll('.lev-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (parseFloat(btn.dataset.lev) === currentLeverageSetting) {
+                        btn.classList.add('active');
+                    }
+                });
+                document.getElementById('mode-dynamic').classList.remove('active');
+                document.getElementById('mode-manual').classList.remove('active');
+                document.getElementById(`mode-${currentLeverageMode}`).classList.add('active');
+                
+            } catch (e) {
+                console.error('Error loading leverage config:', e);
+            }
+        }
+        
+        async function setLeverageQuick(value) {
+            // Update sidebar UI immediately
+            document.querySelectorAll('.lev-quick-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseFloat(btn.dataset.lev) === value) {
+                    btn.classList.add('active');
+                }
+            });
+            document.getElementById('current-leverage-display').textContent = `${value}x`;
+            currentLeverageSetting = value;
+            
+            // Also update modal buttons
+            document.querySelectorAll('.lev-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseFloat(btn.dataset.lev) === value) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Send to server
+            await setMaxLeverage(value);
+        }
+        
+        async function setLeverageModeQuick(mode) {
+            // Update sidebar UI
+            document.getElementById('lev-mode-auto').classList.remove('active');
+            document.getElementById('lev-mode-manual').classList.remove('active');
+            if (mode === 'dynamic') {
+                document.getElementById('lev-mode-auto').classList.add('active');
+                document.getElementById('leverage-status-text').textContent = 'Auto: Adjusts based on VIX/drawdown';
+            } else {
+                document.getElementById('lev-mode-manual').classList.add('active');
+                document.getElementById('leverage-status-text').textContent = `Fixed at ${currentLeverageSetting}x leverage`;
+            }
+            currentLeverageMode = mode;
+            
+            // Also update modal buttons
+            document.getElementById('mode-dynamic').classList.remove('active');
+            document.getElementById('mode-manual').classList.remove('active');
+            document.getElementById(`mode-${mode}`).classList.add('active');
+            
+            // Send to server
+            await setLeverageMode(mode);
+        }
+        
         async function setMaxLeverage(value) {
             try {
                 // Update UI

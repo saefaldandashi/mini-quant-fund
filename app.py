@@ -3010,6 +3010,7 @@ def manage_leverage_config():
         })
     
     # GET - return current config
+    leverage_settings = getattr(config, 'LEVERAGE_SETTINGS', {})
     return jsonify({
         'max_leverage_absolute': leverage_manager.config.max_leverage_absolute,
         'max_overnight_leverage': leverage_manager.config.max_overnight_leverage,
@@ -3020,6 +3021,7 @@ def manage_leverage_config():
         'vix_thresholds': leverage_manager.config.vix_thresholds,
         'drawdown_thresholds': leverage_manager.config.drawdown_thresholds,
         'strategy_leverage_limits': leverage_manager.config.strategy_leverage_limits,
+        'mode': leverage_settings.get('mode', 'dynamic'),  # Current mode
     })
 
 
