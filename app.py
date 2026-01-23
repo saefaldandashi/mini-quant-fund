@@ -2824,9 +2824,16 @@ def get_equity_curve():
     """
     Get equity curve data for charting.
     Uses Alpaca's Portfolio History API for ACCURATE historical equity values.
+    
+    Query params:
+        days: Number of days of history (default 30, max 90)
     """
     try:
         from datetime import timedelta
+        
+        # Get requested days from query param
+        requested_days = int(request.args.get('days', 30))
+        requested_days = min(max(requested_days, 1), 90)  # Clamp between 1 and 90
         
         api_key = os.environ.get('ALPACA_API_KEY')
         secret_key = os.environ.get('ALPACA_SECRET_KEY')
@@ -2844,10 +2851,18 @@ def get_equity_curve():
             from alpaca.trading.client import TradingClient
             client = TradingClient(api_key, secret_key, paper=True)
             
-            # Get portfolio history (last 30 days)
+            # Determine period based on requested days
+            if requested_days <= 7:
+                period = "1W"
+            elif requested_days <= 30:
+                period = "1M"
+            else:
+                period = "3M"
+            
+            # Get portfolio history
             # This gives actual equity values at end of each day
             history = client.get_portfolio_history(
-                period="1M",  # 1 month
+                period=period,
                 timeframe="1D"  # Daily
             )
             
@@ -2875,7 +2890,11 @@ def get_equity_curve():
                         'trades': 0,  # Would need to count from trade memory
                     })
                 
-                logging.info(f"Loaded {len(curve_data)} days of portfolio history from Alpaca")
+                # Filter to only requested days (take last N days)
+                if len(curve_data) > requested_days:
+                    curve_data = curve_data[-requested_days:]
+                
+                logging.info(f"Loaded {len(curve_data)} days of portfolio history from Alpaca (requested: {requested_days})")
             else:
                 logging.warning("No portfolio history data from Alpaca")
                 
@@ -2905,20 +2924,36 @@ def get_equity_curve():
         
         # Calculate summary stats from the ACTUAL data
         current_equity = curve_data[-1]['equity'] if curve_data else 0
-        starting_equity = curve_data[0]['equity'] if curve_data else current_equity
-        total_pnl = current_equity - starting_equity
-        total_pnl_pct = ((current_equity / starting_equity) - 1) * 100 if starting_equity > 0 else 0
+        equity_30d_ago = curve_data[0]['equity'] if curve_data else current_equity
+        
+        # 30-day P/L (current vs 30 days ago)
+        pnl_30d = current_equity - equity_30d_ago
+        pnl_30d_pct = ((current_equity / equity_30d_ago) - 1) * 100 if equity_30d_ago > 0 else 0
+        
+        # ALL-TIME P/L (current vs starting capital of $100,000)
+        # This is what users actually want to see
+        STARTING_CAPITAL = 100000.0  # Account was funded with $100,000
+        total_pnl_all_time = current_equity - STARTING_CAPITAL
+        total_pnl_all_time_pct = ((current_equity / STARTING_CAPITAL) - 1) * 100 if STARTING_CAPITAL > 0 else 0
         
         winning_days = len([d for d in curve_data if d.get('daily_pnl', 0) > 0])
         losing_days = len([d for d in curve_data if d.get('daily_pnl', 0) < 0])
         
+        logging.info(f"Equity curve: current=${current_equity:.2f}, 30d_ago=${equity_30d_ago:.2f}, "
+                     f"30d_pnl=${pnl_30d:.2f}, all_time_pnl=${total_pnl_all_time:.2f}")
+        
         return jsonify({
             'curve': curve_data,
             'summary': {
-                'starting_equity': starting_equity,
+                'starting_capital': STARTING_CAPITAL,
                 'current_equity': current_equity,
-                'total_pnl_30d': total_pnl,
-                'total_pnl_pct': total_pnl_pct,
+                'equity_30d_ago': equity_30d_ago,
+                # ALL-TIME P/L (what user actually wants)
+                'total_pnl': total_pnl_all_time,
+                'total_pnl_pct': total_pnl_all_time_pct,
+                # 30-day specific P/L  
+                'total_pnl_30d': pnl_30d,
+                'pnl_30d_pct': pnl_30d_pct,
                 'winning_days': winning_days,
                 'losing_days': losing_days,
                 'total_trades': sum(d.get('trades', 0) for d in curve_data),

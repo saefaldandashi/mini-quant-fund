@@ -1810,7 +1810,7 @@
                     <!-- Equity Curve Chart -->
                     <div id="equity-curve-container" style="margin-top: 16px; padding: 12px; background: var(--bg-inset); border-radius: 8px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <h3 style="margin: 0; font-size: 0.9em; color: var(--text-dim);">📈 30-Day Equity Curve</h3>
+                            <h3 style="margin: 0; font-size: 0.9em; color: var(--text-dim);">📈 Equity Curve (All-Time P/L)</h3>
                             <span id="equity-summary" style="font-size: 0.75em; color: var(--text-dim);">--</span>
                         </div>
                         <div id="equity-chart" style="height: 80px; position: relative;">
@@ -3239,14 +3239,17 @@
                 const curve = data.curve;
                 const summary = data.summary || {};
                 
-                // Update summary text
+                // Update summary text - show ALL-TIME P/L (since $100k starting capital)
                 const summaryEl = document.getElementById('equity-summary');
-                if (summaryEl && summary.total_pnl_30d !== undefined) {
-                    const pnl = summary.total_pnl_30d;
-                    const pnlPct = summary.total_pnl_pct || 0;
+                if (summaryEl) {
+                    // Use total_pnl (all-time) as the primary display
+                    const pnl = summary.total_pnl !== undefined ? summary.total_pnl : (summary.total_pnl_30d || 0);
+                    const pnlPct = summary.total_pnl_pct !== undefined ? summary.total_pnl_pct : 0;
                     const pnlClass = pnl >= 0 ? 'positive' : 'negative';
                     const pnlSign = pnl >= 0 ? '+' : '';
-                    summaryEl.innerHTML = `<span class="${pnlClass}">${pnlSign}${formatCurrency(pnl)} (${pnlSign}${pnlPct.toFixed(2)}%)</span> 30d | ${summary.total_trades || 0} trades`;
+                    
+                    // Show all-time P/L prominently
+                    summaryEl.innerHTML = `<span class="${pnlClass}">${pnlSign}${formatCurrency(pnl)} (${pnlSign}${pnlPct.toFixed(2)}%)</span> total`;
                 }
                 
                 // Render SVG chart
