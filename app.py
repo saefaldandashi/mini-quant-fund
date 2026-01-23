@@ -92,6 +92,7 @@ from src.analytics import (
     FactorExposureManager, get_factor_manager,
 )
 from src.analytics.dynamic_weights import DynamicWeightOptimizer, get_dynamic_optimizer
+from src.data.cross_asset_data import CrossAssetDataLoader, get_cross_asset_loader
 
 # Parallel data fetching utilities
 import asyncio
@@ -1839,11 +1840,32 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         try:
             # 1. Cross-Correlation Signals
+            # Fetch cross-asset data (commodities, currencies, international markets)
+            cross_asset_loader = get_cross_asset_loader()
+            
+            # Fetch all cross-asset prices (cached for 15 min)
+            cross_asset_prices = cross_asset_loader.fetch_all_cross_assets(days=100)
+            log(f"📊 Cross-Asset Data: {len(cross_asset_prices)} assets loaded")
+            log(f"   Commodities: CL=F (Oil), GC=F (Gold), HG=F (Copper)")
+            log(f"   Currencies: DXY, EUR/USD, USD/JPY")
+            log(f"   International: EWG (Germany), EWJ (Japan), FXI (China)")
+            log(f"   Bonds: TLT, HYG (Credit)")
+            
+            # Combine with stock prices from feature store
+            all_prices = {}
+            for s in list(combined_weights.keys())[:50]:
+                if s in feature_store._price_history:
+                    hist = feature_store._price_history[s]
+                    if isinstance(hist, pd.DataFrame) and 'close' in hist.columns:
+                        all_prices[s] = hist['close']
+                    elif isinstance(hist, pd.Series):
+                        all_prices[s] = hist
+            
+            # Add cross-asset prices
+            all_prices.update(cross_asset_prices)
+            
             cross_corr = get_cross_correlation_engine()
-            cross_corr.update_prices({
-                s: feature_store._price_history.get(s, {}).get('close', pd.Series())
-                for s in list(combined_weights.keys())[:50]
-            })
+            cross_corr.update_prices(all_prices)
             cross_corr.calculate_correlations()
             cross_signals = cross_corr.generate_signals()
             
@@ -6107,9 +6129,55 @@ def get_analytics_summary():
             "event_calendar": get_event_calendar().get_summary(),
             "factor_exposure": get_factor_manager().get_summary(),
             "dynamic_weights": get_dynamic_optimizer([]).get_summary(),
+            "cross_asset_data": get_cross_asset_loader().get_summary(),
         })
     except Exception as e:
         logging.error(f"Analytics summary error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/analytics/cross-asset-data')
+@requires_auth
+def get_cross_asset_data():
+    """Get cross-asset price data (commodities, currencies, international)."""
+    try:
+        loader = get_cross_asset_loader()
+        days = request.args.get('days', 60, type=int)
+        
+        # Fetch all data
+        all_data = loader.fetch_all_cross_assets(days=days)
+        
+        # Format for JSON response
+        formatted = {}
+        for symbol, series in all_data.items():
+            if len(series) > 0:
+                formatted[symbol] = {
+                    "latest_price": round(float(series.iloc[-1]), 4),
+                    "change_1d": round(float((series.iloc[-1] / series.iloc[-2] - 1) * 100), 2) if len(series) >= 2 else 0,
+                    "change_5d": round(float((series.iloc[-1] / series.iloc[-5] - 1) * 100), 2) if len(series) >= 5 else 0,
+                    "change_20d": round(float((series.iloc[-1] / series.iloc[-20] - 1) * 100), 2) if len(series) >= 20 else 0,
+                    "days_available": len(series),
+                }
+        
+        # Group by category
+        categories = {
+            "commodities": {s: formatted[s] for s in loader.COMMODITIES if s in formatted},
+            "currencies": {s: formatted[s] for s in loader.CURRENCIES if s in formatted},
+            "international": {s: formatted[s] for s in loader.INTERNATIONAL if s in formatted},
+            "bonds": {s: formatted[s] for s in loader.BONDS if s in formatted},
+            "volatility": {s: formatted[s] for s in loader.VOLATILITY if s in formatted},
+            "sectors": {s: formatted[s] for s in loader.SECTORS if s in formatted},
+        }
+        
+        return jsonify({
+            "success": True,
+            "total_assets": len(formatted),
+            "days_requested": days,
+            "data": categories,
+            "descriptions": loader.get_all_symbols(),
+        })
+    except Exception as e:
+        logging.error(f"Cross-asset data error: {e}")
         return jsonify({"error": str(e)}), 500
 
 
