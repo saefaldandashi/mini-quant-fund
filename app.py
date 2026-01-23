@@ -365,6 +365,52 @@ scheduler_thread = None
 scheduler_stop_event = threading.Event()
 _scheduler_started = False  # Flag to prevent double-start
 
+# Cached VIX value for fallback
+_cached_vix = {'value': 18.0, 'timestamp': None}
+
+def get_vix_with_fallback(macro_loader=None, broker=None) -> float:
+    """
+    Get VIX with proper fallbacks.
+    
+    Priority:
+    1. Macro loader (FRED/Yahoo)
+    2. Broker (Alpaca)
+    3. Cached value
+    4. Market-aware default (not static 20)
+    """
+    global _cached_vix
+    
+    # Try macro loader first
+    if macro_loader:
+        try:
+            indicators = macro_loader.fetch_all()
+            if indicators and indicators.vix and indicators.vix > 0:
+                _cached_vix = {'value': indicators.vix, 'timestamp': datetime.now()}
+                return indicators.vix
+        except Exception:
+            pass
+    
+    # Try broker
+    if broker:
+        try:
+            prices = broker.get_current_prices(['^VIX', 'VIX'])
+            vix = prices.get('^VIX') or prices.get('VIX')
+            if vix and vix > 0:
+                _cached_vix = {'value': vix, 'timestamp': datetime.now()}
+                return vix
+        except Exception:
+            pass
+    
+    # Use cached if fresh (within 30 minutes)
+    if _cached_vix['timestamp']:
+        age = (datetime.now() - _cached_vix['timestamp']).total_seconds()
+        if age < 1800:  # 30 minutes
+            return _cached_vix['value']
+    
+    # Market-aware default based on time of day and market conditions
+    # Typically VIX is lower during stable periods
+    return 18.0  # More realistic default than 20
+
 def start_auto_rebalance_scheduler():
     """Start the auto-rebalance scheduler thread. Safe to call multiple times."""
     global scheduler_thread, _scheduler_started
@@ -966,9 +1012,14 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         # === CRITICAL: Add intraday data for HFT-lite strategies ===
         # Without this, intraday strategies fall back to daily data and perform poorly
-        # Note: effective_trading_mode is determined later, so we load intraday if setting is intraday
-        # or if it's hybrid (which uses some intraday strategies)
-        if trading_mode_setting in ['intraday', 'hybrid']:
+        # Load intraday data if:
+        # 1. Static mode is intraday or hybrid
+        # 2. Dynamic mode is enabled (might switch to intraday based on VIX)
+        should_load_intraday = (
+            trading_mode_setting in ['intraday', 'hybrid'] or
+            dynamic_mode_enabled  # Dynamic mode may switch to intraday
+        )
+        if should_load_intraday:
             log("📊 Loading INTRADAY data (15-min bars) for HFT-lite strategies...")
             try:
                 symbols_for_intraday = list(feature_store._price_history.keys())[:50]  # Top 50 to avoid API limits
@@ -1681,8 +1732,14 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                             scanner_sentiments[sym] = sent
                 
                 # Get RSI and 200 DMA from features if available
-                rsi_values = features.rsi_14 if hasattr(features, 'rsi_14') else {}
-                ma_200_values = {}  # Would need to calculate from prices
+                rsi_values = features.rsi_14 if hasattr(features, 'rsi_14') and features.rsi_14 else {}
+                
+                # Get 200-day MA from features (critical for technical shorts)
+                ma_200_values = {}
+                if hasattr(features, 'ma_200') and features.ma_200:
+                    ma_200_values = features.ma_200
+                elif hasattr(features, 'moving_avg_200d') and features.moving_avg_200d:
+                    ma_200_values = features.moving_avg_200d
                 
                 # Get current prices
                 scanner_prices = broker.get_current_prices(config.UNIVERSE[:100])
@@ -1843,6 +1900,17 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         # === RECORD SIGNALS FOR OUTCOME TRACKING ===
         # This is CRITICAL for validating whether our signals are predictive
         try:
+            # Compute confidences for each symbol (average from strategies)
+            signal_confidences = {}
+            for symbol in final_weights:
+                conf_sum = 0
+                conf_count = 0
+                for name, signal in signals.items():
+                    if symbol in signal.desired_weights and abs(signal.desired_weights[symbol]) > 0.01:
+                        conf_sum += signal.confidence
+                        conf_count += 1
+                signal_confidences[symbol] = conf_sum / max(1, conf_count) if conf_count > 0 else 0.5
+            
             # Get sentiment scores for recording
             sentiment_scores = {}
             for symbol in final_weights:
@@ -1856,7 +1924,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             # Record batch signals
             signal_ids = outcome_tracker.record_batch_signals(
                 weights=final_weights,
-                confidences=confidences if 'confidences' in dir() else {},
+                confidences=signal_confidences,
                 sentiment_scores=sentiment_scores,
                 macro_stance=getattr(macro_features_temp, 'overall_risk_sentiment_index', 0) if macro_features_temp else None,
                 regime=regime_str,
@@ -1975,13 +2043,21 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             
             try:
                 global current_regime
-                # Get regime indicators
-                spy_price = prices.get('SPY', 0)
-                spy_200ma = features.moving_avg_200d.get('SPY', spy_price) if hasattr(features, 'moving_avg_200d') else spy_price
-                vix_level = 20  # Default if not available
-                macro_sent = macro_features_temp.get('overall_risk_sentiment_index', 0) if macro_features_temp else 0
-                geo_risk = macro_features_temp.get('geopolitical_risk_index', 0) if macro_features_temp else 0
-                fin_stress = macro_features_temp.get('financial_stress_index', 0) if macro_features_temp else 0
+                # Get regime indicators - use features.prices (not undefined 'prices')
+                spy_price = features.prices.get('SPY', 0) if features.prices else 0
+                spy_200ma = features.ma_200.get('SPY', spy_price) if hasattr(features, 'ma_200') and features.ma_200 else spy_price
+                
+                # Get VIX from market indicators if available
+                vix_level = 20.0  # Default
+                if market_indicators and hasattr(market_indicators, 'vix') and market_indicators.vix > 0:
+                    vix_level = market_indicators.vix
+                elif macro_features_temp and hasattr(macro_features_temp, 'vix') and macro_features_temp.vix > 0:
+                    vix_level = macro_features_temp.vix
+                
+                # Use getattr() since macro_features_temp is an object, not a dict
+                macro_sent = getattr(macro_features_temp, 'overall_risk_sentiment_index', 0) if macro_features_temp else 0
+                geo_risk = getattr(macro_features_temp, 'geopolitical_risk_index', 0) if macro_features_temp else 0
+                fin_stress = getattr(macro_features_temp, 'financial_stress_index', 0) if macro_features_temp else 0
                 
                 current_regime = strategy_enhancer.detect_regime(
                     spy_price=spy_price,
@@ -2313,13 +2389,21 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 spread_pct = 0.05  # Default 5 bps for liquid stocks
             
             # Estimate transaction cost
+            # Adjust holding days based on trading mode (intraday = same day, position = weeks)
+            if effective_trading_mode == 'intraday':
+                est_holding_days = 1  # Same day
+            elif effective_trading_mode == 'hybrid':
+                est_holding_days = 5  # About a week
+            else:
+                est_holding_days = 20  # About a month
+            
             cost_estimate = transaction_cost_model.estimate_trade_cost(
                 symbol=symbol,
                 side=side,
                 quantity=qty,
                 price=price,
                 spread_pct=spread_pct,
-                holding_days=20,  # Assume ~1 month holding
+                holding_days=est_holding_days,
             )
             
             # Check if trade is worth executing
@@ -2872,19 +2956,28 @@ def get_equity_curve():
                 profit_loss = history.profit_loss if hasattr(history, 'profit_loss') else [0] * len(equities)
                 profit_loss_pct = history.profit_loss_pct if hasattr(history, 'profit_loss_pct') else [0] * len(equities)
                 
+                last_valid_equity = None  # Track last valid equity for null handling
+                
                 for i, (ts, eq, pnl, pnl_pct) in enumerate(zip(timestamps, equities, profit_loss, profit_loss_pct)):
+                    # CRITICAL: Skip null equity values (weekends, holidays)
+                    if eq is None or eq == 0:
+                        continue
+                    
+                    # Update last valid equity
+                    last_valid_equity = eq
+                    
                     # Convert timestamp to date string
                     if isinstance(ts, int):
                         date_str = datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
                     else:
                         date_str = str(ts)[:10]
                     
-                    if i == 0:
+                    if starting_equity is None:
                         starting_equity = eq
                     
                     curve_data.append({
                         'date': date_str,
-                        'equity': float(eq) if eq else 0,
+                        'equity': float(eq),
                         'daily_pnl': float(pnl) if pnl else 0,
                         'daily_pnl_pct': float(pnl_pct) * 100 if pnl_pct else 0,
                         'trades': 0,  # Would need to count from trade memory
@@ -3874,6 +3967,24 @@ def update_learning_outcomes():
         # Record outcomes for pattern learning
         if symbol_returns:
             learning_engine.record_outcomes(symbol_returns, market_context)
+        
+        # INTEGRATE FEEDBACK LOOP - record outcomes for strategy weight adjustments
+        try:
+            for trade in learning_engine.trade_memory.trades:
+                if trade.pnl_percent is not None and trade.entry_strategy:
+                    feedback_loop.record_outcome(
+                        strategy_name=trade.entry_strategy,
+                        was_correct=trade.was_profitable,
+                        signal_return=trade.pnl_percent / 100 if trade.pnl_percent else 0,
+                        regime=regime,
+                        confidence=getattr(trade, 'entry_confidence', 0.5),
+                    )
+            # Recalculate weight adjustments
+            feedback_loop._calculate_weight_adjustments()
+            feedback_loop._save()
+            logging.info(f"Feedback loop updated with {len(feedback_loop.strategy_performance)} strategies")
+        except Exception as e:
+            logging.warning(f"Feedback loop integration error: {e}")
         
         # Get updated statistics
         stats = learning_engine.trade_memory.get_statistics()
