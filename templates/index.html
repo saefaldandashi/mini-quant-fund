@@ -3243,9 +3243,10 @@
                 const summaryEl = document.getElementById('equity-summary');
                 if (summaryEl && summary.total_pnl_30d !== undefined) {
                     const pnl = summary.total_pnl_30d;
+                    const pnlPct = summary.total_pnl_pct || 0;
                     const pnlClass = pnl >= 0 ? 'positive' : 'negative';
                     const pnlSign = pnl >= 0 ? '+' : '';
-                    summaryEl.innerHTML = `<span class="${pnlClass}">${pnlSign}${formatCurrency(pnl)}</span> (30d) | ${summary.total_trades || 0} trades`;
+                    summaryEl.innerHTML = `<span class="${pnlClass}">${pnlSign}${formatCurrency(pnl)} (${pnlSign}${pnlPct.toFixed(2)}%)</span> 30d | ${summary.total_trades || 0} trades`;
                 }
                 
                 // Render SVG chart
