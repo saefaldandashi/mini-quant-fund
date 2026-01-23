@@ -1869,12 +1869,25 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             cross_corr.calculate_correlations()
             cross_signals = cross_corr.generate_signals()
             
+            # Store cross-asset signals in features for debate engine and strategies
+            cross_asset_signal_summary = {}
+            
             if cross_signals:
                 log(f"📊 Cross-Correlation: {len(cross_signals)} signals")
-                for sig in cross_signals[:3]:
+                for sig in cross_signals[:5]:
                     log(f"   {sig.signal_type}: {sig.direction} ({sig.driver_asset})")
                     
-                    # Apply cross-asset signal adjustments
+                    # Build signal summary for LLM/strategies
+                    if sig.signal_type == "oil_energy":
+                        cross_asset_signal_summary['oil_signal'] = sig.strength if sig.direction == "bullish" else -sig.strength
+                    elif sig.signal_type == "usd_multinationals":
+                        cross_asset_signal_summary['dxy_signal'] = sig.strength if sig.direction == "bullish" else -sig.strength
+                    elif sig.signal_type == "europe_lead":
+                        cross_asset_signal_summary['europe_lead'] = sig.strength if sig.direction == "bullish" else -sig.strength
+                    elif sig.signal_type == "credit_risk":
+                        cross_asset_signal_summary['credit_signal'] = sig.strength if sig.direction == "bullish" else -sig.strength
+                    
+                    # Apply cross-asset signal adjustments to weights
                     for symbol in sig.affected_symbols:
                         if symbol in combined_weights:
                             if sig.direction == "bullish":
@@ -1882,6 +1895,20 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                             elif sig.direction == "bearish":
                                 combined_weights[symbol] *= (1 - sig.strength * 0.2)
                             analytics_adjustments.append(f"{symbol}: {sig.signal_type} adj")
+            
+            # Attach to features for debate engine
+            features.cross_asset_signals = cross_asset_signal_summary
+            
+            # Record in learning system for future pattern recognition
+            try:
+                if cross_asset_signal_summary:
+                    trade_memory.record_cross_asset_context(
+                        timestamp=end_date,
+                        cross_signals=cross_asset_signal_summary,
+                        market_regime=features.regime.risk_regime.value if features.regime else 'unknown'
+                    )
+            except Exception as e:
+                logging.debug(f"Could not record cross-asset context: {e}")
             
             # 2. Event Calendar Risk Adjustment
             calendar = get_event_calendar()
@@ -2080,7 +2107,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             log("=" * 60)
             
             try:
-                # Build context for LLM
+                # Build context for LLM (include CROSS-ASSET DATA)
                 macro_ctx = "No macro data"
                 if macro_features_temp:
                     macro_ctx = f"""
@@ -2088,7 +2115,62 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
 - Growth Momentum: {getattr(macro_features_temp, 'growth_momentum_index', 0):.2f}
 - Geopolitical Risk: {getattr(macro_features_temp, 'geopolitical_risk_index', 0):.2f}
 - Financial Stress: {getattr(macro_features_temp, 'financial_stress_index', 0):.2f}
-- Risk Sentiment: {getattr(macro_features_temp, 'overall_risk_sentiment_index', 0):.2f}"""
+- Risk Sentiment: {getattr(macro_features_temp, 'overall_risk_sentiment_index', 0):.2f}
+- Oil Price: ${getattr(macro_features_temp, 'oil_price', 0):.2f}
+- Gold Price: ${getattr(macro_features_temp, 'gold_price', 0):.2f}
+- VIX: {getattr(macro_features_temp, 'vix', 20):.1f}"""
+                
+                # Add cross-asset correlation signals to LLM context
+                cross_asset_ctx = ""
+                try:
+                    cross_asset_loader = get_cross_asset_loader()
+                    cross_asset_prices = cross_asset_loader.fetch_all_cross_assets(days=5)
+                    
+                    # Build cross-asset summary
+                    cross_lines = []
+                    
+                    # Oil
+                    if 'CL=F' in cross_asset_prices and len(cross_asset_prices['CL=F']) >= 2:
+                        oil_series = cross_asset_prices['CL=F']
+                        oil_chg = (oil_series.iloc[-1] / oil_series.iloc[-2] - 1) * 100
+                        cross_lines.append(f"  Oil (CL=F): ${oil_series.iloc[-1]:.2f} ({oil_chg:+.1f}% today)")
+                    
+                    # Gold
+                    if 'GC=F' in cross_asset_prices and len(cross_asset_prices['GC=F']) >= 2:
+                        gold_series = cross_asset_prices['GC=F']
+                        gold_chg = (gold_series.iloc[-1] / gold_series.iloc[-2] - 1) * 100
+                        cross_lines.append(f"  Gold (GC=F): ${gold_series.iloc[-1]:.2f} ({gold_chg:+.1f}% today)")
+                    
+                    # Dollar Index
+                    if 'DX-Y.NYB' in cross_asset_prices and len(cross_asset_prices['DX-Y.NYB']) >= 2:
+                        dxy_series = cross_asset_prices['DX-Y.NYB']
+                        dxy_chg = (dxy_series.iloc[-1] / dxy_series.iloc[-2] - 1) * 100
+                        cross_lines.append(f"  Dollar (DXY): {dxy_series.iloc[-1]:.2f} ({dxy_chg:+.1f}% today)")
+                    
+                    # Europe
+                    if 'EWG' in cross_asset_prices and len(cross_asset_prices['EWG']) >= 2:
+                        ewg_series = cross_asset_prices['EWG']
+                        ewg_chg = (ewg_series.iloc[-1] / ewg_series.iloc[-2] - 1) * 100
+                        cross_lines.append(f"  Europe (EWG): ${ewg_series.iloc[-1]:.2f} ({ewg_chg:+.1f}%)")
+                    
+                    # China
+                    if 'FXI' in cross_asset_prices and len(cross_asset_prices['FXI']) >= 2:
+                        fxi_series = cross_asset_prices['FXI']
+                        fxi_chg = (fxi_series.iloc[-1] / fxi_series.iloc[-2] - 1) * 100
+                        cross_lines.append(f"  China (FXI): ${fxi_series.iloc[-1]:.2f} ({fxi_chg:+.1f}%)")
+                    
+                    # Credit (High Yield)
+                    if 'HYG' in cross_asset_prices and len(cross_asset_prices['HYG']) >= 2:
+                        hyg_series = cross_asset_prices['HYG']
+                        hyg_chg = (hyg_series.iloc[-1] / hyg_series.iloc[-2] - 1) * 100
+                        cross_lines.append(f"  High Yield (HYG): ${hyg_series.iloc[-1]:.2f} ({hyg_chg:+.1f}%)")
+                    
+                    if cross_lines:
+                        cross_asset_ctx = "\n\nCROSS-ASSET SIGNALS:\n" + "\n".join(cross_lines)
+                except Exception as e:
+                    logging.debug(f"Cross-asset context error: {e}")
+                
+                macro_ctx += cross_asset_ctx
                 
                 # Summarize debate
                 debate_summary = adversarial_transcript.to_string()[:500] if adversarial_transcript else "No debate conducted"

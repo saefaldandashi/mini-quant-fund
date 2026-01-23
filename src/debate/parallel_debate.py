@@ -299,7 +299,7 @@ JSON: {{"claim": "your critique", "risk": "specific risk", "strength": 0.0-1.0}}
         )
     
     def _build_market_context(self, features) -> str:
-        """Build concise market context string."""
+        """Build concise market context string WITH cross-asset data."""
         parts = []
         
         if features.regime:
@@ -312,6 +312,31 @@ JSON: {{"claim": "your critique", "risk": "specific risk", "strength": 0.0-1.0}}
         if hasattr(features, 'returns_1d') and features.returns_1d:
             spy_ret = features.returns_1d.get('SPY', 0)
             parts.append(f"SPY={spy_ret*100:+.1f}%")
+        
+        # Add macro features (oil, gold, etc.) if available
+        if hasattr(features, 'macro_features') and features.macro_features:
+            mf = features.macro_features
+            if hasattr(mf, 'oil_price') and mf.oil_price:
+                parts.append(f"Oil=${mf.oil_price:.0f}")
+            if hasattr(mf, 'gold_price') and mf.gold_price:
+                parts.append(f"Gold=${mf.gold_price:.0f}")
+            if hasattr(mf, 'dxy') and mf.dxy:
+                parts.append(f"DXY={mf.dxy:.1f}")
+            if hasattr(mf, 'geopolitical_risk_index'):
+                parts.append(f"GeoRisk={mf.geopolitical_risk_index:.1f}")
+        
+        # Add cross-asset signals if available
+        if hasattr(features, 'cross_asset_signals') and features.cross_asset_signals:
+            ca = features.cross_asset_signals
+            cross_parts = []
+            if 'oil_signal' in ca:
+                cross_parts.append(f"Oil→{'↑' if ca['oil_signal'] > 0 else '↓'}")
+            if 'dxy_signal' in ca:
+                cross_parts.append(f"USD→{'↑' if ca['dxy_signal'] > 0 else '↓'}")
+            if 'europe_lead' in ca:
+                cross_parts.append(f"EU→{'↑' if ca['europe_lead'] > 0 else '↓'}")
+            if cross_parts:
+                parts.append(f"X-Asset[{','.join(cross_parts)}]")
         
         return ", ".join(parts) if parts else "Normal conditions"
     

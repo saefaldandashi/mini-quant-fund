@@ -559,3 +559,87 @@ class TradeMemory:
             records.append(record)
         
         return pd.DataFrame(records)
+
+    # ==========================================================================
+    # CROSS-ASSET CONTEXT TRACKING
+    # ==========================================================================
+    
+    def record_cross_asset_context(
+        self,
+        timestamp: datetime,
+        cross_signals: Dict[str, float],
+        market_regime: str = 'unknown',
+    ) -> None:
+        """
+        Record cross-asset signals at time of rebalance for pattern learning.
+        """
+        cross_asset_path = self.storage_path.parent / "cross_asset_history.json"
+        
+        try:
+            if cross_asset_path.exists():
+                with open(cross_asset_path, 'r') as f:
+                    history = json.load(f)
+            else:
+                history = {'records': [], 'summary': {}}
+            
+            record = {
+                'timestamp': timestamp.isoformat(),
+                'signals': cross_signals,
+                'market_regime': market_regime,
+            }
+            history['records'].append(record)
+            
+            if len(history['records']) > 500:
+                history['records'] = history['records'][-500:]
+            
+            for signal_type, value in cross_signals.items():
+                if signal_type not in history['summary']:
+                    history['summary'][signal_type] = {'count': 0, 'sum': 0.0}
+                history['summary'][signal_type]['count'] += 1
+                history['summary'][signal_type]['sum'] += value
+            
+            with open(cross_asset_path, 'w') as f:
+                json.dump(history, f, indent=2, default=str)
+            
+            logging.debug(f"Recorded cross-asset context: {cross_signals}")
+            
+        except Exception as e:
+            logging.warning(f"Could not record cross-asset context: {e}")
+    
+    def get_cross_asset_history(self, days: int = 30) -> List[Dict]:
+        """Get recent cross-asset signal history for pattern analysis."""
+        cross_asset_path = self.storage_path.parent / "cross_asset_history.json"
+        
+        if not cross_asset_path.exists():
+            return []
+        
+        try:
+            with open(cross_asset_path, 'r') as f:
+                history = json.load(f)
+            
+            cutoff = datetime.now() - timedelta(days=days)
+            return [
+                r for r in history.get('records', [])
+                if datetime.fromisoformat(r['timestamp']) > cutoff
+            ]
+        except Exception as e:
+            logging.warning(f"Could not load cross-asset history: {e}")
+            return []
+    
+    def analyze_cross_asset_patterns(self) -> Dict[str, Any]:
+        """Analyze cross-asset signal patterns for learning insights."""
+        recent = self.get_cross_asset_history(days=90)
+        if not recent:
+            return {'patterns': [], 'insights': []}
+        
+        patterns = []
+        
+        oil_signals = [r['signals'].get('oil_signal', 0) for r in recent if 'oil_signal' in r.get('signals', {})]
+        if oil_signals:
+            avg_oil = sum(oil_signals) / len(oil_signals)
+            if avg_oil > 0.1:
+                patterns.append({'type': 'oil_bullish_trend', 'strength': avg_oil})
+            elif avg_oil < -0.1:
+                patterns.append({'type': 'oil_bearish_trend', 'strength': abs(avg_oil)})
+        
+        return {'patterns': patterns, 'insights': [p.get('type', '') for p in patterns], 'total_records': len(recent)}

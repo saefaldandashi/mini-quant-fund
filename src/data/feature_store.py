@@ -78,6 +78,25 @@ class Features:
     
     # Flag indicating if intraday data is available
     has_intraday_data: bool = False
+    
+    # =========================================================================
+    # CROSS-ASSET FEATURES (Commodities, Currencies, International)
+    # =========================================================================
+    
+    # Cross-asset prices
+    cross_asset_prices: Dict[str, float] = field(default_factory=dict)  # CL=F, GC=F, DXY, etc.
+    
+    # Cross-asset returns (1-day change)
+    cross_asset_returns: Dict[str, float] = field(default_factory=dict)  # CL=F -> 0.02 = +2%
+    
+    # Cross-asset signals (computed by CrossCorrelationEngine)
+    cross_asset_signals: Dict[str, float] = field(default_factory=dict)  # oil_signal, dxy_signal, etc.
+    
+    # Commodity-to-stock correlations
+    commodity_correlations: Dict[str, Dict[str, float]] = field(default_factory=dict)  # CL=F -> {XOM: 0.7, CVX: 0.65}
+    
+    # International market leading indicators
+    intl_market_leads: Dict[str, float] = field(default_factory=dict)  # EWG -> 0.02 (Europe up 2%)
 
 
 class FeatureStore:
@@ -201,6 +220,12 @@ class FeatureStore:
             )
         except Exception as e:
             logger.warning(f"Sentiment computation failed: {e}")
+        
+        # Cross-asset features (commodities, currencies, international)
+        try:
+            self._compute_cross_asset_features(features, symbols)
+        except Exception as e:
+            logger.warning(f"Cross-asset feature computation failed: {e}")
         
         self._feature_cache[cache_key] = features
         return features
@@ -376,6 +401,68 @@ class FeatureStore:
         
         features.correlation_matrix = recent_returns.corr()
         features.covariance_matrix = recent_returns.cov() * 252  # Annualized
+    
+    def _compute_cross_asset_features(
+        self,
+        features: Features,
+        symbols: List[str],
+    ) -> None:
+        """
+        Compute cross-asset features from commodities, currencies, and international markets.
+        
+        These features help strategies understand:
+        - How oil prices affect energy stocks
+        - How dollar strength affects multinationals
+        - How European/Asian markets lead/lag US markets
+        """
+        from src.data.cross_asset_data import get_cross_asset_loader
+        
+        try:
+            loader = get_cross_asset_loader()
+            cross_data = loader.fetch_all_cross_assets(days=10)
+            
+            if not cross_data:
+                return
+            
+            # Extract latest prices
+            for symbol, series in cross_data.items():
+                if len(series) > 0:
+                    features.cross_asset_prices[symbol] = float(series.iloc[-1])
+                    
+                    # Calculate 1-day return
+                    if len(series) >= 2:
+                        ret = (series.iloc[-1] / series.iloc[-2]) - 1
+                        features.cross_asset_returns[symbol] = float(ret)
+            
+            # Build commodity correlations with stocks
+            # Map commodities to relevant stocks
+            commodity_stock_map = {
+                'CL=F': ['XOM', 'CVX', 'SLB', 'OXY', 'COP', 'XLE'],  # Oil -> Energy
+                'GC=F': ['GLD', 'NEM', 'GOLD', 'GDX'],  # Gold -> Gold miners
+                'HG=F': ['FCX', 'SCCO', 'XLB'],  # Copper -> Materials
+            }
+            
+            for commodity, related_stocks in commodity_stock_map.items():
+                if commodity in features.cross_asset_returns:
+                    commodity_ret = features.cross_asset_returns[commodity]
+                    
+                    for stock in related_stocks:
+                        if stock in symbols or stock in features.prices:
+                            if commodity not in features.commodity_correlations:
+                                features.commodity_correlations[commodity] = {}
+                            # Simple signal: commodity up = stock should be up
+                            features.commodity_correlations[commodity][stock] = commodity_ret
+            
+            # International market leads (Europe, Asia opened before US)
+            intl_symbols = ['EWG', 'EWJ', 'FXI', 'EEM']
+            for symbol in intl_symbols:
+                if symbol in features.cross_asset_returns:
+                    features.intl_market_leads[symbol] = features.cross_asset_returns[symbol]
+            
+            logger.debug(f"Cross-asset features: {len(features.cross_asset_prices)} prices, {len(features.cross_asset_returns)} returns")
+            
+        except Exception as e:
+            logger.warning(f"Cross-asset feature computation error: {e}")
     
     def add_intraday_features(
         self,
