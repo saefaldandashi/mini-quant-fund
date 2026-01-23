@@ -95,13 +95,23 @@ class AlpacaBroker:
         logging.info(f"Alpaca broker initialized (paper={paper}, base_url={base_url})")
     
     def get_account(self) -> Dict:
-        """Get account information."""
+        """Get account information including today's P/L."""
         account = self.trading_client.get_account()
+        
+        # Get last_equity (previous close equity) for today's P/L calculation
+        equity = float(account.equity)
+        last_equity = float(getattr(account, 'last_equity', equity))
+        today_pnl = equity - last_equity
+        today_pnl_pct = ((equity / last_equity) - 1) * 100 if last_equity > 0 else 0
+        
         return {
-            "equity": float(account.equity),
+            "equity": equity,
             "cash": float(account.cash),
             "buying_power": float(account.buying_power),
             "portfolio_value": float(account.portfolio_value),
+            "last_equity": last_equity,
+            "today_pnl": today_pnl,
+            "today_pnl_pct": today_pnl_pct,
         }
     
     def get_margin_data(self) -> Dict:

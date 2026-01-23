@@ -3458,6 +3458,10 @@ def get_portfolio():
         total_market_value = sum(pos.get("market_value", 0) for pos in positions_dict.values())
         total_pnl_pct = (total_pnl / total_cost_basis * 100) if total_cost_basis > 0 else 0.0
         
+        # Get today's P/L from account (based on last_equity from previous close)
+        today_pnl = account.get("today_pnl", 0)
+        today_pnl_pct = account.get("today_pnl_pct", 0)
+        
         # Return FLAT structure that matches what the JavaScript expects
         return jsonify({
             # Top-level fields for easy access
@@ -3465,8 +3469,13 @@ def get_portfolio():
             "cash": account.get("cash", 0),
             "buying_power": account.get("buying_power", 0),
             "market_value": total_market_value,
+            # Unrealized P/L from open positions
             "total_pl": total_pnl,
             "total_pl_pct": total_pnl_pct,
+            # TODAY's actual P/L (equity vs last close)
+            "today_pnl": today_pnl,
+            "today_pnl_pct": today_pnl_pct,
+            "last_equity": account.get("last_equity", 0),
             "positions": positions_list,  # Array, not object
             # Also include nested for backwards compatibility
             "account": account,
@@ -3476,6 +3485,8 @@ def get_portfolio():
                 "total_cost_basis": total_cost_basis,
                 "total_pnl": total_pnl,
                 "total_pnl_pct": total_pnl_pct,
+                "today_pnl": today_pnl,
+                "today_pnl_pct": today_pnl_pct,
             }
         })
     except Exception as e:

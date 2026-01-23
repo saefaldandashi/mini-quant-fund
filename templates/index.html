@@ -3956,28 +3956,45 @@
         // ========== QUICK STATS ==========
         async function loadQuickStats() {
             try {
-                const [portfolioRes, learningRes, leverageRes] = await Promise.all([
+                const [portfolioRes, learningRes, leverageRes, equityCurveRes] = await Promise.all([
                     fetch('/api/portfolio'),
                     fetch('/api/learning/realtime'),
-                    fetch('/api/leverage')
+                    fetch('/api/leverage'),
+                    fetch('/api/equity-curve?days=7')  // Get 7 days for weekly P/L
                 ]);
                 
                 const portfolio = await portfolioRes.json();
                 const learning = await learningRes.json();
                 
-                // Today's P/L
-                const todayPL = portfolio.total_pl || 0;
-                const todayPct = portfolio.total_pl_pct || 0;
+                // Today's P/L - use ACTUAL today P/L from Alpaca (equity vs previous close)
+                const todayPL = portfolio.today_pnl !== undefined ? portfolio.today_pnl : (portfolio.total_pl || 0);
+                const todayPct = portfolio.today_pnl_pct !== undefined ? portfolio.today_pnl_pct : (portfolio.total_pl_pct || 0);
                 document.getElementById('qs-today').textContent = formatCurrency(todayPL);
                 document.getElementById('qs-today').className = `quick-stat-value ${todayPL >= 0 ? 'positive' : 'negative'}`;
                 document.getElementById('qs-today-pct').textContent = `${todayPct >= 0 ? '+' : ''}${todayPct.toFixed(2)}%`;
                 document.getElementById('qs-today-pct').className = `quick-stat-change ${todayPct >= 0 ? 'positive' : 'negative'}`;
                 
-                // Week P/L (estimated from learning data)
-                const weekPL = learning.total_pnl || 0;
+                // Week P/L - Calculate from actual Alpaca equity curve
+                let weekPL = 0;
+                let weekTrades = learning.total_trades || 0;
+                
+                if (equityCurveRes.ok) {
+                    const equityData = await equityCurveRes.json();
+                    if (equityData.curve && equityData.curve.length >= 2) {
+                        // Weekly P/L = current equity - equity from 7 days ago (or earliest available)
+                        const curve = equityData.curve;
+                        const latestEquity = curve[curve.length - 1].equity;
+                        const startEquity = curve[0].equity;
+                        weekPL = latestEquity - startEquity;
+                    } else if (equityData.summary && equityData.summary.total_pnl_30d !== undefined) {
+                        // Fallback to 30-day summary if 7-day not available
+                        weekPL = equityData.summary.total_pnl_30d || 0;
+                    }
+                }
+                
                 document.getElementById('qs-week').textContent = formatCurrency(weekPL);
                 document.getElementById('qs-week').className = `quick-stat-value ${weekPL >= 0 ? 'positive' : 'negative'}`;
-                document.getElementById('qs-week-pct').textContent = `${learning.total_trades || 0} trades`;
+                document.getElementById('qs-week-pct').textContent = `${weekTrades} trades`;
                 
                 // Win Rate
                 const winRate = (learning.win_rate || 0) * 100;
