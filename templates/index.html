@@ -1498,8 +1498,12 @@
                 <value id="header-equity" style="color: var(--accent);">$--</value>
             </div>
             <div class="header-stat">
-                <label>Today's P/L</label>
+                <label>Unrealized P/L</label>
                 <value id="header-pnl">$--</value>
+            </div>
+            <div class="header-stat">
+                <label>Total P/L</label>
+                <value id="header-total-pnl" style="font-weight: bold;">$--</value>
             </div>
             <div class="header-stat">
                 <label>LLM Status</label>
@@ -1785,6 +1789,10 @@
                             <label>Total Equity</label>
                             <value id="total-equity">$--</value>
                         </div>
+                        <div class="portfolio-item highlight">
+                            <label>Total P/L (All-Time)</label>
+                            <value id="total-pnl-alltime" style="font-weight: bold;">$--</value>
+                        </div>
                         <div class="portfolio-item">
                             <label>Cash</label>
                             <value id="total-cash">$--</value>
@@ -1794,11 +1802,11 @@
                             <value id="invested">$--</value>
                         </div>
                         <div class="portfolio-item">
-                            <label>P/L Today</label>
+                            <label>Unrealized P/L</label>
                             <value id="pnl-today">$--</value>
                         </div>
                         <div class="portfolio-item">
-                            <label>P/L %</label>
+                            <label>Unrealized %</label>
                             <value id="pnl-pct">--%</value>
                         </div>
                         <div class="portfolio-item">
@@ -2017,7 +2025,7 @@
                     </div>
                     <div style="text-align: center; padding: 8px; background: var(--bg-card); border-radius: 6px;">
                         <div id="learning-pnl" style="font-size: 1.2em; font-weight: bold;">--</div>
-                        <div style="font-size: 0.65em; color: var(--text-dim);">P/L</div>
+                        <div style="font-size: 0.65em; color: var(--text-dim);">Realized P/L</div>
                     </div>
                 </div>
                 
@@ -2552,6 +2560,12 @@
                 document.getElementById('header-pnl').textContent = formatCurrency(data.total_pl || 0);
                 document.getElementById('header-pnl').className = (data.total_pl || 0) >= 0 ? 'positive' : 'negative';
                 
+                // Total P/L (all-time: current equity - $100k starting capital)
+                const STARTING_CAPITAL = 100000;
+                const totalPnl = (data.equity || 0) - STARTING_CAPITAL;
+                document.getElementById('header-total-pnl').textContent = formatCurrency(totalPnl);
+                document.getElementById('header-total-pnl').className = totalPnl >= 0 ? 'positive' : 'negative';
+                
                 // Portfolio grid
                 document.getElementById('total-equity').textContent = formatCurrency(data.equity);
                 document.getElementById('total-cash').textContent = formatCurrency(data.cash);
@@ -2561,6 +2575,15 @@
                 document.getElementById('pnl-pct').textContent = (data.total_pl_pct || 0).toFixed(2) + '%';
                 document.getElementById('pnl-pct').className = data.total_pl_pct >= 0 ? 'positive' : 'negative';
                 document.getElementById('position-count').textContent = data.positions?.length || 0;
+                
+                // Total P/L All-Time (current equity - $100k starting capital)
+                const totalPnlAllTime = (data.equity || 0) - STARTING_CAPITAL;
+                const totalPnlPct = (totalPnlAllTime / STARTING_CAPITAL * 100);
+                const totalPnlEl = document.getElementById('total-pnl-alltime');
+                if (totalPnlEl) {
+                    totalPnlEl.textContent = `${formatCurrency(totalPnlAllTime)} (${totalPnlPct >= 0 ? '+' : ''}${totalPnlPct.toFixed(2)}%)`;
+                    totalPnlEl.className = totalPnlAllTime >= 0 ? 'positive' : 'negative';
+                }
                 
                 // Last updated
                 document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
