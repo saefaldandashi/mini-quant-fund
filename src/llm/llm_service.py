@@ -74,7 +74,7 @@ class LLMService:
     PROVIDER_PRIORITY = [
         ("gemini", "gemini-2.0-flash", "GEMINI_API_KEY"),
         ("openai", "gpt-4-turbo", "OPENAI_API_KEY"),
-        ("anthropic", "claude-3-sonnet-20240229", "ANTHROPIC_API_KEY"),
+        ("anthropic", "claude-3-haiku-20240307", "ANTHROPIC_API_KEY"),
     ]
     
     def __init__(
