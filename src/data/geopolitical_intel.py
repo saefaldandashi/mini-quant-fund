@@ -15,6 +15,12 @@ Data Sources:
 3. RSS feeds - Reuters, BBC, Al Jazeera
 4. Regional market data - Middle East, Asia indices
 5. Flight data - Disruption signals
+
+Now with ADVANCED RELEVANCE FILTERING:
+- Rule-based market-moving detection
+- Hard discard for irrelevant content
+- Scoring: relevance, impact, credibility, novelty
+- Direction inference for market impact
 """
 
 import os
@@ -30,6 +36,14 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import pytz
 import re
+
+# Import the advanced relevance filter
+try:
+    from src.data.news_relevance_filter import get_news_filter, NewsEvent, NewsCategory, MarketDirection
+    HAS_RELEVANCE_FILTER = True
+except ImportError:
+    HAS_RELEVANCE_FILTER = False
+    logging.warning("NewsRelevanceFilter not available, using basic filtering")
 
 try:
     import yfinance as yf
@@ -172,6 +186,10 @@ class GeopoliticalIntelligence:
         self.events_cache: List[GeopoliticalEvent] = []
         self.last_assessment: Optional[GeopoliticalRiskAssessment] = None
         self.last_update: Optional[datetime] = None
+        
+        # Advanced relevance filter (rule-based, deterministic)
+        self.relevance_filter = get_news_filter() if HAS_RELEVANCE_FILTER else None
+        self.filtered_events: List[NewsEvent] = []  # High-quality filtered events
         
         # Load cache
         self._load_cache()
@@ -508,19 +526,59 @@ class GeopoliticalIntelligence:
     
     def update_events(self, hours_back: int = 24) -> int:
         """
-        Fetch new events from all sources.
+        Fetch new events from all sources and apply advanced relevance filtering.
         Returns number of new events added.
         """
         all_events = []
+        raw_articles = []  # For relevance filter
         
         # Fetch from multiple sources
         logging.info("Fetching geopolitical events from RSS feeds...")
         rss_events = self.fetch_rss_news(hours_back)
         all_events.extend(rss_events)
         
+        # Also collect raw articles for advanced filtering
+        for event in rss_events:
+            raw_articles.append({
+                "headline": event.headline,
+                "summary": event.summary,
+                "source": event.source,
+                "timestamp": event.timestamp,
+                "url": event.url,
+            })
+        
         logging.info("Fetching geopolitical events from NewsAPI...")
         newsapi_events = self.fetch_newsapi(hours_back)
         all_events.extend(newsapi_events)
+        
+        for event in newsapi_events:
+            raw_articles.append({
+                "headline": event.headline,
+                "summary": event.summary,
+                "source": event.source,
+                "timestamp": event.timestamp,
+                "url": event.url,
+            })
+        
+        # ============================================================
+        # ADVANCED RELEVANCE FILTERING (Rule-based, deterministic)
+        # ============================================================
+        if self.relevance_filter and raw_articles:
+            logging.info(f"Applying advanced relevance filter to {len(raw_articles)} articles...")
+            
+            # Filter articles
+            filtered = self.relevance_filter.filter_batch(raw_articles)
+            self.filtered_events = filtered
+            
+            # Log filter stats
+            stats = self.relevance_filter.get_stats()
+            logging.info(f"Filter results: {stats['accepted']} accepted, "
+                        f"{stats['rejected']} rejected "
+                        f"({stats['acceptance_rate']*100:.1f}% acceptance rate)")
+            
+            # Save filtered events
+            if filtered:
+                self.relevance_filter.save_events(filtered)
         
         # Deduplicate by event_id
         existing_ids = {e.event_id for e in self.events_cache}
@@ -544,9 +602,20 @@ class GeopoliticalIntelligence:
         self._save_cache()
         
         logging.info(f"Geopolitical: Found {len(new_events)} new events, "
-                    f"{len(self.events_cache)} total cached")
+                    f"{len(self.events_cache)} total cached, "
+                    f"{len(self.filtered_events)} high-quality filtered")
         
         return len(new_events)
+    
+    def get_filtered_events(self) -> List:
+        """Get high-quality filtered events (from advanced filter)."""
+        return self.filtered_events
+    
+    def get_filter_stats(self) -> dict:
+        """Get statistics from the relevance filter."""
+        if self.relevance_filter:
+            return self.relevance_filter.get_stats()
+        return {}
     
     def get_risk_assessment(self, refresh: bool = False) -> GeopoliticalRiskAssessment:
         """
