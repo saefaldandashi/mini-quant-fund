@@ -351,7 +351,8 @@ class AlpacaBroker:
         self,
         target_weights: Dict[str, float],
         equity: float,
-        cash_buffer_pct: float = config.CASH_BUFFER_PCT
+        cash_buffer_pct: float = config.CASH_BUFFER_PCT,
+        leverage: float = 1.0
     ) -> Dict[str, int]:
         """
         Calculate target share quantities given target weights and current prices.
@@ -360,6 +361,7 @@ class AlpacaBroker:
             target_weights: Dict of symbol -> weight (e.g., 0.10 for 10% allocation)
             equity: Total account equity
             cash_buffer_pct: Cash buffer percentage
+            leverage: Leverage multiplier (1.0 = no leverage, 2.0 = 2x leverage)
         
         Returns:
             Dict mapping symbol to target share quantity (whole shares)
@@ -370,7 +372,9 @@ class AlpacaBroker:
         symbols = list(target_weights.keys())
         prices = self.get_current_prices(symbols)
         
-        investable_equity = equity * (1.0 - cash_buffer_pct)
+        # Apply leverage: with 2x leverage, we can invest 2x the equity
+        # But still maintain cash buffer
+        investable_equity = equity * leverage * (1.0 - cash_buffer_pct)
         
         result = {}
         
