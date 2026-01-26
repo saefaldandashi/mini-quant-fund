@@ -120,16 +120,16 @@ class OutcomeTracker:
                     'timestamp': sig.timestamp.isoformat(),
                     'ticker': sig.ticker,
                     'direction': sig.direction,
-                    'weight': sig.weight,
-                    'confidence': sig.confidence,
-                    'sentiment_score': sig.sentiment_score,
-                    'macro_stance': sig.macro_stance,
+                    'weight': float(sig.weight) if sig.weight is not None else None,
+                    'confidence': float(sig.confidence) if sig.confidence is not None else None,
+                    'sentiment_score': float(sig.sentiment_score) if sig.sentiment_score is not None else None,
+                    'macro_stance': float(sig.macro_stance) if sig.macro_stance is not None else None,
                     'regime': sig.regime,
                     'strategy_source': sig.strategy_source,
-                    'outcome_1d': sig.outcome_1d,
-                    'outcome_5d': sig.outcome_5d,
+                    'outcome_1d': float(sig.outcome_1d) if sig.outcome_1d is not None else None,
+                    'outcome_5d': float(sig.outcome_5d) if sig.outcome_5d is not None else None,
                     'outcome_timestamp': sig.outcome_timestamp.isoformat() if sig.outcome_timestamp else None,
-                    'was_correct': sig.was_correct,
+                    'was_correct': bool(sig.was_correct) if sig.was_correct is not None else None,
                 })
             
             with open(path, 'w') as f:

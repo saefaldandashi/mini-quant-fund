@@ -416,3 +416,99 @@ class MarketDataLoader:
             data[symbol] = df
             
         return data
+
+
+# ============================================================
+# HELPER FUNCTION FOR ALPACA DATA LOADING
+# ============================================================
+
+_alpaca_loader_instance = None
+
+def get_market_data_loader(api_key: str = None, secret_key: str = None) -> 'AlpacaMarketDataLoader':
+    """
+    Get a singleton Alpaca market data loader instance.
+    
+    Args:
+        api_key: Alpaca API key (optional, uses env var if not provided)
+        secret_key: Alpaca secret key (optional, uses env var if not provided)
+    
+    Returns:
+        AlpacaMarketDataLoader instance
+    """
+    global _alpaca_loader_instance
+    
+    if _alpaca_loader_instance is None:
+        _alpaca_loader_instance = AlpacaMarketDataLoader(
+            api_key=api_key or os.environ.get('ALPACA_API_KEY'),
+            secret_key=secret_key or os.environ.get('ALPACA_SECRET_KEY'),
+        )
+    
+    return _alpaca_loader_instance
+
+
+class AlpacaMarketDataLoader:
+    """
+    Market data loader using Alpaca API.
+    Used for fetching live price data for outcome tracking.
+    """
+    
+    def __init__(self, api_key: str = None, secret_key: str = None):
+        self.api_key = api_key or os.environ.get('ALPACA_API_KEY')
+        self.secret_key = secret_key or os.environ.get('ALPACA_SECRET_KEY')
+        self._client = None
+        
+        if self.api_key and self.secret_key:
+            try:
+                from alpaca.data.historical import StockHistoricalDataClient
+                self._client = StockHistoricalDataClient(self.api_key, self.secret_key)
+            except Exception as e:
+                logger.warning(f"Could not initialize Alpaca client: {e}")
+    
+    def fetch_prices(self, symbols: List[str], lookback_days: int = 10) -> Optional[pd.DataFrame]:
+        """
+        Fetch historical prices for symbols.
+        
+        Returns DataFrame with columns = symbols, index = dates
+        """
+        if not self._client:
+            logger.warning("Alpaca client not initialized")
+            return None
+        
+        try:
+            from alpaca.data.requests import StockBarsRequest
+            from alpaca.data.timeframe import TimeFrame
+            from alpaca.data.enums import DataFeed
+            
+            end = datetime.now()
+            start = end - timedelta(days=lookback_days + 5)  # Buffer for weekends
+            
+            request = StockBarsRequest(
+                symbol_or_symbols=symbols,
+                timeframe=TimeFrame.Day,
+                start=start,
+                end=end,
+                feed=DataFeed.IEX,  # Use IEX feed (free tier)
+            )
+            
+            bars = self._client.get_stock_bars(request)
+            
+            # Convert to DataFrame
+            if hasattr(bars, 'df') and not bars.df.empty:
+                df = bars.df
+                
+                # Pivot to get symbols as columns
+                if 'symbol' in df.index.names:
+                    df = df.reset_index()
+                
+                if 'symbol' in df.columns:
+                    pivot = df.pivot(index='timestamp', columns='symbol', values='close')
+                    return pivot
+                else:
+                    # Single symbol case
+                    return pd.DataFrame({'close': df['close']})
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"Error fetching prices from Alpaca: {e}")
+            return None
