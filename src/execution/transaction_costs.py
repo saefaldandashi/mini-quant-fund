@@ -344,6 +344,50 @@ class TransactionCostModel:
         
         return abs(notional) * daily_rate * holding_days
     
+    # Cross-asset affected symbols
+    ENERGY_SYMBOLS = ['XOM', 'CVX', 'SLB', 'OXY', 'COP', 'XLE']
+    FINANCIAL_SYMBOLS = ['JPM', 'BAC', 'WFC', 'C', 'GS', 'MS', 'XLF']
+    
+    def _cross_asset_cost_multiplier(
+        self,
+        symbol: str,
+        cross_asset_signals: Optional[Dict[str, float]],
+    ) -> float:
+        """
+        Calculate cost multiplier based on cross-asset volatility.
+        
+        Higher cross-asset volatility = higher slippage/impact costs:
+        - Oil volatility → increases costs for energy stocks
+        - Credit stress → increases costs for financials
+        - Market-wide stress → increases costs for all
+        """
+        if not cross_asset_signals:
+            return 1.0
+        
+        multiplier = 1.0
+        
+        # Oil volatility affects energy stock execution
+        if symbol in self.ENERGY_SYMBOLS:
+            oil_return = abs(cross_asset_signals.get('oil_return', 0))
+            if oil_return > 0.02:  # Oil moved 2%+
+                # Up to 50% higher costs
+                multiplier *= 1 + min(0.5, oil_return * 10)
+        
+        # Credit stress affects financial stock execution
+        if symbol in self.FINANCIAL_SYMBOLS:
+            credit_signal = cross_asset_signals.get('credit_signal', 0)
+            if credit_signal < -0.1:  # Credit stress
+                # Up to 30% higher costs
+                multiplier *= 1 + min(0.3, abs(credit_signal) * 1.5)
+        
+        # Market-wide stress (VIX proxy from cross-asset)
+        vix_signal = cross_asset_signals.get('vix_signal', 0)
+        if vix_signal > 0.1:  # High VIX
+            # Up to 20% higher costs for all
+            multiplier *= 1 + min(0.2, vix_signal * 0.5)
+        
+        return multiplier
+    
     def estimate_trade_cost(
         self,
         symbol: str,
@@ -353,6 +397,7 @@ class TransactionCostModel:
         spread_pct: float = 0.05,
         adv: Optional[float] = None,
         holding_days: int = 1,
+        cross_asset_signals: Optional[Dict[str, float]] = None,
     ) -> CostEstimate:
         """
         Estimate total transaction cost for a trade.
@@ -365,6 +410,7 @@ class TransactionCostModel:
             spread_pct: Current bid-ask spread as percentage
             adv: Average daily volume in dollars
             holding_days: Expected holding period (for borrow cost)
+            cross_asset_signals: Cross-asset signals for cost adjustment
         """
         notional = quantity * price
         
@@ -376,6 +422,11 @@ class TransactionCostModel:
         slippage_cost = self.estimate_slippage(symbol, notional, liquidity)
         impact_cost = self.estimate_market_impact(quantity, price, adv, liquidity)
         commission = notional * self.params['commission_bps'] / 10000
+        
+        # Apply cross-asset volatility adjustment (NEW)
+        cross_asset_mult = self._cross_asset_cost_multiplier(symbol, cross_asset_signals)
+        slippage_cost *= cross_asset_mult
+        impact_cost *= cross_asset_mult
         
         # Borrow cost for shorts
         is_short = side.lower() in ['sell_short', 'short']

@@ -409,5 +409,133 @@
       "IntradayMomentum excels in neutral low-vol conditions",
       "Portfolio returns are trending upward over the last 10 reports"
     ]
+  },
+  {
+    "report_date": "2026-01-26",
+    "report_type": "daily",
+    "portfolio_value": 100020.68,
+    "return_1d": -0.0056383560516218385,
+    "return_1m": 0,
+    "alpha_1d": -0.005986707189568902,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": -0.0056383560516218385,
+    "regime_label": "bull_trending",
+    "vix": 16.09,
+    "risk_sentiment": "RISK_ON",
+    "strategy_weights": {
+      "IntradayMomentum": 0.1,
+      "RelativeStrengthIntraday": 0.1,
+      "VWAPReversion": 0.1,
+      "NewsSentimentEvent": 0.09787641508635768,
+      "VolumeSpike": 0.1
+    },
+    "strategy_win_rates": {
+      "IntradayMomentum": 0.8780487804878049,
+      "RelativeStrengthIntraday": 0.8545454545454545,
+      "VWAPReversion": 0.8181818181818182,
+      "NewsSentimentEvent": 0.8,
+      "VolumeSpike": 0.75
+    },
+    "top_strategies": [
+      "IntradayMomentum",
+      "RelativeStrengthIntraday",
+      "VWAPReversion"
+    ],
+    "position_count": 7,
+    "total_pnl": 80.162996999999,
+    "insight_count": 11,
+    "recommendations": [
+      "CrossSectionMomentum excels in neutral low-vol conditions",
+      "Carry excels in neutral low-vol conditions",
+      "TS_Momentum_LS excels in neutral low-vol conditions",
+      "Portfolio returns are trending upward over the last 10 reports"
+    ]
+  },
+  {
+    "report_date": "2026-01-26",
+    "report_type": "daily",
+    "portfolio_value": 100020.68,
+    "return_1d": -0.0056383560516218385,
+    "return_1m": 0,
+    "alpha_1d": -0.005986707189568902,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": -0.0056383560516218385,
+    "regime_label": "bull_trending",
+    "vix": 16.09,
+    "risk_sentiment": "RISK_ON",
+    "strategy_weights": {
+      "IntradayMomentum": 0.1,
+      "RelativeStrengthIntraday": 0.1,
+      "VWAPReversion": 0.1,
+      "NewsSentimentEvent": 0.09787641508635768,
+      "VolumeSpike": 0.1
+    },
+    "strategy_win_rates": {
+      "IntradayMomentum": 0.8780487804878049,
+      "RelativeStrengthIntraday": 0.8545454545454545,
+      "VWAPReversion": 0.8181818181818182,
+      "NewsSentimentEvent": 0.8,
+      "VolumeSpike": 0.75
+    },
+    "top_strategies": [
+      "IntradayMomentum",
+      "RelativeStrengthIntraday",
+      "VWAPReversion"
+    ],
+    "position_count": 7,
+    "total_pnl": 80.162996999999,
+    "insight_count": 11,
+    "recommendations": [
+      "CrossSectionMomentum excels in neutral low-vol conditions",
+      "Carry excels in neutral low-vol conditions",
+      "TS_Momentum_LS excels in neutral low-vol conditions",
+      "In BULL_TRENDING regime, IntradayMomentum has historically performed best (avg win rate: 88%)",
+      "Portfolio returns are trending upward over the last 10 reports"
+    ]
+  },
+  {
+    "report_date": "2026-01-26",
+    "report_type": "daily",
+    "portfolio_value": 100020.68,
+    "return_1d": -0.0056383560516218385,
+    "return_1m": 0,
+    "alpha_1d": -0.005986707189568902,
+    "volatility": 0.0,
+    "sharpe_ratio": 0.0,
+    "drawdown": -0.0056383560516218385,
+    "regime_label": "bull_trending",
+    "vix": 16.75,
+    "risk_sentiment": "RISK_ON",
+    "strategy_weights": {
+      "IntradayMomentum": 0.1,
+      "RelativeStrengthIntraday": 0.1,
+      "VWAPReversion": 0.1,
+      "NewsSentimentEvent": 0.09787641508635768,
+      "VolumeSpike": 0.1
+    },
+    "strategy_win_rates": {
+      "IntradayMomentum": 0.8780487804878049,
+      "RelativeStrengthIntraday": 0.8545454545454545,
+      "VWAPReversion": 0.8181818181818182,
+      "NewsSentimentEvent": 0.8,
+      "VolumeSpike": 0.75
+    },
+    "top_strategies": [
+      "IntradayMomentum",
+      "RelativeStrengthIntraday",
+      "VWAPReversion"
+    ],
+    "position_count": 7,
+    "total_pnl": 80.162996999999,
+    "insight_count": 11,
+    "recommendations": [
+      "CrossSectionMomentum excels in neutral low-vol conditions",
+      "Carry excels in neutral low-vol conditions",
+      "TS_Momentum_LS excels in neutral low-vol conditions",
+      "In BULL_TRENDING regime, IntradayMomentum has historically performed best (avg win rate: 88%)",
+      "Portfolio returns are trending upward over the last 10 reports"
+    ]
   }
 ]

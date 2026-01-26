@@ -212,6 +212,132 @@ class Strategy(ABC):
         
         return (my_weight, None)
     
+    # =========================================================================
+    # CROSS-ASSET SIGNAL HELPERS
+    # =========================================================================
+    
+    def get_cross_asset_signal(self, features: Features, signal_type: str) -> float:
+        """
+        Get a cross-asset signal from features.
+        
+        Signal types: 'oil', 'gold', 'dxy', 'europe', 'credit', 'china'
+        Returns: Signal strength (-1 to 1, negative=bearish, positive=bullish)
+        """
+        if not hasattr(features, 'cross_asset_signals') or not features.cross_asset_signals:
+            return 0.0
+        
+        signal_map = {
+            'oil': 'oil_signal',
+            'gold': 'gold_signal',
+            'dxy': 'dxy_signal',
+            'dollar': 'dxy_signal',
+            'europe': 'europe_lead',
+            'credit': 'credit_signal',
+            'china': 'china_signal',
+        }
+        
+        key = signal_map.get(signal_type.lower(), signal_type)
+        return features.cross_asset_signals.get(key, 0.0)
+    
+    def get_oil_signal(self, features: Features) -> float:
+        """Get oil price signal. Positive = oil rising, negative = falling."""
+        return self.get_cross_asset_signal(features, 'oil')
+    
+    def get_dxy_signal(self, features: Features) -> float:
+        """Get dollar strength signal. Positive = strong dollar, negative = weak."""
+        return self.get_cross_asset_signal(features, 'dxy')
+    
+    def get_europe_lead_signal(self, features: Features) -> float:
+        """Get Europe premarket lead signal."""
+        return self.get_cross_asset_signal(features, 'europe')
+    
+    def get_credit_signal(self, features: Features) -> float:
+        """Get credit stress signal. Negative = credit stress."""
+        return self.get_cross_asset_signal(features, 'credit')
+    
+    def get_cross_asset_return(self, features: Features, symbol: str) -> float:
+        """Get the 1-day return of a cross-asset symbol."""
+        if not hasattr(features, 'cross_asset_returns') or not features.cross_asset_returns:
+            return 0.0
+        return features.cross_asset_returns.get(symbol, 0.0)
+    
+    def adjust_weight_for_cross_asset(
+        self,
+        symbol: str,
+        base_weight: float,
+        features: Features,
+    ) -> tuple:
+        """
+        Adjust a position weight based on cross-asset signals.
+        
+        Returns (adjusted_weight, reason)
+        """
+        adjustment = 1.0
+        reasons = []
+        
+        # Energy stocks affected by oil
+        energy_stocks = ['XOM', 'CVX', 'SLB', 'OXY', 'COP', 'XLE']
+        if symbol in energy_stocks:
+            oil_signal = self.get_oil_signal(features)
+            if abs(oil_signal) > 0.1:
+                adjustment *= (1 + oil_signal * 0.3)  # Up to 30% adjustment
+                reasons.append(f"Oil signal {oil_signal:+.2f}")
+        
+        # Multinational stocks affected by DXY
+        multinational_stocks = ['AAPL', 'MSFT', 'GOOG', 'GOOGL', 'META', 'NVDA', 'AMZN']
+        if symbol in multinational_stocks:
+            dxy_signal = self.get_dxy_signal(features)
+            if abs(dxy_signal) > 0.1:
+                # Strong dollar hurts multinationals
+                adjustment *= (1 - dxy_signal * 0.2)  # Up to 20% adjustment
+                reasons.append(f"DXY signal {dxy_signal:+.2f}")
+        
+        # Financial stocks affected by credit
+        financial_stocks = ['JPM', 'BAC', 'WFC', 'C', 'GS', 'MS', 'XLF']
+        if symbol in financial_stocks:
+            credit_signal = self.get_credit_signal(features)
+            if abs(credit_signal) > 0.1:
+                adjustment *= (1 + credit_signal * 0.25)  # Up to 25% adjustment
+                reasons.append(f"Credit signal {credit_signal:+.2f}")
+        
+        adjusted_weight = base_weight * adjustment
+        reason = ", ".join(reasons) if reasons else None
+        
+        return (adjusted_weight, reason)
+    
+    def should_short_based_on_cross_asset(
+        self,
+        symbol: str,
+        features: Features,
+    ) -> tuple:
+        """
+        Check if cross-asset signals suggest shorting this symbol.
+        
+        Returns (should_short: bool, strength: float, reason: str)
+        """
+        # Energy shorts on oil decline
+        energy_stocks = ['XOM', 'CVX', 'SLB', 'OXY', 'COP']
+        if symbol in energy_stocks:
+            oil_signal = self.get_oil_signal(features)
+            if oil_signal < -0.2:
+                return (True, abs(oil_signal), f"Oil declining ({oil_signal:.2f})")
+        
+        # Multinational shorts on strong dollar
+        multinational_stocks = ['AAPL', 'MSFT', 'GOOG', 'GOOGL', 'META', 'AMZN']
+        if symbol in multinational_stocks:
+            dxy_signal = self.get_dxy_signal(features)
+            if dxy_signal > 0.2:
+                return (True, dxy_signal, f"Strong dollar ({dxy_signal:.2f})")
+        
+        # Financial shorts on credit stress
+        financial_stocks = ['JPM', 'BAC', 'WFC', 'C', 'GS']
+        if symbol in financial_stocks:
+            credit_signal = self.get_credit_signal(features)
+            if credit_signal < -0.3:
+                return (True, abs(credit_signal), f"Credit stress ({credit_signal:.2f})")
+        
+        return (False, 0.0, None)
+    
     @abstractmethod
     def generate_signals(self, features: Features, t: datetime) -> SignalOutput:
         """

@@ -373,6 +373,17 @@ class DynamicWeightOptimizer:
                     adjustments[name] = adjustments.get(name, 1.0) * bonus
                     rationale.append(f"{name}: {bonus:.2f}x regime fit ({regime})")
         
+        # === 5b. CROSS-ASSET SIGNAL ADJUSTMENT (NEW) ===
+        if cross_asset_signals:
+            cross_adj = self._apply_cross_asset_weight_adjustment(
+                optimized, cross_asset_signals
+            )
+            for name, adj_factor in cross_adj.items():
+                if abs(adj_factor - 1.0) > 0.01:
+                    optimized[name] = optimized[name] * adj_factor
+                    adjustments[name] = adjustments.get(name, 1.0) * adj_factor
+                    rationale.append(f"{name}: {adj_factor:.2f}x cross-asset")
+        
         # === 6. NORMALIZE AND ENFORCE LIMITS ===
         # Enforce min/max weights
         for name in optimized:
@@ -435,6 +446,67 @@ class DynamicWeightOptimizer:
             return 0.0
         
         return np.mean(regime_returns)
+    
+    def _apply_cross_asset_weight_adjustment(
+        self,
+        weights: Dict[str, float],
+        cross_asset_signals: List[Any],
+    ) -> Dict[str, float]:
+        """
+        Adjust strategy weights based on cross-asset signals.
+        
+        Rules:
+        - Credit stress → Reduce long/short, boost mean reversion
+        - High oil volatility → Boost sector rotation strategies
+        - Strong international leads → Boost momentum strategies
+        """
+        adjustments = {name: 1.0 for name in weights}
+        
+        # Parse cross-asset signals (can be list of CrossAssetSignal objects or dict)
+        credit_stress = 0.0
+        oil_vol = 0.0
+        intl_lead = 0.0
+        
+        for sig in cross_asset_signals:
+            if hasattr(sig, 'signal_type'):
+                # CrossAssetSignal object
+                if sig.signal_type == 'credit_stress':
+                    credit_stress = sig.strength * (-1 if sig.direction == 'bearish' else 1)
+                elif sig.signal_type == 'commodity_sector_rotation':
+                    oil_vol = sig.strength
+                elif sig.signal_type == 'international_lead':
+                    intl_lead = sig.strength * (1 if sig.direction == 'bullish' else -1)
+            elif isinstance(sig, dict):
+                # Dict format
+                if sig.get('signal_type') == 'credit_stress':
+                    credit_stress = sig.get('strength', 0) * (-1 if sig.get('direction') == 'bearish' else 1)
+                elif sig.get('signal_type') == 'commodity_sector_rotation':
+                    oil_vol = sig.get('strength', 0)
+                elif sig.get('signal_type') == 'international_lead':
+                    intl_lead = sig.get('strength', 0) * (1 if sig.get('direction') == 'bullish' else -1)
+        
+        # Apply adjustments
+        for name in weights:
+            name_lower = name.lower()
+            
+            # Credit stress: reduce L/S, boost mean reversion
+            if abs(credit_stress) > 0.2:
+                if 'long_short' in name_lower or 'ls' in name_lower:
+                    adjustments[name] *= max(0.7, 1 - abs(credit_stress) * 0.5)
+                elif 'mean_reversion' in name_lower or 'reversion' in name_lower:
+                    adjustments[name] *= min(1.3, 1 + abs(credit_stress) * 0.3)
+            
+            # Oil volatility: boost sector rotation
+            if oil_vol > 0.3:
+                if 'sector' in name_lower or 'rotation' in name_lower:
+                    adjustments[name] *= min(1.3, 1 + oil_vol * 0.3)
+            
+            # International lead: boost momentum
+            if abs(intl_lead) > 0.2:
+                if 'momentum' in name_lower:
+                    adjustments[name] *= min(1.2, 1 + abs(intl_lead) * 0.2)
+        
+        return adjustments
     
     def _calculate_avg_correlation(
         self,

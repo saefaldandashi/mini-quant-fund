@@ -70,29 +70,53 @@ class LLMService:
         'gemini-exp-1206': {'input': 0.0, 'output': 0.0},  # Experimental
     }
     
+    # Provider priority and fallback configuration
+    PROVIDER_PRIORITY = [
+        ("gemini", "gemini-2.0-flash", "GEMINI_API_KEY"),
+        ("openai", "gpt-4-turbo", "OPENAI_API_KEY"),
+        ("anthropic", "claude-3-sonnet-20240229", "ANTHROPIC_API_KEY"),
+    ]
+    
     def __init__(
         self,
-        provider: str = "gemini",  # 'gemini', 'openai', or 'anthropic'
-        model: str = "gemini-2.0-flash",  # Default to Gemini
+        provider: str = "auto",  # 'auto', 'gemini', 'openai', or 'anthropic'
+        model: str = None,  # Auto-selected based on provider
         api_key: Optional[str] = None,
         cache_dir: str = "outputs/llm_cache",
         max_daily_cost: float = 5.0,  # $5/day limit
         cache_ttl_hours: int = 24,
+        enable_fallback: bool = True,  # Auto-fallback to next provider
     ):
-        self.provider = provider
-        self.model = model
+        self.enable_fallback = enable_fallback
+        self._fallback_providers = []
         
-        # Get API key based on provider
-        if api_key:
-            self.api_key = api_key
-        elif provider == "gemini":
-            self.api_key = os.environ.get('GEMINI_API_KEY') or os.environ.get('GOOGLE_API_KEY')
-        elif provider == "openai":
-            self.api_key = os.environ.get('OPENAI_API_KEY')
-        elif provider == "anthropic":
-            self.api_key = os.environ.get('ANTHROPIC_API_KEY')
+        # Auto-select best available provider
+        if provider == "auto":
+            provider, model, self.api_key = self._select_best_provider()
+            if not provider:
+                logger.warning("No LLM provider available! All API keys missing.")
+                self.provider = "none"
+                self.model = "none"
+                self.api_key = None
+            else:
+                self.provider = provider
+                self.model = model
+                logger.info(f"Auto-selected LLM: {provider}/{model}")
         else:
-            self.api_key = None
+            self.provider = provider
+            self.model = model or self._get_default_model(provider)
+            
+            # Get API key based on provider
+            if api_key:
+                self.api_key = api_key
+            elif provider == "gemini":
+                self.api_key = os.environ.get('GEMINI_API_KEY') or os.environ.get('GOOGLE_API_KEY')
+            elif provider == "openai":
+                self.api_key = os.environ.get('OPENAI_API_KEY')
+            elif provider == "anthropic":
+                self.api_key = os.environ.get('ANTHROPIC_API_KEY')
+            else:
+                self.api_key = None
         
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -121,6 +145,27 @@ class LLMService:
         self._gemini_model = None
         if self.api_key:
             self._init_client()
+    
+    def _select_best_provider(self):
+        """Auto-select the best available LLM provider based on API key availability."""
+        for provider, default_model, env_key in self.PROVIDER_PRIORITY:
+            api_key = os.environ.get(env_key)
+            if api_key:
+                # Build fallback list from remaining providers
+                remaining = [(p, m, k) for p, m, k in self.PROVIDER_PRIORITY 
+                             if p != provider and os.environ.get(k)]
+                self._fallback_providers = remaining
+                return provider, default_model, api_key
+        return None, None, None
+    
+    def _get_default_model(self, provider: str) -> str:
+        """Get default model for a provider."""
+        defaults = {
+            "gemini": "gemini-2.0-flash",
+            "openai": "gpt-4-turbo",
+            "anthropic": "claude-3-sonnet-20240229",
+        }
+        return defaults.get(provider, "unknown")
     
     def _init_client(self):
         """Initialize the API client."""

@@ -35,6 +35,13 @@ class EventType(Enum):
     IPO = "ipo"
     SPLIT = "split"
     CONFERENCE = "conference"
+    # Cross-asset event types
+    OIL_INVENTORY = "oil_inventory"  # EIA Weekly Report
+    ECB_MEETING = "ecb"              # European Central Bank
+    OPEC_MEETING = "opec"            # OPEC+ decisions
+    CHINA_PMI = "china_pmi"          # China manufacturing data
+    BOJ_MEETING = "boj"              # Bank of Japan
+    COMMODITY_REPORT = "commodity"    # Other commodity reports
     OTHER = "other"
 
 
@@ -173,7 +180,28 @@ class EventCalendar:
         EventType.OPTIONS_EXPIRY: {
             EventImpact.MEDIUM: {"position_mult": 0.95, "leverage_mult": 0.9},
         },
+        # Cross-asset event impacts
+        EventType.OIL_INVENTORY: {
+            EventImpact.MEDIUM: {"position_mult": 0.7, "leverage_mult": 0.8},  # Reduce energy
+        },
+        EventType.ECB_MEETING: {
+            EventImpact.HIGH: {"position_mult": 0.8, "leverage_mult": 0.7},  # Reduce EUR-exposed
+        },
+        EventType.OPEC_MEETING: {
+            EventImpact.HIGH: {"position_mult": 0.5, "leverage_mult": 0.6},  # Major oil impact
+        },
+        EventType.CHINA_PMI: {
+            EventImpact.MEDIUM: {"position_mult": 0.8, "leverage_mult": 0.85},  # China-exposed
+        },
+        EventType.BOJ_MEETING: {
+            EventImpact.MEDIUM: {"position_mult": 0.85, "leverage_mult": 0.85},  # Yen-exposed
+        },
     }
+    
+    # Cross-asset affected sectors/symbols
+    OIL_AFFECTED_SYMBOLS = ['XOM', 'CVX', 'SLB', 'OXY', 'COP', 'XLE']
+    EUR_AFFECTED_SYMBOLS = ['AAPL', 'MSFT', 'GOOG', 'XLI', 'EWG']
+    CHINA_AFFECTED_SYMBOLS = ['AAPL', 'TSLA', 'NKE', 'SBUX', 'FXI']
     
     def __init__(
         self,
@@ -234,6 +262,18 @@ class EventCalendar:
                     pre_event_days=1,
                     post_event_days=1,
                 )
+        
+        # Add EIA Oil Inventory Report (every Wednesday at 10:30 AM ET)
+        self._add_weekly_oil_inventory(today)
+        
+        # Add ECB meetings (known 2026 dates)
+        self._add_ecb_meetings(today)
+        
+        # Add OPEC meetings (known 2026 dates)
+        self._add_opec_meetings(today)
+        
+        # Add China PMI (first day of each month)
+        self._add_china_pmi(today)
         
         # Add monthly options expiry (3rd Friday)
         for month in range(1, 13):
@@ -306,6 +346,124 @@ class EventCalendar:
                 )
         
         logger.info(f"Generated {len(self.events)} known calendar events")
+    
+    def _add_weekly_oil_inventory(self, today: date):
+        """Add EIA Oil Inventory reports (every Wednesday at 10:30 AM ET)."""
+        # Add next 12 Wednesdays
+        current = today
+        for _ in range(12):
+            # Find next Wednesday
+            days_until_wednesday = (2 - current.weekday()) % 7
+            if days_until_wednesday == 0 and current == today:
+                days_until_wednesday = 7
+            next_wednesday = current + timedelta(days=days_until_wednesday)
+            
+            event_id = f"eia_oil_{next_wednesday.isoformat()}"
+            self.events[event_id] = MarketEvent(
+                event_id=event_id,
+                event_type=EventType.OIL_INVENTORY,
+                event_date=next_wednesday,
+                event_time="10:30 ET",
+                affected_symbols=self.OIL_AFFECTED_SYMBOLS,
+                affected_sectors=["XLE"],
+                market_wide=False,
+                impact=EventImpact.MEDIUM,
+                expected_volatility_increase=1.3,
+                description="EIA Weekly Oil Inventory Report",
+                source="EIA",
+                pre_event_days=0,
+                post_event_days=0,
+            )
+            current = next_wednesday + timedelta(days=1)
+    
+    def _add_ecb_meetings(self, today: date):
+        """Add ECB meeting dates for 2026."""
+        # Known 2026 ECB meeting dates (approximate)
+        ecb_dates = [
+            date(2026, 1, 22),
+            date(2026, 3, 5),
+            date(2026, 4, 16),
+            date(2026, 6, 4),
+            date(2026, 7, 23),
+            date(2026, 9, 10),
+            date(2026, 10, 29),
+            date(2026, 12, 17),
+        ]
+        
+        for ecb_date in ecb_dates:
+            if ecb_date >= today - timedelta(days=3):
+                event_id = f"ecb_{ecb_date.isoformat()}"
+                self.events[event_id] = MarketEvent(
+                    event_id=event_id,
+                    event_type=EventType.ECB_MEETING,
+                    event_date=ecb_date,
+                    event_time="07:45 ET",
+                    affected_symbols=self.EUR_AFFECTED_SYMBOLS,
+                    affected_sectors=["EWG", "VGK"],
+                    market_wide=False,
+                    impact=EventImpact.HIGH,
+                    expected_volatility_increase=1.4,
+                    description="ECB Interest Rate Decision",
+                    source="ECB",
+                    pre_event_days=1,
+                    post_event_days=0,
+                )
+    
+    def _add_opec_meetings(self, today: date):
+        """Add OPEC+ meeting dates for 2026."""
+        # Known 2026 OPEC+ meeting dates (approximate)
+        opec_dates = [
+            date(2026, 2, 1),
+            date(2026, 4, 3),
+            date(2026, 6, 1),
+            date(2026, 8, 3),
+            date(2026, 10, 4),
+            date(2026, 12, 5),
+        ]
+        
+        for opec_date in opec_dates:
+            if opec_date >= today - timedelta(days=3):
+                event_id = f"opec_{opec_date.isoformat()}"
+                self.events[event_id] = MarketEvent(
+                    event_id=event_id,
+                    event_type=EventType.OPEC_MEETING,
+                    event_date=opec_date,
+                    event_time="06:00 ET",
+                    affected_symbols=self.OIL_AFFECTED_SYMBOLS,
+                    affected_sectors=["XLE"],
+                    market_wide=False,
+                    impact=EventImpact.HIGH,
+                    expected_volatility_increase=1.6,
+                    description="OPEC+ Meeting - Production Decision",
+                    source="OPEC",
+                    pre_event_days=1,
+                    post_event_days=1,
+                )
+    
+    def _add_china_pmi(self, today: date):
+        """Add China PMI releases (1st of each month)."""
+        for months_ahead in range(6):
+            target_month = (today.month + months_ahead) % 12 or 12
+            target_year = today.year + ((today.month + months_ahead - 1) // 12)
+            pmi_date = date(target_year, target_month, 1)
+            
+            if pmi_date >= today:
+                event_id = f"china_pmi_{pmi_date.isoformat()}"
+                self.events[event_id] = MarketEvent(
+                    event_id=event_id,
+                    event_type=EventType.CHINA_PMI,
+                    event_date=pmi_date,
+                    event_time="21:00 ET (prev day)",
+                    affected_symbols=self.CHINA_AFFECTED_SYMBOLS,
+                    affected_sectors=["FXI", "EEM"],
+                    market_wide=False,
+                    impact=EventImpact.MEDIUM,
+                    expected_volatility_increase=1.2,
+                    description="China Manufacturing PMI Release",
+                    source="NBS China",
+                    pre_event_days=0,
+                    post_event_days=1,
+                )
     
     def add_earnings_event(
         self,

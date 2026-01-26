@@ -100,9 +100,21 @@ class LearningEngine:
         if win_rate > 0.55 and total_trades >= 30:
             influence = min(0.7, influence * 1.15)
         
-        # Reduce if win rate is poor
+        # Reduce if win rate is poor - MORE AGGRESSIVE REDUCTION
+        # If we're losing more than winning, we should trust the learning LESS
         if win_rate < 0.45 and total_trades >= 30:
-            influence = max(0.2, influence * 0.85)
+            # Scale reduction based on how far below 45% we are
+            if win_rate < 0.35:
+                # Very poor: reduce to near-minimum
+                influence = max(0.15, influence * 0.5)
+                logging.warning(f"⚠️ Very poor win rate ({win_rate:.1%}): Learning influence reduced to {influence:.0%}")
+            elif win_rate < 0.40:
+                # Poor: significant reduction
+                influence = max(0.2, influence * 0.7)
+                logging.warning(f"⚠️ Poor win rate ({win_rate:.1%}): Learning influence reduced to {influence:.0%}")
+            else:
+                # Below target: moderate reduction
+                influence = max(0.25, influence * 0.85)
         
         self.learning_influence = influence
         return influence

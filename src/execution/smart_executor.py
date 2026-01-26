@@ -582,8 +582,12 @@ class SmartExecutor:
             self.log(f"    ✓ [DRY RUN] Filled at ${fill_price:.2f}")
         else:
             try:
+                # Check if we're in extended hours
+                tod = self.get_time_of_day()
+                is_extended = tod in [TimeOfDay.PRE_MARKET, TimeOfDay.AFTER_HOURS]
+                self.log(f"    📍 Extended hours: {is_extended} (time: {tod.value})")
                 result = self.broker.place_market_order(
-                    symbol, quantity, order_side, dry_run=False
+                    symbol, quantity, order_side, dry_run=False, extended_hours=is_extended
                 )
                 fill_price = result.get('filled_avg_price', current_price) if result else current_price
                 self.log(f"    ✓ Filled at ${fill_price:.2f}")
@@ -680,13 +684,28 @@ class SmartExecutor:
         
         # Real execution
         try:
-            limit_request = LimitOrderRequest(
-                symbol=symbol,
-                qty=quantity,
-                side=order_side,
-                time_in_force=TimeInForce.IOC,
-                limit_price=limit_price,
-            )
+            # Check if we're in extended hours
+            is_extended = self.get_time_of_day() in [TimeOfDay.PRE_MARKET, TimeOfDay.AFTER_HOURS]
+            
+            if is_extended:
+                # Extended hours: use limit order with extended_hours=True, DAY time-in-force
+                limit_request = LimitOrderRequest(
+                    symbol=symbol,
+                    qty=quantity,
+                    side=order_side,
+                    time_in_force=TimeInForce.DAY,  # Must be DAY for extended hours
+                    limit_price=limit_price,
+                    extended_hours=True,
+                )
+            else:
+                # Regular hours: use IOC for quick fill
+                limit_request = LimitOrderRequest(
+                    symbol=symbol,
+                    qty=quantity,
+                    side=order_side,
+                    time_in_force=TimeInForce.IOC,
+                    limit_price=limit_price,
+                )
             
             order = self.broker.trading_client.submit_order(limit_request)
             order_id = order.id
@@ -719,7 +738,8 @@ class SmartExecutor:
                     pass
                 
                 if remaining > 0:
-                    self.broker.place_market_order(symbol, remaining, order_side, dry_run=False)
+                    is_extended = self.get_time_of_day() in [TimeOfDay.PRE_MARKET, TimeOfDay.AFTER_HOURS]
+                    self.broker.place_market_order(symbol, remaining, order_side, dry_run=False, extended_hours=is_extended)
                 
                 return ExecutionResult(
                     symbol=symbol,
@@ -739,7 +759,8 @@ class SmartExecutor:
                 except:
                     pass
                 
-                result = self.broker.place_market_order(symbol, quantity, order_side, dry_run=False)
+                is_extended = self.get_time_of_day() in [TimeOfDay.PRE_MARKET, TimeOfDay.AFTER_HOURS]
+                result = self.broker.place_market_order(symbol, quantity, order_side, dry_run=False, extended_hours=is_extended)
                 fill_price = result.get('filled_avg_price', current_price) if result else current_price
                 
                 self.log(f"    ✓ Market fallback filled at ${fill_price:.2f}")
@@ -759,7 +780,8 @@ class SmartExecutor:
             self.log(f"    ✗ Limit order failed: {e}, trying market order")
             
             try:
-                result = self.broker.place_market_order(symbol, quantity, order_side, dry_run=False)
+                is_extended = self.get_time_of_day() in [TimeOfDay.PRE_MARKET, TimeOfDay.AFTER_HOURS]
+                result = self.broker.place_market_order(symbol, quantity, order_side, dry_run=False, extended_hours=is_extended)
                 fill_price = result.get('filled_avg_price', current_price) if result else current_price
                 
                 return ExecutionResult(
@@ -832,15 +854,16 @@ class SmartExecutor:
         for i, order in enumerate(optimized_orders, 1):
             self.log(f"[{i}/{len(optimized_orders)}]")
             
-            # Check if this order should use TWAP (large order)
+            # Check if this order should use TWAP (large order during market hours)
             if self.should_use_twap(order):
-                self.log(f"  📊 Large order detected - using TWAP execution")
+                self.log(f"  📊 Large order - using SMART TWAP")
                 twap_result = self.execute_twap(
                     symbol=order['symbol'],
                     side=order['side'],
                     total_quantity=order['quantity'],
-                    slices=5,
-                    interval_seconds=15 if self.dry_run else 30,
+                    # Let execute_twap auto-calculate optimal slices and intervals
+                    slices=None,
+                    interval_seconds=2 if self.dry_run else None,  # Fast in dry run
                 )
                 twap_used += 1
                 
@@ -1144,26 +1167,51 @@ class SmartExecutor:
         symbol: str,
         side: str,
         total_quantity: int,
-        slices: int = 5,
-        interval_seconds: int = 30,
+        slices: int = None,  # Auto-calculate if None
+        interval_seconds: int = None,  # Auto-calculate if None
     ) -> Dict[str, Any]:
         """
-        Execute a large order using Time-Weighted Average Price (TWAP).
+        Execute a large order using SMART Time-Weighted Average Price (TWAP).
         
-        Splits order into smaller slices executed over time to minimize
-        market impact.
+        Intelligently splits order based on:
+        - Order size relative to typical volume
+        - Time of day (faster during prime hours)
+        - VIX level (faster when volatile)
         
         Args:
             symbol: Stock symbol
             side: 'buy' or 'sell'
             total_quantity: Total shares to trade
-            slices: Number of slices to split the order into
-            interval_seconds: Time between slices
+            slices: Number of slices (auto-calculated if None)
+            interval_seconds: Time between slices (auto-calculated if None)
         
         Returns:
             Dict with execution results
         """
-        self.log(f"📊 TWAP EXECUTION: {side.upper()} {total_quantity} {symbol} in {slices} slices")
+        # SMART: Auto-calculate slices based on order size
+        if slices is None:
+            if total_quantity < 100:
+                slices = 1  # No need to slice small orders
+            elif total_quantity < 500:
+                slices = 2
+            elif total_quantity < 2000:
+                slices = 3
+            else:
+                slices = min(5, total_quantity // 500)  # Max 5 slices
+        
+        # SMART: Auto-calculate interval based on time of day
+        if interval_seconds is None:
+            tod = self.get_time_of_day()
+            if tod == TimeOfDay.MORNING_PRIME:
+                interval_seconds = 5  # High liquidity, fast execution
+            elif tod in [TimeOfDay.OPENING, TimeOfDay.CLOSING]:
+                interval_seconds = 3  # Volatile, even faster
+            elif tod == TimeOfDay.LUNCH:
+                interval_seconds = 10  # Lower volume, slightly slower
+            else:
+                interval_seconds = 8  # Default reasonable pace
+        
+        self.log(f"📊 SMART TWAP: {side.upper()} {total_quantity} {symbol} → {slices} slices @ {interval_seconds}s intervals")
         
         slice_quantity = total_quantity // slices
         remaining = total_quantity
@@ -1249,20 +1297,36 @@ class SmartExecutor:
         """
         Determine if an order should use TWAP execution.
         
-        Criteria:
-        - Order value > $5,000 (for intraday trading)
-        - Or quantity > 500 shares
-        - Or symbol has low liquidity
+        SMART CRITERIA:
+        - Only during market hours (no point slicing in illiquid after-hours)
+        - Order value > $25,000 (meaningful size that could move market)
+        - Or quantity > 1000 shares
+        - Skip for high-spread symbols (already illiquid, slicing won't help)
         """
         value = order.get('value', 0)
         quantity = order.get('quantity', 0)
+        symbol = order.get('symbol', '')
         
-        # Large orders by value (lowered threshold for HFT-lite)
-        if value > 5000:
+        # NEVER use TWAP outside market hours - no liquidity to improve
+        tod = self.get_time_of_day()
+        if tod in [TimeOfDay.PRE_MARKET, TimeOfDay.AFTER_HOURS]:
+            return False
+        
+        # Check spread - if already illiquid, TWAP won't help
+        if self.spread_analyzer:
+            try:
+                analysis = self.spread_analyzer.analyze_spread(symbol)
+                if analysis.spread_pct > 1.0:  # >1% spread = illiquid
+                    return False
+            except:
+                pass
+        
+        # Large orders by value (raised threshold - $25K+ is meaningful)
+        if value > 25000:
             return True
         
-        # Large orders by share count
-        if quantity > 500:
+        # Large orders by share count (raised threshold)
+        if quantity > 1000:
             return True
         
         return False

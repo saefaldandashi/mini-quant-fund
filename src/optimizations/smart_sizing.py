@@ -160,12 +160,18 @@ class SmartPositionSizer:
         self._returns_history: Dict[str, List[float]] = {}
         self._current_drawdown: float = 0.0
     
+    # Cross-asset exposed symbols
+    ENERGY_SYMBOLS = ['XOM', 'CVX', 'SLB', 'OXY', 'COP', 'XLE']
+    MULTINATIONAL_SYMBOLS = ['AAPL', 'MSFT', 'GOOG', 'GOOGL', 'META', 'NVDA', 'AMZN']
+    FINANCIAL_SYMBOLS = ['JPM', 'BAC', 'WFC', 'C', 'GS', 'MS', 'XLF']
+    
     def size_positions(
         self,
         base_weights: Dict[str, float],
         confidences: Dict[str, float],
         volatilities: Dict[str, float],
         correlations: Optional[Dict[Tuple[str, str], float]] = None,
+        cross_asset_signals: Optional[Dict[str, float]] = None,
     ) -> Tuple[Dict[str, float], List[SizingResult]]:
         """
         Calculate optimal position sizes.
@@ -175,15 +181,17 @@ class SmartPositionSizer:
             confidences: Confidence level per symbol (0-1)
             volatilities: Volatility per symbol (annualized)
             correlations: Pairwise correlations (optional)
+            cross_asset_signals: Cross-asset signals for size adjustment
         
         Returns:
             Tuple of (adjusted_weights, sizing_details)
         """
         adjusted = {}
         details = []
+        cross_asset_signals = cross_asset_signals or {}
         
         for symbol, base_weight in base_weights.items():
-            if base_weight < 0.001:
+            if abs(base_weight) < 0.001:  # Handle shorts too
                 continue
             
             vol = volatilities.get(symbol, 0.20)
@@ -191,6 +199,9 @@ class SmartPositionSizer:
             
             # 1. Volatility scaling
             vol_scalar = self._vol_scalar(vol)
+            
+            # 1b. Cross-asset scaling (NEW)
+            cross_scalar = self._cross_asset_scalar(symbol, cross_asset_signals)
             
             # 2. Conviction scaling
             conviction_scalar = self._conviction_scalar(confidence)
@@ -208,12 +219,15 @@ class SmartPositionSizer:
             if self.drawdown_scaling and self._current_drawdown > 0.05:
                 dd_scalar = max(0.5, 1.0 - self._current_drawdown)
             
-            # Combine scalars
-            total_scalar = vol_scalar * conviction_scalar * kelly_fraction * dd_scalar
+            # Combine scalars (including cross-asset)
+            total_scalar = vol_scalar * conviction_scalar * kelly_fraction * dd_scalar * cross_scalar
             adjusted_weight = base_weight * total_scalar
             
-            # Apply max position limit
-            adjusted_weight = min(adjusted_weight, self.max_position)
+            # Apply max position limit (handle both longs and shorts)
+            if adjusted_weight > 0:
+                adjusted_weight = min(adjusted_weight, self.max_position)
+            else:
+                adjusted_weight = max(adjusted_weight, -self.max_position)
             
             adjusted[symbol] = adjusted_weight
             
@@ -255,6 +269,46 @@ class SmartPositionSizer:
         """
         # Map confidence to 0.7-1.3 range
         return 0.7 + 0.6 * confidence
+    
+    def _cross_asset_scalar(self, symbol: str, cross_asset_signals: Dict[str, float]) -> float:
+        """
+        Adjust position size based on cross-asset signals.
+        
+        - High commodity correlation → reduce size (hidden risk)
+        - Currency exposure → reduce for multinational with strong DXY
+        - Credit stress → reduce financial positions
+        """
+        if not cross_asset_signals:
+            return 1.0
+        
+        scalar = 1.0
+        
+        # Energy stocks with high oil correlation
+        if symbol in self.ENERGY_SYMBOLS:
+            oil_signal = cross_asset_signals.get('oil_signal', 0)
+            oil_vol = abs(cross_asset_signals.get('oil_return', 0))
+            
+            # High oil volatility = increase position risk
+            if oil_vol > 0.03:  # Oil moved 3%+
+                scalar *= max(0.7, 1 - oil_vol * 3)  # Reduce up to 30%
+        
+        # Multinational stocks with DXY exposure
+        if symbol in self.MULTINATIONAL_SYMBOLS:
+            dxy_signal = cross_asset_signals.get('dxy_signal', 0)
+            
+            # Strong dollar headwind
+            if dxy_signal > 0.1:  # DXY strengthening
+                scalar *= max(0.8, 1 - dxy_signal * 0.5)  # Reduce up to 20%
+        
+        # Financial stocks with credit exposure
+        if symbol in self.FINANCIAL_SYMBOLS:
+            credit_signal = cross_asset_signals.get('credit_signal', 0)
+            
+            # Credit stress
+            if credit_signal < -0.1:  # Credit stress
+                scalar *= max(0.7, 1 + credit_signal * 2)  # Reduce up to 30%
+        
+        return max(0.5, min(1.5, scalar))  # Cap adjustments
     
     def _sizing_reason(
         self,

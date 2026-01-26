@@ -1,0 +1,301 @@
+/Users/saef.aldandashi/Desktop/mini fund tool/src/llm/llm_service.py:30: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+WARNING:root:⚠️ Authentication DISABLED - Set APP_PASSWORD environment variable to enable
+✓ Background data refresh started (every 15 minutes)
+
+============================================================
+MULTI-STRATEGY QUANT DEBATE BOT - Web UI
+============================================================
+
+Open your browser: http://localhost:5000
+
+Strategies: 9 active strategies with debate mechanism
+Data Sources:
+  - Market Data: Alpaca API (IEX feed)
+  - News & Sentiment: Alpha Vantage News Sentiment API ✓
+
+Press Ctrl+C to stop the server
+============================================================
+
+ * Serving Flask app 'app'
+ * Debug mode: off
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.185.146:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:127.0.0.1 - - [23/Jan/2026 18:29:14] "POST /api/cancel-orders HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jan/2026 18:29:14] "POST /api/run?dry_run=false&fast_mode=true&allow_after_hours=true HTTP/1.1" 200 -
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:Invalid quote for GS: bid=430.0, ask=0.0
+INFO:werkzeug:127.0.0.1 - - [23/Jan/2026 18:29:59] "GET /api/status HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jan/2026 18:31:13] "GET /api/status HTTP/1.1" 200 -
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Error cancelling orders: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/orders (Caused by NameResolutionError("HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:root:Error checking market status: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/clock (Caused by NameResolutionError("HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:src.risk.realtime_monitor:Could not get account data: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Read timed out. (read timeout=None)
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+WARNING:root:⏰ Found 1 positions exceeding holding period!
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:307: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:395: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.data.macro_data:Error fetching ^VIX from Yahoo: HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/%5EVIX?interval=1d&range=5d (Caused by NameResolutionError("HTTPSConnection(host='query1.finance.yahoo.com', port=443): Failed to resolve 'query1.finance.yahoo.com' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:src.data.macro_data:Error fetching ^TNX from Yahoo: HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/%5ETNX?interval=1d&range=5d (Caused by NameResolutionError("HTTPSConnection(host='query1.finance.yahoo.com', port=443): Failed to resolve 'query1.finance.yahoo.com' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:src.data.macro_data:Error fetching SPY from Yahoo: HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/SPY?interval=1d&range=5d (Caused by NameResolutionError("HTTPSConnection(host='query1.finance.yahoo.com', port=443): Failed to resolve 'query1.finance.yahoo.com' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:src.data.macro_data:Error fetching DX-Y.NYB from Yahoo: HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/DX-Y.NYB?interval=1d&range=5d (Caused by NameResolutionError("HTTPSConnection(host='query1.finance.yahoo.com', port=443): Failed to resolve 'query1.finance.yahoo.com' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:src.data.macro_data:Error fetching GC=F from Yahoo: HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/GC=F?interval=1d&range=5d (Caused by NameResolutionError("HTTPSConnection(host='query1.finance.yahoo.com', port=443): Failed to resolve 'query1.finance.yahoo.com' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:src.data.macro_data:Error fetching CL=F from Yahoo: HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/CL=F?interval=1d&range=5d (Caused by NameResolutionError("HTTPSConnection(host='query1.finance.yahoo.com', port=443): Failed to resolve 'query1.finance.yahoo.com' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:src.risk.realtime_monitor:Could not get account data: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/account (Caused by NameResolutionError("HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)"))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.data.cross_asset_data:Error fetching EWT from Yahoo: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+WARNING:src.data.cross_asset_data:Error fetching VGK from Yahoo: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+WARNING:src.data.cross_asset_data:Error fetching EEM from Yahoo: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+WARNING:src.risk.realtime_monitor:Could not get account data: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Read timed out. (read timeout=None)
+WARNING:root:Batch fetch failed: ('Connection aborted.', OSError(49, "Can't assign requested address"))
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)

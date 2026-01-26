@@ -30,6 +30,7 @@ class ShortCandidate:
     news_score: float = 0.0
     valuation_score: float = 0.0
     technical_score: float = 0.0
+    cross_asset_score: float = 0.0  # NEW: Cross-asset driven score
     
     # Composite score
     total_score: float = 0.0
@@ -38,6 +39,7 @@ class ShortCandidate:
     news_signals: List[str] = field(default_factory=list)
     valuation_signals: List[str] = field(default_factory=list)
     technical_signals: List[str] = field(default_factory=list)
+    cross_asset_signals: List[str] = field(default_factory=list)  # NEW
     
     # Risk metrics
     short_interest: float = 0.0  # If available
@@ -51,15 +53,17 @@ class ShortCandidate:
     def calculate_total(self, weights: Optional[Dict[str, float]] = None):
         """Calculate weighted total score."""
         weights = weights or {
-            'news': 0.40,
-            'valuation': 0.30,
-            'technical': 0.30,
+            'news': 0.35,
+            'valuation': 0.25,
+            'technical': 0.25,
+            'cross_asset': 0.15,  # NEW: Cross-asset weight
         }
         
         self.total_score = (
-            self.news_score * weights['news'] +
-            self.valuation_score * weights['valuation'] +
-            self.technical_score * weights['technical']
+            self.news_score * weights.get('news', 0.35) +
+            self.valuation_score * weights.get('valuation', 0.25) +
+            self.technical_score * weights.get('technical', 0.25) +
+            self.cross_asset_score * weights.get('cross_asset', 0.15)
         )
         
         # Determine conviction
@@ -133,6 +137,12 @@ class ShortScanner:
         self.last_scan_time: Optional[datetime] = None
         self.last_candidates: List[ShortCandidate] = []
     
+    # Cross-asset symbol mappings
+    ENERGY_SYMBOLS = ['XOM', 'CVX', 'SLB', 'OXY', 'COP', 'HAL', 'MPC', 'VLO', 'PSX']
+    MULTINATIONAL_SYMBOLS = ['AAPL', 'MSFT', 'GOOG', 'GOOGL', 'META', 'NVDA', 'AMZN', 'NFLX']
+    FINANCIAL_SYMBOLS = ['JPM', 'BAC', 'WFC', 'C', 'GS', 'MS', 'BLK', 'SCHW']
+    CHINA_EXPOSED_SYMBOLS = ['AAPL', 'TSLA', 'NKE', 'SBUX', 'WYNN', 'LVS', 'QCOM']
+    
     def scan(
         self,
         symbols: List[str],
@@ -141,6 +151,7 @@ class ShortScanner:
         prices: Optional[Dict[str, float]] = None,
         ma_200: Optional[Dict[str, float]] = None,
         rsi_values: Optional[Dict[str, float]] = None,
+        cross_asset_signals: Optional[Dict[str, float]] = None,  # NEW
     ) -> List[ShortCandidate]:
         """
         Scan for short opportunities.
@@ -152,11 +163,15 @@ class ShortScanner:
             prices: Current prices
             ma_200: 200-day moving averages
             rsi_values: RSI values
+            cross_asset_signals: Cross-asset signals (oil_signal, dxy_signal, etc.)
         
         Returns:
             List of ShortCandidate sorted by total_score descending
         """
         logger.info(f"🔍 Short scanner: Scanning {len(symbols)} symbols")
+        
+        # Process cross-asset signals
+        cross_asset_signals = cross_asset_signals or {}
         
         candidates = []
         
@@ -168,6 +183,7 @@ class ShortScanner:
                 price=prices.get(symbol) if prices else None,
                 ma_200_value=ma_200.get(symbol) if ma_200 else None,
                 rsi=rsi_values.get(symbol) if rsi_values else None,
+                cross_asset_signals=cross_asset_signals,
             )
             
             if candidate and candidate.total_score >= self.config.min_total_score:
@@ -196,6 +212,7 @@ class ShortScanner:
         price: Optional[float],
         ma_200_value: Optional[float],
         rsi: Optional[float],
+        cross_asset_signals: Optional[Dict[str, float]] = None,
     ) -> Optional[ShortCandidate]:
         """Analyze a single symbol for short opportunity."""
         candidate = ShortCandidate(symbol=symbol)
@@ -219,7 +236,13 @@ class ShortScanner:
         if tech_score > 0.3:
             sources_signaling += 1
         
-        # Check minimum sources agreeing
+        # 4. CROSS-ASSET ANALYSIS (NEW)
+        cross_score = self._analyze_cross_asset(symbol, cross_asset_signals, candidate)
+        candidate.cross_asset_score = cross_score
+        if cross_score > 0.3:
+            sources_signaling += 1
+        
+        # Check minimum sources agreeing (now 2 of 4 possible)
         if sources_signaling < self.config.min_sources_agreeing:
             return None
         
@@ -227,6 +250,59 @@ class ShortScanner:
         candidate.calculate_total(self.config.signal_weights)
         
         return candidate
+    
+    def _analyze_cross_asset(
+        self,
+        symbol: str,
+        cross_asset_signals: Optional[Dict[str, float]],
+        candidate: ShortCandidate
+    ) -> float:
+        """
+        Analyze cross-asset signals for short opportunities.
+        
+        Cross-asset short triggers:
+        - Oil declining → Short energy stocks
+        - Strong dollar (DXY rising) → Short multinationals
+        - Credit stress (HYG falling) → Short financials
+        - China weakness → Short China-exposed
+        """
+        if not cross_asset_signals:
+            return 0.0
+        
+        score = 0.0
+        
+        # 1. Oil decline → Energy shorts
+        oil_signal = cross_asset_signals.get('oil_signal', 0)
+        if symbol in self.ENERGY_SYMBOLS and oil_signal < -0.15:
+            score += min(0.5, abs(oil_signal))
+            candidate.cross_asset_signals.append(f"Oil declining ({oil_signal:.2f})")
+        
+        # 2. Strong dollar → Multinational shorts
+        dxy_signal = cross_asset_signals.get('dxy_signal', 0)
+        if symbol in self.MULTINATIONAL_SYMBOLS and dxy_signal > 0.15:
+            score += min(0.4, dxy_signal)
+            candidate.cross_asset_signals.append(f"Strong dollar ({dxy_signal:.2f})")
+        
+        # 3. Credit stress → Financial shorts
+        credit_signal = cross_asset_signals.get('credit_signal', 0)
+        if symbol in self.FINANCIAL_SYMBOLS and credit_signal < -0.2:
+            score += min(0.5, abs(credit_signal))
+            candidate.cross_asset_signals.append(f"Credit stress ({credit_signal:.2f})")
+        
+        # 4. China weakness → China-exposed shorts
+        china_signal = cross_asset_signals.get('china_signal', 0)
+        if symbol in self.CHINA_EXPOSED_SYMBOLS and china_signal < -0.2:
+            score += min(0.4, abs(china_signal))
+            candidate.cross_asset_signals.append(f"China weakness ({china_signal:.2f})")
+        
+        # 5. Europe weakness → EU-exposed
+        europe_signal = cross_asset_signals.get('europe_lead', 0)
+        if europe_signal < -0.2:
+            # General market weakness signal
+            score += min(0.2, abs(europe_signal))
+            candidate.cross_asset_signals.append(f"Europe weak ({europe_signal:.2f})")
+        
+        return min(1.0, score)
     
     def _analyze_news(
         self,

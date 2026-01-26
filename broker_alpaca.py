@@ -462,19 +462,23 @@ class AlpacaBroker:
         symbol: str,
         qty: int,
         side: OrderSide,
-        dry_run: bool = True
+        dry_run: bool = True,
+        extended_hours: bool = False,
     ) -> Optional[Dict]:
         """
-        Place a market order.
+        Place a market order (or limit order for extended hours).
         
         Args:
             symbol: Stock symbol
             qty: Quantity (must be > 0)
             side: OrderSide.BUY or OrderSide.SELL
             dry_run: If True, log but don't place order
+            extended_hours: If True, use limit order for after-hours trading
         
         Returns:
             Order info dict if placed, None if dry_run
+        
+        Note: Alpaca requires LIMIT orders for extended hours trading.
         """
         if qty <= 0:
             logging.warning(f"Invalid quantity {qty} for {symbol}, skipping order")
@@ -487,12 +491,42 @@ class AlpacaBroker:
             return None
         
         try:
-            order_request = MarketOrderRequest(
-                symbol=symbol,
-                qty=qty,
-                side=side,
-                time_in_force=TimeInForce.DAY
-            )
+            # For extended hours, we MUST use limit orders (Alpaca requirement)
+            if extended_hours:
+                from alpaca.trading.requests import LimitOrderRequest
+                
+                # Get current price for limit order
+                prices = self.get_current_prices([symbol])
+                current_price = prices.get(symbol, 0)
+                
+                if current_price > 0:
+                    # Add buffer to ensure fill: +0.5% for buys, -0.5% for sells
+                    buffer = 0.005
+                    if side == OrderSide.BUY:
+                        limit_price = round(current_price * (1 + buffer), 2)
+                    else:
+                        limit_price = round(current_price * (1 - buffer), 2)
+                    
+                    order_request = LimitOrderRequest(
+                        symbol=symbol,
+                        qty=qty,
+                        side=side,
+                        limit_price=limit_price,
+                        time_in_force=TimeInForce.DAY,
+                        extended_hours=True,
+                    )
+                    logging.info(f"Extended hours LIMIT: {side_str} {qty} {symbol} @ ${limit_price}")
+                else:
+                    logging.warning(f"Cannot get price for {symbol}, skipping extended hours order")
+                    return None
+            else:
+                # Regular market order
+                order_request = MarketOrderRequest(
+                    symbol=symbol,
+                    qty=qty,
+                    side=side,
+                    time_in_force=TimeInForce.DAY
+                )
             
             order = self.trading_client.submit_order(order_request)
             
@@ -900,6 +934,11 @@ class AlpacaBroker:
                     if bid > 0 and ask > 0:
                         mid = (bid + ask) / 2
                         spread_pct = ((ask - bid) / mid) * 100 if mid > 0 else 0.05
+                        # CAP SPREAD: After-hours spreads can be unrealistically wide
+                        if spread_pct > 5.0:
+                            spread_pct = 0.10  # Stale quote → conservative 10 bps
+                        elif spread_pct > 0.5:
+                            spread_pct = 0.50  # Cap at 50 bps max
                     else:
                         mid = ask if ask > 0 else bid
                         spread_pct = 0.05  # Default 5 bps if no bid-ask

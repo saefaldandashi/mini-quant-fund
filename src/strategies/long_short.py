@@ -17,7 +17,78 @@ import pandas as pd
 import logging
 
 from .base import Strategy, SignalOutput
+
+logger = logging.getLogger(__name__)
 from src.data.feature_store import Features
+
+
+def _apply_cross_asset_adjustments(
+    weights: Dict[str, float],
+    features: Features,
+    logger_ref: Any = None,
+) -> Tuple[Dict[str, float], List[str]]:
+    """
+    Apply cross-asset signal adjustments to L/S weights.
+    
+    Cross-asset rules:
+    - Oil rising → Boost energy longs, reduce energy shorts
+    - Oil falling → Reduce energy longs, boost energy shorts
+    - DXY rising → Reduce multinational longs, boost multinational shorts
+    - Credit stress → Reduce financial longs, boost financial shorts
+    """
+    adjustments = []
+    adjusted = weights.copy()
+    
+    # Get cross-asset signals
+    cross_signals = getattr(features, 'cross_asset_signals', {}) or {}
+    
+    oil_signal = cross_signals.get('oil_signal', 0)
+    dxy_signal = cross_signals.get('dxy_signal', 0)
+    credit_signal = cross_signals.get('credit_signal', 0)
+    
+    # Energy stocks
+    energy_stocks = ['XOM', 'CVX', 'SLB', 'OXY', 'COP', 'HAL', 'XLE']
+    # Multinational stocks
+    multinational_stocks = ['AAPL', 'MSFT', 'GOOG', 'GOOGL', 'META', 'NVDA', 'AMZN']
+    # Financial stocks
+    financial_stocks = ['JPM', 'BAC', 'WFC', 'C', 'GS', 'MS', 'XLF']
+    
+    for symbol, weight in list(adjusted.items()):
+        adjustment_factor = 1.0
+        reasons = []
+        
+        # Oil adjustment for energy
+        if symbol in energy_stocks and abs(oil_signal) > 0.1:
+            if weight > 0:  # Long position
+                adjustment_factor *= (1 + oil_signal * 0.3)  # Boost if oil rising
+                reasons.append(f"oil={oil_signal:+.2f}")
+            else:  # Short position
+                adjustment_factor *= (1 - oil_signal * 0.3)  # Boost short if oil falling
+                reasons.append(f"oil={oil_signal:+.2f}")
+        
+        # DXY adjustment for multinationals
+        if symbol in multinational_stocks and abs(dxy_signal) > 0.1:
+            if weight > 0:  # Long position
+                adjustment_factor *= (1 - dxy_signal * 0.2)  # Reduce if DXY rising
+                reasons.append(f"dxy={dxy_signal:+.2f}")
+            else:  # Short position
+                adjustment_factor *= (1 + dxy_signal * 0.2)  # Boost short if DXY rising
+                reasons.append(f"dxy={dxy_signal:+.2f}")
+        
+        # Credit adjustment for financials
+        if symbol in financial_stocks and abs(credit_signal) > 0.15:
+            if weight > 0:  # Long position
+                adjustment_factor *= (1 + credit_signal * 0.25)  # Reduce if credit stress
+                reasons.append(f"credit={credit_signal:+.2f}")
+            else:  # Short position
+                adjustment_factor *= (1 - credit_signal * 0.25)  # Boost short if credit stress
+                reasons.append(f"credit={credit_signal:+.2f}")
+        
+        if adjustment_factor != 1.0:
+            adjusted[symbol] = weight * adjustment_factor
+            adjustments.append(f"{symbol}: {','.join(reasons)} → {adjustment_factor:.2f}x")
+    
+    return adjusted, adjustments
 
 
 class CrossSectionalMomentumLS(Strategy):
@@ -113,6 +184,12 @@ class CrossSectionalMomentumLS(Strategy):
             adjustment = (self.target_net - current_net) / len(weights)
             weights = {k: v + adjustment for k, v in weights.items()}
         
+        # Apply cross-asset adjustments
+        weights, cross_adj = _apply_cross_asset_adjustments(weights, features)
+        if cross_adj:
+            sentiment_adjustments.extend(cross_adj)
+            logger.info(f"CS Momentum L/S: Applied {len(cross_adj)} cross-asset adjustments")
+        
         # Calculate expected returns
         long_mom = np.mean([m for _, m in longs])
         short_mom = np.mean([m for _, m in shorts])
@@ -206,7 +283,8 @@ class TimeSeriesMomentumLS(Strategy):
             
             if abs(weight) > 0.01:
                 weights[symbol] = weight
-                expected_returns[symbol] = mom * 0.3  # Discount
+                # Cap expected return at realistic levels
+                expected_returns[symbol] = max(-0.50, min(0.50, mom * 0.3))
         
         if not weights:
             return SignalOutput(

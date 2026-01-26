@@ -418,9 +418,17 @@ class LeverageManager:
     
     def calculate_blended_leverage_limit(
         self,
-        strategy_weights: Dict[str, float]
+        strategy_weights: Dict[str, float],
+        cross_asset_signals: Optional[Dict[str, float]] = None,
     ) -> float:
-        """Calculate blended leverage limit based on strategy mix."""
+        """
+        Calculate blended leverage limit based on strategy mix AND cross-asset signals.
+        
+        Cross-asset stress reduces leverage:
+        - Credit stress (HYG falling) → Reduce leverage
+        - Oil volatility spike → Reduce leverage for energy
+        - Gold surge (risk-off) → Reduce overall leverage
+        """
         if not strategy_weights:
             return self.get_effective_leverage_limit()
         
@@ -433,7 +441,59 @@ class LeverageManager:
             for name, weight in strategy_weights.items()
         ) / total_weight
         
-        return min(blended, self.get_effective_leverage_limit())
+        base_limit = min(blended, self.get_effective_leverage_limit())
+        
+        # Apply cross-asset adjustments
+        if cross_asset_signals:
+            cross_asset_multiplier = self._calculate_cross_asset_leverage_adjustment(cross_asset_signals)
+            base_limit *= cross_asset_multiplier
+            if cross_asset_multiplier < 1.0:
+                logging.info(f"Cross-asset reduced leverage: {cross_asset_multiplier:.2f}x")
+        
+        return max(1.0, base_limit)  # Never go below 1x
+    
+    def _calculate_cross_asset_leverage_adjustment(
+        self,
+        cross_asset_signals: Dict[str, float],
+    ) -> float:
+        """
+        Calculate leverage reduction based on cross-asset stress.
+        
+        Returns multiplier (e.g., 0.8 = reduce to 80% of normal leverage)
+        """
+        multiplier = 1.0
+        
+        # Credit stress (negative credit_signal = stress)
+        credit_signal = cross_asset_signals.get('credit_signal', 0)
+        if credit_signal < -0.2:
+            # Credit stress detected - reduce leverage
+            reduction = min(0.3, abs(credit_signal) * 0.5)  # Up to 30% reduction
+            multiplier *= (1 - reduction)
+            logging.debug(f"Credit stress leverage reduction: {reduction:.1%}")
+        
+        # Gold surge (risk-off flight)
+        gold_return = cross_asset_signals.get('gold_return', 0)
+        if gold_return > 0.03:  # Gold up 3%+ = risk-off
+            reduction = min(0.2, gold_return * 3)  # Up to 20% reduction
+            multiplier *= (1 - reduction)
+            logging.debug(f"Gold surge leverage reduction: {reduction:.1%}")
+        
+        # Oil volatility (rapid oil moves = market stress)
+        oil_return = cross_asset_signals.get('oil_return', 0)
+        if abs(oil_return) > 0.05:  # Oil moved 5%+ = elevated risk
+            reduction = min(0.15, abs(oil_return) * 2)
+            multiplier *= (1 - reduction)
+            logging.debug(f"Oil volatility leverage reduction: {reduction:.1%}")
+        
+        # International market stress
+        europe_signal = cross_asset_signals.get('europe_lead', 0)
+        china_signal = cross_asset_signals.get('china_signal', 0)
+        if europe_signal < -0.03 or china_signal < -0.03:  # International down 3%+
+            reduction = min(0.15, max(abs(europe_signal), abs(china_signal)) * 2)
+            multiplier *= (1 - reduction)
+            logging.debug(f"International stress leverage reduction: {reduction:.1%}")
+        
+        return max(0.5, multiplier)  # Never reduce more than 50%
     
     def can_use_leverage(self) -> Tuple[bool, str]:
         """Check if leverage can be used right now."""

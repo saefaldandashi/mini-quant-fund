@@ -189,6 +189,9 @@ class RealtimeRiskMonitor:
             
             # Check daily loss (circuit breaker)
             self._check_daily_loss(account, equity)
+            
+            # Check cross-asset stress signals (NEW)
+            self._check_cross_asset_stress()
     
     def _check_drawdown(self, drawdown: float, equity: float):
         """Check drawdown thresholds and take action."""
@@ -399,6 +402,68 @@ class RealtimeRiskMonitor:
                 threshold=-self.config.daily_loss_alert_pct,
             )
             self._trigger_alert(alert)
+    
+    def _check_cross_asset_stress(self):
+        """
+        Check cross-asset signals for stress conditions.
+        
+        Triggers alerts for:
+        - Credit stress (HYG falling sharply)
+        - International crash (Europe/China down significantly)
+        - Commodity spike (oil/gold violent moves)
+        """
+        try:
+            from src.data.cross_asset_data import get_cross_asset_loader
+            loader = get_cross_asset_loader()
+            data = loader.fetch_all_cross_assets(days=5)
+            
+            if not data:
+                return
+            
+            # Check credit stress (HYG)
+            if 'HYG' in data and len(data['HYG']) >= 2:
+                hyg_ret = (data['HYG'].iloc[-1] / data['HYG'].iloc[-2] - 1) * 100
+                if hyg_ret < -2.0:  # HYG down 2%+ = credit stress
+                    alert = self._create_alert(
+                        level=RiskLevel.ELEVATED,
+                        message=f"⚠️ Credit stress: HYG down {hyg_ret:.2f}% today",
+                        metric_name="hyg_return",
+                        current_value=hyg_ret,
+                        threshold=-2.0,
+                    )
+                    self._trigger_alert(alert)
+                    logger.warning(f"Credit stress detected: HYG {hyg_ret:.2f}%")
+            
+            # Check international crash
+            for intl_symbol, name in [('EWG', 'Europe'), ('FXI', 'China'), ('EEM', 'EM')]:
+                if intl_symbol in data and len(data[intl_symbol]) >= 2:
+                    ret = (data[intl_symbol].iloc[-1] / data[intl_symbol].iloc[-2] - 1) * 100
+                    if ret < -3.0:  # Down 3%+ = crash
+                        alert = self._create_alert(
+                            level=RiskLevel.HIGH if ret < -5.0 else RiskLevel.ELEVATED,
+                            message=f"⚠️ {name} market stress: {intl_symbol} down {ret:.2f}%",
+                            metric_name=f"{intl_symbol}_return",
+                            current_value=ret,
+                            threshold=-3.0,
+                        )
+                        self._trigger_alert(alert)
+            
+            # Check commodity spikes (oil, gold)
+            for comm, name in [('CL=F', 'Oil'), ('GC=F', 'Gold')]:
+                if comm in data and len(data[comm]) >= 2:
+                    ret = (data[comm].iloc[-1] / data[comm].iloc[-2] - 1) * 100
+                    if abs(ret) > 5.0:  # 5%+ move either direction
+                        alert = self._create_alert(
+                            level=RiskLevel.ELEVATED,
+                            message=f"⚠️ {name} spike: {ret:+.2f}% today",
+                            metric_name=f"{comm}_return",
+                            current_value=ret,
+                            threshold=5.0,
+                        )
+                        self._trigger_alert(alert)
+                        
+        except Exception as e:
+            logger.debug(f"Could not check cross-asset stress: {e}")
     
     def _close_leveraged_positions(self, reason: str):
         """Close all positions that are using leverage (above 1x equity)."""

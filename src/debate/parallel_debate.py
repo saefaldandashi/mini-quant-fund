@@ -276,12 +276,21 @@ JSON: {{"claim": "your critique", "risk": "specific risk", "strength": 0.0-1.0}}
                     break
             
             # Adjust score: boost by support, penalize by attacks
-            adjusted = base_score * (1 + support * 0.2) * (1 - impact)
-            adjusted_scores[name] = max(0.0, min(1.0, adjusted))
+            # CAP PENALTY: Never reduce score by more than 50%
+            effective_impact = min(impact, 0.5)  # Cap attack impact at 50%
+            adjusted = base_score * (1 + support * 0.2) * (1 - effective_impact)
+            
+            # Ensure minimum score floor (strategies shouldn't be zeroed out)
+            adjusted_scores[name] = max(0.15, min(1.0, adjusted))
         
-        # Normalize scores
-        total = sum(adjusted_scores.values()) or 1.0
-        adjusted_scores = {k: v / total for k, v in adjusted_scores.items()}
+        # PRESERVE relative scores - don't force sum to 1.0
+        # Instead, scale so that the best strategy keeps its score
+        if adjusted_scores:
+            max_score = max(adjusted_scores.values())
+            if max_score > 0:
+                # Scale so max score stays near 1.0 (but keep minimum floor)
+                scale = 1.0 / max_score if max_score > 1.0 else 1.0
+                adjusted_scores = {k: max(0.15, v * scale) for k, v in adjusted_scores.items()}
         
         elapsed_ms = (time.time() - start_time) * 1000
         

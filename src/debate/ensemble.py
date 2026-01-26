@@ -488,13 +488,28 @@ class EnsembleOptimizer:
             final = {k: v * scale for k, v in final.items()}
             constraints_applied.append(f"Vol target applied ({port_vol:.1%} -> {self.vol_target:.1%})")
         
-        # Clean up tiny weights
-        final = {k: v for k, v in final.items() if abs(v) > 0.005}
+        # Clean up tiny weights (use smaller threshold to preserve valid small positions)
+        final = {k: v for k, v in final.items() if abs(v) > 0.002}
         
-        # Normalize if needed
-        total = sum(final.values())
-        if total > 0 and abs(total - 1.0) > 0.01:
-            final = {k: v / total for k, v in final.items()}
+        # Normalize based on portfolio type
+        # For long-only: normalize to sum to 1.0
+        # For L/S: normalize GROSS exposure to target, preserve net exposure
+        total_net = sum(final.values())
+        total_gross = sum(abs(v) for v in final.values())
+        
+        # Check if this is a L/S portfolio (has both longs and shorts)
+        has_longs = any(v > 0 for v in final.values())
+        has_shorts = any(v < 0 for v in final.values())
+        
+        if has_longs and has_shorts:
+            # L/S Portfolio: normalize gross exposure to 1.0 (or less)
+            if total_gross > 1.2:  # Allow 20% buffer
+                scale = 1.0 / total_gross
+                final = {k: v * scale for k, v in final.items()}
+                constraints_applied.append(f"L/S gross exposure normalized ({total_gross:.1%} -> 1.0)")
+        elif total_net > 0.1 and abs(total_net - 1.0) > 0.01:
+            # Long-only: normalize to sum to 1.0
+            final = {k: v / total_net for k, v in final.items()}
         
         return final, constraints_applied
     
