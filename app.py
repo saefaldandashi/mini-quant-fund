@@ -5235,6 +5235,48 @@ def refresh_geopolitical():
         return jsonify({"status": "error", "error": str(e)}), 500
 
 
+@app.route('/api/geopolitical/filtered-events')
+@requires_auth
+def get_geopolitical_filtered_events():
+    """Get high-quality filtered geopolitical events."""
+    try:
+        # Get filtered events from advanced filter
+        filtered = geopolitical_intel.get_filtered_events()
+        filter_stats = geopolitical_intel.get_filter_stats()
+        
+        # Convert to serializable format
+        events = []
+        for event in filtered:
+            events.append({
+                "event_id": event.event_id,
+                "timestamp": event.timestamp.isoformat() if hasattr(event.timestamp, 'isoformat') else str(event.timestamp),
+                "headline": event.headline,
+                "summary": event.summary[:200] if event.summary else "",
+                "source": event.source,
+                "url": event.url,
+                "category": event.category.value if hasattr(event.category, 'value') else str(event.category),
+                "tags": event.tags,
+                "relevance_score": event.relevance_score,
+                "impact_score": event.impact_score,
+                "final_score": event.final_score,
+                "direction": event.direction.value if hasattr(event.direction, 'value') else str(event.direction),
+                "direction_confidence": event.direction_confidence,
+                "affected_assets": event.affected_assets,
+                "affected_regions": event.affected_regions,
+                "rationale": event.rationale,
+            })
+        
+        return jsonify({
+            "status": "success",
+            "events": events,
+            "count": len(events),
+            "filter_stats": filter_stats,
+        })
+    except Exception as e:
+        logging.error(f"Filtered events error: {e}")
+        return jsonify({"status": "error", "error": str(e), "events": []}), 500
+
+
 @app.route('/api/regime')
 def get_regime():
     """Get current market regime detection."""

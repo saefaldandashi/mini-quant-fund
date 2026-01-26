@@ -1110,6 +1110,34 @@
             color: var(--accent);
         }
         
+        /* Geopolitical Event Cards */
+        .geo-event-card {
+            cursor: pointer;
+        }
+        .geo-event-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border-color: var(--accent) !important;
+        }
+        .geo-region-pill {
+            transition: all 0.2s;
+        }
+        .geo-region-pill:hover {
+            background: var(--bg-secondary) !important;
+            transform: scale(1.05);
+        }
+        #geo-intel-dashboard {
+            transition: border-color 0.3s;
+        }
+        #geo-intel-dashboard.risk-critical {
+            border-color: #ff0000 !important;
+            animation: pulse-danger 2s infinite;
+        }
+        @keyframes pulse-danger {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); }
+            50% { box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.2); }
+        }
+        
         /* Improved execution log */
         .log-entry {
             padding: 3px 0;
@@ -1899,6 +1927,77 @@
                             <span>Risk-On</span>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <!-- GEOPOLITICAL INTELLIGENCE DASHBOARD -->
+            <div class="card" id="geo-intel-dashboard" style="border: 2px solid var(--border);">
+                <div class="card-header" style="flex-wrap: wrap; gap: 10px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(239, 68, 68, 0.1));">
+                    <h2><span>🌍</span> Global Intelligence Feed</h2>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <!-- Risk Level Badge -->
+                        <div id="geo-risk-badge" style="display: flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 20px; background: rgba(255,165,0,0.2); border: 1px solid rgba(255,165,0,0.5);">
+                            <span style="font-size: 1.1em;">⚠️</span>
+                            <span id="geo-main-risk-level" style="font-weight: 600; font-size: 0.85em;">ELEVATED</span>
+                            <span id="geo-main-risk-score" style="font-size: 0.75em; color: var(--text-dim);">58%</span>
+                        </div>
+                        <!-- Safe Haven Signal -->
+                        <div id="geo-safe-haven-badge" style="display: none; padding: 6px 12px; border-radius: 20px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); font-size: 0.75em; font-weight: 600; color: var(--danger);">
+                            🛡️ SAFE HAVEN ACTIVE
+                        </div>
+                        <button class="action-btn secondary" onclick="refreshGeoIntelFull()" style="padding: 6px 12px; font-size: 0.7em;">↻ Refresh</button>
+                    </div>
+                </div>
+                
+                <!-- Regional Risk Indicators -->
+                <div style="display: flex; gap: 15px; padding: 12px 20px; background: var(--bg-secondary); border-bottom: 1px solid var(--border); overflow-x: auto;">
+                    <div class="geo-region-pill" id="region-middle_east" style="display: flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 15px; background: var(--bg); border: 1px solid var(--border); font-size: 0.75em;">
+                        <span>🇸🇦 Middle East</span>
+                        <span class="region-risk-value" style="font-weight: 600; color: var(--warning);">--</span>
+                    </div>
+                    <div class="geo-region-pill" id="region-asia" style="display: flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 15px; background: var(--bg); border: 1px solid var(--border); font-size: 0.75em;">
+                        <span>🇨🇳 Asia</span>
+                        <span class="region-risk-value" style="font-weight: 600; color: var(--text-dim);">--</span>
+                    </div>
+                    <div class="geo-region-pill" id="region-europe" style="display: flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 15px; background: var(--bg); border: 1px solid var(--border); font-size: 0.75em;">
+                        <span>🇪🇺 Europe</span>
+                        <span class="region-risk-value" style="font-weight: 600; color: var(--text-dim);">--</span>
+                    </div>
+                    <div class="geo-region-pill" id="region-russia" style="display: flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 15px; background: var(--bg); border: 1px solid var(--border); font-size: 0.75em;">
+                        <span>🇷🇺 Russia</span>
+                        <span class="region-risk-value" style="font-weight: 600; color: var(--text-dim);">--</span>
+                    </div>
+                    <div class="geo-region-pill" id="region-americas" style="display: flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 15px; background: var(--bg); border: 1px solid var(--border); font-size: 0.75em;">
+                        <span>🇺🇸 Americas</span>
+                        <span class="region-risk-value" style="font-weight: 600; color: var(--text-dim);">--</span>
+                    </div>
+                </div>
+                
+                <!-- Category Tabs -->
+                <div class="tab-header" style="padding: 0 15px; border-bottom: 1px solid var(--border);">
+                    <button class="tab-btn active" onclick="setGeoCategory('all')" data-geo-cat="all">📊 All</button>
+                    <button class="tab-btn" onclick="setGeoCategory('geopolitical')" data-geo-cat="geopolitical">⚔️ Conflicts</button>
+                    <button class="tab-btn" onclick="setGeoCategory('sanctions')" data-geo-cat="sanctions">🚫 Sanctions</button>
+                    <button class="tab-btn" onclick="setGeoCategory('energy_commodity')" data-geo-cat="energy_commodity">🛢️ Energy</button>
+                    <button class="tab-btn" onclick="setGeoCategory('shipping_logistics')" data-geo-cat="shipping_logistics">🚢 Shipping</button>
+                    <button class="tab-btn" onclick="setGeoCategory('central_bank')" data-geo-cat="central_bank">🏦 Central Banks</button>
+                    <button class="tab-btn" onclick="setGeoCategory('financial_stress')" data-geo-cat="financial_stress">📉 Financial</button>
+                </div>
+                
+                <!-- Events Grid -->
+                <div class="card-body" style="padding: 15px; max-height: 450px; overflow-y: auto;">
+                    <div id="geo-events-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 12px;">
+                        <div style="grid-column: 1 / -1; text-align: center; color: var(--text-dim); padding: 40px;">
+                            Loading global intelligence...
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Footer -->
+                <div style="display: flex; justify-content: space-between; padding: 10px 20px; background: var(--bg-secondary); border-top: 1px solid var(--border); font-size: 0.7em; color: var(--text-dim);">
+                    <span id="geo-events-count">0 events tracked</span>
+                    <span id="geo-filter-stats">Acceptance rate: --</span>
+                    <span id="geo-last-update">Last update: --</span>
                 </div>
             </div>
             
@@ -3636,7 +3735,11 @@
             }
         }
         
-        // Load Geopolitical Intelligence
+        // Geopolitical Intelligence State
+        let currentGeoCategory = 'all';
+        let geoEventsCache = [];
+        
+        // Load Geopolitical Intelligence (mini card + full dashboard)
         async function loadGeoIntel() {
             try {
                 const res = await fetch('/api/geopolitical/assessment');
@@ -3645,64 +3748,299 @@
                 if (data.status === 'success' && data.assessment) {
                     const a = data.assessment;
                     
+                    // Update mini card
                     const levelEl = document.getElementById('geo-risk-level');
-                    levelEl.textContent = (a.risk_level || 'unknown').toUpperCase();
-                    
-                    // Color based on risk level
-                    if (a.risk_level === 'critical') {
-                        levelEl.style.color = '#ff0000';
-                        document.getElementById('geo-risk-card').style.borderColor = '#ff0000';
-                    } else if (a.risk_level === 'high') {
-                        levelEl.style.color = 'var(--danger)';
-                        document.getElementById('geo-risk-card').style.borderColor = 'var(--danger)';
-                    } else if (a.risk_level === 'elevated') {
-                        levelEl.style.color = '#ffa500';
-                        document.getElementById('geo-risk-card').style.borderColor = '#ffa500';
-                    } else if (a.risk_level === 'moderate') {
-                        levelEl.style.color = 'var(--warning)';
-                        document.getElementById('geo-risk-card').style.borderColor = 'var(--border)';
-                    } else {
-                        levelEl.style.color = 'var(--success)';
-                        document.getElementById('geo-risk-card').style.borderColor = 'var(--border)';
+                    if (levelEl) {
+                        levelEl.textContent = (a.risk_level || 'unknown').toUpperCase();
+                        
+                        // Color based on risk level
+                        const colors = {
+                            'critical': '#ff0000',
+                            'high': 'var(--danger)',
+                            'elevated': '#ffa500',
+                            'moderate': 'var(--warning)',
+                            'low': 'var(--success)'
+                        };
+                        levelEl.style.color = colors[a.risk_level] || 'var(--text-secondary)';
+                        
+                        const card = document.getElementById('geo-risk-card');
+                        if (card) card.style.borderColor = colors[a.risk_level] || 'var(--border)';
                     }
                     
-                    document.getElementById('geo-risk-score').textContent = `Score: ${((a.overall_risk_score || 0) * 100).toFixed(0)}%`;
+                    const scoreEl = document.getElementById('geo-risk-score');
+                    if (scoreEl) scoreEl.textContent = `Score: ${((a.overall_risk_score || 0) * 100).toFixed(0)}%`;
                     
                     const safeHavenEl = document.getElementById('geo-safe-haven');
-                    if (a.safe_haven_signal) {
-                        safeHavenEl.textContent = 'Safe Haven: ⚠️ ROTATE';
-                        safeHavenEl.style.color = 'var(--danger)';
-                    } else {
-                        safeHavenEl.textContent = 'Safe Haven: Normal';
-                        safeHavenEl.style.color = 'var(--text-dim)';
+                    if (safeHavenEl) {
+                        if (a.safe_haven_signal) {
+                            safeHavenEl.textContent = 'Safe Haven: ⚠️ ROTATE';
+                            safeHavenEl.style.color = 'var(--danger)';
+                        } else {
+                            safeHavenEl.textContent = 'Safe Haven: Normal';
+                            safeHavenEl.style.color = 'var(--text-dim)';
+                        }
                     }
                     
-                    // Show concerns
+                    // Update concerns in mini card
                     const concernsEl = document.getElementById('geo-concerns');
-                    if (a.key_concerns && a.key_concerns.length > 0) {
-                        concernsEl.innerHTML = a.key_concerns.slice(0, 3).map(c => 
-                            `<div style="margin-bottom: 3px;">• ${c.substring(0, 60)}...</div>`
-                        ).join('');
-                    } else {
-                        concernsEl.innerHTML = '<div style="color: var(--text-dim);">No significant concerns</div>';
+                    if (concernsEl) {
+                        if (a.key_concerns && a.key_concerns.length > 0) {
+                            concernsEl.innerHTML = a.key_concerns.slice(0, 3).map(c => 
+                                `<div style="margin-bottom: 3px;">• ${c.substring(0, 60)}...</div>`
+                            ).join('');
+                        } else {
+                            concernsEl.innerHTML = '<div style="color: var(--text-dim);">No significant concerns</div>';
+                        }
                     }
+                    
+                    // ===== UPDATE FULL DASHBOARD =====
+                    updateGeoDashboard(a);
                 }
+                
+                // Also load filtered events
+                await loadGeoEvents();
+                
             } catch (e) {
                 console.error('Load geo intel error:', e);
             }
         }
         
-        // Refresh geopolitical intelligence
-        async function refreshGeoIntel() {
+        // Update the full geopolitical dashboard
+        function updateGeoDashboard(assessment) {
+            // Update main risk badge
+            const riskBadge = document.getElementById('geo-risk-badge');
+            const mainLevel = document.getElementById('geo-main-risk-level');
+            const mainScore = document.getElementById('geo-main-risk-score');
+            
+            if (mainLevel) mainLevel.textContent = (assessment.risk_level || 'UNKNOWN').toUpperCase();
+            if (mainScore) mainScore.textContent = `${((assessment.overall_risk_score || 0) * 100).toFixed(0)}%`;
+            
+            // Color the badge based on risk
+            if (riskBadge) {
+                const badgeColors = {
+                    'critical': 'rgba(255, 0, 0, 0.3)',
+                    'high': 'rgba(239, 68, 68, 0.3)',
+                    'elevated': 'rgba(255, 165, 0, 0.3)',
+                    'moderate': 'rgba(234, 179, 8, 0.2)',
+                    'low': 'rgba(34, 197, 94, 0.2)'
+                };
+                riskBadge.style.background = badgeColors[assessment.risk_level] || 'rgba(100,100,100,0.2)';
+            }
+            
+            // Safe haven badge
+            const safeHavenBadge = document.getElementById('geo-safe-haven-badge');
+            if (safeHavenBadge) {
+                safeHavenBadge.style.display = assessment.safe_haven_signal ? 'block' : 'none';
+            }
+            
+            // Update regional risks
+            const regionFlags = {
+                'middle_east': '🇸🇦',
+                'asia': '🇨🇳', 
+                'europe': '🇪🇺',
+                'russia': '🇷🇺',
+                'americas': '🇺🇸',
+                'global': '🌍'
+            };
+            
+            if (assessment.regional_risks) {
+                Object.entries(assessment.regional_risks).forEach(([region, risk]) => {
+                    const pill = document.getElementById(`region-${region}`);
+                    if (pill) {
+                        const riskValue = pill.querySelector('.region-risk-value');
+                        if (riskValue) {
+                            riskValue.textContent = `${(risk * 100).toFixed(0)}%`;
+                            if (risk >= 0.6) riskValue.style.color = 'var(--danger)';
+                            else if (risk >= 0.4) riskValue.style.color = 'var(--warning)';
+                            else riskValue.style.color = 'var(--success)';
+                        }
+                    }
+                });
+            }
+            
+            // Update last update time
+            const lastUpdateEl = document.getElementById('geo-last-update');
+            if (lastUpdateEl) {
+                lastUpdateEl.textContent = `Last update: ${new Date().toLocaleTimeString()}`;
+            }
+        }
+        
+        // Load filtered geopolitical events
+        async function loadGeoEvents() {
             try {
-                document.getElementById('geo-risk-level').textContent = 'Refreshing...';
+                const res = await fetch('/api/geopolitical/filtered-events');
+                const data = await res.json();
+                
+                if (data.status === 'success' && data.events) {
+                    geoEventsCache = data.events;
+                    renderGeoEvents();
+                    
+                    // Update stats
+                    const countEl = document.getElementById('geo-events-count');
+                    if (countEl) countEl.textContent = `${data.events.length} events tracked`;
+                    
+                    const statsEl = document.getElementById('geo-filter-stats');
+                    if (statsEl && data.filter_stats) {
+                        statsEl.textContent = `Acceptance rate: ${(data.filter_stats.acceptance_rate * 100).toFixed(0)}%`;
+                    }
+                }
+            } catch (e) {
+                console.error('Load geo events error:', e);
+                // Fallback to basic events
+                try {
+                    const res = await fetch('/api/geopolitical/events?hours=24');
+                    const data = await res.json();
+                    if (data.events) {
+                        geoEventsCache = data.events;
+                        renderGeoEvents();
+                    }
+                } catch (e2) {
+                    console.error('Fallback failed:', e2);
+                }
+            }
+        }
+        
+        // Render geo events to the grid
+        function renderGeoEvents() {
+            const grid = document.getElementById('geo-events-grid');
+            if (!grid) return;
+            
+            // Filter by category
+            let filteredEvents = geoEventsCache;
+            if (currentGeoCategory !== 'all') {
+                filteredEvents = geoEventsCache.filter(e => e.category === currentGeoCategory);
+            }
+            
+            if (filteredEvents.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: var(--text-dim); padding: 40px;">
+                        No events in this category
+                    </div>
+                `;
+                return;
+            }
+            
+            // Render event cards
+            grid.innerHTML = filteredEvents.slice(0, 20).map(event => {
+                const categoryIcons = {
+                    'geopolitical': '⚔️',
+                    'sanctions': '🚫',
+                    'energy_commodity': '🛢️',
+                    'shipping_logistics': '🚢',
+                    'central_bank': '🏦',
+                    'financial_stress': '📉',
+                    'macro_data': '📊',
+                    'elections_policy': '🗳️',
+                    'corporate_deals': '🤝'
+                };
+                
+                const directionColors = {
+                    'risk_off': 'var(--danger)',
+                    'risk_on': 'var(--success)',
+                    'oil_up': '#f59e0b',
+                    'oil_down': '#06b6d4',
+                    'rates_up': '#8b5cf6',
+                    'rates_down': '#10b981',
+                    'neutral': 'var(--text-dim)'
+                };
+                
+                const directionLabels = {
+                    'risk_off': '📉 RISK OFF',
+                    'risk_on': '📈 RISK ON',
+                    'oil_up': '🛢️ OIL ↑',
+                    'oil_down': '🛢️ OIL ↓',
+                    'rates_up': '📈 RATES ↑',
+                    'rates_down': '📉 RATES ↓',
+                    'neutral': '➖ NEUTRAL'
+                };
+                
+                const icon = categoryIcons[event.category] || '📰';
+                const dirColor = directionColors[event.direction] || 'var(--text-dim)';
+                const dirLabel = directionLabels[event.direction] || event.direction;
+                const score = event.final_score || event.market_impact_score || 0;
+                
+                // Format timestamp
+                let timeAgo = '';
+                if (event.timestamp) {
+                    const eventTime = new Date(event.timestamp);
+                    const now = new Date();
+                    const diffHours = Math.round((now - eventTime) / (1000 * 60 * 60));
+                    if (diffHours < 1) timeAgo = 'Just now';
+                    else if (diffHours === 1) timeAgo = '1 hour ago';
+                    else if (diffHours < 24) timeAgo = `${diffHours}h ago`;
+                    else timeAgo = `${Math.round(diffHours / 24)}d ago`;
+                }
+                
+                return `
+                    <div class="geo-event-card" style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 12px; transition: all 0.2s;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="font-size: 1.2em;">${icon}</span>
+                                <span style="font-size: 0.7em; color: var(--text-dim); text-transform: uppercase;">${event.category || 'general'}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 0.65em; padding: 2px 8px; border-radius: 10px; background: ${dirColor}20; color: ${dirColor}; font-weight: 600;">${dirLabel}</span>
+                            </div>
+                        </div>
+                        <h4 style="margin: 0 0 6px 0; font-size: 0.85em; font-weight: 600; line-height: 1.3; color: var(--text-primary);">
+                            ${event.headline || 'No headline'}
+                        </h4>
+                        <p style="margin: 0 0 8px 0; font-size: 0.75em; color: var(--text-secondary); line-height: 1.4; max-height: 40px; overflow: hidden;">
+                            ${event.summary || ''}
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.65em; color: var(--text-dim);">
+                            <span>${event.source || 'Unknown'}</span>
+                            <span>${timeAgo}</span>
+                            <span style="font-weight: 600; color: ${score > 0.6 ? 'var(--danger)' : score > 0.4 ? 'var(--warning)' : 'var(--text-dim)'};">
+                                Impact: ${(score * 100).toFixed(0)}%
+                            </span>
+                        </div>
+                        ${event.affected_regions && event.affected_regions.length > 0 ? `
+                            <div style="margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap;">
+                                ${event.affected_regions.slice(0, 3).map(r => `
+                                    <span style="font-size: 0.6em; padding: 2px 6px; border-radius: 8px; background: var(--bg); border: 1px solid var(--border);">${r}</span>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Set geo category filter
+        function setGeoCategory(category) {
+            currentGeoCategory = category;
+            
+            // Update tab buttons
+            document.querySelectorAll('[data-geo-cat]').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.geoCat === category) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            renderGeoEvents();
+        }
+        
+        // Refresh full geopolitical intelligence
+        async function refreshGeoIntelFull() {
+            try {
+                const badge = document.getElementById('geo-main-risk-level');
+                if (badge) badge.textContent = 'Refreshing...';
+                
                 const res = await fetch('/api/geopolitical/refresh', { method: 'POST' });
                 const data = await res.json();
                 console.log('Geo refresh:', data);
+                
                 await loadGeoIntel();
             } catch (e) {
                 console.error('Geo refresh error:', e);
             }
+        }
+        
+        // Refresh geopolitical intelligence (for mini card compatibility)
+        async function refreshGeoIntel() {
+            await refreshGeoIntelFull();
         }
         
         // Load Universe Stats
