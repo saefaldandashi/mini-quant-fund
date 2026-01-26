@@ -2,6 +2,7 @@
 Alpha Vantage News Sentiment API adapter.
 Replaces World News API for market news and sentiment data.
 """
+import os
 import requests
 import logging
 from typing import List, Dict, Optional, Any
@@ -15,7 +16,7 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 # Alpha Vantage API Configuration
-ALPHA_VANTAGE_API_KEY = "MU0B7DN9XFBK5I7C"
+ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY", "IOCS4REOCIVL21MW")
 ALPHA_VANTAGE_BASE_URL = "https://www.alphavantage.co/query"
 
 
@@ -80,8 +81,8 @@ class AlphaVantageNewsLoader:
         self,
         api_key: Optional[str] = None,
         cache_dir: str = "outputs/alpha_vantage_cache",
-        cache_ttl_hours: int = 1,  # Alpha Vantage has rate limits, cache aggressively
-        rate_limit_delay: float = 12.0,  # Free tier: 5 calls/min = 12s between calls
+        cache_ttl_hours: int = 6,  # Increased: Alpha Vantage free tier only allows 25 req/day
+        rate_limit_delay: float = 15.0,  # Conservative: 4 calls/min to stay under limit
     ):
         """
         Initialize Alpha Vantage news loader.
@@ -589,6 +590,11 @@ class AlphaVantageNewsLoader:
         Returns:
             List of articles
         """
+        # RATE LIMIT CHECK: If rate limited, return cached data immediately
+        if self._rate_limited and self._articles_cache:
+            logger.info(f"Alpha Vantage rate limited - returning {len(self._articles_cache)} cached articles")
+            return self._articles_cache
+        
         all_articles = []
         
         # Fetch by relevant topics
@@ -645,6 +651,18 @@ class AlphaVantageNewsLoader:
         Returns:
             List of articles
         """
+        # RATE LIMIT CHECK: If rate limited, return cached data immediately
+        if self._rate_limited and self._articles_cache:
+            # Filter cached articles by requested symbols
+            relevant = [a for a in self._articles_cache 
+                       if any(s in [ts.ticker for ts in a.ticker_sentiments] for s in symbols)]
+            if relevant:
+                logger.info(f"Alpha Vantage rate limited - returning {len(relevant)} cached articles for tickers")
+                return relevant
+            # Fall back to all cached if no ticker matches
+            logger.info(f"Alpha Vantage rate limited - returning {len(self._articles_cache)} cached articles")
+            return self._articles_cache
+        
         time_from = datetime.now() - timedelta(days=days_back)
         time_to = datetime.now()
         
