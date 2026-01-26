@@ -449,6 +449,8 @@ class TransactionCostModel:
         cost_estimate: CostEstimate,
         expected_return: float,
         confidence: float = 0.5,
+        is_extended_hours: bool = False,
+        force_execute: bool = False,
     ) -> TradeCostResult:
         """
         Determine if a trade should be executed based on cost-benefit analysis.
@@ -457,6 +459,8 @@ class TransactionCostModel:
             cost_estimate: Estimated transaction costs
             expected_return: Expected return as decimal (e.g., 0.02 = 2%)
             confidence: Strategy confidence in this trade
+            is_extended_hours: If True, relax cost thresholds (spreads are wider but capped)
+            force_execute: If True, always execute (for mandatory rebalancing)
         """
         # Expected benefit in dollars
         expected_benefit = cost_estimate.notional_value * expected_return * confidence
@@ -464,8 +468,23 @@ class TransactionCostModel:
         total_cost = cost_estimate.total_cost
         net_value = expected_benefit - total_cost
         
-        min_ratio = self.params['min_benefit_ratio']
-        min_threshold_bps = self.params['min_trade_threshold_bps']
+        # Force execute bypasses cost checks (for mandatory trades)
+        if force_execute:
+            return TradeCostResult(
+                should_trade=True,
+                cost_estimate=cost_estimate,
+                expected_benefit=expected_benefit,
+                net_expected_value=net_value,
+                reason="Force execute enabled"
+            )
+        
+        # Relax thresholds during extended hours (spreads are capped but still wider)
+        if is_extended_hours:
+            min_ratio = 1.0  # Lower ratio during extended hours
+            min_threshold_bps = 200.0  # Higher threshold for capped spreads
+        else:
+            min_ratio = self.params['min_benefit_ratio']
+            min_threshold_bps = self.params['min_trade_threshold_bps']
         
         # Skip if cost exceeds threshold and benefit doesn't justify
         if cost_estimate.total_cost_bps > min_threshold_bps:

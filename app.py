@@ -2583,13 +2583,17 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         # BULK FETCH real bid-ask spreads for all symbols (much faster than per-symbol)
         real_quotes = {}
+        is_extended_hours = False
         try:
             symbols_to_quote = [s for s in all_symbols if s in current_prices and current_prices[s] > 0]
             if symbols_to_quote:
                 real_quotes = broker.get_current_quotes(symbols_to_quote[:100])  # Limit to 100
                 if real_quotes:
                     avg_spread = sum(q['spread_pct'] for q in real_quotes.values()) / len(real_quotes)
-                    log(f"📊 Real-time quotes fetched: {len(real_quotes)} symbols, avg spread: {avg_spread:.3f}%")
+                    # Check if we're in extended hours
+                    is_extended_hours = any(q.get('is_extended_hours', False) for q in real_quotes.values())
+                    hours_str = " (EXTENDED HOURS - relaxed cost thresholds)" if is_extended_hours else ""
+                    log(f"📊 Real-time quotes fetched: {len(real_quotes)} symbols, avg spread: {avg_spread:.3f}%{hours_str}")
         except Exception as e:
             log(f"⚠️ Could not fetch real quotes: {e} - using estimates")
         
@@ -2733,10 +2737,12 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             )
             
             # Check if trade is worth executing
+            # During extended hours, use relaxed thresholds (spreads are capped but wider)
             cost_result = transaction_cost_model.should_execute_trade(
                 cost_estimate=cost_estimate,
                 expected_return=expected_return,
                 confidence=conviction,
+                is_extended_hours=is_extended_hours,
             )
             
             if not cost_result.should_trade:
