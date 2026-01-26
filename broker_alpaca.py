@@ -408,7 +408,8 @@ class AlpacaBroker:
         symbol: str,
         qty: int,
         side: OrderSide,
-        dry_run: bool = True
+        dry_run: bool = True,
+        extended_hours: bool = False
     ) -> Optional[Dict]:
         """
         Place a market order.
@@ -418,6 +419,7 @@ class AlpacaBroker:
             qty: Quantity (must be > 0)
             side: OrderSide.BUY or OrderSide.SELL
             dry_run: If True, log but don't place order
+            extended_hours: If True, allow trading outside regular market hours
         
         Returns:
             Order info dict if placed, None if dry_run
@@ -429,15 +431,17 @@ class AlpacaBroker:
         side_str = "BUY" if side == OrderSide.BUY else "SELL"
         
         if dry_run:
-            logging.info(f"[DRY RUN] Would place {side_str} order: {symbol} x {qty}")
+            logging.info(f"[DRY RUN] Would place {side_str} order: {symbol} x {qty} (extended_hours={extended_hours})")
             return None
         
         try:
             order_request = MarketOrderRequest(
+                
                 symbol=symbol,
                 qty=qty,
                 side=side,
-                time_in_force=TimeInForce.DAY
+                time_in_force=TimeInForce.DAY,
+                extended_hours=extended_hours
             )
             
             order = self.trading_client.submit_order(order_request)
@@ -712,6 +716,7 @@ class AlpacaBroker:
             symbol: Stock symbol
             qty: Quantity to short (must be > 0)
             dry_run: If True, log but don't place order
+            extended_hours: If True, allow trading outside regular market hours
         
         Returns:
             Order info dict if placed, None if dry_run or failed
@@ -746,6 +751,7 @@ class AlpacaBroker:
             symbol: Stock symbol
             qty: Quantity to cover (must be > 0)
             dry_run: If True, log but don't place order
+            extended_hours: If True, allow trading outside regular market hours
         
         Returns:
             Order info dict if placed, None if dry_run or failed
