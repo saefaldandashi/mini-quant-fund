@@ -116,18 +116,50 @@ class GeopoliticalIntelligence:
     """
     
     # Keywords that indicate high-impact geopolitical events
+    # EXPANDED to capture ALL market-moving categories
     HIGH_IMPACT_KEYWORDS = {
         "military": ["airstrike", "military", "jets", "troops", "deploy", "missile", 
                      "strike", "attack", "invasion", "war", "conflict", "combat",
-                     "bombing", "airspace", "naval", "defense", "offensive"],
+                     "bombing", "airspace", "naval", "defense", "offensive",
+                     "retaliation", "mobilization", "ceasefire", "peace talks"],
         "diplomatic": ["sanctions", "embargo", "diplomatic", "treaty", "alliance",
-                      "ambassador", "expelled", "relations", "summit", "talks"],
+                      "ambassador", "expelled", "relations", "summit", "talks",
+                      "tariff", "trade war", "trade deal", "export controls",
+                      "blacklist", "asset freeze", "swift"],
         "economic": ["tariff", "trade war", "currency", "devaluation", "default",
-                    "bailout", "crisis", "collapse", "shutdown"],
+                    "bailout", "crisis", "collapse", "shutdown", "recession",
+                    "gdp", "inflation", "cpi", "ppi", "unemployment", "payrolls",
+                    "retail sales", "pmi", "ism", "housing"],
         "civil_unrest": ["protest", "riot", "uprising", "revolution", "coup",
-                        "martial law", "curfew", "emergency", "unrest"],
+                        "martial law", "curfew", "emergency", "unrest",
+                        "election", "referendum", "impeachment", "government"],
         "infrastructure": ["flight cancelled", "flights cancelled", "airspace closed",
-                          "port closed", "shipping disrupted", "pipeline", "embargo"],
+                          "port closed", "shipping disrupted", "pipeline", "embargo",
+                          "suez", "panama canal", "strait of hormuz", "supply chain",
+                          "freight", "logistics", "blockade", "reroute"],
+        # NEW CATEGORIES - Critical for market intelligence
+        "central_bank": ["federal reserve", "fed", "fomc", "ecb", "bank of england",
+                        "bank of japan", "boj", "pboc", "rate hike", "rate cut",
+                        "interest rate", "monetary policy", "hawkish", "dovish",
+                        "quantitative easing", "qe", "quantitative tightening", "qt",
+                        "balance sheet", "liquidity", "pivot", "dot plot",
+                        "fed chair", "powell", "lagarde", "bailey", "ueda",
+                        "central bank", "rate decision", "fomc meeting"],
+        "energy": ["opec", "oil", "crude", "brent", "wti", "natural gas", "lng",
+                  "refinery", "production cut", "output cut", "oil prices",
+                  "energy crisis", "fuel", "gasoline", "petroleum",
+                  "tanker", "force majeure", "strategic reserves",
+                  "gold", "silver", "copper", "commodity", "commodities",
+                  "mining", "rare earth", "precious metals", "safe haven"],
+        "financial_stress": ["bank run", "banking crisis", "credit crisis",
+                            "liquidity crisis", "margin calls", "contagion",
+                            "downgrade", "junk", "distressed", "restructuring",
+                            "imf", "bailout", "rescue", "capital shortfall",
+                            "sovereign debt", "yield curve", "credit spread"],
+        "shipping": ["shipping", "freight", "container", "port", "tanker",
+                    "suez canal", "panama canal", "strait of hormuz", "red sea",
+                    "logistics", "supply chain", "cargo", "reroute",
+                    "insurance premium", "shipping rates", "chokepoint"],
     }
     
     # Regions and their market indices
@@ -172,6 +204,29 @@ class GeopoliticalIntelligence:
         
         # Russia/Ukraine
         "guardian_russia": "https://www.theguardian.com/world/russia/rss",
+        
+        # CENTRAL BANKS & MONETARY POLICY
+        "fed_news": "https://www.federalreserve.gov/feeds/press_all.xml",
+        "ecb_press": "https://www.ecb.europa.eu/rss/press.html",
+        "ft_central_banks": "https://www.ft.com/central-banks?format=rss",
+        
+        # ENERGY & COMMODITIES
+        "reuters_energy": "https://feeds.reuters.com/reuters/energyNews",
+        "oilprice_news": "https://oilprice.com/rss/main",
+        
+        # FINANCIAL MARKETS & ECONOMY
+        "reuters_markets": "https://feeds.reuters.com/reuters/companyNews",
+        "ft_markets": "https://www.ft.com/markets?format=rss",
+        "wsj_markets": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+        "bloomberg_markets": "https://feeds.bloomberg.com/markets/news.rss",
+        
+        # TRADE & TARIFFS
+        "reuters_trade": "https://feeds.reuters.com/reuters/USTradingDesk",
+        
+        # SHIPPING & LOGISTICS
+        "splash247": "https://splash247.com/feed/",
+        "gcaptain": "https://gcaptain.com/feed/",
+        "lloyds_list": "https://lloydslist.maritimeintelligence.informa.com/rss",
     }
     
     def __init__(self, cache_dir: str = "outputs/cache"):
@@ -255,13 +310,27 @@ class GeopoliticalIntelligence:
         Classify event type and severity from text.
         Returns: (event_type, severity, matched_keywords)
         """
-        text_lower = text.lower()
+        text_lower = " " + text.lower() + " "  # Add spaces for word boundary matching
         matched_keywords = []
         event_type = "general"
         max_matches = 0
+        all_matches = []
         
+        # Short keywords that need word boundaries to avoid false positives
+        # e.g., "war" should not match "warns", "ware", etc.
+        short_keywords = ["war", "fed", "ecb", "boj", "qe", "qt", "oil", "lng", "gdp", "cpi", "ppi", "pmi", "ism"]
+        
+        # Check all categories
         for etype, keywords in self.HIGH_IMPACT_KEYWORDS.items():
-            matches = [kw for kw in keywords if kw in text_lower]
+            matches = []
+            for kw in keywords:
+                if kw in short_keywords:
+                    # Require word boundaries for short keywords
+                    if f" {kw} " in text_lower or f" {kw}," in text_lower or f" {kw}." in text_lower:
+                        matches.append(kw)
+                elif kw in text_lower:
+                    matches.append(kw)
+            all_matches.extend(matches)
             if len(matches) > max_matches:
                 max_matches = len(matches)
                 event_type = etype
@@ -269,10 +338,22 @@ class GeopoliticalIntelligence:
         
         # Calculate severity based on keyword matches and urgency words
         urgency_words = ["breaking", "urgent", "emergency", "imminent", "immediate", 
-                        "critical", "major", "massive", "unprecedented"]
+                        "critical", "major", "massive", "unprecedented", "surge",
+                        "plunge", "crisis", "shock", "surprise", "unexpected"]
         urgency_count = sum(1 for w in urgency_words if w in text_lower)
         
-        severity = min(1.0, (max_matches * 0.15) + (urgency_count * 0.2) + 0.2)
+        # Base severity now starts higher (0.3) so market-moving events pass
+        # Each keyword match adds to severity
+        base_severity = 0.3 if max_matches > 0 else 0.1
+        keyword_bonus = min(0.4, max_matches * 0.12)  # Up to 0.4 from keywords
+        urgency_bonus = min(0.3, urgency_count * 0.1)  # Up to 0.3 from urgency
+        
+        # High-impact event types get base bonus
+        high_impact_types = ["military", "central_bank", "energy", "financial_stress", "shipping"]
+        if event_type in high_impact_types:
+            base_severity += 0.1
+        
+        severity = min(1.0, base_severity + keyword_bonus + urgency_bonus)
         
         return event_type, severity, matched_keywords
     
@@ -313,6 +394,11 @@ class GeopoliticalIntelligence:
             "civil_unrest": 0.5,
             "infrastructure": 0.7,
             "general": 0.3,
+            # NEW event types
+            "central_bank": 0.85,      # Fed/ECB decisions are highly impactful
+            "energy": 0.8,             # Oil/gas prices affect everything
+            "financial_stress": 0.9,   # Banking crises are critical
+            "shipping": 0.7,           # Supply chain disruptions
         }
         
         base_impact = type_impact.get(event_type, 0.3)
@@ -321,7 +407,7 @@ class GeopoliticalIntelligence:
         region_multiplier = min(1.5, 1.0 + (len(regions) - 1) * 0.1)
         
         # High-impact regions for US markets
-        high_impact_regions = ["middle_east", "asia", "russia"]
+        high_impact_regions = ["middle_east", "asia", "russia", "americas"]
         if any(r in regions for r in high_impact_regions):
             region_multiplier *= 1.2
         
