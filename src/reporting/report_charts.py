@@ -191,7 +191,7 @@ class ReportChartGenerator:
         # Calculate daily returns
         if len(equity) < 2 or len(benchmark) < 2:
             ax.text(0.5, 0.5, 'Insufficient data for daily P/L comparison',
-                   ha='center', va='center', fontsize=12, color=DARK_THEME['muted'])
+                   ha='center', va='center', fontsize=12, color=DARK_THEME['text_muted'])
             plt.tight_layout()
             return _fig_to_base64(fig)
         
@@ -202,7 +202,7 @@ class ReportChartGenerator:
         common_dates = portfolio_returns.index.intersection(benchmark_returns.index)
         if len(common_dates) < 2:
             ax.text(0.5, 0.5, 'No overlapping dates for comparison',
-                   ha='center', va='center', fontsize=12, color=DARK_THEME['muted'])
+                   ha='center', va='center', fontsize=12, color=DARK_THEME['text_muted'])
             plt.tight_layout()
             return _fig_to_base64(fig)
         
@@ -228,7 +228,7 @@ class ReportChartGenerator:
         alpha = portfolio_returns.values - benchmark_returns.values
         cumulative_alpha = np.sum(alpha)
         
-        ax.axhline(y=0, color=DARK_THEME['muted'], linewidth=0.5)
+        ax.axhline(y=0, color=DARK_THEME['text_muted'], linewidth=0.5)
         ax.set_xlabel('Date')
         ax.set_ylabel('Daily Return (%)')
         ax.set_title(f'Daily P/L: Portfolio vs SPY | Cumulative Alpha: {cumulative_alpha:+.2f}%',

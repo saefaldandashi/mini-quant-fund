@@ -126,7 +126,7 @@ class TradeMemory:
         self._load()
     
     def _load(self):
-        """Load trade history from disk."""
+        """Load trade history from disk with corruption handling."""
         if self.storage_path.exists():
             try:
                 with open(self.storage_path, 'r') as f:
@@ -139,6 +139,18 @@ class TradeMemory:
                         self.open_positions[trade.symbol] = trade
                 
                 logging.info(f"Loaded {len(self.trades)} trades from memory")
+            except json.JSONDecodeError as e:
+                logging.error(f"Trade memory JSON corrupted: {e}")
+                # Create backup of corrupted file
+                try:
+                    import shutil
+                    backup_path = str(self.storage_path) + f".corrupted.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+                    shutil.copy(self.storage_path, backup_path)
+                    logging.warning(f"Corrupted trade memory backed up to: {backup_path}")
+                    logging.warning("Starting fresh with empty trade history")
+                except Exception as backup_err:
+                    logging.error(f"Could not backup corrupted file: {backup_err}")
+                self.trades = []
             except Exception as e:
                 logging.warning(f"Could not load trade memory: {e}")
                 self.trades = []

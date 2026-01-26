@@ -231,12 +231,15 @@ class ReportLearningStore:
             if pattern_key not in self.learned_patterns:
                 self.learned_patterns[pattern_key] = {
                     'observations': 0,
-                    'best_strategies': defaultdict(float),
+                    'best_strategies': {},
                     'avg_alpha': 0.0,
                 }
             
             self.learned_patterns[pattern_key]['observations'] += 1
             for strategy, wr in summary.strategy_win_rates.items():
+                # Handle both defaultdict and regular dict (from JSON load)
+                if strategy not in self.learned_patterns[pattern_key]['best_strategies']:
+                    self.learned_patterns[pattern_key]['best_strategies'][strategy] = 0.0
                 self.learned_patterns[pattern_key]['best_strategies'][strategy] += wr
         
         # Pattern: Bull regime best strategies
@@ -245,11 +248,14 @@ class ReportLearningStore:
             if pattern_key not in self.learned_patterns:
                 self.learned_patterns[pattern_key] = {
                     'observations': 0,
-                    'strategy_performance': defaultdict(list),
+                    'strategy_performance': {},
                 }
             
             self.learned_patterns[pattern_key]['observations'] += 1
             for strategy, wr in summary.strategy_win_rates.items():
+                # Handle both defaultdict and regular dict (from JSON load)
+                if strategy not in self.learned_patterns[pattern_key]['strategy_performance']:
+                    self.learned_patterns[pattern_key]['strategy_performance'][strategy] = []
                 self.learned_patterns[pattern_key]['strategy_performance'][strategy].append(wr)
         
         # Pattern: Bear regime best strategies
@@ -258,11 +264,14 @@ class ReportLearningStore:
             if pattern_key not in self.learned_patterns:
                 self.learned_patterns[pattern_key] = {
                     'observations': 0,
-                    'strategy_performance': defaultdict(list),
+                    'strategy_performance': {},
                 }
             
             self.learned_patterns[pattern_key]['observations'] += 1
             for strategy, wr in summary.strategy_win_rates.items():
+                # Handle both defaultdict and regular dict (from JSON load)
+                if strategy not in self.learned_patterns[pattern_key]['strategy_performance']:
+                    self.learned_patterns[pattern_key]['strategy_performance'][strategy] = []
                 self.learned_patterns[pattern_key]['strategy_performance'][strategy].append(wr)
     
     def _save_all(self):

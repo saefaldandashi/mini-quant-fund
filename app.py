@@ -853,8 +853,8 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             unique_articles = []
             ticker_features = cached_sentiments
             last_ticker_sentiments.update(cached_sentiments)  # Update global
-            if hasattr(macro_data, 'last_features') and macro_data.last_features:
-                macro_features = macro_data.last_features
+            if hasattr(macro_loader, 'last_features') and macro_loader.last_features:
+                macro_features = macro_loader.last_features
                 log(f"⚡⚡ Using cached macro features")
         
         if not skip_news_fetch:
@@ -1094,6 +1094,36 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         if features.regime:
             log(f"Market Regime: {features.regime.description}")
+            
+            # === REGIME/MACRO RECONCILIATION ===
+            # Reconcile potentially contradictory signals from regime and macro
+            if risk_sentiment_temp and features.regime:
+                macro_risk = risk_sentiment_temp.risk_sentiment
+                regime_risk_on = features.regime.risk_regime.value == 'risk_on'
+                regime_risk_off = features.regime.risk_regime.value == 'risk_off'
+                
+                # Detect contradiction
+                is_contradiction = (
+                    (macro_risk > 0.15 and regime_risk_off) or  # Macro bullish, regime bearish
+                    (macro_risk < -0.15 and regime_risk_on)     # Macro bearish, regime bullish
+                )
+                
+                if is_contradiction:
+                    # Reconcile by averaging the signals
+                    # Convert regime to numeric: risk_on=+1, neutral=0, risk_off=-1
+                    regime_numeric = 1.0 if regime_risk_on else (-1.0 if regime_risk_off else 0.0)
+                    reconciled = (macro_risk + regime_numeric * 0.5) / 2
+                    
+                    # Log the reconciliation
+                    reconciled_label = 'RISK-ON' if reconciled > 0.1 else ('RISK-OFF' if reconciled < -0.1 else 'NEUTRAL')
+                    log(f"⚠️ REGIME CONTRADICTION DETECTED:")
+                    log(f"   Macro says: {'RISK-ON' if macro_risk > 0.1 else 'RISK-OFF'} ({macro_risk:+.2f})")
+                    log(f"   Regime says: {features.regime.risk_regime.value}")
+                    log(f"   🔄 Reconciled: {reconciled_label} ({reconciled:+.2f})")
+                    
+                    # Update features with reconciled risk sentiment for strategies
+                    risk_sentiment_temp.risk_sentiment = reconciled
+                    features.risk_sentiment = risk_sentiment_temp
         else:
             log("Market Regime: Could not classify (insufficient data)")
         
@@ -1103,15 +1133,12 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         effective_trading_mode = trading_mode_setting  # Start with static setting
         
         if dynamic_mode_enabled:
-            # Get VIX for dynamic mode decision
-            early_vix = 20.0  # Default
-            try:
-                if macro_features_temp and hasattr(macro_features_temp, 'vix') and macro_features_temp.vix:
-                    early_vix = macro_features_temp.vix
-                elif market_indicators and hasattr(market_indicators, 'vix') and market_indicators.vix:
-                    early_vix = market_indicators.vix
-            except:
-                pass
+            # Get VIX for dynamic mode decision (use centralized function for consistency)
+            early_vix = get_vix_with_fallback(macro_loader=macro_loader, broker=broker)
+            
+            # Also try from macro_features_temp if already loaded
+            if macro_features_temp and hasattr(macro_features_temp, 'vix') and macro_features_temp.vix and macro_features_temp.vix > 0:
+                early_vix = macro_features_temp.vix
             
             # Get regime description
             regime_desc = features.regime.description if hasattr(features, 'regime') and features.regime else 'neutral'
@@ -1764,9 +1791,11 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 if last_ticker_sentiments:
                     for sym, sent in last_ticker_sentiments.items():
                         if hasattr(sent, 'sentiment_score'):
+                            # Use sentiment_confidence (correct attribute name)
+                            conf = getattr(sent, 'sentiment_confidence', 0.5)
                             scanner_sentiments[sym] = {
                                 'sentiment_score': sent.sentiment_score,
-                                'sentiment_confidence': sent.confidence,
+                                'sentiment_confidence': conf,
                             }
                         elif isinstance(sent, dict):
                             scanner_sentiments[sym] = sent
@@ -1784,7 +1813,30 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 # Get current prices
                 scanner_prices = broker.get_current_prices(config.UNIVERSE[:100])
                 
-                # Run short scan
+                # Get cross-asset signals for short scanner
+                scanner_cross_signals = {}
+                try:
+                    quick_cross_loader = get_cross_asset_loader()
+                    quick_cross_data = quick_cross_loader.fetch_all_cross_assets(days=5)
+                    if quick_cross_data:
+                        # Calculate quick 1-day returns for cross-asset signals
+                        for symbol, series in quick_cross_data.items():
+                            if len(series) >= 2:
+                                ret = (series.iloc[-1] / series.iloc[-2] - 1)
+                                if 'CL=F' in symbol or 'OIL' in symbol.upper():
+                                    scanner_cross_signals['oil_signal'] = ret * 10  # Scale to signal
+                                elif 'DX' in symbol or 'UUP' in symbol:
+                                    scanner_cross_signals['dxy_signal'] = ret * 10
+                                elif 'HYG' in symbol:
+                                    scanner_cross_signals['credit_signal'] = ret * 10
+                                elif 'FXI' in symbol:
+                                    scanner_cross_signals['china_signal'] = ret * 10
+                                elif 'EWG' in symbol:
+                                    scanner_cross_signals['europe_lead'] = ret * 10
+                except Exception as e:
+                    logging.debug(f"Quick cross-asset for scanner: {e}")
+                
+                # Run short scan with cross-asset signals
                 short_candidates = short_scanner.scan(
                     symbols=config.UNIVERSE[:100],  # Scan top 100
                     news_sentiments=scanner_sentiments,
@@ -1792,6 +1844,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                     prices=scanner_prices,
                     ma_200=ma_200_values,
                     rsi_values=rsi_values,
+                    cross_asset_signals=scanner_cross_signals,
                 )
                 
                 # Add fundamental shorts to combined_weights
@@ -3865,18 +3918,19 @@ def get_alpaca_trade_history():
             secret_key = os.getenv("ALPACA_SECRET_KEY")
             
             if api_key and secret_key:
-                broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
-                orders = broker.api.get_orders(status='closed', limit=50)
+                broker_inst = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+                orders = broker_inst.get_orders(status='closed', limit=50)
                 
                 for order in orders:
-                    if order.filled_at:
+                    filled_at = order.get('filled_at')
+                    if filled_at:
                         trades.append({
-                            "timestamp": str(order.filled_at),
-                            "symbol": order.symbol,
-                            "side": order.side,
-                            "qty": float(order.filled_qty) if order.filled_qty else 0,
-                            "price": float(order.filled_avg_price) if order.filled_avg_price else 0,
-                            "notional": float(order.filled_qty or 0) * float(order.filled_avg_price or 0),
+                            "timestamp": str(filled_at),
+                            "symbol": order.get('symbol', ''),
+                            "side": order.get('side', 'buy'),
+                            "qty": float(order.get('filled_qty', 0) or 0),
+                            "price": float(order.get('filled_avg_price', 0) or 0),
+                            "notional": float(order.get('filled_qty', 0) or 0) * float(order.get('filled_avg_price', 0) or 0),
                             "pnl": None  # Alpaca orders don't include PnL
                         })
         except Exception as e:
@@ -5970,19 +6024,35 @@ def view_report(filename):
 @app.route('/api/reports/list')
 @requires_auth
 def list_reports():
-    """List available reports."""
+    """List available reports (both HTML and PDF)."""
     try:
         reports_dir = Path("outputs/reports")
         if not reports_dir.exists():
             return jsonify({"reports": []})
         
         reports = []
-        for pdf_file in reports_dir.glob("*.pdf"):
+        
+        # Include both HTML and PDF files
+        for report_file in list(reports_dir.glob("*.html")) + list(reports_dir.glob("*.pdf")):
+            # Determine report type from filename
+            report_type = "unknown"
+            if "daily" in report_file.name.lower():
+                report_type = "daily"
+            elif "weekly" in report_file.name.lower():
+                report_type = "weekly"
+            elif "monthly" in report_file.name.lower():
+                report_type = "monthly"
+            elif "learning" in report_file.name.lower():
+                report_type = "learning"
+            
             reports.append({
-                "filename": pdf_file.name,
-                "path": str(pdf_file),
-                "size": pdf_file.stat().st_size,
-                "modified": datetime.fromtimestamp(pdf_file.stat().st_mtime).isoformat(),
+                "filename": report_file.name,
+                "path": str(report_file),
+                "size": report_file.stat().st_size,
+                "modified": datetime.fromtimestamp(report_file.stat().st_mtime).isoformat(),
+                "type": report_type,
+                "format": report_file.suffix[1:],  # 'html' or 'pdf'
+                "view_url": f"/api/reports/view/{report_file.name}",
             })
         
         # Sort by modified time (newest first)

@@ -624,11 +624,27 @@ class LearningReportGenerator:
         }
     
     def _load_json(self, filename: str) -> Dict:
-        """Load a JSON file from outputs directory."""
+        """Load a JSON file from outputs directory with error handling."""
         path = os.path.join(self.outputs_dir, filename)
         if os.path.exists(path):
-            with open(path, 'r') as f:
-                return json.load(f)
+            try:
+                with open(path, 'r') as f:
+                    return json.load(f)
+            except json.JSONDecodeError as e:
+                logging.error(f"Corrupted JSON file {filename}: {e}")
+                logging.warning(f"Creating backup and returning empty data for {filename}")
+                # Create backup of corrupted file
+                try:
+                    import shutil
+                    backup_path = path + f".corrupted.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+                    shutil.copy(path, backup_path)
+                    logging.info(f"Backup created at {backup_path}")
+                except Exception:
+                    pass
+                return {}
+            except Exception as e:
+                logging.error(f"Error loading {filename}: {e}")
+                return {}
         return {}
     
     def generate_html_report(self) -> str:
