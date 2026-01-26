@@ -5248,6 +5248,13 @@ def get_geopolitical_filtered_events():
     try:
         # Get filtered events from advanced filter
         filtered = geopolitical_intel.get_filtered_events()
+        
+        # If no filtered events, trigger a refresh (first access or stale cache)
+        if not filtered:
+            logging.info("No filtered events found, triggering refresh...")
+            geopolitical_intel.update_events(hours_back=24)
+            filtered = geopolitical_intel.get_filtered_events()
+        
         filter_stats = geopolitical_intel.get_filter_stats()
         
         # Convert to serializable format
