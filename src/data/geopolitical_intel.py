@@ -125,12 +125,39 @@ class GeopoliticalIntelligence:
     }
     
     # RSS feeds for geopolitical news
+    # General world news
     RSS_FEEDS = {
         "reuters_world": "https://feeds.reuters.com/Reuters/worldNews",
         "bbc_world": "http://feeds.bbci.co.uk/news/world/rss.xml",
         "aljazeera": "https://www.aljazeera.com/xml/rss/all.xml",
         "ap_world": "https://rsshub.app/apnews/topics/world-news",
         "guardian_world": "https://www.theguardian.com/world/rss",
+    }
+    
+    # TARGETED RSS FEEDS - Topic-specific for higher relevance
+    TARGETED_RSS_FEEDS = {
+        # Middle East specific
+        "aljazeera_middleeast": "https://www.aljazeera.com/xml/rss/all.xml",
+        "bbc_middleeast": "http://feeds.bbci.co.uk/news/world/middle_east/rss.xml",
+        
+        # Asia specific  
+        "bbc_asia": "http://feeds.bbci.co.uk/news/world/asia/rss.xml",
+        
+        # US Politics & Foreign Policy
+        "bbc_uspolitics": "http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml",
+        
+        # Business/Economy (for trade wars, sanctions)
+        "reuters_business": "https://feeds.reuters.com/reuters/businessNews",
+        "bbc_business": "http://feeds.bbci.co.uk/news/business/rss.xml",
+        
+        # Defense & Military (specialized)
+        "defense_news": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml",
+        
+        # Europe (for NATO, EU decisions)
+        "bbc_europe": "http://feeds.bbci.co.uk/news/world/europe/rss.xml",
+        
+        # Russia/Ukraine
+        "guardian_russia": "https://www.theguardian.com/world/russia/rss",
     }
     
     def __init__(self, cache_dir: str = "outputs/cache"):
@@ -341,14 +368,17 @@ class GeopoliticalIntelligence:
             
             return feed_events
         
-        # Fetch all feeds in parallel
-        with ThreadPoolExecutor(max_workers=5) as executor:
+        # Combine general and targeted feeds
+        all_feeds = {**self.RSS_FEEDS, **self.TARGETED_RSS_FEEDS}
+        
+        # Fetch all feeds in parallel (increased workers for more feeds)
+        with ThreadPoolExecutor(max_workers=10) as executor:
             futures = {
                 executor.submit(fetch_feed, name, url): name 
-                for name, url in self.RSS_FEEDS.items()
+                for name, url in all_feeds.items()
             }
             
-            for future in as_completed(futures, timeout=30):
+            for future in as_completed(futures, timeout=45):
                 try:
                     feed_events = future.result()
                     events.extend(feed_events)
