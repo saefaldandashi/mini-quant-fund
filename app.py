@@ -3997,19 +3997,22 @@ def get_alpaca_trade_history():
                 orders = broker_inst.get_orders(status='closed', limit=50)
                 
                 for order in orders:
-                    filled_at = order.get('filled_at')
+                    # Order is an Alpaca Order object, use attribute access
+                    filled_at = getattr(order, 'filled_at', None)
                     if filled_at:
+                        filled_qty = float(getattr(order, 'filled_qty', 0) or 0)
+                        filled_price = float(getattr(order, 'filled_avg_price', 0) or 0)
                         trades.append({
                             "timestamp": str(filled_at),
-                            "symbol": order.get('symbol', ''),
-                            "side": order.get('side', 'buy'),
-                            "qty": float(order.get('filled_qty', 0) or 0),
-                            "price": float(order.get('filled_avg_price', 0) or 0),
-                            "notional": float(order.get('filled_qty', 0) or 0) * float(order.get('filled_avg_price', 0) or 0),
+                            "symbol": getattr(order, 'symbol', ''),
+                            "side": getattr(order, 'side', 'buy'),
+                            "qty": filled_qty,
+                            "price": filled_price,
+                            "notional": filled_qty * filled_price,
                             "pnl": None  # Alpaca orders don't include PnL
                         })
         except Exception as e:
-            print(f"Could not get Alpaca orders: {e}")
+            logging.warning(f"Could not get Alpaca orders: {e}")
         
         # Sort by timestamp (most recent first)
         trades.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
@@ -5128,13 +5131,15 @@ def get_regime():
                     bars = broker.get_historical_bars(['SPY'], days=250)
                     if bars and 'SPY' in bars:
                         spy_series = bars['SPY']
+                        # spy_series is already a Series of close prices
                         if len(spy_series) >= 200:
-                            spy_200ma = spy_series['close'].tail(200).mean()
+                            spy_200ma = spy_series.tail(200).mean()
                         else:
-                            spy_200ma = spy_price
+                            spy_200ma = spy_series.mean() if len(spy_series) > 0 else spy_price
                     else:
                         spy_200ma = spy_price
-                except:
+                except Exception as e:
+                    logging.warning(f"Could not get SPY 200MA: {e}")
                     spy_200ma = spy_price
                 
                 # Calculate regime using strategy enhancer
