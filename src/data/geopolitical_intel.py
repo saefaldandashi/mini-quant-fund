@@ -116,51 +116,196 @@ class GeopoliticalIntelligence:
     """
     
     # Keywords that indicate high-impact geopolitical events
-    # EXPANDED to capture ALL market-moving categories
+    # COMPREHENSIVE EXPANSION for ALL market-moving categories
     HIGH_IMPACT_KEYWORDS = {
-        "military": ["airstrike", "military", "jets", "troops", "deploy", "missile", 
-                     "strike", "attack", "invasion", "war", "conflict", "combat",
-                     "bombing", "airspace", "naval", "defense", "offensive",
-                     "retaliation", "mobilization", "ceasefire", "peace talks"],
-        "diplomatic": ["sanctions", "embargo", "diplomatic", "treaty", "alliance",
-                      "ambassador", "expelled", "relations", "summit", "talks",
-                      "tariff", "trade war", "trade deal", "export controls",
-                      "blacklist", "asset freeze", "swift"],
-        "economic": ["tariff", "trade war", "currency", "devaluation", "default",
-                    "bailout", "crisis", "collapse", "shutdown", "recession",
-                    "gdp", "inflation", "cpi", "ppi", "unemployment", "payrolls",
-                    "retail sales", "pmi", "ism", "housing"],
-        "civil_unrest": ["protest", "riot", "uprising", "revolution", "coup",
-                        "martial law", "curfew", "emergency", "unrest",
-                        "election", "referendum", "impeachment", "government"],
-        "infrastructure": ["flight cancelled", "flights cancelled", "airspace closed",
-                          "port closed", "shipping disrupted", "pipeline", "embargo",
-                          "suez", "panama canal", "strait of hormuz", "supply chain",
-                          "freight", "logistics", "blockade", "reroute"],
-        # NEW CATEGORIES - Critical for market intelligence
-        "central_bank": ["federal reserve", "fed", "fomc", "ecb", "bank of england",
-                        "bank of japan", "boj", "pboc", "rate hike", "rate cut",
-                        "interest rate", "monetary policy", "hawkish", "dovish",
-                        "quantitative easing", "qe", "quantitative tightening", "qt",
-                        "balance sheet", "liquidity", "pivot", "dot plot",
-                        "fed chair", "powell", "lagarde", "bailey", "ueda",
-                        "central bank", "rate decision", "fomc meeting"],
-        "energy": ["opec", "oil", "crude", "brent", "wti", "natural gas", "lng",
-                  "refinery", "production cut", "output cut", "oil prices",
-                  "energy crisis", "fuel", "gasoline", "petroleum",
-                  "tanker", "force majeure", "strategic reserves",
-                  "gold", "silver", "copper", "commodity", "commodities",
-                  "mining", "rare earth", "precious metals", "safe haven"],
-        "financial_stress": ["bank run", "banking crisis", "credit crisis",
-                            "liquidity crisis", "margin calls", "contagion",
-                            "downgrade", "junk", "distressed", "restructuring",
-                            "imf", "bailout", "rescue", "capital shortfall",
-                            "sovereign debt", "yield curve", "credit spread"],
-        "shipping": ["shipping", "freight", "container", "port", "tanker",
-                    "suez canal", "panama canal", "strait of hormuz", "red sea",
-                    "logistics", "supply chain", "cargo", "reroute",
-                    "insurance premium", "shipping rates", "chokepoint"],
+        # ======================================================
+        # GEOPOLITICAL RISK & CONFLICT
+        # ======================================================
+        "military": [
+            "airstrike", "military", "jets", "troops", "deploy", "missile", 
+            "strike", "attack", "invasion", "war", "conflict", "combat",
+            "bombing", "airspace", "naval", "defense", "offensive",
+            "retaliation", "mobilization", "ceasefire", "peace talks",
+            "drone attack", "terrorism", "insurgency", "counteroffensive",
+            "military escalation", "naval incident", "territorial",
+        ],
+        "diplomatic": [
+            "sanctions", "embargo", "diplomatic", "treaty", "alliance",
+            "ambassador", "expelled", "relations", "summit", "talks",
+            "tariff", "trade war", "trade deal", "export controls",
+            "blacklist", "asset freeze", "swift", "secondary sanctions",
+            "trade embargo", "import ban", "export ban", "retaliation",
+        ],
+        "civil_unrest": [
+            "protest", "riot", "uprising", "revolution", "coup",
+            "martial law", "curfew", "emergency", "unrest",
+            "election", "elections", "referendum", "impeachment", "government",
+            "regime change", "political crisis", "constitutional crisis",
+        ],
+        
+        # ======================================================
+        # CENTRAL BANKS & MONETARY POLICY (CRITICAL)
+        # ======================================================
+        "central_bank": [
+            # Core Institutions
+            "federal reserve", "fed", "fomc", "ecb", "european central bank",
+            "bank of england", "boe", "bank of japan", "boj", "pboc",
+            "snb", "rba", "rbnz", "boc", "bank of canada",
+            "bis", "imf", "international monetary fund",
+            # Key Officials
+            "jerome powell", "powell", "lagarde", "christine lagarde",
+            "bailey", "andrew bailey", "ueda", "kazuo ueda", "fed chair",
+            # Policy Actions
+            "interest rate hike", "interest rate cut", "rate hike", "rate cut",
+            "rate hold", "rate decision", "policy tightening", "policy easing",
+            "monetary tightening", "monetary easing", "emergency meeting",
+            "inter-meeting decision", "forward guidance", "dot plot",
+            "policy statement", "balance sheet policy", "minutes",
+            # Liquidity Tools
+            "quantitative easing", "qe", "quantitative tightening", "qt",
+            "balance sheet runoff", "repo operations", "reverse repo",
+            "standing facilities", "discount window", "liquidity injection",
+            "liquidity withdrawal", "emergency facility", "yield curve control",
+            "currency intervention",
+            # Communication Tone (Sentiment)
+            "hawkish", "dovish", "neutral stance", "restrictive policy",
+            "accommodative policy", "data-dependent", "higher for longer",
+            "policy pivot", "tightening bias", "easing bias", "monetary policy",
+            "central bank", "rate decision", "fomc meeting",
+        ],
+        
+        # ======================================================
+        # MACROECONOMIC INDICATORS
+        # ======================================================
+        "economic": [
+            # Inflation
+            "cpi", "pce", "core cpi", "core pce", "inflation", "core inflation",
+            "inflation expectations", "disinflation", "deflation",
+            "price pressures", "sticky inflation", "inflation surprise",
+            # Labor Market
+            "unemployment", "unemployment rate", "jobless claims", "initial claims",
+            "continuing claims", "nonfarm payrolls", "non-farm payrolls", "nfp",
+            "employment growth", "wage growth", "average hourly earnings",
+            "labor participation", "layoffs", "hiring freeze",
+            # Growth & Demand
+            "gdp", "gdp growth", "recession", "economic slowdown", "contraction",
+            "economic expansion", "pmi", "ism", "retail sales",
+            "consumer spending", "consumer confidence", "industrial production",
+            # Housing & Credit
+            "housing starts", "building permits", "home sales", "mortgage rates",
+            "credit conditions", "lending standards", "delinquencies", "defaults",
+            # Legacy
+            "tariff", "trade war", "currency", "devaluation", "default",
+            "bailout", "crisis", "collapse", "shutdown",
+        ],
+        
+        # ======================================================
+        # FINANCIAL MARKETS & STRESS
+        # ======================================================
+        "financial_stress": [
+            # Market Structure
+            "equity markets", "bond markets", "yield curve", "curve inversion",
+            "term premium", "real yields", "credit spreads", "swap spreads",
+            "funding markets",
+            # Volatility & Risk
+            "market volatility", "vix", "implied volatility", "volatility spike",
+            "risk-off", "risk-on", "flight to safety", "market selloff",
+            "market rally", "liquidity crunch",
+            # Banking & Credit Stress
+            "bank run", "bank failure", "banking crisis", "deposit outflows",
+            "liquidity stress", "capital adequacy", "stress test",
+            "loan losses", "defaults", "restructuring", "downgrade",
+            "bankruptcy", "debt distress", "bailout", "rescue",
+            "capital shortfall", "liquidity crisis", "sovereign debt",
+            "imf support", "credit downgrade", "distressed", "contagion",
+            "funding stress", "margin calls", "financial crisis", "junk",
+        ],
+        
+        # ======================================================
+        # SHIPPING, TRADE & GLOBAL SUPPLY CHAINS (VERY IMPORTANT)
+        # ======================================================
+        "shipping": [
+            # Shipping & Logistics
+            "shipping", "shipping disruption", "shipping delays",
+            "port congestion", "container shortage", "vessel shortage",
+            "freight rates", "charter rates", "demurrage",
+            "logistics bottlenecks", "rerouting", "reroute", "maritime risk",
+            "freight", "container", "port", "tanker", "cargo",
+            "insurance premium", "shipping rates", "chokepoint",
+            # Strategic Chokepoints
+            "suez canal", "panama canal", "strait of hormuz",
+            "bab el-mandeb", "strait of malacca", "bosphorus",
+            "red sea", "south china sea", "black sea",
+            # Trade & Transport
+            "global trade", "trade flows", "trade deficit",
+            "export restrictions", "customs delays", "trade sanctions",
+            "reshoring", "nearshoring", "supply chain", "logistics",
+            "blockade",
+        ],
+        "infrastructure": [
+            "flight cancelled", "flights cancelled", "airspace closed",
+            "port closed", "shipping disrupted", "pipeline", "embargo",
+            "supply chain disruption", "logistics crisis",
+        ],
+        
+        # ======================================================
+        # ENERGY & COMMODITIES
+        # ======================================================
+        "energy": [
+            # Energy Markets
+            "opec", "opec+", "oil", "crude oil", "brent", "wti",
+            "natural gas", "lng", "energy supply", "energy shortages",
+            "energy sanctions", "refinery", "refinery outages",
+            "pipeline disruption", "oil prices", "energy crisis",
+            "fuel", "gasoline", "petroleum",
+            # OPEC & Supply
+            "production cut", "production cuts", "output cut",
+            "production increase", "spare capacity", "inventory draw",
+            "inventory build", "strategic petroleum reserve", "spr",
+            "drilling activity", "rig counts",
+            "tanker", "force majeure", "strategic reserves",
+            # Industrial & Ag Commodities
+            "gold", "silver", "copper", "aluminum", "steel",
+            "rare earth", "rare earths", "commodity", "commodities",
+            "mining", "precious metals", "safe haven",
+            "grain exports", "wheat", "corn", "soybeans", "fertilizer",
+        ],
+        
+        # ======================================================
+        # FISCAL & REGULATORY POLICY
+        # ======================================================
+        "fiscal_regulatory": [
+            # Fiscal Policy
+            "government spending", "fiscal stimulus", "austerity",
+            "budget deficit", "public debt", "debt ceiling", "treasury issuance",
+            "government shutdown",
+            # Regulation
+            "regulatory crackdown", "financial regulation", "capital requirements",
+            "banking reform", "market intervention", "price controls",
+            "subsidies", "tax changes", "tax reform",
+            "antitrust", "doj", "ftc", "sec",
+        ],
+        
+        # ======================================================
+        # FUTURES, RATES & DERIVATIVES
+        # ======================================================
+        "rates_derivatives": [
+            # Futures & Term Structure
+            "futures curve", "contango", "backwardation", "roll yield",
+            "open interest", "contract expiry", "front month", "calendar spread",
+            # Rates & Fixed Income
+            "treasury yields", "bond auction", "yield spike", "duration risk",
+            "curve steepening", "curve flattening", "rate volatility", "swap rates",
+        ],
     }
+    
+    # SEVERITY MODIFIERS - Words that boost impact score
+    SEVERITY_MODIFIERS = [
+        "unexpectedly", "sharply", "emergency", "historic", "unprecedented",
+        "sudden", "significant", "severe", "escalates", "intensifies",
+        "collapses", "surges", "spikes", "plunges", "widens", "narrows",
+        "crisis", "rare", "record", "shock",
+    ]
     
     # Regions and their market indices
     REGIONAL_INDICES = {
@@ -336,24 +481,32 @@ class GeopoliticalIntelligence:
                 event_type = etype
                 matched_keywords = matches
         
-        # Calculate severity based on keyword matches and urgency words
-        urgency_words = ["breaking", "urgent", "emergency", "imminent", "immediate", 
-                        "critical", "major", "massive", "unprecedented", "surge",
-                        "plunge", "crisis", "shock", "surprise", "unexpected"]
+        # Calculate severity based on keyword matches and SEVERITY_MODIFIERS
+        # Use class-level modifiers for consistency
+        severity_count = sum(1 for w in self.SEVERITY_MODIFIERS if w in text_lower)
+        
+        # Also check for urgency words
+        urgency_words = ["breaking", "urgent", "imminent", "immediate", "critical", "major", "massive"]
         urgency_count = sum(1 for w in urgency_words if w in text_lower)
         
         # Base severity now starts higher (0.3) so market-moving events pass
         # Each keyword match adds to severity
         base_severity = 0.3 if max_matches > 0 else 0.1
         keyword_bonus = min(0.4, max_matches * 0.12)  # Up to 0.4 from keywords
-        urgency_bonus = min(0.3, urgency_count * 0.1)  # Up to 0.3 from urgency
+        severity_bonus = min(0.25, severity_count * 0.08)  # Up to 0.25 from severity modifiers
+        urgency_bonus = min(0.15, urgency_count * 0.05)  # Up to 0.15 from urgency
         
-        # High-impact event types get base bonus
-        high_impact_types = ["military", "central_bank", "energy", "financial_stress", "shipping"]
+        # CRITICAL event types get base bonus (central_bank, financial_stress)
+        critical_types = ["central_bank", "financial_stress"]
+        if event_type in critical_types:
+            base_severity += 0.15
+        
+        # VERY IMPORTANT event types get base bonus
+        high_impact_types = ["military", "energy", "shipping", "rates_derivatives"]
         if event_type in high_impact_types:
             base_severity += 0.1
         
-        severity = min(1.0, base_severity + keyword_bonus + urgency_bonus)
+        severity = min(1.0, base_severity + keyword_bonus + severity_bonus + urgency_bonus)
         
         return event_type, severity, matched_keywords
     

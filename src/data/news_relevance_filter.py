@@ -121,6 +121,7 @@ class NewsRelevanceFilter:
     
     # A. GEOPOLITICAL RISK AND CONFLICT
     GEOPOLITICAL_KEYWORDS = [
+        # Conflict & Security
         "war", "invasion", "offensive", "counteroffensive", "missile", "missiles",
         "drone", "drones", "airstrike", "airstrikes", "naval incident", "naval clash",
         "cross-border attack", "retaliation", "retaliates", "retaliatory",
@@ -131,6 +132,9 @@ class NewsRelevanceFilter:
         "siege", "blockade", "territorial control", "territory seized",
         "military aid", "arms shipments", "defense pact", "security agreement",
         "jets deployed", "troops deployed", "military buildup", "escalation",
+        "military escalation", "missile strike", "drone attack", "terrorism", "insurgency",
+        # Political Instability
+        "coup", "regime change", "political unrest", "protests", "constitutional crisis",
     ]
     
     GEOPOLITICAL_ENTITIES = [
@@ -140,139 +144,169 @@ class NewsRelevanceFilter:
         "eastern europe", "south china sea", "taiwan strait",
         "red sea", "strait of hormuz", "black sea", "korean peninsula",
         "gaza", "lebanon", "syria", "yemen", "iraq", "ukraine", "russia",
+        "china", "north korea", "pakistan", "india", "turkey",
     ]
     
     # B. SANCTIONS, EXPORT CONTROLS, TRADE RESTRICTIONS
     SANCTIONS_KEYWORDS = [
         "sanctions", "sanctioned", "sanctions imposed", "sanctions lifted", "sanctions expanded",
-        "export controls", "export ban", "import ban",
-        "tariffs", "tariff hike", "trade ban", "embargo",
+        "economic sanctions", "secondary sanctions", "asset freezes",
+        "export controls", "export ban", "import ban", "import bans",
+        "tariffs", "tariff hike", "trade ban", "embargo", "trade embargo",
         "asset freeze", "assets frozen",
         "swift restrictions", "payment restrictions",
-        "secondary sanctions",
         "blacklist", "entity list", "restricted list",
         "seizes assets", "retaliatory measures",
+        "diplomatic tensions", "expulsion", "recalled ambassador",
     ]
     
     # C. ENERGY SUPPLY AND COMMODITY SHOCKS
     ENERGY_KEYWORDS = [
-        "opec", "opec+", "production cut", "output cut", "production increase",
+        # OPEC & Supply
+        "opec", "opec+", "production cut", "production cuts", "output cut", "production increase",
+        "production increases", "spare capacity", "inventory draw", "inventory build",
+        "strategic petroleum reserve", "spr", "drilling activity", "rig counts",
+        # Energy Markets
+        "oil prices", "crude oil", "brent", "wti", "natural gas", "lng",
+        "energy supply", "energy shortages", "energy sanctions",
+        "refinery outages", "refinery fire", "refinery explosion", "refinery shutdown",
+        "pipeline disruption", "pipeline sabotage", "pipeline leak",
         "oil supply", "gas supply", "lng supply",
-        "pipeline sabotage", "pipeline leak",
-        "refinery fire", "refinery explosion", "refinery shutdown",
-        "force majeure",
-        "tanker attack", "shipping insurance",
-        "port closure",
-        "export ban", "price cap",
-        "strategic reserves release",
-        "mining strike", "rare earth disruption",
-        "oil prices", "crude oil", "natural gas", "brent", "wti",
+        "force majeure", "tanker attack", "shipping insurance", "port closure",
+        "export ban", "price cap", "strategic reserves release",
+        # Industrial & Ag Commodities
+        "metals", "copper", "aluminum", "steel", "rare earths", "rare earth disruption",
+        "grain exports", "wheat", "corn", "soybeans", "fertilizer shortages",
+        "gold", "silver", "mining strike",
     ]
     
-    # D. SHIPPING LANES, CHOKEPOINTS, LOGISTICS
+    # D. SHIPPING LANES, CHOKEPOINTS, LOGISTICS (VERY IMPORTANT)
     SHIPPING_KEYWORDS = [
-        "shipping disrupted", "shipping disruption",
-        "reroute", "rerouting",
-        "suspend transit", "transit suspended",
-        "blockade",
-        "freight rates surge",
-        "insurance premiums jump",
-        "port closed", "port strike",
-        "aviation route closed",
+        # Shipping & Logistics
+        "shipping disruption", "shipping disrupted", "shipping delays",
+        "port congestion", "container shortage", "vessel shortage",
+        "freight rates", "charter rates", "demurrage",
+        "logistics bottlenecks", "rerouting", "reroute", "maritime risk",
+        "suspend transit", "transit suspended", "blockade",
+        "freight rates surge", "insurance premiums jump",
+        "port closed", "port strike", "aviation route closed",
         "supply chain disruption", "logistics crisis",
+        # Trade & Transport
+        "global trade", "trade flows", "trade deficit",
+        "export restrictions", "customs delays", "trade sanctions",
+        "reshoring", "nearshoring",
     ]
     
     CHOKEPOINTS = [
+        # Strategic Chokepoints
         "suez canal", "panama canal", "strait of hormuz",
         "bab el-mandeb", "strait of malacca", "bosphorus",
+        "red sea", "south china sea", "black sea",
     ]
     
     # E. MACROECONOMIC DATA AND SURPRISES
     MACRO_KEYWORDS = [
-        "cpi", "pce", "inflation", "core inflation",
-        "inflation expectations",
-        "unemployment", "jobless claims",
-        "nonfarm payrolls", "payrolls",
-        "wages", "wage growth",
-        "gdp", "pmi", "ism",
-        "retail sales",
-        "industrial production",
-        "housing starts", "housing permits",
+        # Inflation
+        "cpi", "pce", "core cpi", "core pce", "inflation", "core inflation",
+        "inflation expectations", "disinflation", "deflation",
+        "price pressures", "sticky inflation", "services inflation", "goods inflation",
+        "breakeven inflation", "inflation surprise",
+        # Labor Market
+        "unemployment", "unemployment rate", "jobless claims", "initial claims", "continuing claims",
+        "nonfarm payrolls", "non-farm payrolls", "nfp", "payrolls",
+        "employment growth", "wages", "wage growth", "average hourly earnings",
+        "labor participation", "labor market tightness", "layoffs", "hiring freeze",
+        # Growth & Demand
+        "gdp", "gdp growth", "recession", "economic slowdown", "economic contraction",
+        "economic expansion", "pmi", "ism", "retail sales",
+        "consumer spending", "consumer confidence", "industrial production", "capacity utilization",
+        # Housing & Credit
+        "housing starts", "building permits", "home sales", "mortgage rates",
+        "credit conditions", "lending standards", "loan growth",
+        "household debt", "corporate debt", "credit contraction",
         "delinquencies", "defaults",
     ]
     
     SURPRISE_LANGUAGE = [
-        "unexpectedly", "unexpected",
-        "beats forecasts", "beats estimates",
-        "misses forecasts", "misses estimates",
-        "surges", "plunges",
+        "unexpectedly", "unexpected", "surprise", "shock",
+        "beats forecasts", "beats estimates", "beats expectations",
+        "misses forecasts", "misses estimates", "misses expectations",
+        "surges", "plunges", "soars", "tumbles",
         "highest since", "lowest since",
-        "revised sharply", "surprise",
+        "revised sharply", "upside surprise", "downside surprise",
+        "forecast miss", "guidance revision", "consensus estimate",
     ]
     
-    # F. CENTRAL BANKS, RATES, LIQUIDITY
+    # F. CENTRAL BANKS, RATES, LIQUIDITY (CRITICAL)
     CENTRAL_BANK_KEYWORDS = [
-        "interest rate hike", "rate cut", "rate hold", "rate decision",
-        "forward guidance",
-        "dot plot",
-        "minutes",
-        "quantitative easing", "qe",
-        "quantitative tightening", "qt",
-        "balance sheet runoff",
-        "liquidity facility",
-        "emergency facility",
-        "yield curve control",
-        "currency intervention",
-        "hawkish", "dovish", "pivot",
+        # Policy Actions
+        "interest rate hike", "interest rate cut", "rate hike", "rate cut", "rate hold",
+        "rate decision", "policy tightening", "policy easing",
+        "monetary tightening", "monetary easing", "emergency meeting",
+        "inter-meeting decision", "forward guidance", "dot plot", "policy statement",
+        "balance sheet policy", "minutes",
+        # Liquidity Tools
+        "quantitative easing", "qe", "quantitative tightening", "qt",
+        "balance sheet runoff", "repo operations", "reverse repo",
+        "standing facilities", "discount window", "liquidity injection", "liquidity withdrawal",
+        "liquidity facility", "emergency facility", "yield curve control", "currency intervention",
+        # Communication Tone (Sentiment)
+        "hawkish", "dovish", "neutral stance", "restrictive policy", "accommodative policy",
+        "data-dependent", "higher for longer", "policy pivot", "tightening bias", "easing bias",
         "monetary policy",
     ]
     
     CENTRAL_BANK_ENTITIES = [
-        "federal reserve", "fed", "fomc",
-        "ecb", "european central bank",
-        "bank of england", "boe",
-        "bank of japan", "boj",
+        # Core Institutions
+        "federal reserve", "fed", "fomc", "jerome powell", "powell",
+        "ecb", "european central bank", "lagarde", "christine lagarde",
+        "bank of england", "boe", "bailey", "andrew bailey",
+        "bank of japan", "boj", "ueda", "kazuo ueda",
         "snb", "swiss national bank",
         "pboc", "people's bank of china",
         "rbi", "reserve bank of india",
-        "rba", "reserve bank of australia",
+        "rba", "reserve bank of australia", "rbnz",
+        "bank of canada", "boc",
+        "bis", "imf", "international monetary fund",
     ]
     
     # G. SYSTEMIC FINANCIAL STRESS
     FINANCIAL_STRESS_KEYWORDS = [
-        "bank run",
-        "bailout", "rescue",
-        "resolution",
-        "emergency merger",
-        "capital shortfall",
-        "liquidity crisis",
-        "default",
-        "restructuring",
-        "sovereign debt",
-        "imf support",
-        "downgrade", "credit downgrade",
-        "distressed",
-        "contagion",
-        "funding stress",
-        "margin calls",
-        "banking crisis", "financial crisis",
+        # Market Structure
+        "equity markets", "bond markets", "yield curve", "curve inversion",
+        "term premium", "real yields", "credit spreads", "swap spreads", "funding markets",
+        # Volatility & Risk
+        "market volatility", "vix", "implied volatility", "volatility spike",
+        "risk-off", "risk-on", "flight to safety", "market selloff", "market rally",
+        "liquidity crunch",
+        # Banking & Credit Stress
+        "bank run", "bank failure", "banking crisis", "deposit outflows",
+        "liquidity stress", "capital adequacy", "stress test",
+        "loan losses", "defaults", "restructuring", "downgrade", "bankruptcy",
+        "debt distress", "bailout", "rescue", "resolution", "emergency merger",
+        "capital shortfall", "liquidity crisis", "sovereign debt", "imf support",
+        "credit downgrade", "distressed", "contagion", "funding stress", "margin calls",
+        "financial crisis",
     ]
     
     # H. ELECTIONS AND POLICY SHOCKS
     ELECTIONS_KEYWORDS = [
-        "election", "snap election",
-        "contested election",
-        "coup",
-        "impeachment",
-        "referendum",
-        "government shutdown",
-        "debt ceiling",
-        "fiscal stimulus",
-        "capital controls",
-        "nationalization",
-        "tariff plan",
-        "budget crisis",
-        "political crisis",
+        "election", "elections", "snap election", "contested election",
+        "coup", "impeachment", "referendum",
+        "government shutdown", "debt ceiling",
+        "fiscal stimulus", "capital controls", "nationalization",
+        "tariff plan", "budget crisis", "political crisis",
+    ]
+    
+    # NEW: FISCAL & REGULATORY POLICY
+    FISCAL_REGULATORY_KEYWORDS = [
+        # Fiscal Policy
+        "government spending", "fiscal stimulus", "austerity",
+        "budget deficit", "public debt", "debt ceiling", "treasury issuance",
+        # Regulation
+        "regulatory crackdown", "financial regulation", "capital requirements",
+        "banking reform", "market intervention", "price controls",
+        "subsidies", "tax changes", "tax reform",
     ]
     
     # I. MAJOR CORPORATE DEALS
@@ -316,6 +350,26 @@ class NewsRelevanceFilter:
         "ev", "electric vehicle",
         "industrial automation",
         "telecom", "5g",
+    ]
+    
+    # NEW: FUTURES, RATES & DERIVATIVES
+    FUTURES_DERIVATIVES_KEYWORDS = [
+        # Futures & Term Structure
+        "futures curve", "contango", "backwardation", "roll yield",
+        "open interest", "contract expiry", "front month", "calendar spread",
+        # Rates & Fixed Income
+        "treasury yields", "bond auction", "yield spike", "duration risk",
+        "curve steepening", "curve flattening", "rate volatility", "swap rates",
+    ]
+    
+    # NEW: MARKET INTERPRETATION / META SIGNALS
+    META_SIGNAL_KEYWORDS = [
+        # Expectations & Surprise
+        "market expectations", "forecast miss", "upside surprise", "downside surprise",
+        "guidance revision", "consensus estimate",
+        # Narrative Shifts
+        "regime change", "structural shift", "policy pivot", "risk repricing",
+        "sentiment reversal", "capitulation",
     ]
     
     # ============================================================
@@ -367,27 +421,52 @@ class NewsRelevanceFilter:
         "shutdown", "blackout",
     ]
     
+    # SEVERITY & IMPACT MODIFIERS (Boost impact_score)
+    SEVERITY_MODIFIERS = [
+        "unexpectedly", "sharply", "emergency", "historic", "unprecedented",
+        "sudden", "significant", "severe", "escalates", "intensifies",
+        "collapses", "surges", "spikes", "plunges", "widens", "narrows",
+        "crisis", "rare", "record",
+    ]
+    
     SURPRISE_MAGNITUDE = [
         "unexpected", "shock", "surge", "plunge", "soars", "tumbles",
         "record", "highest since", "lowest since", "misses estimates",
         "beats forecasts", "revised sharply", "emergency", "rare", "historic",
         "unprecedented", "crisis",
+        # Additional from user
+        "unexpectedly", "sharply", "sudden", "significant", "severe",
+        "escalates", "intensifies", "collapses", "surges", "spikes",
+        "plunges", "widens", "narrows",
     ]
     
     FINANCIAL_STRESS_PHRASES = [
         "bailout", "rescue", "capital shortfall", "default", "restructuring",
         "bank run", "liquidity", "margin calls", "downgrade", "junk",
         "distressed", "contagion",
+        # Additional
+        "bank failure", "deposit outflows", "liquidity stress", "stress test",
+        "loan losses", "debt distress", "capital adequacy",
     ]
     
     LOGISTICS_PHRASES = [
         "reroute", "divert", "port closed", "shipping disrupted",
         "insurance premiums", "freight rates", "bottleneck",
+        # Additional
+        "container shortage", "vessel shortage", "demurrage",
+        "maritime risk", "supply chain disruption",
     ]
     
     DEAL_PHRASES = [
         "acquire", "merger", "takeover", "buyout", "strategic stake",
         "spin-off", "ipo", "antitrust", "doj", "ftc",
+    ]
+    
+    # CENTRAL BANK SPECIFIC BOOSTERS
+    CENTRAL_BANK_BOOSTERS = [
+        "rate hike", "rate cut", "emergency meeting", "policy pivot",
+        "hawkish", "dovish", "tightening", "easing",
+        "higher for longer", "balance sheet", "liquidity injection",
     ]
     
     # ============================================================
@@ -429,25 +508,84 @@ class NewsRelevanceFilter:
     # ============================================================
     
     RISK_OFF_TRIGGERS = [
-        "war", "invasion", "airstrike", "missile", "sanctions",
-        "escalation", "crisis", "default", "bank run", "contagion",
-        "hawkish", "rate hike", "tightening",
+        # Geopolitical
+        "war", "invasion", "airstrike", "missile", "sanctions", "escalation",
+        "military escalation", "conflict", "attack", "drone attack",
+        # Financial Stress
+        "crisis", "default", "bank run", "contagion", "bank failure",
+        "liquidity crisis", "margin calls", "distressed", "downgrade",
+        "bankruptcy", "debt distress", "capital shortfall",
+        # Central Bank Hawkish
+        "hawkish", "rate hike", "tightening", "restrictive policy",
+        "higher for longer", "tightening bias", "quantitative tightening",
+        # Economic Weakness
+        "recession", "economic slowdown", "contraction", "layoffs",
+        "unemployment rises", "jobless claims surge",
+        # Market Stress
+        "selloff", "volatility spike", "flight to safety", "vix spikes",
+        "curve inversion", "credit spreads widen",
     ]
     
     RISK_ON_TRIGGERS = [
-        "ceasefire", "peace", "sanctions lifted", "dovish", "rate cut",
-        "stimulus", "rescue", "bailout successful", "recovery",
+        # Geopolitical De-escalation
+        "ceasefire", "peace", "peace deal", "peace talks", "sanctions lifted",
+        "truce", "negotiations progress",
+        # Central Bank Dovish
+        "dovish", "rate cut", "easing", "accommodative policy",
+        "policy pivot", "easing bias", "quantitative easing",
+        # Stimulus & Support
+        "stimulus", "fiscal stimulus", "rescue", "bailout successful", "recovery",
+        "liquidity injection", "support package",
+        # Economic Strength
+        "expansion", "gdp growth", "employment growth", "consumer confidence rises",
+        "beats expectations", "upside surprise",
+        # Market Recovery
+        "rally", "risk appetite", "credit spreads narrow",
+    ]
+    
+    # Central Bank Direction
+    RATES_UP_TRIGGERS = [
+        "rate hike", "hawkish", "tightening", "restrictive",
+        "higher for longer", "inflation concerns", "hot cpi",
+        "strong employment", "wage growth",
+    ]
+    
+    RATES_DOWN_TRIGGERS = [
+        "rate cut", "dovish", "easing", "accommodative",
+        "policy pivot", "disinflation", "cooling inflation",
+        "weak employment", "recession fears",
+    ]
+    
+    # USD Direction
+    USD_UP_TRIGGERS = [
+        "fed hawkish", "rate hike", "strong employment", "hot inflation",
+        "risk-off", "flight to safety", "dollar strength",
+    ]
+    
+    USD_DOWN_TRIGGERS = [
+        "fed dovish", "rate cut", "weak data", "risk-on",
+        "dollar weakness", "euro strength",
     ]
     
     OIL_UP_TRIGGERS = [
+        # Supply Disruption
         "opec cut", "production cut", "pipeline attack", "refinery fire",
         "shipping disrupted", "strait of hormuz", "tanker attack",
         "force majeure", "supply disruption",
+        # Geopolitical
+        "middle east tensions", "iran sanctions", "red sea attacks",
+        "bab el-mandeb", "shipping reroute",
+        # Demand
+        "demand surge", "inventory draw", "spr release paused",
     ]
     
     OIL_DOWN_TRIGGERS = [
-        "opec increase", "production increase", "demand falls",
-        "recession fears", "strategic reserves",
+        # Supply Increase
+        "opec increase", "production increase", "supply glut",
+        "inventory build", "spr release",
+        # Demand Weakness
+        "demand falls", "recession fears", "economic slowdown",
+        "china demand weak", "consumption decline",
     ]
     
     # ============================================================
@@ -554,14 +692,17 @@ class NewsRelevanceFilter:
         # Check each category with base relevance scores
         # Higher base = higher priority category
         category_keywords = [
+            # CRITICAL CATEGORIES (highest priority)
+            (NewsCategory.CENTRAL_BANK, self.CENTRAL_BANK_KEYWORDS + self.CENTRAL_BANK_ENTITIES, 0.30),
+            (NewsCategory.FINANCIAL_STRESS, self.FINANCIAL_STRESS_KEYWORDS, 0.30),
             (NewsCategory.GEOPOLITICAL, self.GEOPOLITICAL_KEYWORDS + self.GEOPOLITICAL_ENTITIES, 0.25),
-            (NewsCategory.FINANCIAL_STRESS, self.FINANCIAL_STRESS_KEYWORDS, 0.25),
+            # VERY IMPORTANT CATEGORIES
+            (NewsCategory.SHIPPING_LOGISTICS, self.SHIPPING_KEYWORDS + self.CHOKEPOINTS, 0.25),
+            (NewsCategory.ENERGY_COMMODITY, self.ENERGY_KEYWORDS, 0.25),
             (NewsCategory.SANCTIONS, self.SANCTIONS_KEYWORDS, 0.20),
-            (NewsCategory.ENERGY_COMMODITY, self.ENERGY_KEYWORDS, 0.20),
-            (NewsCategory.SHIPPING_LOGISTICS, self.SHIPPING_KEYWORDS + self.CHOKEPOINTS, 0.20),
-            (NewsCategory.CENTRAL_BANK, self.CENTRAL_BANK_KEYWORDS + self.CENTRAL_BANK_ENTITIES, 0.20),
-            (NewsCategory.MACRO_DATA, self.MACRO_KEYWORDS + self.SURPRISE_LANGUAGE, 0.15),
-            (NewsCategory.ELECTIONS_POLICY, self.ELECTIONS_KEYWORDS, 0.15),
+            # IMPORTANT CATEGORIES
+            (NewsCategory.MACRO_DATA, self.MACRO_KEYWORDS + self.SURPRISE_LANGUAGE + self.FUTURES_DERIVATIVES_KEYWORDS, 0.20),
+            (NewsCategory.ELECTIONS_POLICY, self.ELECTIONS_KEYWORDS + self.FISCAL_REGULATORY_KEYWORDS, 0.15),
             (NewsCategory.CORPORATE_DEALS, self.CORPORATE_KEYWORDS, 0.10),
             (NewsCategory.BUSINESS_INNOVATION, self.INNOVATION_KEYWORDS, 0.10),
         ]
@@ -622,6 +763,15 @@ class NewsRelevanceFilter:
         surprise_count = sum(1 for s in self.SURPRISE_MAGNITUDE if s in text_lower)
         impact += min(0.2, surprise_count * 0.05)
         
+        # Boost for SEVERITY MODIFIERS (critical impact boosters)
+        severity_count = sum(1 for s in self.SEVERITY_MODIFIERS if s in text_lower)
+        impact += min(0.25, severity_count * 0.08)
+        
+        # Boost for CENTRAL BANK specific terms
+        if category == NewsCategory.CENTRAL_BANK:
+            cb_boost_count = sum(1 for b in self.CENTRAL_BANK_BOOSTERS if b in text_lower)
+            impact += min(0.15, cb_boost_count * 0.05)
+        
         # Boost for numeric signals
         for pattern in self.numeric_patterns:
             if pattern.search(text_lower):
@@ -659,28 +809,56 @@ class NewsRelevanceFilter:
         """Infer market direction from news content."""
         text_lower = self._normalize_text(text)
         
+        # Count triggers for each direction
         risk_off_count = sum(1 for t in self.RISK_OFF_TRIGGERS if t in text_lower)
         risk_on_count = sum(1 for t in self.RISK_ON_TRIGGERS if t in text_lower)
         oil_up_count = sum(1 for t in self.OIL_UP_TRIGGERS if t in text_lower)
         oil_down_count = sum(1 for t in self.OIL_DOWN_TRIGGERS if t in text_lower)
+        rates_up_count = sum(1 for t in self.RATES_UP_TRIGGERS if t in text_lower)
+        rates_down_count = sum(1 for t in self.RATES_DOWN_TRIGGERS if t in text_lower)
+        usd_up_count = sum(1 for t in self.USD_UP_TRIGGERS if t in text_lower)
+        usd_down_count = sum(1 for t in self.USD_DOWN_TRIGGERS if t in text_lower)
         
-        # Determine primary direction
+        # Determine primary direction with weighted scoring
         scores = {
             MarketDirection.RISK_OFF: risk_off_count * 0.2,
             MarketDirection.RISK_ON: risk_on_count * 0.2,
             MarketDirection.OIL_UP: oil_up_count * 0.15,
             MarketDirection.OIL_DOWN: oil_down_count * 0.15,
+            MarketDirection.RATES_UP: rates_up_count * 0.18,
+            MarketDirection.RATES_DOWN: rates_down_count * 0.18,
+            MarketDirection.USD_UP: usd_up_count * 0.12,
+            MarketDirection.USD_DOWN: usd_down_count * 0.12,
         }
         
-        # Category-based defaults
-        if category == NewsCategory.GEOPOLITICAL and risk_off_count == 0:
-            scores[MarketDirection.RISK_OFF] += 0.1
+        # Category-based defaults and boosters
+        if category == NewsCategory.GEOPOLITICAL:
+            if risk_off_count == 0 and risk_on_count == 0:
+                scores[MarketDirection.RISK_OFF] += 0.15  # Default: geopolitical = risk-off
         
         if category == NewsCategory.CENTRAL_BANK:
-            if "hawkish" in text_lower or "rate hike" in text_lower:
-                scores[MarketDirection.RATES_UP] = 0.5
-            elif "dovish" in text_lower or "rate cut" in text_lower:
-                scores[MarketDirection.RATES_DOWN] = 0.5
+            # Central bank news gets strong direction signals
+            if rates_up_count > 0:
+                scores[MarketDirection.RATES_UP] += 0.25
+            if rates_down_count > 0:
+                scores[MarketDirection.RATES_DOWN] += 0.25
+        
+        if category == NewsCategory.ENERGY_COMMODITY:
+            # Energy news defaults to oil-related direction
+            if oil_up_count == 0 and oil_down_count == 0:
+                # Check for supply disruption keywords
+                if any(w in text_lower for w in ["disruption", "attack", "shortage", "cut"]):
+                    scores[MarketDirection.OIL_UP] += 0.15
+        
+        if category == NewsCategory.FINANCIAL_STRESS:
+            # Financial stress = risk-off
+            scores[MarketDirection.RISK_OFF] += 0.2
+        
+        if category == NewsCategory.SHIPPING_LOGISTICS:
+            # Shipping disruptions often lead to oil/commodity price increases
+            if any(w in text_lower for w in ["disruption", "blocked", "reroute", "attack"]):
+                scores[MarketDirection.OIL_UP] += 0.1
+                scores[MarketDirection.RISK_OFF] += 0.1
         
         if max(scores.values()) == 0:
             return MarketDirection.NEUTRAL, 0.0
