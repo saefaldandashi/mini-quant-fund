@@ -3548,8 +3548,18 @@ def get_status():
         except:
             break
     
+    # Build safe status dict (handle None values)
+    safe_status = {}
+    for key, value in last_run_status.items():
+        if value is None:
+            safe_status[key] = None
+        elif isinstance(value, dict):
+            safe_status[key] = value
+        else:
+            safe_status[key] = value
+    
     return jsonify({
-        **last_run_status,
+        **safe_status,
         "new_messages": new_messages,
         "auto_rebalance": auto_rebalance_settings,
     })
@@ -3885,6 +3895,71 @@ def get_portfolio():
     except Exception as e:
         import traceback
         traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/positions')
+@requires_auth
+def get_positions():
+    """Get current positions."""
+    try:
+        api_key = os.getenv("ALPACA_API_KEY")
+        secret_key = os.getenv("ALPACA_SECRET_KEY")
+        
+        if not api_key or not secret_key:
+            return jsonify({"error": "API keys not configured", "positions": []}), 400
+        
+        broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+        positions_dict = broker.get_positions()
+        
+        # Convert to list format
+        positions_list = []
+        for symbol, pos in positions_dict.items():
+            positions_list.append({
+                "symbol": symbol,
+                "qty": pos.get("qty", 0),
+                "side": "long" if float(pos.get("qty", 0)) > 0 else "short",
+                "avg_entry_price": pos.get("avg_entry_price", 0),
+                "current_price": pos.get("current_price", 0),
+                "market_value": pos.get("market_value", 0),
+                "cost_basis": pos.get("cost_basis", 0),
+                "unrealized_pl": pos.get("pnl", 0),
+                "unrealized_plpc": pos.get("pnl_pct", 0) / 100 if pos.get("pnl_pct") else 0,
+            })
+        
+        return jsonify({
+            "positions": positions_list,
+            "count": len(positions_list),
+        })
+    except Exception as e:
+        return jsonify({"error": str(e), "positions": []}), 500
+
+
+@app.route('/api/account')
+@requires_auth
+def get_account():
+    """Get account information."""
+    try:
+        api_key = os.getenv("ALPACA_API_KEY")
+        secret_key = os.getenv("ALPACA_SECRET_KEY")
+        
+        if not api_key or not secret_key:
+            return jsonify({"error": "API keys not configured"}), 400
+        
+        broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+        account = broker.get_account()
+        
+        return jsonify({
+            "equity": account.get("equity", 0),
+            "cash": account.get("cash", 0),
+            "buying_power": account.get("buying_power", 0),
+            "portfolio_value": account.get("portfolio_value", 0),
+            "last_equity": account.get("last_equity", 0),
+            "today_pnl": account.get("today_pnl", 0),
+            "today_pnl_pct": account.get("today_pnl_pct", 0),
+            "status": account.get("status", "unknown"),
+        })
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 

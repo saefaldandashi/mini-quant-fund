@@ -78,4 +78,40 @@ __all__ = [
     'QuickMeanReversionStrategy',
     'IntradaySignalOutput',
     'create_intraday_strategies',
+    
+    # Helper function
+    'get_all_strategies',
 ]
+
+
+def get_all_strategies(
+    enable_intraday: bool = True,
+    enable_long_short: bool = True,
+    enable_futures: bool = True,
+):
+    """
+    Get all available trading strategies.
+    
+    Args:
+        enable_intraday: Include intraday/short-term strategies
+        enable_long_short: Include long/short strategies
+        enable_futures: Include futures strategies
+        
+    Returns:
+        List of strategy instances
+    """
+    strategies = []
+    
+    # Intraday strategies (primary for HFT-lite)
+    if enable_intraday:
+        strategies.extend(create_intraday_strategies())
+    
+    # Long/Short strategies
+    if enable_long_short:
+        strategies.extend(create_long_short_strategies())
+    
+    # Futures strategies (backtest only)
+    if enable_futures:
+        strategies.extend(create_futures_strategies())
+    
+    return strategies
