@@ -311,10 +311,31 @@ class OutcomeTracker:
         if wrong_signals:
             avg_return_wrong = sum(abs(s.outcome_5d) for s in wrong_signals) / len(wrong_signals)
         
+        # Calculate 1d and 5d accuracy separately
+        signals_with_1d = [s for s in completed if s.outcome_1d is not None]
+        signals_with_5d = [s for s in completed if s.outcome_5d is not None]
+        
+        accuracy_1d = None
+        accuracy_5d = None
+        
+        if signals_with_1d:
+            correct_1d = sum(1 for s in signals_with_1d 
+                           if (s.direction == 'long' and s.outcome_1d > 0) or 
+                              (s.direction == 'short' and s.outcome_1d < 0))
+            accuracy_1d = correct_1d / len(signals_with_1d)
+        
+        if signals_with_5d:
+            correct_5d = sum(1 for s in signals_with_5d 
+                           if (s.direction == 'long' and s.outcome_5d > 0) or 
+                              (s.direction == 'short' and s.outcome_5d < 0))
+            accuracy_5d = correct_5d / len(signals_with_5d)
+        
         return {
             'total_signals': len(self.signals),
             'completed_signals': len(completed),
             'accuracy': accuracy,
+            'accuracy_1d': accuracy_1d,  # Frontend expects this
+            'accuracy_5d': accuracy_5d,  # Frontend expects this
             'long_accuracy': long_accuracy,
             'short_accuracy': short_accuracy,
             'regime_accuracy': regime_accuracy,

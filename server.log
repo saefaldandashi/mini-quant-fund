@@ -300,3 +300,4 @@ WARNING:root:Batch fetch failed: ('Connection aborted.', OSError(49, "Can't assi
 ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
 ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
 ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
+ERROR:root:Outcome tracking error: cannot import name 'get_market_data_loader' from 'src.data.market_data' (/Users/saef.aldandashi/Desktop/mini fund tool/src/data/market_data.py)
