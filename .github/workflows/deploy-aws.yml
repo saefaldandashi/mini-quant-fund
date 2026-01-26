@@ -12,7 +12,9 @@
 #    - EC2_USER: Usually "ec2-user" for Amazon Linux or "ubuntu" for Ubuntu
 #    - ALPACA_API_KEY: Your Alpaca API key
 #    - ALPACA_SECRET_KEY: Your Alpaca secret key
-#    - GEMINI_API_KEY: Your Gemini API key (optional)
+#    - GEMINI_API_KEY: Your Gemini API key (for Gemini LLM)
+#    - OPENAI_API_KEY: Your OpenAI API key (for GPT)
+#    - ANTHROPIC_API_KEY: Your Anthropic API key (for Claude)
 #    - ALPHA_VANTAGE_API_KEY: Your Alpha Vantage API key (optional)
 #    - FRED_API_KEY: Your FRED API key for economic data (optional)
 #    - APP_USERNAME: Username for web authentication (default: admin)
@@ -44,6 +46,8 @@ jobs:
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
           ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           APP_USERNAME: ${{ secrets.APP_USERNAME }}
@@ -54,7 +58,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script_stop: true
-          envs: ALPACA_API_KEY,ALPACA_SECRET_KEY,GEMINI_API_KEY,ALPHA_VANTAGE_API_KEY,FRED_API_KEY,APP_USERNAME,APP_PASSWORD
+          envs: ALPACA_API_KEY,ALPACA_SECRET_KEY,GEMINI_API_KEY,OPENAI_API_KEY,ANTHROPIC_API_KEY,ALPHA_VANTAGE_API_KEY,FRED_API_KEY,APP_USERNAME,APP_PASSWORD
           script: |
             echo "🚀 Starting deployment..."
             
@@ -72,6 +76,8 @@ jobs:
             ALPACA_API_KEY=$ALPACA_API_KEY
             ALPACA_SECRET_KEY=$ALPACA_SECRET_KEY
             GEMINI_API_KEY=$GEMINI_API_KEY
+            OPENAI_API_KEY=$OPENAI_API_KEY
+            ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY
             ALPHA_VANTAGE_API_KEY=$ALPHA_VANTAGE_API_KEY
             FRED_API_KEY=$FRED_API_KEY
             APP_USERNAME=$APP_USERNAME
