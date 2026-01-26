@@ -95,23 +95,13 @@ class AlpacaBroker:
         logging.info(f"Alpaca broker initialized (paper={paper}, base_url={base_url})")
     
     def get_account(self) -> Dict:
-        """Get account information including today's P/L."""
+        """Get account information."""
         account = self.trading_client.get_account()
-        
-        # Get last_equity (previous close equity) for today's P/L calculation
-        equity = float(account.equity)
-        last_equity = float(getattr(account, 'last_equity', equity))
-        today_pnl = equity - last_equity
-        today_pnl_pct = ((equity / last_equity) - 1) * 100 if last_equity > 0 else 0
-        
         return {
-            "equity": equity,
+            "equity": float(account.equity),
             "cash": float(account.cash),
             "buying_power": float(account.buying_power),
             "portfolio_value": float(account.portfolio_value),
-            "last_equity": last_equity,
-            "today_pnl": today_pnl,
-            "today_pnl_pct": today_pnl_pct,
         }
     
     def get_margin_data(self) -> Dict:
@@ -280,31 +270,14 @@ class AlpacaBroker:
                     if symbol in bars_dict:
                         symbol_bars = bars_dict[symbol]
                         
-                        # symbol_bars is a list of Bar objects with OHLCV data
+                        # symbol_bars is a list of Bar objects
                         if symbol_bars and len(symbol_bars) > 0:
-                            # Extract full OHLCV data (not just close)
-                            opens = [bar.open for bar in symbol_bars]
-                            highs = [bar.high for bar in symbol_bars]
-                            lows = [bar.low for bar in symbol_bars]
                             closes = [bar.close for bar in symbol_bars]
-                            volumes = [bar.volume for bar in symbol_bars]
                             timestamps = [bar.timestamp for bar in symbol_bars]
                             
-                            df = pd.DataFrame({
-                                'open': opens,
-                                'high': highs,
-                                'low': lows,
-                                'close': closes,
-                                'volume': volumes
-                            }, index=pd.DatetimeIndex(timestamps))
+                            df = pd.DataFrame({'close': closes}, index=pd.DatetimeIndex(timestamps))
                             df = df.sort_index()
-                            # Return close Series for backwards compatibility
-                            # but store full OHLCV in a cache for strategies that need it
                             result[symbol] = df["close"]
-                            # Store full OHLCV data
-                            if not hasattr(self, '_ohlcv_cache'):
-                                self._ohlcv_cache = {}
-                            self._ohlcv_cache[symbol] = df
                 except Exception as e:
                     logging.debug(f"Error processing {symbol}: {e}")
                     continue
@@ -336,23 +309,12 @@ class AlpacaBroker:
                     if symbol in bars_dict:
                         symbol_bars = bars_dict[symbol]
                         if symbol_bars and len(symbol_bars) > 0:
-                            # Extract full OHLCV data
-                            opens = [bar.open for bar in symbol_bars]
-                            highs = [bar.high for bar in symbol_bars]
-                            lows = [bar.low for bar in symbol_bars]
                             closes = [bar.close for bar in symbol_bars]
-                            volumes = [bar.volume for bar in symbol_bars]
                             timestamps = [bar.timestamp for bar in symbol_bars]
                             
-                            df = pd.DataFrame({
-                                'open': opens, 'high': highs, 'low': lows,
-                                'close': closes, 'volume': volumes
-                            }, index=pd.DatetimeIndex(timestamps))
+                            df = pd.DataFrame({'close': closes}, index=pd.DatetimeIndex(timestamps))
                             df = df.sort_index()
                             result[symbol] = df["close"]
-                            if not hasattr(self, '_ohlcv_cache'):
-                                self._ohlcv_cache = {}
-                            self._ohlcv_cache[symbol] = df
                 except Exception as e:
                     continue
             
@@ -389,23 +351,18 @@ class AlpacaBroker:
         self,
         target_weights: Dict[str, float],
         equity: float,
-        cash_buffer_pct: float = config.CASH_BUFFER_PCT,
-        leverage: float = 1.0
+        cash_buffer_pct: float = config.CASH_BUFFER_PCT
     ) -> Dict[str, int]:
         """
         Calculate target share quantities given target weights and current prices.
         
-        SUPPORTS BOTH LONG AND SHORT POSITIONS:
-        - Positive weight = LONG position (buy shares)
-        - Negative weight = SHORT position (negative shares in result)
-        
         Args:
-            target_weights: Dict of symbol -> weight (e.g., 0.10 for 10%, -0.05 for 5% short)
+            target_weights: Dict of symbol -> weight (e.g., 0.10 for 10% allocation)
             equity: Total account equity
             cash_buffer_pct: Cash buffer percentage
         
         Returns:
-            Dict mapping symbol to target share quantity (positive for long, NEGATIVE for short)
+            Dict mapping symbol to target share quantity (whole shares)
         """
         if not target_weights:
             return {}
@@ -413,15 +370,12 @@ class AlpacaBroker:
         symbols = list(target_weights.keys())
         prices = self.get_current_prices(symbols)
         
-        investable_equity = equity * leverage * (1.0 - cash_buffer_pct)
-        
-        logging.info(f"📊 Position sizing: equity=${equity:,.0f}, leverage={leverage:.2f}x, investable=${investable_equity:,.0f}")
+        investable_equity = equity * (1.0 - cash_buffer_pct)
         
         result = {}
         
         for symbol, weight in target_weights.items():
-            # Skip insignificant weights (but check absolute value for shorts!)
-            if abs(weight) <= 0.001:
+            if weight <= 0.001:
                 continue
                 
             if symbol not in prices:
@@ -433,27 +387,15 @@ class AlpacaBroker:
                 logging.warning(f"Invalid price for {symbol}: {price}, skipping")
                 continue
             
-            # Calculate target notional based on actual weight (preserves sign for shorts)
+            # Calculate target notional based on actual weight
             target_notional = investable_equity * weight
+            shares = int(target_notional / price)  # Floor to whole shares
             
-            # For SHORTS: weight is negative, so target_notional is negative
-            # We want shares to be NEGATIVE to signal a short position
-            if weight > 0:
-                # LONG: positive shares
-                shares = int(target_notional / price)  # Floor to whole shares
-                if shares > 0:
-                    result[symbol] = shares
-                    logging.info(
-                        f"LONG {symbol}: weight={weight:.1%}, target ${target_notional:.2f} / ${price:.2f} = {shares} shares"
-                    )
-            else:
-                # SHORT: negative shares (note: target_notional is already negative)
-                shares = int(target_notional / price)  # This will be negative
-                if shares < 0:
-                    result[symbol] = shares  # NEGATIVE VALUE = SHORT POSITION
-                    logging.info(
-                        f"SHORT {symbol}: weight={weight:.1%}, target ${target_notional:.2f} / ${price:.2f} = {shares} shares"
-                    )
+            if shares > 0:
+                result[symbol] = shares
+                logging.info(
+                    f"{symbol}: weight={weight:.1%}, target ${target_notional:.2f} / ${price:.2f} = {shares} shares"
+                )
         
         return result
     
@@ -462,23 +404,19 @@ class AlpacaBroker:
         symbol: str,
         qty: int,
         side: OrderSide,
-        dry_run: bool = True,
-        extended_hours: bool = False,
+        dry_run: bool = True
     ) -> Optional[Dict]:
         """
-        Place a market order (or limit order for extended hours).
+        Place a market order.
         
         Args:
             symbol: Stock symbol
             qty: Quantity (must be > 0)
             side: OrderSide.BUY or OrderSide.SELL
             dry_run: If True, log but don't place order
-            extended_hours: If True, use limit order for after-hours trading
         
         Returns:
             Order info dict if placed, None if dry_run
-        
-        Note: Alpaca requires LIMIT orders for extended hours trading.
         """
         if qty <= 0:
             logging.warning(f"Invalid quantity {qty} for {symbol}, skipping order")
@@ -491,42 +429,12 @@ class AlpacaBroker:
             return None
         
         try:
-            # For extended hours, we MUST use limit orders (Alpaca requirement)
-            if extended_hours:
-                from alpaca.trading.requests import LimitOrderRequest
-                
-                # Get current price for limit order
-                prices = self.get_current_prices([symbol])
-                current_price = prices.get(symbol, 0)
-                
-                if current_price > 0:
-                    # Add buffer to ensure fill: +0.5% for buys, -0.5% for sells
-                    buffer = 0.005
-                    if side == OrderSide.BUY:
-                        limit_price = round(current_price * (1 + buffer), 2)
-                    else:
-                        limit_price = round(current_price * (1 - buffer), 2)
-                    
-                    order_request = LimitOrderRequest(
-                        symbol=symbol,
-                        qty=qty,
-                        side=side,
-                        limit_price=limit_price,
-                        time_in_force=TimeInForce.DAY,
-                        extended_hours=True,
-                    )
-                    logging.info(f"Extended hours LIMIT: {side_str} {qty} {symbol} @ ${limit_price}")
-                else:
-                    logging.warning(f"Cannot get price for {symbol}, skipping extended hours order")
-                    return None
-            else:
-                # Regular market order
-                order_request = MarketOrderRequest(
-                    symbol=symbol,
-                    qty=qty,
-                    side=side,
-                    time_in_force=TimeInForce.DAY
-                )
+            order_request = MarketOrderRequest(
+                symbol=symbol,
+                qty=qty,
+                side=side,
+                time_in_force=TimeInForce.DAY
+            )
             
             order = self.trading_client.submit_order(order_request)
             
@@ -934,11 +842,6 @@ class AlpacaBroker:
                     if bid > 0 and ask > 0:
                         mid = (bid + ask) / 2
                         spread_pct = ((ask - bid) / mid) * 100 if mid > 0 else 0.05
-                        # CAP SPREAD: After-hours spreads can be unrealistically wide
-                        if spread_pct > 5.0:
-                            spread_pct = 0.10  # Stale quote → conservative 10 bps
-                        elif spread_pct > 0.5:
-                            spread_pct = 0.50  # Cap at 50 bps max
                     else:
                         mid = ask if ask > 0 else bid
                         spread_pct = 0.05  # Default 5 bps if no bid-ask

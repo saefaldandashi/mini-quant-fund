@@ -126,7 +126,7 @@ class TradeMemory:
         self._load()
     
     def _load(self):
-        """Load trade history from disk with corruption handling."""
+        """Load trade history from disk."""
         if self.storage_path.exists():
             try:
                 with open(self.storage_path, 'r') as f:
@@ -139,18 +139,6 @@ class TradeMemory:
                         self.open_positions[trade.symbol] = trade
                 
                 logging.info(f"Loaded {len(self.trades)} trades from memory")
-            except json.JSONDecodeError as e:
-                logging.error(f"Trade memory JSON corrupted: {e}")
-                # Create backup of corrupted file
-                try:
-                    import shutil
-                    backup_path = str(self.storage_path) + f".corrupted.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-                    shutil.copy(self.storage_path, backup_path)
-                    logging.warning(f"Corrupted trade memory backed up to: {backup_path}")
-                    logging.warning("Starting fresh with empty trade history")
-                except Exception as backup_err:
-                    logging.error(f"Could not backup corrupted file: {backup_err}")
-                self.trades = []
             except Exception as e:
                 logging.warning(f"Could not load trade memory: {e}")
                 self.trades = []
@@ -571,7 +559,7 @@ class TradeMemory:
             records.append(record)
         
         return pd.DataFrame(records)
-
+    
     # ==========================================================================
     # CROSS-ASSET CONTEXT TRACKING
     # ==========================================================================
@@ -584,7 +572,18 @@ class TradeMemory:
     ) -> None:
         """
         Record cross-asset signals at time of rebalance for pattern learning.
+        
+        This helps the learning system understand:
+        - How oil prices affected energy stock decisions
+        - How DXY moves influenced multinational weights
+        - How international markets lead/lag US markets
+        
+        Args:
+            timestamp: When these signals were observed
+            cross_signals: Dict of signal_type -> signal_value (e.g., {'oil_signal': 0.3})
+            market_regime: Current market regime for context
         """
+        # Load or initialize cross-asset history
         cross_asset_path = self.storage_path.parent / "cross_asset_history.json"
         
         try:
@@ -594,6 +593,7 @@ class TradeMemory:
             else:
                 history = {'records': [], 'summary': {}}
             
+            # Add new record
             record = {
                 'timestamp': timestamp.isoformat(),
                 'signals': cross_signals,
@@ -601,15 +601,26 @@ class TradeMemory:
             }
             history['records'].append(record)
             
+            # Keep only last 500 records
             if len(history['records']) > 500:
                 history['records'] = history['records'][-500:]
             
+            # Update summary stats
             for signal_type, value in cross_signals.items():
                 if signal_type not in history['summary']:
-                    history['summary'][signal_type] = {'count': 0, 'sum': 0.0}
+                    history['summary'][signal_type] = {
+                        'count': 0,
+                        'sum': 0.0,
+                        'avg': 0.0,
+                    }
                 history['summary'][signal_type]['count'] += 1
                 history['summary'][signal_type]['sum'] += value
+                history['summary'][signal_type]['avg'] = (
+                    history['summary'][signal_type]['sum'] / 
+                    history['summary'][signal_type]['count']
+                )
             
+            # Save
             with open(cross_asset_path, 'w') as f:
                 json.dump(history, f, indent=2, default=str)
             
@@ -630,8 +641,10 @@ class TradeMemory:
                 history = json.load(f)
             
             cutoff = datetime.now() - timedelta(days=days)
+            records = history.get('records', [])
+            
             return [
-                r for r in history.get('records', [])
+                r for r in records
                 if datetime.fromisoformat(r['timestamp']) > cutoff
             ]
         except Exception as e:
@@ -639,19 +652,60 @@ class TradeMemory:
             return []
     
     def analyze_cross_asset_patterns(self) -> Dict[str, Any]:
-        """Analyze cross-asset signal patterns for learning insights."""
+        """
+        Analyze cross-asset signal patterns for learning insights.
+        
+        Returns patterns like:
+        - "When oil rises, energy stocks outperform"
+        - "Strong DXY correlates with tech underperformance"
+        """
         recent = self.get_cross_asset_history(days=90)
         if not recent:
             return {'patterns': [], 'insights': []}
         
         patterns = []
+        insights = []
         
-        oil_signals = [r['signals'].get('oil_signal', 0) for r in recent if 'oil_signal' in r.get('signals', {})]
+        # Analyze oil signal patterns
+        oil_signals = [r['signals'].get('oil_signal', 0) for r in recent]
         if oil_signals:
             avg_oil = sum(oil_signals) / len(oil_signals)
             if avg_oil > 0.1:
-                patterns.append({'type': 'oil_bullish_trend', 'strength': avg_oil})
+                patterns.append({
+                    'type': 'oil_bullish_trend',
+                    'strength': avg_oil,
+                    'insight': 'Oil has been rising - favor energy stocks'
+                })
             elif avg_oil < -0.1:
-                patterns.append({'type': 'oil_bearish_trend', 'strength': abs(avg_oil)})
+                patterns.append({
+                    'type': 'oil_bearish_trend',
+                    'strength': abs(avg_oil),
+                    'insight': 'Oil has been falling - underweight energy'
+                })
         
-        return {'patterns': patterns, 'insights': [p.get('type', '') for p in patterns], 'total_records': len(recent)}
+        # Analyze DXY signal patterns
+        dxy_signals = [r['signals'].get('dxy_signal', 0) for r in recent]
+        if dxy_signals:
+            avg_dxy = sum(dxy_signals) / len(dxy_signals)
+            if avg_dxy > 0.1:
+                patterns.append({
+                    'type': 'strong_dollar',
+                    'strength': avg_dxy,
+                    'insight': 'Strong dollar - underweight multinationals'
+                })
+            elif avg_dxy < -0.1:
+                patterns.append({
+                    'type': 'weak_dollar',
+                    'strength': abs(avg_dxy),
+                    'insight': 'Weak dollar - favor multinationals'
+                })
+        
+        # Generate actionable insights
+        if patterns:
+            insights = [p['insight'] for p in patterns[:3]]
+        
+        return {
+            'patterns': patterns,
+            'insights': insights,
+            'total_records': len(recent),
+        }
