@@ -1664,10 +1664,10 @@
             </div>
             
             <div class="mini-card">
-                <h3>⚡ LLM Mode</h3>
+                <h3>⚡ Fast Mode</h3>
                 <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
                     <input type="checkbox" id="fast-mode" checked>
-                    <label for="fast-mode" style="font-size: 0.8em;">Parallel LLM (6x faster)</label>
+                    <label for="fast-mode" style="font-size: 0.8em;">Skip LLM (faster)</label>
                 </div>
                 <div style="margin-top: 6px; font-size: 0.65em; color: var(--text-dim);">
                     ~30-60s vs ~2-3min
@@ -2587,26 +2587,13 @@
                 console.log('Rebalance started:', result);
                 document.getElementById('execution-log').textContent += `\n${result.message || 'Bot started...'}\n`;
                 
-                // Poll for log updates - accumulate real-time messages
-                let accumulatedLog = `Starting ${modeStr}rebalance (${exposure}% exposure, ${riskAppetite} risk, ${dryRun ? 'DRY RUN' : '🔴 LIVE'})...\n`;
-                
+                // Poll for log updates
                 const logPoll = setInterval(async () => {
                     try {
                         const statusRes = await fetch('/api/status');
                         const status = await statusRes.json();
                         
-                        // Accumulate new real-time messages
-                        if (status.new_messages && status.new_messages.length > 0) {
-                            for (const msg of status.new_messages) {
-                                accumulatedLog += msg + '\n';
-                            }
-                            const logEl = document.getElementById('execution-log');
-                            logEl.textContent = accumulatedLog;
-                            logEl.scrollTop = logEl.scrollHeight;
-                        }
-                        
-                        // Also check output for final complete log
-                        if (status.output && status.completed) {
+                        if (status.output) {
                             document.getElementById('execution-log').textContent = status.output;
                             document.getElementById('execution-log').scrollTop = document.getElementById('execution-log').scrollHeight;
                         }
@@ -2625,10 +2612,7 @@
                             btn.disabled = false;
                             
                             if (status.error) {
-                                updateStatus('error', 'Error: ' + status.error);
-                                // Show error in log
-                                accumulatedLog += '\n❌ ERROR: ' + status.error + '\n';
-                                document.getElementById('execution-log').textContent = accumulatedLog;
+                                updateStatus('error', 'Error');
                             } else {
                                 updateStatus('success', 'Completed');
                             }
@@ -2642,7 +2626,7 @@
                     } catch (e) {
                         console.error('Poll error:', e);
                     }
-                }, 500);  // Poll faster for real-time feel
+                }, 1000);
                 
             } catch (e) {
                 console.error('Run error:', e);
@@ -4280,7 +4264,7 @@
                 case 'q':
                     const fastMode = document.getElementById('fast-mode');
                     fastMode.checked = !fastMode.checked;
-                    showToast('info', 'LLM Mode', fastMode.checked ? 'Parallel LLM (6x faster)' : 'Sequential LLM (thorough)');
+                    showToast('info', 'Fast Mode', fastMode.checked ? 'Enabled (skip LLM)' : 'Disabled (full debate)');
                     break;
                 case 'd':
                     const dryRun = document.getElementById('dry-run');

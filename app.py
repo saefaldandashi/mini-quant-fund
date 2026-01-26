@@ -2324,13 +2324,28 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         log("EXECUTING TRADES")
         log("=" * 60)
         
-        # Calculate target shares
-        target_symbols = [s for s, w in final_weights.items() if w > 0.01]
-        log(f"Target portfolio: {len(target_symbols)} positions")
+        # Calculate target shares - include BOTH longs AND shorts
+        # Use 0.1% (0.001) threshold to allow more positions through
+        # The investment floor in enhance_position_sizes will scale them up properly
+        MIN_WEIGHT_THRESHOLD = 0.001  # 0.1% minimum weight to consider
+        target_symbols = [s for s, w in final_weights.items() if abs(w) > MIN_WEIGHT_THRESHOLD]
+        long_count = len([s for s, w in final_weights.items() if w > MIN_WEIGHT_THRESHOLD])
+        short_count = len([s for s, w in final_weights.items() if w < -MIN_WEIGHT_THRESHOLD])
+        log(f"Target portfolio: {len(target_symbols)} positions ({long_count} longs, {short_count} shorts)")
         
-        for symbol, weight in sorted(final_weights.items(), key=lambda x: -x[1])[:10]:
-            if weight > 0.01:
-                log(f"  {symbol}: {weight:.1%}")
+        # Log top longs
+        longs_sorted = sorted([(s, w) for s, w in final_weights.items() if w > MIN_WEIGHT_THRESHOLD], key=lambda x: -x[1])
+        if longs_sorted:
+            log(f"  📈 Top Longs:")
+            for symbol, weight in longs_sorted[:5]:
+                log(f"    {symbol}: {weight:.1%}")
+        
+        # Log top shorts
+        shorts_sorted = sorted([(s, w) for s, w in final_weights.items() if w < -MIN_WEIGHT_THRESHOLD], key=lambda x: x[1])
+        if shorts_sorted:
+            log(f"  📉 Top Shorts:")
+            for symbol, weight in shorts_sorted[:5]:
+                log(f"    {symbol}: {weight:.1%}")
         
         if not target_symbols:
             log("No positions to take - going to cash")
@@ -3214,8 +3229,12 @@ def health_check():
     # Check if broker is connected
     broker_ok = False
     try:
-        account = broker.get_account()
-        broker_ok = account is not None
+        api_key = os.getenv("ALPACA_API_KEY")
+        secret_key = os.getenv("ALPACA_SECRET_KEY")
+        if api_key and secret_key:
+            health_broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+            account = health_broker.get_account()
+            broker_ok = account is not None
     except:
         pass
     

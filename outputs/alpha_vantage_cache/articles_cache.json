@@ -7406,7 +7406,2604 @@
       "ticker_sentiments": {
         "PUK": 0.267395
       }
+    },
+    {
+      "id": "3374676439953278678",
+      "timestamp": "2026-01-26T12:48:25",
+      "headline": "Caterpillar Inc. $CAT Stock Holdings Decreased by OneAscent Financial Services LLC",
+      "summary": "OneAscent Financial Services LLC significantly reduced its holdings in Caterpillar Inc. (NYSE:CAT) by 75% in the last quarter, selling 10,329 shares. Despite this, institutional ownership remains high at nearly 71%, with other major firms like Fisher Asset Management and Valeo Financial Advisors substantially increasing their stakes. Caterpillar recently reported strong earnings, exceeding analyst expectations, and announced a quarterly dividend of $1.51 while expanding its AI partnership with Nvidia.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-caterpillar-inc-cat-stock-holdings-decreased-by-oneascent-financial-services-llc-2026-01-26/",
+      "tickers": [
+        "CAT",
+        "NVDA"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing",
+        "technology"
+      ],
+      "overall_sentiment": 0.233101,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CAT",
+          "relevance_score": 0.957575,
+          "sentiment_score": 0.110214,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": 0.686838,
+          "sentiment_score": 0.338053,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CAT": 0.110214,
+        "NVDA": 0.338053
+      }
+    },
+    {
+      "id": "-5788521748133171127",
+      "timestamp": "2026-01-26T12:48:22",
+      "headline": "OneAscent Financial Services LLC Cuts Stock Holdings in Bank of America Corporation $BAC",
+      "summary": "OneAscent Financial Services LLC reduced its stake in Bank of America (BAC) by 29.2% in Q3, selling over 11,000 shares but still holding 26,768 shares worth approximately $1.38 million. Meanwhile, major institutions like Norges Bank and Arrowstreet Capital significantly increased their holdings, with institutional investors now owning about 70.71% of BAC. Despite a positive \"Moderate Buy\" consensus from analysts, concerns remain over a proposed 10% cap on credit card rates, which could impact Bank of America's profitability.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-oneascent-financial-services-llc-cuts-stock-holdings-in-bank-of-america-corporation-bac-2026-01-26/",
+      "tickers": [
+        "BAC",
+        "MS",
+        "C"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "economy_monetary"
+      ],
+      "overall_sentiment": 0.035765,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BAC",
+          "relevance_score": 0.970557,
+          "sentiment_score": 0.094008,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "MS",
+          "relevance_score": 0.625666,
+          "sentiment_score": 0.326929,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "C",
+          "relevance_score": 0.584266,
+          "sentiment_score": -0.288455,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "BAC": 0.094008,
+        "MS": 0.326929,
+        "C": -0.288455
+      }
+    },
+    {
+      "id": "5801343641589425387",
+      "timestamp": "2026-01-26T12:42:41",
+      "headline": "Lbp Am Sa Invests $21.55 Million in GE HealthCare Technologies Inc. $GEHC",
+      "summary": "Lbp Am Sa recently acquired a new stake of 286,976 shares, valued at approximately $21.55 million, in GE HealthCare Technologies Inc. This investment represents about 0.06% of the company's shares. GE HealthCare reported strong Q3 earnings, beating estimates with $1.07 EPS and $5.14 billion in revenue, and declared a quarterly dividend of $0.035. Institutional investors hold a significant 82.06% of the stock, and analysts maintain a \"Hold\" consensus rating with an average target price of $89.83.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-invests-2155-million-in-ge-healthcare-technologies-inc-gehc-2026-01-26/",
+      "tickers": [
+        "GEHC"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences",
+        "finance"
+      ],
+      "overall_sentiment": 0.343171,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GEHC",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.307014,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "GEHC": 0.307014
+      }
+    },
+    {
+      "id": "6799047893351076150",
+      "timestamp": "2026-01-26T12:42:29",
+      "headline": "Lbp Am Sa Grows Stock Holdings in Cencora, Inc. $COR",
+      "summary": "LBP AM SA significantly increased its stake in Cencora, Inc. (NYSE:COR) by 67.1%, now owning 104,904 shares valued at approximately $32.79 million. This comes as Cencora reported strong Q3 earnings, beating analyst estimates and increasing its quarterly dividend. The company maintains a \"Moderate Buy\" consensus rating from analysts, despite recent insider share sales.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-grows-stock-holdings-in-cencora-inc-cor-2026-01-26/",
+      "tickers": [
+        "COR"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences",
+        "finance"
+      ],
+      "overall_sentiment": 0.477753,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "COR",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.495507,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "COR": 0.495507
+      }
+    },
+    {
+      "id": "7688587728435887835",
+      "timestamp": "2026-01-26T12:42:27",
+      "headline": "Colgate-Palmolive Company $CL Shares Bought by Lbp Am Sa",
+      "summary": "Lbp Am Sa increased its stake in Colgate-Palmolive (NYSE:CL) by 7.7% in Q3, now owning 228,323 shares valued at approximately $18.25 million. Analysts maintain a \"Moderate Buy\" consensus with an average price target of $89.44. The company recently declared a quarterly dividend of $0.52 per share, yielding about 2.4% annually.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-colgate-palmolive-company-cl-shares-bought-by-lbp-am-sa-2026-01-26/",
+      "tickers": [
+        "CL"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.31269,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CL",
+          "relevance_score": 0.957755,
+          "sentiment_score": 0.2857,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CL": 0.2857
+      }
+    },
+    {
+      "id": "197071659272535661",
+      "timestamp": "2026-01-26T12:42:26",
+      "headline": "Lbp Am Sa Buys 9,396 Shares of Cadence Design Systems, Inc. $CDNS",
+      "summary": "Lbp Am Sa increased its stake in Cadence Design Systems (NASDAQ:CDNS) by 8.5% in the third quarter, purchasing 9,396 additional shares and now holding 119,502 shares valued at $41.98 million. The company recently reported strong Q3 results, beating EPS and revenue estimates, and has a consensus \"Moderate Buy\" rating from analysts with an average target price of $379.59. Despite significant insider selling over the past 90 days, institutional investors own a substantial 84.85% of Cadence Design Systems.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-buys-9396-shares-of-cadence-design-systems-inc-cdns-2026-01-26/",
+      "tickers": [
+        "CDNS"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.275782,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CDNS",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.259375,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CDNS": 0.259375
+      }
+    },
+    {
+      "id": "2560671291541561947",
+      "timestamp": "2026-01-26T12:42:24",
+      "headline": "Lbp Am Sa Increases Position in Boston Scientific Corporation $BSX",
+      "summary": "Lbp Am Sa significantly increased its stake in Boston Scientific Corporation (NYSE:BSX) by 38.1% in the third quarter of 2025, adding 110,583 shares to hold a total of 400,859 shares valued at approximately $39.14 million. Institutional investors collectively own 89.07% of BSX, with major holders including Vanguard Group and State Street Corp, demonstrating strong institutional confidence. Analysts currently maintain a consensus rating of \"Moderate Buy\" for Boston Scientific, with an average price target of $123.89, suggesting potential upside for the stock.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-increases-position-in-boston-scientific-corporation-bsx-2026-01-26/",
+      "tickers": [
+        "BSX",
+        "V",
+        "STT"
+      ],
+      "topics": [
+        "financial_markets",
+        "life_sciences"
+      ],
+      "overall_sentiment": 0.177187,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BSX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.265685,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "V",
+          "relevance_score": 0.622929,
+          "sentiment_score": 0.134813,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "STT",
+          "relevance_score": 0.64685,
+          "sentiment_score": 0.11217,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "BSX": 0.265685,
+        "V": 0.134813,
+        "STT": 0.11217
+      }
+    },
+    {
+      "id": "5036508160009064756",
+      "timestamp": "2026-01-26T12:42:22",
+      "headline": "Lbp Am Sa Has $18.14 Million Position in Bank of America Corporation $BAC",
+      "summary": "Lbp Am Sa increased its stake in Bank of America (NYSE:BAC) by 31.6% in the third quarter, now holding 351,677 shares valued at $18.14 million. Wall Street analysts generally have a \"Moderate Buy\" rating for BAC with an average target price of $59.74, despite recent concerns stemming from reports that Bank of America may offer credit cards with a 10% interest rate, which could affect card yields and investor perception. The article also highlights strong Q4 results and various other hedge fund transactions in Bank of America shares.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-has-1814-million-position-in-bank-of-america-corporation-bac-2026-01-26/",
+      "tickers": [
+        "BAC",
+        "C"
+      ],
+      "topics": [
+        "finance",
+        "financial_markets",
+        "earnings"
+      ],
+      "overall_sentiment": 0.046318,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BAC",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.091523,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "C",
+          "relevance_score": 0.621048,
+          "sentiment_score": -0.066283,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "BAC": 0.091523,
+        "C": -0.066283
+      }
+    },
+    {
+      "id": "-6505262321818582482",
+      "timestamp": "2026-01-26T12:41:57",
+      "headline": "Lbp Am Sa Raises Stock Position in Marathon Petroleum Corporation $MPC",
+      "summary": "Lbp Am Sa significantly increased its stake in Marathon Petroleum Corporation (NYSE:MPC) by 279.6% in the third quarter, now holding 87,606 shares valued at $16.885 million. Other institutional investors like Vanguard Group and Norges Bank also substantially increased their positions, with institutional ownership reaching 76.77%. Analysts maintain a mixed \"Hold\" rating for MPC, with a consensus price target of $196.67, while the company recently raised its quarterly dividend to $1.00 per share, offering a 2.3% yield.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-raises-stock-position-in-marathon-petroleum-corporation-mpc-2026-01-26/",
+      "tickers": [
+        "MPC"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "energy_transportation",
+        "finance"
+      ],
+      "overall_sentiment": 0.004918,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MPC",
+          "relevance_score": 0.333699,
+          "sentiment_score": 0.047764,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "MPC": 0.047764
+      }
+    },
+    {
+      "id": "6848014349513387839",
+      "timestamp": "2026-01-26T12:41:55",
+      "headline": "Milestones Administradora de Recursos Ltda. Decreases Stake in Moody's Corporation $MCO",
+      "summary": "Milestones Administradora de Recursos Ltda. significantly reduced its stake in Moody's Corporation (NYSE:MCO) by 66.7% in the third quarter, selling 12,702 shares and retaining 6,353 shares valued at approximately $3.03 million. Despite this, other institutions like Vanguard, TCI Fund Management, Geode Capital Management, and Fiera Capital Corp increased their holdings, with Norges Bank initiating a substantial new stake. Analysts generally maintain a \"Moderate Buy\" rating for Moody's with a consensus price target of $560.94.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-milestones-administradora-de-recursos-ltda-decreases-stake-in-moodys-corporation-mco-2026-01-26/",
+      "tickers": [
+        "MCO"
+      ],
+      "topics": [
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.118599,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MCO",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.143496,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "MCO": 0.143496
+      }
+    },
+    {
+      "id": "8350334740041085194",
+      "timestamp": "2026-01-26T12:41:53",
+      "headline": "Shoker Investment Counsel Inc. Has $3.43 Million Holdings in Lockheed Martin Corporation $LMT",
+      "summary": "Shoker Investment Counsel Inc. significantly increased its stake in Lockheed Martin Corporation by 1,348% in the third quarter, bringing its total holdings to 6,878 shares valued at approximately $3.43 million. This makes Lockheed Martin its 25th largest holding, representing 1.0% of its investment portfolio. Other institutional investors like Vanguard Group Inc., Geode Capital Management LLC, and Legal & General Group Plc have also adjusted their positions in the aerospace company.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-shoker-investment-counsel-inc-has-343-million-holdings-in-lockheed-martin-corporation-lmt-2026-01-26/",
+      "tickers": [
+        "LMT"
+      ],
+      "topics": [
+        "financial_markets",
+        "manufacturing"
+      ],
+      "overall_sentiment": 0.043877,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "LMT",
+          "relevance_score": 0.311867,
+          "sentiment_score": 0.008696,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "LMT": 0.008696
+      }
+    },
+    {
+      "id": "-2921170227547780332",
+      "timestamp": "2026-01-26T12:41:47",
+      "headline": "Lbp Am Sa Has $20.25 Million Stock Position in Incyte Corporation $INCY",
+      "summary": "Lbp Am Sa has increased its stake in Incyte Corporation (NASDAQ: INCY) by 33.6% in the third quarter, now holding 238,705 shares valued at approximately $20.25 million. This institutional investment comes as several other firms have also modified their holdings in the biopharmaceutical company. Incyte recently surpassed its quarterly earnings expectations, reporting an EPS of $2.26 against an anticipated $1.65, with revenues reaching $1.37 billion.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-has-2025-million-stock-position-in-incyte-corporation-incy-2026-01-26/",
+      "tickers": [
+        "INCY"
+      ],
+      "topics": [
+        "earnings",
+        "life_sciences",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.106119,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "INCY",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.118739,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "INCY": 0.118739
+      }
+    },
+    {
+      "id": "-4648911479027555002",
+      "timestamp": "2026-01-26T12:41:46",
+      "headline": "Lbp Am Sa Buys 27,175 Shares of International Business Machines Corporation $IBM",
+      "summary": "Lbp Am Sa increased its stake in International Business Machines (NYSE:IBM) by 24.8%, purchasing 27,175 shares to hold a total of 136,659 shares valued at $38.56 million in the third quarter. Analysts generally hold a \"Moderate Buy\" consensus rating with a $306.86 price target, with IBM's earnings scheduled for January 28th. The company has a market capitalization of $273.35 billion, a P/E ratio of approximately 35, and a 52-week trading range of $214.50\u2013$324.90.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-buys-27175-shares-of-international-business-machines-corporation-ibm-2026-01-26/",
+      "tickers": [
+        "IBM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology",
+        "finance"
+      ],
+      "overall_sentiment": 0.342205,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "IBM",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.320958,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "IBM": 0.320958
+      }
+    },
+    {
+      "id": "8266485240527560345",
+      "timestamp": "2026-01-26T12:41:24",
+      "headline": "Lbp Am Sa Grows Position in Vertex Pharmaceuticals Incorporated $VRTX",
+      "summary": "Lbp Am Sa increased its stake in Vertex Pharmaceuticals (NASDAQ:VRTX) by 12.6% in Q3, now holding 44,279 shares valued at $17.34 million. Despite significant insider selling totaling $73.86 million recently, analysts maintain a \"Moderate Buy\" consensus with an average target of $513.10. Vertex Pharmaceuticals reported strong Q3 earnings, beating estimates with $4.80 EPS and 11% year-over-year revenue growth.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-grows-position-in-vertex-pharmaceuticals-incorporated-vrtx-2026-01-26/",
+      "tickers": [
+        "VRTX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences",
+        "finance"
+      ],
+      "overall_sentiment": 0.106173,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "VRTX",
+          "relevance_score": 0.969294,
+          "sentiment_score": 0.135618,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "VRTX": 0.135618
+      }
+    },
+    {
+      "id": "-2739840990710555246",
+      "timestamp": "2026-01-26T12:41:22",
+      "headline": "Shoker Investment Counsel Inc. Buys New Stake in UnitedHealth Group Incorporated $UNH",
+      "summary": "Shoker Investment Counsel Inc. has initiated a new position in UnitedHealth Group (UNH) during the third quarter, acquiring 7,893 shares valued at approximately $2.73 million. This comes as institutional investors collectively own about 87.9% of the stock, with other significant moves including Berkshire Hathaway Inc.'s much larger new stake of around $1.57 billion. Wall Street analysts generally maintain a \"Moderate Buy\" rating with an average price target of $386.33, though the company faces near-term risks such as regulatory scrutiny, a planned ACA profit rebate, and rising medical costs ahead of its January 27th earnings report.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-shoker-investment-counsel-inc-buys-new-stake-in-unitedhealth-group-incorporated-unh-2026-01-26/",
+      "tickers": [
+        "UNH"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "life_sciences"
+      ],
+      "overall_sentiment": 0.124114,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "UNH",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.144722,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "UNH": 0.144722
+      }
+    },
+    {
+      "id": "1448939591483530464",
+      "timestamp": "2026-01-26T12:41:20",
+      "headline": "Lbp Am Sa Buys New Position in The Travelers Companies, Inc. $TRV",
+      "summary": "Lbp Am Sa has acquired a new position of 87,799 shares, valued at approximately $24.5 million, in The Travelers Companies, Inc. This purchase highlights institutional investor interest, with these entities now owning about 82.45% of the company's stock. Travelers recently reported a strong fourth-quarter earnings beat, authorized a $5.0 billion share buyback, and declared a quarterly dividend of $1.10, indicating strong management confidence in the company's performance and future outlook.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-buys-new-position-in-the-travelers-companies-inc-trv-2026-01-26/",
+      "tickers": [
+        "TRV"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.424983,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TRV",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.434619,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "TRV": 0.434619
+      }
+    },
+    {
+      "id": "-8733414390336795924",
+      "timestamp": "2026-01-26T12:41:18",
+      "headline": "Lbp Am Sa Has $16.42 Million Stock Holdings in Teledyne Technologies Incorporated $TDY",
+      "summary": "Lbp Am Sa increased its stake in Teledyne Technologies (NYSE:TDY) by 21.2% in Q3, bringing its holdings to 28,022 shares valued at $16.42 million. This comes as Teledyne reported strong Q4 results, surpassing earnings estimates and raising FY2026 guidance, leading to a stock rally and analyst price target upgrades. Despite the positive momentum, some analysts caution about the stock's premium valuation and potential for short-term pullbacks after its recent gains.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-has-1642-million-stock-holdings-in-teledyne-technologies-incorporated-tdy-2026-01-26/",
+      "tickers": [
+        "TDY"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.413187,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TDY",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.420021,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "TDY": 0.420021
+      }
+    },
+    {
+      "id": "-3546668829661720828",
+      "timestamp": "2026-01-26T12:41:17",
+      "headline": "Lbp Am Sa Raises Stock Position in Automatic Data Processing, Inc. $ADP",
+      "summary": "Lbp Am Sa increased its stake in Automatic Data Processing (ADP) by 20.5% in Q3, now owning 78,171 shares valued at $22.94 million. ADP also announced a $6.0 billion share repurchase program and a quarterly dividend of $1.70. The company reported strong Q3 earnings, exceeding expectations with $2.49 EPS and $5.18 billion in revenue, and provided FY2026 guidance above analyst forecasts.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-raises-stock-position-in-automatic-data-processing-inc-adp-2026-01-26/",
+      "tickers": [
+        "ADP"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.393058,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ADP",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.425917,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ADP": 0.425917
+      }
+    },
+    {
+      "id": "682631682401629100",
+      "timestamp": "2026-01-26T12:41:17",
+      "headline": "Lorne Steinberg Wealth Management Inc. Boosts Position in Automatic Data Processing, Inc. $ADP",
+      "summary": "Lorne Steinberg Wealth Management Inc. significantly increased its stake in Automatic Data Processing (ADP) by 96.2% in Q3, owning 16,685 shares valued at approximately $4.90 million. Despite institutional buying, company insiders have recently sold shares, and analysts generally hold a \"Hold\" rating with a consensus target price of $306.42, alongside recent downward price target revisions. ADP has also authorized a $6.0 billion share repurchase program and announced a quarterly dividend of $1.70 per share.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lorne-steinberg-wealth-management-inc-boosts-position-in-automatic-data-processing-inc-adp-2026-01-26/",
+      "tickers": [
+        "ADP"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.276249,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ADP",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.285098,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ADP": 0.285098
+      }
+    },
+    {
+      "id": "-477748812097559741",
+      "timestamp": "2026-01-26T12:41:16",
+      "headline": "Lbp Am Sa Has $19.93 Million Stake in Seagate Technology Holdings PLC $STX",
+      "summary": "Lbp Am Sa decreased its stake in Seagate Technology Holdings PLC by 23.4% in the third quarter, reducing its holdings to 84,419 shares valued at approximately $19.93 million. This comes as insiders have been net sellers, with CEO William D. Mosley selling 20,000 shares worth $5.26 million. Despite insider selling, analyst sentiment is bullish, with multiple price target increases and a \"Moderate Buy\" consensus, driven by AI-driven demand for storage and a recent dividend increase.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-has-1993-million-stake-in-seagate-technology-holdings-plc-stx-2026-01-26/",
+      "tickers": [
+        "STX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.461302,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "STX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.468479,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "STX": 0.468479
+      }
+    },
+    {
+      "id": "-807767124492573400",
+      "timestamp": "2026-01-26T12:41:15",
+      "headline": "Lbp Am Sa Acquires 16,994 Shares of S&P Global Inc. $SPGI",
+      "summary": "Lbp Am Sa increased its stake in S&P Global Inc. by 32.8% in Q3, purchasing 16,994 additional shares and bringing its total holdings to 68,858 shares valued at approximately $33.51 million. S&P Global exceeded Q3 earnings expectations with $4.73 EPS and $3.89 billion in revenue, and subsequently raised its FY2025 EPS guidance. The company also announced an increase in its quarterly dividend to $0.97 per share, yielding about 0.7%, and maintains a \"Buy\" consensus rating from analysts with an average price target of around $615.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-acquires-16994-shares-of-sp-global-inc-spgi-2026-01-26/",
+      "tickers": [
+        "SPGI"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.488705,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SPGI",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.462159,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "SPGI": 0.462159
+      }
+    },
+    {
+      "id": "1782558732281067934",
+      "timestamp": "2026-01-26T12:40:15",
+      "headline": "Lbp Am Sa Sells 9,046 Shares of Simon Property Group, Inc. $SPG",
+      "summary": "Lbp Am Sa has reduced its stake in Simon Property Group, Inc. (NYSE:SPG) by 8.4% in the third quarter, selling 9,046 shares to hold 98,951 shares valued at $18.57 million. Despite this insider selling, Simon Property Group recently beat quarterly earnings and revenue estimates, raised its quarterly dividend to $2.20, and received several analyst upgrades. The article also details insider buying from directors Larry C. Glasscock and Gary M. Rodkin, and lists various financial metrics and analyst ratings for the company.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-sells-9046-shares-of-simon-property-group-inc-spg-2026-01-26/",
+      "tickers": [
+        "SPG"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "real_estate",
+        "finance"
+      ],
+      "overall_sentiment": 0.287065,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SPG",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.288205,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "SPG": 0.288205
+      }
+    },
+    {
+      "id": "-1760052100863178007",
+      "timestamp": "2026-01-26T12:39:56",
+      "headline": "Marketaxess Holdings Inc. Announces Board Appointments, Effective March 1, 2026",
+      "summary": "MarketAxess Holdings Inc. announced the election of Douglas Cifu and Kenneth Schiciano to its Board of Directors, effective March 1, 2026. Mr. Cifu, co-founder and former CEO of Virtu Financial, brings expertise in financial technology and market making. Mr. Schiciano, a Senior Advisor at TA Associates, offers extensive experience in the private equity industry with a focus on infrastructure, software, and financial technology investments.",
+      "source": "marketscreener.com",
+      "url": "https://www.marketscreener.com/news/marketaxess-holdings-inc-announces-board-appointments-effective-march-1-2026-ce7e5bdbda8cf62c",
+      "tickers": [
+        "MKTX"
+      ],
+      "topics": [
+        "finance",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.203433,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MKTX",
+          "relevance_score": 0.999915,
+          "sentiment_score": 0.216012,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MKTX": 0.216012
+      }
+    },
+    {
+      "id": "8503611268936164343",
+      "timestamp": "2026-01-26T12:39:48",
+      "headline": "Lbp Am Sa Increases Stock Holdings in Intuitive Surgical, Inc. $ISRG",
+      "summary": "Lbp Am Sa has increased its stake in Intuitive Surgical (NASDAQ:ISRG) by 28.2% in Q3, now holding 45,426 shares worth $20.316 million, with institutional investors owning 83.64% of the company. Intuitive Surgical's Q4 results exceeded estimates, leading to analyst target increases, though management provided measured 2026 guidance anticipating mid-teens procedure growth and a slight gross-margin headwind. Insiders sold 55,714 shares totaling approximately $31.6 million in the last three months.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-increases-stock-holdings-in-intuitive-surgical-inc-isrg-2026-01-26/",
+      "tickers": [
+        "ISRG"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences"
+      ],
+      "overall_sentiment": 0.222179,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ISRG",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.223864,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ISRG": 0.223864
+      }
+    },
+    {
+      "id": "-5974108153848151810",
+      "timestamp": "2026-01-26T12:38:16",
+      "headline": "Steel Dynamics (STLD) Beats Q4 2025 EPS Estimates but Revenue Misses",
+      "summary": "Steel Dynamics (STLD) reported Q4 2025 EPS of $1.83, exceeding estimates, but missed revenue projections with $4.41 billion. The company attributed the revenue miss to lower average realized selling values and reduced volumes due to seasonal demand and longer-than-anticipated maintenance outages. Despite challenges, Steel Dynamics maintains an optimistic outlook for 2026, anticipating improved market conditions and strong domestic demand for its steel and aluminum products, particularly with ongoing expansion of its aluminum facilities.",
+      "source": "Tokenist",
+      "url": "https://tokenist.com/steel-dynamics-stld-beats-q4-2025-eps-estimates-but-revenue-misses/",
+      "tickers": [
+        "STLD"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing",
+        "economy_macro",
+        "finance"
+      ],
+      "overall_sentiment": 0.10739,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "STLD",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.110207,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "STLD": 0.110207
+      }
+    },
+    {
+      "id": "-7124810690131259633",
+      "timestamp": "2026-01-26T12:37:25",
+      "headline": "Caterpillar\u2019s Robust Order Book Fuels Investor Confidence",
+      "summary": "Caterpillar is poised for strong earnings, backed by a record $39.9 billion order backlog providing multi-year visibility. Market analysts anticipate increased EPS and have raised price targets, highlighting confidence in Caterpillar's role as a hybrid entity in traditional machinery and technology infrastructure sectors. Investors await the January 29th earnings report to confirm sustained momentum or potential volatility due to its premium valuation.",
+      "source": "Primary Ignition",
+      "url": "https://primaryignition.com/2026/01/26/caterpillars-robust-order-book-fuels-investor-confidence/",
+      "tickers": [
+        "CAT"
+      ],
+      "topics": [
+        "earnings",
+        "manufacturing",
+        "financial_markets",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.413548,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CAT",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.424315,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CAT": 0.424315
+      }
+    },
+    {
+      "id": "2146893298667417669",
+      "timestamp": "2026-01-26T12:35:52",
+      "headline": "Lbp Am Sa Has $17.44 Million Position in L3Harris Technologies Inc $LHX",
+      "summary": "Lbp Am Sa significantly increased its stake in L3Harris Technologies, now holding 57,104 shares valued at $17.44 million. This move comes as CEO Christopher E. Kubasik recently sold shares worth $4.27 million, while L3Harris reported strong Q3 earnings, beating estimates, and raised its quarterly dividend. The company also received a \"Moderate Buy\" rating from analysts with an average target price of $315.73.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-has-1744-million-position-in-l3harris-technologies-inc-lhx-2026-01-26/",
+      "tickers": [
+        "LHX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.310667,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "LHX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.305856,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "LHX": 0.305856
+      }
+    },
+    {
+      "id": "6708933016263350889",
+      "timestamp": "2026-01-26T12:35:25",
+      "headline": "Ventas, Inc. $VTR Holdings Lifted by Lbp Am Sa",
+      "summary": "Lbp Am Sa increased its holdings in Ventas, Inc. (NYSE:VTR) by 17.6% during the third quarter, bringing its total ownership to 479,818 shares valued at approximately $33.6 million. Following this, institutional investors now own about 94.18% of the company. Despite positive analyst ratings and lifted price targets, significant insider selling has occurred, with CEO Debra Cafaro and CFO Robert Probst offloading shares worth over $37 million combined in the last 90 days.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-ventas-inc-vtr-holdings-lifted-by-lbp-am-sa-2026-01-26/",
+      "tickers": [
+        "VTR",
+        "WFC",
+        "KEY"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences",
+        "real_estate",
+        "finance"
+      ],
+      "overall_sentiment": 0.372997,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "VTR",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.431783,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "WFC",
+          "relevance_score": 0.613305,
+          "sentiment_score": 0.303312,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "KEY",
+          "relevance_score": 0.609448,
+          "sentiment_score": 0.325745,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "VTR": 0.431783,
+        "WFC": 0.303312,
+        "KEY": 0.325745
+      }
+    },
+    {
+      "id": "-1387069071008498886",
+      "timestamp": "2026-01-26T12:34:07",
+      "headline": "Lbp Am Sa Takes Position in PepsiCo, Inc. $PEP",
+      "summary": "Lbp Am Sa acquired a new stake of 179,392 shares in PepsiCo, valued at approximately $25.19 million, in the third quarter. Institutional investors now own about 73.07% of the company's stock. While analysts have issued mixed ratings, with some upgrades, the MarketBeat consensus is a \"Hold\" with a $159.29 price target, amid news like Coca-Cola reclaiming Costco food courts and PepsiCo's 3.9% dividend yield coupled with a high payout ratio.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-lbp-am-sa-takes-position-in-pepsico-inc-pep-2026-01-26/",
+      "tickers": [
+        "PEP",
+        "KO",
+        "KDP",
+        "COST"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings",
+        "retail_wholesale",
+        "finance"
+      ],
+      "overall_sentiment": -0.11506,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PEP",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.021781,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "KO",
+          "relevance_score": 0.700852,
+          "sentiment_score": -0.405174,
+          "sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "KDP",
+          "relevance_score": 0.613629,
+          "sentiment_score": 0.33908,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "COST",
+          "relevance_score": 0.62843,
+          "sentiment_score": -0.336065,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "PEP": 0.021781,
+        "KO": -0.405174,
+        "KDP": 0.33908,
+        "COST": -0.336065
+      }
+    },
+    {
+      "id": "1656368933644957234",
+      "timestamp": "2026-01-26T12:33:47",
+      "headline": "DeFi Technologies Announces Valour Receives UK Regulatory Approval and Begins Offering Select Yield-Bearing Crypto ETPs to UK Retail Investors via the London Stock Exchange",
+      "summary": "DeFi Technologies, through its subsidiary Valour, has received UK regulatory approval to offer select yield-bearing crypto ETPs to UK retail investors. These products will be available via the London Stock Exchange starting January 26, 2026. This move bridges traditional capital markets with decentralized finance for UK investors.",
+      "source": "The Globe and Mail",
+      "url": "https://www.theglobeandmail.com/investing/markets/markets-news/Newswire.ca/37226416/defi-technologies-announces-valour-receives-uk-regulatory-approval-and-begins-offering-select-yield-bearing-crypto-etps-to-uk-retail-investors-via-the-london-stock-exchange/",
+      "tickers": [
+        "DEFT"
+      ],
+      "topics": [
+        "blockchain",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.009923,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "DEFT",
+          "relevance_score": 0.347612,
+          "sentiment_score": 0.022793,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "DEFT": 0.022793
+      }
+    },
+    {
+      "id": "-5236468788158107161",
+      "timestamp": "2026-01-26T12:33:24",
+      "headline": "Brown & Brown (BRO) Announces Leadership Change in Legal Department",
+      "summary": "Brown & Brown Inc. (BRO) has announced a leadership change in its legal department following the passing of Chief Legal Officer Robert Mathis. Eileen Akerson will serve as interim Chief Legal Officer. The company, a diversified insurance agency, reported strong financial performance with consistent revenue growth and expanding operating margins, but its Altman Z-Score indicates potential financial challenges.",
+      "source": "GuruFocus",
+      "url": "https://www.gurufocus.com/news/8550216/brown-brown-bro-announces-leadership-change-in-legal-department",
+      "tickers": [
+        "BRO"
+      ],
+      "topics": [
+        "earnings",
+        "finance",
+        "financial_markets",
+        "retail_wholesale"
+      ],
+      "overall_sentiment": 0.038675,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BRO",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.041335,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "BRO": 0.041335
+      }
+    },
+    {
+      "id": "6201353081600080052",
+      "timestamp": "2026-01-26T12:33:16",
+      "headline": "Steel Dynamics shares rise as fourth quarter earnings beat expectations",
+      "summary": "Steel Dynamics (NASDAQ:STLD) exceeded analyst expectations for its fourth-quarter earnings, reporting $1.82 per diluted share against a $1.69 consensus. Despite revenue falling slightly short at $4.4 billion compared to the anticipated $4.53 billion, shares rose 2.6% post-announcement. The company cited solid operational performance and anticipates improved market conditions, including trade stability and a favorable interest rate environment, to support future demand.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/earnings/steel-dynamics-shares-rise-as-fourth-quarter-earnings-beat-expectations-4464904",
+      "tickers": [
+        "STLD"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.472845,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "STLD",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.494779,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "STLD": 0.494779
+      }
+    },
+    {
+      "id": "2350122051720431078",
+      "timestamp": "2026-01-26T12:31:59",
+      "headline": "Jefferies lowers NiSource stock price target to $49 from $50, keeps Buy rating",
+      "summary": "Jefferies has reiterated its Buy rating on NiSource (NYSE:NI) but has slightly reduced its price target from $50 to $49. The firm notes that the new target still implies a 13% upside from the current stock price, and NiSource's shares are considered appealing among utilities due to strong projected earnings per share growth. The analysis highlights potential for further growth driven by future GenCo deals and its relationship with Amazon.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/analyst-ratings/jefferies-lowers-nisource-stock-price-target-to-49-from-50-keeps-buy-rating-93CH-4464802",
+      "tickers": [
+        "NI"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings"
+      ],
+      "overall_sentiment": 0.005236,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "NI",
+          "relevance_score": 0.314043,
+          "sentiment_score": 0.016058,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "NI": 0.016058
+      }
+    },
+    {
+      "id": "1591543223632972256",
+      "timestamp": "2026-01-26T12:30:19",
+      "headline": "Wolfe Research Adjusts Price Target on Applied Materials to $400 From $260, Maintains Outperform Rating",
+      "summary": "Wolfe Research has increased its price target for Applied Materials (AMAT) to $400 from $260, while maintaining an Outperform rating on the stock. This adjustment reflects a significant positive outlook on the semiconductor equipment company's future performance. The news comes alongside other analysts also raising their price targets for Applied Materials.",
+      "source": "marketscreener.com",
+      "url": "https://www.marketscreener.com/news/wolfe-research-adjusts-price-target-on-applied-materials-to-400-from-260-maintains-outperform-rat-ce7e5bdbda8df727",
+      "tickers": [
+        "AMAT",
+        "LRCX"
+      ],
+      "topics": [
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.396014,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "AMAT",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.444384,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "LRCX",
+          "relevance_score": 0.638389,
+          "sentiment_score": 0.324396,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "AMAT": 0.444384,
+        "LRCX": 0.324396
+      }
+    },
+    {
+      "id": "8141164549781503306",
+      "timestamp": "2026-01-26T12:25:07",
+      "headline": "Danaher Corporation $DHR Shares Purchased by Mutual of America Capital Management LLC",
+      "summary": "Mutual of America Capital Management LLC increased its stake in Danaher Corporation (NYSE:DHR) by 22.4% in the third quarter of last year, acquiring an additional 17,478 shares to hold a total of 95,443 shares worth approximately $18.92 million. Despite this institutional buying, company insiders sold 30,248 shares totaling $6.61 million during the previous quarter, with SVP Brian W. Ellis being a significant seller. Analysts maintain a generally positive outlook, with a consensus \"Moderate Buy\" rating and an average price target of $252.09, though several firms have recently raised their targets to around $270.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-danaher-corporation-dhr-shares-purchased-by-mutual-of-america-capital-management-llc-2026-01-26/",
+      "tickers": [
+        "DHR",
+        "JCI"
+      ],
+      "topics": [
+        "financial_markets",
+        "life_sciences",
+        "earnings"
+      ],
+      "overall_sentiment": 0.275886,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "DHR",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.487855,
+          "sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "JCI",
+          "relevance_score": 0.563343,
+          "sentiment_score": 0.108728,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "DHR": 0.487855,
+        "JCI": 0.108728
+      }
+    },
+    {
+      "id": "-7166987384425239743",
+      "timestamp": "2026-01-26T12:25:01",
+      "headline": "Mutual of America Capital Management LLC Cuts Stock Position in Cisco Systems, Inc. $CSCO",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in Cisco Systems, Inc. by 5.9% in the third quarter, selling 26,981 shares and now owning 429,192 shares valued at $29.37 million. Despite this reduction, other institutional investors increased their positions in CSCO. The article also covers recent analyst ratings, financial performance, dividend announcements, and insider trading activity for Cisco Systems.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-cuts-stock-position-in-cisco-systems-inc-csco-2026-01-26/",
+      "tickers": [
+        "CSCO"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.007485,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CSCO",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.039217,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "CSCO": 0.039217
+      }
+    },
+    {
+      "id": "1794454481800316229",
+      "timestamp": "2026-01-26T12:24:55",
+      "headline": "Mutual of America Capital Management LLC Sells 15,535 Shares of Citigroup Inc. $C",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in Citigroup Inc. (NYSE:C) by 6.6% in the third quarter, selling 15,535 shares and holding 220,805 shares valued at $22.41 million. Other institutional investors also adjusted their positions in Citigroup, which has a \"Moderate Buy\" consensus rating from analysts with an average price target of $125.56. The company recently reported an EPS beat for its latest quarter and declared a quarterly dividend of $0.60 per share.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-sells-15535-shares-of-citigroup-inc-c-2026-01-26/",
+      "tickers": [
+        "C"
+      ],
+      "topics": [
+        "earnings",
+        "finance",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.010766,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "C",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.020748,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "C": 0.020748
+      }
+    },
+    {
+      "id": "6088763868435015088",
+      "timestamp": "2026-01-26T12:24:53",
+      "headline": "Mutual of America Capital Management LLC Trims Holdings in Bank of America Corporation $BAC",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in Bank of America Corporation (NYSE:BAC) by 1.7% in the third quarter, holding 738,667 shares valued at $38.1 million. Despite this trim, Bank of America remains its 26th largest position. Other institutional investors showed mixed activity, with some increasing and some initiating new positions in the financial services provider.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-trims-holdings-in-bank-of-america-corporation-bac-2026-01-26/",
+      "tickers": [
+        "BAC"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings",
+        "finance"
+      ],
+      "overall_sentiment": -0.096558,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BAC",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.068962,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "BAC": -0.068962
+      }
+    },
+    {
+      "id": "7047710887879150017",
+      "timestamp": "2026-01-26T12:24:53",
+      "headline": "Mutual of America Capital Management LLC Sells 4,515 Shares of The Boeing Company $BA",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in The Boeing Company (NYSE:BA) by 5.2% in Q3, selling 4,515 shares and now owning 81,826 shares valued at $17.66 million. Insider activity was mixed, with an EVP selling shares and an SVP buying, while the company faces strong order momentum contrasted by FAA certification risks and a recent EPS miss. Boeing's stock performance and analyst ratings show a \"Moderate Buy\" consensus despite the challenges.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-sells-4515-shares-of-the-boeing-company-ba-2026-01-26/",
+      "tickers": [
+        "BA",
+        "BAC",
+        "IBM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing"
+      ],
+      "overall_sentiment": -0.067664,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BA",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.252549,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "BAC",
+          "relevance_score": 0.563667,
+          "sentiment_score": -0.144733,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "IBM",
+          "relevance_score": 0.579233,
+          "sentiment_score": 0.293685,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "BA": -0.252549,
+        "BAC": -0.144733,
+        "IBM": 0.293685
+      }
+    },
+    {
+      "id": "666629972152884481",
+      "timestamp": "2026-01-26T12:24:52",
+      "headline": "Mutual of America Capital Management LLC Sells 4,635 Shares of American Express Company $AXP",
+      "summary": "Mutual of America Capital Management LLC decreased its stake in American Express Company by 7.3%, selling 4,635 shares in the third quarter. The fund now holds 58,838 shares valued at $19.544 million. American Express previously missed quarterly earnings expectations and has a consensus \"Hold\" rating from analysts with an average price target of $353.95.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-sells-4635-shares-of-american-express-company-axp-2026-01-26/",
+      "tickers": [
+        "AXP"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": -0.204537,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "AXP",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.218369,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "AXP": -0.218369
+      }
+    },
+    {
+      "id": "-5827749799845242342",
+      "timestamp": "2026-01-26T12:24:48",
+      "headline": "Mutual of America Capital Management LLC Sells 3,718 Shares of Adobe Inc. $ADBE",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in Adobe Inc. by 6.7% in the third quarter, selling 3,718 shares and retaining 51,797 shares valued at $18.27 million. This comes as Adobe leverages AI initiatives, which have positively impacted user growth and monetization, and recently surpassed its quarterly EPS and revenue estimates while providing optimistic FY26 guidance. Despite this, Wall Street sentiment is mixed with an average \"Hold\" rating, and the stock is trading below its 50- and 200-day moving averages due to significant year-to-date declines.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-sells-3718-shares-of-adobe-inc-adbe-2026-01-26/",
+      "tickers": [
+        "ADBE"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology",
+        "finance"
+      ],
+      "overall_sentiment": 0.036549,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ADBE",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.040667,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ADBE": 0.040667
+      }
+    },
+    {
+      "id": "7047420918585580656",
+      "timestamp": "2026-01-26T12:24:47",
+      "headline": "Mutual of America Capital Management LLC Sells 10,889 Shares of Abbott Laboratories $ABT",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in Abbott Laboratories by 5.5% in the third quarter, selling 10,889 shares and holding 188,339 shares valued at $25.23 million. Other institutional investors also adjusted their holdings in the company, which recently reported earnings of $1.50 EPS and a revenue miss, leading to a slight stock price dip and some analyst price target reductions despite an increase in its quarterly dividend.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-sells-10889-shares-of-abbott-laboratories-abt-2026-01-26/",
+      "tickers": [
+        "ABT",
+        "AVGO"
+      ],
+      "topics": [
+        "earnings",
+        "life_sciences",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.317211,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ABT",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.093648,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AVGO",
+          "relevance_score": 0.645512,
+          "sentiment_score": 0.533769,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ABT": 0.093648,
+        "AVGO": 0.533769
+      }
+    },
+    {
+      "id": "5015689997128528774",
+      "timestamp": "2026-01-26T12:24:47",
+      "headline": "AbbVie Inc. $ABBV Position Cut by Mutual of America Capital Management LLC",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in AbbVie Inc. (NYSE:ABBV) by 5.3% in the third quarter, selling 11,465 shares, though AbbVie remains its 21st largest holding. Despite this, other institutional investors like Conning Inc. and Diversified Trust Co. increased their positions, and analysts have issued a \"Moderate Buy\" rating with an average target price of $248.11. AbbVie recently declared an increased quarterly dividend of $1.73 per share, payable in February.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-abbvie-inc-abbv-position-cut-by-mutual-of-america-capital-management-llc-2026-01-26/",
+      "tickers": [
+        "ABBV"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences",
+        "finance"
+      ],
+      "overall_sentiment": 0.122057,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ABBV",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.138303,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ABBV": 0.138303
+      }
+    },
+    {
+      "id": "4416232266688044085",
+      "timestamp": "2026-01-26T12:24:27",
+      "headline": "Mutual of America Capital Management LLC Reduces Holdings in Lam Research Corporation $LRCX",
+      "summary": "Mutual of America Capital Management LLC decreased its stake in Lam Research Corporation (NASDAQ:LRCX) by 6.2% in the third quarter, reducing its holdings to 169,260 shares valued at $22.66 million. Despite this reduction, other institutional investors like Norges Bank and JPMorgan Chase & Co. significantly increased their positions in the semiconductor company. Analysts have a \"Moderate Buy\" consensus rating for LRCX with a target price of $200.52, and the company recently announced a quarterly dividend.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-reduces-holdings-in-lam-research-corporation-lrcx-2026-01-26/",
+      "tickers": [
+        "LRCX"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings",
+        "technology"
+      ],
+      "overall_sentiment": 0.008874,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "LRCX",
+          "relevance_score": 0.307699,
+          "sentiment_score": 0.019979,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "LRCX": 0.019979
+      }
+    },
+    {
+      "id": "-5331594883920117516",
+      "timestamp": "2026-01-26T12:24:21",
+      "headline": "Mutual of America Capital Management LLC Reduces Holdings in Intuit Inc. $INTU",
+      "summary": "Mutual of America Capital Management LLC decreased its stake in Intuit Inc. (NASDAQ:INTU) by 5.3% in Q3, now owning 33,929 shares valued at $23.17 million. Despite institutional selling, the company has a \"Moderate Buy\" consensus rating from analysts with an average price target of $791.73. Intuit recently reported strong Q3 earnings, beating estimates and increasing revenue by 18.3%, and declared a quarterly dividend of $1.20 per share.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-reduces-holdings-in-intuit-inc-intu-2026-01-26/",
+      "tickers": [
+        "INTU"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "technology"
+      ],
+      "overall_sentiment": 0.053691,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "INTU",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.074143,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "INTU": 0.074143
+      }
+    },
+    {
+      "id": "-4868103815921944607",
+      "timestamp": "2026-01-26T12:24:19",
+      "headline": "Mutual of America Capital Management LLC Sells 3,290 Shares of Amgen Inc. $AMGN",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in Amgen Inc. by 5.3% in the third quarter, selling 3,290 shares and holding 58,491 shares valued at $16.51 million. Despite insider selling, Amgen reported strong quarterly earnings, increased its dividend, and analysts maintain a \"Moderate Buy\" rating with a target price of $339.24. The company's stock has also seen significant buying activity from other institutional investors and recently hit a 52-week high, although it has faced some negative sentiment due to a lawsuit and a downgrade from one firm.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-sells-3290-shares-of-amgen-inc-amgn-2026-01-26/",
+      "tickers": [
+        "AMGN"
+      ],
+      "topics": [
+        "earnings",
+        "life_sciences",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.209663,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "AMGN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.24713,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "AMGN": 0.24713
+      }
+    },
+    {
+      "id": "-2148336150961799144",
+      "timestamp": "2026-01-26T12:24:19",
+      "headline": "Honeywell International Inc. $HON Stock Position Decreased by Mutual of America Capital Management LLC",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in Honeywell International Inc. (NASDAQ:HON) by 6.6% in the third quarter of 2025, selling 4,890 shares and holding 68,704 shares valued at $14.46 million. Despite this, other major institutional investors increased their positions, and institutional ownership remains high at 75.91%. Honeywell also surpassed Q3 earnings estimates with $2.82 EPS and $10.41 billion in revenue, leading analysts to maintain a \"Moderate Buy\" rating with an average price target of $237.67.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-honeywell-international-inc-hon-stock-position-decreased-by-mutual-of-america-capital-management-llc-2026-01-26/",
+      "tickers": [
+        "HON",
+        "BK",
+        "MS",
+        "JPM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing",
+        "finance"
+      ],
+      "overall_sentiment": 0.14274,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "HON",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.208379,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "BK",
+          "relevance_score": 0.711778,
+          "sentiment_score": 0.113765,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "MS",
+          "relevance_score": 0.635852,
+          "sentiment_score": 0.128781,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.588081,
+          "sentiment_score": 0.13557,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "HON": 0.208379,
+        "BK": 0.113765,
+        "MS": 0.128781,
+        "JPM": 0.13557
+      }
+    },
+    {
+      "id": "-3972260097991498240",
+      "timestamp": "2026-01-26T12:24:17",
+      "headline": "Mutual of America Capital Management LLC Trims Holdings in The Goldman Sachs Group, Inc. $GS",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in The Goldman Sachs Group by 6.6% during the third quarter. Despite this, other institutional investors increased their holdings, and 71.21% of the stock is owned by hedge funds and institutions. The article also details Goldman Sachs' recent financial performance, including a dividend increase, analyst ratings, and insider stock sales.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-trims-holdings-in-the-goldman-sachs-group-inc-gs-2026-01-26/",
+      "tickers": [
+        "GS",
+        "DHI"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance"
+      ],
+      "overall_sentiment": 0.146077,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GS",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.264251,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "DHI",
+          "relevance_score": 0.609857,
+          "sentiment_score": 0.047241,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "GS": 0.264251,
+        "DHI": 0.047241
+      }
+    },
+    {
+      "id": "-7050597819974960977",
+      "timestamp": "2026-01-26T12:24:16",
+      "headline": "Mutual of America Capital Management LLC Has $19.46 Million Stake in GE Vernova Inc. $GEV",
+      "summary": "Mutual of America Capital Management LLC has decreased its stake in GE Vernova Inc. by 5.6%, now holding 31,639 shares valued at approximately $19.46 million. This adjustment comes as GE Vernova recently doubled its quarterly dividend to $0.50, equivalent to an annualized $2.00, boasting a 0.3% yield and a 32.57% payout ratio. The company currently holds a \"Moderate Buy\" consensus rating from analysts, with a target price of $701.62.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-has-1946-million-stake-in-ge-vernova-inc-gev-2026-01-26/",
+      "tickers": [
+        "GEV"
+      ],
+      "topics": [
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.211611,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "GEV",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.210195,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "GEV": 0.210195
+      }
+    },
+    {
+      "id": "-8676715638380934889",
+      "timestamp": "2026-01-26T12:24:05",
+      "headline": "Oracle Corporation $ORCL Shares Acquired by Lbp Am Sa",
+      "summary": "Lbp Am Sa increased its stake in Oracle Corporation by 1.7% in Q3 2025, now holding 380,677 shares valued at $107.06 million. Despite notable insider selling totaling $26.11 million (including the CEO and a director), Oracle reported strong Q3 earnings, beating EPS estimates, and its TikTok/OCI partnership is viewed positively. However, the company faces risks from aggressive AI/data-center spending and related litigation.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-oracle-corporation-orcl-shares-acquired-by-lbp-am-sa-2026-01-26/",
+      "tickers": [
+        "ORCL",
+        "AMD"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.118951,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ORCL",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.089824,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "AMD",
+          "relevance_score": 0.53033,
+          "sentiment_score": 0.122813,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ORCL": 0.089824,
+        "AMD": 0.122813
+      }
+    },
+    {
+      "id": "-6856503489059571442",
+      "timestamp": "2026-01-26T12:23:51",
+      "headline": "Mutual of America Capital Management LLC Sells 8,778 Shares of UnitedHealth Group Incorporated $UNH",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in UnitedHealth Group (NYSE:UNH) by 7.9% in the third quarter, selling 8,778 shares, though the company remains its 28th largest holding. Despite this sale, several other institutional investors increased their positions in UNH during the second quarter. The article also reviews recent analyst ratings, market sentiment, and key factors affecting UnitedHealth Group, including regulatory risks and medical cost concerns.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-sells-8778-shares-of-unitedhealth-group-incorporated-unh-2026-01-26/",
+      "tickers": [
+        "UNH"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "life_sciences",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": -0.078355,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "UNH",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.068971,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "UNH": -0.068971
+      }
+    },
+    {
+      "id": "-1072309776035433247",
+      "timestamp": "2026-01-26T12:21:48",
+      "headline": "Mutual of America Capital Management LLC Decreases Stock Holdings in The TJX Companies, Inc. $TJX",
+      "summary": "Mutual of America Capital Management LLC reduced its stake in The TJX Companies, Inc. by 5.5% in Q3, selling 7,413 shares, though institutional ownership remains high at 91.09%. Analysts are largely bullish on TJX, with a consensus \"Buy\" rating and an average price target of $163.86. The company recently beat Q3 earnings estimates, provided optimistic FY2026 EPS guidance, and declared a quarterly dividend.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mutual-of-america-capital-management-llc-decreases-stock-holdings-in-the-tjx-companies-inc-tjx-2026-01-26/",
+      "tickers": [
+        "TJX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "retail_wholesale",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.305532,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TJX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.331707,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "TJX": 0.331707
+      }
+    },
+    {
+      "id": "8143712307110377343",
+      "timestamp": "2026-01-26T12:20:19",
+      "headline": "Comparator Drug Sourcing Global Market Review 2021-2025 and Forecast 2026-2031 Featuring Clinigen, BAP Pharma Group, Thermo Fisher Scientific, Laboratory Corporation of America, Catalent and More",
+      "summary": "The global comparator drug sourcing market is projected to grow from USD 1.56 billion in 2025 to USD 2.21 billion by 2031, with a CAGR of 5.98%, driven by increasing clinical trials and biosimilar developments. Challenges include supply chain security risks and counterfeiting, while market trends show expansion of cold chain capabilities and adoption of AI-driven demand forecasting. Key players in this market include Clinigen, Thermo Fisher Scientific, and Catalent.",
+      "source": "Yahoo Finance Singapore",
+      "url": "https://sg.finance.yahoo.com/news/comparator-drug-sourcing-global-market-121600302.html",
+      "tickers": [
+        "TMO",
+        "LH",
+        "MCK",
+        "BSX"
+      ],
+      "topics": [
+        "life_sciences",
+        "financial_markets",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.279072,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TMO",
+          "relevance_score": 0.938457,
+          "sentiment_score": 0.308652,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "LH",
+          "relevance_score": 0.747413,
+          "sentiment_score": 0.211811,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MCK",
+          "relevance_score": 0.646896,
+          "sentiment_score": 0.257727,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "BSX",
+          "relevance_score": 0.571703,
+          "sentiment_score": 0.237459,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "TMO": 0.308652,
+        "LH": 0.211811,
+        "MCK": 0.257727,
+        "BSX": 0.237459
+      }
+    },
+    {
+      "id": "-6802048873023423938",
+      "timestamp": "2026-01-26T11:49:56",
+      "headline": "Carrier Global (CARR): Buy, Sell, or Hold Post Q3 Earnings?",
+      "summary": "This article analyzes Carrier Global (CARR) stock post-Q3 earnings, advising investors to be cautious despite a recent price drop. The authors identify three main reasons for their bearish outlook: slow organic growth, limited projected revenue upside, and declining return on invested capital (ROIC). They conclude that CARR falls short of their quality standards and suggest looking into other \"high-quality stocks\" instead.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/286611/carrier-global-carr-buy-sell-or-hold-post-q3-earnings",
+      "tickers": [
+        "CARR",
+        "NVDA",
+        "JCI",
+        "TT"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing",
+        "economy_macro"
+      ],
+      "overall_sentiment": -0.291327,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CARR",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.627171,
+          "sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": 0.62436,
+          "sentiment_score": -0.144293,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "JCI",
+          "relevance_score": 0.629685,
+          "sentiment_score": -0.249459,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "TT",
+          "relevance_score": 0.630694,
+          "sentiment_score": -0.23176,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CARR": -0.627171,
+        "NVDA": -0.144293,
+        "JCI": -0.249459,
+        "TT": -0.23176
+      }
+    },
+    {
+      "id": "9035398243115962159",
+      "timestamp": "2026-01-26T11:44:42",
+      "headline": "Symphony Financial Ltd. Co. Trims Position in Marathon Petroleum Corporation $MPC",
+      "summary": "Symphony Financial Ltd. Co. significantly reduced its stake in Marathon Petroleum Corporation (NYSE:MPC) by 91.7% in the third quarter, selling 11,916 shares and retaining only 1,082 shares valued at $209,000. This move comes amid cooled analyst sentiment, with a consensus \"Hold\" rating and an average price target of $196.67, despite Marathon Petroleum slightly beating EPS estimates and raising its quarterly dividend. The article also notes other institutional investor activities and recent analyst rating changes for MPC.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-symphony-financial-ltd-co-trims-position-in-marathon-petroleum-corporation-mpc-2026-01-26/",
+      "tickers": [
+        "MPC"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_macro",
+        "energy_transportation",
+        "finance"
+      ],
+      "overall_sentiment": -0.149943,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MPC",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.119161,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "MPC": -0.119161
+      }
+    },
+    {
+      "id": "8722294973568988567",
+      "timestamp": "2026-01-26T11:44:24",
+      "headline": "Resona Asset Management Co. Ltd. Acquires 17,014 Shares of Equity Residential $EQR",
+      "summary": "Resona Asset Management Co. Ltd. increased its stake in Equity Residential (NYSE:EQR) by 8.8% in Q3, acquiring 17,014 additional shares to own a total of 209,614 shares valued at $13.47 million. Other institutional investors also adjusted their holdings, with hedge funds and institutions now owning 92.68% of the company's stock. Equity Residential reported Q3 EPS of $1.02, met analyst estimates, and announced a quarterly dividend of $0.6925, resulting in an annualized yield of 4.5%.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-resona-asset-management-co-ltd-acquires-17014-shares-of-equity-residential-eqr-2026-01-26/",
+      "tickers": [
+        "EQR"
+      ],
+      "topics": [
+        "earnings",
+        "finance",
+        "real_estate",
+        "financial_markets",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.114567,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "EQR",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.10058,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "EQR": 0.10058
+      }
+    },
+    {
+      "id": "-2871956796845463463",
+      "timestamp": "2026-01-26T11:43:59",
+      "headline": "Evercore ISI reiterates Outperform rating on Tractor Supply stock ahead of earnings",
+      "summary": "Evercore ISI has reiterated an Outperform rating for Tractor Supply Company (NASDAQ:TSCO), setting a $65.00 price target ahead of its Q4 earnings report. The firm projects Q4 comparable sales growth at 1.5%, below the Street's 2.5%, due to various headwinds, and has adjusted its EPS forecast slightly downward. Despite near-term challenges and recent analyst downgrades, Evercore maintains a positive long-term outlook, highlighting the stock's improved risk/reward profile and dividend yield.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/analyst-ratings/evercore-isi-reiterates-outperform-rating-on-tractor-supply-stock-ahead-of-earnings-93CH-4464761",
+      "tickers": [
+        "TSCO"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "retail_wholesale",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.01496,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TSCO",
+          "relevance_score": 0.327158,
+          "sentiment_score": 0.048899,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "TSCO": 0.048899
+      }
+    },
+    {
+      "id": "7668692790760952205",
+      "timestamp": "2026-01-26T11:43:55",
+      "headline": "Simon Property Group, Inc. $SPG Shares Sold by Teacher Retirement System of Texas",
+      "summary": "The Teacher Retirement System of Texas reduced its stake in Simon Property Group (NYSE:SPG) by 11.9% in the third quarter, selling 6,796 shares and leaving its total holdings valued at $9.45 million. Despite this, several other institutional investors increased their positions in SPG, and company insiders also acquired shares. Simon Property Group recently increased its quarterly dividend to $2.20 per share, offering an annualized dividend of $8.80 with a yield of 4.8%.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-simon-property-group-inc-spg-shares-sold-by-teacher-retirement-system-of-texas-2026-01-26/",
+      "tickers": [
+        "SPG"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "real_estate",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.07509,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SPG",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.104365,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "SPG": 0.104365
+      }
+    },
+    {
+      "id": "-924208676444490943",
+      "timestamp": "2026-01-26T11:41:24",
+      "headline": "Evercore ISI Adjusts Price Target on Eaton to $378 From $354, Maintains In Line Rating",
+      "summary": "Evercore ISI has increased its price target for Eaton (NYSE:ETN) to $378 from $354, while maintaining an \"In Line\" rating on the stock. This adjustment reflects an updated outlook from the analyst firm for the diversified industrial group. Eaton Corporation plc is a diversified industrial group organized around 4 families of products: distribution, control and electric protection systems and component, aerospace systems, air managing systems for automotive engines, and others.",
+      "source": "marketscreener.com",
+      "url": "https://www.marketscreener.com/news/evercore-isi-adjusts-price-target-on-eaton-to-378-from-354-maintains-in-line-rating-ce7e5bdbdb80f225",
+      "tickers": [
+        "ETN"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings",
+        "manufacturing",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.258696,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ETN",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.292584,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ETN": 0.292584
+      }
+    },
+    {
+      "id": "-1741834931130901235",
+      "timestamp": "2026-01-26T11:36:59",
+      "headline": "Mitsubishi UFJ Trust & Banking Corp Lowers Stock Holdings in The AES Corporation $AES",
+      "summary": "Mitsubishi UFJ Trust & Banking Corp significantly reduced its stake in The AES Corporation by 10.6% in the third quarter of 2025, selling 326,733 shares. Despite this, analysts maintain a \"Moderate Buy\" rating for AES with an average price target of $23.83, suggesting substantial upside from its current price of $14.23. The company also reported strong quarterly earnings, beating expectations, and announced a quarterly dividend of $0.176, equating to an attractive annual yield of approximately 4.9%.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-mitsubishi-ufj-trust-banking-corp-lowers-stock-holdings-in-the-aes-corporation-aes-2026-01-26/",
+      "tickers": [
+        "AES"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "economy_macro",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.14537,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "AES",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.144086,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "AES": 0.144086
+      }
+    },
+    {
+      "id": "8695656535761201746",
+      "timestamp": "2026-01-26T11:26:09",
+      "headline": "Strs Ohio Lowers Stake in Fidelity National Information Services, Inc. $FIS",
+      "summary": "Strs Ohio significantly decreased its holdings in Fidelity National Information Services (NYSE:FIS) by 57.2% in Q3, selling over 200,000 shares. Despite this, institutional investors collectively own 96.23% of the company's stock. The article also provides recent analyst ratings, price performance data, earnings results, dividend information, and details of insider stock purchases.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-strs-ohio-lowers-stake-in-fidelity-national-information-services-inc-fis-2026-01-26/",
+      "tickers": [
+        "FIS"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "technology",
+        "economy_macro"
+      ],
+      "overall_sentiment": -0.2476,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "FIS",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.234446,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "FIS": -0.234446
+      }
+    },
+    {
+      "id": "-6673669489511221067",
+      "timestamp": "2026-01-26T11:19:37",
+      "headline": "Teacher Retirement System of Texas Has $9.06 Million Position in Sempra Energy $SRE",
+      "summary": "The Teacher Retirement System of Texas decreased its stake in Sempra Energy (NYSE:SRE) by 11.9% in Q3, now holding 100,659 shares valued at $9.06 million. Sempra Energy beat Q3 earnings estimates with $1.11 EPS and $3.15 billion in revenue, and pays a quarterly dividend of $0.645, yielding approximately 3%. Analysts maintain a \"Moderate Buy\" rating with an average price target of $95.83, while institutional ownership remains high at nearly 90%, despite recent insider selling.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-teacher-retirement-system-of-texas-has-906-million-position-in-sempra-energy-sre-2026-01-26/",
+      "tickers": [
+        "SRE"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "energy_transportation",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.263354,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SRE",
+          "relevance_score": 0.994573,
+          "sentiment_score": 0.277773,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "SRE": 0.277773
+      }
+    },
+    {
+      "id": "-5242775384277752545",
+      "timestamp": "2026-01-26T11:11:26",
+      "headline": "This Emerging Markets ETF Has a Slight ESG Tilt",
+      "summary": "The iShares ESG Aware MSCI Emerging Markets Index ETF (XSEM) offers broad exposure to emerging markets with a mild ESG tilt, closely tracking its parent index due to tight constraints. Despite its low 0.25% annual fee, which provides a performance advantage over peers, the fund may still include investments in sectors or companies that some ESG-focused investors might prefer to avoid. Geopolitical risks are inherent, and while it has outperformed the category average since its inception, its long-term returns are expected to align closely with peers, supported by its low fees.",
+      "source": "Morningstar Canada",
+      "url": "https://global.morningstar.com/en-ca/etfs/this-emerging-markets-etf-has-slight-esg-tilt",
+      "tickers": [
+        "MSCI"
+      ],
+      "topics": [
+        "financial_markets",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.122188,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MSCI",
+          "relevance_score": 0.900957,
+          "sentiment_score": 0.140502,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "MSCI": 0.140502
+      }
+    },
+    {
+      "id": "3103217961810865292",
+      "timestamp": "2026-01-26T11:04:15",
+      "headline": "ICE First Look at Mortgage Performance: Increased Refinance Activity Drives Mortgage Prepayments Back Toward 3.5-Year High",
+      "summary": "ICE Mortgage Technology's December 2025 \"First Look\" report indicates that lower interest rates led to a surge in refinance activity and mortgage prepayments, nearing a 3.5-year high. While early-stage delinquencies improved, late-stage delinquencies and foreclosure activity, especially for FHA and VA loans, saw increases. The national delinquency rate fell, but foreclosure starts and inventory rose year-over-year.",
+      "source": "Business Wire",
+      "url": "https://www.businesswire.com/news/home/20260126881841/en/ICE-First-Look-at-Mortgage-Performance-Increased-Refinance-Activity-Drives-Mortgage-Prepayments-Back-Toward-3.5-Year-High",
+      "tickers": [
+        "ICE"
+      ],
+      "topics": [
+        "finance",
+        "real_estate",
+        "economy_macro",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.147452,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ICE",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.110983,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ICE": 0.110983
+      }
+    },
+    {
+      "id": "-7498443805433572632",
+      "timestamp": "2026-01-26T11:03:37",
+      "headline": "Steel Dynamics Stock (STLD) Hitting New Highs Into Earnings \u2013 What To Expect",
+      "summary": "Steel Dynamics (STLD) stock has reached new highs ahead of its earnings report, with consensus EPS expectations at $1.86 on $4.76B revenue. This is modestly above management's guided midpoint of $1.67 EPS, suggesting that execution at or slightly above guidance could meet market expectations, while a shortfall might pressure the stock. The upcoming earnings call will be crucial in determining whether the fourth quarter's operational constraints are temporary or indicate more persistent pricing pressures for 2026.",
+      "source": "AskTraders.com",
+      "url": "https://www.asktraders.com/analysis/steel-dynamics-stock-stld-hitting-new-highs-into-earnings-what-to-expect/",
+      "tickers": [
+        "STLD"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "manufacturing",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.212609,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "STLD",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.202034,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "STLD": 0.202034
+      }
+    },
+    {
+      "id": "-5932517534879301924",
+      "timestamp": "2026-01-26T11:01:52",
+      "headline": "Technical Reactions to VMD Trends in Macro Strategies",
+      "summary": "This article analyzes Viemed Healthcare Inc. (NYSE: VMD) using AI models to provide technical reactions and macro strategies. It identifies a neutral sentiment across all time horizons, suggesting a wait-and-see approach, and outlines specific position trading, momentum breakout, and risk hedging strategies with entry and exit points, targets, and stop losses. The analysis highlights a 32.0:1 risk-reward short setup if resistance holds.",
+      "source": "Stock Traders Daily",
+      "url": "https://news.stocktradersdaily.com/news_release/40/Technical_Reactions_to_VMD_Trends_in_Macro_Strategies_012526103202_1769398322.html",
+      "tickers": [
+        "VMD"
+      ],
+      "topics": [
+        "financial_markets",
+        "economy_macro",
+        "life_sciences"
+      ],
+      "overall_sentiment": 0.005915,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "VMD",
+          "relevance_score": 0.328222,
+          "sentiment_score": 0.041945,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "VMD": 0.041945
+      }
+    },
+    {
+      "id": "-8914498630929527021",
+      "timestamp": "2026-01-26T10:39:26",
+      "headline": "Morgan Stanley expects earnings beats from these nine EU stocks in Q4",
+      "summary": "Morgan Stanley anticipates a significant improvement in Europe's fourth-quarter earnings season, with analyst previews showing a positive skew towards beats. The bank has identified nine EU companies, including Soci\u00e9t\u00e9 G\u00e9n\u00e9rale, Centrica, and ASML, that it expects to deliver strong earnings beats. This optimistic outlook contributes to Morgan Stanley raising its year-end 2026 MSCI Europe target, reflecting an improved earnings backdrop and recognized value.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/stock-market-news/morgan-stanley-expects-earnings-beats-from-these-nine-eu-stocks-in-q4-4464533",
+      "tickers": [
+        "MS",
+        "MSCI",
+        "BAC"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.315195,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "MS",
+          "relevance_score": 0.94332,
+          "sentiment_score": 0.322039,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MSCI",
+          "relevance_score": 0.640406,
+          "sentiment_score": 0.3258,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "BAC",
+          "relevance_score": 0.583547,
+          "sentiment_score": 0.294332,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "MS": 0.322039,
+        "MSCI": 0.3258,
+        "BAC": 0.294332
+      }
+    },
+    {
+      "id": "4492898782087269599",
+      "timestamp": "2026-01-26T10:38:32",
+      "headline": "Stock Market Today: Dow Jones, S&P 500 Futures Slip As Investors Brace For Mega-Cap Earnings\u2014Brand Engagement, Nucor In Focus",
+      "summary": "U.S. stock futures, including the Dow Jones and S&P 500, dropped on Monday as investors prepare for upcoming mega-cap earnings reports from companies like UnitedHealth, General Motors, Microsoft, and Meta. The Federal Open Market Committee's interest rate decision, expected Wednesday, is another key focus, with markets anticipating rates to remain unchanged. Several individual stocks, including Baker Hughes, Sarepta Therapeutics, Nucor, WR Berkley, and Brand Engagement Network, are in focus due to recent performance, earnings, or strategic announcements.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/markets/equities/26/01/50120802/stock-market-today-dow-jones-sp-500-futures-slip-as-investors-brace-for-mega-cap-earnings-brand-engagement-nucor-in-focus",
+      "tickers": [
+        "NUE"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings",
+        "economy_monetary",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.00171,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "NUE",
+          "relevance_score": 0.311789,
+          "sentiment_score": 0.005945,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "NUE": 0.005945
+      }
+    },
+    {
+      "id": "866630567311227542",
+      "timestamp": "2026-01-26T10:33:14",
+      "headline": "Jefferies lowers Eversource Energy stock price target on balance sheet concerns",
+      "summary": "Jefferies has reduced its price target for Eversource Energy (NYSE:ES) to $57.00 from $60.00, maintaining an Underperform rating due to balance sheet concerns and regulatory challenges in Connecticut. The firm anticipates 2026 to be another \"complicated year\" for Eversource, citing affordability issues with rate cases and high electricity rates, along with weaker credit metrics and below-average growth projections. Other analysts like Scotiabank and Mizuho have also adjusted their ratings and price targets following the rejection of Eversource's Aquarion Water Company sale.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/analyst-ratings/jefferies-lowers-eversource-energy-stock-price-target-on-balance-sheet-concerns-93CH-4464549",
+      "tickers": [
+        "ES"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_macro",
+        "finance",
+        "energy_transportation"
+      ],
+      "overall_sentiment": -0.419755,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ES",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.442725,
+          "sentiment_label": "Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "ES": -0.442725
+      }
+    },
+    {
+      "id": "4486957682959021559",
+      "timestamp": "2026-01-26T10:00:36",
+      "headline": "Chatham Lodging Trust Reveals 2025 Performance",
+      "summary": "Chatham Lodging Trust, a real estate investment trust focusing on upscale extended-stay and premium-branded select-service hotels, has announced its fourth-quarter 2025 earnings call for February 25, 2026. The report will detail the company's financial performance, portfolio growth, and strategic outlook, offering crucial insights into the US tourism and hospitality sectors. Performance metrics, including non-GAAP measures like FFO and EBITDA, will be discussed for stakeholders.",
+      "source": "Travel And Tour World",
+      "url": "https://www.travelandtourworld.com/news/article/chatham-lodging-trust-reveals-2025-performance/",
+      "tickers": [
+        "CLDT"
+      ],
+      "topics": [
+        "earnings",
+        "real_estate",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.38252,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CLDT",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.39661,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CLDT": 0.39661
+      }
+    },
+    {
+      "id": "-5951407380599490678",
+      "timestamp": "2026-01-26T09:31:41",
+      "headline": "Cullen Frost Bankers Inc. Has $12.68 Million Stock Holdings in Starbucks Corporation $SBUX",
+      "summary": "Cullen Frost Bankers Inc. recently increased its stake in Starbucks Corporation by 25.4% to 149,882 shares, valued at $12.68 million. This move is part of a broader trend where institutional investors collectively own 72.29% of Starbucks. Despite a recent earnings miss and a high P/E ratio, analyst sentiment remains generally positive with a \"Moderate Buy\" rating, and the company's upcoming Investor Day is anticipated as a potential catalyst.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-cullen-frost-bankers-inc-has-1268-million-stock-holdings-in-starbucks-corporation-sbux-2026-01-26/",
+      "tickers": [
+        "CFR",
+        "SBUX"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "retail_wholesale",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.137223,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CFR",
+          "relevance_score": 0.313059,
+          "sentiment_score": 0.026215,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "SBUX",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.246303,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CFR": 0.026215,
+        "SBUX": 0.246303
+      }
+    },
+    {
+      "id": "2131011407893658282",
+      "timestamp": "2026-01-26T09:31:41",
+      "headline": "NextEra Energy, Inc. $NEE Shares Sold by Cullen Frost Bankers Inc.",
+      "summary": "Cullen Frost Bankers Inc. reduced its stake in NextEra Energy (NYSE:NEE) by 19.3% in the third quarter, selling 20,089 shares. Additionally, high-ranking insiders like EVP Ronald R. Reagan and CEO Armando Pimentel Jr. significantly decreased their personal holdings through sales. Despite these insider sales, analysts maintain a \"Moderate Buy\" consensus rating with a target price of $91.94, supported by positive sentiment from some firms raising price targets due to growth forecasts and clean-energy exposure.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-nextera-energy-inc-nee-shares-sold-by-cullen-frost-bankers-inc-2026-01-26/",
+      "tickers": [
+        "CFR",
+        "NEE"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "energy_transportation",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.039779,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CFR",
+          "relevance_score": 0.808898,
+          "sentiment_score": 0.038732,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "NEE",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.013008,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "CFR": 0.038732,
+        "NEE": 0.013008
+      }
+    },
+    {
+      "id": "-3929336251577920156",
+      "timestamp": "2026-01-26T12:04:35",
+      "headline": "Realty Income (NYSE: O) Stock Price Prediction and Forecast 2026-2030 (February 2026)",
+      "summary": "This article provides a stock price prediction and forecast for Realty Income (NYSE:O) from 2026 to 2030, highlighting its dividend consistency, global expansion, and quality tenant base as key drivers. The analysis includes a look at past performance, revenue, and Adjusted Funds From Operations (AFFO) and projects a price target of $86.43 per share by 2030, representing a significant potential upside. Despite facing challenges like rising interest rates, Realty Income has maintained its status as a Dividend Aristocrat.",
+      "source": "24/7 Wall St.",
+      "url": "https://247wallst.com/forecasts/2026/01/26/realty-income-o-stock-price-prediction-and-forecast-2025-2030/",
+      "tickers": [
+        "O",
+        "AMZN"
+      ],
+      "topics": [
+        "financial_markets",
+        "real_estate",
+        "earnings",
+        "economy_monetary",
+        "retail_wholesale"
+      ],
+      "overall_sentiment": 0.357037,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "O",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.335309,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "AMZN",
+          "relevance_score": 0.645979,
+          "sentiment_score": 0.379286,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "O": 0.335309,
+        "AMZN": 0.379286
+      }
+    },
+    {
+      "id": "3839485154104967915",
+      "timestamp": "2026-01-26T12:01:53",
+      "headline": "Diversified Banks Stocks Q4 Recap: Benchmarking Bank of America (NYSE:BAC)",
+      "summary": "This article provides a Q4 recap for diversified bank stocks, benchmarking Bank of America (NYSE:BAC) against its peers. It details the financial performance of Bank of America, PNC Financial Services Group (NYSE:PNC) as the best performer, and Citigroup (NYSE:C) as the weakest. The report also touches on U.S. Bancorp (NYSE:USB) and Truist Financial (NYSE:TFC), highlighting their revenue growth, analyst estimate beats or misses, and stock performance post-earnings.",
+      "source": "Finviz",
+      "url": "https://finviz.com/news/286626/diversified-banks-stocks-q4-recap-benchmarking-bank-of-america-nyse-bac",
+      "tickers": [
+        "BAC",
+        "PNC",
+        "C",
+        "USB",
+        "TFC"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "economy_monetary"
+      ],
+      "overall_sentiment": 0.072811,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BAC",
+          "relevance_score": 0.951767,
+          "sentiment_score": 0.112887,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "PNC",
+          "relevance_score": 0.738004,
+          "sentiment_score": 0.329724,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "C",
+          "relevance_score": 0.655717,
+          "sentiment_score": -0.305637,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "USB",
+          "relevance_score": 0.628441,
+          "sentiment_score": 0.121137,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "TFC",
+          "relevance_score": 0.59417,
+          "sentiment_score": -0.093741,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "BAC": 0.112887,
+        "PNC": 0.329724,
+        "C": -0.305637,
+        "USB": 0.121137,
+        "TFC": -0.093741
+      }
+    },
+    {
+      "id": "5258243013583815860",
+      "timestamp": "2026-01-26T11:00:45",
+      "headline": "Avino Silver (ASM) stock pops in premarket as silver smashes records \u2014 what\u2019s driving the move",
+      "summary": "Avino Silver & Gold Mines (ASM) shares are rising in premarket trading after silver and gold hit new record highs, driven by investor anticipation for Avino's upcoming earnings report and strengthened by the company meeting its 2025 production targets. The silver rally is also positively impacting other U.S.-listed silver miners. However, analysts caution that quick surges in silver prices and limited liquidity could lead to sharp dips for Avino's stock.",
+      "source": "TechStock\u00b2",
+      "url": "https://ts2.tech/en/avino-silver-asm-stock-pops-in-premarket-as-silver-smashes-records-whats-driving-the-move/",
+      "tickers": [
+        "ASM"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings",
+        "economy_monetary"
+      ],
+      "overall_sentiment": 0.022809,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "ASM",
+          "relevance_score": 0.306959,
+          "sentiment_score": 0.004341,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "ASM": 0.004341
+      }
+    },
+    {
+      "id": "1608850658939082969",
+      "timestamp": "2026-01-26T07:30:06",
+      "headline": "Woodside Energy share price: ASX shut for Australia Day, oil holds gains as WDS heads into Q4 update",
+      "summary": "The Australian market is closed for Australia Day, impacting trading for Woodside Energy (WDS.AX) shares ahead of its upcoming Q4 earnings report. Oil prices held gains due to winter outages and Middle East tensions, while the broader market remains volatile ahead of a U.S. Federal Reserve meeting. Investors will be focused on Woodside's production, sales, and capital expenditure when the Q4 2025 earnings report is released on January 28.",
+      "source": "TechStock\u00b2",
+      "url": "https://ts2.tech/en/woodside-energy-share-price-asx-shut-for-australia-day-oil-holds-gains-as-wds-heads-into-q4-update/",
+      "tickers": [
+        "WDS",
+        "XOM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_monetary",
+        "economy_macro",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.061473,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "WDS",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.037068,
+          "sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "XOM",
+          "relevance_score": 0.624538,
+          "sentiment_score": 0.1315,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "WDS": 0.037068,
+        "XOM": 0.1315
+      }
+    },
+    {
+      "id": "-8608321459577963405",
+      "timestamp": "2026-01-26T00:29:49",
+      "headline": "Tower Semiconductor (TSEM) stock slips as chip sector cools \u2014 what to watch before the Fed and Feb. 11 earnings",
+      "summary": "Tower Semiconductor (TSEM) stock slipped roughly 1% on Friday, closing at $128.62, as the chip sector experienced a cooling trend following Intel's cautious outlook. Traders are closely watching the upcoming Federal Reserve policy meeting on January 27-28 and Tower's fourth-quarter and full-year 2025 earnings report scheduled for February 11. The article highlights the vulnerability of the semiconductor sector to market shifts and the potential impact of both macroeconomic factors and company-specific guidance on TSEM's stock performance.",
+      "source": "TechStock\u00b2",
+      "url": "https://ts2.tech/en/tower-semiconductor-tsem-stock-slips-as-chip-sector-cools-what-to-watch-before-the-fed-and-feb-11-earnings/",
+      "tickers": [
+        "TSEM",
+        "INTC",
+        "AMAT"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "economy_monetary",
+        "technology",
+        "economy_macro"
+      ],
+      "overall_sentiment": -0.270171,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TSEM",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.334971,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "INTC",
+          "relevance_score": 0.74085,
+          "sentiment_score": -0.304273,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "AMAT",
+          "relevance_score": 0.606556,
+          "sentiment_score": -0.221147,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "TSEM": -0.334971,
+        "INTC": -0.304273,
+        "AMAT": -0.221147
+      }
     }
   ],
-  "last_updated": "2026-01-26T15:07:49.758578"
+  "last_updated": "2026-01-26T17:11:08.293514"
 }
