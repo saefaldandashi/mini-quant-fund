@@ -211,14 +211,15 @@ class GeopoliticalIntelligence:
             "market volatility", "vix", "implied volatility", "volatility spike",
             "risk-off", "risk-on", "flight to safety", "market selloff",
             "market rally", "liquidity crunch",
-            # Banking & Credit Stress
+            # Banking & Credit Stress (SPECIFIC - avoid generic words like "rescue")
             "bank run", "bank failure", "banking crisis", "deposit outflows",
             "liquidity stress", "capital adequacy", "stress test",
-            "loan losses", "defaults", "restructuring", "downgrade",
-            "bankruptcy", "debt distress", "bailout", "rescue",
-            "capital shortfall", "liquidity crisis", "sovereign debt",
-            "imf support", "credit downgrade", "distressed", "contagion",
-            "funding stress", "margin calls", "financial crisis", "junk",
+            "loan losses", "defaults", "debt restructuring", "credit downgrade",
+            "bankruptcy filing", "debt distress", "bailout package", "bank rescue",
+            "capital shortfall", "liquidity crisis", "sovereign debt crisis",
+            "imf support", "imf bailout", "distressed debt", "contagion risk",
+            "funding stress", "margin calls", "financial crisis", "junk bonds",
+            "systemic risk", "too big to fail", "emergency lending",
         ],
         
         # ======================================================
@@ -306,6 +307,40 @@ class GeopoliticalIntelligence:
         "collapses", "surges", "spikes", "plunges", "widens", "narrows",
         "crisis", "rare", "record", "shock",
     ]
+    
+    # HARD DISCARD - Events that should NEVER be classified as market-moving
+    # These are local news, accidents, and irrelevant events
+    HARD_DISCARD_KEYWORDS = [
+        # Local disasters (not market-moving unless massive scale)
+        "ferry sinks", "ferry sank", "ferry capsizes", "ferry accident", "boat sinks",
+        "bus crash", "train derailment", "plane crash", "car accident",
+        "building collapse", "house fire", "apartment fire", "factory fire",
+        "people dead", "people killed", "bodies found", "bodies recovered",
+        "missing persons", "search and rescue", "rescue operation", "rescue workers",
+        "rescuers save", "survivors found", "survivors rescued", "death toll",
+        "people onboard", "passengers aboard", "passengers rescued",
+        # Crime/Local
+        "arrested", "murder", "robbery", "burglary", "theft", "assault",
+        "shooting", "stabbing", "drug bust", "gang violence",
+        "local police", "city council", "town hall",
+        # Sports/Entertainment
+        "world cup", "olympics", "football", "soccer", "basketball", "baseball",
+        "tennis", "golf", "celebrity", "kardashian", "hollywood", "movie",
+        "concert", "grammy", "oscar", "emmy", "red carpet",
+        # Lifestyle
+        "recipe", "cooking", "restaurant", "travel tips", "fashion",
+        "diet", "workout", "yoga", "meditation", "home decor",
+        # Social media / Tech regulation (unless antitrust)
+        "social media ban", "under-15", "age verification", "content moderation",
+        "parental controls", "screen time", "online safety",
+        # Weather (unless infrastructure impact)
+        "weather forecast", "sunny", "cloudy", "chance of rain",
+        # Obituaries
+        "obituary", "funeral", "passed away", "dies at",
+    ]
+    
+    # MINIMUM SEVERITY THRESHOLD - Events below this are discarded
+    MIN_SEVERITY_THRESHOLD = 0.25
     
     # Regions and their market indices
     REGIONAL_INDICES = {
@@ -454,8 +489,17 @@ class GeopoliticalIntelligence:
         """
         Classify event type and severity from text.
         Returns: (event_type, severity, matched_keywords)
+        
+        IMPORTANT: Returns severity=0 for hard-discard events
         """
         text_lower = " " + text.lower() + " "  # Add spaces for word boundary matching
+        
+        # STEP 1: Check hard discard FIRST - reject irrelevant content immediately
+        for discard_kw in self.HARD_DISCARD_KEYWORDS:
+            if discard_kw in text_lower:
+                # This is noise - return immediately with 0 severity
+                return "irrelevant", 0.0, []
+        
         matched_keywords = []
         event_type = "general"
         max_matches = 0
@@ -595,8 +639,9 @@ class GeopoliticalIntelligence:
                         full_text = f"{headline} {summary}"
                         event_type, severity, keywords = self._classify_event(full_text)
                         
-                        # Skip low-severity events
-                        if severity < 0.3:
+                        # Skip low-severity or irrelevant events
+                        # Uses class-level threshold for consistency
+                        if severity < self.MIN_SEVERITY_THRESHOLD or event_type == "irrelevant":
                             continue
                         
                         regions = self._identify_regions(full_text)

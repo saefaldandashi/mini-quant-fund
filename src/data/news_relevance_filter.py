@@ -282,10 +282,10 @@ class NewsRelevanceFilter:
         # Banking & Credit Stress
         "bank run", "bank failure", "banking crisis", "deposit outflows",
         "liquidity stress", "capital adequacy", "stress test",
-        "loan losses", "defaults", "restructuring", "downgrade", "bankruptcy",
-        "debt distress", "bailout", "rescue", "resolution", "emergency merger",
-        "capital shortfall", "liquidity crisis", "sovereign debt", "imf support",
-        "credit downgrade", "distressed", "contagion", "funding stress", "margin calls",
+        "loan losses", "defaults", "debt restructuring", "credit downgrade", "bankruptcy filing",
+        "debt distress", "bailout package", "bank rescue", "bank resolution", "emergency merger",
+        "capital shortfall", "liquidity crisis", "sovereign debt crisis", "imf support", "imf bailout",
+        "distressed debt", "contagion risk", "funding stress", "margin calls", "systemic risk",
         "financial crisis",
     ]
     
@@ -377,7 +377,7 @@ class NewsRelevanceFilter:
     # ============================================================
     
     HARD_DISCARD_KEYWORDS = [
-        # Sports (use word boundaries to avoid false positives like "inflation" matching "nfl")
+        # Sports (use word boundaries to avoid false positives)
         "football game", "soccer match", "basketball game", "baseball game", 
         "tennis match", "golf tournament",
         "cricket match", "rugby match", "olympics 2024", "world cup 2026",
@@ -395,16 +395,33 @@ class NewsRelevanceFilter:
         "diet", "workout", "yoga", "meditation",
         "home decor", "gardening",
         
-        # Local news
-        "local crime", "robbery", "burglary", "car accident",
-        "house fire", "local police", "city council",
+        # LOCAL DISASTERS / ACCIDENTS (NOT market-moving)
+        "ferry sinks", "ferry sank", "ferry capsizes", "ferry accident", "boat sinks", "boat capsizes",
+        "bus crash", "train derailment", "train crash", "plane crash", "car accident",
+        "building collapse", "house fire", "apartment fire", "factory fire",
+        "people dead", "people killed", "bodies found", "bodies recovered",
+        "missing persons", "search and rescue", "rescue operation", "rescue workers",
+        "survivors found", "survivors rescued", "rescuers save", "death toll rises",
+        "people injured", "hospitalized after", "local disaster",
+        "people onboard", "passengers aboard", "passengers rescued",
+        
+        # Crime/Local news
+        "local crime", "robbery", "burglary", "theft", "assault",
+        "shooting suspect", "shooting in", "stabbing", "drug bust", "gang violence",
+        "man arrested", "woman arrested", "suspect arrested", "arrested after",
+        "local police", "city council", "town hall",
         "school board", "local election",
-        "obituary", "funeral",
+        "obituary", "funeral", "passed away", "dies at age",
+        
+        # Social media regulation (not market-moving unless antitrust)
+        "social media ban", "under-15", "under 15", "age verification",
+        "content moderation", "parental controls", "screen time",
+        "online safety bill", "children online",
         
         # Irrelevant weather
-        "weather forecast", "sunny", "cloudy",
+        "weather forecast", "sunny", "cloudy", "chance of rain",
         
-        # Opinion/Editorial (unless paired with policy)
+        # Opinion/Editorial
         "opinion:", "editorial:", "commentary:",
         "letter to the editor",
     ]
@@ -441,9 +458,9 @@ class NewsRelevanceFilter:
     ]
     
     FINANCIAL_STRESS_PHRASES = [
-        "bailout", "rescue", "capital shortfall", "default", "restructuring",
-        "bank run", "liquidity", "margin calls", "downgrade", "junk",
-        "distressed", "contagion",
+        "bailout package", "bank rescue", "capital shortfall", "credit default", "debt restructuring",
+        "bank run", "liquidity crisis", "margin calls", "credit downgrade", "junk bonds",
+        "distressed debt", "contagion risk", "systemic risk",
         # Additional
         "bank failure", "deposit outflows", "liquidity stress", "stress test",
         "loan losses", "debt distress", "capital adequacy",
