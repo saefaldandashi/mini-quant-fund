@@ -419,7 +419,6 @@ class AlpacaBroker:
             qty: Quantity (must be > 0)
             side: OrderSide.BUY or OrderSide.SELL
             dry_run: If True, log but don't place order
-            extended_hours: If True, allow trading outside regular market hours
         
         Returns:
             Order info dict if placed, None if dry_run
@@ -431,12 +430,11 @@ class AlpacaBroker:
         side_str = "BUY" if side == OrderSide.BUY else "SELL"
         
         if dry_run:
-            logging.info(f"[DRY RUN] Would place {side_str} order: {symbol} x {qty} (extended_hours={extended_hours})")
+            logging.info(f"[DRY RUN] Would place {side_str} order: {symbol} x {qty}")
             return None
         
         try:
             order_request = MarketOrderRequest(
-                
                 symbol=symbol,
                 qty=qty,
                 side=side,
@@ -707,7 +705,8 @@ class AlpacaBroker:
         self,
         symbol: str,
         qty: int,
-        dry_run: bool = True
+        dry_run: bool = True,
+        extended_hours: bool = False
     ) -> Optional[Dict]:
         """
         Place a short sell order.
@@ -716,7 +715,6 @@ class AlpacaBroker:
             symbol: Stock symbol
             qty: Quantity to short (must be > 0)
             dry_run: If True, log but don't place order
-            extended_hours: If True, allow trading outside regular market hours
         
         Returns:
             Order info dict if placed, None if dry_run or failed
@@ -742,7 +740,8 @@ class AlpacaBroker:
         self,
         symbol: str,
         qty: int,
-        dry_run: bool = True
+        dry_run: bool = True,
+        extended_hours: bool = False
     ) -> Optional[Dict]:
         """
         Cover a short position (buy to close).
@@ -751,7 +750,6 @@ class AlpacaBroker:
             symbol: Stock symbol
             qty: Quantity to cover (must be > 0)
             dry_run: If True, log but don't place order
-            extended_hours: If True, allow trading outside regular market hours
         
         Returns:
             Order info dict if placed, None if dry_run or failed
@@ -842,21 +840,6 @@ class AlpacaBroker:
             quotes = self.data_client.get_stock_latest_quote(request)
             
             result = {}
-            
-            # Check if we're outside regular market hours
-            from datetime import datetime
-            import pytz
-            now = datetime.now(pytz.timezone('US/Eastern'))
-            is_regular_hours = (
-                now.weekday() < 5 and  # Weekday
-                ((now.hour == 9 and now.minute >= 30) or now.hour > 9) and
-                now.hour < 16
-            )
-            
-            # Maximum reasonable spread for liquid stocks
-            # Outside regular hours, spreads can be 5-10x wider, but 10%+ is quote error
-            MAX_SPREAD_PCT = 0.5 if is_regular_hours else 2.0  # 0.5% regular, 2% extended
-            
             for symbol in symbols:
                 if symbol in quotes:
                     q = quotes[symbol]
@@ -866,14 +849,7 @@ class AlpacaBroker:
                     # Calculate mid and spread
                     if bid > 0 and ask > 0:
                         mid = (bid + ask) / 2
-                        raw_spread_pct = ((ask - bid) / mid) * 100 if mid > 0 else 0.05
-                        
-                        # Cap unrealistic spreads (pre/post market quotes can be stale)
-                        if raw_spread_pct > MAX_SPREAD_PCT:
-                            logging.debug(f"{symbol}: Capping unrealistic spread {raw_spread_pct:.2f}% to {MAX_SPREAD_PCT:.2f}%")
-                            spread_pct = MAX_SPREAD_PCT
-                        else:
-                            spread_pct = raw_spread_pct
+                        spread_pct = ((ask - bid) / mid) * 100 if mid > 0 else 0.05
                     else:
                         mid = ask if ask > 0 else bid
                         spread_pct = 0.05  # Default 5 bps if no bid-ask
@@ -885,10 +861,9 @@ class AlpacaBroker:
                         'spread_pct': spread_pct,
                         'bid_size': int(q.bid_size) if q.bid_size else 0,
                         'ask_size': int(q.ask_size) if q.ask_size else 0,
-                        'is_extended_hours': not is_regular_hours,
                     }
             
-            logging.info(f"Fetched real-time quotes for {len(result)} symbols (extended_hours={not is_regular_hours})")
+            logging.info(f"Fetched real-time quotes for {len(result)} symbols")
             return result
             
         except Exception as e:
