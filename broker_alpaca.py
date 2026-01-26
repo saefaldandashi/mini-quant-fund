@@ -842,6 +842,21 @@ class AlpacaBroker:
             quotes = self.data_client.get_stock_latest_quote(request)
             
             result = {}
+            
+            # Check if we're outside regular market hours
+            from datetime import datetime
+            import pytz
+            now = datetime.now(pytz.timezone('US/Eastern'))
+            is_regular_hours = (
+                now.weekday() < 5 and  # Weekday
+                ((now.hour == 9 and now.minute >= 30) or now.hour > 9) and
+                now.hour < 16
+            )
+            
+            # Maximum reasonable spread for liquid stocks
+            # Outside regular hours, spreads can be 5-10x wider, but 10%+ is quote error
+            MAX_SPREAD_PCT = 0.5 if is_regular_hours else 2.0  # 0.5% regular, 2% extended
+            
             for symbol in symbols:
                 if symbol in quotes:
                     q = quotes[symbol]
@@ -851,7 +866,14 @@ class AlpacaBroker:
                     # Calculate mid and spread
                     if bid > 0 and ask > 0:
                         mid = (bid + ask) / 2
-                        spread_pct = ((ask - bid) / mid) * 100 if mid > 0 else 0.05
+                        raw_spread_pct = ((ask - bid) / mid) * 100 if mid > 0 else 0.05
+                        
+                        # Cap unrealistic spreads (pre/post market quotes can be stale)
+                        if raw_spread_pct > MAX_SPREAD_PCT:
+                            logging.debug(f"{symbol}: Capping unrealistic spread {raw_spread_pct:.2f}% to {MAX_SPREAD_PCT:.2f}%")
+                            spread_pct = MAX_SPREAD_PCT
+                        else:
+                            spread_pct = raw_spread_pct
                     else:
                         mid = ask if ask > 0 else bid
                         spread_pct = 0.05  # Default 5 bps if no bid-ask
@@ -863,9 +885,10 @@ class AlpacaBroker:
                         'spread_pct': spread_pct,
                         'bid_size': int(q.bid_size) if q.bid_size else 0,
                         'ask_size': int(q.ask_size) if q.ask_size else 0,
+                        'is_extended_hours': not is_regular_hours,
                     }
             
-            logging.info(f"Fetched real-time quotes for {len(result)} symbols")
+            logging.info(f"Fetched real-time quotes for {len(result)} symbols (extended_hours={not is_regular_hours})")
             return result
             
         except Exception as e:
