@@ -49,3 +49,4 @@ pyarrow>=14.0.0  # For parquet file support
 
 # HTML Rendering
 Jinja2>=3.1.0
+feedparser>=6.0.0

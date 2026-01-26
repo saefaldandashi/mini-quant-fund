@@ -1688,6 +1688,22 @@
                 </div>
             </div>
             
+            <div class="mini-card" id="geo-risk-card">
+                <h3>🌍 Geopolitical Risk</h3>
+                <div id="geo-display" style="margin-top: 8px; text-align: center;">
+                    <div id="geo-risk-level" style="font-size: 1.1em; font-weight: 600; color: var(--text-secondary);">--</div>
+                    <div id="geo-risk-score" style="font-size: 0.75em; color: var(--text-dim);">Score: --</div>
+                    <div id="geo-safe-haven" style="font-size: 0.75em; color: var(--text-dim);">Safe Haven: --</div>
+                </div>
+                <div id="geo-concerns" style="margin-top: 8px; font-size: 0.65em; color: var(--text-dim); max-height: 60px; overflow-y: auto;">
+                </div>
+                <div style="margin-top: 6px; text-align: center;">
+                    <button onclick="refreshGeoIntel()" style="font-size: 0.65em; padding: 3px 8px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 4px; color: var(--text-secondary); cursor: pointer;">
+                        🔄 Refresh Intel
+                    </button>
+                </div>
+            </div>
+            
             <div class="mini-card">
                 <h3>Strategies</h3>
                 <div class="strategy-tags" id="strategy-tags">
@@ -2399,6 +2415,7 @@
             loadNews();
             loadRiskAppetite();
             loadRegime();
+            loadGeoIntel();  // Load geopolitical intelligence
             loadUniverseStats();
             loadMarketData();
             loadDataSources();
@@ -2419,6 +2436,7 @@
                     loadEquityCurve();  // Keep equity curve updated
                     loadMacro();  // Keep macro updated
                     loadRegime(); // Keep regime updated
+                    loadGeoIntel(); // Keep geopolitical intel updated
                     loadMarketData(); // Keep market data updated
                     loadLeverageStatus();  // Keep leverage/margin updated
                 }
@@ -3615,6 +3633,75 @@
                 document.getElementById('regime-exposure').textContent = `Exposure: ${((data.exposure_multiplier || 1) * 100).toFixed(0)}%`;
             } catch (e) {
                 console.error('Load regime error:', e);
+            }
+        }
+        
+        // Load Geopolitical Intelligence
+        async function loadGeoIntel() {
+            try {
+                const res = await fetch('/api/geopolitical/assessment');
+                const data = await res.json();
+                
+                if (data.status === 'success' && data.assessment) {
+                    const a = data.assessment;
+                    
+                    const levelEl = document.getElementById('geo-risk-level');
+                    levelEl.textContent = (a.risk_level || 'unknown').toUpperCase();
+                    
+                    // Color based on risk level
+                    if (a.risk_level === 'critical') {
+                        levelEl.style.color = '#ff0000';
+                        document.getElementById('geo-risk-card').style.borderColor = '#ff0000';
+                    } else if (a.risk_level === 'high') {
+                        levelEl.style.color = 'var(--danger)';
+                        document.getElementById('geo-risk-card').style.borderColor = 'var(--danger)';
+                    } else if (a.risk_level === 'elevated') {
+                        levelEl.style.color = '#ffa500';
+                        document.getElementById('geo-risk-card').style.borderColor = '#ffa500';
+                    } else if (a.risk_level === 'moderate') {
+                        levelEl.style.color = 'var(--warning)';
+                        document.getElementById('geo-risk-card').style.borderColor = 'var(--border)';
+                    } else {
+                        levelEl.style.color = 'var(--success)';
+                        document.getElementById('geo-risk-card').style.borderColor = 'var(--border)';
+                    }
+                    
+                    document.getElementById('geo-risk-score').textContent = `Score: ${((a.overall_risk_score || 0) * 100).toFixed(0)}%`;
+                    
+                    const safeHavenEl = document.getElementById('geo-safe-haven');
+                    if (a.safe_haven_signal) {
+                        safeHavenEl.textContent = 'Safe Haven: ⚠️ ROTATE';
+                        safeHavenEl.style.color = 'var(--danger)';
+                    } else {
+                        safeHavenEl.textContent = 'Safe Haven: Normal';
+                        safeHavenEl.style.color = 'var(--text-dim)';
+                    }
+                    
+                    // Show concerns
+                    const concernsEl = document.getElementById('geo-concerns');
+                    if (a.key_concerns && a.key_concerns.length > 0) {
+                        concernsEl.innerHTML = a.key_concerns.slice(0, 3).map(c => 
+                            `<div style="margin-bottom: 3px;">• ${c.substring(0, 60)}...</div>`
+                        ).join('');
+                    } else {
+                        concernsEl.innerHTML = '<div style="color: var(--text-dim);">No significant concerns</div>';
+                    }
+                }
+            } catch (e) {
+                console.error('Load geo intel error:', e);
+            }
+        }
+        
+        // Refresh geopolitical intelligence
+        async function refreshGeoIntel() {
+            try {
+                document.getElementById('geo-risk-level').textContent = 'Refreshing...';
+                const res = await fetch('/api/geopolitical/refresh', { method: 'POST' });
+                const data = await res.json();
+                console.log('Geo refresh:', data);
+                await loadGeoIntel();
+            } catch (e) {
+                console.error('Geo refresh error:', e);
             }
         }
         

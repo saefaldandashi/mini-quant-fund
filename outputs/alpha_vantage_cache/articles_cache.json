@@ -7179,7 +7179,234 @@
       "ticker_sentiments": {
         "JCI": 0.214744
       }
+    },
+    {
+      "id": "7541528772670324330",
+      "timestamp": "2026-01-26T10:51:43",
+      "headline": "Evercore ISI on Tractor Supply Company (TSCO): '4Q Preview: Needs Reset to Clear The Bar'",
+      "summary": "Evercore ISI analyst Oliver Wintermantel reiterated an Outperform rating and $65.00 price target on Tractor Supply Company (NASDAQ: TSCO). This article, titled \"4Q Preview: Needs Reset to Clear The Bar,\" is premium content and requires a StreetInsider.com Premium subscription to read the full details.",
+      "source": "StreetInsider",
+      "url": "https://www.streetinsider.com/Analyst+Comments/Evercore+ISI+on+Tractor+Supply+Company+%28TSCO%29%3A+4Q+Preview%3A+Needs+Reset+to+Clear+The+Bar/25889610.html",
+      "tickers": [
+        "TSCO"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "retail_wholesale"
+      ],
+      "overall_sentiment": 0.132672,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TSCO",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.107127,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "TSCO": 0.107127
+      }
+    },
+    {
+      "id": "-6971086097188339928",
+      "timestamp": "2026-01-26T10:47:11",
+      "headline": "Red Cat Shares Retreat Following Record Rally",
+      "summary": "Red Cat Holdings Inc. shares are experiencing a significant pullback after a parabolic rally, fueled by strong fourth-quarter 2025 revenue projections but tempered by ongoing losses. The stock's valuation hinges on its growth potential, with market experts divided on its outlook, and a high short interest indicating skepticism among some investors ahead of the company's \"Innovation Day\" in February.",
+      "source": "primaryignition.com",
+      "url": "https://primaryignition.com/2026/01/26/red-cat-shares-retreat-following-record-rally/",
+      "tickers": [
+        "RCAT",
+        "LMT"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": -0.065395,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "RCAT",
+          "relevance_score": 0.979826,
+          "sentiment_score": -0.222466,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "LMT",
+          "relevance_score": 0.61798,
+          "sentiment_score": 0.108897,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "RCAT": -0.222466,
+        "LMT": 0.108897
+      }
+    },
+    {
+      "id": "-581189633969201618",
+      "timestamp": "2026-01-26T10:25:03",
+      "headline": "Cooke & Bieler LP Sells 155,401 Shares of Armstrong World Industries, Inc. $AWI",
+      "summary": "Cooke & Bieler LP has significantly reduced its stake in Armstrong World Industries (NYSE:AWI) by selling 155,401 shares, lowering its total holdings by 45% to 190,158 shares valued at approximately $37.27 million. Despite this insider selling, analyst sentiment remains largely positive, with several firms raising price targets and the consensus standing at a \"Moderate Buy.\" Armstrong World Industries recently surpassed its quarterly earnings and revenue estimates and provided optimistic guidance for FY 2025.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-cooke-bieler-lp-sells-155401-shares-of-armstrong-world-industries-inc-awi-2026-01-26/",
+      "tickers": [
+        "AWI",
+        "BAC",
+        "JPM"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "real_estate",
+        "finance"
+      ],
+      "overall_sentiment": 0.265537,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "AWI",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.290085,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "BAC",
+          "relevance_score": 0.647621,
+          "sentiment_score": 0.211024,
+          "sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "JPM",
+          "relevance_score": 0.647307,
+          "sentiment_score": 0.223466,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "AWI": 0.290085,
+        "BAC": 0.211024,
+        "JPM": 0.223466
+      }
+    },
+    {
+      "id": "-1545781727955890242",
+      "timestamp": "2026-01-26T10:23:13",
+      "headline": "XPO, Inc. $XPO Shares Purchased by Cooke & Bieler LP",
+      "summary": "Cooke & Bieler LP increased its stake in XPO, Inc. (NYSE:XPO) by 9% in the third quarter, now owning 933,745 shares valued at $120.7 million. Several other hedge funds also adjusted their positions in XPO, with institutional investors and hedge funds collectively owning 97.73% of the company's stock. XPO recently exceeded quarterly earnings and revenue expectations, and Wall Street analysts currently give the stock a \"Moderate Buy\" rating with an average price target of $153.29.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/filing-xpo-inc-xpo-shares-purchased-by-cooke-bieler-lp-2026-01-26/",
+      "tickers": [
+        "XPO"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings",
+        "energy_transportation"
+      ],
+      "overall_sentiment": 0.420955,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "XPO",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.407591,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "XPO": 0.407591
+      }
+    },
+    {
+      "id": "3168893137585771261",
+      "timestamp": "2026-01-26T09:58:19",
+      "headline": "StepStone Group Inc. (NASDAQ:STEP) Fits the Minervini Trend Template with Strong Growth Momentum",
+      "summary": "StepStone Group Inc. (NASDAQ:STEP) is identified as a stock that aligns with Mark Minervini's \"Trend Template,\" displaying strong upward momentum and a clear upward trend. The analysis highlights STEP's strong financial growth, including significant EPS and revenue increases, positive analyst revisions, and a history of beating EPS forecasts. Chart conditions further support its strong position, indicating potential for continued growth.",
+      "source": "Chartmill",
+      "url": "https://www.chartmill.com/news/STEP/Chartmill-40372-StepStone-Group-Inc-NASDAQSTEP-Fits-the-Minervini-Trend-Template-with-Strong-Growth-Momentum",
+      "tickers": [
+        "STEP"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.800274,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "STEP",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.804493,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "STEP": 0.804493
+      }
+    },
+    {
+      "id": "5689360529329762206",
+      "timestamp": "2026-01-26T09:58:06",
+      "headline": "Prudential Public Limited Company (NYSE:PUK) Given Consensus Rating of \"Moderate Buy\" by Brokerages",
+      "summary": "Prudential Public Limited Company (NYSE:PUK) has received a consensus rating of \"Moderate Buy\" from six brokerage firms, with five issuing a buy recommendation and one a hold. The company's stock, which opened at $31.58, has seen various institutional investors increase their holdings in recent quarters. Prudential Public is an international life insurance and financial services group headquartered in London, focusing on long-term savings, retirement, and protection products.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/prudential-public-limited-company-nysepuk-given-consensus-rating-of-moderate-buy-by-brokerages-2026-01-26/",
+      "tickers": [
+        "PUK"
+      ],
+      "topics": [
+        "finance",
+        "financial_markets",
+        "earnings"
+      ],
+      "overall_sentiment": 0.331237,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PUK",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.306152,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "PUK": 0.306152
+      }
+    },
+    {
+      "id": "-3614275519378532801",
+      "timestamp": "2026-01-26T09:58:06",
+      "headline": "Prudential share price ticks higher as insurers firm; PRU.L in focus ahead of Fed week",
+      "summary": "Prudential shares rose by approximately 0.8% in early London trading, amidst broader gains in the insurance sector and ahead of a crucial U.S. Federal Reserve rate decision. The company's ongoing $1.2 billion share repurchase program provides near-term support, with investors now looking towards its full-year 2025 results due in March. The stock's future direction is highly dependent on global interest rates, risk appetite, and central bank guidance, especially considering Prudential's international exposure and susceptibility to currency volatility.",
+      "source": "TechStock\u00b2",
+      "url": "https://ts2.tech/en/prudential-share-price-ticks-higher-as-insurers-firm-pru-l-in-focus-ahead-of-fed-week/",
+      "tickers": [
+        "PUK"
+      ],
+      "topics": [
+        "financial_markets",
+        "economy_monetary",
+        "earnings"
+      ],
+      "overall_sentiment": 0.270514,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "PUK",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.267395,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "PUK": 0.267395
+      }
     }
   ],
-  "last_updated": "2026-01-26T14:47:11.744249"
+  "last_updated": "2026-01-26T15:07:49.758578"
 }

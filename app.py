@@ -10,6 +10,7 @@ import threading
 import queue
 import time
 import json
+import pytz
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, Tuple
@@ -35,6 +36,7 @@ from alpaca.trading.enums import OrderSide
 from src.data.market_data import MarketDataLoader
 from src.data.news_data import NewsDataLoader
 from src.data.alpha_vantage_news import AlphaVantageNewsLoader, AlphaVantageArticle
+from src.data.geopolitical_intel import get_geopolitical_intel, GeopoliticalIntelligence
 from src.data.ticker_sentiment import TickerSentimentAggregator, StockSentimentFeatures
 from src.data.sentiment import SentimentAnalyzer
 from src.data.feature_store import FeatureStore
@@ -202,6 +204,11 @@ alpha_vantage_news = AlphaVantageNewsLoader(
     cache_dir="outputs/alpha_vantage_cache",
     cache_ttl_hours=1,  # Cache for 1 hour (rate limits)
 )
+
+# Initialize Geopolitical Intelligence Layer
+# Monitors global events: military tensions, conflicts, diplomatic crises
+geopolitical_intel = get_geopolitical_intel()
+logging.info("✓ Geopolitical Intelligence Layer initialized")
 
 # Initialize Ticker Sentiment Aggregator (THE KEY FEATURE WE WERE MISSING)
 ticker_sentiment_aggregator = TickerSentimentAggregator()
@@ -1031,6 +1038,54 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                     
         except Exception as e:
             log(f"Warning: Could not compute macro features: {e}")
+        
+        # ============================================================
+        # GEOPOLITICAL INTELLIGENCE PIPELINE (NEW!)
+        # Monitors: Military tensions, conflicts, flight disruptions,
+        #           diplomatic crises, regional market panic
+        # ============================================================
+        log("")
+        log("=" * 60)
+        log("🌍 GEOPOLITICAL INTELLIGENCE PIPELINE")
+        log("=" * 60)
+        
+        geo_assessment = None
+        try:
+            # Refresh geopolitical events (RSS feeds, NewsAPI)
+            if not ultra_fast:
+                new_geo_events = geopolitical_intel.update_events(hours_back=24)
+                log(f"📡 Fetched {new_geo_events} new geopolitical events")
+            
+            # Get risk assessment
+            geo_assessment = geopolitical_intel.get_risk_assessment()
+            
+            log(f"🚨 GEOPOLITICAL RISK: {geo_assessment.risk_level.upper()} ({geo_assessment.overall_risk_score:.0%})")
+            log(f"   Recommended Exposure: {geo_assessment.recommended_exposure_adjustment:.0%}")
+            log(f"   Safe Haven Signal: {'YES ⚠️' if geo_assessment.safe_haven_signal else 'No'}")
+            
+            if geo_assessment.regional_risks:
+                log("")
+                log("   Regional Risks:")
+                for region, risk in sorted(geo_assessment.regional_risks.items(), 
+                                          key=lambda x: x[1], reverse=True)[:4]:
+                    log(f"     • {region}: {risk:.0%}")
+            
+            if geo_assessment.key_concerns:
+                log("")
+                log("   ⚠️ Key Concerns:")
+                for concern in geo_assessment.key_concerns[:3]:
+                    log(f"     • {concern[:70]}...")
+            
+            # CRITICAL: Override geopolitical_risk_index with REAL intelligence
+            if macro_features_temp and geo_assessment.overall_risk_score > 0.3:
+                # Update the geopolitical risk with our detected events
+                # Scale from 0-1 risk score to -1 to +1 index
+                real_geo_risk = (geo_assessment.overall_risk_score - 0.5) * 2
+                log(f"   📊 Overriding geo_risk_index: {macro_features_temp.geopolitical_risk_index:.2f} → {real_geo_risk:.2f}")
+                macro_features_temp.geopolitical_risk_index = real_geo_risk
+        
+        except Exception as e:
+            log(f"⚠️ Geopolitical intelligence error: {e}")
             
         log("")
         
@@ -1066,6 +1121,12 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         if macro_features_temp:
             features.macro_features = macro_features_temp
             last_macro_features["features"] = macro_features_temp
+        
+        # Attach geopolitical assessment for LLM context
+        if geo_assessment:
+            features.geopolitical_assessment = geo_assessment
+            # Store geo context string for LLM
+            features.geopolitical_context = geopolitical_intel.get_context_for_llm()
             
             # Write macro features to parquet storage for reports
             if data_writer and macro_features_temp:
@@ -5100,6 +5161,80 @@ def get_exposure_summary():
         return jsonify({"error": str(e)}), 500
 
 
+# ============================================================================
+# GEOPOLITICAL INTELLIGENCE ENDPOINTS
+# ============================================================================
+
+@app.route('/api/geopolitical/assessment')
+@requires_auth
+def get_geopolitical_assessment():
+    """Get current geopolitical risk assessment."""
+    try:
+        refresh = request.args.get('refresh', 'false').lower() == 'true'
+        assessment = geopolitical_intel.get_risk_assessment(refresh=refresh)
+        
+        return jsonify({
+            "status": "success",
+            "assessment": assessment.to_dict(),
+            "last_update": geopolitical_intel.last_update.isoformat() if geopolitical_intel.last_update else None,
+        })
+    except Exception as e:
+        logging.error(f"Geopolitical assessment error: {e}")
+        return jsonify({"status": "error", "error": str(e)}), 500
+
+
+@app.route('/api/geopolitical/events')
+@requires_auth
+def get_geopolitical_events():
+    """Get recent geopolitical events."""
+    try:
+        hours = request.args.get('hours', 24, type=int)
+        min_severity = request.args.get('min_severity', 0.3, type=float)
+        
+        cutoff = datetime.now(pytz.UTC) - timedelta(hours=hours)
+        
+        events = []
+        for e in geopolitical_intel.events_cache:
+            try:
+                ts = e.timestamp
+                if ts.tzinfo is None:
+                    ts = ts.replace(tzinfo=pytz.UTC)
+                if ts > cutoff and e.severity >= min_severity:
+                    events.append(e.to_dict())
+            except Exception:
+                continue
+        
+        return jsonify({
+            "status": "success",
+            "events": events,
+            "count": len(events),
+            "hours_back": hours,
+        })
+    except Exception as e:
+        logging.error(f"Geopolitical events error: {e}")
+        return jsonify({"status": "error", "error": str(e)}), 500
+
+
+@app.route('/api/geopolitical/refresh', methods=['POST'])
+@requires_auth
+def refresh_geopolitical():
+    """Force refresh of geopolitical intelligence."""
+    try:
+        hours_back = request.args.get('hours', 24, type=int)
+        new_events = geopolitical_intel.update_events(hours_back=hours_back)
+        assessment = geopolitical_intel.get_risk_assessment()
+        
+        return jsonify({
+            "status": "success",
+            "new_events": new_events,
+            "total_events": len(geopolitical_intel.events_cache),
+            "risk_level": assessment.risk_level,
+            "risk_score": assessment.overall_risk_score,
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "error": str(e)}), 500
+
+
 @app.route('/api/regime')
 def get_regime():
     """Get current market regime detection."""
@@ -5150,8 +5285,16 @@ def get_regime():
                     try:
                         # Try to get macro features from cache or calculate
                         macro_sentiment = 0.0
-                        geo_risk = 0.5
                         financial_stress = 0.5
+                        
+                        # Get REAL geopolitical risk from intelligence layer
+                        try:
+                            geo_assessment = geopolitical_intel.get_risk_assessment()
+                            geo_risk = geo_assessment.overall_risk_score
+                            logging.info(f"Geopolitical risk: {geo_assessment.risk_level} ({geo_risk:.2f})")
+                        except Exception as geo_e:
+                            logging.warning(f"Could not get geo risk: {geo_e}")
+                            geo_risk = 0.5
                         
                         # Try to get from macro loader
                         if market_indicators:
@@ -5160,9 +5303,11 @@ def get_regime():
                             if hasattr(market_indicators, 'spy_change_pct'):
                                 macro_sentiment = market_indicators.spy_change_pct / 10.0  # Normalize
                             
-                            # Get geo risk and financial stress from macro features if available
-                            # For now, use defaults
-                    except:
+                            # Get financial stress from macro features
+                            if hasattr(market_indicators, 'financial_stress_index'):
+                                financial_stress = (market_indicators.financial_stress_index + 1) / 2  # Normalize to 0-1
+                    except Exception as macro_e:
+                        logging.warning(f"Could not get macro features: {macro_e}")
                         macro_sentiment = 0.0
                         geo_risk = 0.5
                         financial_stress = 0.5
