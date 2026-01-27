@@ -3046,10 +3046,10 @@
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        items_per_category: 15,  // Comprehensive coverage
-                        impact_threshold: 0.30,  // All notable events
-                        skip_llm: false,
-                        include_pdf: false
+                        items_per_category: 20,   // Comprehensive coverage
+                        impact_threshold: 0.30,   // All notable events
+                        skip_llm: false,          // ✅ LLM generates US & GCC market impacts
+                        include_pdf: true         // Generate PDF for download
                     })
                 });
                 

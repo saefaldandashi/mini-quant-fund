@@ -314,9 +314,10 @@ class LLMSummarizer:
         # Call LLM with retries
         for attempt in range(self.max_retries):
             try:
-                response = self.llm_service.generate(
+                # Use LLMService.call() method
+                response = self.llm_service.call(
                     prompt=user_prompt,
-                    system_prompt=CATEGORY_SYSTEM_PROMPT,
+                    system=CATEGORY_SYSTEM_PROMPT,
                     max_tokens=1500,
                     temperature=0.3,  # Low for consistency
                 )
@@ -324,7 +325,7 @@ class LLMSummarizer:
                 if not response or not response.content:
                     continue
                 
-                # Parse response
+                # Parse response (LLMService.call returns LLMResponse object)
                 summary, error = self.parser.parse_category_summary(response.content)
                 
                 if summary:
@@ -375,9 +376,10 @@ class LLMSummarizer:
         
         for attempt in range(self.max_retries):
             try:
-                response = self.llm_service.generate(
+                # Use LLMService.call() method
+                response = self.llm_service.call(
                     prompt=user_prompt,
-                    system_prompt=EXECUTIVE_SYSTEM_PROMPT,
+                    system=EXECUTIVE_SYSTEM_PROMPT,
                     max_tokens=800,
                     temperature=0.3,
                 )
@@ -385,6 +387,7 @@ class LLMSummarizer:
                 if not response or not response.content:
                     continue
                 
+                # LLMService.call returns LLMResponse object
                 brief, error = self.parser.parse_executive_brief(response.content)
                 
                 if brief:
