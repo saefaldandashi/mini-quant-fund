@@ -2254,21 +2254,31 @@
             <div class="insight-card">
                 <h3><span>📄</span> Reports</h3>
                 <div style="font-size: 0.85em;">
-                    <button class="action-btn secondary" onclick="generateReport('daily')" style="width: 100%; margin-bottom: 8px; padding: 8px; font-size: 0.8em;">
-                        📊 Generate Daily Report
+                    <!-- DAILY INTELLIGENCE DIGEST - Primary Report -->
+                    <button class="action-btn" onclick="generateDailyDigest()" style="width: 100%; margin-bottom: 12px; padding: 10px; font-size: 0.85em; background: linear-gradient(135deg, #1e3a5f, #3b82f6);">
+                        🌍 Generate Daily Intelligence Digest
                     </button>
-                    <button class="action-btn secondary" onclick="generateReport('weekly')" style="width: 100%; margin-bottom: 8px; padding: 8px; font-size: 0.8em;">
-                        📈 Generate Weekly Report
-                    </button>
-                    <button class="action-btn secondary" onclick="generateReport('monthly')" style="width: 100%; margin-bottom: 8px; padding: 8px; font-size: 0.8em;">
-                        📉 Generate Monthly Report
-                    </button>
+                    <div style="border-top: 1px solid var(--border); padding-top: 10px; margin-top: 5px;">
+                        <div style="font-size: 0.7em; color: var(--text-dim); margin-bottom: 8px;">Performance Reports:</div>
+                        <button class="action-btn secondary" onclick="generateReport('daily')" style="width: 100%; margin-bottom: 8px; padding: 8px; font-size: 0.8em;">
+                            📊 Generate Daily Report
+                        </button>
+                        <button class="action-btn secondary" onclick="generateReport('weekly')" style="width: 100%; margin-bottom: 8px; padding: 8px; font-size: 0.8em;">
+                            📈 Generate Weekly Report
+                        </button>
+                        <button class="action-btn secondary" onclick="generateReport('monthly')" style="width: 100%; margin-bottom: 8px; padding: 8px; font-size: 0.8em;">
+                            📉 Generate Monthly Report
+                        </button>
+                    </div>
                     <button class="action-btn secondary" onclick="listReports()" style="width: 100%; padding: 8px; font-size: 0.8em;">
-                        📋 View Reports
+                        📋 View All Reports
                     </button>
                 </div>
                 <div id="report-status" style="margin-top: 10px; font-size: 0.7em; color: var(--text-dim);">
                     <!-- Report generation status -->
+                </div>
+                <div id="digest-status" style="margin-top: 8px; font-size: 0.7em;">
+                    <!-- Digest generation status -->
                 </div>
             </div>
             
@@ -3023,6 +3033,68 @@
                     `${data.total_signals || 0} signals`;
             } catch (e) {
                 console.error('Accuracy error:', e);
+            }
+        }
+        
+        // Daily Intelligence Digest Generation
+        async function generateDailyDigest() {
+            try {
+                const statusEl = document.getElementById('digest-status');
+                statusEl.innerHTML = '<span style="color: var(--accent);">🔄 Generating Daily Intelligence Digest...</span>';
+                
+                const res = await fetch('/api/digest/generate', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        items_per_category: 3,
+                        impact_threshold: 0.25,
+                        skip_llm: false,
+                        include_pdf: false
+                    })
+                });
+                
+                const data = await res.json();
+                
+                if (data.status === 'success') {
+                    const meta = data.metadata || {};
+                    statusEl.innerHTML = `
+                        <span style="color: var(--success);">✅ Digest generated!</span><br>
+                        <span style="font-size: 0.9em; color: var(--text-dim);">
+                            ${meta.items_selected || 0} items across ${meta.categories || 0} categories
+                        </span>
+                    `;
+                    
+                    // Open the digest in a new tab
+                    setTimeout(() => {
+                        if (data.html_path) {
+                            const date = data.html_path.split('/').slice(-2, -1)[0];
+                            window.open(`/api/digest/view/${date}`, '_blank');
+                        }
+                    }, 500);
+                } else {
+                    statusEl.innerHTML = `<span style="color: var(--danger);">❌ Error: ${data.error}</span>`;
+                }
+            } catch (e) {
+                console.error('Digest generation error:', e);
+                const statusEl = document.getElementById('digest-status');
+                statusEl.innerHTML = `<span style="color: var(--danger);">❌ Error: ${e.message}</span>`;
+            }
+        }
+        
+        // View latest digest
+        async function viewLatestDigest() {
+            try {
+                const res = await fetch('/api/digest/latest');
+                const data = await res.json();
+                
+                if (data._paths && data._paths.view_url) {
+                    window.open(data._paths.view_url, '_blank');
+                } else if (data.error) {
+                    alert('No digest available. Generate one first.');
+                }
+            } catch (e) {
+                console.error('View digest error:', e);
+                alert('Could not load digest: ' + e.message);
             }
         }
         
