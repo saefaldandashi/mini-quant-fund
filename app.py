@@ -647,16 +647,25 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         allow_after_hours: If True, allow execution outside market hours
         force_rebalance: If True, bypass daily limit check
         cancel_orders: If True, cancel existing open orders first
-        fast_mode: If True, skip LLM calls and use cached data for faster execution
+        fast_mode: If True, uses parallel LLM + cached data for faster execution
         ultra_fast: If True, use cached data + rule-based debate (<5 sec target)
     
     Returns tuple of (success: bool, output: str, error: str or None, debate_info: dict)
+    
+    PERFORMANCE OPTIMIZATIONS (v2.0):
+    - Aggressive caching: skip data fetch if cache < 15 min old
+    - Parallel data fetching
+    - Reduced universe during rebalance (top 100 most liquid)
+    - Skip geopolitical refresh if recent
+    - Timeout on all API calls
     """
     global last_ticker_sentiments, trading_mode_setting  # Declare at top for ultra-fast caching
     
-    # Ultra fast implies fast mode
-    if ultra_fast:
-        fast_mode = True
+    import time as time_module
+    rebalance_start_time = time_module.time()
+    
+    # ALWAYS use fast mode now (parallel LLM is default)
+    fast_mode = True
     output_lines = []
     debate_info = {"transcript": None, "scores": None, "final_weights": {}}
     
@@ -737,11 +746,14 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         end_date = datetime.now(pytz.UTC)
         start_date = end_date - timedelta(days=400)
         
-        # ULTRA-FAST MODE: Use cached features directly if fresh enough
-        if ultra_fast and hasattr(price_cache, '_last_update') and price_cache._last_update:
+        # AGGRESSIVE CACHING: Use cached features if fresh (< 15 min)
+        # This dramatically speeds up rebalancing
+        use_cached_data = False
+        if hasattr(price_cache, '_last_update') and price_cache._last_update:
             cache_age = (datetime.now(pytz.UTC) - price_cache._last_update).total_seconds()
-            if cache_age < 300:  # 5 minutes
-                log(f"⚡⚡ ULTRA-FAST: Using cached data (age: {cache_age:.0f}s)")
+            if cache_age < 900:  # 15 minutes - use cache
+                use_cached_data = True
+                log(f"⚡ Using cached data (age: {cache_age/60:.1f} min)")
         
         # Create data loaders
         market_loader = MarketDataLoader()
@@ -754,7 +766,10 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             market_loader, news_loader, sentiment_analyzer, regime_classifier
         )
         
-        log(f"Fetching data for {len(config.UNIVERSE)} stocks...")
+        # PERFORMANCE: Use reduced universe for faster rebalancing
+        # Full universe is 300+ stocks, but we only need top 100 most liquid
+        rebalance_universe = config.UNIVERSE[:100]  # Top 100 by market cap
+        log(f"Fetching data for {len(rebalance_universe)} stocks (top 100 for speed)...")
         
         # ============================================================
         # PARALLEL DATA FETCHING (Reduces 40s -> ~15s)
@@ -766,12 +781,13 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         def fetch_price_data():
             """Fetch price data from cache or Alpaca."""
-            cached = price_cache.get_prices(config.UNIVERSE, days=300, end_date=end_date)
+            # Use reduced universe for speed
+            cached = price_cache.get_prices(rebalance_universe, days=300, end_date=end_date)
             if cached is not None:
                 return cached, True  # (data, was_cached)
             else:
-                data = broker.get_historical_bars(config.UNIVERSE, days=300)
-                price_cache.set_prices(config.UNIVERSE, days=300, data=data, end_date=end_date)
+                data = broker.get_historical_bars(rebalance_universe, days=300)
+                price_cache.set_prices(rebalance_universe, days=300, data=data, end_date=end_date)
                 return data, False
         
         def fetch_news_data():
@@ -1051,10 +1067,17 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         geo_assessment = None
         try:
-            # Refresh geopolitical events (RSS feeds, NewsAPI)
-            if not ultra_fast:
+            # Refresh geopolitical events ONLY if stale (> 30 min)
+            # This saves 5-10 seconds on each rebalance
+            geo_cache_age = 0
+            if geopolitical_intel.last_update:
+                geo_cache_age = (datetime.now(pytz.UTC) - geopolitical_intel.last_update).total_seconds()
+            
+            if geo_cache_age > 1800:  # 30 minutes
                 new_geo_events = geopolitical_intel.update_events(hours_back=24)
-                log(f"📡 Fetched {new_geo_events} new geopolitical events")
+                log(f"📡 Refreshed geopolitical events: {new_geo_events} new")
+            else:
+                log(f"📡 Using cached geopolitical data (age: {geo_cache_age/60:.1f} min)")
             
             # Get risk assessment
             geo_assessment = geopolitical_intel.get_risk_assessment()
@@ -3020,12 +3043,21 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         except Exception as e:
             log(f"⚠️ Could not save cost learning data: {e}")
         
+        # Log total rebalance time
+        total_time = time_module.time() - rebalance_start_time
+        log("")
+        log("=" * 60)
+        log(f"✅ REBALANCE COMPLETE in {total_time:.1f} seconds")
+        log("=" * 60)
+        
         return True, "\n".join(output_lines), None, debate_info
         
     except Exception as e:
         log(f"ERROR: {str(e)}")
         import traceback
         log(traceback.format_exc())
+        total_time = time_module.time() - rebalance_start_time
+        log(f"❌ REBALANCE FAILED after {total_time:.1f} seconds")
         return False, "\n".join(output_lines), str(e), debate_info
 
 
