@@ -462,6 +462,20 @@ def generate_daily_digest(
             skip_llm=skip_llm,
         )
         
+        # === ML INTEGRATION: Save signals for learning system ===
+        ml_signals = None
+        try:
+            from .ml_integration import get_digest_ml_integration
+            ml_integration = get_digest_ml_integration()
+            
+            # Convert digest to dict for signal extraction
+            digest_dict = digest.dict()
+            ml_signals = ml_integration.save_digest_signals(digest_dict)
+            logger.info(f"ML signals saved: bias={ml_signals.get('overall_bias')}, "
+                        f"conviction={ml_signals.get('conviction_score')}")
+        except Exception as e:
+            logger.warning(f"Could not save ML signals: {e}")
+        
         return {
             'html_path': digest.html_path,
             'pdf_path': digest.pdf_path,
@@ -474,7 +488,8 @@ def generate_daily_digest(
                 'items_selected': digest.metadata.total_items_selected,
                 'categories': digest.metadata.categories_with_content,
                 'generation_time': digest.metadata.generation_time_seconds,
-            }
+            },
+            'ml_signals': ml_signals,  # For strategies to consume
         }
         
     except Exception as e:

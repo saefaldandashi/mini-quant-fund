@@ -218,33 +218,43 @@ class MarketImpact(BaseModel):
     @field_validator('bullets', mode='after')
     @classmethod
     def limit_bullets(cls, v):
-        return v[:4]  # Max 4 bullets
+        return v[:6]  # Increased for more detail
+
+
+class TradingSignal(BaseModel):
+    """ML-ready trading signal from digest analysis."""
+    
+    direction: str = "NEUTRAL"  # BULLISH, BEARISH, NEUTRAL
+    conviction: int = 3  # 1-5 scale
+    timeframe: str = "DAYS"  # INTRADAY, DAYS, WEEKS
+    affected_assets: List[str] = Field(default_factory=list)
 
 
 class CategorySummary(BaseModel):
     """LLM-generated summary for a category."""
     
-    what_happened: List[str] = Field(default_factory=list, description="2-3 bullets on what happened")
-    why_it_matters: List[str] = Field(default_factory=list, description="1-2 bullets on why it matters")
+    what_happened: List[str] = Field(default_factory=list, description="Detailed bullets on what happened")
+    why_it_matters: List[str] = Field(default_factory=list, description="Why this is significant")
     market_impact_us: MarketImpact = Field(default_factory=MarketImpact)
     market_impact_gcc: MarketImpact = Field(default_factory=MarketImpact)
-    watchlist: List[str] = Field(default_factory=list, description="1-3 items to monitor")
+    watchlist: List[str] = Field(default_factory=list, description="Items to monitor")
     confidence: str = "Medium"
+    trading_signal: Optional[TradingSignal] = None  # For ML integration
     
     @field_validator('what_happened', mode='after')
     @classmethod
     def limit_what_happened(cls, v):
-        return v[:3]
+        return v[:5]  # Increased for more detail
     
     @field_validator('why_it_matters', mode='after')
     @classmethod
     def limit_why_it_matters(cls, v):
-        return v[:2]
+        return v[:4]  # Increased for more detail
     
     @field_validator('watchlist', mode='after')
     @classmethod
     def limit_watchlist(cls, v):
-        return v[:3]
+        return v[:5]  # Increased
 
 
 class DigestSection(BaseModel):
@@ -307,13 +317,65 @@ class MarketSnapshot(BaseModel):
     timestamp: Optional[datetime] = None
 
 
+class MarketOutlook(BaseModel):
+    """Overall market outlook synthesized from all categories."""
+    
+    overall: str = ""  # 1-2 sentences on global market implications
+    us_markets: str = ""  # US equities, bonds, USD outlook
+    gcc_markets: str = ""  # Tadawul, DFM, oil, regional outlook
+
+
+class RecommendedPosture(BaseModel):
+    """Portfolio positioning recommendations."""
+    
+    equity_exposure: str = "Neutral"  # Increase, Maintain, Reduce, Neutral
+    duration_bonds: str = "Neutral"  # Extend, Maintain, Reduce, Neutral
+    cash_position: str = "Neutral"  # Build, Maintain, Deploy, Neutral
+    risk_assets: str = "Neutral"  # Overweight, Neutral, Underweight
+
+
+class NoiseVsSignal(BaseModel):
+    """Distinguish actionable news from noise."""
+    
+    signal_act_on: List[str] = Field(default_factory=list, description="Truly market-moving news")
+    noise_ignore: List[str] = Field(default_factory=list, description="Sensational but not actionable")
+    watch_wait_for: List[str] = Field(default_factory=list, description="Needs more clarity")
+
+
+class KeyLevel(BaseModel):
+    """Price level to watch."""
+    
+    asset: str
+    level: str
+    significance: str
+
+
+class StrategySignals(BaseModel):
+    """ML-ready signals from digest analysis."""
+    
+    overall_bias: str = "NEUTRAL"  # BULLISH, BEARISH, NEUTRAL
+    conviction_score: int = 5  # 1-10 scale
+    volatility_expectation: str = "MEDIUM"  # LOW, MEDIUM, HIGH, SPIKE
+    sector_tilts: Dict[str, str] = Field(default_factory=dict)  # sector -> overweight/underweight
+    risk_events_next_24h: List[str] = Field(default_factory=list)
+
+
 class ExecutiveBrief(BaseModel):
-    """Executive summary at top of digest."""
+    """Executive summary at top of digest - comprehensive market guidance."""
     
     top_takeaways: List[str] = Field(default_factory=list, description="Top 5 takeaways")
-    todays_themes: List[str] = Field(default_factory=list, description="Key themes as chips")
+    todays_themes: List[str] = Field(default_factory=list, description="Key themes")
     risk_tone: Optional[str] = None  # "Risk-On", "Risk-Off", "Neutral"
     risk_score: Optional[float] = None
+    
+    # NEW: Enhanced guidance
+    market_outlook: Optional[MarketOutlook] = None
+    recommended_posture: Optional[RecommendedPosture] = None
+    noise_vs_signal: Optional[NoiseVsSignal] = None
+    key_levels: List[KeyLevel] = Field(default_factory=list)
+    
+    # NEW: ML integration
+    strategy_signals: Optional[StrategySignals] = None
     
     @field_validator('top_takeaways', mode='after')
     @classmethod

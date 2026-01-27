@@ -22,7 +22,13 @@ from .schema import (
     DigestCategory,
     CategorySummary,
     MarketImpact,
+    TradingSignal,
     ExecutiveBrief,
+    MarketOutlook,
+    RecommendedPosture,
+    NoiseVsSignal,
+    KeyLevel,
+    StrategySignals,
     CATEGORY_DISPLAY_NAMES,
 )
 
@@ -34,43 +40,57 @@ logger = logging.getLogger(__name__)
 # ============================================================
 
 CATEGORY_SYSTEM_PROMPT = """You are a senior macro strategist at a global investment bank.
-You write concise, actionable market intelligence for portfolio managers.
+You write detailed, actionable market intelligence for portfolio managers.
 
 STRICT RULES:
 1. ONLY use information from the provided articles. DO NOT add external facts.
 2. EVERY bullet MUST cite [Source] at the end.
 3. Use conditional language: "could", "may", "suggests", "indicates".
-4. NO predictions. Only conditional impact analysis.
-5. Stay under 1500 characters total.
+4. NO predictions. Only conditional impact analysis based on the news.
+5. Be DETAILED - explain the causal chain from event → market impact.
 6. If articles are insufficient, say "Insufficient data" rather than hallucinate.
 
 OUTPUT FORMAT (EXACT):
 Follow this structure exactly. Use the exact headers shown.
 
 WHAT_HAPPENED:
-- [Bullet 1 describing key event] [Source]
-- [Bullet 2 if relevant] [Source]
-- [Bullet 3 if relevant] [Source]
+- [Detailed description of key event with context] [Source]
+- [Second major development if relevant] [Source]
+- [Third development if relevant] [Source]
 
 WHY_IT_MATTERS:
-- [Why this is significant for markets] [Source]
-- [Additional context if needed] [Source]
+- [Explain WHY this is significant - the mechanism, not just the fact] [Source]
+- [Historical context or precedent if mentioned] [Source]
+- [Chain of effects: event → first impact → second order effects] [Source]
 
 MARKET_IMPACT_US:
-- [Impact on specific US asset/rate] [Source]
-- [Impact on another US asset] [Source]
-- [Additional impacts if clear] [Source]
+- [SPX/NDX: Specific impact with reasoning] [Source]
+- [UST 2Y/10Y yields: Direction and why] [Source]
+- [USD (DXY): Strength/weakness implications] [Source]
+- [Credit spreads/VIX: Risk sentiment implications] [Source]
+- [Sector-specific impacts if relevant] [Source]
 
 MARKET_IMPACT_GCC:
-- [Impact on Brent/oil prices] [Source]
-- [Impact on GCC equities or rates via USD peg] [Source]
-- [Additional GCC-specific impacts] [Source]
+GCC = Saudi Arabia (Tadawul), UAE (DFM, ADX), Qatar (QSE), Kuwait, Bahrain, Oman.
+- [Brent/WTI oil: Impact and reasoning - crucial for GCC fiscal balances] [Source]
+- [Tadawul (Saudi): Specific impact given oil dependence and Vision 2030] [Source]
+- [UAE markets (DFM/ADX): Impact on financials, real estate, trade] [Source]
+- [USD peg transmission: How US rate moves affect GCC rates and liquidity] [Source]
+- [GCC sovereign credit/bonds: Implications for fiscal positions] [Source]
+- [Regional trade/shipping: Especially if Suez/Hormuz mentioned] [Source]
 
 CONFIDENCE: [Low|Medium|High]
 
 WATCHLIST:
-- [What to monitor next] [Source]
-- [Additional watchlist item if relevant] [Source]"""
+- [Key data release or event to monitor next] [Source]
+- [Price level or indicator to watch] [Source]
+- [Potential escalation/de-escalation trigger] [Source]
+
+TRADING_SIGNALS:
+- Direction: [BULLISH|BEARISH|NEUTRAL]
+- Conviction: [1-5]
+- Timeframe: [INTRADAY|DAYS|WEEKS]
+- Key assets affected: [list 3-5 tickers]"""
 
 
 CATEGORY_USER_PROMPT = """Category: {category_name}
@@ -84,18 +104,19 @@ Focus on market implications for both US and GCC markets."""
 
 
 EXECUTIVE_SYSTEM_PROMPT = """You are a Chief Investment Strategist writing the executive brief for a daily intelligence report.
+You advise portfolio managers on how to position given today's news flow.
 
 STRICT RULES:
 1. Synthesize the MOST important points from ALL categories provided.
 2. EVERY bullet MUST cite [Source].
-3. Maximum 5 takeaways, each under 150 characters.
+3. Be ACTIONABLE - tell readers what this means for their portfolios.
 4. Themes should be 2-4 word phrases derived from the content.
 5. Risk tone based on aggregate sentiment of the articles.
 
 OUTPUT FORMAT (EXACT):
 
 TOP_TAKEAWAYS:
-- [Most important takeaway] [Source]
+- [Most important takeaway with market implication] [Source]
 - [Second takeaway] [Source]
 - [Third takeaway] [Source]
 - [Fourth takeaway if warranted] [Source]
@@ -105,8 +126,38 @@ TODAYS_THEMES:
 - [Theme 1]
 - [Theme 2]
 - [Theme 3]
+- [Theme 4]
 
-RISK_TONE: [Risk-On|Risk-Off|Neutral]"""
+RISK_TONE: [Risk-On|Risk-Off|Neutral]
+
+MARKET_OUTLOOK:
+Overall: [1-2 sentences on what today's news means for markets globally]
+US Markets: [Specific outlook for US equities, bonds, USD]
+GCC Markets: [Specific outlook for Tadawul, DFM, oil prices, regional trade]
+
+RECOMMENDED_POSTURE:
+- Equity exposure: [Increase|Maintain|Reduce|Neutral]
+- Duration (bonds): [Extend|Maintain|Reduce|Neutral]
+- Cash: [Build|Maintain|Deploy|Neutral]
+- Risk assets: [Overweight|Neutral|Underweight]
+
+NOISE_VS_SIGNAL:
+- Signal (act on): [What news is truly market-moving today]
+- Noise (ignore): [What news is sensational but not actionable]
+- Watch (wait for): [What developments need more clarity before acting]
+
+KEY_LEVELS_TO_WATCH:
+- [Asset 1]: [Price level and significance]
+- [Asset 2]: [Price level and significance]
+- [Asset 3]: [Price level and significance]
+
+STRATEGY_SIGNALS:
+For ML integration - provide structured signals:
+- overall_bias: [BULLISH|BEARISH|NEUTRAL]
+- conviction_score: [1-10]
+- volatility_expectation: [LOW|MEDIUM|HIGH|SPIKE]
+- sector_tilts: [list sectors to overweight/underweight]
+- risk_events_next_24h: [list key events]"""
 
 
 EXECUTIVE_USER_PROMPT = """Digest Date: {date}
@@ -203,10 +254,11 @@ class SummaryParser:
     
     @staticmethod
     def parse_executive_brief(text: str) -> Tuple[Optional[ExecutiveBrief], Optional[str]]:
-        """Parse executive brief from LLM output."""
+        """Parse executive brief from LLM output with enhanced market guidance."""
         try:
             sections = {}
             
+            # Basic patterns
             patterns = {
                 'takeaways': r'TOP_TAKEAWAYS:\s*\n((?:- .+\n?)+)',
                 'themes': r'TODAYS_THEMES:\s*\n((?:- .+\n?)+)',
@@ -228,6 +280,10 @@ class SummaryParser:
                         bullets.append(line[2:].strip())
                 return bullets
             
+            def extract_field(pattern: str, default: str = "") -> str:
+                match = re.search(pattern, text, re.IGNORECASE)
+                return match.group(1).strip() if match else default
+            
             takeaways = parse_bullets(sections.get('takeaways', ''))
             themes = parse_bullets(sections.get('themes', ''))
             risk_tone_raw = sections.get('risk_tone', 'Neutral').strip()
@@ -241,10 +297,105 @@ class SummaryParser:
             if not takeaways:
                 return None, "Missing TOP_TAKEAWAYS section"
             
+            # Parse Market Outlook section
+            market_outlook = None
+            outlook_match = re.search(r'MARKET_OUTLOOK:\s*\n(.+?)(?=\n\n|\nRECOMMENDED|\nNOISE|\nKEY_LEVELS|\nSTRATEGY|$)', text, re.IGNORECASE | re.DOTALL)
+            if outlook_match:
+                outlook_text = outlook_match.group(1)
+                overall = extract_field(r'Overall:\s*(.+?)(?=\n|$)', "")
+                us_markets = extract_field(r'US Markets?:\s*(.+?)(?=\n|$)', "")
+                gcc_markets = extract_field(r'GCC Markets?:\s*(.+?)(?=\n|$)', "")
+                market_outlook = MarketOutlook(
+                    overall=overall,
+                    us_markets=us_markets,
+                    gcc_markets=gcc_markets,
+                )
+            
+            # Parse Recommended Posture
+            recommended_posture = None
+            posture_match = re.search(r'RECOMMENDED_POSTURE:\s*\n(.+?)(?=\n\n|\nNOISE|\nKEY_LEVELS|\nSTRATEGY|$)', text, re.IGNORECASE | re.DOTALL)
+            if posture_match:
+                posture_text = posture_match.group(1)
+                equity = extract_field(r'Equity exposure:\s*(\w+)', "Neutral")
+                duration = extract_field(r'Duration.*?:\s*(\w+)', "Neutral")
+                cash = extract_field(r'Cash:\s*(\w+)', "Neutral")
+                risk_assets = extract_field(r'Risk assets:\s*(\w+)', "Neutral")
+                recommended_posture = RecommendedPosture(
+                    equity_exposure=equity,
+                    duration_bonds=duration,
+                    cash_position=cash,
+                    risk_assets=risk_assets,
+                )
+            
+            # Parse Noise vs Signal
+            noise_vs_signal = None
+            nvs_match = re.search(r'NOISE_VS_SIGNAL:\s*\n(.+?)(?=\n\n|\nKEY_LEVELS|\nSTRATEGY|$)', text, re.IGNORECASE | re.DOTALL)
+            if nvs_match:
+                nvs_text = nvs_match.group(1)
+                signal_match = re.search(r'Signal.*?:\s*\[(.+?)\]', nvs_text, re.IGNORECASE)
+                noise_match = re.search(r'Noise.*?:\s*\[(.+?)\]', nvs_text, re.IGNORECASE)
+                watch_match = re.search(r'Watch.*?:\s*\[(.+?)\]', nvs_text, re.IGNORECASE)
+                noise_vs_signal = NoiseVsSignal(
+                    signal_act_on=[signal_match.group(1).strip()] if signal_match else [],
+                    noise_ignore=[noise_match.group(1).strip()] if noise_match else [],
+                    watch_wait_for=[watch_match.group(1).strip()] if watch_match else [],
+                )
+            
+            # Parse Key Levels
+            key_levels = []
+            levels_match = re.search(r'KEY_LEVELS_TO_WATCH:\s*\n((?:- .+\n?)+)', text, re.IGNORECASE)
+            if levels_match:
+                for line in levels_match.group(1).split('\n'):
+                    if line.strip().startswith('- '):
+                        parts = line[2:].split(':')
+                        if len(parts) >= 2:
+                            key_levels.append(KeyLevel(
+                                asset=parts[0].strip(),
+                                level=parts[1].strip() if len(parts) > 1 else "",
+                                significance=parts[2].strip() if len(parts) > 2 else "",
+                            ))
+            
+            # Parse Strategy Signals (for ML integration)
+            strategy_signals = None
+            signals_match = re.search(r'STRATEGY_SIGNALS:\s*\n(.+?)(?=$)', text, re.IGNORECASE | re.DOTALL)
+            if signals_match:
+                signals_text = signals_match.group(1)
+                overall_bias = extract_field(r'overall_bias:\s*(\w+)', "NEUTRAL").upper()
+                conviction = int(extract_field(r'conviction_score:\s*(\d+)', "5"))
+                volatility = extract_field(r'volatility_expectation:\s*(\w+)', "MEDIUM").upper()
+                
+                # Parse sector tilts
+                sector_tilts = {}
+                tilts_match = re.search(r'sector_tilts:\s*\[(.+?)\]', signals_text, re.IGNORECASE)
+                if tilts_match:
+                    for tilt in tilts_match.group(1).split(','):
+                        if ':' in tilt:
+                            sector, weight = tilt.split(':')
+                            sector_tilts[sector.strip()] = weight.strip()
+                
+                # Parse risk events
+                risk_events = []
+                events_match = re.search(r'risk_events_next_24h:\s*\[(.+?)\]', signals_text, re.IGNORECASE)
+                if events_match:
+                    risk_events = [e.strip() for e in events_match.group(1).split(',')]
+                
+                strategy_signals = StrategySignals(
+                    overall_bias=overall_bias,
+                    conviction_score=min(10, max(1, conviction)),
+                    volatility_expectation=volatility,
+                    sector_tilts=sector_tilts,
+                    risk_events_next_24h=risk_events,
+                )
+            
             brief = ExecutiveBrief(
                 top_takeaways=takeaways[:5],
                 todays_themes=themes[:4],
                 risk_tone=risk_tone,
+                market_outlook=market_outlook,
+                recommended_posture=recommended_posture,
+                noise_vs_signal=noise_vs_signal,
+                key_levels=key_levels[:3],
+                strategy_signals=strategy_signals,
             )
             
             return brief, None
