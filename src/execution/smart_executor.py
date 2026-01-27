@@ -710,7 +710,7 @@ class SmartExecutor:
             order = self.broker.trading_client.submit_order(limit_request)
             order_id = order.id
             
-            time.sleep(2)
+            time.sleep(0.5)  # Reduced from 2s for faster execution
             
             order_status = self.broker.trading_client.get_order_by_id(order_id)
             
@@ -1199,17 +1199,17 @@ class SmartExecutor:
             else:
                 slices = min(5, total_quantity // 500)  # Max 5 slices
         
-        # SMART: Auto-calculate interval based on time of day
+        # SMART: Auto-calculate interval based on time of day (FAST defaults)
         if interval_seconds is None:
             tod = self.get_time_of_day()
             if tod == TimeOfDay.MORNING_PRIME:
-                interval_seconds = 5  # High liquidity, fast execution
+                interval_seconds = 1  # High liquidity, fast execution
             elif tod in [TimeOfDay.OPENING, TimeOfDay.CLOSING]:
-                interval_seconds = 3  # Volatile, even faster
+                interval_seconds = 1  # Volatile, even faster
             elif tod == TimeOfDay.LUNCH:
-                interval_seconds = 10  # Lower volume, slightly slower
+                interval_seconds = 2  # Lower volume, slightly slower
             else:
-                interval_seconds = 8  # Default reasonable pace
+                interval_seconds = 1  # Default fast pace
         
         self.log(f"📊 SMART TWAP: {side.upper()} {total_quantity} {symbol} → {slices} slices @ {interval_seconds}s intervals")
         
@@ -1321,12 +1321,13 @@ class SmartExecutor:
             except:
                 pass
         
-        # Large orders by value (raised threshold - $25K+ is meaningful)
-        if value > 25000:
+        # Large orders by value - Only use TWAP for very large orders ($50K+)
+        # Most retail orders don't need TWAP - adds latency without benefit
+        if value > 50000:
             return True
         
-        # Large orders by share count (raised threshold)
-        if quantity > 1000:
+        # Large orders by share count (very high threshold)
+        if quantity > 2000:
             return True
         
         return False

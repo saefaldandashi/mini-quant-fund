@@ -3786,14 +3786,8 @@ def run_bot_endpoint():
         risk_appetite = new_risk_appetite
         strategy_enhancer = get_enhancer(EnhancedConfig(risk_appetite=risk_appetite))
     
-    # Fast mode - uses parallel LLM for speed while keeping full reasoning
-    # DEFAULT: True (parallel LLM gives same quality in 2s instead of 30s)
-    fast_mode_val = request.args.get('fast_mode', data.get('fast_mode', True))
-    fast_mode = parse_bool_param(fast_mode_val, default=True)
-    
-    # Ultra-fast mode - rule-based debate, cached data (<5 sec target)
-    ultra_fast_val = request.args.get('ultra_fast', data.get('ultra_fast', False))
-    ultra_fast = parse_bool_param(ultra_fast_val, default=False)
+    # ALWAYS use smart mode with parallel LLM (fast + full intelligence)
+    # Removed fast_mode/ultra_fast distinction per user request
     
     if last_run_status["running"]:
         return jsonify({"error": "Bot is already running"}), 400
@@ -3804,16 +3798,10 @@ def run_bot_endpoint():
         force_rebalance=force_rebalance,
         cancel_orders=cancel_orders,
         exposure_pct=exposure_pct,
-        fast_mode=fast_mode,
-        ultra_fast=ultra_fast,
+        fast_mode=True,  # Always use parallel LLM
+        ultra_fast=False,  # Always use full intelligence
     )
-    if ultra_fast:
-        mode_str = "⚡⚡ ULTRA-FAST "
-    elif fast_mode:
-        mode_str = "⚡ FAST "
-    else:
-        mode_str = ""
-    return jsonify({"status": "started", "message": f"{mode_str}Multi-strategy bot initiated ({int(exposure_pct*100)}% exposure)"})
+    return jsonify({"status": "started", "message": f"🧠 Smart rebalance initiated ({int(exposure_pct*100)}% exposure)"})
 
 
 @app.route('/api/auto-rebalance', methods=['POST', 'GET'])
