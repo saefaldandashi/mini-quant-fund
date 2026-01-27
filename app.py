@@ -6424,19 +6424,33 @@ def generate_digest_endpoint():
     
     Uses the Global Intelligence Feed to create an investor-grade
     digest with US and GCC market impact analysis.
+    
+    Always refreshes news before generating to ensure latest events are included.
     """
     try:
         from src.digest import generate_daily_digest
         
         data = request.get_json() or {}
         date = data.get('date')  # Optional, defaults to today
-        items_per_category = data.get('items_per_category', 3)
-        impact_threshold = data.get('impact_threshold', 0.25)
+        items_per_category = data.get('items_per_category', 20)  # Comprehensive coverage
+        impact_threshold = data.get('impact_threshold', 0.30)
         skip_llm = data.get('skip_llm', False)
         include_pdf = data.get('include_pdf', True)
+        refresh_news = data.get('refresh_news', True)  # Always refresh by default
         
         logging.info(f"Generating digest for date: {date or 'today'}")
         
+        # Step 1: Refresh the Global Intelligence Feed to get latest news
+        if refresh_news:
+            logging.info("Refreshing Global Intelligence Feed before digest generation...")
+            try:
+                geopolitical_intel.update_events(hours_back=24)
+                filtered_count = len(geopolitical_intel.get_filtered_events())
+                logging.info(f"News refresh complete: {filtered_count} filtered events available")
+            except Exception as e:
+                logging.warning(f"News refresh failed (using cached data): {e}")
+        
+        # Step 2: Generate the digest from refreshed data
         result = generate_daily_digest(
             date=date,
             feed_path="outputs/cache/filtered_events_cache.json",
@@ -6448,11 +6462,20 @@ def generate_digest_endpoint():
         )
         
         if result['success']:
+            # Add view URL for convenience
+            digest_date = result['metadata'].get('date', date or datetime.now(pytz.UTC).strftime('%Y-%m-%d'))
             return jsonify({
                 "status": "success",
+                "date": digest_date,
                 "html_path": result['html_path'],
                 "pdf_path": result['pdf_path'],
                 "json_path": result['json_path'],
+                "view_url": f"/api/digest/view/{digest_date}",
+                "download_url": f"/api/digest/download/{digest_date}" if result['pdf_path'] else None,
+                "items_processed": result['metadata'].get('items_processed', 0),
+                "items_selected": result['metadata'].get('items_selected', 0),
+                "categories_summarized": result['metadata'].get('categories', 0),
+                "news_refreshed": refresh_news,
                 "metadata": result['metadata'],
             })
         else:

@@ -3040,7 +3040,10 @@
         async function generateDailyDigest() {
             try {
                 const statusEl = document.getElementById('digest-status');
-                statusEl.innerHTML = '<span style="color: var(--accent);">🔄 Generating Daily Intelligence Digest...</span>';
+                statusEl.innerHTML = `
+                    <span style="color: var(--accent);">🔄 Refreshing Global Intelligence Feed...</span><br>
+                    <span style="font-size: 0.85em; color: var(--text-dim);">Fetching latest news from 50+ sources</span>
+                `;
                 
                 const res = await fetch('/api/digest/generate', {
                     method: 'POST',
@@ -3049,24 +3052,28 @@
                         items_per_category: 20,   // Comprehensive coverage
                         impact_threshold: 0.30,   // All notable events
                         skip_llm: false,          // ✅ LLM generates US & GCC market impacts
-                        include_pdf: true         // Generate PDF for download
+                        include_pdf: true,        // Generate PDF for download
+                        refresh_news: true        // ✅ Always fetch latest news first
                     })
                 });
                 
                 const data = await res.json();
                 
                 if (data.status === 'success') {
-                    const meta = data.metadata || {};
                     statusEl.innerHTML = `
                         <span style="color: var(--success);">✅ Digest generated!</span><br>
                         <span style="font-size: 0.9em; color: var(--text-dim);">
-                            ${meta.items_selected || 0} items across ${meta.categories || 0} categories
+                            📰 ${data.items_processed || 0} news items processed<br>
+                            📊 ${data.items_selected || 0} items in ${data.categories_summarized || 0} categories<br>
+                            ${data.news_refreshed ? '🔄 Fresh news from last 24h' : '📦 Using cached news'}
                         </span>
                     `;
                     
                     // Open the digest in a new tab
                     setTimeout(() => {
-                        if (data.html_path) {
+                        if (data.view_url) {
+                            window.open(data.view_url, '_blank');
+                        } else if (data.html_path) {
                             const date = data.html_path.split('/').slice(-2, -1)[0];
                             window.open(`/api/digest/view/${date}`, '_blank');
                         }
