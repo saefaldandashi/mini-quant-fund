@@ -128,17 +128,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 140,
+  "total_rounds": 141,
   "reward_history": [
-    {
-      "timestamp": "2026-01-21T00:01:27.517164",
-      "returns": {
-        "Carry": -0.001694592142542118,
-        "ValueQualityTilt": -0.001210386195668183,
-        "NewsSentimentEvent": -0.00245152988059233
-      },
-      "regime": "risk_on"
-    },
     {
       "timestamp": "2026-01-21T00:06:28.838962",
       "returns": {
@@ -1253,7 +1244,17 @@
         "MeanReversion_LS": -0.00023525721455455015
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-01-26T22:11:58.916005",
+      "returns": {
+        "TS_Momentum_LS": 4.5807065642198014e-05,
+        "VWAPReversion": -0.001578875412209192,
+        "QualityValue_LS": 0.0011381279526888166,
+        "MeanReversion_LS": -0.001578875412209192
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-01-26T21:02:38.312448"
+  "last_updated": "2026-01-26T22:11:58.916353"
 }

@@ -30,13 +30,13 @@ class SelectionConfig:
     
     def __init__(
         self,
-        items_per_category: int = 3,
-        impact_threshold: float = 0.25,
-        novelty_threshold: float = 0.3,
-        min_credibility: float = 0.3,
-        max_age_hours: int = 48,
+        items_per_category: int = 20,  # Very high - comprehensive coverage
+        impact_threshold: float = 0.30,  # Reasonable threshold for quality
+        novelty_threshold: float = 0.0,  # Disabled - handled by dedup
+        min_credibility: float = 0.0,  # Disabled - include all sources
+        max_age_hours: int = 72,  # 3 days for comprehensive coverage
         boost_tier1_sources: bool = True,
-        dedupe_by_headline_similarity: float = 0.8,
+        dedupe_by_headline_similarity: float = 0.90,  # Very high - only exact dupes
     ):
         self.items_per_category = items_per_category
         self.impact_threshold = impact_threshold
@@ -281,18 +281,18 @@ class ItemSelector:
 
 def select_items(
     items: List[FeedItem],
-    items_per_category: int = 3,
-    impact_threshold: float = 0.25,
-    novelty_threshold: float = 0.3,
+    items_per_category: int = 20,  # Comprehensive coverage
+    impact_threshold: float = 0.30,  # All notable events
+    novelty_threshold: float = 0.0,  # Disabled - handled by dedup
 ) -> Dict[DigestCategory, SelectionResult]:
     """
     Convenience function to select items.
     
     Args:
         items: Feed items to select from
-        items_per_category: Number of items per category
-        impact_threshold: Minimum impact score
-        novelty_threshold: Minimum novelty score
+        items_per_category: Number of items per category (default: 20)
+        impact_threshold: Minimum impact score (default: 0.30)
+        novelty_threshold: Minimum novelty score (default: 0 - disabled)
         
     Returns:
         Dict of selection results by category

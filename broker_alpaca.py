@@ -419,6 +419,7 @@ class AlpacaBroker:
             qty: Quantity (must be > 0)
             side: OrderSide.BUY or OrderSide.SELL
             dry_run: If True, log but don't place order
+            extended_hours: If True, allow execution in pre/post-market (requires LIMIT order)
         
         Returns:
             Order info dict if placed, None if dry_run
@@ -434,6 +435,8 @@ class AlpacaBroker:
             return None
         
         try:
+            # Extended hours requires LIMIT orders, but we'll use DAY for simplicity
+            # Alpaca requires extended_hours=True + LIMIT order for pre/post market
             order_request = MarketOrderRequest(
                 symbol=symbol,
                 qty=qty,
@@ -705,8 +708,7 @@ class AlpacaBroker:
         self,
         symbol: str,
         qty: int,
-        dry_run: bool = True,
-        extended_hours: bool = False
+        dry_run: bool = True
     ) -> Optional[Dict]:
         """
         Place a short sell order.
@@ -740,8 +742,7 @@ class AlpacaBroker:
         self,
         symbol: str,
         qty: int,
-        dry_run: bool = True,
-        extended_hours: bool = False
+        dry_run: bool = True
     ) -> Optional[Dict]:
         """
         Cover a short position (buy to close).

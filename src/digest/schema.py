@@ -40,7 +40,7 @@ CATEGORY_MAPPING = {
     "elections_policy": DigestCategory.GEOPOLITICS,
     "irrelevant": None,  # Skip
     
-    # Aliases for robustness
+    # Aliases for robustness (uppercase)
     "CENTRAL_BANK": DigestCategory.CENTRAL_BANKS,
     "MACRO_DATA": DigestCategory.INFLATION_MACRO,
     "GEOPOLITICAL": DigestCategory.GEOPOLITICS,
@@ -51,6 +51,26 @@ CATEGORY_MAPPING = {
     "CORPORATE_DEALS": DigestCategory.EQUITY_CORPORATE,
     "BUSINESS_INNOVATION": DigestCategory.EQUITY_CORPORATE,
     "ELECTIONS_POLICY": DigestCategory.GEOPOLITICS,
+    
+    # Additional category aliases
+    "military": DigestCategory.GEOPOLITICS,
+    "conflict": DigestCategory.GEOPOLITICS,
+    "diplomatic": DigestCategory.GEOPOLITICS,
+    "trade": DigestCategory.GEOPOLITICS,
+    "tariff": DigestCategory.GEOPOLITICS,
+    "oil": DigestCategory.ENERGY_COMMODITIES,
+    "opec": DigestCategory.ENERGY_COMMODITIES,
+    "commodities": DigestCategory.ENERGY_COMMODITIES,
+    "rates": DigestCategory.CENTRAL_BANKS,
+    "fed": DigestCategory.CENTRAL_BANKS,
+    "inflation": DigestCategory.INFLATION_MACRO,
+    "gdp": DigestCategory.INFLATION_MACRO,
+    "unemployment": DigestCategory.INFLATION_MACRO,
+    "shipping": DigestCategory.SHIPPING_SUPPLY,
+    "ports": DigestCategory.SHIPPING_SUPPLY,
+    "freight": DigestCategory.SHIPPING_SUPPLY,
+    "banking": DigestCategory.FINANCIAL_STRESS,
+    "credit": DigestCategory.FINANCIAL_STRESS,
 }
 
 # Display names for categories

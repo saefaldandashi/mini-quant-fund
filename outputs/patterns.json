@@ -69,10 +69,10 @@
         "volatility_regime": "low",
         "trend_strength": "weak"
       },
-      "times_observed": 136,
-      "times_profitable": 110,
-      "avg_return": 0.0012431812365020153,
-      "confidence": 0.8088235294117647,
+      "times_observed": 137,
+      "times_profitable": 111,
+      "avg_return": 0.0011234438194160337,
+      "confidence": 0.8102189781021898,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "MeanReversion",
@@ -126,10 +126,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 78,
-      "times_profitable": 70,
-      "avg_return": 0.0012430194920063427,
-      "confidence": 0.8974358974358975,
+      "times_observed": 79,
+      "times_profitable": 71,
+      "avg_return": 0.0011232982493699284,
+      "confidence": 0.8987341772151899,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "Carry",
@@ -160,10 +160,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 70,
-      "times_profitable": 63,
-      "avg_return": 0.0012406205015713682,
-      "confidence": 0.9,
+      "times_observed": 71,
+      "times_profitable": 64,
+      "avg_return": 0.0011211391579784512,
+      "confidence": 0.9014084507042254,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "TS_Momentum_LS",
@@ -192,10 +192,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 71,
-      "times_profitable": 64,
-      "avg_return": 0.0012406205015713682,
-      "confidence": 0.9014084507042254,
+      "times_observed": 72,
+      "times_profitable": 65,
+      "avg_return": 0.0011211391579784512,
+      "confidence": 0.9027777777777778,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "CrossSectionMomentum",
@@ -224,10 +224,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 68,
-      "times_profitable": 61,
-      "avg_return": 0.0012406205015713682,
-      "confidence": 0.8970588235294118,
+      "times_observed": 69,
+      "times_profitable": 62,
+      "avg_return": 0.0011211391579784512,
+      "confidence": 0.8985507246376812,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "IntradayMomentum",
@@ -256,10 +256,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 68,
-      "times_profitable": 61,
-      "avg_return": 0.0012406205015713682,
-      "confidence": 0.8970588235294118,
+      "times_observed": 69,
+      "times_profitable": 62,
+      "avg_return": 0.0011211391579784512,
+      "confidence": 0.8985507246376812,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "RelativeStrengthIntraday",
@@ -288,10 +288,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 53,
-      "times_profitable": 46,
-      "avg_return": 0.00117427664489832,
-      "confidence": 0.8679245283018868,
+      "times_observed": 54,
+      "times_profitable": 47,
+      "avg_return": 0.001061429686972708,
+      "confidence": 0.8703703703703703,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "MeanReversion_LS",
@@ -319,10 +319,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 50,
-      "times_profitable": 42,
-      "avg_return": 0.00117427664489832,
-      "confidence": 0.84,
+      "times_observed": 51,
+      "times_profitable": 43,
+      "avg_return": 0.001061429686972708,
+      "confidence": 0.8431372549019608,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "NewsSentimentEvent",
@@ -350,10 +350,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 54,
-      "times_profitable": 42,
-      "avg_return": 0.0010715111985251235,
-      "confidence": 0.7777777777777778,
+      "times_observed": 55,
+      "times_profitable": 43,
+      "avg_return": 0.0009689407852368309,
+      "confidence": 0.7818181818181819,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "QualityValue_LS",
@@ -380,10 +380,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 35,
-      "times_profitable": 28,
-      "avg_return": 0.0010137388005481817,
-      "confidence": 0.8,
+      "times_observed": 36,
+      "times_profitable": 29,
+      "avg_return": 0.0009169456270575833,
+      "confidence": 0.8055555555555556,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "VolumeSpike",
@@ -408,10 +408,10 @@
         "regime": "neutral",
         "volatility_regime": "low"
       },
-      "times_observed": 27,
-      "times_profitable": 20,
-      "avg_return": 0.0007555910447205982,
-      "confidence": 0.7407407407407407,
+      "times_observed": 28,
+      "times_profitable": 21,
+      "avg_return": 0.0006846126468127582,
+      "confidence": 0.75,
       "recommended_action": "increase_exposure",
       "recommended_strategies": [
         "OpeningRangeBreakout",
@@ -3750,7 +3750,28 @@
       "outcome_return": 5.884950725108118e-05,
       "winning_strategies": [],
       "losing_strategies": []
+    },
+    {
+      "timestamp": "2026-01-26T22:11:58.917914",
+      "market_context": {
+        "regime": "neutral",
+        "volatility_regime": "low",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "QuickMeanReversion": 0.5,
+        "OpeningRangeBreakout": 0.65,
+        "TS_Momentum_LS": 0.6,
+        "VWAPReversion": 0.6,
+        "RelativeStrengthIntraday": 0.6,
+        "CrossSectionMomentum": 0.65,
+        "QualityValue_LS": 0.5,
+        "MeanReversion_LS": 0.5
+      },
+      "outcome_return": 4.5807065642198014e-05,
+      "winning_strategies": [],
+      "losing_strategies": []
     }
   ],
-  "last_updated": "2026-01-26T21:02:38.314448"
+  "last_updated": "2026-01-26T22:11:58.918208"
 }

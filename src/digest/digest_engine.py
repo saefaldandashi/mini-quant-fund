@@ -422,8 +422,8 @@ def generate_daily_digest(
     date: Optional[str] = None,
     feed_path: Optional[str] = None,
     outdir: str = "outputs/digest",
-    items_per_category: int = 3,
-    impact_threshold: float = 0.25,
+    items_per_category: int = 20,  # Comprehensive coverage
+    impact_threshold: float = 0.30,  # All notable events
     include_pdf: bool = True,
     skip_llm: bool = False,
 ) -> Dict[str, Any]:
