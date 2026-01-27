@@ -3865,7 +3865,7 @@
             }
         }
         
-        // Load filtered geopolitical events
+        // Load filtered geopolitical events (with persistent cache support)
         async function loadGeoEvents() {
             try {
                 const res = await fetch('/api/geopolitical/filtered-events');
@@ -3877,11 +3877,42 @@
                     
                     // Update stats
                     const countEl = document.getElementById('geo-events-count');
-                    if (countEl) countEl.textContent = `${data.events.length} events tracked`;
+                    if (countEl) {
+                        const totalInCache = data.total_in_cache || data.events.length;
+                        countEl.textContent = `${data.events.length} events (${totalInCache} cached)`;
+                    }
                     
                     const statsEl = document.getElementById('geo-filter-stats');
-                    if (statsEl && data.filter_stats) {
-                        statsEl.textContent = `Acceptance rate: ${(data.filter_stats.acceptance_rate * 100).toFixed(0)}%`;
+                    if (statsEl) {
+                        if (data.filter_stats && data.filter_stats.acceptance_rate > 0) {
+                            statsEl.textContent = `Acceptance: ${(data.filter_stats.acceptance_rate * 100).toFixed(0)}%`;
+                        } else if (data.categories) {
+                            // Show top categories
+                            const cats = Object.entries(data.categories).slice(0, 3).map(([k, v]) => `${k.toLowerCase()}: ${v}`);
+                            statsEl.textContent = cats.join(' | ');
+                        }
+                    }
+                    
+                    // Update last update time from cache_info
+                    const lastUpdateEl = document.getElementById('geo-last-update');
+                    if (lastUpdateEl && data.cache_info) {
+                        if (data.cache_info.last_update) {
+                            const lastUpdate = new Date(data.cache_info.last_update);
+                            const ageMin = data.cache_info.age_minutes || 0;
+                            if (ageMin < 1) {
+                                lastUpdateEl.textContent = `Updated: just now`;
+                            } else if (ageMin < 60) {
+                                lastUpdateEl.textContent = `Updated: ${Math.round(ageMin)}m ago`;
+                            } else {
+                                lastUpdateEl.textContent = `Updated: ${lastUpdate.toLocaleTimeString()}`;
+                            }
+                            // Show stale indicator
+                            if (data.cache_info.is_stale) {
+                                lastUpdateEl.innerHTML += ' <span style="color: orange;">⚠️</span>';
+                            }
+                        } else {
+                            lastUpdateEl.textContent = `Last update: ${new Date().toLocaleTimeString()}`;
+                        }
                     }
                 }
             } catch (e) {
@@ -4022,19 +4053,29 @@
             renderGeoEvents();
         }
         
-        // Refresh full geopolitical intelligence
+        // Refresh full geopolitical intelligence (with force refresh for filtered events)
         async function refreshGeoIntelFull() {
             try {
                 const badge = document.getElementById('geo-main-risk-level');
+                const lastUpdateEl = document.getElementById('geo-last-update');
                 if (badge) badge.textContent = 'Refreshing...';
+                if (lastUpdateEl) lastUpdateEl.textContent = 'Fetching new data...';
                 
+                // Refresh geopolitical assessment
                 const res = await fetch('/api/geopolitical/refresh', { method: 'POST' });
                 const data = await res.json();
                 console.log('Geo refresh:', data);
                 
+                // Also force refresh filtered events (bypasses cache)
+                const resFiltered = await fetch('/api/geopolitical/filtered-events?refresh=true');
+                const filteredData = await resFiltered.json();
+                console.log('Filtered events refreshed:', filteredData.count || 0, 'events');
+                
                 await loadGeoIntel();
             } catch (e) {
                 console.error('Geo refresh error:', e);
+                const badge = document.getElementById('geo-main-risk-level');
+                if (badge) badge.textContent = 'ERROR';
             }
         }
         

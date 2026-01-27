@@ -5263,50 +5263,77 @@ def refresh_geopolitical():
 @app.route('/api/geopolitical/filtered-events')
 @requires_auth
 def get_geopolitical_filtered_events():
-    """Get high-quality filtered geopolitical events."""
+    """
+    Get high-quality filtered geopolitical events.
+    
+    Events are persisted to disk and survive page refreshes / server restarts.
+    Auto-refreshes if cache is older than 60 minutes.
+    """
     try:
-        # Get filtered events from advanced filter
-        filtered = geopolitical_intel.get_filtered_events()
+        # Get optional parameters
+        max_age = request.args.get('max_age_minutes', 60, type=int)
+        force_refresh = request.args.get('refresh', 'false').lower() == 'true'
         
-        # If no filtered events, trigger a refresh (first access or stale cache)
-        if not filtered:
-            logging.info("No filtered events found, triggering refresh...")
+        # Force refresh if requested
+        if force_refresh:
+            logging.info("Force refresh requested for filtered events")
             geopolitical_intel.update_events(hours_back=24)
-            filtered = geopolitical_intel.get_filtered_events()
         
+        # Get filtered events (auto-refreshes if stale or empty)
+        filtered = geopolitical_intel.get_filtered_events(
+            auto_refresh_if_empty=True, 
+            max_age_minutes=max_age
+        )
+        
+        # Get cache info and stats
         filter_stats = geopolitical_intel.get_filter_stats()
+        summary = geopolitical_intel.get_filtered_events_summary()
+        cache_age = geopolitical_intel.get_cached_filtered_events_age()
         
-        # Convert to serializable format
+        # Convert to serializable format with enhanced data
         events = []
-        for event in filtered:
-            events.append({
-                "event_id": event.event_id,
-                "timestamp": event.timestamp.isoformat() if hasattr(event.timestamp, 'isoformat') else str(event.timestamp),
-                "headline": event.headline,
-                "summary": event.summary[:200] if event.summary else "",
-                "source": event.source,
-                "url": event.url,
-                "category": event.category.value if hasattr(event.category, 'value') else str(event.category),
-                "tags": event.tags,
-                "relevance_score": event.relevance_score,
-                "impact_score": event.impact_score,
-                "final_score": event.final_score,
-                "direction": event.direction.value if hasattr(event.direction, 'value') else str(event.direction),
-                "direction_confidence": event.direction_confidence,
-                "affected_assets": event.affected_assets,
-                "affected_regions": event.affected_regions,
-                "rationale": event.rationale,
-            })
+        for event in filtered[:100]:  # Limit to 100 for UI performance
+            try:
+                events.append({
+                    "event_id": event.event_id,
+                    "timestamp": event.timestamp.isoformat() if hasattr(event.timestamp, 'isoformat') else str(event.timestamp),
+                    "headline": event.headline,
+                    "summary": event.summary[:300] if event.summary else "",
+                    "source": event.source,
+                    "url": event.url,
+                    "category": event.category.value if hasattr(event.category, 'value') else (event.category.name if hasattr(event.category, 'name') else str(event.category)),
+                    "tags": event.tags[:5] if event.tags else [],  # Limit tags
+                    "relevance_score": round(event.relevance_score, 2),
+                    "impact_score": round(event.impact_score, 2),
+                    "final_score": round(event.final_score, 2),
+                    "direction": event.direction.value if hasattr(event.direction, 'value') else (event.direction.name if hasattr(event.direction, 'name') else str(event.direction)),
+                    "direction_confidence": round(event.direction_confidence, 2),
+                    "affected_assets": event.affected_assets[:5] if event.affected_assets else [],
+                    "affected_regions": event.affected_regions[:3] if event.affected_regions else [],
+                    "rationale": getattr(event, 'rationale', ''),
+                })
+            except Exception as evt_e:
+                logging.debug(f"Could not serialize event: {evt_e}")
+                continue
         
         return jsonify({
             "status": "success",
             "events": events,
             "count": len(events),
+            "total_in_cache": len(filtered),
             "filter_stats": filter_stats,
+            "cache_info": {
+                "age_minutes": round(cache_age, 1) if cache_age else None,
+                "last_update": geopolitical_intel.last_filtered_update.isoformat() if geopolitical_intel.last_filtered_update else None,
+                "is_stale": cache_age > max_age if cache_age else True,
+            },
+            "categories": summary.get("categories", {}),
         })
     except Exception as e:
         logging.error(f"Filtered events error: {e}")
-        return jsonify({"status": "error", "error": str(e), "events": []}), 500
+        import traceback
+        traceback.print_exc()
+        return jsonify({"status": "error", "error": str(e), "events": [], "cache_info": {"error": True}}), 500
 
 
 @app.route('/api/regime')

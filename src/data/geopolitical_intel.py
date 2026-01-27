@@ -413,6 +413,7 @@ class GeopoliticalIntelligence:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.cache_file = self.cache_dir / "geopolitical_cache.json"
+        self.filtered_cache_file = self.cache_dir / "filtered_events_cache.json"  # PERSISTENT FILTERED EVENTS
         
         # API keys
         self.newsapi_key = os.getenv("NEWSAPI_KEY")
@@ -421,13 +422,18 @@ class GeopoliticalIntelligence:
         self.events_cache: List[GeopoliticalEvent] = []
         self.last_assessment: Optional[GeopoliticalRiskAssessment] = None
         self.last_update: Optional[datetime] = None
+        self.last_filtered_update: Optional[datetime] = None  # Track filtered events update time
         
         # Advanced relevance filter (rule-based, deterministic)
         self.relevance_filter = get_news_filter() if HAS_RELEVANCE_FILTER else None
         self.filtered_events: List[NewsEvent] = []  # High-quality filtered events
         
-        # Load cache
+        # Load caches (both raw and filtered)
         self._load_cache()
+        self._load_filtered_cache()  # LOAD PERSISTENT FILTERED EVENTS
+        
+        logging.info(f"GeopoliticalIntelligence: Loaded {len(self.events_cache)} raw events, "
+                    f"{len(self.filtered_events)} filtered events from cache")
     
     def _load_cache(self):
         """Load cached events from disk."""
@@ -479,6 +485,159 @@ class GeopoliticalIntelligence:
                 json.dump(data, f, indent=2)
         except Exception as e:
             logging.warning(f"Could not save geopolitical cache: {e}")
+    
+    def _load_filtered_cache(self):
+        """
+        Load high-quality filtered events from persistent cache.
+        This ensures filtered news survives page refreshes and server restarts.
+        """
+        try:
+            if not self.filtered_cache_file.exists():
+                logging.info("No filtered events cache file found")
+                return
+                
+            with open(self.filtered_cache_file, 'r') as f:
+                data = json.load(f)
+            
+            # Only load events from last 48 hours
+            cutoff = datetime.now(pytz.UTC) - timedelta(hours=48)
+            
+            # Import NewsEvent and enums at module level is safer
+            from src.data.news_relevance_filter import NewsEvent, NewsCategory, MarketDirection
+            
+            # Build lookup maps for enums (case-insensitive)
+            category_map = {c.name.lower(): c for c in NewsCategory}
+            category_map.update({c.value.lower(): c for c in NewsCategory})
+            direction_map = {d.name.lower(): d for d in MarketDirection}
+            direction_map.update({d.value.lower(): d for d in MarketDirection})
+            
+            self.filtered_events = []
+            loaded_count = 0
+            skipped_count = 0
+            
+            for event_data in data.get("events", []):
+                try:
+                    # Parse timestamp
+                    ts_str = event_data.get("timestamp")
+                    if ts_str:
+                        ts = datetime.fromisoformat(ts_str.replace('Z', '+00:00'))
+                        if ts.tzinfo is None:
+                            ts = ts.replace(tzinfo=pytz.UTC)
+                    else:
+                        ts = datetime.now(pytz.UTC)
+                    
+                    # Skip old events
+                    if ts < cutoff:
+                        skipped_count += 1
+                        continue
+                    
+                    # Parse category (case-insensitive)
+                    cat_str = str(event_data.get("category", "irrelevant")).lower()
+                    category = category_map.get(cat_str, NewsCategory.IRRELEVANT)
+                    
+                    # Parse direction (case-insensitive)
+                    dir_str = str(event_data.get("direction", "neutral")).lower()
+                    direction = direction_map.get(dir_str, MarketDirection.NEUTRAL)
+                    
+                    event = NewsEvent(
+                        event_id=event_data.get("event_id", ""),
+                        timestamp=ts,
+                        headline=event_data.get("headline", ""),
+                        summary=event_data.get("summary", ""),
+                        source=event_data.get("source", ""),
+                        url=event_data.get("url"),
+                        category=category,
+                        tags=event_data.get("tags", []),
+                        matched_keywords=event_data.get("matched_keywords", []),
+                        relevance_score=float(event_data.get("relevance_score", 0.5)),
+                        impact_score=float(event_data.get("impact_score", 0.5)),
+                        credibility_score=float(event_data.get("credibility_score", 0.5)),
+                        novelty_score=float(event_data.get("novelty_score", 0.5)),
+                        final_score=float(event_data.get("final_score", 0.5)),
+                        direction=direction,
+                        direction_confidence=float(event_data.get("direction_confidence", 0.5)),
+                        affected_assets=event_data.get("affected_assets", []),
+                        affected_regions=event_data.get("affected_regions", []),
+                        rationale=event_data.get("rationale", ""),  # Include rationale field
+                    )
+                    self.filtered_events.append(event)
+                    loaded_count += 1
+                    
+                except Exception as e:
+                    logging.debug(f"Could not restore filtered event: {e}")
+                    continue
+            
+            if data.get("last_update"):
+                try:
+                    self.last_filtered_update = datetime.fromisoformat(
+                        data["last_update"].replace('Z', '+00:00')
+                    )
+                except:
+                    self.last_filtered_update = datetime.now(pytz.UTC)
+            
+            logging.info(f"Loaded {loaded_count} filtered events from cache "
+                        f"(skipped {skipped_count} old events)")
+                    
+        except Exception as e:
+            logging.warning(f"Could not load filtered events cache: {e}")
+            import traceback
+            traceback.print_exc()
+    
+    def _save_filtered_cache(self):
+        """
+        Save high-quality filtered events to persistent cache.
+        Called after every update to ensure no data loss.
+        """
+        try:
+            events_data = []
+            for event in self.filtered_events:
+                try:
+                    # Convert NewsEvent to dict
+                    event_dict = event.to_dict() if hasattr(event, 'to_dict') else {
+                        "event_id": event.event_id,
+                        "timestamp": event.timestamp.isoformat() if hasattr(event.timestamp, 'isoformat') else str(event.timestamp),
+                        "headline": event.headline,
+                        "summary": event.summary,
+                        "source": event.source,
+                        "url": event.url,
+                        "category": event.category.name if hasattr(event.category, 'name') else str(event.category),
+                        "tags": event.tags,
+                        "matched_keywords": event.matched_keywords,
+                        "relevance_score": event.relevance_score,
+                        "impact_score": event.impact_score,
+                        "credibility_score": event.credibility_score,
+                        "novelty_score": event.novelty_score,
+                        "final_score": event.final_score,
+                        "direction": event.direction.name if hasattr(event.direction, 'name') else str(event.direction),
+                        "direction_confidence": event.direction_confidence,
+                        "affected_assets": event.affected_assets,
+                        "affected_regions": event.affected_regions,
+                    }
+                    events_data.append(event_dict)
+                except Exception as e:
+                    logging.debug(f"Could not serialize filtered event: {e}")
+                    continue
+            
+            data = {
+                "events": events_data,
+                "last_update": datetime.now(pytz.UTC).isoformat(),
+                "total_count": len(events_data),
+            }
+            
+            with open(self.filtered_cache_file, 'w') as f:
+                json.dump(data, f, indent=2)
+            
+            logging.info(f"Saved {len(events_data)} filtered events to cache")
+            
+        except Exception as e:
+            logging.warning(f"Could not save filtered events cache: {e}")
+    
+    def get_cached_filtered_events_age(self) -> Optional[float]:
+        """Get the age of cached filtered events in minutes."""
+        if self.last_filtered_update:
+            age = datetime.now(pytz.UTC) - self.last_filtered_update
+            return age.total_seconds() / 60
+        return None
     
     def _generate_event_id(self, headline: str, source: str) -> str:
         """Generate unique event ID from headline and source."""
@@ -852,7 +1011,20 @@ class GeopoliticalIntelligence:
             
             # Filter articles
             filtered = self.relevance_filter.filter_batch(raw_articles)
-            self.filtered_events = filtered
+            
+            # Merge new filtered events with existing cached ones (deduplicate by event_id)
+            existing_ids = {e.event_id for e in self.filtered_events}
+            new_filtered = [e for e in filtered if e.event_id not in existing_ids]
+            self.filtered_events = new_filtered + self.filtered_events
+            
+            # Keep only last 48 hours worth and limit to 500 events max
+            cutoff = datetime.now(pytz.UTC) - timedelta(hours=48)
+            self.filtered_events = [
+                e for e in self.filtered_events 
+                if e.timestamp and (
+                    e.timestamp > cutoff if hasattr(e.timestamp, '__gt__') else True
+                )
+            ][:500]
             
             # Log filter stats
             stats = self.relevance_filter.get_stats()
@@ -860,9 +1032,14 @@ class GeopoliticalIntelligence:
                         f"{stats['rejected']} rejected "
                         f"({stats['acceptance_rate']*100:.1f}% acceptance rate)")
             
-            # Save filtered events
+            # Save filtered events to BOTH locations (original timestamped + persistent cache)
             if filtered:
                 self.relevance_filter.save_events(filtered)
+            
+            # CRITICAL: Save to persistent cache for survival across restarts
+            self.last_filtered_update = datetime.now(pytz.UTC)
+            self._save_filtered_cache()
+            logging.info(f"Persistent filtered cache: {len(self.filtered_events)} total events")
         
         # Deduplicate by event_id
         existing_ids = {e.event_id for e in self.events_cache}
@@ -891,9 +1068,55 @@ class GeopoliticalIntelligence:
         
         return len(new_events)
     
-    def get_filtered_events(self) -> List:
-        """Get high-quality filtered events (from advanced filter)."""
+    def get_filtered_events(self, auto_refresh_if_empty: bool = True, max_age_minutes: int = 60) -> List:
+        """
+        Get high-quality filtered events (from advanced filter).
+        
+        Args:
+            auto_refresh_if_empty: If True, triggers refresh when no events available
+            max_age_minutes: If events are older than this, trigger refresh
+            
+        Returns:
+            List of NewsEvent objects
+        """
+        # Check if we need to refresh (empty or stale)
+        should_refresh = False
+        
+        if not self.filtered_events and auto_refresh_if_empty:
+            logging.info("No filtered events in cache, triggering refresh...")
+            should_refresh = True
+        elif self.last_filtered_update:
+            age_minutes = self.get_cached_filtered_events_age()
+            if age_minutes and age_minutes > max_age_minutes:
+                logging.info(f"Filtered events are {age_minutes:.1f} min old (max: {max_age_minutes}), refreshing...")
+                should_refresh = True
+        
+        if should_refresh:
+            try:
+                self.update_events(hours_back=24)
+            except Exception as e:
+                logging.warning(f"Auto-refresh failed: {e}")
+        
         return self.filtered_events
+    
+    def get_filtered_events_summary(self) -> dict:
+        """Get a summary of filtered events for UI display."""
+        events = self.filtered_events
+        
+        # Group by category
+        by_category = {}
+        for event in events:
+            cat = event.category.name if hasattr(event.category, 'name') else str(event.category)
+            if cat not in by_category:
+                by_category[cat] = []
+            by_category[cat].append(event)
+        
+        return {
+            "total_events": len(events),
+            "categories": {cat: len(evts) for cat, evts in by_category.items()},
+            "last_update": self.last_filtered_update.isoformat() if self.last_filtered_update else None,
+            "cache_age_minutes": self.get_cached_filtered_events_age(),
+        }
     
     def get_filter_stats(self) -> dict:
         """Get statistics from the relevance filter."""
