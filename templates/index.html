@@ -2578,9 +2578,20 @@
             
             btn.disabled = true;
             isRunning = true;
-            const modeStr = fastMode ? '⚡FAST ' : '';
-            updateStatus('running', dryRun ? `${modeStr}Simulating...` : `🔴 ${modeStr}LIVE Trading...`);
-            document.getElementById('execution-log').textContent = `Starting ${modeStr}rebalance (${exposure}% exposure, ${riskAppetite} risk, ${dryRun ? 'DRY RUN' : '🔴 LIVE'})...\n`;
+            const rebalanceStartTime = Date.now();
+            
+            // Update status with elapsed time
+            const statusInterval = setInterval(() => {
+                if (!isRunning) {
+                    clearInterval(statusInterval);
+                    return;
+                }
+                const elapsed = Math.floor((Date.now() - rebalanceStartTime) / 1000);
+                updateStatus('running', dryRun ? `🔄 Running... (${elapsed}s)` : `🔴 LIVE (${elapsed}s)`);
+            }, 1000);
+            
+            updateStatus('running', dryRun ? '🔄 Starting...' : '🔴 LIVE Starting...');
+            document.getElementById('execution-log').textContent = `🚀 Starting smart rebalance...\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📊 Exposure: ${exposure}%\n🎯 Risk: ${riskAppetite}\n📋 Mode: ${dryRun ? 'DRY RUN (simulation)' : '🔴 LIVE TRADING'}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
             
             try {
                 const response = await fetch(`/api/run?force=${force}&cancel_previous=${cancel}&exposure=${exposure}&dry_run=${dryRun}&risk_appetite=${riskAppetite}&fast_mode=${fastMode}`, {
@@ -2597,7 +2608,7 @@
                 console.log('Rebalance started:', result);
                 document.getElementById('execution-log').textContent += `\n${result.message || 'Bot started...'}\n`;
                 
-                // Poll for log updates
+                // Poll for log updates every 1 second (faster feedback)
                 const logPoll = setInterval(async () => {
                     try {
                         const statusRes = await fetch('/api/status');
@@ -2616,15 +2627,24 @@
                             updateDebateScores(status.debate_scores);
                         }
                         
+                        // Also update new_messages to execution log
+                        if (status.new_messages && status.new_messages.length > 0) {
+                            const log = document.getElementById('execution-log');
+                            log.textContent += status.new_messages.join('\n') + '\n';
+                            log.scrollTop = log.scrollHeight;
+                        }
+                        
                         if (!status.running) {
                             clearInterval(logPoll);
+                            clearInterval(statusInterval);
                             isRunning = false;
                             btn.disabled = false;
                             
+                            const elapsed = Math.floor((Date.now() - rebalanceStartTime) / 1000);
                             if (status.error) {
-                                updateStatus('error', 'Error');
+                                updateStatus('error', `Error (${elapsed}s)`);
                             } else {
-                                updateStatus('success', 'Completed');
+                                updateStatus('success', `Done (${elapsed}s)`);
                             }
                             
                             loadPortfolio();
