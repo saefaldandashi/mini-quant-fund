@@ -107,14 +107,14 @@ class LearningReportGenerator:
         trades = trade_stats.get("trades", [])
         total_trades = len(trades)
         
-        # Calculate win rate
-        trades_with_pnl = [t for t in trades if t.get("pnl_percent") is not None]
-        wins = sum(1 for t in trades_with_pnl if t.get("pnl_percent", 0) > 0)
-        losses = sum(1 for t in trades_with_pnl if t.get("pnl_percent", 0) < 0)
+        # Calculate win rate - support both old (pnl_amount) and new (pnl_dollars) field names
+        trades_with_pnl = [t for t in trades if t.get("pnl_percent") is not None or t.get("pnl_dollars") is not None]
+        wins = sum(1 for t in trades_with_pnl if (t.get("pnl_percent", 0) or 0) > 0 or t.get("was_profitable", False))
+        losses = sum(1 for t in trades_with_pnl if (t.get("pnl_percent", 0) or 0) < 0 or (not t.get("was_profitable", True) and t.get("exit_price")))
         win_rate = wins / (wins + losses) if (wins + losses) > 0 else 0.5
         
-        # Calculate total PnL
-        total_pnl = sum(t.get("pnl_amount", 0) or 0 for t in trades)
+        # Calculate total PnL - support both pnl_amount and pnl_dollars
+        total_pnl = sum((t.get("pnl_dollars", 0) or t.get("pnl_amount", 0) or 0) for t in trades)
         
         # Count active patterns
         patterns = pattern_data.get("patterns", {})

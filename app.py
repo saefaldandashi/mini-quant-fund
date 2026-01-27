@@ -2580,6 +2580,40 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             log(f"⚠️ Could not update leverage manager: {e}")
             effective_max_lev = 1.0
         
+        # === RECORD PREDICTIONS FOR LEARNING ===
+        # This is CRITICAL for the learning system to track strategy performance
+        log("")
+        log("📚 Recording predictions for learning system...")
+        predictions_recorded = 0
+        try:
+            # Get current regime for tracking
+            current_regime_label = current_regime.regime if current_regime else 'unknown'
+            
+            for symbol, weight in enhanced_weights.items():
+                if abs(weight) > MIN_WEIGHT_THRESHOLD:
+                    direction = 'long' if weight > 0 else 'short'
+                    confidence = confidences.get(symbol, 0.5)
+                    expected_return = abs(weight) * 0.02  # Estimate ~2% for full weight
+                    
+                    # Record prediction for each strategy that contributed to this symbol
+                    for strategy_name, signal in signals.items():
+                        if symbol in signal.desired_weights:
+                            learning_engine.performance_tracker.record_prediction(
+                                strategy_name=strategy_name,
+                                symbol=symbol,
+                                predicted_direction=direction,
+                                confidence=signal.confidence,  # Use strategy's own confidence
+                                expected_return=expected_return,
+                                regime=current_regime_label,
+                            )
+                            predictions_recorded += 1
+            
+            log(f"   ✅ Recorded {predictions_recorded} predictions across {len(enhanced_weights)} symbols")
+        except Exception as e:
+            log(f"   ⚠️ Could not record predictions: {e}")
+            import traceback
+            logging.error(traceback.format_exc())
+        
         # Initialize Smart Executor with VIX awareness
         smart_executor = SmartExecutor(
             broker=broker,
