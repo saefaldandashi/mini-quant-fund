@@ -4174,11 +4174,27 @@ def get_learning_summary():
         trade_stats = learning_engine.trade_memory.get_statistics()
         pattern_summary = learning_engine.pattern_learner.get_learning_summary()
         
+        # ===== FIX: Get ACTUAL P/L from Alpaca =====
+        try:
+            broker = AlpacaBroker(
+                api_key=os.getenv("ALPACA_API_KEY"),
+                secret_key=os.getenv("ALPACA_SECRET_KEY"),
+                paper=True
+            )
+            account = broker.get_account()
+            current_equity = float(account.get('equity', 0) if isinstance(account, dict) else account.equity)
+            STARTING_CAPITAL = 100000.0
+            actual_pnl = current_equity - STARTING_CAPITAL
+        except Exception:
+            actual_pnl = trade_stats.get('total_pnl', 0)
+        
         # Add fields the UI expects
         summary['total_trades'] = trade_stats.get('total_trades', 0)
         summary['win_rate'] = trade_stats.get('win_rate', 0)
         summary['patterns_found'] = pattern_summary.get('discovered_patterns', 0)
-        summary['total_pnl'] = trade_stats.get('total_pnl', 0)
+        # Use ACTUAL P/L from Alpaca, not internal Trade Memory calculation
+        summary['total_pnl'] = actual_pnl
+        summary['internal_trade_memory_pnl'] = trade_stats.get('total_pnl', 0)  # For debugging
         summary['avg_pnl'] = trade_stats.get('avg_pnl_percent', 0)
         summary['best_trade'] = trade_stats.get('best_trade', 'N/A')
         summary['worst_trade'] = trade_stats.get('worst_trade', 'N/A')
@@ -4518,8 +4534,27 @@ def download_learning_report():
 def get_realtime_learning_stats():
     """Get real-time learning statistics for dashboard display."""
     try:
-        # Get trade statistics
+        # Get trade statistics from learning engine
         trade_stats = learning_engine.trade_memory.get_statistics()
+        
+        # ===== FIX: Get ACTUAL P/L from Alpaca, not Trade Memory =====
+        # Trade Memory's "total_pnl" is for internal learning, not actual account P/L
+        try:
+            broker = AlpacaBroker(
+                api_key=os.getenv("ALPACA_API_KEY"),
+                secret_key=os.getenv("ALPACA_SECRET_KEY"),
+                paper=True
+            )
+            account = broker.get_account()
+            current_equity = float(account.get('equity', 0) if isinstance(account, dict) else account.equity)
+            STARTING_CAPITAL = 100000.0  # Account was funded with $100,000
+            actual_pnl = current_equity - STARTING_CAPITAL
+            actual_pnl_pct = ((current_equity / STARTING_CAPITAL) - 1) * 100 if STARTING_CAPITAL > 0 else 0
+        except Exception as e:
+            logging.warning(f"Could not fetch actual P/L from Alpaca: {e}")
+            # Fall back to trade memory (but this is less accurate)
+            actual_pnl = trade_stats.get('total_pnl', 0)
+            actual_pnl_pct = 0
         
         # Get current learning influence
         current_influence = learning_engine.get_adaptive_learning_influence()
@@ -4575,8 +4610,12 @@ def get_realtime_learning_stats():
             # Core stats
             "total_trades": trade_stats.get('total_trades', 0),
             "win_rate": trade_stats.get('win_rate', 0.5),
-            "total_pnl": trade_stats.get('total_pnl', 0),
+            # ===== FIX: Use ACTUAL Alpaca P/L, not internal calculation =====
+            "total_pnl": actual_pnl,  # Real account P/L from Alpaca
+            "total_pnl_pct": actual_pnl_pct,  # Real P/L percentage
             "avg_pnl_percent": trade_stats.get('avg_pnl_percent', 0),
+            # For debugging: show what Trade Memory calculated (internal use only)
+            "internal_trade_memory_pnl": trade_stats.get('total_pnl', 0),
             
             # Learning influence
             "learning_influence": current_influence,
