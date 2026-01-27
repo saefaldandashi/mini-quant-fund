@@ -6413,6 +6413,213 @@ def download_report(filename):
 
 
 # =============================================================================
+# DAILY DIGEST ENDPOINTS
+# =============================================================================
+
+@app.route('/api/digest/generate', methods=['POST'])
+@requires_auth
+def generate_digest_endpoint():
+    """
+    Generate a Daily Intelligence Digest.
+    
+    Uses the Global Intelligence Feed to create an investor-grade
+    digest with US and GCC market impact analysis.
+    """
+    try:
+        from src.digest import generate_daily_digest
+        
+        data = request.get_json() or {}
+        date = data.get('date')  # Optional, defaults to today
+        items_per_category = data.get('items_per_category', 3)
+        impact_threshold = data.get('impact_threshold', 0.25)
+        skip_llm = data.get('skip_llm', False)
+        include_pdf = data.get('include_pdf', True)
+        
+        logging.info(f"Generating digest for date: {date or 'today'}")
+        
+        result = generate_daily_digest(
+            date=date,
+            feed_path="outputs/cache/filtered_events_cache.json",
+            outdir="outputs/digest",
+            items_per_category=items_per_category,
+            impact_threshold=impact_threshold,
+            skip_llm=skip_llm,
+            include_pdf=include_pdf,
+        )
+        
+        if result['success']:
+            return jsonify({
+                "status": "success",
+                "html_path": result['html_path'],
+                "pdf_path": result['pdf_path'],
+                "json_path": result['json_path'],
+                "metadata": result['metadata'],
+            })
+        else:
+            return jsonify({
+                "status": "error",
+                "error": result['error'],
+            }), 400
+            
+    except Exception as e:
+        logging.error(f"Digest generation failed: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"status": "error", "error": str(e)}), 500
+
+
+@app.route('/api/digest/list')
+@requires_auth
+def list_digests():
+    """List available daily digests."""
+    try:
+        from pathlib import Path
+        
+        digest_dir = Path("outputs/digest")
+        if not digest_dir.exists():
+            return jsonify({"digests": []})
+        
+        digests = []
+        for date_dir in sorted(digest_dir.iterdir(), reverse=True):
+            if date_dir.is_dir():
+                html_path = date_dir / "daily_digest.html"
+                pdf_path = date_dir / "daily_digest.pdf"
+                json_path = date_dir / "daily_digest.json"
+                
+                if html_path.exists() or json_path.exists():
+                    digest_info = {
+                        "date": date_dir.name,
+                        "has_html": html_path.exists(),
+                        "has_pdf": pdf_path.exists(),
+                        "has_json": json_path.exists(),
+                        "view_url": f"/api/digest/view/{date_dir.name}",
+                        "download_url": f"/api/digest/download/{date_dir.name}" if pdf_path.exists() else None,
+                    }
+                    
+                    # Get metadata if available
+                    if json_path.exists():
+                        try:
+                            import json as json_lib
+                            with open(json_path) as f:
+                                data = json_lib.load(f)
+                            digest_info['metadata'] = data.get('metadata', {})
+                        except:
+                            pass
+                    
+                    digests.append(digest_info)
+        
+        return jsonify({"digests": digests[:30]})  # Last 30 digests
+        
+    except Exception as e:
+        logging.error(f"List digests error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/digest/view/<date>')
+@requires_auth
+def view_digest(date):
+    """View a digest HTML by date."""
+    try:
+        from pathlib import Path
+        
+        html_path = Path("outputs/digest") / date / "daily_digest.html"
+        if not html_path.exists():
+            return jsonify({"error": "Digest not found"}), 404
+        
+        with open(html_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        return content, 200, {'Content-Type': 'text/html; charset=utf-8'}
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/digest/download/<date>')
+@requires_auth
+def download_digest(date):
+    """Download a digest PDF by date."""
+    try:
+        from pathlib import Path
+        
+        pdf_path = Path("outputs/digest") / date / "daily_digest.pdf"
+        if not pdf_path.exists():
+            return jsonify({"error": "PDF not found"}), 404
+        
+        return send_file(
+            pdf_path,
+            as_attachment=True,
+            download_name=f"digest_{date}.pdf",
+            mimetype='application/pdf'
+        )
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/digest/json/<date>')
+@requires_auth
+def get_digest_json(date):
+    """Get digest data as JSON."""
+    try:
+        from pathlib import Path
+        import json as json_lib
+        
+        json_path = Path("outputs/digest") / date / "daily_digest.json"
+        if not json_path.exists():
+            return jsonify({"error": "Digest not found"}), 404
+        
+        with open(json_path, 'r') as f:
+            data = json_lib.load(f)
+        
+        return jsonify(data)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/digest/latest')
+@requires_auth
+def get_latest_digest():
+    """Get the most recent digest."""
+    try:
+        from pathlib import Path
+        import json as json_lib
+        
+        digest_dir = Path("outputs/digest")
+        if not digest_dir.exists():
+            return jsonify({"error": "No digests available"}), 404
+        
+        # Find most recent date directory
+        date_dirs = sorted(
+            [d for d in digest_dir.iterdir() if d.is_dir()],
+            reverse=True
+        )
+        
+        if not date_dirs:
+            return jsonify({"error": "No digests available"}), 404
+        
+        latest_dir = date_dirs[0]
+        json_path = latest_dir / "daily_digest.json"
+        
+        if not json_path.exists():
+            return jsonify({"error": "Digest data not found"}), 404
+        
+        with open(json_path, 'r') as f:
+            data = json_lib.load(f)
+        
+        data['_paths'] = {
+            "view_url": f"/api/digest/view/{latest_dir.name}",
+            "download_url": f"/api/digest/download/{latest_dir.name}",
+        }
+        
+        return jsonify(data)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# =============================================================================
 # ADVANCED ANALYTICS ENDPOINTS
 # =============================================================================
 
