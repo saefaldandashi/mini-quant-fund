@@ -66,14 +66,14 @@ class ShortCandidate:
             self.cross_asset_score * weights.get('cross_asset', 0.15)
         )
         
-        # Determine conviction
-        if self.total_score >= 0.70:
+        # Determine conviction - more aggressive thresholds to generate shorts
+        if self.total_score >= 0.55:
             self.conviction = "high"
             self.recommended_weight = -0.05  # 5% short
-        elif self.total_score >= 0.50:
+        elif self.total_score >= 0.40:
             self.conviction = "medium"
             self.recommended_weight = -0.03  # 3% short
-        elif self.total_score >= 0.35:
+        elif self.total_score >= 0.25:
             self.conviction = "low"
             self.recommended_weight = -0.02  # 2% short
         else:
@@ -91,10 +91,10 @@ class ShortScannerConfig:
         'technical': 0.30,
     })
     
-    # Minimum scores to be considered
-    min_total_score: float = 0.35
+    # Minimum scores to be considered - relaxed to generate more shorts
+    min_total_score: float = 0.25
     min_news_score: float = 0.0     # Allow shorts without news
-    min_sources_agreeing: int = 2    # At least 2 of 3 sources must agree
+    min_sources_agreeing: int = 1    # Only need 1 source to agree (technical OR fundamental)
     
     # News signal thresholds
     news_sentiment_threshold: float = -0.3  # Bearish threshold
@@ -102,13 +102,13 @@ class ShortScannerConfig:
     downgrade_boost: float = 0.2            # Extra score for analyst downgrade
     regulatory_boost: float = 0.4           # Extra score for regulatory issues
     
-    # Valuation thresholds
-    pe_vs_sector_threshold: float = 2.0     # P/E > 2x sector = high
-    price_above_200ma_threshold: float = 0.50  # 50% above = extended
+    # Valuation thresholds - relaxed to find more shorts
+    pe_vs_sector_threshold: float = 1.5     # P/E > 1.5x sector = high
+    price_above_200ma_threshold: float = 0.15  # 15% above = extended (was 25%)
     
-    # Technical thresholds
-    below_200ma_days: int = 5               # Must be below for N days
-    rsi_overbought: float = 70.0            # RSI above = overbought
+    # Technical thresholds - relaxed for more shorts
+    below_200ma_days: int = 3               # Must be below for N days
+    rsi_overbought: float = 65.0            # RSI above = overbought (was 70)
     
     # Risk limits
     max_borrow_rate: float = 10.0           # Skip if > 10% annual
@@ -387,8 +387,8 @@ class ShortScanner:
             
             if extension > self.config.price_above_200ma_threshold:
                 # Extended above MA = potential short
-                # Map 50% to 100%+ extension to 0.3-0.7 score
-                ext_score = min(0.7, 0.3 + (extension - 0.5) * 0.8)
+                # Map 15%-50% extension to 0.2-0.6 score
+                ext_score = min(0.6, 0.2 + extension * 0.8)
                 score += ext_score
                 candidate.valuation_signals.append(f"Extended {extension:.0%} above 200 DMA")
         
@@ -420,26 +420,36 @@ class ShortScanner:
         Analyze technicals for short signals.
         
         Looks for:
+        - Price ABOVE 200 DMA by >30% (overextended, mean reversion opportunity)
         - Price below 200 DMA (breakdown)
         - RSI overbought (reversal setup)
-        - Death cross (if we had 50 DMA)
         """
         score = 0.0
         
-        # RSI overbought
+        # RSI overbought - key short signal
         if rsi and rsi > self.config.rsi_overbought:
             # Map 70-100 to 0.3-0.6
             rsi_score = min(0.6, 0.3 + (rsi - 70) / 100)
             score += rsi_score
             candidate.technical_signals.append(f"RSI overbought: {rsi:.1f}")
         
-        # Price below 200 DMA (breakdown)
-        if price and ma_200_value and price < ma_200_value:
-            # Below MA = bearish
-            below_pct = (ma_200_value - price) / ma_200_value
-            below_score = min(0.5, 0.2 + below_pct)
-            score += below_score
-            candidate.technical_signals.append(f"Below 200 DMA by {below_pct:.0%}")
+        # Price analysis relative to 200 DMA
+        if price and ma_200_value and ma_200_value > 0:
+            pct_from_ma = (price - ma_200_value) / ma_200_value
+            
+            # Price ABOVE 200 DMA (overextended) - prime short candidate
+            if pct_from_ma > 0.15:  # >15% above MA200 (lowered from 30%)
+                # Scale score: 15%-50% above maps to 0.2-0.6
+                extended_score = min(0.6, 0.2 + (pct_from_ma - 0.15) * 1.15)
+                score += extended_score
+                candidate.technical_signals.append(f"Extended {pct_from_ma:.0%} above 200 DMA")
+            
+            # Price below 200 DMA (breakdown) - also bearish
+            elif pct_from_ma < 0:
+                below_pct = abs(pct_from_ma)
+                below_score = min(0.4, 0.2 + below_pct)
+                score += below_score
+                candidate.technical_signals.append(f"Below 200 DMA by {below_pct:.0%}")
         
         return min(1.0, score)
     
