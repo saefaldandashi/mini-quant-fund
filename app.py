@@ -2032,6 +2032,73 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             except Exception as e:
                 logging.debug(f"Could not record cross-asset context: {e}")
             
+            # === TECHNICAL ANALYSIS INTEGRATION ===
+            # Use MACD, Bollinger, Stochastic, ADX signals to adjust weights
+            try:
+                tech_adjustments = []
+                if hasattr(features, 'tech_composite_signal') and features.tech_composite_signal:
+                    log(f"📊 Technical Analysis: {len(features.tech_composite_signal)} symbols analyzed")
+                    
+                    bullish_count = 0
+                    bearish_count = 0
+                    
+                    for symbol, tech_signal in features.tech_composite_signal.items():
+                        if symbol not in combined_weights:
+                            continue
+                        
+                        current_weight = combined_weights[symbol]
+                        confidence = features.tech_signal_confidence.get(symbol, 0.5)
+                        
+                        # Only adjust if high confidence (>60%)
+                        if confidence < 0.6:
+                            continue
+                        
+                        # Strong bullish technical signal
+                        if tech_signal > 0.4 and current_weight > 0:
+                            adjustment = min(0.2, tech_signal * 0.3)  # Up to 20% boost
+                            combined_weights[symbol] *= (1 + adjustment)
+                            tech_adjustments.append(f"{symbol}:+{adjustment*100:.0f}%")
+                            bullish_count += 1
+                        
+                        # Strong bearish technical signal
+                        elif tech_signal < -0.4 and current_weight > 0:
+                            adjustment = min(0.3, abs(tech_signal) * 0.4)  # Up to 30% reduction
+                            combined_weights[symbol] *= (1 - adjustment)
+                            tech_adjustments.append(f"{symbol}:-{adjustment*100:.0f}%")
+                            bearish_count += 1
+                        
+                        # Oversold bounce opportunity (Bollinger/Stochastic)
+                        elif tech_signal < -0.3:
+                            stoch_k = features.stochastic_k.get(symbol, 50)
+                            bb_pct_b = features.bollinger_percent_b.get(symbol, 0.5)
+                            if stoch_k < 20 and bb_pct_b < 0:  # Very oversold
+                                # Potential bounce - add small position
+                                if symbol not in combined_weights or combined_weights[symbol] < 0.01:
+                                    combined_weights[symbol] = 0.01  # 1% position
+                                    tech_adjustments.append(f"{symbol}:bounce")
+                    
+                    if bullish_count or bearish_count:
+                        log(f"   Technical Adjustments: {bullish_count} bullish, {bearish_count} bearish")
+                    
+                    # Log top technical signals
+                    sorted_signals = sorted(features.tech_composite_signal.items(), key=lambda x: abs(x[1]), reverse=True)
+                    top_5 = sorted_signals[:5]
+                    if top_5:
+                        log(f"   Top Signals:")
+                        for sym, sig in top_5:
+                            trend = features.tech_trend_score.get(sym, 0)
+                            momentum = features.tech_momentum_score.get(sym, 0)
+                            adx_val = features.adx.get(sym, 0)
+                            direction = "📈" if sig > 0 else "📉"
+                            log(f"     {direction} {sym}: signal={sig:.2f}, trend={trend:.2f}, mom={momentum:.2f}, ADX={adx_val:.0f}")
+                    
+                    analytics_adjustments.extend(tech_adjustments)
+                else:
+                    log(f"📊 Technical Analysis: Computing indicators...")
+                    
+            except Exception as e:
+                log(f"⚠️ Technical analysis integration error: {e}")
+            
             # 2. Event Calendar Risk Adjustment
             calendar = get_event_calendar()
             market_risk_factor, risk_reason = calendar.get_market_risk_factor()
@@ -3712,6 +3779,157 @@ def get_debate_transcript():
         "adversarial_transcript": last_run_status.get("adversarial_transcript"),
         "strategy_scores": last_run_status.get("strategy_scores"),
     })
+
+
+@app.route('/api/technical-analysis')
+@requires_auth
+def get_technical_analysis():
+    """
+    Get comprehensive technical analysis for symbols.
+    
+    Query params:
+        symbols: Comma-separated list of symbols (default: top holdings)
+    
+    Returns:
+        Technical indicators: MACD, Bollinger, Stochastic, ADX, composite signals
+    """
+    try:
+        from src.analytics.technical_indicators import get_technical_analyzer, get_signal_summary
+        from src.data.market_data import get_market_data_loader
+        from alpaca.data.historical import StockHistoricalDataClient
+        from alpaca.data.requests import StockBarsRequest
+        from alpaca.data.timeframe import TimeFrame
+        from alpaca.data.enums import DataFeed
+        import os
+        
+        # Get symbols from query or use top universe
+        symbols_param = request.args.get('symbols', '')
+        if symbols_param:
+            symbols = [s.strip().upper() for s in symbols_param.split(',')]
+        else:
+            # Default to top 10 from universe
+            symbols = config.UNIVERSE[:10]
+        
+        # Fetch 100 days of daily data from Alpaca
+        api_key = os.getenv('ALPACA_API_KEY')
+        secret_key = os.getenv('ALPACA_SECRET_KEY')
+        
+        if not api_key or not secret_key:
+            return jsonify({"error": "Alpaca API keys not configured"}), 500
+        
+        client = StockHistoricalDataClient(api_key, secret_key)
+        end = datetime.now()
+        start = end - timedelta(days=120)
+        
+        request_obj = StockBarsRequest(
+            symbol_or_symbols=symbols,
+            timeframe=TimeFrame.Day,
+            start=start,
+            end=end,
+            feed=DataFeed.IEX,
+        )
+        
+        bars = client.get_stock_bars(request_obj)
+        
+        analyzer = get_technical_analyzer()
+        results = {}
+        
+        for symbol in symbols:
+            try:
+                if symbol not in bars.data or not bars.data[symbol]:
+                    continue
+                
+                symbol_bars = bars.data[symbol]
+                df = pd.DataFrame({
+                    'open': [b.open for b in symbol_bars],
+                    'high': [b.high for b in symbol_bars],
+                    'low': [b.low for b in symbol_bars],
+                    'close': [b.close for b in symbol_bars],
+                    'volume': [b.volume for b in symbol_bars],
+                }, index=[b.timestamp for b in symbol_bars])
+                
+                analysis = analyzer.analyze(symbol, df)
+                
+                results[symbol] = {
+                    'price': analysis.current_price,
+                    'timestamp': analysis.timestamp.isoformat(),
+                    
+                    # MACD
+                    'macd': {
+                        'line': round(analysis.macd.macd_line, 3),
+                        'signal': round(analysis.macd.signal_line, 3),
+                        'histogram': round(analysis.macd.histogram, 3),
+                        'bullish_crossover': analysis.macd.bullish_crossover,
+                        'bearish_crossover': analysis.macd.bearish_crossover,
+                        'momentum_state': analysis.macd.momentum_state.value,
+                    },
+                    
+                    # Bollinger Bands
+                    'bollinger': {
+                        'upper': round(analysis.bollinger.upper, 2),
+                        'middle': round(analysis.bollinger.middle, 2),
+                        'lower': round(analysis.bollinger.lower, 2),
+                        'percent_b': round(analysis.bollinger.percent_b, 3),
+                        'bandwidth': round(analysis.bollinger.bandwidth, 4),
+                        'squeeze': analysis.bollinger.squeeze,
+                        'volatility_state': analysis.bollinger.volatility_state.value,
+                    },
+                    
+                    # Stochastic
+                    'stochastic': {
+                        'k': round(analysis.stochastic.k, 1),
+                        'd': round(analysis.stochastic.d, 1),
+                        'overbought': analysis.stochastic.overbought,
+                        'oversold': analysis.stochastic.oversold,
+                        'bullish_cross': analysis.stochastic.bullish_cross,
+                        'bearish_cross': analysis.stochastic.bearish_cross,
+                    },
+                    
+                    # ADX
+                    'adx': {
+                        'value': round(analysis.adx.adx, 1),
+                        'plus_di': round(analysis.adx.plus_di, 1),
+                        'minus_di': round(analysis.adx.minus_di, 1),
+                        'trend_strength': analysis.adx.trend_strength.value,
+                        'trending': analysis.adx.trending,
+                        'strong_trend': analysis.adx.strong_trend,
+                    },
+                    
+                    # Volume
+                    'volume': {
+                        'obv_trend': analysis.volume.obv_trend,
+                        'volume_ratio': round(analysis.volume.volume_ma_ratio, 2),
+                        'volume_breakout': analysis.volume.volume_breakout,
+                        'mfi': round(analysis.volume.money_flow_index, 1),
+                    },
+                    
+                    # Scores
+                    'scores': {
+                        'trend': round(analysis.trend_score, 3),
+                        'momentum': round(analysis.momentum_score, 3),
+                        'volatility': round(analysis.volatility_score, 3),
+                        'volume': round(analysis.volume_score, 3),
+                        'composite_signal': round(analysis.composite_signal, 3),
+                        'confidence': round(analysis.signal_confidence, 3),
+                    },
+                    
+                    # Summary
+                    'summary': get_signal_summary(analysis),
+                }
+                
+            except Exception as e:
+                logging.warning(f"Technical analysis failed for {symbol}: {e}")
+                results[symbol] = {'error': str(e)}
+        
+        return jsonify({
+            'symbols_analyzed': len(results),
+            'timestamp': datetime.now().isoformat(),
+            'analysis': results,
+        })
+        
+    except Exception as e:
+        logging.error(f"Technical analysis endpoint error: {e}")
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route('/api/debate/learning')

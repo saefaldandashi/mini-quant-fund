@@ -14,6 +14,13 @@ from .news_data import NewsDataLoader, NewsArticle
 from .sentiment import SentimentAnalyzer, SentimentScore
 from .regime import RegimeClassifier, MarketRegime
 
+# Technical analysis (optional - may not be installed yet)
+try:
+    from src.analytics.technical_indicators import TechnicalAnalyzer, get_technical_analyzer
+    TECHNICAL_ANALYZER_AVAILABLE = True
+except ImportError:
+    TECHNICAL_ANALYZER_AVAILABLE = False
+
 logger = logging.getLogger(__name__)
 
 
@@ -53,6 +60,33 @@ class Features:
     
     # Technical indicators for intraday
     rsi_14: Dict[str, float] = field(default_factory=dict)  # 14-period RSI
+    
+    # COMPREHENSIVE TECHNICAL ANALYSIS (from TechnicalAnalyzer)
+    # MACD
+    macd_line: Dict[str, float] = field(default_factory=dict)
+    macd_signal: Dict[str, float] = field(default_factory=dict)
+    macd_histogram: Dict[str, float] = field(default_factory=dict)
+    
+    # Bollinger Bands
+    bollinger_upper: Dict[str, float] = field(default_factory=dict)
+    bollinger_middle: Dict[str, float] = field(default_factory=dict)
+    bollinger_lower: Dict[str, float] = field(default_factory=dict)
+    bollinger_percent_b: Dict[str, float] = field(default_factory=dict)
+    
+    # Stochastic
+    stochastic_k: Dict[str, float] = field(default_factory=dict)
+    stochastic_d: Dict[str, float] = field(default_factory=dict)
+    
+    # ADX (trend strength)
+    adx: Dict[str, float] = field(default_factory=dict)
+    plus_di: Dict[str, float] = field(default_factory=dict)
+    minus_di: Dict[str, float] = field(default_factory=dict)
+    
+    # Composite technical scores (from TechnicalAnalyzer)
+    tech_trend_score: Dict[str, float] = field(default_factory=dict)     # -1 to +1
+    tech_momentum_score: Dict[str, float] = field(default_factory=dict)  # -1 to +1
+    tech_composite_signal: Dict[str, float] = field(default_factory=dict)  # -1 to +1
+    tech_signal_confidence: Dict[str, float] = field(default_factory=dict)  # 0 to 1
     
     # Volume profile (for intraday strategies)
     volume_profile: Dict[str, Dict[str, float]] = field(default_factory=dict)  # symbol -> {avg, ratio, trend}
@@ -226,6 +260,12 @@ class FeatureStore:
             self._compute_cross_asset_features(features, symbols)
         except Exception as e:
             logger.warning(f"Cross-asset feature computation failed: {e}")
+        
+        # Comprehensive technical analysis (MACD, Bollinger, Stochastic, ADX)
+        try:
+            self._compute_technical_analysis(features, symbols)
+        except Exception as e:
+            logger.warning(f"Technical analysis computation failed: {e}")
         
         self._feature_cache[cache_key] = features
         return features
@@ -463,6 +503,77 @@ class FeatureStore:
             
         except Exception as e:
             logger.warning(f"Cross-asset feature computation error: {e}")
+    
+    def _compute_technical_analysis(
+        self,
+        features: Features,
+        symbols: List[str],
+    ) -> None:
+        """
+        Compute comprehensive technical indicators using TechnicalAnalyzer.
+        
+        Adds MACD, Bollinger Bands, Stochastic, ADX, and composite signals
+        to the features object for strategy consumption.
+        """
+        if not TECHNICAL_ANALYZER_AVAILABLE:
+            logger.debug("Technical analyzer not available, skipping")
+            return
+        
+        try:
+            analyzer = get_technical_analyzer()
+            
+            for symbol in symbols:
+                # Get price history for this symbol
+                if symbol not in self._price_history:
+                    continue
+                
+                # Build OHLCV DataFrame from history
+                history = self._price_history[symbol]
+                if len(history) < 50:
+                    continue
+                
+                # The history should have OHLCV data
+                df = history.copy()
+                
+                # Ensure we have required columns
+                required_cols = ['close']
+                if not all(col in df.columns for col in required_cols):
+                    continue
+                
+                # Run technical analysis
+                analysis = analyzer.analyze(symbol, df, include_volume='volume' in df.columns)
+                
+                # Store results in features
+                # MACD
+                features.macd_line[symbol] = analysis.macd.macd_line
+                features.macd_signal[symbol] = analysis.macd.signal_line
+                features.macd_histogram[symbol] = analysis.macd.histogram
+                
+                # Bollinger Bands
+                features.bollinger_upper[symbol] = analysis.bollinger.upper
+                features.bollinger_middle[symbol] = analysis.bollinger.middle
+                features.bollinger_lower[symbol] = analysis.bollinger.lower
+                features.bollinger_percent_b[symbol] = analysis.bollinger.percent_b
+                
+                # Stochastic
+                features.stochastic_k[symbol] = analysis.stochastic.k
+                features.stochastic_d[symbol] = analysis.stochastic.d
+                
+                # ADX
+                features.adx[symbol] = analysis.adx.adx
+                features.plus_di[symbol] = analysis.adx.plus_di
+                features.minus_di[symbol] = analysis.adx.minus_di
+                
+                # Composite scores
+                features.tech_trend_score[symbol] = analysis.trend_score
+                features.tech_momentum_score[symbol] = analysis.momentum_score
+                features.tech_composite_signal[symbol] = analysis.composite_signal
+                features.tech_signal_confidence[symbol] = analysis.signal_confidence
+            
+            logger.debug(f"Technical analysis computed for {len(features.macd_line)} symbols")
+            
+        except Exception as e:
+            logger.warning(f"Technical analysis computation error: {e}")
     
     def add_intraday_features(
         self,
