@@ -51,29 +51,39 @@ class ShortCandidate:
     recommended_weight: float = 0.0
     
     def calculate_total(self, weights: Optional[Dict[str, float]] = None):
-        """Calculate weighted total score."""
-        weights = weights or {
-            'news': 0.35,
-            'valuation': 0.25,
-            'technical': 0.25,
-            'cross_asset': 0.15,  # NEW: Cross-asset weight
-        }
+        """
+        Calculate total score.
         
-        self.total_score = (
-            self.news_score * weights.get('news', 0.35) +
-            self.valuation_score * weights.get('valuation', 0.25) +
-            self.technical_score * weights.get('technical', 0.25) +
-            self.cross_asset_score * weights.get('cross_asset', 0.15)
+        IMPORTANT: We use MAX of individual scores, not weighted average.
+        This ensures a strong signal in any one dimension can trigger a short.
+        A weighted average would make it impossible to short based on technicals alone.
+        """
+        # Get the strongest individual signal
+        max_score = max(
+            self.news_score,
+            self.valuation_score, 
+            self.technical_score,
+            self.cross_asset_score
         )
         
-        # Determine conviction - more aggressive thresholds to generate shorts
-        if self.total_score >= 0.55:
+        # Also calculate average of non-zero scores
+        non_zero_scores = [s for s in [self.news_score, self.valuation_score, 
+                                        self.technical_score, self.cross_asset_score] if s > 0]
+        avg_score = sum(non_zero_scores) / len(non_zero_scores) if non_zero_scores else 0
+        
+        # Total score is the higher of: max score, or boosted average
+        # This allows a single strong signal OR multiple weaker signals to trigger
+        self.total_score = max(max_score * 0.8, avg_score)
+        
+        # Determine conviction based on max score (not total)
+        # Strong technical signal alone should be sufficient
+        if max_score >= 0.6 or self.total_score >= 0.50:
             self.conviction = "high"
             self.recommended_weight = -0.05  # 5% short
-        elif self.total_score >= 0.40:
+        elif max_score >= 0.45 or self.total_score >= 0.35:
             self.conviction = "medium"
             self.recommended_weight = -0.03  # 3% short
-        elif self.total_score >= 0.25:
+        elif max_score >= 0.30 or self.total_score >= 0.25:
             self.conviction = "low"
             self.recommended_weight = -0.02  # 2% short
         else:
@@ -150,8 +160,9 @@ class ShortScanner:
         features: Optional[Dict] = None,
         prices: Optional[Dict[str, float]] = None,
         ma_200: Optional[Dict[str, float]] = None,
+        ma_50: Optional[Dict[str, float]] = None,  # Fallback if MA200 unavailable
         rsi_values: Optional[Dict[str, float]] = None,
-        cross_asset_signals: Optional[Dict[str, float]] = None,  # NEW
+        cross_asset_signals: Optional[Dict[str, float]] = None,
     ) -> List[ShortCandidate]:
         """
         Scan for short opportunities.
@@ -161,7 +172,8 @@ class ShortScanner:
             news_sentiments: Dict of symbol -> sentiment data
             features: Feature store data
             prices: Current prices
-            ma_200: 200-day moving averages
+            ma_200: 200-day moving averages (preferred)
+            ma_50: 50-day moving averages (fallback if MA200 unavailable)
             rsi_values: RSI values
             cross_asset_signals: Cross-asset signals (oil_signal, dxy_signal, etc.)
         
@@ -169,6 +181,7 @@ class ShortScanner:
             List of ShortCandidate sorted by total_score descending
         """
         logger.info(f"🔍 Short scanner: Scanning {len(symbols)} symbols")
+        logger.info(f"   Data available: prices={len(prices or {})}, RSI={len(rsi_values or {})}, MA200={len(ma_200 or {})}, MA50={len(ma_50 or {})}")
         
         # Process cross-asset signals
         cross_asset_signals = cross_asset_signals or {}
@@ -182,6 +195,7 @@ class ShortScanner:
                 features=features,
                 price=prices.get(symbol) if prices else None,
                 ma_200_value=ma_200.get(symbol) if ma_200 else None,
+                ma_50_value=ma_50.get(symbol) if ma_50 else None,
                 rsi=rsi_values.get(symbol) if rsi_values else None,
                 cross_asset_signals=cross_asset_signals,
             )
@@ -200,7 +214,7 @@ class ShortScanner:
         
         logger.info(f"🎯 Short scanner: Found {len(candidates)} candidates")
         for c in candidates[:5]:
-            logger.info(f"  {c.symbol}: score={c.total_score:.2f}, conviction={c.conviction}")
+            logger.info(f"  {c.symbol}: score={c.total_score:.2f}, conviction={c.conviction}, signals={c.technical_signals}")
         
         return candidates
     
@@ -211,7 +225,8 @@ class ShortScanner:
         features: Optional[Dict],
         price: Optional[float],
         ma_200_value: Optional[float],
-        rsi: Optional[float],
+        ma_50_value: Optional[float] = None,  # Fallback MA
+        rsi: Optional[float] = None,
         cross_asset_signals: Optional[Dict[str, float]] = None,
     ) -> Optional[ShortCandidate]:
         """Analyze a single symbol for short opportunity."""
@@ -224,25 +239,26 @@ class ShortScanner:
         if news_score > 0.3:
             sources_signaling += 1
         
-        # 2. VALUATION ANALYSIS
-        val_score = self._analyze_valuation(symbol, features, price, ma_200_value, candidate)
+        # 2. VALUATION ANALYSIS (use MA200 or fall back to MA50)
+        effective_ma = ma_200_value if ma_200_value else ma_50_value
+        val_score = self._analyze_valuation(symbol, features, price, effective_ma, candidate)
         candidate.valuation_score = val_score
         if val_score > 0.3:
             sources_signaling += 1
         
-        # 3. TECHNICAL ANALYSIS
-        tech_score = self._analyze_technicals(symbol, price, ma_200_value, rsi, candidate)
+        # 3. TECHNICAL ANALYSIS (pass both MAs)
+        tech_score = self._analyze_technicals(symbol, price, ma_200_value, rsi, candidate, ma_50_value)
         candidate.technical_score = tech_score
         if tech_score > 0.3:
             sources_signaling += 1
         
-        # 4. CROSS-ASSET ANALYSIS (NEW)
+        # 4. CROSS-ASSET ANALYSIS
         cross_score = self._analyze_cross_asset(symbol, cross_asset_signals, candidate)
         candidate.cross_asset_score = cross_score
         if cross_score > 0.3:
             sources_signaling += 1
         
-        # Check minimum sources agreeing (now 2 of 4 possible)
+        # Check minimum sources agreeing (only need 1 now)
         if sources_signaling < self.config.min_sources_agreeing:
             return None
         
@@ -414,42 +430,63 @@ class ShortScanner:
         price: Optional[float],
         ma_200_value: Optional[float],
         rsi: Optional[float],
-        candidate: ShortCandidate
+        candidate: ShortCandidate,
+        ma_50_value: Optional[float] = None,  # Fallback if MA200 unavailable
     ) -> float:
         """
         Analyze technicals for short signals.
         
         Looks for:
-        - Price ABOVE 200 DMA by >30% (overextended, mean reversion opportunity)
-        - Price below 200 DMA (breakdown)
-        - RSI overbought (reversal setup)
+        - RSI overbought (primary short signal)
+        - Price extended above MA (200 or 50 day)
+        - Price breakdown below MA
+        - Extreme RSI (>75) is strong short signal by itself
         """
         score = 0.0
         
-        # RSI overbought - key short signal
+        # RSI overbought - KEY short signal (works without MA data)
         if rsi and rsi > self.config.rsi_overbought:
-            # Map 70-100 to 0.3-0.6
-            rsi_score = min(0.6, 0.3 + (rsi - 70) / 100)
+            # RSI 65-75: moderate signal (0.3-0.45)
+            # RSI 75-85: strong signal (0.45-0.6)
+            # RSI 85+: very strong signal (0.6+)
+            if rsi >= 85:
+                rsi_score = 0.7
+                candidate.technical_signals.append(f"RSI EXTREME: {rsi:.1f} 🔴")
+            elif rsi >= 75:
+                rsi_score = 0.5
+                candidate.technical_signals.append(f"RSI very overbought: {rsi:.1f}")
+            else:
+                rsi_score = 0.35
+                candidate.technical_signals.append(f"RSI overbought: {rsi:.1f}")
             score += rsi_score
-            candidate.technical_signals.append(f"RSI overbought: {rsi:.1f}")
         
-        # Price analysis relative to 200 DMA
-        if price and ma_200_value and ma_200_value > 0:
-            pct_from_ma = (price - ma_200_value) / ma_200_value
+        # Use MA200 if available, otherwise fall back to MA50
+        ma_value = ma_200_value if ma_200_value and ma_200_value > 0 else ma_50_value
+        ma_label = "200 DMA" if ma_200_value and ma_200_value > 0 else "50 DMA"
+        
+        # Price analysis relative to MA
+        if price and ma_value and ma_value > 0:
+            pct_from_ma = (price - ma_value) / ma_value
             
-            # Price ABOVE 200 DMA (overextended) - prime short candidate
-            if pct_from_ma > 0.15:  # >15% above MA200 (lowered from 30%)
-                # Scale score: 15%-50% above maps to 0.2-0.6
-                extended_score = min(0.6, 0.2 + (pct_from_ma - 0.15) * 1.15)
+            # Price ABOVE MA (overextended) - prime short candidate
+            if pct_from_ma > 0.10:  # >10% above MA (relaxed from 15%)
+                # Scale score: 10%-50% above maps to 0.2-0.6
+                extended_score = min(0.6, 0.2 + (pct_from_ma - 0.10) * 1.0)
                 score += extended_score
-                candidate.technical_signals.append(f"Extended {pct_from_ma:.0%} above 200 DMA")
+                candidate.technical_signals.append(f"Extended {pct_from_ma:.0%} above {ma_label}")
             
-            # Price below 200 DMA (breakdown) - also bearish
-            elif pct_from_ma < 0:
+            # Price below MA (breakdown) - bearish
+            elif pct_from_ma < -0.03:  # More than 3% below
                 below_pct = abs(pct_from_ma)
                 below_score = min(0.4, 0.2 + below_pct)
                 score += below_score
-                candidate.technical_signals.append(f"Below 200 DMA by {below_pct:.0%}")
+                candidate.technical_signals.append(f"Below {ma_label} by {below_pct:.0%}")
+        
+        # If we have high RSI but no MA data, still give a decent score
+        # This ensures RSI alone can trigger shorts
+        if rsi and rsi >= 75 and not ma_value:
+            score += 0.15  # Bonus for extreme RSI without MA confirmation
+            candidate.technical_signals.append("High RSI standalone signal")
         
         return min(1.0, score)
     

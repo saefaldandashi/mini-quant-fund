@@ -1869,7 +1869,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                         elif isinstance(sent, dict):
                             scanner_sentiments[sym] = sent
                 
-                # Get RSI and 200 DMA from features if available
+                # Get RSI and MAs from features if available
                 rsi_values = features.rsi_14 if hasattr(features, 'rsi_14') and features.rsi_14 else {}
                 
                 # Get 200-day MA from features (critical for technical shorts)
@@ -1878,6 +1878,13 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                     ma_200_values = features.ma_200
                 elif hasattr(features, 'moving_avg_200d') and features.moving_avg_200d:
                     ma_200_values = features.moving_avg_200d
+                
+                # Get 50-day MA as fallback (more likely to have data)
+                ma_50_values = {}
+                if hasattr(features, 'ma_50') and features.ma_50:
+                    ma_50_values = features.ma_50
+                
+                log(f"   Short scanner data: RSI={len(rsi_values)}, MA200={len(ma_200_values)}, MA50={len(ma_50_values)}")
                 
                 # Get current prices
                 scanner_prices = broker.get_current_prices(config.UNIVERSE[:100])
@@ -1912,6 +1919,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                     features={'rsi_14': rsi_values} if rsi_values else None,
                     prices=scanner_prices,
                     ma_200=ma_200_values,
+                    ma_50=ma_50_values,  # Fallback if MA200 unavailable
                     rsi_values=rsi_values,
                     cross_asset_signals=scanner_cross_signals,
                 )
