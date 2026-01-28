@@ -1925,14 +1925,27 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 )
                 
                 # Add fundamental shorts to combined_weights
+                # CRITICAL: Short scanner signals OVERRIDE ensemble longs
+                # This is because the short scanner has done specific technical/fundamental
+                # analysis that identified overbought/overvalued conditions
                 scanner_shorts = short_scanner.get_short_weights()
                 if scanner_shorts:
                     log(f"🎯 Short Scanner found {len(scanner_shorts)} fundamental short candidates:")
                     for sym, wt in list(scanner_shorts.items())[:5]:
-                        log(f"    {sym}: {wt*100:+.2f}%")
-                        # Only add if not already in combined_weights or if scanner has stronger conviction
-                        if sym not in combined_weights or abs(combined_weights.get(sym, 0)) < abs(wt):
-                            combined_weights[sym] = wt
+                        existing = combined_weights.get(sym, 0)
+                        log(f"    {sym}: {wt*100:+.2f}% (was {existing*100:+.2f}%)")
+                        
+                        # SHORT SIGNALS TAKE PRIORITY over long signals
+                        # If short scanner says SHORT, we SHORT regardless of ensemble
+                        # This prevents the common bug where longs override valid short signals
+                        if wt < 0:  # This is a short recommendation
+                            if existing > 0:
+                                log(f"      ⚠️ OVERRIDING long position with SHORT signal")
+                            combined_weights[sym] = wt  # ALWAYS use short signal
+                        else:
+                            # For any non-short signals, use existing logic
+                            if sym not in combined_weights or abs(combined_weights.get(sym, 0)) < abs(wt):
+                                combined_weights[sym] = wt
                 
             except Exception as e:
                 log(f"⚠️ Short scanner error: {e}")
@@ -1944,8 +1957,12 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             log(f"📉 Total SHORT positions (ensemble + scanner): {len(short_positions)}")
             for sym, wt in sorted(short_positions.items(), key=lambda x: x[1])[:5]:
                 log(f"    {sym}: {wt*100:+.2f}%")
+            log(f"⚠️ IMPORTANT: These shorts MUST be preserved through risk checks!")
         else:
             log(f"⚠️ NO short positions produced")
+            log(f"   This means either:")
+            log(f"   1. Short scanner found no candidates, OR")
+            log(f"   2. Ensemble longs overrode shorts (BUG if this happens)")
             # Debug: Check what L/S strategies are producing
             for name, signal in signals.items():
                 if '_LS' in name:
@@ -2076,11 +2093,16 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                             bearish_count += 1
                         
                         # Oversold bounce opportunity (Bollinger/Stochastic)
+                        # NOTE: Only add bounce positions if we don't already have a SHORT
+                        # We don't want to override intentional shorts with bounce longs
                         elif tech_signal < -0.3:
                             stoch_k = features.stochastic_k.get(symbol, 50)
                             bb_pct_b = features.bollinger_percent_b.get(symbol, 0.5)
-                            if stoch_k < 20 and bb_pct_b < 0:  # Very oversold
-                                # Potential bounce - add small position
+                            current_weight = combined_weights.get(symbol, 0)
+                            
+                            # Only add bounce if: oversold AND not already a short position
+                            if stoch_k < 20 and bb_pct_b < 0 and current_weight >= 0:
+                                # Potential bounce - add small position (but don't override shorts!)
                                 if symbol not in combined_weights or combined_weights[symbol] < 0.01:
                                     combined_weights[symbol] = 0.01  # 1% position
                                     tech_adjustments.append(f"{symbol}:bounce")
@@ -2194,6 +2216,17 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 log(f"  - {adj}")
         
         final_weights = risk_result.approved_weights
+        
+        # DEBUG: Track shorts through the pipeline
+        shorts_after_risk = {k: v for k, v in final_weights.items() if v < 0}
+        if shorts_after_risk:
+            log(f"📉 Shorts PRESERVED after risk check: {len(shorts_after_risk)}")
+            for sym, wt in shorts_after_risk.items():
+                log(f"    {sym}: {wt*100:+.2f}%")
+        elif short_positions:
+            log(f"❌ SHORTS WERE REMOVED BY RISK CHECK!")
+            log(f"   Original shorts: {list(short_positions.keys())}")
+        
         log("")
         
         # === VALIDATE SIGNALS BEFORE TRADING ===
