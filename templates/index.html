@@ -1489,7 +1489,7 @@
                 <span class="shortcut-key">F</span>
             </div>
             <div class="shortcut-row">
-                <span>Toggle Fast Mode</span>
+                <span>Refresh Data</span>
                 <span class="shortcut-key">Q</span>
             </div>
             <div class="shortcut-row">
@@ -1659,18 +1659,18 @@
                 </div>
                 <div style="margin-top: 8px; font-size: 0.7em; color: var(--text-dim);">
                     ✓ No confirmation needed<br>
-                    ✓ Uses Fast Mode (skips LLM)
+                    ✓ Uses Smart Mode (full LLM)
                 </div>
             </div>
             
             <div class="mini-card">
-                <h3>⚡ Fast Mode</h3>
+                <h3>🧠 Smart Mode</h3>
                 <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
-                    <input type="checkbox" id="fast-mode" checked>
-                    <label for="fast-mode" style="font-size: 0.8em;">Skip LLM (faster)</label>
+                    <input type="checkbox" id="fast-mode" checked disabled>
+                    <label for="fast-mode" style="font-size: 0.8em;">Always On</label>
                 </div>
                 <div style="margin-top: 6px; font-size: 0.65em; color: var(--text-dim);">
-                    ~30-60s vs ~2-3min
+                    Parallel LLM + Full Analysis
                 </div>
             </div>
             
@@ -2338,8 +2338,7 @@
                 <label for="mobile-dry-run">🧪 Dry Run (simulation)</label>
             </div>
             <div class="checkbox-row" style="padding: 10px 0;">
-                <input type="checkbox" id="mobile-fast-mode" checked onchange="document.getElementById('fast-mode').checked = this.checked">
-                <label for="mobile-fast-mode">⚡ Fast Mode</label>
+                <span style="color: var(--accent-green); font-size: 0.85em;">🧠 Smart Mode Always On</span>
             </div>
         </div>
     </div>
@@ -4402,9 +4401,8 @@
                     showToast('info', 'Refreshing', 'Updating all data...');
                     break;
                 case 'q':
-                    const fastMode = document.getElementById('fast-mode');
-                    fastMode.checked = !fastMode.checked;
-                    showToast('info', 'Fast Mode', fastMode.checked ? 'Enabled (skip LLM)' : 'Disabled (full debate)');
+                    refreshData();
+                    showToast('info', 'Refreshing', 'Updating all data...');
                     break;
                 case 'd':
                     const dryRun = document.getElementById('dry-run');
