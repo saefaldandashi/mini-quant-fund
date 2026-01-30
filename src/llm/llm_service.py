@@ -537,6 +537,8 @@ class LLMService:
         debate_summary: str,
         macro_context: str,
         signals_summary: str,
+        news_context: Optional[str] = None,  # NEW: Latest news headlines
+        geopolitical_context: Optional[str] = None,  # NEW: Geopolitical intel
     ) -> Optional[str]:
         """
         Generate a natural language explanation for the trade decision.
@@ -545,6 +547,7 @@ class LLMService:
         - The debate outcome
         - Macro context
         - Strategy signals
+        - LATEST NEWS HEADLINES (Alpha Vantage + Geopolitical)
         
         Into a coherent explanation of WHY we're making these trades.
         """
@@ -563,10 +566,19 @@ class LLMService:
             for symbol, weight in top_positions
         ])
         
+        # Build news section
+        news_section = ""
+        if news_context:
+            news_section = f"\n\nLATEST NEWS HEADLINES:\n{news_context}"
+        
+        if geopolitical_context:
+            news_section += f"\n\nGEOPOLITICAL INTELLIGENCE:\n{geopolitical_context}"
+        
         prompt = f"""As the Chief Investment Officer, provide a 3-5 sentence explanation of today's portfolio decision.
 
 MACRO CONTEXT:
 {macro_context}
+{news_section}
 
 STRATEGY DEBATE SUMMARY:
 {debate_summary}
@@ -578,11 +590,11 @@ FINAL POSITIONS:
 {positions_str}
 
 Explain:
-1. The KEY driver of today's allocation (one main reason)
-2. The primary RISK we're managing against
-3. Why THIS specific set of positions (not generic statements)
+1. The KEY driver of today's allocation (consider news headlines if relevant)
+2. The primary RISK we're managing against (geopolitical, macro, technical)
+3. Why THIS specific set of positions (reference specific news/data that influenced the decision)
 
-Be specific. Reference the actual data above. No platitudes."""
+Be specific. Reference the actual data and news above. No platitudes."""
 
         response = self.call(
             prompt=prompt,

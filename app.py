@@ -1134,12 +1134,52 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                             except Exception as e:
                                 logging.warning(f"Could not write news events: {e}")
                 else:
-                    # Fallback to sample data
-                    log("No articles from Alpha Vantage, using sample data...")
-                    sample_path = Path("data/sample_news.json")
-                    if sample_path.exists():
-                        events, stats = news_intelligence.load_from_json(str(sample_path), end_date)
-                        log(f"Loaded {stats.events_extracted} sample events")
+                    # Fallback: Use Geopolitical Intelligence when Alpha Vantage is stale/empty
+                    log("⚠️ No fresh articles from Alpha Vantage (rate limited)")
+                    log("🌍 Using Geopolitical Intelligence as backup news source...")
+                    
+                    # Get geopolitical events
+                    geo_events = geopolitical_intel.get_filtered_events(auto_refresh_if_empty=True)
+                    if geo_events:
+                        log(f"   Loaded {len(geo_events)} high-quality global events")
+                        
+                        # Convert to news intelligence pipeline format
+                        from src.news_intelligence.pipeline import NewsArticle as NIPNewsArticle
+                        
+                        geo_articles = []
+                        for event in geo_events[:50]:  # Top 50 events
+                            try:
+                                ts = event.timestamp
+                                if ts.tzinfo is None:
+                                    ts = pytz.UTC.localize(ts)
+                                geo_articles.append(NIPNewsArticle(
+                                    timestamp=ts,
+                                    source=event.source if hasattr(event, 'source') else 'Geopolitical',
+                                    title=event.headline,
+                                    body=event.summary if hasattr(event, 'summary') else '',
+                                    url=event.url if hasattr(event, 'url') else '',
+                                ))
+                            except Exception as e:
+                                logging.debug(f"Could not convert geo event: {e}")
+                                continue
+                        
+                        if geo_articles:
+                            events, stats = news_intelligence.process_articles(geo_articles, end_date)
+                            log(f"✅ Processed {stats.total_articles} geo events → {stats.events_extracted} market events")
+                        
+                        # Log sample headlines
+                        log("")
+                        log("📰 Sample Global Headlines (from Geopolitical Intel):")
+                        for event in geo_events[:3]:
+                            severity = f"{event.severity:.0%}" if hasattr(event, 'severity') else "N/A"
+                            log(f"   [{severity}] {event.headline[:60]}...")
+                    else:
+                        # Last resort: sample data
+                        log("No geo events available, using sample data...")
+                        sample_path = Path("data/sample_news.json")
+                        if sample_path.exists():
+                            events, stats = news_intelligence.load_from_json(str(sample_path), end_date)
+                            log(f"Loaded {stats.events_extracted} sample events")
                 
             except Exception as e:
                 log(f"Alpha Vantage error: {e}")
@@ -2664,12 +2704,43 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                         top3 = sorted(signal.desired_weights.items(), key=lambda x: -abs(x[1]))[:3]
                         signals_summary += f"\n{name} (conf={signal.confidence:.0%}): {', '.join([f'{s}:{w:+.0%}' for s,w in top3])}"
                 
-                # Call LLM for reasoning
+                # Build news context from Alpha Vantage (latest headlines)
+                news_ctx = None
+                try:
+                    av_articles = alpha_vantage_news.get_cached_articles()
+                    if av_articles:
+                        # Get most recent headlines (up to 10)
+                        news_lines = []
+                        for article in av_articles[:10]:
+                            title = getattr(article, 'title', getattr(article, 'headline', 'Unknown'))
+                            sentiment = getattr(article, 'overall_sentiment_label', 'N/A')
+                            news_lines.append(f"- {title[:80]} [{sentiment}]")
+                        if news_lines:
+                            news_ctx = "\n".join(news_lines)
+                            
+                            # Add staleness warning
+                            rate_status = alpha_vantage_news.get_rate_limit_status()
+                            hours_stale = rate_status.get('hours_since_fresh_news', 0)
+                            if hours_stale > 24:
+                                news_ctx = f"[⚠️ NEWS DATA IS {hours_stale:.0f} HOURS OLD - RATE LIMITED]\n{news_ctx}"
+                except Exception as e:
+                    logging.debug(f"Could not build news context: {e}")
+                
+                # Get geopolitical context
+                geo_ctx = None
+                try:
+                    geo_ctx = geopolitical_intel.get_context_for_llm()
+                except Exception as e:
+                    logging.debug(f"Could not get geo context: {e}")
+                
+                # Call LLM for reasoning with NEWS CONTEXT
                 trade_reasoning = llm_service.generate_trade_reasoning(
                     final_weights=final_weights,
                     debate_summary=debate_summary,
                     macro_context=macro_ctx,
                     signals_summary=signals_summary,
+                    news_context=news_ctx,
+                    geopolitical_context=geo_ctx,
                 )
                 
                 if trade_reasoning:
