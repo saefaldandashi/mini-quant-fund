@@ -3843,7 +3843,31 @@
       "losing_strategies": [
         "QualityValue_LS"
       ]
+    },
+    {
+      "timestamp": "2026-01-30T12:17:27.594232",
+      "market_context": {
+        "regime": "neutral",
+        "volatility_regime": "medium",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "OpeningRangeBreakout": 0.65,
+        "TS_Momentum_LS": 0.6,
+        "IntradayMomentum": 0.65,
+        "VolumeSpike": 0.7,
+        "QuickMeanReversion": 0.5,
+        "RelativeStrengthIntraday": 0.6,
+        "QualityValue_LS": 0.5,
+        "MeanReversion_LS": 0.5,
+        "CrossSectionMomentum": 0.65
+      },
+      "outcome_return": -0.0006342100214935487,
+      "winning_strategies": [],
+      "losing_strategies": [
+        "QualityValue_LS"
+      ]
     }
   ],
-  "last_updated": "2026-01-30T12:09:07.142317"
+  "last_updated": "2026-01-30T12:17:27.594351"
 }

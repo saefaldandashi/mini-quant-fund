@@ -761,27 +761,25 @@ def stop_risk_monitor():
     return False
 
 
-def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_rebalance=True, cancel_orders=True, fast_mode=False, ultra_fast=False):
+def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_rebalance=True, cancel_orders=True):
     """
     Run the multi-strategy debate bot and execute rebalancing.
+    
+    Uses SMART MODE: Parallel LLM for speed + full intelligence.
+    Always generates LLM trade reasoning with fundamental data citations.
     
     Args:
         dry_run: If True, simulate trades without executing
         allow_after_hours: If True, allow execution outside market hours
         force_rebalance: If True, bypass daily limit check
         cancel_orders: If True, cancel existing open orders first
-        fast_mode: If True, skip LLM calls and use cached data for faster execution
-        ultra_fast: If True, use cached data + rule-based debate (<5 sec target)
     
     Returns tuple of (success: bool, output: str, error: str or None, debate_info: dict)
     """
-    global last_ticker_sentiments, trading_mode_setting  # Declare at top for ultra-fast caching
+    global last_ticker_sentiments, trading_mode_setting
     
     import time as time_module
     rebalance_start_time = time_module.time()
-    
-    # Always use smart mode (parallel LLM)
-    fast_mode = True  # Use parallel LLM for speed + intelligence
     
     output_lines = []
     debate_info = {"transcript": None, "scores": None, "final_weights": {}}
@@ -804,12 +802,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         log(f"Mode: {'DRY RUN' if dry_run else 'LIVE PAPER TRADING'}")
         log(f"After Hours: {'Allowed' if allow_after_hours else 'Not Allowed'}")
         log(f"Cancel Previous Orders: {'Yes' if cancel_orders else 'No'}")
-        if ultra_fast:
-            log(f"Mode: ⚡⚡ ULTRA-FAST (<5 sec target)")
-        elif fast_mode:
-            log(f"Mode: ⚡ FAST (skip LLM)")
-        else:
-            log(f"Mode: Normal (full LLM debate)")
+        log(f"Mode: 🧠 SMART (Parallel LLM + Full Intelligence)")
         log("")
         
         # Get API keys
@@ -882,11 +875,11 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         end_date = datetime.now(pytz.UTC)
         start_date = end_date - timedelta(days=400)
         
-        # ULTRA-FAST MODE: Use cached features directly if fresh enough
-        if ultra_fast and hasattr(price_cache, '_last_update') and price_cache._last_update:
+        # Check cache freshness for info logging
+        if hasattr(price_cache, '_last_update') and price_cache._last_update:
             cache_age = (datetime.now(pytz.UTC) - price_cache._last_update).total_seconds()
             if cache_age < 300:  # 5 minutes
-                log(f"⚡⚡ ULTRA-FAST: Using cached data (age: {cache_age:.0f}s)")
+                log(f"📦 Using cached data (age: {cache_age:.0f}s)")
         
         # Create data loaders
         market_loader = MarketDataLoader()
@@ -921,8 +914,6 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         def fetch_news_data():
             """Fetch news from Alpha Vantage."""
-            if ultra_fast and load_ultrafast_cache(max_age_minutes=30) is not None:
-                return [], True  # Skip news fetch in ultra-fast mode
             try:
                 articles = alpha_vantage_news.fetch_market_news(days_back=7)
                 return articles, False
@@ -930,40 +921,32 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 logging.warning(f"News fetch error: {e}")
                 return [], False
         
-        # Execute in parallel
+        # Execute in parallel for speed
         price_data = None
         av_articles_parallel = []
         
-        if not ultra_fast:
-            with ThreadPoolExecutor(max_workers=2) as executor:
-                price_future = executor.submit(fetch_price_data)
-                news_future = executor.submit(fetch_news_data)
-                
-                # Get results
-                try:
-                    price_data, was_cached = price_future.result(timeout=60)
-                    if was_cached:
-                        log(f"📦 Using cached price data ({len(price_data)} stocks)")
-                    else:
-                        log(f"Received data for {len(price_data)} stocks from Alpaca (cached)")
-                except Exception as e:
-                    log(f"Price fetch error: {e}")
-                    price_data = {}
-                
-                try:
-                    av_articles_parallel, was_cached = news_future.result(timeout=60)
-                    if not was_cached and av_articles_parallel:
-                        log(f"📰 Pre-fetched {len(av_articles_parallel)} news articles")
-                except Exception as e:
-                    log(f"News prefetch error: {e}")
-                    av_articles_parallel = []
-        else:
-            # Ultra-fast: just fetch prices (news from cache)
-            price_data, was_cached = fetch_price_data()
-            if was_cached:
-                log(f"📦 Using cached price data ({len(price_data)} stocks)")
-            else:
-                log(f"Received data for {len(price_data)} stocks from Alpaca (cached)")
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            price_future = executor.submit(fetch_price_data)
+            news_future = executor.submit(fetch_news_data)
+            
+            # Get results
+            try:
+                price_data, was_cached = price_future.result(timeout=60)
+                if was_cached:
+                    log(f"📦 Using cached price data ({len(price_data)} stocks)")
+                else:
+                    log(f"Received data for {len(price_data)} stocks from Alpaca")
+            except Exception as e:
+                log(f"Price fetch error: {e}")
+                price_data = {}
+            
+            try:
+                av_articles_parallel, was_cached = news_future.result(timeout=60)
+                if not was_cached and av_articles_parallel:
+                    log(f"📰 Pre-fetched {len(av_articles_parallel)} news articles")
+            except Exception as e:
+                log(f"News prefetch error: {e}")
+                av_articles_parallel = []
         
         data_fetch_time = time_module.time() - data_fetch_start
         log(f"⚡ Parallel data fetch completed in {data_fetch_time:.1f}s")
@@ -996,12 +979,12 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         # Try to load fresh news from Alpha Vantage
         macro_features = None
         
-        # ULTRA-FAST MODE: Skip fresh news fetch, use cached data
-        cached_sentiments = load_ultrafast_cache(max_age_minutes=30) if ultra_fast else None
-        skip_news_fetch = ultra_fast and cached_sentiments is not None
+        # Check for cached sentiments (optional speed optimization)
+        cached_sentiments = load_ultrafast_cache(max_age_minutes=30)
+        skip_news_fetch = False  # Always fetch fresh news
         
-        if skip_news_fetch:
-            log("⚡⚡ ULTRA-FAST: Using cached ticker sentiments (skipping news fetch)")
+        if cached_sentiments and False:  # Disabled - always use fresh news
+            log("📦 Using cached ticker sentiments")
             unique_articles = []
             ticker_features = cached_sentiments
             last_ticker_sentiments.update(cached_sentiments)  # Update global
@@ -1237,9 +1220,8 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         geo_assessment = None
         try:
             # Refresh geopolitical events (RSS feeds, NewsAPI)
-            if not ultra_fast:
-                new_geo_events = geopolitical_intel.update_events(hours_back=24)
-                log(f"📡 Fetched {new_geo_events} new geopolitical events")
+            new_geo_events = geopolitical_intel.update_events(hours_back=24)
+            log(f"📡 Fetched {new_geo_events} new geopolitical events")
             
             # Get risk assessment
             geo_assessment = geopolitical_intel.get_risk_assessment()
@@ -1547,9 +1529,12 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         except Exception as e:
             logging.debug(f"Could not load recent trades for LLM: {e}")
         
-        # ULTRA-FAST MODE: Use rule-based fast debate
-        if ultra_fast:
-            log("⚡⚡ ULTRA-FAST: Using rule-based debate (no LLM)")
+        # SMART MODE: Always use parallel LLM debate
+        use_parallel_llm = True  # Always use full LLM intelligence
+        
+        # Legacy fast debate code - disabled
+        if False:  # Disabled - always use LLM
+            log("⚡⚡ Using rule-based debate (no LLM)")
             from src.debate.fast_debate import fast_debate, MarketContext
             
             # Get historical performance for scoring
@@ -1638,20 +1623,9 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         base_scores = {name: score.total_score for name, score in scores.items()}
         
-        # Choose debate mode:
-        # - ultra_fast: Rule-based only (no LLM)
-        # - fast_mode: Parallel LLM (full LLM, but concurrent)
-        # - normal: Sequential LLM (original behavior)
-        
-        if ultra_fast:
-            # Already handled above in fast_debate
-            log("  ⚡⚡ Ultra-fast: Scores already set by rule-based debate")
-            adjusted_scores = base_scores
-            adversarial_transcript = None
-            
-        elif fast_mode and llm_service:
-            # NEW: Parallel LLM - full reasoning with concurrency!
-            log("  ⚡ PARALLEL LLM: Running all LLM calls concurrently...")
+        # SMART MODE: Always use Parallel LLM debate (fast + full intelligence)
+        if llm_service and llm_service.is_available():
+            log("  🧠 PARALLEL LLM: Running all LLM calls concurrently...")
             from src.debate.parallel_debate import ParallelDebateEngine
             
             parallel_engine = ParallelDebateEngine(llm_service, max_workers=6)
@@ -1662,7 +1636,7 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             adjusted_scores = parallel_result.strategy_scores
             adversarial_transcript = None  # Different format
             
-            log(f"  ⚡ Parallel LLM complete: {parallel_result.execution_time_ms:.0f}ms")
+            log(f"  🧠 Parallel LLM complete: {parallel_result.execution_time_ms:.0f}ms")
             log(f"  📊 LLM calls: {parallel_result.llm_calls_parallel}/{parallel_result.llm_calls_made} succeeded")
             
             # Log insights from parallel debate
@@ -1673,30 +1647,17 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             support_args = [a for a in parallel_result.arguments if a["type"] == "support"]
             for arg in sorted(support_args, key=lambda x: x.get("strength", 0), reverse=True)[:3]:
                 log(f"  💪 {arg['strategy']}: {arg.get('claim', '')[:60]}... ({arg.get('strength', 0):.0%})")
-            
         else:
-            # Original sequential LLM (slow but thorough)
-            if fast_mode:
-                log("  ⚡ Fast mode: Using rule-based debate (no LLM available)")
-                adversarial_engine = AdversarialDebateEngine(
-                    debate_learner=debate_learner,
-                    llm_service=None,
-                )
-            else:
-                log("  🐢 Sequential LLM: Full debate (may take 30+ seconds)")
-                adversarial_engine = AdversarialDebateEngine(
-                    debate_learner=debate_learner,
-                    llm_service=llm_service,
-                )
+            # Fallback: Sequential debate if LLM not available
+            log("  ⚠️ LLM not available - using rule-based debate")
+            adversarial_engine = AdversarialDebateEngine(
+                debate_learner=debate_learner,
+                llm_service=None,
+            )
             
             adjusted_scores, adversarial_transcript = adversarial_engine.run_adversarial_debate(
                 signals, features, base_scores
             )
-            
-            # Log LLM usage
-            if llm_service and not fast_mode:
-                log(f"  LLM arguments generated: {adversarial_engine.llm_arguments_generated}")
-                log(f"  Rule-based fallbacks: {adversarial_engine.rule_based_fallbacks}")
         
         # Log key arguments from each round (only for sequential debate)
         if adversarial_transcript and hasattr(adversarial_transcript, 'rounds'):
@@ -3528,20 +3489,16 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         return False, "\n".join(output_lines), str(e), debate_info
 
 
-def run_bot_threaded(dry_run=True, allow_after_hours=False, force_rebalance=True, cancel_orders=True, exposure_pct=0.8, fast_mode=True, ultra_fast=False):
+def run_bot_threaded(dry_run=True, allow_after_hours=False, force_rebalance=True, cancel_orders=True, exposure_pct=0.8):
     """Run bot in a separate thread.
+    
+    Uses SMART MODE: Parallel LLM for speed + full intelligence.
     
     Args:
         exposure_pct: Capital exposure percentage (0.0 to 1.0). Default 0.8 = 80%
-        fast_mode: If True, uses parallel LLM (2s instead of 30s, same quality). Default: True
-        ultra_fast: If True, use rule-based debate + cached data (<5 sec target)
     """
     global last_run_status, capital_exposure_pct
     capital_exposure_pct = exposure_pct  # Store globally for use in rebalancing
-    
-    # Store modes in closure variables for the worker
-    _fast_mode = fast_mode
-    _ultra_fast = ultra_fast
     
     if last_run_status["running"]:
         return
@@ -3566,7 +3523,7 @@ def run_bot_threaded(dry_run=True, allow_after_hours=False, force_rebalance=True
         
         try:
             success, output, error, debate_info = run_multi_strategy_rebalance(
-                dry_run, allow_after_hours, force_rebalance, cancel_orders, _fast_mode, _ultra_fast
+                dry_run, allow_after_hours, force_rebalance, cancel_orders
             )
             last_run_status["output"] = output
             last_run_status["error"] = error
@@ -3625,7 +3582,6 @@ def auto_rebalance_scheduler():
                             force_rebalance=True,
                             cancel_orders=True,
                             exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
-                            fast_mode=True,
                         )
                         
                 last_holding_check = now
@@ -3646,7 +3602,6 @@ def auto_rebalance_scheduler():
                         force_rebalance=True,
                         cancel_orders=True,
                         exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
-                        fast_mode=True,  # Auto mode uses fast mode for speed
                     )
                     auto_rebalance_settings["last_run"] = now.isoformat()
                 
@@ -4436,8 +4391,7 @@ def run_bot_endpoint():
         risk_appetite = new_risk_appetite
         strategy_enhancer = get_enhancer(EnhancedConfig(risk_appetite=risk_appetite))
     
-    # ALWAYS use smart mode with parallel LLM (fast + full intelligence)
-    # Removed fast_mode/ultra_fast distinction per user request
+    # SMART MODE: Always use parallel LLM (fast + full intelligence)
     
     if last_run_status["running"]:
         return jsonify({"error": "Bot is already running"}), 400
@@ -4448,10 +4402,8 @@ def run_bot_endpoint():
         force_rebalance=force_rebalance,
         cancel_orders=cancel_orders,
         exposure_pct=exposure_pct,
-        fast_mode=True,  # Always use parallel LLM
-        ultra_fast=False,  # Always use full intelligence
     )
-    return jsonify({"status": "started", "message": f"🧠 Smart rebalance initiated ({int(exposure_pct*100)}% exposure)"})
+    return jsonify({"status": "started", "message": f"🧠 Rebalance initiated ({int(exposure_pct*100)}% exposure)"})
 
 
 @app.route('/api/auto-rebalance', methods=['POST', 'GET'])

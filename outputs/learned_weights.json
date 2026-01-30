@@ -2,7 +2,7 @@
   "weights": {
     "TimeSeriesMomentum": {
       "strategy_name": "TimeSeriesMomentum",
-      "base_weight": 0.1074950648059703,
+      "base_weight": 0.10747418441099355,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -16,22 +16,22 @@
     },
     "CrossSectionMomentum": {
       "strategy_name": "CrossSectionMomentum",
-      "base_weight": 0.13795713601953008,
-      "ema_performance": 0.0012015921340914782,
+      "base_weight": 0.1381245836648642,
+      "ema_performance": 0.0014699986974999425,
       "ema_alpha": 0.1,
-      "times_selected": 68,
-      "cumulative_reward": 0.6199113490907935,
+      "times_selected": 69,
+      "cumulative_reward": 0.6237970068589697,
       "ucb_bonus": 0.0,
       "regime_weights": {
-        "neutral": 0.14127773333610363,
+        "neutral": 0.14147201622451244,
         "risk_on": 0.13617187180012683
       },
-      "learned_confidence": 0.8456317536038677,
-      "last_updated": "2026-01-30T12:09:07.138725"
+      "learned_confidence": 0.8814311325443778,
+      "last_updated": "2026-01-30T12:17:27.592736"
     },
     "MeanReversion": {
       "strategy_name": "MeanReversion",
-      "base_weight": 0.10751074838856055,
+      "base_weight": 0.10748986494712394,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -43,7 +43,7 @@
     },
     "VolatilityRegimeVolTarget": {
       "strategy_name": "VolatilityRegimeVolTarget",
-      "base_weight": 0.10751074838856055,
+      "base_weight": 0.10748986494712394,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -55,7 +55,7 @@
     },
     "Carry": {
       "strategy_name": "Carry",
-      "base_weight": 0.10500169825316386,
+      "base_weight": 0.10498130218254689,
       "ema_performance": -0.00026882398252459593,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -71,7 +71,7 @@
     },
     "ValueQualityTilt": {
       "strategy_name": "ValueQualityTilt",
-      "base_weight": 0.11022385121042645,
+      "base_weight": 0.11020244076192551,
       "ema_performance": 0.0007588578368238671,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -87,7 +87,7 @@
     },
     "RiskParityMinVar": {
       "strategy_name": "RiskParityMinVar",
-      "base_weight": 0.1074950648059703,
+      "base_weight": 0.10747418441099355,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -101,7 +101,7 @@
     },
     "TailRiskOverlay": {
       "strategy_name": "TailRiskOverlay",
-      "base_weight": 0.10751074838856055,
+      "base_weight": 0.10748986494712394,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -113,7 +113,7 @@
     },
     "NewsSentimentEvent": {
       "strategy_name": "NewsSentimentEvent",
-      "base_weight": 0.10929493973925744,
+      "base_weight": 0.10927370972730446,
       "ema_performance": 0.003584849420027366,
       "ema_alpha": 0.1,
       "times_selected": 62,
@@ -128,17 +128,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 144,
+  "total_rounds": 145,
   "reward_history": [
-    {
-      "timestamp": "2026-01-21T00:16:26.967498",
-      "returns": {
-        "Carry": -0.0019194227635920631,
-        "ValueQualityTilt": -0.00022261181676682177,
-        "NewsSentimentEvent": -0.0012069735156368297
-      },
-      "regime": "risk_on"
-    },
     {
       "timestamp": "2026-01-21T00:21:27.207548",
       "returns": {
@@ -1254,7 +1245,16 @@
         "QualityValue_LS": -0.005840754916573017
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-01-30T12:17:27.592677",
+      "returns": {
+        "TS_Momentum_LS": -0.0006342100214935485,
+        "QualityValue_LS": -0.005840754916573017,
+        "CrossSectionMomentum": 0.0038856577681761215
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-01-30T12:09:07.138918"
+  "last_updated": "2026-01-30T12:17:27.593353"
 }

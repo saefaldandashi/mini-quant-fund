@@ -14786,7 +14786,161 @@
       "ticker_sentiments": {
         "DUK": 0.044688
       }
+    },
+    {
+      "id": "-8724596656100189137",
+      "timestamp": "2026-01-30T07:58:44",
+      "headline": "Rigetti Computing (NASDAQ:RGTI) Trading Down 9.8% - Here's Why",
+      "summary": "Rigetti Computing's (NASDAQ:RGTI) stock traded down 9.8% on Thursday, closing at $19.85 with heavy trading volume. Despite the dip and the company remaining unprofitable with a negative net margin, analysts maintain a \"Moderate Buy\" consensus rating with an average price target of $32.60 to $40.00. Major institutional investors like Vanguard and State Street have significantly increased their stakes in the quantum computing company.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/rigetti-computing-nasdaqrgti-trading-down-98-heres-why-2026-01-29/",
+      "tickers": [
+        "RGTI",
+        "STT"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "technology"
+      ],
+      "overall_sentiment": 0.084103,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "RGTI",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.223005,
+          "sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "STT",
+          "relevance_score": 0.647308,
+          "sentiment_score": 0.301343,
+          "sentiment_label": "Somewhat-Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "RGTI": -0.223005,
+        "STT": 0.301343
+      }
+    },
+    {
+      "id": "8147218207159769834",
+      "timestamp": "2026-01-30T07:58:20",
+      "headline": "Standex International Earnings Report: Q2 Overview",
+      "summary": "Standex International (NYSE: SXI) announced its Q2 earnings, beating estimated EPS by 5.0% with a reported EPS of $2.08 against an estimate of $1.99. The company's revenue increased by $31.51 million compared to the same period last year. This performance follows a previous quarter where the company also beat EPS estimates, though its share price subsequently dropped.",
+      "source": "Benzinga",
+      "url": "https://www.benzinga.com/insights/earnings/26/01/50248254/standex-international-earnings-report-q2-overview",
+      "tickers": [
+        "SXI"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.032911,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SXI",
+          "relevance_score": 0.33089,
+          "sentiment_score": 0.044292,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "SXI": 0.044292
+      }
+    },
+    {
+      "id": "2781331224833629324",
+      "timestamp": "2026-01-30T07:12:40",
+      "headline": "Southside Bancshares Q4 Earnings Call Highlights",
+      "summary": "Southside Bancshares reported a Q4 profitability rebound, driven by strategic repositioning of its securities portfolio and an expected modest improvement in net interest margin. The bank also detailed loan growth, deposit changes, technology-related expense plans, and a selective approach to M&A in Texas. Key financial metrics included Q4 net income of $21.0 million ($0.70 EPS), securities portfolio growth, and strong credit quality.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/southside-bancshares-q4-earnings-call-highlights-2026-01-30/",
+      "tickers": [
+        "SBSI"
+      ],
+      "topics": [
+        "earnings",
+        "finance",
+        "financial_markets",
+        "mergers_and_acquisitions",
+        "real_estate"
+      ],
+      "overall_sentiment": 0.474068,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "SBSI",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.485466,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "SBSI": 0.485466
+      }
+    },
+    {
+      "id": "-6130865925147364821",
+      "timestamp": "2026-01-30T07:07:33",
+      "headline": "Jones Trading initiates coverage on RenovoRx stock with Buy rating",
+      "summary": "Jones Trading initiated coverage on RenovoRx (NASDAQ:RNXT) with a Buy rating and an $8.00 price target, suggesting a 733% upside from its current price. The medtech company, which has an FDA-cleared dual-balloon catheter called RenovoCath, is considered undervalued by InvestingPro data and holds more cash than debt. Investors are watching the ongoing Phase III TIGeR-PaC trial for which results are expected in fiscal year 2027.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/analyst-ratings/jones-trading-initiates-coverage-on-renovorx-stock-with-buy-rating-93CH-4475143",
+      "tickers": [
+        "RNXT"
+      ],
+      "topics": [
+        "life_sciences",
+        "financial_markets"
+      ],
+      "overall_sentiment": 0.633877,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "RNXT",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.622065,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "RNXT": 0.622065
+      }
+    },
+    {
+      "id": "-2740348365598603777",
+      "timestamp": "2026-01-30T05:58:27",
+      "headline": "NioCorp Developments (NB) Projected to Post Quarterly Earnings on Friday",
+      "summary": "NioCorp Developments (NASDAQ:NB) is expected to announce its quarterly earnings before the market opens on Friday, February 6th, with analysts projecting a loss of ($0.88) per share. The company, which is developing a critical-minerals project in Nebraska, last reported earnings of ($0.19) per share. Analysts have a \"Moderate Buy\" consensus rating for NB with an average price target of $8.32.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/niocorp-developments-nb-projected-to-post-quarterly-earnings-on-friday-2026-01-30/",
+      "tickers": [
+        "NB"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "manufacturing"
+      ],
+      "overall_sentiment": 0.137636,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "NB",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.110273,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "NB": 0.110273
+      }
     }
   ],
-  "last_updated": "2026-01-30T12:05:40.155748"
+  "last_updated": "2026-01-30T12:16:17.653708"
 }

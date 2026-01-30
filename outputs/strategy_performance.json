@@ -130,28 +130,28 @@
     },
     "QualityValue_LS": {
       "strategy_name": "QualityValue_LS",
-      "total_predictions": 65,
-      "correct_predictions": 41,
-      "accuracy": 0.6307692307692307,
-      "cumulative_return": 0.11180383277266724,
-      "avg_return_per_trade": 0.0017200589657333423,
-      "sharpe_ratio": 0.4240414765660578,
-      "max_drawdown": 0.035044529499438135,
-      "volatility": 0.004056346043463956,
-      "win_rate": 0.6307692307692307,
-      "profit_factor": 2.943840218333743,
+      "total_predictions": 66,
+      "correct_predictions": 40,
+      "accuracy": 0.6060606060606061,
+      "cumulative_return": 0.09161313422853398,
+      "avg_return_per_trade": 0.0013880777913414237,
+      "sharpe_ratio": 0.33465315962891407,
+      "max_drawdown": 0.04672603933258415,
+      "volatility": 0.004147810207083112,
+      "win_rate": 0.6060606060606061,
+      "profit_factor": 2.323917979172657,
       "performance_by_regime": {
-        "neutral": 0.0017200589657333423
+        "neutral": 0.0013880777913414237
       },
       "best_regime": "neutral",
       "worst_regime": "neutral",
-      "avg_confidence_when_right": 0.5109756097560976,
+      "avg_confidence_when_right": 0.51,
       "avg_confidence_when_wrong": 0.5,
-      "confidence_calibration": 0.01097560975609757,
-      "rolling_accuracy_20": 0.65,
-      "rolling_return_20": -0.011162742318120979,
+      "confidence_calibration": 0.010000000000000009,
+      "rolling_accuracy_20": 0.55,
+      "rolling_return_20": -0.03129161808460179,
       "improving": true,
-      "momentum_score": 0.25
+      "momentum_score": 0.050000000000000044
     },
     "TimeSeriesMomentum": {
       "strategy_name": "TimeSeriesMomentum",
@@ -256,28 +256,28 @@
     },
     "CrossSectionMomentum": {
       "strategy_name": "CrossSectionMomentum",
-      "total_predictions": 237,
-      "correct_predictions": 167,
-      "accuracy": 0.7046413502109705,
-      "cumulative_return": 2.418470118402963,
-      "avg_return_per_trade": 0.010204515267523053,
-      "sharpe_ratio": 0.5680356072760727,
+      "total_predictions": 238,
+      "correct_predictions": 168,
+      "accuracy": 0.7058823529411765,
+      "cumulative_return": 2.4223557761711394,
+      "avg_return_per_trade": 0.010177965446097226,
+      "sharpe_ratio": 0.5676042079803247,
       "max_drawdown": 0.10501019543381984,
-      "volatility": 0.01796456971501705,
-      "win_rate": 0.7046413502109705,
-      "profit_factor": 5.239084812987838,
+      "volatility": 0.01793144818695571,
+      "win_rate": 0.7058823529411765,
+      "profit_factor": 5.245895578483018,
       "performance_by_regime": {
-        "neutral": 0.010204515267523053
+        "neutral": 0.010177965446097226
       },
       "best_regime": "neutral",
       "worst_regime": "neutral",
-      "avg_confidence_when_right": 0.65,
+      "avg_confidence_when_right": 0.6500000000000001,
       "avg_confidence_when_wrong": 0.6499999999999999,
-      "confidence_calibration": 1.1102230246251565e-16,
-      "rolling_accuracy_20": 0.15,
-      "rolling_return_20": -0.05046856689992341,
+      "confidence_calibration": 2.220446049250313e-16,
+      "rolling_accuracy_20": 0.2,
+      "rolling_return_20": -0.03908899573541324,
       "improving": false,
-      "momentum_score": -0.4
+      "momentum_score": -0.3
     },
     "VolumeSpike": {
       "strategy_name": "VolumeSpike",
@@ -5360,66 +5360,6 @@
     ],
     "CrossSectionMomentum": [
       {
-        "timestamp": "2026-01-21T00:22:34.363360",
-        "symbol": "ALB",
-        "direction": "long",
-        "confidence": 0.65,
-        "expected_return": 2.5557760810631116,
-        "regime": "risk_on",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T00:22:34.387824",
-        "symbol": "MDB",
-        "direction": "long",
-        "confidence": 0.65,
-        "expected_return": 2.5557760810631116,
-        "regime": "risk_on",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T00:26:19.389975",
-        "symbol": "WDC",
-        "direction": "long",
-        "confidence": 0.65,
-        "expected_return": 2.5557760810631116,
-        "regime": "risk_on",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T00:26:19.414555",
-        "symbol": "MU",
-        "direction": "long",
-        "confidence": 0.65,
-        "expected_return": 2.5557760810631116,
-        "regime": "risk_on",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T00:26:19.441474",
-        "symbol": "STX",
-        "direction": "long",
-        "confidence": 0.65,
-        "expected_return": 2.5557760810631116,
-        "regime": "risk_on",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T00:26:19.466361",
-        "symbol": "ALB",
-        "direction": "long",
-        "confidence": 0.65,
-        "expected_return": 2.5557760810631116,
-        "regime": "risk_on",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
         "timestamp": "2026-01-21T00:26:19.490811",
         "symbol": "MDB",
         "direction": "long",
@@ -10351,6 +10291,66 @@
       },
       {
         "timestamp": "2026-01-30T12:09:00.237383",
+        "symbol": "MU",
+        "direction": "short",
+        "confidence": 0.65,
+        "expected_return": 0.00028031249999999996,
+        "regime": "unknown",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.716471",
+        "symbol": "WDC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.43434663501366444,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.743577",
+        "symbol": "MU",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.43434663501366444,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.769985",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.43434663501366444,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.796393",
+        "symbol": "ALB",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.43434663501366444,
+        "regime": "neutral",
+        "outcome": "correct",
+        "actual_return": 0.0038856577681761215
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.822584",
+        "symbol": "LRCX",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.43434663501366444,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:21.504373",
         "symbol": "MU",
         "direction": "short",
         "confidence": 0.65,
@@ -35372,2656 +35372,6 @@
     ],
     "TS_Momentum_LS": [
       {
-        "timestamp": "2026-01-30T12:06:10.282447",
-        "symbol": "AKAM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.308289",
-        "symbol": "EPAM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.333646",
-        "symbol": "WDC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.359080",
-        "symbol": "STX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.384533",
-        "symbol": "SWKS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.410282",
-        "symbol": "QRVO",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.436029",
-        "symbol": "SEDG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.462630",
-        "symbol": "ENPH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.489084",
-        "symbol": "FSLR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.514907",
-        "symbol": "RUN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.540800",
-        "symbol": "ANET",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.566636",
-        "symbol": "DDOG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.592262",
-        "symbol": "ZS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.617945",
-        "symbol": "OKTA",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.643585",
-        "symbol": "MDB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.669312",
-        "symbol": "SNOW",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.694769",
-        "symbol": "BAC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.720400",
-        "symbol": "WFC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.746275",
-        "symbol": "GS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": "correct",
-        "actual_return": 0.004363026154676523
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.772600",
-        "symbol": "MS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": "correct",
-        "actual_return": 0.0017969205068744474
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.798855",
-        "symbol": "C",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.825036",
-        "symbol": "SCHW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.851107",
-        "symbol": "AXP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.877219",
-        "symbol": "USB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.903555",
-        "symbol": "PNC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.929695",
-        "symbol": "TFC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.955758",
-        "symbol": "BK",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:10.981729",
-        "symbol": "CME",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.007640",
-        "symbol": "ICE",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.033422",
-        "symbol": "MSCI",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.059071",
-        "symbol": "FIS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.084946",
-        "symbol": "FISV",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.110553",
-        "symbol": "ADP",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.136802",
-        "symbol": "PAYX",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.162697",
-        "symbol": "GPN",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.188463",
-        "symbol": "CFG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.214328",
-        "symbol": "KEY",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.240210",
-        "symbol": "RF",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.266000",
-        "symbol": "MTB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.291664",
-        "symbol": "FITB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.317319",
-        "symbol": "ZION",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.342861",
-        "symbol": "CMA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.368356",
-        "symbol": "NTRS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.393867",
-        "symbol": "STT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.419458",
-        "symbol": "BRO",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.445230",
-        "symbol": "AJG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.470789",
-        "symbol": "MMC",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.496307",
-        "symbol": "WTW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.521839",
-        "symbol": "CINF",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.547311",
-        "symbol": "L",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.572900",
-        "symbol": "TRV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.598879",
-        "symbol": "PGR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.624878",
-        "symbol": "CB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.651059",
-        "symbol": "PRU",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.676983",
-        "symbol": "LLY",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.703049",
-        "symbol": "JNJ",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": "incorrect",
-        "actual_return": -0.004257425051418839
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.729216",
-        "symbol": "MRK",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": "incorrect",
-        "actual_return": -0.007424084781727196
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.755252",
-        "symbol": "ABBV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.781987",
-        "symbol": "PFE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.808030",
-        "symbol": "TMO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": "incorrect",
-        "actual_return": -0.00038827739887920036
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.834374",
-        "symbol": "ABT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.860370",
-        "symbol": "DHR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.886593",
-        "symbol": "BMY",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.912796",
-        "symbol": "AMGN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.939028",
-        "symbol": "GILD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.965298",
-        "symbol": "REGN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:11.991260",
-        "symbol": "MRNA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.016849",
-        "symbol": "BIIB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.042582",
-        "symbol": "ILMN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.068151",
-        "symbol": "DXCM",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.093604",
-        "symbol": "SYK",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.119148",
-        "symbol": "MDT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.145090",
-        "symbol": "BSX",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.170667",
-        "symbol": "ZBH",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.196288",
-        "symbol": "IDXX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.221960",
-        "symbol": "IQV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.249216",
-        "symbol": "A",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.275021",
-        "symbol": "MTD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.300752",
-        "symbol": "WAT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.326571",
-        "symbol": "HOLX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.352403",
-        "symbol": "ALGN",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.378379",
-        "symbol": "TECH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.404268",
-        "symbol": "BIO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.430286",
-        "symbol": "CRL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.456047",
-        "symbol": "ELV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.482222",
-        "symbol": "HUM",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.507896",
-        "symbol": "CI",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.533512",
-        "symbol": "CNC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.559031",
-        "symbol": "MOH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.584667",
-        "symbol": "CVS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.610976",
-        "symbol": "MCK",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.636911",
-        "symbol": "CAH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.663094",
-        "symbol": "VTRS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.689757",
-        "symbol": "ZTS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.715955",
-        "symbol": "DGX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.741799",
-        "symbol": "TSLA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.767729",
-        "symbol": "MCD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.793479",
-        "symbol": "NKE",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.819343",
-        "symbol": "LOW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.845600",
-        "symbol": "TJX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.871642",
-        "symbol": "BKNG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.897930",
-        "symbol": "MAR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.923860",
-        "symbol": "HLT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.950013",
-        "symbol": "CMG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:12.976459",
-        "symbol": "YUM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.002499",
-        "symbol": "PHM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.028273",
-        "symbol": "GRMN",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.054080",
-        "symbol": "POOL",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.079952",
-        "symbol": "ULTA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.105785",
-        "symbol": "EXPE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.131696",
-        "symbol": "MGM",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.157333",
-        "symbol": "F",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.182994",
-        "symbol": "GM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.208637",
-        "symbol": "APTV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.234437",
-        "symbol": "BWA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.260291",
-        "symbol": "LEA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.286438",
-        "symbol": "RL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.312132",
-        "symbol": "TPR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.338672",
-        "symbol": "VFC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.364124",
-        "symbol": "PVH",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.389568",
-        "symbol": "KO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.415014",
-        "symbol": "PEP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.440427",
-        "symbol": "WMT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.466151",
-        "symbol": "PM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.491750",
-        "symbol": "MDLZ",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.517571",
-        "symbol": "KMB",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.543869",
-        "symbol": "GIS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.569905",
-        "symbol": "SJM",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.596282",
-        "symbol": "HRL",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.622656",
-        "symbol": "TSN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.648610",
-        "symbol": "MNST",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.674809",
-        "symbol": "KDP",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.700701",
-        "symbol": "STZ",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.726472",
-        "symbol": "BF.B",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.752140",
-        "symbol": "EL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.777760",
-        "symbol": "CHD",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.803536",
-        "symbol": "CLX",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.829170",
-        "symbol": "KHC",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.854976",
-        "symbol": "CPB",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.880783",
-        "symbol": "MKC",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.906446",
-        "symbol": "ADM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.932079",
-        "symbol": "CAT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.957770",
-        "symbol": "UPS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:13.984137",
-        "symbol": "RTX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.010223",
-        "symbol": "LMT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.036372",
-        "symbol": "GE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.062176",
-        "symbol": "GD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.087957",
-        "symbol": "NOC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.113698",
-        "symbol": "TXT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.139423",
-        "symbol": "HII",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.165177",
-        "symbol": "LHX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.190871",
-        "symbol": "TDG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.216663",
-        "symbol": "AXON",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.242330",
-        "symbol": "ETN",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.268263",
-        "symbol": "ROK",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.294063",
-        "symbol": "AME",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.320017",
-        "symbol": "PH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.345526",
-        "symbol": "DOV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.372266",
-        "symbol": "FAST",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.398336",
-        "symbol": "ODFL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.424420",
-        "symbol": "JBHT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.450708",
-        "symbol": "CSX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.476871",
-        "symbol": "FDX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.502883",
-        "symbol": "CHRW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.528692",
-        "symbol": "WAB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.554657",
-        "symbol": "CTAS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.580283",
-        "symbol": "CPRT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.605867",
-        "symbol": "PCAR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.631388",
-        "symbol": "CARR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.656876",
-        "symbol": "JCI",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.682417",
-        "symbol": "LII",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.707824",
-        "symbol": "XOM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": "incorrect",
-        "actual_return": -0.0024152873481566965
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.733351",
-        "symbol": "CVX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.758865",
-        "symbol": "SLB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.784484",
-        "symbol": "EOG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.809928",
-        "symbol": "PSX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.835373",
-        "symbol": "VLO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.860784",
-        "symbol": "DVN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.886278",
-        "symbol": "HAL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.911772",
-        "symbol": "BKR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.937685",
-        "symbol": "FANG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.963364",
-        "symbol": "KMI",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:14.989838",
-        "symbol": "WMB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.016036",
-        "symbol": "TRGP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.042243",
-        "symbol": "LNG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.068235",
-        "symbol": "GOOGL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.094150",
-        "symbol": "GOOG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.120688",
-        "symbol": "NFLX",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.146488",
-        "symbol": "DIS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.172244",
-        "symbol": "CMCSA",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.198064",
-        "symbol": "TMUS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.223829",
-        "symbol": "VZ",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.250205",
-        "symbol": "T",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.276531",
-        "symbol": "CHTR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.302945",
-        "symbol": "EA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.329176",
-        "symbol": "TTWO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.356481",
-        "symbol": "MTCH",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.383655",
-        "symbol": "NEE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.409474",
-        "symbol": "SO",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.435183",
-        "symbol": "D",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.460944",
-        "symbol": "AEP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.486692",
-        "symbol": "SRE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.512377",
-        "symbol": "XEL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.537953",
-        "symbol": "PEG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.563615",
-        "symbol": "ED",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.589187",
-        "symbol": "ES",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.614959",
-        "symbol": "AWK",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.640965",
-        "symbol": "ATO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.666597",
-        "symbol": "NI",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.692195",
-        "symbol": "PLD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.717772",
-        "symbol": "AMT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.743243",
-        "symbol": "CCI",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.769386",
-        "symbol": "SPG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.795047",
-        "symbol": "O",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.820467",
-        "symbol": "WELL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.845730",
-        "symbol": "DLR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.871044",
-        "symbol": "AVB",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.896624",
-        "symbol": "EQR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.921936",
-        "symbol": "VTR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.947821",
-        "symbol": "ARE",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.973566",
-        "symbol": "MAA",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:15.999675",
-        "symbol": "UDR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.025827",
-        "symbol": "APD",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.051648",
-        "symbol": "SHW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.077337",
-        "symbol": "ECL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.103184",
-        "symbol": "DD",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.129337",
-        "symbol": "NEM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.155760",
-        "symbol": "FCX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.182193",
-        "symbol": "NUE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.208411",
-        "symbol": "STLD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.235290",
-        "symbol": "VMC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.261867",
-        "symbol": "MLM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.288172",
-        "symbol": "ALB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": "correct",
-        "actual_return": 0.0038856577681761215
-      },
-      {
-        "timestamp": "2026-01-30T12:06:16.314252",
-        "symbol": "MOS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:06:25.457978",
-        "symbol": "MU",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.00028031249999999996,
-        "regime": "unknown",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.684289",
-        "symbol": "AAPL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.710233",
-        "symbol": "MSFT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.736450",
-        "symbol": "NVDA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.762280",
-        "symbol": "AVGO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.788135",
-        "symbol": "ORCL",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.813876",
-        "symbol": "ADBE",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.839678",
-        "symbol": "CRM",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.866587",
-        "symbol": "AMD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.892834",
-        "symbol": "CSCO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.919004",
-        "symbol": "INTC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.945196",
-        "symbol": "IBM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.972075",
-        "symbol": "TXN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:41.998287",
-        "symbol": "AMAT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.024472",
-        "symbol": "LRCX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.050655",
-        "symbol": "MU",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.076816",
-        "symbol": "INTU",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.102897",
-        "symbol": "NOW",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.130016",
-        "symbol": "ADI",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.156215",
-        "symbol": "KLAC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.182617",
-        "symbol": "SNPS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.208729",
-        "symbol": "CDNS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.234445",
-        "symbol": "FTNT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.260847",
-        "symbol": "MCHP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.287258",
-        "symbol": "TEL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.313305",
-        "symbol": "HPQ",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.339265",
-        "symbol": "KEYS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.365130",
-        "symbol": "CTSH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.391180",
-        "symbol": "GLW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.417269",
-        "symbol": "ZBRA",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-30T12:08:42.443481",
-        "symbol": "CDW",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.732520319202716,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
         "timestamp": "2026-01-30T12:08:42.470112",
         "symbol": "AKAM",
         "direction": "long",
@@ -40370,109 +37720,2659 @@
         "regime": "unknown",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.180304",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.207504",
+        "symbol": "MSFT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.235220",
+        "symbol": "NVDA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.262545",
+        "symbol": "AVGO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.290032",
+        "symbol": "ORCL",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.318351",
+        "symbol": "ADBE",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.346567",
+        "symbol": "CRM",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.375910",
+        "symbol": "AMD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.403238",
+        "symbol": "CSCO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.431136",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.457906",
+        "symbol": "IBM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.485244",
+        "symbol": "TXN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.512233",
+        "symbol": "AMAT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.542875",
+        "symbol": "LRCX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.569565",
+        "symbol": "MU",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.596434",
+        "symbol": "INTU",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.623122",
+        "symbol": "NOW",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.650479",
+        "symbol": "ADI",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.677987",
+        "symbol": "KLAC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.705144",
+        "symbol": "SNPS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.732481",
+        "symbol": "CDNS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.759744",
+        "symbol": "FTNT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.787142",
+        "symbol": "MCHP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.815037",
+        "symbol": "TEL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.843059",
+        "symbol": "HPQ",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.870746",
+        "symbol": "KEYS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.898805",
+        "symbol": "CTSH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.926518",
+        "symbol": "GLW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.954985",
+        "symbol": "ZBRA",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.982131",
+        "symbol": "CDW",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.009296",
+        "symbol": "AKAM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.036128",
+        "symbol": "EPAM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.063439",
+        "symbol": "WDC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.090079",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.117228",
+        "symbol": "SWKS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.144240",
+        "symbol": "QRVO",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.171450",
+        "symbol": "SEDG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.198362",
+        "symbol": "ENPH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.225267",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.252024",
+        "symbol": "RUN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.284376",
+        "symbol": "ANET",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.311839",
+        "symbol": "DDOG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.348718",
+        "symbol": "ZS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.376827",
+        "symbol": "OKTA",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.404873",
+        "symbol": "MDB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.432597",
+        "symbol": "SNOW",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.459794",
+        "symbol": "BAC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.486562",
+        "symbol": "WFC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.513442",
+        "symbol": "GS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": "correct",
+        "actual_return": 0.004363026154676523
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.540244",
+        "symbol": "MS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": "correct",
+        "actual_return": 0.0017969205068744474
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.567276",
+        "symbol": "C",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.595069",
+        "symbol": "SCHW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.622530",
+        "symbol": "AXP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.649842",
+        "symbol": "USB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.677019",
+        "symbol": "PNC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.704214",
+        "symbol": "TFC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.731303",
+        "symbol": "BK",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.758631",
+        "symbol": "CME",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.785411",
+        "symbol": "ICE",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.812493",
+        "symbol": "MSCI",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.838934",
+        "symbol": "FIS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.865907",
+        "symbol": "FISV",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.893182",
+        "symbol": "ADP",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.920068",
+        "symbol": "PAYX",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.947830",
+        "symbol": "GPN",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:03.974943",
+        "symbol": "CFG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.002145",
+        "symbol": "KEY",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.029771",
+        "symbol": "RF",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.056843",
+        "symbol": "MTB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.083754",
+        "symbol": "FITB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.112471",
+        "symbol": "ZION",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.141071",
+        "symbol": "CMA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.168495",
+        "symbol": "NTRS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.196625",
+        "symbol": "STT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.223813",
+        "symbol": "BRO",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.250679",
+        "symbol": "AJG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.277722",
+        "symbol": "MMC",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.304350",
+        "symbol": "WTW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.331052",
+        "symbol": "CINF",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.357644",
+        "symbol": "L",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.384292",
+        "symbol": "TRV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.411135",
+        "symbol": "PGR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.438041",
+        "symbol": "CB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.465119",
+        "symbol": "PRU",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.492134",
+        "symbol": "LLY",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.518748",
+        "symbol": "JNJ",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": "incorrect",
+        "actual_return": -0.004257425051418839
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.545735",
+        "symbol": "MRK",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": "incorrect",
+        "actual_return": -0.007424084781727196
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.572835",
+        "symbol": "ABBV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.599518",
+        "symbol": "PFE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.626471",
+        "symbol": "TMO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": "incorrect",
+        "actual_return": -0.00038827739887920036
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.653425",
+        "symbol": "ABT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.680404",
+        "symbol": "DHR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.707424",
+        "symbol": "BMY",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.734447",
+        "symbol": "AMGN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.761340",
+        "symbol": "GILD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.788276",
+        "symbol": "REGN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.815262",
+        "symbol": "MRNA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.842536",
+        "symbol": "BIIB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.870176",
+        "symbol": "ILMN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.897243",
+        "symbol": "DXCM",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.924064",
+        "symbol": "SYK",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.952760",
+        "symbol": "MDT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:04.979957",
+        "symbol": "BSX",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.008020",
+        "symbol": "ZBH",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.034898",
+        "symbol": "IDXX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.062228",
+        "symbol": "IQV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.089002",
+        "symbol": "A",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.115663",
+        "symbol": "MTD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.142128",
+        "symbol": "WAT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.168499",
+        "symbol": "HOLX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.195580",
+        "symbol": "ALGN",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.222177",
+        "symbol": "TECH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.248766",
+        "symbol": "BIO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.275067",
+        "symbol": "CRL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.301579",
+        "symbol": "ELV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.328002",
+        "symbol": "HUM",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.354549",
+        "symbol": "CI",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.381033",
+        "symbol": "CNC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.407209",
+        "symbol": "MOH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.433413",
+        "symbol": "CVS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.459589",
+        "symbol": "MCK",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.485747",
+        "symbol": "CAH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.512378",
+        "symbol": "VTRS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.538607",
+        "symbol": "ZTS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.565101",
+        "symbol": "DGX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.591216",
+        "symbol": "TSLA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.617611",
+        "symbol": "MCD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.644117",
+        "symbol": "NKE",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.670724",
+        "symbol": "LOW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.697086",
+        "symbol": "TJX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.723668",
+        "symbol": "BKNG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.750737",
+        "symbol": "MAR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.777587",
+        "symbol": "HLT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.804186",
+        "symbol": "CMG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.830765",
+        "symbol": "YUM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.857603",
+        "symbol": "PHM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.883866",
+        "symbol": "GRMN",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.910440",
+        "symbol": "POOL",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.936413",
+        "symbol": "ULTA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.963228",
+        "symbol": "EXPE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:05.989520",
+        "symbol": "MGM",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.015927",
+        "symbol": "F",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.042344",
+        "symbol": "GM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.068809",
+        "symbol": "APTV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.095166",
+        "symbol": "BWA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.121482",
+        "symbol": "LEA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.147816",
+        "symbol": "RL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.174053",
+        "symbol": "TPR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.205092",
+        "symbol": "VFC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.231604",
+        "symbol": "PVH",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.257986",
+        "symbol": "KO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.284343",
+        "symbol": "PEP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.311393",
+        "symbol": "WMT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.337708",
+        "symbol": "PM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.363937",
+        "symbol": "MDLZ",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.390098",
+        "symbol": "KMB",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.416396",
+        "symbol": "GIS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.442712",
+        "symbol": "SJM",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.468776",
+        "symbol": "HRL",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.495025",
+        "symbol": "TSN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.521147",
+        "symbol": "MNST",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.547555",
+        "symbol": "KDP",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.574589",
+        "symbol": "STZ",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.600622",
+        "symbol": "BF.B",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.626835",
+        "symbol": "EL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.659346",
+        "symbol": "CHD",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.685880",
+        "symbol": "CLX",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.712246",
+        "symbol": "KHC",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.738624",
+        "symbol": "CPB",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.765077",
+        "symbol": "MKC",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.791403",
+        "symbol": "ADM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.817804",
+        "symbol": "CAT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.844328",
+        "symbol": "UPS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.870456",
+        "symbol": "RTX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.896918",
+        "symbol": "LMT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.923159",
+        "symbol": "GE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.949372",
+        "symbol": "GD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:06.975686",
+        "symbol": "NOC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.001842",
+        "symbol": "TXT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.028198",
+        "symbol": "HII",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.054658",
+        "symbol": "LHX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.080918",
+        "symbol": "TDG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.107177",
+        "symbol": "AXON",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.133584",
+        "symbol": "ETN",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.159868",
+        "symbol": "ROK",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.186000",
+        "symbol": "AME",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.214693",
+        "symbol": "PH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.242987",
+        "symbol": "DOV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.272627",
+        "symbol": "FAST",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.299552",
+        "symbol": "ODFL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.326027",
+        "symbol": "JBHT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.352475",
+        "symbol": "CSX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.378914",
+        "symbol": "FDX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.405209",
+        "symbol": "CHRW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.431633",
+        "symbol": "WAB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.457850",
+        "symbol": "CTAS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.484066",
+        "symbol": "CPRT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.510859",
+        "symbol": "PCAR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.537108",
+        "symbol": "CARR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.563632",
+        "symbol": "JCI",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.590355",
+        "symbol": "LII",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.616499",
+        "symbol": "XOM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": "incorrect",
+        "actual_return": -0.0024152873481566965
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.642633",
+        "symbol": "CVX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.668699",
+        "symbol": "SLB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.694871",
+        "symbol": "EOG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.721450",
+        "symbol": "PSX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.747775",
+        "symbol": "VLO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.774079",
+        "symbol": "DVN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.800471",
+        "symbol": "HAL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.826670",
+        "symbol": "BKR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.852854",
+        "symbol": "FANG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.879274",
+        "symbol": "KMI",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.905809",
+        "symbol": "WMB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.932744",
+        "symbol": "TRGP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.959080",
+        "symbol": "LNG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:07.985624",
+        "symbol": "GOOGL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.011999",
+        "symbol": "GOOG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.038191",
+        "symbol": "NFLX",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.064816",
+        "symbol": "DIS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.091017",
+        "symbol": "CMCSA",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.117257",
+        "symbol": "TMUS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.143703",
+        "symbol": "VZ",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.169918",
+        "symbol": "T",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.196214",
+        "symbol": "CHTR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.222403",
+        "symbol": "EA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.248758",
+        "symbol": "TTWO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.275072",
+        "symbol": "MTCH",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.301274",
+        "symbol": "NEE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.327633",
+        "symbol": "SO",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.354096",
+        "symbol": "D",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.380333",
+        "symbol": "AEP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.406588",
+        "symbol": "SRE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.432724",
+        "symbol": "XEL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.458997",
+        "symbol": "PEG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.485280",
+        "symbol": "ED",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.511818",
+        "symbol": "ES",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.538323",
+        "symbol": "AWK",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.564706",
+        "symbol": "ATO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.591071",
+        "symbol": "NI",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.617284",
+        "symbol": "PLD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.643773",
+        "symbol": "AMT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.670136",
+        "symbol": "CCI",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.696449",
+        "symbol": "SPG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.722723",
+        "symbol": "O",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.749091",
+        "symbol": "WELL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.775570",
+        "symbol": "DLR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.801586",
+        "symbol": "AVB",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.828046",
+        "symbol": "EQR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.854355",
+        "symbol": "VTR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.880979",
+        "symbol": "ARE",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.907703",
+        "symbol": "MAA",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.934851",
+        "symbol": "UDR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.962230",
+        "symbol": "APD",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:08.989067",
+        "symbol": "SHW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.016016",
+        "symbol": "ECL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.042831",
+        "symbol": "DD",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.069330",
+        "symbol": "NEM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.096095",
+        "symbol": "FCX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.122574",
+        "symbol": "NUE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.148808",
+        "symbol": "STLD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.175159",
+        "symbol": "VMC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.201386",
+        "symbol": "MLM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.227661",
+        "symbol": "ALB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": "correct",
+        "actual_return": 0.0038856577681761215
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.253894",
+        "symbol": "MOS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.732520319202716,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:21.422346",
+        "symbol": "MU",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.00028031249999999996,
+        "regime": "unknown",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "MeanReversion_LS": [
-      {
-        "timestamp": "2026-01-22T00:37:36.236686",
-        "symbol": "HPQ",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.257739",
-        "symbol": "ADBE",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.278790",
-        "symbol": "AAPL",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": "correct",
-        "actual_return": 0.007517140203575878
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.299961",
-        "symbol": "INTU",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.321108",
-        "symbol": "NFLX",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.341731",
-        "symbol": "ULTA",
-        "direction": "short",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.362702",
-        "symbol": "LHX",
-        "direction": "short",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.383861",
-        "symbol": "BA",
-        "direction": "short",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.404956",
-        "symbol": "MU",
-        "direction": "short",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.426052",
-        "symbol": "TDG",
-        "direction": "short",
-        "confidence": 0.5,
-        "expected_return": 0.05,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
       {
         "timestamp": "2026-01-22T00:41:48.736071",
         "symbol": "HPQ",
@@ -45372,109 +45272,109 @@
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.447812",
+        "symbol": "FIS",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.473897",
+        "symbol": "NFLX",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.500289",
+        "symbol": "INTU",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.528652",
+        "symbol": "ADBE",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.557145",
+        "symbol": "HPQ",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.584097",
+        "symbol": "CHRW",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.610674",
+        "symbol": "LHX",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.636904",
+        "symbol": "FCX",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.663606",
+        "symbol": "LMT",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.690046",
+        "symbol": "NEM",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "QualityValue_LS": [
-      {
-        "timestamp": "2026-01-22T00:37:35.922949",
-        "symbol": "EA",
-        "direction": "long",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.944409",
-        "symbol": "JBHT",
-        "direction": "long",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.965868",
-        "symbol": "JNJ",
-        "direction": "long",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": "correct",
-        "actual_return": 0.008509188710987232
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.985920",
-        "symbol": "PH",
-        "direction": "long",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.006557",
-        "symbol": "WAT",
-        "direction": "long",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.027316",
-        "symbol": "INTU",
-        "direction": "short",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.048161",
-        "symbol": "DD",
-        "direction": "short",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.068689",
-        "symbol": "MOS",
-        "direction": "short",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.089601",
-        "symbol": "NOW",
-        "direction": "short",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:36.110594",
-        "symbol": "ORCL",
-        "direction": "short",
-        "confidence": 0.55,
-        "expected_return": 0.08,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
       {
         "timestamp": "2026-01-22T00:41:48.076615",
         "symbol": "EA",
@@ -50374,109 +50274,109 @@
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.183966",
+        "symbol": "JNJ",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": "incorrect",
+        "actual_return": -0.004257425051418839
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.210594",
+        "symbol": "GOOGL",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.236794",
+        "symbol": "GOOG",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.263233",
+        "symbol": "MRK",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": "incorrect",
+        "actual_return": -0.007424084781727196
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.289562",
+        "symbol": "NEE",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.315920",
+        "symbol": "CHTR",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.342229",
+        "symbol": "DD",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.368493",
+        "symbol": "MOS",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.394966",
+        "symbol": "SNPS",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.421278",
+        "symbol": "ARE",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "RelativeStrengthIntraday": [
-      {
-        "timestamp": "2026-01-22T00:37:35.708295",
-        "symbol": "ALB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": "correct",
-        "actual_return": 0.005907149300302928
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.729750",
-        "symbol": "STZ",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.751170",
-        "symbol": "NEM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.772591",
-        "symbol": "MNST",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.794120",
-        "symbol": "ILMN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.815626",
-        "symbol": "BSX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.837052",
-        "symbol": "INTC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.858506",
-        "symbol": "BF.B",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.879944",
-        "symbol": "MRNA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-22T00:37:35.901453",
-        "symbol": "MOS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
       {
         "timestamp": "2026-01-22T00:41:47.195577",
         "symbol": "ALB",
@@ -55376,69 +55276,109 @@
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.917306",
+        "symbol": "RCL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.944471",
+        "symbol": "META",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.970854",
+        "symbol": "NCLH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.997324",
+        "symbol": "TT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.023590",
+        "symbol": "CCL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.050352",
+        "symbol": "VFC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.077474",
+        "symbol": "CHRW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.104166",
+        "symbol": "IBM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.130847",
+        "symbol": "CHTR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:10.157345",
+        "symbol": "HON",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "QuickMeanReversion": [
-      {
-        "timestamp": "2026-01-21T19:02:09.493585",
-        "symbol": "AVGO",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T19:02:09.523823",
-        "symbol": "CDW",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T19:08:33.517331",
-        "symbol": "NTAP",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T19:08:33.547906",
-        "symbol": "RUN",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T19:08:33.578029",
-        "symbol": "NCLH",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-01-21T19:08:33.607928",
-        "symbol": "ORCL",
-        "direction": "long",
-        "confidence": 0.5,
-        "expected_return": 0.003,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
       {
         "timestamp": "2026-01-21T19:08:33.654091",
         "symbol": "AVGO",
@@ -60378,6 +60318,66 @@
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.757798",
+        "symbol": "LVS",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.784335",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.810719",
+        "symbol": "MSFT",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.837304",
+        "symbol": "NOW",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.863583",
+        "symbol": "MDB",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.890538",
+        "symbol": "DDOG",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "IntradayMomentum": [
@@ -64913,6 +64913,106 @@
       },
       {
         "timestamp": "2026-01-30T12:08:41.504027",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.280407",
+        "symbol": "EPAM",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.306590",
+        "symbol": "ENPH",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.333045",
+        "symbol": "RUN",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.360059",
+        "symbol": "ACN",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.386554",
+        "symbol": "SEDG",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.413312",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.439884",
+        "symbol": "SWKS",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.466700",
+        "symbol": "CTSH",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.493091",
+        "symbol": "CDNS",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.519490",
         "symbol": "INTC",
         "direction": "long",
         "confidence": 0.65,
@@ -72734,6 +72834,66 @@
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:01.972174",
+        "symbol": "HPQ",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.035616",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.066032",
+        "symbol": "KLAC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.097945",
+        "symbol": "CDW",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.125878",
+        "symbol": "SWKS",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:02.153252",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "VolumeSpike": [
@@ -73956,6 +74116,86 @@
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.546291",
+        "symbol": "QRVO",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.573201",
+        "symbol": "CDW",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.600068",
+        "symbol": "SWKS",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.626523",
+        "symbol": "ZBRA",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.652718",
+        "symbol": "TEL",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.679097",
+        "symbol": "KLAC",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.705268",
+        "symbol": "LRCX",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:09.731589",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "CS_Momentum_LS": [
@@ -73988,8 +74228,18 @@
         "regime": "unknown",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-01-30T12:17:21.474552",
+        "symbol": "MU",
+        "direction": "short",
+        "confidence": 1.0,
+        "expected_return": 0.00028031249999999996,
+        "regime": "unknown",
+        "outcome": null,
+        "actual_return": null
       }
     ]
   },
-  "last_updated": "2026-01-30T12:09:07.113286"
+  "last_updated": "2026-01-30T12:17:27.566346"
 }
