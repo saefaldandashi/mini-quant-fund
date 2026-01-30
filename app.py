@@ -2375,6 +2375,24 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 combined_weights = {s: w * market_risk_factor for s, w in combined_weights.items()}
                 analytics_adjustments.append(f"Event: {risk_reason}")
             
+            # 2b. Per-Stock Event Risk Adjustment (Earnings, etc.)
+            # Get adjustments for each stock in portfolio
+            portfolio_symbols = list(combined_weights.keys())
+            stock_adjustments = calendar.get_portfolio_adjustment(portfolio_symbols)
+            
+            stocks_adjusted = 0
+            for symbol, adjustment in stock_adjustments.items():
+                if adjustment.position_multiplier < 1.0 and symbol in combined_weights:
+                    old_weight = combined_weights[symbol]
+                    combined_weights[symbol] = old_weight * adjustment.position_multiplier
+                    stocks_adjusted += 1
+                    if adjustment.rationale:
+                        log(f"   📅 {symbol}: Reduced {(1-adjustment.position_multiplier)*100:.0f}% ({adjustment.rationale})")
+                        analytics_adjustments.append(f"{symbol}: {adjustment.rationale}")
+            
+            if stocks_adjusted > 0:
+                log(f"   📅 Adjusted {stocks_adjusted} stocks for upcoming events (earnings, etc.)")
+            
             # 3. Factor Exposure Check
             factor_mgr = get_factor_manager()
             exposure = factor_mgr.calculate_portfolio_exposure(combined_weights)
