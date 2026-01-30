@@ -574,27 +574,29 @@ class LLMService:
         if geopolitical_context:
             news_section += f"\n\nGEOPOLITICAL INTELLIGENCE:\n{geopolitical_context}"
         
-        prompt = f"""As the Chief Investment Officer, provide a 3-5 sentence explanation of today's portfolio decision.
+        prompt = f"""As the Chief Investment Officer, provide a DETAILED 5-7 sentence explanation of today's portfolio decision.
 
-MACRO CONTEXT:
+=== FUNDAMENTAL DATA ===
 {macro_context}
 {news_section}
 
-STRATEGY DEBATE SUMMARY:
-{debate_summary}
-
-SIGNALS FROM STRATEGIES:
+=== STRATEGY SIGNALS ===
 {signals_summary}
 
-FINAL POSITIONS:
+=== DEBATE OUTCOME ===
+{debate_summary}
+
+=== FINAL POSITIONS ===
 {positions_str}
 
-Explain:
-1. The KEY driver of today's allocation (consider news headlines if relevant)
-2. The primary RISK we're managing against (geopolitical, macro, technical)
-3. Why THIS specific set of positions (reference specific news/data that influenced the decision)
+YOUR RESPONSE MUST:
+1. EXPLICITLY reference specific news headlines or macro data points that influenced decisions
+2. Explain the PRIMARY DRIVER (e.g., "Due to the Trump tariff threats on oil...") - be specific!
+3. Identify the KEY RISK being managed (geopolitical, inflation, recession, etc.)
+4. Connect specific positions to the fundamental data (e.g., "Long AVGO due to bullish sentiment (+0.70)...")
+5. Mention any sector rotations or defensive moves prompted by the news/macro environment
 
-Be specific. Reference the actual data and news above. No platitudes."""
+DO NOT be generic. Name specific tickers, news events, and macro readings. Cite the data."""
 
         response = self.call(
             prompt=prompt,

@@ -120,17 +120,30 @@ class AlphaVantageNewsLoader:
         self._load_fetch_status()
     
     def _load_fetch_status(self):
-        """Load last successful fetch timestamp."""
+        """Load last successful fetch timestamp and reset rate limit on new day."""
         status_file = self.cache_dir / "fetch_status.json"
         if status_file.exists():
             try:
                 with open(status_file, 'r') as f:
                     data = json.load(f)
-                    self._last_successful_fetch = datetime.fromisoformat(data.get('last_successful_fetch', ''))
+                    last_fetch_str = data.get('last_successful_fetch', '')
+                    if last_fetch_str:
+                        self._last_successful_fetch = datetime.fromisoformat(last_fetch_str)
                     self._rate_limited = data.get('rate_limited', False)
                     self._rate_limit_message = data.get('rate_limit_message', '')
-            except:
-                pass
+                    
+                    # CRITICAL: Reset rate limit on a new day (midnight UTC)
+                    # Alpha Vantage resets daily quota at midnight UTC
+                    if self._rate_limited and self._last_successful_fetch:
+                        last_date = self._last_successful_fetch.date()
+                        today = datetime.now().date()
+                        if today > last_date:
+                            logger.info(f"🔄 New day detected - resetting Alpha Vantage rate limit (last fetch: {last_date}, today: {today})")
+                            self._rate_limited = False
+                            self._rate_limit_message = ""
+                            self._save_fetch_status()
+            except Exception as e:
+                logger.debug(f"Could not load fetch status: {e}")
     
     def _save_fetch_status(self):
         """Save fetch status to disk."""
@@ -708,6 +721,38 @@ class AlphaVantageNewsLoader:
             f.unlink()
         
         logger.info("Cleared Alpha Vantage cache")
+    
+    def reset_rate_limit(self):
+        """
+        Force reset the rate limit flag.
+        Use this when you know the daily quota has reset (midnight UTC).
+        """
+        self._rate_limited = False
+        self._rate_limit_message = ""
+        self._save_fetch_status()
+        logger.info("🔄 Force reset Alpha Vantage rate limit - ready to fetch fresh news")
+        return True
+    
+    def force_refresh(self, days_back: int = 3) -> List[AlphaVantageArticle]:
+        """
+        Force refresh news, ignoring rate limit flag.
+        Will reset rate limit and attempt to fetch fresh articles.
+        
+        Returns:
+            List of fresh articles, or empty if still rate limited by API
+        """
+        # Reset rate limit
+        self.reset_rate_limit()
+        
+        # Try to fetch fresh news
+        articles = self.fetch_market_news(days_back=days_back)
+        
+        if articles:
+            logger.info(f"✅ Force refresh successful: {len(articles)} fresh articles")
+        else:
+            logger.warning("⚠️ Force refresh failed - API may still be rate limiting")
+        
+        return articles
     
     def get_cached_articles(self) -> List[AlphaVantageArticle]:
         """Get all cached articles."""

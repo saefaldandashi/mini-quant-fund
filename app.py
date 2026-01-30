@@ -6836,6 +6836,42 @@ def clear_alpha_vantage_cache():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/api/alpha-vantage/force-refresh', methods=['POST'])
+def force_refresh_alpha_vantage():
+    """
+    Force refresh Alpha Vantage news, resetting the rate limit flag.
+    Use this when daily quota has reset but the system is stuck.
+    """
+    try:
+        # Reset rate limit
+        alpha_vantage_news.reset_rate_limit()
+        
+        # Try to fetch fresh articles
+        days_back = request.args.get('days', 3, type=int)
+        articles = alpha_vantage_news.fetch_market_news(days_back=days_back)
+        
+        # Get updated status
+        status = alpha_vantage_news.get_rate_limit_status()
+        
+        if articles:
+            return jsonify({
+                "success": True,
+                "message": f"Fetched {len(articles)} fresh articles",
+                "articles_count": len(articles),
+                "rate_limited": status.get('rate_limited', False),
+                "sample_headlines": [a.headline[:60] for a in articles[:5]]
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "message": "API returned no articles - may still be rate limited",
+                "rate_limited": status.get('rate_limited', False),
+                "rate_limit_message": status.get('rate_limit_message', ''),
+            })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route('/api/alpha-vantage/deduplicate', methods=['POST'])
 def deduplicate_alpha_vantage_cache():
     """Remove duplicate articles from cache."""
