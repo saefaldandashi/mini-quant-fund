@@ -377,6 +377,100 @@ long_short_settings = {
     "max_short_per_position": 0.10,  # 10% max per short
 }
 
+# === DAILY P&L LIMIT (CRITICAL RISK CONTROL) ===
+# Stops trading when daily loss exceeds threshold
+daily_pnl_tracker = {
+    "enabled": True,
+    "max_daily_loss_pct": 0.03,  # 3% max daily loss (of portfolio)
+    "max_daily_loss_dollars": 3000,  # $3000 max daily loss (absolute)
+    "trading_halted": False,
+    "halt_reason": "",
+    "day_start_equity": None,
+    "last_reset_date": None,
+    "current_pnl_pct": 0.0,
+    "current_pnl_dollars": 0.0,
+}
+
+def check_daily_pnl_limit(broker, log_func=None) -> Tuple[bool, str]:
+    """
+    Check if daily P&L limit has been exceeded.
+    
+    Returns:
+        Tuple of (can_trade, reason)
+    """
+    global daily_pnl_tracker
+    
+    if not daily_pnl_tracker["enabled"]:
+        return True, "P&L limit disabled"
+    
+    try:
+        # Get current date (market timezone)
+        now = datetime.now(pytz.timezone('US/Eastern'))
+        today_str = now.strftime('%Y-%m-%d')
+        
+        # Reset tracker on new day
+        if daily_pnl_tracker["last_reset_date"] != today_str:
+            try:
+                account = broker.api.get_account()
+                daily_pnl_tracker["day_start_equity"] = float(account.equity)
+                daily_pnl_tracker["last_reset_date"] = today_str
+                daily_pnl_tracker["trading_halted"] = False
+                daily_pnl_tracker["halt_reason"] = ""
+                if log_func:
+                    log_func(f"📅 Daily P&L tracker reset. Start equity: ${daily_pnl_tracker['day_start_equity']:,.2f}")
+            except Exception as e:
+                logging.warning(f"Could not reset daily P&L tracker: {e}")
+                return True, "Could not get equity"
+        
+        # Check if already halted
+        if daily_pnl_tracker["trading_halted"]:
+            return False, daily_pnl_tracker["halt_reason"]
+        
+        # Calculate current P&L
+        try:
+            account = broker.api.get_account()
+            current_equity = float(account.equity)
+            start_equity = daily_pnl_tracker["day_start_equity"]
+            
+            if start_equity and start_equity > 0:
+                pnl_dollars = current_equity - start_equity
+                pnl_pct = pnl_dollars / start_equity
+                
+                daily_pnl_tracker["current_pnl_pct"] = pnl_pct
+                daily_pnl_tracker["current_pnl_dollars"] = pnl_dollars
+                
+                # Check limits
+                max_loss_pct = daily_pnl_tracker["max_daily_loss_pct"]
+                max_loss_dollars = daily_pnl_tracker["max_daily_loss_dollars"]
+                
+                if pnl_pct < -max_loss_pct:
+                    daily_pnl_tracker["trading_halted"] = True
+                    daily_pnl_tracker["halt_reason"] = f"Daily loss {pnl_pct:.1%} exceeds limit -{max_loss_pct:.1%}"
+                    if log_func:
+                        log_func(f"🛑 TRADING HALTED: {daily_pnl_tracker['halt_reason']}")
+                    return False, daily_pnl_tracker["halt_reason"]
+                
+                if pnl_dollars < -max_loss_dollars:
+                    daily_pnl_tracker["trading_halted"] = True
+                    daily_pnl_tracker["halt_reason"] = f"Daily loss ${abs(pnl_dollars):,.0f} exceeds limit ${max_loss_dollars:,.0f}"
+                    if log_func:
+                        log_func(f"🛑 TRADING HALTED: {daily_pnl_tracker['halt_reason']}")
+                    return False, daily_pnl_tracker["halt_reason"]
+                
+                # Log current status
+                if log_func and abs(pnl_pct) > 0.01:  # Only log if significant
+                    status = "📈" if pnl_pct >= 0 else "📉"
+                    log_func(f"{status} Daily P&L: {pnl_pct:+.2%} (${pnl_dollars:+,.0f})")
+                
+        except Exception as e:
+            logging.warning(f"Could not calculate daily P&L: {e}")
+        
+        return True, "Within limits"
+        
+    except Exception as e:
+        logging.error(f"Daily P&L check error: {e}")
+        return True, "Error checking P&L"
+
 # Strategy enhancer
 strategy_enhancer = get_enhancer(EnhancedConfig(risk_appetite="moderate"))
 
@@ -755,6 +849,20 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             log("Market closed, but after-hours enabled. Proceeding...")
         else:
             log("Market is OPEN")
+        
+        # === CRITICAL: Check Daily P&L Limit ===
+        # This prevents catastrophic losses by stopping trading when daily loss exceeds threshold
+        can_trade, pnl_reason = check_daily_pnl_limit(broker, log)
+        if not can_trade:
+            log("")
+            log("🛑" * 20)
+            log(f"TRADING HALTED: {pnl_reason}")
+            log("🛑" * 20)
+            log("")
+            log("To resume trading, either:")
+            log("  1. Wait until tomorrow (tracker resets at market open)")
+            log("  2. Manually reset: daily_pnl_tracker['trading_halted'] = False")
+            return False, "\n".join(output_lines), f"Daily P&L limit exceeded: {pnl_reason}", debate_info
         
         # Get account info
         account = broker.get_account()

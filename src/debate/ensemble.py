@@ -216,10 +216,71 @@ class EnsembleOptimizer:
                     'weight': weighted,
                 })
         
+        # === CONFLUENCE SCORING (NEW) ===
+        # Boost weights when multiple strategies agree on direction
+        # This rewards high-conviction trades where strategies converge
+        combined = self._apply_confluence_boost(combined, symbol_contributions)
+        
         # Resolve conflicts where strategies disagree on direction
         combined = self._resolve_signal_conflicts(combined, symbol_contributions)
         
         return combined
+    
+    def _apply_confluence_boost(
+        self,
+        combined: Dict[str, float],
+        contributions: Dict[str, List[Dict]]
+    ) -> Dict[str, float]:
+        """
+        Apply confluence boost when multiple strategies agree.
+        
+        Rules:
+        - 2 strategies agree: 1.1x boost (10%)
+        - 3 strategies agree: 1.25x boost (25%)
+        - 4+ strategies agree: 1.4x boost (40%)
+        
+        Confluence = strategies agreeing on DIRECTION (all long or all short)
+        """
+        boosted = dict(combined)
+        
+        for symbol, contribs in contributions.items():
+            if len(contribs) < 2:
+                continue
+            
+            # Count strategies agreeing on direction
+            longs = [c for c in contribs if c['weight'] > 0.001]  # Significant long signals
+            shorts = [c for c in contribs if c['weight'] < -0.001]  # Significant short signals
+            
+            # Check for confluence (all agree on direction)
+            if len(longs) >= 2 and len(shorts) == 0:
+                # Multiple strategies all going long
+                confluence_count = len(longs)
+            elif len(shorts) >= 2 and len(longs) == 0:
+                # Multiple strategies all going short
+                confluence_count = len(shorts)
+            else:
+                # Mixed signals, no confluence
+                continue
+            
+            # Apply boost based on confluence level
+            if confluence_count >= 4:
+                boost = 1.40
+            elif confluence_count >= 3:
+                boost = 1.25
+            elif confluence_count >= 2:
+                boost = 1.10
+            else:
+                continue
+            
+            old_weight = boosted.get(symbol, 0)
+            boosted[symbol] = old_weight * boost
+            
+            logger.debug(
+                f"Confluence boost for {symbol}: {confluence_count} strategies agree, "
+                f"{old_weight:.2%} -> {boosted[symbol]:.2%} ({boost:.0%} boost)"
+            )
+        
+        return boosted
     
     def _resolve_signal_conflicts(
         self,

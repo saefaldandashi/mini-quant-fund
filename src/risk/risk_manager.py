@@ -29,6 +29,16 @@ class RiskConstraints:
     enable_take_profit: bool = True  # CRITICAL FIX: Enable take-profit!
     take_profit_pct: float = 0.04  # 4% take-profit (was 20%) - locks in gains
     
+    # TRAILING STOP-LOSS (NEW) - Protects profits by moving stop up with price
+    enable_trailing_stop: bool = True
+    trailing_stop_activation: float = 0.02  # Activate after 2% profit
+    trailing_stop_distance: float = 0.015   # Trail 1.5% behind peak
+    
+    # CORRELATION LIMIT (NEW) - Prevents holding too many correlated positions
+    enable_correlation_limit: bool = True
+    max_pairwise_correlation: float = 0.80  # Max allowed correlation between any two positions
+    max_avg_correlation: float = 0.60       # Max average correlation of portfolio
+    
     # === LONG/SHORT CONSTRAINTS ===
     enable_shorting: bool = True
     max_gross_exposure: float = 1.5  # REDUCED from 200% to 150% gross
@@ -89,6 +99,9 @@ class RiskManager:
         self.entry_prices: Dict[str, float] = {}
         self.high_water_mark: float = 0.0
         self.current_drawdown: float = 0.0
+        
+        # Trailing stop tracking - peak price since entry for each position
+        self.position_peaks: Dict[str, float] = {}  # symbol -> highest price since entry
     
     def check_and_approve(
         self,
@@ -135,9 +148,13 @@ class RiskManager:
             self._check_net_exposure(result)
             self._check_short_limits(result)
         
-        # Stop-loss / take-profit
-        if self.constraints.enable_stop_loss or self.constraints.enable_take_profit:
+        # Stop-loss / take-profit / trailing stop
+        if self.constraints.enable_stop_loss or self.constraints.enable_take_profit or self.constraints.enable_trailing_stop:
             self._check_stop_take(result, features)
+        
+        # Correlation limit check
+        if self.constraints.enable_correlation_limit:
+            self._check_correlation_limit(result, features)
         
         # Calculate final metrics
         result.risk_metrics['leverage'] = sum(abs(w) for w in result.approved_weights.values())
@@ -270,7 +287,7 @@ class RiskManager:
         result: RiskCheckResult,
         features: Features
     ) -> None:
-        """Check stop-loss and take-profit levels."""
+        """Check stop-loss, trailing stop, and take-profit levels."""
         for symbol, weight in list(result.approved_weights.items()):
             if symbol not in self.entry_prices:
                 continue
@@ -281,18 +298,64 @@ class RiskManager:
             if current is None or entry <= 0:
                 continue
             
-            pnl = (current - entry) / entry * np.sign(weight)
+            # For longs: pnl positive when price goes up
+            # For shorts: pnl positive when price goes down
+            is_long = weight > 0
+            if is_long:
+                pnl = (current - entry) / entry
+            else:
+                pnl = (entry - current) / entry  # Inverted for shorts
             
-            # Stop-loss
+            # === TRAILING STOP (NEW) ===
+            # Protects profits by moving stop up with price
+            if self.constraints.enable_trailing_stop:
+                activation = self.constraints.trailing_stop_activation
+                trail_distance = self.constraints.trailing_stop_distance
+                
+                # Update peak price tracking
+                if symbol not in self.position_peaks:
+                    self.position_peaks[symbol] = current if is_long else entry  # Entry for shorts
+                
+                # Update peak (highest for longs, lowest for shorts)
+                if is_long:
+                    if current > self.position_peaks[symbol]:
+                        self.position_peaks[symbol] = current
+                    peak = self.position_peaks[symbol]
+                    peak_pnl = (peak - entry) / entry
+                else:
+                    if current < self.position_peaks.get(symbol, entry):
+                        self.position_peaks[symbol] = current
+                    peak = self.position_peaks[symbol]
+                    peak_pnl = (entry - peak) / entry
+                
+                # Check if trailing stop is activated (we've hit activation threshold)
+                if peak_pnl >= activation:
+                    # Calculate trailing stop level
+                    trailing_pnl = peak_pnl - trail_distance
+                    
+                    # If current P&L falls below trailing stop, exit
+                    if pnl < trailing_pnl:
+                        result.approved_weights[symbol] = 0
+                        result.adjustments.append(
+                            f"TRAILING STOP triggered for {symbol} "
+                            f"(Peak: {peak_pnl:.1%}, Now: {pnl:.1%}, Trail: {trailing_pnl:.1%})"
+                        )
+                        # Clean up tracking
+                        self.position_peaks.pop(symbol, None)
+                        continue
+            
+            # === FIXED STOP-LOSS ===
             if self.constraints.enable_stop_loss:
                 if pnl < -self.constraints.stop_loss_pct:
                     result.approved_weights[symbol] = 0
                     result.adjustments.append(
                         f"STOP-LOSS triggered for {symbol} (P&L: {pnl:.1%})"
                     )
+                    # Clean up trailing stop tracking
+                    self.position_peaks.pop(symbol, None)
                     continue
             
-            # Take-profit
+            # === TAKE-PROFIT ===
             if self.constraints.enable_take_profit:
                 if pnl > self.constraints.take_profit_pct:
                     # Reduce position by half
@@ -412,6 +475,85 @@ class RiskManager:
                 f"Reduced total short: {total_short:.1%} -> {max_total_short:.1%}"
             )
     
+    def _check_correlation_limit(self, result: RiskCheckResult, features: Features) -> None:
+        """
+        Check portfolio correlation limits.
+        
+        Prevents holding too many highly correlated positions.
+        When correlations are too high, reduces the smaller position.
+        """
+        if features.correlation_matrix is None or features.correlation_matrix.empty:
+            return
+        
+        max_pairwise = self.constraints.max_pairwise_correlation
+        max_avg = self.constraints.max_avg_correlation
+        
+        # Get symbols in current portfolio
+        portfolio_symbols = [s for s in result.approved_weights.keys() 
+                           if abs(result.approved_weights[s]) > 0.005]
+        
+        if len(portfolio_symbols) < 2:
+            return
+        
+        # Check pairwise correlations
+        violations = []
+        corr_matrix = features.correlation_matrix
+        
+        for i, sym1 in enumerate(portfolio_symbols):
+            for sym2 in portfolio_symbols[i+1:]:
+                if sym1 not in corr_matrix.columns or sym2 not in corr_matrix.columns:
+                    continue
+                
+                try:
+                    corr = abs(corr_matrix.loc[sym1, sym2])
+                    
+                    if corr > max_pairwise:
+                        violations.append((sym1, sym2, corr))
+                except:
+                    continue
+        
+        # Handle violations by reducing the smaller position
+        for sym1, sym2, corr in violations:
+            w1 = abs(result.approved_weights.get(sym1, 0))
+            w2 = abs(result.approved_weights.get(sym2, 0))
+            
+            # Reduce the smaller position by 50%
+            if w1 > w2:
+                # Reduce sym2
+                old = result.approved_weights[sym2]
+                result.approved_weights[sym2] = old * 0.5
+                result.adjustments.append(
+                    f"Reduced {sym2} (corr with {sym1}: {corr:.0%} > {max_pairwise:.0%})"
+                )
+            else:
+                # Reduce sym1
+                old = result.approved_weights[sym1]
+                result.approved_weights[sym1] = old * 0.5
+                result.adjustments.append(
+                    f"Reduced {sym1} (corr with {sym2}: {corr:.0%} > {max_pairwise:.0%})"
+                )
+        
+        # Check average correlation
+        total_corr = 0
+        count = 0
+        for i, sym1 in enumerate(portfolio_symbols):
+            for sym2 in portfolio_symbols[i+1:]:
+                if sym1 in corr_matrix.columns and sym2 in corr_matrix.columns:
+                    try:
+                        total_corr += abs(corr_matrix.loc[sym1, sym2])
+                        count += 1
+                    except:
+                        pass
+        
+        if count > 0:
+            avg_corr = total_corr / count
+            result.risk_metrics['avg_portfolio_correlation'] = avg_corr
+            
+            if avg_corr > max_avg:
+                result.violations.append(
+                    f"Portfolio avg correlation {avg_corr:.0%} > {max_avg:.0%}"
+                )
+    
     def _update_drawdown(self, current_nav: float) -> None:
         """Update high water mark and drawdown."""
         if current_nav > self.high_water_mark:
@@ -479,6 +621,7 @@ class RiskManager:
         self.entry_prices = {}
         self.high_water_mark = 0.0
         self.current_drawdown = 0.0
+        self.position_peaks = {}  # Reset trailing stop tracking
     
     def get_exposure_summary(self, weights: Dict[str, float]) -> Dict[str, float]:
         """
