@@ -14631,7 +14631,162 @@
       "ticker_sentiments": {
         "FINV": 0.030573
       }
+    },
+    {
+      "id": "-4754852937157978018",
+      "timestamp": "2026-01-30T07:13:27",
+      "headline": "Franklin Resources, Inc. (NYSE:BEN) Given Consensus Recommendation of \"Reduce\" by Brokerages",
+      "summary": "Franklin Resources, Inc. (NYSE:BEN) has received a consensus \"Reduce\" rating from thirteen brokerages, with an average 12-month price target of $24.64, below its recent open of $25.88. The company reported mixed quarterly results, beating EPS expectations but missing revenue estimates, and analysts project $2.16 in EPS for the current fiscal year. Despite a high dividend yield of 5.1%, the dividend payout ratio is elevated at 145.05%, raising sustainability concerns.",
+      "source": "MarketBeat",
+      "url": "https://www.marketbeat.com/instant-alerts/franklin-resources-inc-nyseben-given-consensus-recommendation-of-reduce-by-brokerages-2026-01-30/",
+      "tickers": [
+        "BEN"
+      ],
+      "topics": [
+        "earnings",
+        "financial_markets",
+        "finance",
+        "economy_macro"
+      ],
+      "overall_sentiment": -0.277459,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "BEN",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.252133,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "BEN": -0.252133
+      }
+    },
+    {
+      "id": "149424465944069427",
+      "timestamp": "2026-01-30T07:08:08",
+      "headline": "Texas Pacific Land Charts New Course with Digital Infrastructure Push",
+      "summary": "Texas Pacific Land Corporation (TPL) is pivoting its business strategy to diversify revenue streams by investing in digital infrastructure, specifically large-scale data centers, following a disappointing Q3 2025 performance. The company has partnered with Bolt Data & Energy, committing $50 million to these projects while securing equity, warrant instruments, and water supply rights. This strategic shift and insider confidence, evidenced by Horizon Kinetics Asset Management's recent stock purchases, will be under scrutiny as TPL releases its Q4 and full-year 2025 financial results on February 18, 2026.",
+      "source": "AD HOC NEWS",
+      "url": "https://www.ad-hoc-news.de/boerse/news/ueberblick/texas-pacific-land-charts-new-course-with-digital-infrastructure-push/68533619",
+      "tickers": [
+        "TPL"
+      ],
+      "topics": [
+        "earnings",
+        "technology",
+        "financial_markets",
+        "energy_transportation",
+        "real_estate"
+      ],
+      "overall_sentiment": 0.119764,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "TPL",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.121529,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "TPL": 0.121529
+      }
+    },
+    {
+      "id": "5318109843333375107",
+      "timestamp": "2026-01-30T05:58:15",
+      "headline": "Qorvo\u2013Skyworks Merger Faces High Regulatory Hurdles, Break-Up Fee Risks and Potential Share Price Pressure",
+      "summary": "Qorvo Inc. (QRVO) is facing significant transaction risks related to its proposed merger with Skyworks, due to the need for multiple regulatory, shareholder, and contractual approvals. Failure to obtain these approvals promptly could lead to delays, deal abandonment, substantial break-up fees ranging from $100 million to $298.7 million, and a potential decline in Qorvo's share price as deal premiums dissipate. Regulatory requirements, such as divestitures, could also diminish the expected strategic and financial benefits of the merger.",
+      "source": "TipRanks",
+      "url": "https://www.tipranks.com/news/company-announcements/qorvo-skyworks-merger-faces-high-regulatory-hurdles-break-up-fee-risks-and-potential-share-price-pressure",
+      "tickers": [
+        "QRVO",
+        "SWKS"
+      ],
+      "topics": [
+        "mergers_and_acquisitions",
+        "financial_markets",
+        "technology",
+        "finance"
+      ],
+      "overall_sentiment": -0.393406,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "QRVO",
+          "relevance_score": 1.0,
+          "sentiment_score": -0.430647,
+          "sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "SWKS",
+          "relevance_score": 0.842804,
+          "sentiment_score": -0.348472,
+          "sentiment_label": "Somewhat-Bearish"
+        }
+      ],
+      "ticker_sentiments": {
+        "QRVO": -0.430647,
+        "SWKS": -0.348472
+      }
+    },
+    {
+      "id": "2583409603676392756",
+      "timestamp": "2026-01-30T05:57:31",
+      "headline": "Buying CMG at a Discount? You Are Getting Paid to Do It",
+      "summary": "The article \"Buying CMG at a Discount? You Are Getting Paid to Do It\" from Trefis suggests an investment opportunity related to CMG. It is primarily a title and placeholder content, hinting at a financial analysis or investment thesis focused on Chipotle Mexican Grill. The full article content is not provided, beyond the title and standard website navigation elements.",
+      "source": "Trefis",
+      "url": "https://www.trefis.com/data/companies/CMG/no-login-required/i5cRPptM/Buying-CMG-at-a-Discount-You-Are-Getting-Paid-to-Do-It",
+      "tickers": [
+        "CMG"
+      ],
+      "topics": [
+        "financial_markets",
+        "earnings"
+      ],
+      "overall_sentiment": 0.501413,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "CMG",
+          "relevance_score": 1.0,
+          "sentiment_score": 0.549555,
+          "sentiment_label": "Bullish"
+        }
+      ],
+      "ticker_sentiments": {
+        "CMG": 0.549555
+      }
+    },
+    {
+      "id": "-1524214957666005534",
+      "timestamp": "2026-01-30T07:26:36",
+      "headline": "Duke Energy stands ready to help you manage your electric bill",
+      "summary": "Duke Energy is offering practical steps and flexible options to help customers in Indiana manage higher electric bills due to prolonged cold temperatures. The company provides tips for saving energy, information on smart thermostat rewards and time-of-use rates, and various payment arrangements, including due date extensions and installment plans. Additionally, Duke Energy highlights resources like its Payment Assistance Finder and the Share the Light Fund to help qualifying customers with their energy costs.",
+      "source": "ReadTheReporter.com",
+      "url": "https://readthereporter.com/duke-energy-stands-ready-to-help-you-manage-your-electric-bill/",
+      "tickers": [
+        "DUK"
+      ],
+      "topics": [
+        "energy_transportation",
+        "economy_macro"
+      ],
+      "overall_sentiment": 0.039489,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment_details": [
+        {
+          "ticker": "DUK",
+          "relevance_score": 0.337784,
+          "sentiment_score": 0.044688,
+          "sentiment_label": "Neutral"
+        }
+      ],
+      "ticker_sentiments": {
+        "DUK": 0.044688
+      }
     }
   ],
-  "last_updated": "2026-01-30T11:57:57.793979"
+  "last_updated": "2026-01-30T12:05:40.155748"
 }

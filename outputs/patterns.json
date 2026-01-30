@@ -3771,7 +3771,79 @@
       "outcome_return": 4.5807065642198014e-05,
       "winning_strategies": [],
       "losing_strategies": []
+    },
+    {
+      "timestamp": "2026-01-30T12:04:32.363375",
+      "market_context": {
+        "regime": "neutral",
+        "volatility_regime": "medium",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "OpeningRangeBreakout": 0.65,
+        "TS_Momentum_LS": 0.6,
+        "RelativeStrengthIntraday": 0.6,
+        "VolumeSpike": 0.7,
+        "IntradayMomentum": 0.65,
+        "QuickMeanReversion": 0.5,
+        "MeanReversion_LS": 0.5,
+        "QualityValue_LS": 0.5,
+        "CrossSectionMomentum": 0.65
+      },
+      "outcome_return": -0.0006342100214935487,
+      "winning_strategies": [],
+      "losing_strategies": [
+        "QualityValue_LS"
+      ]
+    },
+    {
+      "timestamp": "2026-01-30T12:06:33.011193",
+      "market_context": {
+        "regime": "neutral",
+        "volatility_regime": "medium",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "TS_Momentum_LS": 0.6,
+        "QuickMeanReversion": 0.5,
+        "OpeningRangeBreakout": 0.65,
+        "IntradayMomentum": 0.65,
+        "RelativeStrengthIntraday": 0.6,
+        "VolumeSpike": 0.7,
+        "MeanReversion_LS": 0.5,
+        "QualityValue_LS": 0.5,
+        "CrossSectionMomentum": 0.65
+      },
+      "outcome_return": -0.0006342100214935487,
+      "winning_strategies": [],
+      "losing_strategies": [
+        "QualityValue_LS"
+      ]
+    },
+    {
+      "timestamp": "2026-01-30T12:09:07.139628",
+      "market_context": {
+        "regime": "neutral",
+        "volatility_regime": "medium",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "RelativeStrengthIntraday": 0.6,
+        "QuickMeanReversion": 0.5,
+        "VolumeSpike": 0.7,
+        "IntradayMomentum": 0.65,
+        "OpeningRangeBreakout": 0.65,
+        "TS_Momentum_LS": 0.6,
+        "CrossSectionMomentum": 0.65,
+        "QualityValue_LS": 0.5,
+        "MeanReversion_LS": 0.5
+      },
+      "outcome_return": -0.0006342100214935487,
+      "winning_strategies": [],
+      "losing_strategies": [
+        "QualityValue_LS"
+      ]
     }
   ],
-  "last_updated": "2026-01-30T11:58:13.186625"
+  "last_updated": "2026-01-30T12:09:07.142317"
 }

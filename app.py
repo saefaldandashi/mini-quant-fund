@@ -411,8 +411,9 @@ def check_daily_pnl_limit(broker, log_func=None) -> Tuple[bool, str]:
         # Reset tracker on new day
         if daily_pnl_tracker["last_reset_date"] != today_str:
             try:
-                account = broker.api.get_account()
-                daily_pnl_tracker["day_start_equity"] = float(account.equity)
+                # Use broker.get_account() which returns a dict
+                account = broker.get_account()
+                daily_pnl_tracker["day_start_equity"] = float(account.get("equity", 0))
                 daily_pnl_tracker["last_reset_date"] = today_str
                 daily_pnl_tracker["trading_halted"] = False
                 daily_pnl_tracker["halt_reason"] = ""
@@ -428,8 +429,9 @@ def check_daily_pnl_limit(broker, log_func=None) -> Tuple[bool, str]:
         
         # Calculate current P&L
         try:
-            account = broker.api.get_account()
-            current_equity = float(account.equity)
+            # Use broker.get_account() which returns a dict
+            account = broker.get_account()
+            current_equity = float(account.get("equity", 0))
             start_equity = daily_pnl_tracker["day_start_equity"]
             
             if start_equity and start_equity > 0:
@@ -2618,11 +2620,8 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         # === LLM TRADE REASONING ===
         # Generate genuine explanation for WHY we're making these trades
-        # Skip in fast mode for speed
-        if fast_mode:
-            log("")
-            log("⚡ Fast mode: Skipping LLM trade reasoning")
-        elif llm_service and llm_service.is_available():
+        # ALWAYS generate reasoning - fundamental data must be visible in decisions
+        if llm_service and llm_service.is_available():
             log("")
             log("=" * 60)
             log("🧠 LLM TRADE REASONING")
