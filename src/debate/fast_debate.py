@@ -176,10 +176,13 @@ def fast_score_strategy(
         elif context.regime == 'high_vol':
             regime_score = 0.05  # Position strategies struggle
     elif strategy_name in LONG_SHORT_STRATEGIES:
+        # L/S strategies can profit in ANY regime - boost significantly
         if context.regime == 'high_vol':
-            regime_score = 0.15  # Can profit both ways
+            regime_score = 0.25  # Can profit both ways - excellent in volatility
+        elif context.regime in ('trending_up', 'trending_down'):
+            regime_score = 0.22  # Market-neutral can capitalize on spreads
         else:
-            regime_score = 0.12
+            regime_score = 0.18  # Still valuable for hedging and alpha
     
     # Historical performance score (0-0.25)
     history_score = historical_accuracy * 0.25
@@ -190,8 +193,12 @@ def fast_score_strategy(
         blend_weight = blend_weights['intraday']
     elif strategy_name in POSITION_STRATEGIES:
         blend_weight = blend_weights['position']
+    elif strategy_name in LONG_SHORT_STRATEGIES:
+        # L/S strategies are CRITICAL for shorts - boost them!
+        # Average of intraday and position, plus a 20% boost to ensure shorts are generated
+        blend_weight = (blend_weights['intraday'] + blend_weights['position']) / 2 + 0.20
     else:
-        blend_weight = 0.5  # L/S strategies get equal weight
+        blend_weight = 0.5  # Unknown strategies get equal weight
     
     # Total score
     raw_score = confidence_score + urgency_score + regime_score + history_score

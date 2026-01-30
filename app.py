@@ -589,24 +589,26 @@ def get_strategy_blend_weights(mode: str, vix_level: float) -> Dict[str, float]:
     Get strategy category weight multipliers based on mode.
     
     Returns multipliers for each strategy category.
+    
+    CRITICAL: L/S strategies are boosted to ensure shorts are generated.
     """
     if mode == "intraday":
         return {
-            "intraday_strategies": 0.70,    # Primary focus
+            "intraday_strategies": 0.55,    # Reduced from 0.70 to make room for L/S
             "position_strategies": 0.15,    # Some position for diversification
-            "ls_strategies": 0.15,          # L/S for market neutral
+            "ls_strategies": 0.30,          # BOOSTED from 0.15 to ensure shorts are generated
         }
     elif mode == "position":
         return {
-            "intraday_strategies": 0.20,    # Some intraday for quick trades
-            "position_strategies": 0.55,    # Primary focus
-            "ls_strategies": 0.25,          # More L/S for hedging
+            "intraday_strategies": 0.15,    # Some intraday for quick trades
+            "position_strategies": 0.50,    # Primary focus
+            "ls_strategies": 0.35,          # BOOSTED from 0.25 for more shorts/hedging
         }
     else:  # hybrid
         return {
-            "intraday_strategies": 0.45,
-            "position_strategies": 0.35,
-            "ls_strategies": 0.20,
+            "intraday_strategies": 0.35,
+            "position_strategies": 0.30,
+            "ls_strategies": 0.35,          # BOOSTED from 0.20 for more shorts
         }
 
 
@@ -1768,6 +1770,35 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             if name in thompson_weights:
                 learned_weights[name] = 0.7 * learned_weights[name] + 0.3 * thompson_weights[name]
         
+        # === PERFORMANCE FILTER: Penalize/disable underperforming strategies ===
+        # If a strategy has enough history and is consistently losing, reduce its weight
+        try:
+            perf_tracker = learning_engine.performance_tracker
+            if perf_tracker:
+                for strat_name, metrics in perf_tracker.metrics.items():
+                    if strat_name not in learned_weights:
+                        continue
+                    
+                    # Only filter strategies with sufficient history (20+ predictions)
+                    if metrics.total_predictions >= 20:
+                        # If accuracy < 45%, reduce weight by 50%
+                        if metrics.accuracy < 0.45:
+                            old_weight = learned_weights[strat_name]
+                            learned_weights[strat_name] *= 0.5
+                            log(f"   ⚠️ Penalized {strat_name}: {metrics.accuracy:.0%} accuracy → weight halved")
+                        
+                        # If accuracy < 40%, reduce weight by 75%
+                        if metrics.accuracy < 0.40:
+                            learned_weights[strat_name] *= 0.5  # Another 50% reduction
+                            log(f"   ❌ Severely penalized {strat_name}: {metrics.accuracy:.0%} accuracy")
+                        
+                        # If accuracy < 35% with 50+ trades, effectively disable
+                        if metrics.accuracy < 0.35 and metrics.total_predictions >= 50:
+                            learned_weights[strat_name] = 0.01  # Minimal weight
+                            log(f"   🚫 Disabled {strat_name}: {metrics.accuracy:.0%} accuracy after {metrics.total_predictions} trades")
+        except Exception as perf_filter_err:
+            logging.debug(f"Performance filter error: {perf_filter_err}")
+        
         # Show learning summary
         learning_summary = learning_engine.get_learning_summary()
         thompson_summary = thompson_sampler.get_summary()
@@ -1909,6 +1940,47 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 if hasattr(features, 'ma_50') and features.ma_50:
                     ma_50_values = features.ma_50
                 
+                # === CRITICAL FIX: Compute RSI/MA directly from price history if missing ===
+                # This is the root cause of shorts not being generated - missing technical data!
+                if len(rsi_values) < 10 or len(ma_50_values) < 10:
+                    log("   ⚠️ Technical data missing from features - computing from price history...")
+                    try:
+                        for symbol, hist in feature_store._price_history.items():
+                            if isinstance(hist, pd.DataFrame) and 'close' in hist.columns:
+                                prices = hist['close'].dropna()
+                            elif isinstance(hist, pd.Series):
+                                prices = hist.dropna()
+                            else:
+                                continue
+                            
+                            # Compute RSI if missing
+                            if symbol not in rsi_values and len(prices) >= 15:
+                                delta = prices.diff()
+                                gains = delta.copy()
+                                losses = delta.copy()
+                                gains[gains < 0] = 0
+                                losses[losses > 0] = 0
+                                losses = abs(losses)
+                                avg_gain = gains.ewm(span=14, adjust=False).mean()
+                                avg_loss = losses.ewm(span=14, adjust=False).mean()
+                                avg_loss = avg_loss.replace(0, 0.001)
+                                rs = avg_gain / avg_loss
+                                rsi = 100 - (100 / (1 + rs))
+                                if not rsi.empty:
+                                    rsi_values[symbol] = rsi.iloc[-1]
+                            
+                            # Compute MA50 if missing
+                            if symbol not in ma_50_values and len(prices) >= 50:
+                                ma_50_values[symbol] = prices.tail(50).mean()
+                            
+                            # Compute MA200 if missing
+                            if symbol not in ma_200_values and len(prices) >= 200:
+                                ma_200_values[symbol] = prices.tail(200).mean()
+                        
+                        log(f"   ✅ Computed: RSI={len(rsi_values)}, MA50={len(ma_50_values)}, MA200={len(ma_200_values)}")
+                    except Exception as compute_err:
+                        log(f"   ⚠️ Could not compute technicals: {compute_err}")
+                
                 log(f"   Short scanner data: RSI={len(rsi_values)}, MA200={len(ma_200_values)}, MA50={len(ma_50_values)}")
                 
                 # Get current prices
@@ -1971,6 +2043,35 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                             # For any non-short signals, use existing logic
                             if sym not in combined_weights or abs(combined_weights.get(sym, 0)) < abs(wt):
                                 combined_weights[sym] = wt
+                else:
+                    # === FALLBACK: Generate shorts from overbought RSI when scanner finds nothing ===
+                    # This ensures we ALWAYS consider shorts when market conditions warrant
+                    log("   📉 No scanner shorts - checking RSI fallback...")
+                    fallback_shorts = {}
+                    for symbol, rsi_val in rsi_values.items():
+                        if rsi_val and rsi_val > 68:  # Overbought threshold
+                            # Calculate short weight based on how overbought
+                            if rsi_val >= 80:
+                                weight = -0.04  # 4% short (very overbought)
+                            elif rsi_val >= 75:
+                                weight = -0.03  # 3% short
+                            elif rsi_val >= 70:
+                                weight = -0.02  # 2% short
+                            else:
+                                weight = -0.015  # 1.5% short
+                            
+                            fallback_shorts[symbol] = weight
+                    
+                    if fallback_shorts:
+                        log(f"   🎯 RSI Fallback: Found {len(fallback_shorts)} overbought stocks for shorts")
+                        # Apply top 5 overbought shorts
+                        sorted_overbought = sorted(fallback_shorts.items(), key=lambda x: rsi_values.get(x[0], 0), reverse=True)[:5]
+                        for sym, wt in sorted_overbought:
+                            existing = combined_weights.get(sym, 0)
+                            log(f"      {sym}: RSI={rsi_values.get(sym, 0):.1f}, weight={wt*100:.1f}%")
+                            if existing > 0:
+                                log(f"         ⚠️ OVERRIDING long with RSI-based short")
+                            combined_weights[sym] = wt
                 
             except Exception as e:
                 log(f"⚠️ Short scanner error: {e}")
