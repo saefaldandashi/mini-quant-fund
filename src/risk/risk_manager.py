@@ -15,28 +15,28 @@ logger = logging.getLogger(__name__)
 @dataclass
 class RiskConstraints:
     """Risk constraint configuration."""
-    max_position_size: float = 0.15
-    max_sector_exposure: float = 0.30
+    max_position_size: float = 0.05  # REDUCED from 15% to 5% - prevents huge losses
+    max_sector_exposure: float = 0.25  # REDUCED from 30% to 25%
     max_leverage: float = 1.0
     max_turnover: float = 0.50
-    max_drawdown_trigger: float = 0.15
+    max_drawdown_trigger: float = 0.10  # REDUCED from 15% to 10% - tighter control
     vol_target: float = 0.12
-    vol_ceiling: float = 0.20
+    vol_ceiling: float = 0.18  # REDUCED from 20% to 18%
     
-    # Stop-loss / take-profit
-    enable_stop_loss: bool = False
-    stop_loss_pct: float = 0.05
-    enable_take_profit: bool = False
-    take_profit_pct: float = 0.20
+    # Stop-loss / take-profit - NOW ENABLED BY DEFAULT
+    enable_stop_loss: bool = True  # CRITICAL FIX: Enable stop-loss!
+    stop_loss_pct: float = 0.02    # 2% stop-loss (was 5%)
+    enable_take_profit: bool = True  # CRITICAL FIX: Enable take-profit!
+    take_profit_pct: float = 0.04  # 4% take-profit (was 20%) - locks in gains
     
     # === LONG/SHORT CONSTRAINTS ===
     enable_shorting: bool = True
-    max_gross_exposure: float = 2.0  # 200% gross (100% long + 100% short max)
-    net_exposure_min: float = -0.3   # Can be 30% net short
+    max_gross_exposure: float = 1.5  # REDUCED from 200% to 150% gross
+    net_exposure_min: float = -0.2   # REDUCED from -30% to -20% net short
     net_exposure_max: float = 1.0    # Can be 100% net long
-    max_short_position: float = 0.10  # 10% max per short
-    max_long_position: float = 0.15   # 15% max per long
-    max_total_short: float = 1.0     # 100% max total short exposure
+    max_short_position: float = 0.05  # REDUCED from 10% to 5% max per short
+    max_long_position: float = 0.05   # REDUCED from 15% to 5% max per long
+    max_total_short: float = 0.30     # REDUCED from 100% to 30% max total short
     
     # === MARGIN CONSTRAINTS (Futures) ===
     min_free_cash_pct: float = 0.10   # Keep 10% cash buffer

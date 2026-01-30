@@ -162,6 +162,31 @@ except ImportError as e:
 # Placeholder for backward compatibility (unused but may be referenced)
 data_writer = None
 
+# ============================================================================
+# SYMBOL COOLDOWN SYSTEM - Prevents over-trading the same symbols
+# ============================================================================
+from collections import defaultdict
+from datetime import datetime, timedelta
+
+symbol_last_trade = defaultdict(lambda: datetime.min)  # Track last trade time per symbol
+SYMBOL_COOLDOWN_MINUTES = 60  # Minimum 60 minutes between trades on same symbol
+
+def can_trade_symbol(symbol: str) -> bool:
+    """Check if symbol is past its cooldown period."""
+    last_trade = symbol_last_trade[symbol]
+    cooldown_end = last_trade + timedelta(minutes=SYMBOL_COOLDOWN_MINUTES)
+    return datetime.now() > cooldown_end
+
+def record_symbol_trade(symbol: str):
+    """Record that we traded a symbol (for cooldown tracking)."""
+    symbol_last_trade[symbol] = datetime.now()
+
+def get_symbols_on_cooldown() -> list:
+    """Get list of symbols currently on cooldown."""
+    now = datetime.now()
+    cooldown_end = now - timedelta(minutes=SYMBOL_COOLDOWN_MINUTES)
+    return [sym for sym, last in symbol_last_trade.items() if last > cooldown_end]
+
 # Initialize learning engine (persists across requests)
 STRATEGY_NAMES = [
     "TimeSeriesMomentum", "CrossSectionMomentum", "MeanReversion",
@@ -2443,10 +2468,23 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         # Calculate target shares - include BOTH longs AND shorts
         # Use 0.1% (0.001) threshold to allow more positions through
         # The investment floor in enhance_position_sizes will scale them up properly
-        MIN_WEIGHT_THRESHOLD = 0.001  # 0.1% minimum weight to consider
+        MIN_WEIGHT_THRESHOLD = 0.01  # 1% minimum weight to consider (was 0.1%)
         target_symbols = [s for s, w in final_weights.items() if abs(w) > MIN_WEIGHT_THRESHOLD]
-        long_count = len([s for s, w in final_weights.items() if w > MIN_WEIGHT_THRESHOLD])
-        short_count = len([s for s, w in final_weights.items() if w < -MIN_WEIGHT_THRESHOLD])
+        
+        # Apply symbol cooldown filter - prevent over-trading same symbols
+        cooldown_symbols = get_symbols_on_cooldown()
+        if cooldown_symbols:
+            # Only apply cooldown to NEW positions (not existing ones we're adjusting)
+            current_position_symbols = set(current_positions.keys()) if current_positions else set()
+            blocked_symbols = [s for s in target_symbols if s in cooldown_symbols and s not in current_position_symbols]
+            if blocked_symbols:
+                log(f"⏳ Cooldown: {len(blocked_symbols)} symbols blocked (recently traded)")
+                for sym in blocked_symbols[:5]:
+                    log(f"    {sym}: on cooldown")
+                target_symbols = [s for s in target_symbols if s not in blocked_symbols]
+        
+        long_count = len([s for s, w in final_weights.items() if w > MIN_WEIGHT_THRESHOLD and s in target_symbols])
+        short_count = len([s for s, w in final_weights.items() if w < -MIN_WEIGHT_THRESHOLD and s in target_symbols])
         log(f"Target portfolio: {len(target_symbols)} positions ({long_count} longs, {short_count} shorts)")
         
         # Log top longs
@@ -3023,6 +3061,9 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
                 if result.success:
                     orders_executed += 1
                     fill_price = result.fill_price or 0
+                    
+                    # Record symbol cooldown to prevent over-trading
+                    record_symbol_trade(result.symbol)
                     
                     # Record actual vs estimated cost for learning
                     if result.symbol in order_cost_map and order_cost_map[result.symbol]:
