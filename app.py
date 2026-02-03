@@ -42,6 +42,8 @@ from src.data.sentiment import SentimentAnalyzer
 from src.data.feature_store import FeatureStore
 from src.data.macro_data import MacroDataLoader, MacroIndicators, get_macro_loader
 from src.data.regime import RegimeClassifier
+from src.data.fundamentals import get_fundamentals_loader, FundamentalsLoader
+from src.data.social_sentiment import get_social_sentiment_loader, SocialSentimentLoader
 from src.strategies import (
     TimeSeriesMomentumStrategy,
     CrossSectionMomentumStrategy,
@@ -750,6 +752,14 @@ def create_strategies(enable_long_short=False, enable_futures=False, trading_mod
         futures_strategies = create_futures_strategies()
         strategies.extend(futures_strategies)
         logging.info(f"Added {len(futures_strategies)} Futures strategies (backtest proxies)")
+    
+    # Add Alpha Enhancement strategies (pairs trading, sector rotation, calendar effects, order flow)
+    enable_alpha = config.get('enable_alpha', True) if config else True
+    if enable_alpha:
+        from src.strategies import create_alpha_strategies
+        alpha_strategies = create_alpha_strategies()
+        strategies.extend(alpha_strategies)
+        logging.info(f"Added {len(alpha_strategies)} Alpha Enhancement strategies (Pairs, Sector, Calendar, OrderFlow)")
     
     return strategies
 

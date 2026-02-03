@@ -39,6 +39,12 @@ from .intraday import (
     create_intraday_strategies,
 )
 
+# NEW: Alpha Enhancement Strategies
+from .pairs import PairsTradingStrategy
+from .sector_rotation import SectorRotationStrategy
+from .calendar_effects import CalendarEffectsStrategy
+from .order_flow import OrderFlowStrategy
+
 __all__ = [
     # Base
     'Strategy',
@@ -79,15 +85,38 @@ __all__ = [
     'IntradaySignalOutput',
     'create_intraday_strategies',
     
-    # Helper function
+    # Alpha Enhancement strategies
+    'PairsTradingStrategy',
+    'SectorRotationStrategy',
+    'CalendarEffectsStrategy',
+    'OrderFlowStrategy',
+    
+    # Helper functions
     'get_all_strategies',
+    'create_alpha_strategies',
 ]
+
+
+def create_alpha_strategies(config: dict = None) -> list:
+    """
+    Create all alpha enhancement strategies.
+    
+    Returns:
+        List of alpha strategy instances
+    """
+    return [
+        PairsTradingStrategy(config),
+        SectorRotationStrategy(config),
+        CalendarEffectsStrategy(config),
+        OrderFlowStrategy(config),
+    ]
 
 
 def get_all_strategies(
     enable_intraday: bool = True,
     enable_long_short: bool = True,
     enable_futures: bool = True,
+    enable_alpha: bool = True,
 ):
     """
     Get all available trading strategies.
@@ -96,6 +125,7 @@ def get_all_strategies(
         enable_intraday: Include intraday/short-term strategies
         enable_long_short: Include long/short strategies
         enable_futures: Include futures strategies
+        enable_alpha: Include alpha enhancement strategies (pairs, sector, calendar, orderflow)
         
     Returns:
         List of strategy instances
@@ -113,5 +143,9 @@ def get_all_strategies(
     # Futures strategies (backtest only)
     if enable_futures:
         strategies.extend(create_futures_strategies())
+    
+    # Alpha enhancement strategies
+    if enable_alpha:
+        strategies.extend(create_alpha_strategies())
     
     return strategies
