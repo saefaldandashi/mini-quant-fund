@@ -1600,9 +1600,8 @@
                 ↻ Refresh Data
             </button>
             
-            <div class="checkbox-row">
-                <input type="checkbox" id="dry-run" checked>
-                <label for="dry-run">🧪 Dry Run (simulation)</label>
+            <div class="checkbox-row" style="background: rgba(239, 68, 68, 0.1); padding: 8px; border-radius: 4px; margin: 8px 0;">
+                <span style="color: var(--danger); font-weight: bold;">🔴 LIVE TRADING MODE</span>
             </div>
             
             <div class="checkbox-row">
@@ -2273,6 +2272,23 @@
                     <button class="action-btn secondary" onclick="listReports()" style="width: 100%; padding: 8px; font-size: 0.8em;">
                         📋 View All Reports
                     </button>
+                    
+                    <!-- Earnings Monitor Section -->
+                    <div style="border-top: 1px solid var(--border); padding-top: 10px; margin-top: 10px;">
+                        <div style="font-size: 0.7em; color: var(--text-dim); margin-bottom: 8px;">🎯 Earnings Season Auto-Monitor:</div>
+                        <div id="earnings-monitor-status" style="font-size: 0.75em; color: var(--text-dim); margin-bottom: 8px;">
+                            Status: <span id="em-status">Not Running</span>
+                        </div>
+                        <button id="earnings-monitor-btn" class="action-btn" onclick="toggleEarningsMonitor()" style="width: 100%; margin-bottom: 8px; padding: 8px; font-size: 0.8em; background: linear-gradient(135deg, #0d4f3d, #10b981);">
+                            🚀 Start Earnings Monitor
+                        </button>
+                        <button class="action-btn secondary" onclick="checkEarningsSignals()" style="width: 100%; padding: 6px; font-size: 0.75em;">
+                            📊 Check Earnings Signals
+                        </button>
+                        <div id="earnings-signals-display" style="margin-top: 8px; font-size: 0.7em; max-height: 100px; overflow-y: auto;">
+                        </div>
+                    </div
+                    </button>
                 </div>
                 <div id="report-status" style="margin-top: 10px; font-size: 0.7em; color: var(--text-dim);">
                     <!-- Report generation status -->
@@ -2333,9 +2349,8 @@
             <button class="action-btn secondary" onclick="refreshData(); closeMobilePanel();">
                 ↻ Refresh Data
             </button>
-            <div class="checkbox-row" style="padding: 10px 0;">
-                <input type="checkbox" id="mobile-dry-run" checked onchange="document.getElementById('dry-run').checked = this.checked">
-                <label for="mobile-dry-run">🧪 Dry Run (simulation)</label>
+            <div class="checkbox-row" style="padding: 10px 0; background: rgba(239, 68, 68, 0.1); border-radius: 4px;">
+                <span style="color: var(--danger); font-weight: bold;">🔴 LIVE TRADING MODE</span>
             </div>
             <div class="checkbox-row" style="padding: 10px 0;">
                 <span style="color: var(--accent-green); font-size: 0.85em;">🧠 Smart Mode Always On</span>
@@ -2529,6 +2544,7 @@
             loadDataSources();
             loadLeverageStatus();  // Load leverage status on startup
             loadLeverageConfig();  // Load and sync leverage settings/mode
+            updateEarningsMonitorStatus();  // Load earnings monitor status
             
             // Refresh macro data on page load to get latest values
             try {
@@ -2547,32 +2563,28 @@
                     loadGeoIntel(); // Keep geopolitical intel updated
                     loadMarketData(); // Keep market data updated
                     loadLeverageStatus();  // Keep leverage/margin updated
+                    updateEarningsMonitorStatus();  // Keep earnings monitor updated
                 }
                 checkStatus();
             }, 5000);
         });
         
-        // Run Rebalance
+        // Run Rebalance - ALWAYS LIVE TRADING (no dry run mode)
         async function runRebalance(skipConfirmation = false) {
             console.log('runRebalance called with skipConfirmation =', skipConfirmation);
             
             const btn = document.getElementById('run-btn');
-            const dryRun = document.getElementById('dry-run').checked;
             const force = document.getElementById('force-rebalance').checked;
             const cancel = document.getElementById('cancel-previous').checked;
             const exposure = getExposurePercent();
             const riskAppetite = document.getElementById('risk-appetite').value;
-            const fastMode = document.getElementById('fast-mode')?.checked ?? true;
             
-            // Confirm ONLY if: (1) NOT dry run AND (2) NOT auto-mode (skipConfirmation=false)
-            // When skipConfirmation is TRUE (auto-mode), NEVER show confirmation
-            if (!dryRun && skipConfirmation !== true) {
-                console.log('Showing confirmation dialog because dryRun=false and skipConfirmation=', skipConfirmation);
-                if (!confirm('⚠️ LIVE TRADING MODE!\n\nThis will place REAL orders with REAL money.\n\nAre you sure you want to continue?')) {
+            // Confirm LIVE trading unless auto-mode
+            if (skipConfirmation !== true) {
+                console.log('Showing confirmation dialog for LIVE trading');
+                if (!confirm('🔴 LIVE TRADING MODE\n\nThis will place REAL orders on your Alpaca paper account.\n\nAre you sure you want to continue?')) {
                     return;
                 }
-            } else {
-                console.log('Skipping confirmation: dryRun=', dryRun, 'skipConfirmation=', skipConfirmation);
             }
             
             btn.disabled = true;
@@ -2586,14 +2598,14 @@
                     return;
                 }
                 const elapsed = Math.floor((Date.now() - rebalanceStartTime) / 1000);
-                updateStatus('running', dryRun ? `🔄 Running... (${elapsed}s)` : `🔴 LIVE (${elapsed}s)`);
+                updateStatus('running', `🔴 LIVE (${elapsed}s)`);
             }, 1000);
             
-            updateStatus('running', dryRun ? '🔄 Starting...' : '🔴 LIVE Starting...');
-            document.getElementById('execution-log').textContent = `🚀 Starting smart rebalance...\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📊 Exposure: ${exposure}%\n🎯 Risk: ${riskAppetite}\n📋 Mode: ${dryRun ? 'DRY RUN (simulation)' : '🔴 LIVE TRADING'}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            updateStatus('running', '🔴 LIVE Starting...');
+            document.getElementById('execution-log').textContent = `🚀 Starting smart rebalance...\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📊 Exposure: ${exposure}%\n🎯 Risk: ${riskAppetite}\n📋 Mode: 🔴 LIVE TRADING\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
             
             try {
-                const response = await fetch(`/api/run?force=${force}&cancel_previous=${cancel}&exposure=${exposure}&dry_run=${dryRun}&risk_appetite=${riskAppetite}&fast_mode=${fastMode}`, {
+                const response = await fetch(`/api/run?force=${force}&cancel_previous=${cancel}&exposure=${exposure}&risk_appetite=${riskAppetite}`, {
                     method: 'POST'
                 });
                 
@@ -3107,6 +3119,121 @@
             }
         }
         
+        // Earnings Monitor Functions
+        let earningsMonitorRunning = false;
+        
+        async function toggleEarningsMonitor() {
+            const btn = document.getElementById('earnings-monitor-btn');
+            const statusEl = document.getElementById('em-status');
+            
+            try {
+                if (earningsMonitorRunning) {
+                    // Stop the monitor
+                    const res = await fetch('/api/earnings-monitor/stop', { method: 'POST' });
+                    const data = await res.json();
+                    
+                    earningsMonitorRunning = false;
+                    btn.textContent = '🚀 Start Earnings Monitor';
+                    btn.style.background = 'linear-gradient(135deg, #0d4f3d, #10b981)';
+                    statusEl.textContent = 'Stopped';
+                    statusEl.style.color = 'var(--text-dim)';
+                } else {
+                    // Start the monitor
+                    btn.textContent = '⏳ Starting...';
+                    const res = await fetch('/api/earnings-monitor/start', { method: 'POST' });
+                    const data = await res.json();
+                    
+                    if (data.success) {
+                        earningsMonitorRunning = true;
+                        btn.textContent = '🛑 Stop Earnings Monitor';
+                        btn.style.background = 'linear-gradient(135deg, #7f1d1d, #ef4444)';
+                        statusEl.textContent = '🟢 ACTIVE - Auto-triggers on earnings news';
+                        statusEl.style.color = 'var(--success)';
+                    } else {
+                        btn.textContent = '🚀 Start Earnings Monitor';
+                        statusEl.textContent = 'Failed to start';
+                        statusEl.style.color = 'var(--danger)';
+                    }
+                }
+            } catch (e) {
+                console.error('Earnings monitor toggle error:', e);
+                btn.textContent = '🚀 Start Earnings Monitor';
+                statusEl.textContent = 'Error: ' + e.message;
+                statusEl.style.color = 'var(--danger)';
+            }
+        }
+        
+        async function checkEarningsSignals() {
+            const displayEl = document.getElementById('earnings-signals-display');
+            displayEl.innerHTML = '<span style="color: var(--accent);">🔄 Scanning...</span>';
+            
+            try {
+                const res = await fetch('/api/earnings-reactor/scan', { method: 'POST' });
+                const data = await res.json();
+                
+                if (data.success) {
+                    const signals = data.trading_signals || {};
+                    const shorts = Object.entries(signals).filter(([_, v]) => v.includes('-'));
+                    const longs = Object.entries(signals).filter(([_, v]) => !v.includes('-'));
+                    
+                    let html = '';
+                    
+                    if (shorts.length > 0) {
+                        html += '<div style="color: var(--danger); margin-bottom: 4px;"><strong>📉 SHORTS:</strong></div>';
+                        shorts.forEach(([sym, wt]) => {
+                            html += `<div style="padding-left: 10px;">${sym}: ${wt}</div>`;
+                        });
+                    }
+                    
+                    if (longs.length > 0) {
+                        html += '<div style="color: var(--success); margin-top: 4px;"><strong>📈 LONGS:</strong></div>';
+                        longs.slice(0, 5).forEach(([sym, wt]) => {
+                            html += `<div style="padding-left: 10px;">${sym}: ${wt}</div>`;
+                        });
+                        if (longs.length > 5) {
+                            html += `<div style="padding-left: 10px; color: var(--text-dim);">+${longs.length - 5} more...</div>`;
+                        }
+                    }
+                    
+                    if (!shorts.length && !longs.length) {
+                        html = '<span style="color: var(--text-dim);">No actionable earnings signals detected</span>';
+                    }
+                    
+                    displayEl.innerHTML = html;
+                } else {
+                    displayEl.innerHTML = `<span style="color: var(--danger);">Error: ${data.error}</span>`;
+                }
+            } catch (e) {
+                displayEl.innerHTML = `<span style="color: var(--danger);">Error: ${e.message}</span>`;
+            }
+        }
+        
+        async function updateEarningsMonitorStatus() {
+            try {
+                const res = await fetch('/api/earnings-monitor/status');
+                const data = await res.json();
+                
+                const statusEl = document.getElementById('em-status');
+                const btn = document.getElementById('earnings-monitor-btn');
+                
+                if (data.running) {
+                    earningsMonitorRunning = true;
+                    statusEl.textContent = `🟢 ACTIVE (${data.scans_performed} scans, ${data.auto_triggers} triggers)`;
+                    statusEl.style.color = 'var(--success)';
+                    btn.textContent = '🛑 Stop Earnings Monitor';
+                    btn.style.background = 'linear-gradient(135deg, #7f1d1d, #ef4444)';
+                } else {
+                    earningsMonitorRunning = false;
+                    statusEl.textContent = 'Not Running';
+                    statusEl.style.color = 'var(--text-dim)';
+                    btn.textContent = '🚀 Start Earnings Monitor';
+                    btn.style.background = 'linear-gradient(135deg, #0d4f3d, #10b981)';
+                }
+            } catch (e) {
+                console.error('Earnings monitor status error:', e);
+            }
+        }
+        
         // View latest digest
         async function viewLatestDigest() {
             try {
@@ -3386,25 +3513,25 @@
         }
         
         // Toggle Auto - CALLS SERVER API for true background automation
+        // ALWAYS LIVE TRADING - no dry run mode
         async function toggleAuto() {
             console.log('=== toggleAuto() called ===');
             const btn = document.getElementById('auto-btn');
             const interval = parseInt(document.getElementById('auto-interval').value) || 60;
-            const dryRun = document.getElementById('dry-run').checked;
             const exposure = getExposurePercent() / 100;
             
             // Toggle state
             const newState = !autoEnabled;
             console.log('Toggling auto-rebalance:', autoEnabled, '->', newState);
-            console.log('Settings: interval=', interval, 'dryRun=', dryRun, 'exposure=', exposure);
+            console.log('Settings: interval=', interval, 'exposure=', exposure, 'mode=LIVE');
             
             try {
                 // CRITICAL: Call server API to enable server-side auto-rebalance
                 // This runs on the server even when browser is closed!
+                // ALWAYS LIVE TRADING - no dry run option
                 const requestBody = {
                     enabled: newState,
                     interval_minutes: interval,
-                    dry_run: dryRun,
                     allow_after_hours: true,
                     exposure_pct: exposure
                 };
@@ -4405,9 +4532,8 @@
                     showToast('info', 'Refreshing', 'Updating all data...');
                     break;
                 case 'd':
-                    const dryRun = document.getElementById('dry-run');
-                    dryRun.checked = !dryRun.checked;
-                    showToast('info', 'Dry Run', dryRun.checked ? 'Enabled (simulation)' : 'Disabled (real trades)');
+                    // Dry run removed - always live trading
+                    showToast('info', 'Live Trading', '🔴 System always runs in LIVE mode');
                     break;
                 case 'c':
                     cancelOrders();

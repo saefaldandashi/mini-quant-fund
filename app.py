@@ -488,21 +488,52 @@ background_refresh_enabled = True
 background_refresh_interval = 15  # minutes
 last_background_refresh = None
 
-# Auto-rebalance settings
-auto_rebalance_settings = {
-    "enabled": False,
-    "interval_minutes": 60,
-    "dry_run": True,
-    "allow_after_hours": True,
-    "exposure_pct": 0.8,  # 80% default
-    "last_run": None,
-    "next_run": None,
-}
+# Auto-rebalance settings - PERSISTENT across restarts
+AUTO_REBALANCE_SETTINGS_FILE = os.path.join(os.path.dirname(__file__), 'outputs', 'auto_rebalance_settings.json')
+
+def _load_auto_rebalance_settings() -> dict:
+    """Load auto-rebalance settings from disk."""
+    default = {
+        "enabled": False,
+        "interval_minutes": 60,
+        "allow_after_hours": True,
+        "exposure_pct": 0.8,
+        "last_run": None,
+        "next_run": None,
+        "auto_start_on_boot": True,  # Auto-start when server launches
+    }
+    try:
+        if os.path.exists(AUTO_REBALANCE_SETTINGS_FILE):
+            with open(AUTO_REBALANCE_SETTINGS_FILE, 'r') as f:
+                saved = json.load(f)
+                # Remove any legacy dry_run setting
+                saved.pop('dry_run', None)
+                # Merge with defaults (in case new keys added)
+                default.update(saved)
+                logging.info(f"📂 Loaded auto-rebalance settings: enabled={default['enabled']}")
+    except Exception as e:
+        logging.warning(f"Could not load auto-rebalance settings: {e}")
+    return default
+
+def _save_auto_rebalance_settings():
+    """Save auto-rebalance settings to disk for persistence."""
+    try:
+        os.makedirs(os.path.dirname(AUTO_REBALANCE_SETTINGS_FILE), exist_ok=True)
+        with open(AUTO_REBALANCE_SETTINGS_FILE, 'w') as f:
+            # Don't save transient fields
+            save_data = {k: v for k, v in auto_rebalance_settings.items() if k not in ['last_run', 'next_run']}
+            json.dump(save_data, f, indent=2)
+        logging.info("💾 Auto-rebalance settings saved to disk")
+    except Exception as e:
+        logging.error(f"Could not save auto-rebalance settings: {e}")
+
+auto_rebalance_settings = _load_auto_rebalance_settings()
 
 # Background scheduler thread
 scheduler_thread = None
 scheduler_stop_event = threading.Event()
 _scheduler_started = False  # Flag to prevent double-start
+_scheduler_last_heartbeat = None  # For health monitoring
 
 # Cached VIX value for fallback
 _cached_vix = {'value': 18.0, 'timestamp': None}
@@ -563,6 +594,89 @@ def start_auto_rebalance_scheduler():
     _scheduler_started = True
     logging.info("🔄 Auto-rebalance scheduler STARTED (background thread)")
     return True
+
+
+# ===============================================================================
+# SELF-HEALING MONITOR - Auto-restarts critical threads if they die
+# ===============================================================================
+_self_healing_thread = None
+_self_healing_enabled = True
+
+def self_healing_monitor():
+    """
+    Background thread that monitors critical components and restarts them if they die.
+    This ensures the bot keeps trading even if individual threads crash.
+    """
+    logging.info("🏥 Self-healing monitor STARTED")
+    
+    check_interval = 60  # Check every 60 seconds
+    last_status_log = datetime.now()
+    status_log_interval = timedelta(minutes=30)  # Log status every 30 min
+    
+    restarts = {
+        'scheduler': 0,
+        'earnings_monitor': 0,
+    }
+    
+    while _self_healing_enabled:
+        try:
+            time.sleep(check_interval)
+            now = datetime.now()
+            
+            # === CHECK SCHEDULER THREAD ===
+            if not scheduler_thread or not scheduler_thread.is_alive():
+                logging.error("🚨 SCHEDULER THREAD DIED - Restarting...")
+                try:
+                    start_auto_rebalance_scheduler()
+                    restarts['scheduler'] += 1
+                    logging.info("✅ Scheduler restarted successfully")
+                except Exception as e:
+                    logging.error(f"Failed to restart scheduler: {e}")
+            
+            # === CHECK EARNINGS MONITOR (if enabled) ===
+            try:
+                from src.strategies.earnings_monitor import get_earnings_monitor
+                monitor = get_earnings_monitor()
+                if monitor._running and (not monitor._thread or not monitor._thread.is_alive()):
+                    logging.error("🚨 EARNINGS MONITOR THREAD DIED - Restarting...")
+                    monitor._running = False  # Reset state
+                    monitor.start()
+                    restarts['earnings_monitor'] += 1
+                    logging.info("✅ Earnings monitor restarted successfully")
+            except Exception:
+                pass  # Earnings monitor may not be enabled
+            
+            # === PERIODIC STATUS LOG ===
+            if now - last_status_log > status_log_interval:
+                last_status_log = now
+                logging.info(f"🏥 Self-healing status: scheduler_restarts={restarts['scheduler']}, earnings_monitor_restarts={restarts['earnings_monitor']}")
+                
+                # Log auto-rebalance status
+                if auto_rebalance_settings.get("enabled"):
+                    next_run = auto_rebalance_settings.get("next_run")
+                    if next_run:
+                        logging.info(f"   Next auto-rebalance: {next_run}")
+            
+        except Exception as e:
+            logging.error(f"Self-healing monitor error: {e}")
+            time.sleep(30)
+    
+    logging.info("🏥 Self-healing monitor STOPPED")
+
+
+def start_self_healing_monitor():
+    """Start the self-healing monitor thread."""
+    global _self_healing_thread
+    
+    if _self_healing_thread and _self_healing_thread.is_alive():
+        return False  # Already running
+    
+    from threading import Thread
+    _self_healing_thread = Thread(target=self_healing_monitor, daemon=True)
+    _self_healing_thread.start()
+    logging.info("🏥 Self-healing monitor STARTED")
+    return True
+
 
 # NOTE: Scheduler is started AFTER auto_rebalance_scheduler function is defined (at end of file)
 
@@ -761,15 +875,15 @@ def stop_risk_monitor():
     return False
 
 
-def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_rebalance=True, cancel_orders=True):
+def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, cancel_orders=True):
     """
     Run the multi-strategy debate bot and execute rebalancing.
     
     Uses SMART MODE: Parallel LLM for speed + full intelligence.
     Always generates LLM trade reasoning with fundamental data citations.
+    Always executes LIVE trades - no dry run mode.
     
     Args:
-        dry_run: If True, simulate trades without executing
         allow_after_hours: If True, allow execution outside market hours
         force_rebalance: If True, bypass daily limit check
         cancel_orders: If True, cancel existing open orders first
@@ -794,12 +908,11 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
     try:
         log("=" * 60)
         log("🧠 SMART REBALANCE INITIATED")
-        log(f"Mode: {'DRY RUN' if dry_run else '🔴 LIVE TRADING'}")
+        log("🔴 LIVE TRADING MODE (Paper Account)")
         log("=" * 60)
         log("")
         log("📡 Connecting to Alpaca...")
         log("=" * 60)
-        log(f"Mode: {'DRY RUN' if dry_run else 'LIVE PAPER TRADING'}")
         log(f"After Hours: {'Allowed' if allow_after_hours else 'Not Allowed'}")
         log(f"Cancel Previous Orders: {'Yes' if cancel_orders else 'No'}")
         log(f"Mode: 🧠 SMART (Parallel LLM + Full Intelligence)")
@@ -845,6 +958,45 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         else:
             log("Market is OPEN")
         
+        # === NEWS FRESHNESS CHECK ===
+        # Alert if news data is stale (could miss earnings events like MSFT -10%)
+        log("")
+        log("📰 NEWS FRESHNESS CHECK:")
+        try:
+            av_status = alpha_vantage_news.get_rate_limit_status()
+            hours_stale = av_status.get('hours_since_fresh_news', 0)
+            
+            if hours_stale > 24:
+                log(f"⚠️ WARNING: Alpha Vantage news is {hours_stale:.0f} hours old!")
+                log("   → May miss earnings announcements")
+                log("   → Run /api/alpha-vantage/force-refresh to update")
+            elif hours_stale > 12:
+                log(f"⚠️ Alpha Vantage news is {hours_stale:.0f} hours old - consider refreshing")
+            else:
+                log(f"✅ Alpha Vantage news is fresh ({hours_stale:.1f} hours old)")
+            
+            # Check geo intel freshness
+            geo_events = geopolitical_intel.get_filtered_events(auto_refresh_if_empty=False)
+            if geo_events:
+                from datetime import timezone
+                newest_geo = max((e.timestamp for e in geo_events if hasattr(e, 'timestamp')), default=None)
+                if newest_geo:
+                    if newest_geo.tzinfo is None:
+                        newest_geo = newest_geo.replace(tzinfo=timezone.utc)
+                    geo_age = (datetime.now(timezone.utc) - newest_geo).total_seconds() / 3600
+                    if geo_age > 24:
+                        log(f"⚠️ Geo intel is {geo_age:.0f} hours old - refreshing now...")
+                        new_events = geopolitical_intel.update_events(hours_back=24)
+                        log(f"   Refreshed: {new_events} new events")
+                    else:
+                        log(f"✅ Geo intel is fresh ({geo_age:.1f} hours old, {len(geo_events)} events)")
+            else:
+                log("⚠️ No geo intel events - refreshing...")
+                geopolitical_intel.update_events(hours_back=24)
+        except Exception as e:
+            log(f"⚠️ Could not check news freshness: {e}")
+        log("")
+        
         # === CRITICAL: Check Daily P&L Limit ===
         # This prevents catastrophic losses by stopping trading when daily loss exceeds threshold
         can_trade, pnl_reason = check_daily_pnl_limit(broker, log)
@@ -858,6 +1010,115 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             log("  1. Wait until tomorrow (tracker resets at market open)")
             log("  2. Manually reset: daily_pnl_tracker['trading_halted'] = False")
             return False, "\n".join(output_lines), f"Daily P&L limit exceeded: {pnl_reason}", debate_info
+        
+        # === LOSS AWARENESS ANALYSIS ===
+        # Analyze current performance and adapt strategy if losing
+        log("")
+        log("=" * 60)
+        log("📊 LOSS AWARENESS CHECK")
+        log("=" * 60)
+        
+        try:
+            from src.risk.loss_awareness import get_loss_awareness
+            
+            loss_system = get_loss_awareness()
+            positions_raw = broker.trading_client.get_all_positions()
+            positions_list = [
+                {
+                    'symbol': p.symbol,
+                    'unrealized_pl': float(p.unrealized_pl),
+                    'unrealized_plpc': float(p.unrealized_plpc),
+                    'market_value': float(p.market_value),
+                    'qty': float(p.qty),
+                }
+                for p in positions_raw
+            ]
+            
+            total_pnl = sum(p['unrealized_pl'] for p in positions_list)
+            total_cost = sum(abs(p['market_value']) - p['unrealized_pl'] for p in positions_list)
+            total_pnl_pct = total_pnl / total_cost if total_cost > 0 else 0
+            
+            # Get market context
+            market_ctx = {}
+            try:
+                spy_prices = broker.get_current_prices(['SPY'])
+                if 'SPY' in spy_prices:
+                    market_ctx['spy_price'] = spy_prices['SPY']
+                market_ctx['vix'] = vix_level
+            except:
+                pass
+            
+            # Analyze losses
+            analysis = loss_system.analyze_losses(
+                positions=positions_list,
+                total_pnl=total_pnl,
+                total_pnl_pct=total_pnl_pct,
+                market_data=market_ctx,
+            )
+            
+            # Log analysis
+            log(f"  Current P&L: ${total_pnl:+,.2f} ({total_pnl_pct*100:+.2f}%)")
+            log(f"  State: {analysis.state.value.upper()}")
+            log(f"  Winning: {len(analysis.winning_positions)} | Losing: {len(analysis.losing_positions)}")
+            
+            if analysis.biggest_loser:
+                sym = analysis.biggest_loser.get('symbol', '?')
+                pnl = analysis.biggest_loser.get('unrealized_pl', 0)
+                log(f"  Biggest loser: {sym} (${pnl:+,.2f})")
+            
+            log("")
+            log("  REASONS:")
+            for reason in analysis.reasons[:3]:
+                log(f"    • {reason}")
+            
+            log("")
+            log("  RECOMMENDATIONS:")
+            for rec in analysis.recommendations[:3]:
+                log(f"    → {rec}")
+            
+            # Apply exposure adjustment
+            original_exposure = capital_exposure_pct
+            adjusted_exposure = loss_system.get_adjusted_exposure(original_exposure)
+            
+            if adjusted_exposure != original_exposure:
+                log("")
+                log(f"  ⚠️ EXPOSURE ADJUSTED: {original_exposure*100:.0f}% → {adjusted_exposure*100:.0f}%")
+                capital_exposure_pct = adjusted_exposure
+            
+            # Check if we should halt
+            should_continue, halt_reason = loss_system.should_trade()
+            if not should_continue:
+                log("")
+                log("🛑" * 20)
+                log(f"TRADING HALTED BY LOSS AWARENESS: {halt_reason}")
+                log("🛑" * 20)
+                log("")
+                log("The system has detected significant losses and is protecting capital.")
+                log("Consider reviewing the portfolio and market conditions before resuming.")
+                return False, "\n".join(output_lines), f"Loss awareness halt: {halt_reason}", debate_info
+            
+            # Exit recommended positions
+            if analysis.positions_to_exit:
+                log("")
+                log(f"  📉 POSITIONS FLAGGED FOR EXIT: {', '.join(analysis.positions_to_exit)}")
+                # These will be handled in the normal rebalancing flow by setting weight to 0
+            
+            # Store for debate context
+            debate_info["loss_analysis"] = {
+                "state": analysis.state.value,
+                "total_pnl": total_pnl,
+                "total_pnl_pct": total_pnl_pct,
+                "recommendations": analysis.recommendations,
+                "positions_to_exit": analysis.positions_to_exit,
+                "adjusted_exposure": adjusted_exposure,
+            }
+            
+        except Exception as e:
+            log(f"  ⚠️ Loss awareness check failed: {e}")
+            import traceback
+            logging.error(traceback.format_exc())
+        
+        log("")
         
         # Get account info
         account = broker.get_account()
@@ -1253,6 +1514,54 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         
         except Exception as e:
             log(f"⚠️ Geopolitical intelligence error: {e}")
+        
+        # ============================================================
+        # EARNINGS REACTION SYSTEM (NEW!)
+        # Scans news for earnings beats/misses and generates signals
+        # This is what should catch MSFT dropping 10% on bad earnings
+        # ============================================================
+        log("")
+        log("=" * 60)
+        log("📊 EARNINGS REACTION SCANNER")
+        log("=" * 60)
+        
+        earnings_signals = {}
+        try:
+            from src.strategies.earnings_reactor import get_earnings_reactor
+            
+            earnings_reactor = get_earnings_reactor()
+            
+            # Scan geopolitical intel (this caught the MSFT drop!)
+            geo_signals = earnings_reactor.scan_geopolitical_intel(geopolitical_intel)
+            log(f"📡 Scanned geo intel: {len(geo_signals)} earnings signals found")
+            
+            # Scan Alpha Vantage news
+            av_signals = earnings_reactor.scan_alpha_vantage(alpha_vantage_news)
+            log(f"📰 Scanned AV news: {len(av_signals)} earnings signals found")
+            
+            # Get trading weights from signals
+            earnings_signals = earnings_reactor.get_trading_signals(max_age_hours=24)
+            
+            if earnings_signals:
+                log("")
+                log("🎯 EARNINGS-DRIVEN SIGNALS:")
+                for symbol, weight in sorted(earnings_signals.items(), key=lambda x: abs(x[1]), reverse=True)[:10]:
+                    direction = "📈 LONG" if weight > 0 else "📉 SHORT"
+                    log(f"   {direction} {symbol}: {weight:+.0%}")
+                
+                # Show recent signal details
+                recent = earnings_reactor.get_recent_signals(max_age_hours=24)
+                if recent:
+                    log("")
+                    log("📰 Recent Headlines Triggering Signals:")
+                    for signal in recent[:5]:
+                        log(f"   [{signal.direction.upper()}] {signal.symbol}: {signal.headline[:60]}...")
+                        if signal.price_move_pct:
+                            log(f"        Price move: {signal.price_move_pct:+.1f}%")
+            else:
+                log("   No actionable earnings signals found")
+        except Exception as e:
+            log(f"⚠️ Earnings reactor error: {e}")
             
         log("")
         
@@ -2187,6 +2496,40 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             except Exception as e:
                 log(f"⚠️ Short scanner error: {e}")
         
+        # === EARNINGS REACTION SIGNALS ===
+        # Add signals from earnings beats/misses detected in news
+        # This is critical for catching events like "MSFT drops 10% on bad earnings"
+        if earnings_signals:
+            log("")
+            log("=" * 60)
+            log("📊 INTEGRATING EARNINGS REACTION SIGNALS")
+            log("=" * 60)
+            
+            earnings_added = 0
+            for symbol, weight in earnings_signals.items():
+                existing = combined_weights.get(symbol, 0)
+                
+                # Earnings signals take PRIORITY - they are based on fresh breaking news
+                if weight < 0:  # SHORT signal from bad earnings
+                    if existing > 0:
+                        log(f"   🔄 {symbol}: OVERRIDING long ({existing*100:+.1f}%) with earnings SHORT ({weight*100:+.1f}%)")
+                        log(f"      Reason: Bad earnings/price drop detected in news")
+                    else:
+                        log(f"   📉 {symbol}: Adding earnings-driven SHORT ({weight*100:+.1f}%)")
+                    combined_weights[symbol] = weight * 0.05  # Scale to 5% max position
+                    earnings_added += 1
+                elif weight > 0:  # LONG signal from good earnings
+                    if existing < 0:
+                        log(f"   🔄 {symbol}: OVERRIDING short ({existing*100:+.1f}%) with earnings LONG ({weight*100:+.1f}%)")
+                        log(f"      Reason: Good earnings/price spike detected in news")
+                    else:
+                        log(f"   📈 {symbol}: Adding earnings-driven LONG ({weight*100:+.1f}%)")
+                    combined_weights[symbol] = max(existing, weight * 0.05)  # Scale to 5% max position
+                    earnings_added += 1
+            
+            log(f"   ✅ Integrated {earnings_added} earnings-driven positions")
+            log("")
+        
         # Log short positions from ensemble (before risk/cost filtering)
         short_positions = {k: v for k, v in combined_weights.items() if v < 0}
         long_positions = {k: v for k, v in combined_weights.items() if v > 0}
@@ -3018,11 +3361,11 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
             import traceback
             logging.error(traceback.format_exc())
         
-        # Initialize Smart Executor with VIX awareness
+        # Initialize Smart Executor with VIX awareness - ALWAYS LIVE
         smart_executor = SmartExecutor(
             broker=broker,
             data_client=broker.data_client if hasattr(broker, 'data_client') else None,
-            dry_run=dry_run,
+            dry_run=False,  # ALWAYS execute real trades
             log_func=log,
             vix_level=vix_level,
         )
@@ -3489,12 +3832,16 @@ def run_multi_strategy_rebalance(dry_run=True, allow_after_hours=False, force_re
         return False, "\n".join(output_lines), str(e), debate_info
 
 
-def run_bot_threaded(dry_run=True, allow_after_hours=False, force_rebalance=True, cancel_orders=True, exposure_pct=0.8):
+def run_bot_threaded(allow_after_hours=False, force_rebalance=True, cancel_orders=True, exposure_pct=0.8):
     """Run bot in a separate thread.
     
     Uses SMART MODE: Parallel LLM for speed + full intelligence.
+    ALWAYS executes LIVE trades - no dry run mode.
     
     Args:
+        allow_after_hours: Allow trading outside market hours
+        force_rebalance: Bypass daily limit check
+        cancel_orders: Cancel existing open orders first
         exposure_pct: Capital exposure percentage (0.0 to 1.0). Default 0.8 = 80%
     """
     global last_run_status, capital_exposure_pct
@@ -3523,7 +3870,7 @@ def run_bot_threaded(dry_run=True, allow_after_hours=False, force_rebalance=True
         
         try:
             success, output, error, debate_info = run_multi_strategy_rebalance(
-                dry_run, allow_after_hours, force_rebalance, cancel_orders
+                allow_after_hours, force_rebalance, cancel_orders
             )
             last_run_status["output"] = output
             last_run_status["error"] = error
@@ -3546,15 +3893,50 @@ def run_bot_threaded(dry_run=True, allow_after_hours=False, force_rebalance=True
 
 def auto_rebalance_scheduler():
     """Background thread for automatic rebalancing, holding period checks, and outcome tracking."""
-    global auto_rebalance_settings
+    global auto_rebalance_settings, _scheduler_last_heartbeat
     
     last_outcome_check = datetime.now()
     last_holding_check = datetime.now()
+    last_daily_check = datetime.now().date()  # Track daily reset
     outcome_check_interval = timedelta(hours=1)  # Check outcomes hourly
     holding_check_interval = timedelta(minutes=5)  # Check holding periods every 5 mins
     
+    logging.info("🔄 Auto-rebalance scheduler thread STARTED")
+    
     while not scheduler_stop_event.is_set():
         now = datetime.now()
+        _scheduler_last_heartbeat = now  # Update heartbeat for health monitoring
+        
+        # === DAILY RESET CHECK ===
+        # At the start of each new trading day, ensure a rebalance happens
+        if now.date() > last_daily_check:
+            last_daily_check = now.date()
+            
+            # Check if it's a trading day (weekday) and market opening time
+            if now.weekday() < 5:  # Monday-Friday
+                logging.info(f"📅 NEW TRADING DAY: {now.strftime('%Y-%m-%d')}")
+                
+                # If auto-rebalance is enabled and we haven't run yet today
+                if auto_rebalance_settings.get("enabled"):
+                    last_run_str = auto_rebalance_settings.get("last_run")
+                    ran_today = False
+                    if last_run_str:
+                        try:
+                            last_run_dt = datetime.fromisoformat(last_run_str)
+                            ran_today = last_run_dt.date() == now.date()
+                        except:
+                            pass
+                    
+                    if not ran_today and not last_run_status["running"]:
+                        logging.info("🌅 Morning rebalance - starting first trade of the day")
+                        run_bot_threaded(
+                            allow_after_hours=True,
+                            force_rebalance=True,
+                            cancel_orders=True,
+                            exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
+                        )
+                        auto_rebalance_settings["last_run"] = now.isoformat()
+                        _save_auto_rebalance_settings()
         
         # === HOLDING PERIOD AUTO-EXIT CHECK ===
         if now - last_holding_check >= holding_check_interval:
@@ -3577,7 +3959,6 @@ def auto_rebalance_scheduler():
                     if not last_run_status["running"]:
                         logging.info("⏰ Triggering auto-exit rebalance for expired positions...")
                         run_bot_threaded(
-                            dry_run=auto_rebalance_settings.get("dry_run", True),
                             allow_after_hours=True,  # Allow after hours for risk management
                             force_rebalance=True,
                             cancel_orders=True,
@@ -3595,15 +3976,15 @@ def auto_rebalance_scheduler():
             if next_run and now >= next_run:
                 # Time to run
                 if not last_run_status["running"]:
-                    logging.info("🔄 Auto-rebalance triggered (fast mode)")
+                    logging.info("🔄 Auto-rebalance triggered (🔴 LIVE TRADING)")
                     run_bot_threaded(
-                        dry_run=auto_rebalance_settings.get("dry_run", True),
                         allow_after_hours=auto_rebalance_settings.get("allow_after_hours", True),
                         force_rebalance=True,
                         cancel_orders=True,
                         exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
                     )
                     auto_rebalance_settings["last_run"] = now.isoformat()
+                    _save_auto_rebalance_settings()  # Persist after each run
                 
                 # Schedule next run
                 interval = auto_rebalance_settings["interval_minutes"]
@@ -3658,10 +4039,26 @@ def auto_rebalance_scheduler():
         time.sleep(10)
 
 
-# Start the scheduler now that the function is defined
+# Start the scheduler and self-healing monitor now that functions are defined
 # This runs when the module is imported (works with Gunicorn)
 try:
     start_auto_rebalance_scheduler()
+    start_self_healing_monitor()  # Auto-restarts dead threads
+    
+    # AUTO-RESTORE: If auto-rebalance was enabled before restart, restore it
+    if auto_rebalance_settings.get("enabled") and auto_rebalance_settings.get("auto_start_on_boot", True):
+        interval = auto_rebalance_settings.get("interval_minutes", 60)
+        auto_rebalance_settings["next_run"] = datetime.now() + timedelta(minutes=interval)
+        logging.info(f"🚀 AUTO-RESTORED: Auto-rebalance (🔴 LIVE) every {interval} minutes")
+        logging.info(f"   Next run: {auto_rebalance_settings['next_run']}")
+    
+    logging.info("=" * 60)
+    logging.info("🛡️ FAILSAFE SYSTEMS ACTIVE:")
+    logging.info("   • Scheduler auto-restart on crash")
+    logging.info("   • Self-healing monitor (checks every 60s)")
+    logging.info("   • Settings persist across restarts")
+    logging.info("   • Morning rebalance on new trading day")
+    logging.info("=" * 60)
 except Exception as e:
     logging.error(f"Failed to start auto-rebalance scheduler: {e}")
 
@@ -3696,15 +4093,136 @@ def health_check():
     auto_enabled = auto_rebalance_settings.get("enabled", False)
     next_run = auto_rebalance_settings.get("next_run")
     
+    # Check scheduler health and AUTO-RESTART if dead
+    scheduler_alive = scheduler_thread and scheduler_thread.is_alive()
+    scheduler_healthy = False
+    scheduler_restarted = False
+    
+    if scheduler_alive:
+        if _scheduler_last_heartbeat:
+            age = (datetime.now() - _scheduler_last_heartbeat).total_seconds()
+            scheduler_healthy = age < 120  # 2 minute heartbeat
+        else:
+            scheduler_healthy = True
+    else:
+        # SCHEDULER IS DEAD - AUTO-RESTART
+        logging.error("🚨 SCHEDULER DIED - Auto-restarting...")
+        try:
+            start_auto_rebalance_scheduler()
+            scheduler_restarted = True
+            logging.info("✅ Scheduler auto-restarted successfully")
+        except Exception as e:
+            logging.error(f"Failed to restart scheduler: {e}")
+    
+    # Check self-healing monitor
+    self_healing_alive = _self_healing_thread and _self_healing_thread.is_alive() if '_self_healing_thread' in globals() else False
+    
     return jsonify({
         "status": "healthy",
         "timestamp": now.isoformat(),
         "broker_connected": broker_ok,
         "auto_rebalance_enabled": auto_enabled,
+        "trading_mode": "LIVE",  # Always live - no dry run
         "next_scheduled_run": next_run.isoformat() if next_run else None,
         "last_run": last_run_status.get("timestamp"),
+        "failsafes": {
+            "scheduler_alive": scheduler_alive,
+            "scheduler_healthy": scheduler_healthy,
+            "scheduler_restarted": scheduler_restarted,
+            "self_healing_active": self_healing_alive,
+            "settings_persistent": True,
+            "morning_rebalance": True,
+        },
+        "scheduler_last_heartbeat": _scheduler_last_heartbeat.isoformat() if _scheduler_last_heartbeat else None,
         "uptime_check": "ok",
     })
+
+
+@app.route('/api/loss-awareness')
+@requires_auth
+def get_loss_awareness_status():
+    """
+    Get current loss awareness analysis.
+    
+    Shows:
+    - Current performance state
+    - Why the portfolio is losing (if applicable)
+    - Recommendations for action
+    - Exposure adjustments
+    """
+    try:
+        from src.risk.loss_awareness import get_loss_awareness
+        
+        api_key = os.getenv("ALPACA_API_KEY")
+        secret_key = os.getenv("ALPACA_SECRET_KEY")
+        
+        if not api_key or not secret_key:
+            return jsonify({"error": "API keys not configured"}), 400
+        
+        broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+        loss_system = get_loss_awareness()
+        
+        # Get current positions
+        positions_raw = broker.trading_client.get_all_positions()
+        positions_list = [
+            {
+                'symbol': p.symbol,
+                'unrealized_pl': float(p.unrealized_pl),
+                'unrealized_plpc': float(p.unrealized_plpc),
+                'market_value': float(p.market_value),
+                'qty': float(p.qty),
+            }
+            for p in positions_raw
+        ]
+        
+        total_pnl = sum(p['unrealized_pl'] for p in positions_list)
+        total_cost = sum(abs(p['market_value']) - p['unrealized_pl'] for p in positions_list)
+        total_pnl_pct = total_pnl / total_cost if total_cost > 0 else 0
+        
+        # Run analysis
+        analysis = loss_system.analyze_losses(
+            positions=positions_list,
+            total_pnl=total_pnl,
+            total_pnl_pct=total_pnl_pct,
+        )
+        
+        should_trade, halt_reason = loss_system.should_trade()
+        
+        return jsonify({
+            "success": True,
+            "state": analysis.state.value,
+            "state_emoji": {
+                "excellent": "🚀",
+                "good": "📈",
+                "neutral": "📊",
+                "concerning": "⚠️",
+                "bad": "📉",
+                "critical": "🚨",
+            }.get(analysis.state.value, "❓"),
+            "total_pnl": total_pnl,
+            "total_pnl_pct": total_pnl_pct * 100,
+            "winning_positions": len(analysis.winning_positions),
+            "losing_positions": len(analysis.losing_positions),
+            "biggest_loser": {
+                "symbol": analysis.biggest_loser.get('symbol'),
+                "pnl": analysis.biggest_loser.get('unrealized_pl'),
+            } if analysis.biggest_loser else None,
+            "biggest_winner": {
+                "symbol": analysis.biggest_winner.get('symbol'),
+                "pnl": analysis.biggest_winner.get('unrealized_pl'),
+            } if analysis.biggest_winner else None,
+            "reasons": analysis.reasons,
+            "recommendations": analysis.recommendations,
+            "recommended_exposure": analysis.recommended_exposure * 100,
+            "positions_to_exit": analysis.positions_to_exit,
+            "should_go_to_cash": analysis.should_go_to_cash,
+            "should_trade": should_trade,
+            "halt_reason": halt_reason if not should_trade else None,
+            "consecutive_losses": loss_system.consecutive_losses,
+        })
+    except Exception as e:
+        logging.error(f"Loss awareness error: {e}")
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route('/api/equity-curve')
@@ -4358,7 +4876,7 @@ def get_transaction_costs():
 @app.route('/api/run', methods=['POST'])
 @requires_auth
 def run_bot_endpoint():
-    """Trigger bot run."""
+    """Trigger bot run - ALWAYS executes LIVE trades."""
     # Accept both JSON body and query parameters
     if request.is_json:
         data = request.get_json() or {}
@@ -4366,9 +4884,6 @@ def run_bot_endpoint():
         data = {}
     
     # Query params override JSON - handle both bool and string values
-    dry_run_val = request.args.get('dry_run', data.get('dry_run', True))
-    dry_run = parse_bool_param(dry_run_val, default=True)
-    
     allow_after_hours_val = request.args.get('allow_after_hours', data.get('allow_after_hours', True))
     allow_after_hours = parse_bool_param(allow_after_hours_val, default=True)
     
@@ -4392,31 +4907,44 @@ def run_bot_endpoint():
         strategy_enhancer = get_enhancer(EnhancedConfig(risk_appetite=risk_appetite))
     
     # SMART MODE: Always use parallel LLM (fast + full intelligence)
+    # LIVE MODE: Always execute real trades - no dry run
     
     if last_run_status["running"]:
         return jsonify({"error": "Bot is already running"}), 400
     
     run_bot_threaded(
-        dry_run=dry_run,
         allow_after_hours=allow_after_hours,
         force_rebalance=force_rebalance,
         cancel_orders=cancel_orders,
         exposure_pct=exposure_pct,
     )
-    return jsonify({"status": "started", "message": f"🧠 Rebalance initiated ({int(exposure_pct*100)}% exposure)"})
+    return jsonify({"status": "started", "message": f"🔴 LIVE Rebalance initiated ({int(exposure_pct*100)}% exposure)"})
 
 
 @app.route('/api/auto-rebalance', methods=['POST', 'GET'])
 @requires_auth
 def set_auto_rebalance():
-    """Configure or get automatic rebalancing settings."""
+    """Configure or get automatic rebalancing settings. ALWAYS LIVE - no dry run mode."""
     global auto_rebalance_settings
     
-    # GET request - return current settings
+    # GET request - return current settings + scheduler health
     if request.method == 'GET':
+        # Check scheduler health
+        scheduler_healthy = False
+        if scheduler_thread and scheduler_thread.is_alive():
+            if _scheduler_last_heartbeat:
+                age = (datetime.now() - _scheduler_last_heartbeat).total_seconds()
+                scheduler_healthy = age < 120  # Heartbeat within 2 minutes
+            else:
+                scheduler_healthy = True  # Just started
+        
         return jsonify({
             "status": "ok",
-            "settings": auto_rebalance_settings
+            "settings": auto_rebalance_settings,
+            "trading_mode": "LIVE",  # Always live
+            "scheduler_running": scheduler_thread.is_alive() if scheduler_thread else False,
+            "scheduler_healthy": scheduler_healthy,
+            "last_heartbeat": _scheduler_last_heartbeat.isoformat() if _scheduler_last_heartbeat else None,
         })
     
     # POST request - update settings
@@ -4424,24 +4952,36 @@ def set_auto_rebalance():
     
     auto_rebalance_settings["enabled"] = data.get('enabled', False)
     auto_rebalance_settings["interval_minutes"] = data.get('interval_minutes', 60)
-    auto_rebalance_settings["dry_run"] = data.get('dry_run', True)
     auto_rebalance_settings["allow_after_hours"] = data.get('allow_after_hours', True)
     auto_rebalance_settings["exposure_pct"] = data.get('exposure_pct', 0.8)
+    auto_rebalance_settings["auto_start_on_boot"] = data.get('auto_start_on_boot', True)
+    # NOTE: No dry_run option - always live trading
     
     if auto_rebalance_settings["enabled"]:
         interval = auto_rebalance_settings["interval_minutes"]
         auto_rebalance_settings["next_run"] = datetime.now() + timedelta(minutes=interval)
-        logging.info(f"🔄 AUTO-REBALANCE ENABLED: every {interval} minutes, exposure={auto_rebalance_settings['exposure_pct']*100:.0f}%, dry_run={auto_rebalance_settings['dry_run']}")
-        message = f"Auto-rebalance enabled: every {interval} minutes"
+        logging.info(f"🔄 AUTO-REBALANCE ENABLED (🔴 LIVE): every {interval} minutes, exposure={auto_rebalance_settings['exposure_pct']*100:.0f}%")
+        message = f"Auto-rebalance enabled (🔴 LIVE): every {interval} minutes"
     else:
         auto_rebalance_settings["next_run"] = None
         logging.info("🔄 AUTO-REBALANCE DISABLED")
         message = "Auto-rebalance disabled"
     
+    # PERSIST settings to disk for survival across restarts
+    _save_auto_rebalance_settings()
+    
+    # Ensure scheduler is running
+    if auto_rebalance_settings["enabled"]:
+        if not scheduler_thread or not scheduler_thread.is_alive():
+            start_auto_rebalance_scheduler()
+            logging.info("🔄 Scheduler was not running - restarted it")
+    
     return jsonify({
         "status": "updated",
         "message": message,
-        "settings": auto_rebalance_settings
+        "settings": auto_rebalance_settings,
+        "trading_mode": "LIVE",
+        "persisted": True,
     })
 
 
@@ -6837,6 +7377,203 @@ def deduplicate_alpha_vantage_cache():
             "removed": removed,
             "message": f"Removed {removed} duplicates, {after_count} articles remain"
         })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/earnings-reactor/scan', methods=['POST', 'GET'])
+def scan_earnings_signals():
+    """
+    Scan news sources for earnings-driven trading signals.
+    This catches events like "MSFT drops 10% on bad earnings" and generates short signals.
+    """
+    try:
+        from src.strategies.earnings_reactor import get_earnings_reactor
+        
+        reactor = get_earnings_reactor()
+        
+        # Scan both sources
+        geo_signals = reactor.scan_geopolitical_intel(geopolitical_intel)
+        av_signals = reactor.scan_alpha_vantage(alpha_vantage_news)
+        
+        # Get trading weights
+        trading_signals = reactor.get_trading_signals(max_age_hours=24)
+        
+        # Get recent signals for display
+        recent = reactor.get_recent_signals(max_age_hours=24)
+        
+        return jsonify({
+            "success": True,
+            "signals_from_geo": len(geo_signals),
+            "signals_from_av": len(av_signals),
+            "total_trading_signals": len(trading_signals),
+            "trading_signals": {k: f"{v*100:.1f}%" for k, v in trading_signals.items()},
+            "recent_signals": [s.to_dict() for s in recent[:20]],
+        })
+    except Exception as e:
+        logging.error(f"Earnings reactor scan error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/earnings-reactor/status')
+def get_earnings_reactor_status():
+    """Get current earnings reactor status and signals."""
+    try:
+        from src.strategies.earnings_reactor import get_earnings_reactor
+        
+        reactor = get_earnings_reactor()
+        
+        # Get recent signals
+        recent = reactor.get_recent_signals(max_age_hours=48)
+        trading_signals = reactor.get_trading_signals(max_age_hours=24)
+        
+        return jsonify({
+            "total_signals_processed": len(reactor.signals),
+            "recent_signals_24h": len([s for s in recent if s.timestamp]),
+            "trading_signals": {k: f"{v*100:+.1f}%" for k, v in trading_signals.items()},
+            "shorts": {k: f"{v*100:.1f}%" for k, v in trading_signals.items() if v < 0},
+            "longs": {k: f"{v*100:.1f}%" for k, v in trading_signals.items() if v > 0},
+            "recent_details": [s.to_dict() for s in recent[:10]],
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ===============================================================================
+# EARNINGS MONITOR (AUTO-REBALANCE ON NEWS)
+# ===============================================================================
+
+# Global earnings monitor instance
+_earnings_monitor_instance = None
+
+@app.route('/api/earnings-monitor/start', methods=['POST'])
+def start_earnings_monitor():
+    """
+    Start the earnings season auto-monitor.
+    This will automatically trigger rebalance when major earnings news is detected.
+    """
+    global _earnings_monitor_instance
+    try:
+        from src.strategies.earnings_monitor import get_earnings_monitor
+        
+        monitor = get_earnings_monitor()
+        
+        # Set the rebalance callback
+        monitor.set_rebalance_callback(run_multi_strategy_rebalance)
+        
+        # Start the monitor
+        monitor.start()
+        _earnings_monitor_instance = monitor
+        
+        return jsonify({
+            "success": True,
+            "message": "Earnings monitor STARTED",
+            "status": monitor.get_status(),
+        })
+    except Exception as e:
+        logging.error(f"Failed to start earnings monitor: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/earnings-monitor/stop', methods=['POST'])
+def stop_earnings_monitor():
+    """Stop the earnings season auto-monitor."""
+    global _earnings_monitor_instance
+    try:
+        from src.strategies.earnings_monitor import get_earnings_monitor
+        
+        monitor = get_earnings_monitor()
+        monitor.stop()
+        
+        return jsonify({
+            "success": True,
+            "message": "Earnings monitor STOPPED",
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/earnings-monitor/status')
+def get_earnings_monitor_status():
+    """Get earnings monitor status."""
+    try:
+        from src.strategies.earnings_monitor import get_earnings_monitor
+        
+        monitor = get_earnings_monitor()
+        status = monitor.get_status()
+        
+        return jsonify(status)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/earnings-monitor/force-scan', methods=['POST'])
+def force_earnings_scan():
+    """Force an immediate earnings scan (for testing)."""
+    try:
+        from src.strategies.earnings_monitor import get_earnings_monitor
+        
+        monitor = get_earnings_monitor()
+        
+        # Make sure callback is set
+        if not monitor._rebalance_callback:
+            monitor.set_rebalance_callback(run_multi_strategy_rebalance)
+        
+        result = monitor.force_scan()
+        
+        return jsonify({
+            "success": True,
+            "result": result,
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/earnings-monitor/config', methods=['GET', 'POST'])
+def earnings_monitor_config():
+    """Get or update earnings monitor configuration."""
+    try:
+        from src.strategies.earnings_monitor import get_earnings_monitor
+        
+        monitor = get_earnings_monitor()
+        
+        if request.method == 'POST':
+            data = request.get_json() or {}
+            
+            if 'check_interval_market_hours' in data:
+                monitor.config.check_interval_market_hours = int(data['check_interval_market_hours'])
+            if 'check_interval_after_hours' in data:
+                monitor.config.check_interval_after_hours = int(data['check_interval_after_hours'])
+            if 'min_confidence_auto_trigger' in data:
+                monitor.config.min_confidence_auto_trigger = float(data['min_confidence_auto_trigger'])
+            if 'trigger_cooldown_minutes' in data:
+                monitor.config.trigger_cooldown_minutes = int(data['trigger_cooldown_minutes'])
+            if 'max_triggers_per_day' in data:
+                monitor.config.max_triggers_per_day = int(data['max_triggers_per_day'])
+            if 'market_hours_only' in data:
+                monitor.config.market_hours_only = bool(data['market_hours_only'])
+            
+            return jsonify({
+                "success": True,
+                "message": "Configuration updated",
+                "config": {
+                    "check_interval_market_hours": monitor.config.check_interval_market_hours,
+                    "check_interval_after_hours": monitor.config.check_interval_after_hours,
+                    "min_confidence_auto_trigger": monitor.config.min_confidence_auto_trigger,
+                    "trigger_cooldown_minutes": monitor.config.trigger_cooldown_minutes,
+                    "max_triggers_per_day": monitor.config.max_triggers_per_day,
+                    "market_hours_only": monitor.config.market_hours_only,
+                }
+            })
+        else:
+            return jsonify({
+                "check_interval_market_hours": monitor.config.check_interval_market_hours,
+                "check_interval_after_hours": monitor.config.check_interval_after_hours,
+                "min_confidence_auto_trigger": monitor.config.min_confidence_auto_trigger,
+                "trigger_cooldown_minutes": monitor.config.trigger_cooldown_minutes,
+                "max_triggers_per_day": monitor.config.max_triggers_per_day,
+                "market_hours_only": monitor.config.market_hours_only,
+            })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
