@@ -264,6 +264,15 @@ class FundamentalsLoader:
                         logger.warning(f"No data for {symbol}")
                         continue
                     
+                    # Handle dividend yield - yfinance returns 'dividendYield' as percentage
+                    # Use 'trailingAnnualDividendYield' which is in decimal form
+                    div_yield = info.get('trailingAnnualDividendYield')
+                    if div_yield is None:
+                        # Fallback: convert percentage to decimal
+                        pct_yield = info.get('dividendYield')
+                        if pct_yield is not None:
+                            div_yield = pct_yield / 100.0 if pct_yield > 1 else pct_yield
+                    
                     fd = FundamentalData(
                         symbol=symbol,
                         pe_ratio=info.get('trailingPE'),
@@ -276,7 +285,7 @@ class FundamentalsLoader:
                         profit_margin=info.get('profitMargins'),
                         operating_margin=info.get('operatingMargins'),
                         gross_margin=info.get('grossMargins'),
-                        dividend_yield=info.get('dividendYield'),
+                        dividend_yield=div_yield,
                         dividend_rate=info.get('dividendRate'),
                         payout_ratio=info.get('payoutRatio'),
                         beta=info.get('beta'),
