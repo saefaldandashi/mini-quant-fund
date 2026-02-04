@@ -574,35 +574,56 @@ class LLMService:
         if geopolitical_context:
             news_section += f"\n\nGEOPOLITICAL INTELLIGENCE:\n{geopolitical_context}"
         
-        prompt = f"""As the Chief Investment Officer, provide a DETAILED 5-7 sentence explanation of today's portfolio decision.
+        prompt = f"""As the Chief Investment Officer, provide a DETAILED investment thesis explaining today's portfolio decision.
 
-=== FUNDAMENTAL DATA ===
+=== MACRO ENVIRONMENT ===
 {macro_context}
+
+=== NEWS INTELLIGENCE BRIEFING ===
 {news_section}
 
-=== STRATEGY SIGNALS ===
+=== QUANTITATIVE STRATEGY SIGNALS ===
 {signals_summary}
 
-=== DEBATE OUTCOME ===
+=== STRATEGY DEBATE OUTCOME ===
 {debate_summary}
 
-=== FINAL POSITIONS ===
+=== FINAL PORTFOLIO POSITIONS ===
 {positions_str}
 
-YOUR RESPONSE MUST:
-1. EXPLICITLY reference specific news headlines or macro data points that influenced decisions
-2. Explain the PRIMARY DRIVER (e.g., "Due to the Trump tariff threats on oil...") - be specific!
-3. Identify the KEY RISK being managed (geopolitical, inflation, recession, etc.)
-4. Connect specific positions to the fundamental data (e.g., "Long AVGO due to bullish sentiment (+0.70)...")
-5. Mention any sector rotations or defensive moves prompted by the news/macro environment
+YOUR RESPONSE MUST ADDRESS (8-12 sentences):
 
-DO NOT be generic. Name specific tickers, news events, and macro readings. Cite the data."""
+1. NEWS-DRIVEN THESIS: What is the dominant news narrative today? Reference SPECIFIC headlines.
+   - Is it RISK-ON or RISK-OFF environment based on news?
+   - What sectors/stocks are directly affected by the news?
+
+2. ACTIONABLE LOGIC: How did the news translate into positions?
+   - "Fed hawkish signal → short growth → hence TSLA short"
+   - "Oil supply disruption → long energy → hence XOM long"
+   - Explain the CAUSAL CHAIN from news → market impact → position
+
+3. RISK MANAGEMENT: What risks is the portfolio hedging against?
+   - Geopolitical (war, sanctions) → safe haven allocation
+   - Inflation → commodity exposure
+   - Recession → defensive sectors
+   - Rate changes → duration/growth sensitivity
+
+4. CONVICTION CALIBRATION: Why these position sizes?
+   - High conviction positions (>3%) - explain why
+   - Hedges and small positions - explain the rationale
+
+5. WHAT COULD GO WRONG: Name the key scenario that would invalidate this thesis.
+
+DO NOT BE GENERIC. You have real-time news data - USE IT. Name specific:
+- Headlines (e.g., "Reuters reported Fed chair signaled...")
+- Tickers (e.g., "Long NVDA at 4% due to AI spending tailwinds")
+- Numbers (e.g., "VIX at 18 suggests moderate risk tolerance")"""
 
         response = self.call(
             prompt=prompt,
-            system="You are a CIO explaining investment decisions to the board. Be specific, not generic.",
+            system="You are a CIO presenting investment decisions to the board. Be specific, cite news headlines, and explain the causal logic. Never be generic.",
             temperature=0.4,
-            max_tokens=300,
+            max_tokens=600,  # Increased for richer reasoning
             use_cache=False,  # Each decision is unique
         )
         

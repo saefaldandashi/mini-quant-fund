@@ -3063,44 +3063,177 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                         top3 = sorted(signal.desired_weights.items(), key=lambda x: -abs(x[1]))[:3]
                         signals_summary += f"\n{name} (conf={signal.confidence:.0%}): {', '.join([f'{s}:{w:+.0%}' for s,w in top3])}"
                 
-                # === BUILD NEWS CONTEXT FROM GLOBAL INTELLIGENCE FEED (PRIMARY) ===
-                # This is our real-time news source - updates every minute from 30+ RSS feeds
+                # === COMPREHENSIVE NEWS INTELLIGENCE FOR LLM ===
+                # Build rich, actionable news context with market implications
                 news_ctx = None
                 try:
-                    # PRIMARY: Use Global Intelligence Feed
                     filtered_events = geopolitical_intel.get_filtered_events(auto_refresh_if_empty=False)
                     
                     if filtered_events:
-                        news_lines = []
-                        for event in filtered_events[:15]:  # Top 15 market-moving headlines
-                            headline = event.headline if hasattr(event, 'headline') else str(event)
-                            direction = getattr(event, 'direction', None)
-                            direction_str = f"[{direction.name}]" if direction and hasattr(direction, 'name') else ""
-                            source = getattr(event, 'source', 'Unknown')[:20]
-                            news_lines.append(f"- [{source}] {headline[:80]} {direction_str}")
+                        # 1. NEWS FRESHNESS
+                        cache_age = geopolitical_intel.get_cached_filtered_events_age()
+                        freshness_note = f"[✅ REAL-TIME NEWS - {cache_age:.0f} MIN AGO]" if cache_age and cache_age < 60 else "[NEWS DATA]"
                         
-                        if news_lines:
-                            cache_age = geopolitical_intel.get_cached_filtered_events_age()
-                            freshness = f"[✅ NEWS UPDATED {cache_age:.0f} MIN AGO]" if cache_age and cache_age < 60 else ""
-                            news_ctx = f"{freshness}\n" + "\n".join(news_lines)
-                            log(f"   📰 Built news context from {len(news_lines)} Global Intel events")
+                        # 2. AGGREGATE MARKET DIRECTION FROM NEWS
+                        direction_counts = {}
+                        category_counts = {}
+                        affected_assets_all = set()
+                        affected_regions_all = set()
+                        high_impact_events = []
+                        
+                        for event in filtered_events[:30]:  # Analyze more events
+                            # Count directions
+                            direction = getattr(event, 'direction', None)
+                            if direction and hasattr(direction, 'name'):
+                                dir_name = direction.name
+                                direction_counts[dir_name] = direction_counts.get(dir_name, 0) + 1
+                            
+                            # Count categories
+                            category = getattr(event, 'category', None)
+                            if category and hasattr(category, 'name'):
+                                cat_name = category.name
+                                category_counts[cat_name] = category_counts.get(cat_name, 0) + 1
+                            
+                            # Collect affected assets
+                            assets = getattr(event, 'affected_assets', [])
+                            if assets:
+                                affected_assets_all.update(assets)
+                            
+                            # Collect affected regions
+                            regions = getattr(event, 'affected_regions', [])
+                            if regions:
+                                affected_regions_all.update(regions)
+                            
+                            # Track high-impact events
+                            impact = getattr(event, 'impact_score', 0)
+                            if impact > 0.6:
+                                high_impact_events.append(event)
+                        
+                        # 3. DERIVE OVERALL MARKET STANCE
+                        risk_on = direction_counts.get('RISK_ON', 0)
+                        risk_off = direction_counts.get('RISK_OFF', 0)
+                        oil_up = direction_counts.get('OIL_UP', 0)
+                        oil_down = direction_counts.get('OIL_DOWN', 0)
+                        rates_up = direction_counts.get('RATES_UP', 0)
+                        rates_down = direction_counts.get('RATES_DOWN', 0)
+                        
+                        if risk_off > risk_on * 1.5:
+                            overall_stance = "⚠️ RISK-OFF ENVIRONMENT"
+                            stance_action = "Consider defensive positioning, safe havens (gold, utilities, bonds)"
+                        elif risk_on > risk_off * 1.5:
+                            overall_stance = "🟢 RISK-ON ENVIRONMENT"
+                            stance_action = "Favor cyclicals, growth, risk assets"
+                        else:
+                            overall_stance = "↔️ MIXED/NEUTRAL ENVIRONMENT"
+                            stance_action = "Stay balanced, watch for catalysts"
+                        
+                        # 4. BUILD COMPREHENSIVE NEWS CONTEXT
+                        news_parts = [
+                            f"{freshness_note}",
+                            "",
+                            f"## OVERALL NEWS STANCE: {overall_stance}",
+                            f"Recommended Action: {stance_action}",
+                            "",
+                            "## NEWS DIRECTION SIGNALS:",
+                            f"  RISK-ON signals: {risk_on}  |  RISK-OFF signals: {risk_off}",
+                            f"  OIL UP signals: {oil_up}  |  OIL DOWN signals: {oil_down}",
+                            f"  RATES UP signals: {rates_up}  |  RATES DOWN signals: {rates_down}",
+                        ]
+                        
+                        # 5. CATEGORY BREAKDOWN (what's driving markets)
+                        if category_counts:
+                            news_parts.append("")
+                            news_parts.append("## WHAT'S DRIVING MARKETS:")
+                            sorted_cats = sorted(category_counts.items(), key=lambda x: -x[1])
+                            for cat, count in sorted_cats[:5]:
+                                # Add actionable interpretation
+                                if cat == 'CENTRAL_BANK':
+                                    implication = "→ Watch rates, growth stocks vulnerable if hawkish"
+                                elif cat == 'GEOPOLITICAL':
+                                    implication = "→ Watch defense, energy, gold; risk sentiment fragile"
+                                elif cat == 'ENERGY_COMMODITY':
+                                    implication = "→ Energy sector directly affected, inflation implications"
+                                elif cat == 'FINANCIAL_STRESS':
+                                    implication = "→ Risk-off, watch financials, credit spreads"
+                                elif cat == 'SHIPPING_LOGISTICS':
+                                    implication = "→ Supply chain, inflation, shipping stocks affected"
+                                elif cat == 'MACRO_DATA':
+                                    implication = "→ Fed reaction function, growth/value rotation"
+                                else:
+                                    implication = ""
+                                news_parts.append(f"  {cat}: {count} events {implication}")
+                        
+                        # 6. AFFECTED ASSETS (direct trading signals)
+                        if affected_assets_all:
+                            news_parts.append("")
+                            news_parts.append("## DIRECTLY AFFECTED ASSETS/SECTORS:")
+                            assets_str = ", ".join(list(affected_assets_all)[:20])
+                            news_parts.append(f"  {assets_str}")
+                        
+                        # 7. AFFECTED REGIONS
+                        if affected_regions_all:
+                            news_parts.append("")
+                            news_parts.append("## AFFECTED REGIONS:")
+                            regions_str = ", ".join(list(affected_regions_all)[:10])
+                            news_parts.append(f"  {regions_str}")
+                        
+                        # 8. TOP HIGH-IMPACT EVENTS (with rationale)
+                        news_parts.append("")
+                        news_parts.append("## KEY MARKET-MOVING HEADLINES:")
+                        for event in high_impact_events[:8]:
+                            headline = getattr(event, 'headline', '')[:90]
+                            direction = getattr(event, 'direction', None)
+                            dir_str = f"[{direction.name}]" if direction and hasattr(direction, 'name') else ""
+                            impact = getattr(event, 'impact_score', 0)
+                            category = getattr(event, 'category', None)
+                            cat_str = f"({category.name})" if category and hasattr(category, 'name') else ""
+                            rationale = getattr(event, 'rationale', '')[:100]
+                            
+                            news_parts.append(f"  • {headline}...")
+                            news_parts.append(f"    {dir_str} {cat_str} Impact: {impact:.0%}")
+                            if rationale:
+                                news_parts.append(f"    Why it matters: {rationale}")
+                        
+                        # 9. ACTIONABLE SYNTHESIS
+                        news_parts.append("")
+                        news_parts.append("## SO WHAT - TRADING IMPLICATIONS:")
+                        
+                        # Generate specific recommendations based on news
+                        implications = []
+                        if risk_off > 3:
+                            implications.append("• Reduce risk exposure, consider hedges")
+                        if oil_up > 2:
+                            implications.append("• Energy longs (XOM, CVX), watch inflation")
+                        if oil_down > 2:
+                            implications.append("• Energy weakness, airline/transport benefit")
+                        if rates_up > 2:
+                            implications.append("• Bank longs, growth/tech vulnerable")
+                        if rates_down > 2:
+                            implications.append("• Growth/tech favorable, banks weak")
+                        if category_counts.get('GEOPOLITICAL', 0) > 3:
+                            implications.append("• Defense stocks (LMT, RTX), gold as hedge")
+                        if category_counts.get('FINANCIAL_STRESS', 0) > 2:
+                            implications.append("• Reduce financials exposure, watch credit spreads")
+                        
+                        if implications:
+                            news_parts.extend(implications)
+                        else:
+                            news_parts.append("• No extreme signals - maintain current positioning")
+                        
+                        news_ctx = "\n".join(news_parts)
+                        log(f"   📰 Built comprehensive news context: {len(filtered_events)} events analyzed")
+                        log(f"      Stance: {overall_stance}")
                     
                     # FALLBACK: Alpha Vantage if Global Intel is empty
                     if not news_ctx:
                         av_articles = alpha_vantage_news.get_cached_articles()
                         if av_articles:
-                            news_lines = []
+                            news_lines = ["[⚠️ FALLBACK TO ALPHA VANTAGE - Global Intel empty]"]
                             for article in av_articles[:10]:
                                 title = getattr(article, 'title', getattr(article, 'headline', 'Unknown'))
                                 sentiment = getattr(article, 'overall_sentiment_label', 'N/A')
                                 news_lines.append(f"- {title[:80]} [{sentiment}]")
-                            if news_lines:
-                                rate_status = alpha_vantage_news.get_rate_limit_status()
-                                hours_stale = rate_status.get('hours_since_fresh_news', 0)
-                                if hours_stale > 24:
-                                    news_ctx = f"[⚠️ FALLBACK NEWS - {hours_stale:.0f}H OLD]\n" + "\n".join(news_lines)
-                                else:
-                                    news_ctx = "[Alpha Vantage Fallback]\n" + "\n".join(news_lines)
+                            news_ctx = "\n".join(news_lines)
                 except Exception as e:
                     logging.debug(f"Could not build news context: {e}")
                 
