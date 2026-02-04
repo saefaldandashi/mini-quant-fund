@@ -449,7 +449,8 @@ class AlpacaBroker:
             if extended_hours:
                 # Get current quote for limit price
                 try:
-                    quote = self.get_current_quote(symbol)
+                    quotes = self.get_current_quotes([symbol])
+                    quote = quotes.get(symbol, {})
                     if side == OrderSide.BUY:
                         # Buy at ask (or bid + 1% if ask unavailable)
                         limit_price = quote.get('ask', 0) if quote.get('ask', 0) > 0 else quote.get('bid', 0) * 1.01

@@ -3699,8 +3699,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             exp_returns = {}
             for symbol in enhanced_weights:
                 for name, signal in signals.items():
-                    if symbol in signal.expected_returns:
-                        exp_returns[symbol] = signal.expected_returns[symbol]
+                    # SignalOutput has expected_return (float) not expected_returns (dict)
+                    if symbol in signal.desired_weights:
+                        exp_returns[symbol] = signal.expected_return
                         break
                 if symbol not in exp_returns:
                     exp_returns[symbol] = 0.02  # 2% default

@@ -43,11 +43,11 @@
       "avg_improvement": 0.0
     },
     "AAPL": {
-      "total_orders": 106,
+      "total_orders": 107,
       "limit_attempts": 11,
       "limit_fills": 1,
-      "avg_spread": 0.05579262305765853,
-      "avg_improvement": -1.8634715136335293e-08
+      "avg_spread": 0.06463409844612683,
+      "avg_improvement": -1.4907772109068234e-08
     },
     "CVX": {
       "total_orders": 35,
@@ -85,11 +85,11 @@
       "avg_improvement": 0.0
     },
     "GOOGL": {
-      "total_orders": 62,
+      "total_orders": 63,
       "limit_attempts": 8,
       "limit_fills": 5,
-      "avg_spread": 1.2520600305842702,
-      "avg_improvement": -0.7752792347298978
+      "avg_spread": 1.0216480244674162,
+      "avg_improvement": -0.6202233877839183
     },
     "EA": {
       "total_orders": 18,
@@ -134,10 +134,10 @@
       "avg_improvement": 0.0
     },
     "GS": {
-      "total_orders": 40,
+      "total_orders": 41,
       "limit_attempts": 21,
       "limit_fills": 0,
-      "avg_spread": 0.23997350322072813,
+      "avg_spread": 0.21197880257658253,
       "avg_improvement": 0.0
     },
     "WDC": {
@@ -223,7 +223,28 @@
       "limit_fills": 0,
       "avg_spread": 0.013779169928111897,
       "avg_improvement": 0.0
+    },
+    "TMO": {
+      "total_orders": 1,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 0.004914694937863735,
+      "avg_improvement": 0.0
+    },
+    "USB": {
+      "total_orders": 1,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 2.142368240930869,
+      "avg_improvement": 0.0
+    },
+    "GLW": {
+      "total_orders": 1,
+      "limit_attempts": 0,
+      "limit_fills": 0,
+      "avg_spread": 0.020000000000000004,
+      "avg_improvement": 0.0
     }
   },
-  "last_updated": "2026-02-03T23:33:33.539782"
+  "last_updated": "2026-02-04T13:09:47.154226"
 }

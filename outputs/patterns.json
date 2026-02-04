@@ -4452,7 +4452,37 @@
         "QualityValue_LS",
         "SectorRotation"
       ]
+    },
+    {
+      "timestamp": "2026-02-04T13:09:55.729486",
+      "market_context": {
+        "regime": "risk_off",
+        "volatility_regime": "medium",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "TS_Momentum_LS": 0.6,
+        "QuickMeanReversion": 0.5,
+        "OpeningRangeBreakout": 0.65,
+        "IntradayMomentum": 0.65,
+        "VolumeSpike": 0.7,
+        "RelativeStrengthIntraday": 0.6,
+        "QualityValue_LS": 0.5,
+        "CrossSectionMomentum": 0.65,
+        "CalendarEffects": 0.39,
+        "MeanReversion_LS": 0.5,
+        "SectorRotation": 0.6
+      },
+      "outcome_return": -0.008748386202432509,
+      "winning_strategies": [
+        "VolumeSpike"
+      ],
+      "losing_strategies": [
+        "TS_Momentum_LS",
+        "QualityValue_LS",
+        "SectorRotation"
+      ]
     }
   ],
-  "last_updated": "2026-02-04T13:07:12.120728"
+  "last_updated": "2026-02-04T13:10:36.764159"
 }

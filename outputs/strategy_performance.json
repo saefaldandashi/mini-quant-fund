@@ -2,16 +2,16 @@
   "metrics": {
     "VolumeSpike": {
       "strategy_name": "VolumeSpike",
-      "total_predictions": 6,
-      "correct_predictions": 6,
+      "total_predictions": 7,
+      "correct_predictions": 7,
       "accuracy": 1.0,
-      "cumulative_return": 0.07440721266239458,
-      "avg_return_per_trade": 0.012401202110399098,
-      "sharpe_ratio": 0,
+      "cumulative_return": 0.08680841477279369,
+      "avg_return_per_trade": 0.012401202110399096,
+      "sharpe_ratio": 7148806298027466.0,
       "max_drawdown": 0.0,
-      "volatility": 0.0,
+      "volatility": 1.734723475976807e-18,
       "win_rate": 1.0,
-      "profit_factor": 74.40721266239458,
+      "profit_factor": 86.80841477279368,
       "performance_by_regime": {
         "risk_off": 0.012401202110399098,
         "neutral": 0.012401202110399098
@@ -22,7 +22,7 @@
       "avg_confidence_when_wrong": 0,
       "confidence_calibration": 0.7000000000000001,
       "rolling_accuracy_20": 1.0,
-      "rolling_return_20": 0.07440721266239458,
+      "rolling_return_20": 0.08680841477279369,
       "improving": false,
       "momentum_score": 0.0
     },
@@ -53,13 +53,13 @@
     },
     "SectorRotation": {
       "strategy_name": "SectorRotation",
-      "total_predictions": 5,
+      "total_predictions": 6,
       "correct_predictions": 0,
       "accuracy": 0.0,
-      "cumulative_return": -0.05207308489526591,
+      "cumulative_return": -0.062487701874319096,
       "avg_return_per_trade": -0.010414616979053182,
       "sharpe_ratio": 0,
-      "max_drawdown": 0.04165846791621273,
+      "max_drawdown": 0.05207308489526591,
       "volatility": 0.0,
       "win_rate": 0.0,
       "profit_factor": 0.0,
@@ -72,24 +72,24 @@
       "avg_confidence_when_wrong": 0.6,
       "confidence_calibration": -0.6,
       "rolling_accuracy_20": 0.0,
-      "rolling_return_20": -0.05207308489526591,
+      "rolling_return_20": -0.062487701874319096,
       "improving": false,
       "momentum_score": 0.0
     },
     "QualityValue_LS": {
       "strategy_name": "QualityValue_LS",
-      "total_predictions": 6,
+      "total_predictions": 7,
       "correct_predictions": 0,
       "accuracy": 0.0,
-      "cumulative_return": -0.040278172494840704,
-      "avg_return_per_trade": -0.006713028749140118,
-      "sharpe_ratio": -7739595205927645.0,
-      "max_drawdown": 0.03356514374570059,
-      "volatility": 8.673617379884035e-19,
+      "cumulative_return": -0.04699120124398082,
+      "avg_return_per_trade": -0.006713028749140119,
+      "sharpe_ratio": -3869797602963823.0,
+      "max_drawdown": 0.04027817249484071,
+      "volatility": 1.734723475976807e-18,
       "win_rate": 0.0,
       "profit_factor": 0.0,
       "performance_by_regime": {
-        "risk_off": -0.006713028749140118
+        "risk_off": -0.006713028749140119
       },
       "best_regime": "risk_off",
       "worst_regime": "risk_off",
@@ -97,2593 +97,13 @@
       "avg_confidence_when_wrong": 0.5,
       "confidence_calibration": -0.5,
       "rolling_accuracy_20": 0.0,
-      "rolling_return_20": -0.040278172494840704,
+      "rolling_return_20": -0.04699120124398082,
       "improving": false,
       "momentum_score": 0.0
     }
   },
   "history": {
     "TS_Momentum_LS": [
-      {
-        "timestamp": "2026-02-04T12:58:00.865640",
-        "symbol": "ADI",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.875174",
-        "symbol": "KLAC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.884751",
-        "symbol": "SNPS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.894497",
-        "symbol": "CDNS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.903734",
-        "symbol": "FTNT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.913200",
-        "symbol": "MCHP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.922684",
-        "symbol": "TEL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.932302",
-        "symbol": "HPQ",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.942153",
-        "symbol": "KEYS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.951384",
-        "symbol": "ON",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.960831",
-        "symbol": "GLW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.970333",
-        "symbol": "ZBRA",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.979865",
-        "symbol": "CDW",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.989669",
-        "symbol": "AKAM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:00.999088",
-        "symbol": "EPAM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.008627",
-        "symbol": "FFIV",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.018151",
-        "symbol": "WDC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.027729",
-        "symbol": "STX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.037242",
-        "symbol": "SWKS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.046849",
-        "symbol": "SEDG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.056308",
-        "symbol": "ENPH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.065895",
-        "symbol": "FSLR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.075647",
-        "symbol": "RUN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.085336",
-        "symbol": "ANET",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.094605",
-        "symbol": "DDOG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.104104",
-        "symbol": "ZS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.113662",
-        "symbol": "OKTA",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.123442",
-        "symbol": "NET",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.132998",
-        "symbol": "MDB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.142702",
-        "symbol": "SNOW",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.152317",
-        "symbol": "JPM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.161858",
-        "symbol": "BAC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.171177",
-        "symbol": "WFC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": "incorrect",
-        "actual_return": -0.010414616979053182
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.180668",
-        "symbol": "GS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.190246",
-        "symbol": "MS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": "incorrect",
-        "actual_return": -0.0023305120654158336
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.199798",
-        "symbol": "C",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.209362",
-        "symbol": "SCHW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.219017",
-        "symbol": "AXP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.228262",
-        "symbol": "USB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.237534",
-        "symbol": "PNC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.247119",
-        "symbol": "TFC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.256708",
-        "symbol": "BK",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.266310",
-        "symbol": "ICE",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.275475",
-        "symbol": "MCO",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.284883",
-        "symbol": "SPGI",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.294381",
-        "symbol": "FIS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.303860",
-        "symbol": "FISV",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.313353",
-        "symbol": "ADP",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.322864",
-        "symbol": "PAYX",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.332612",
-        "symbol": "GPN",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.342244",
-        "symbol": "CFG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.352088",
-        "symbol": "KEY",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.361827",
-        "symbol": "RF",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.371895",
-        "symbol": "HBAN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.381303",
-        "symbol": "MTB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.390922",
-        "symbol": "FITB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.400574",
-        "symbol": "ZION",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.410167",
-        "symbol": "CMA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.419774",
-        "symbol": "NTRS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.429234",
-        "symbol": "STT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.438785",
-        "symbol": "BRO",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.448365",
-        "symbol": "AJG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.457999",
-        "symbol": "MMC",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.467615",
-        "symbol": "CINF",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.476788",
-        "symbol": "L",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.486224",
-        "symbol": "TRV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.495680",
-        "symbol": "PGR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.505126",
-        "symbol": "CB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.514597",
-        "symbol": "UNH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.524101",
-        "symbol": "LLY",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.533573",
-        "symbol": "JNJ",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.542951",
-        "symbol": "MRK",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.552477",
-        "symbol": "ABBV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.562119",
-        "symbol": "PFE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.571844",
-        "symbol": "TMO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": "incorrect",
-        "actual_return": -0.03668497532895251
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.581542",
-        "symbol": "ABT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.591610",
-        "symbol": "DHR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.601208",
-        "symbol": "BMY",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.610753",
-        "symbol": "AMGN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.620322",
-        "symbol": "GILD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.629666",
-        "symbol": "REGN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.639307",
-        "symbol": "MRNA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.648925",
-        "symbol": "BIIB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.658606",
-        "symbol": "ILMN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.668353",
-        "symbol": "DXCM",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.677995",
-        "symbol": "MDT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.687967",
-        "symbol": "BSX",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.697715",
-        "symbol": "ZBH",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.707422",
-        "symbol": "IDXX",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.716735",
-        "symbol": "IQV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.726476",
-        "symbol": "A",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.736161",
-        "symbol": "MTD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.745595",
-        "symbol": "WAT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.755094",
-        "symbol": "HOLX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.764566",
-        "symbol": "ALGN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.774081",
-        "symbol": "TECH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.783709",
-        "symbol": "BIO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.793332",
-        "symbol": "CRL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.802974",
-        "symbol": "ELV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.813101",
-        "symbol": "HUM",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.822825",
-        "symbol": "CNC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.832339",
-        "symbol": "MOH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.842015",
-        "symbol": "CVS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.851599",
-        "symbol": "MCK",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.861934",
-        "symbol": "CAH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.871982",
-        "symbol": "VTRS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.881930",
-        "symbol": "ZTS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.891456",
-        "symbol": "DGX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.901166",
-        "symbol": "AMZN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.910757",
-        "symbol": "TSLA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.920355",
-        "symbol": "MCD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.929998",
-        "symbol": "NKE",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.939340",
-        "symbol": "LOW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.948877",
-        "symbol": "TJX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.958360",
-        "symbol": "BKNG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.967854",
-        "symbol": "MAR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.977326",
-        "symbol": "HLT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.986843",
-        "symbol": "CMG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:01.996414",
-        "symbol": "YUM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.005960",
-        "symbol": "AZO",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.015543",
-        "symbol": "PHM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.025145",
-        "symbol": "GRMN",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.034527",
-        "symbol": "POOL",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.044027",
-        "symbol": "ULTA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.053543",
-        "symbol": "EXPE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.063052",
-        "symbol": "F",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.072586",
-        "symbol": "GM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.082145",
-        "symbol": "APTV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.091487",
-        "symbol": "BWA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.100968",
-        "symbol": "LEA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.110550",
-        "symbol": "RL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.120096",
-        "symbol": "TPR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.129765",
-        "symbol": "VFC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.139384",
-        "symbol": "PVH",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.149027",
-        "symbol": "KO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.158612",
-        "symbol": "PEP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.168158",
-        "symbol": "WMT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.177707",
-        "symbol": "PM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.187248",
-        "symbol": "MDLZ",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.196552",
-        "symbol": "CL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.206044",
-        "symbol": "KMB",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.215509",
-        "symbol": "HSY",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.224997",
-        "symbol": "HRL",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.234685",
-        "symbol": "TSN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.244449",
-        "symbol": "MNST",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.254137",
-        "symbol": "KDP",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.269759",
-        "symbol": "EL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.279473",
-        "symbol": "CHD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.289035",
-        "symbol": "CLX",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.298498",
-        "symbol": "KHC",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.307977",
-        "symbol": "CPB",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.317497",
-        "symbol": "MKC",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.326955",
-        "symbol": "ADM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.336545",
-        "symbol": "CAT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.346144",
-        "symbol": "UNP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.355700",
-        "symbol": "UPS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.365317",
-        "symbol": "RTX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.374926",
-        "symbol": "LMT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.384490",
-        "symbol": "BA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.394042",
-        "symbol": "GE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.403867",
-        "symbol": "GD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.413912",
-        "symbol": "NOC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.423500",
-        "symbol": "TXT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.433174",
-        "symbol": "HII",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.442826",
-        "symbol": "LHX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.452334",
-        "symbol": "TDG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.461946",
-        "symbol": "AXON",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.471469",
-        "symbol": "ETN",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.481035",
-        "symbol": "EMR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.490588",
-        "symbol": "ROK",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.500062",
-        "symbol": "AME",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.509411",
-        "symbol": "ITW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.518935",
-        "symbol": "PH",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.528464",
-        "symbol": "DOV",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.538213",
-        "symbol": "ODFL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.547761",
-        "symbol": "JBHT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.557357",
-        "symbol": "CSX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.567074",
-        "symbol": "NSC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.576735",
-        "symbol": "FDX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.586366",
-        "symbol": "CHRW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.595718",
-        "symbol": "WAB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.605190",
-        "symbol": "GWW",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.614702",
-        "symbol": "CTAS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.624209",
-        "symbol": "CPRT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.633547",
-        "symbol": "PCAR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.643027",
-        "symbol": "CARR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.652577",
-        "symbol": "JCI",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.662095",
-        "symbol": "LII",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.671683",
-        "symbol": "XOM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.681442",
-        "symbol": "CVX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.690950",
-        "symbol": "COP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.700441",
-        "symbol": "SLB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.709896",
-        "symbol": "MPC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.719314",
-        "symbol": "PSX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.728849",
-        "symbol": "VLO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.738691",
-        "symbol": "DVN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.748263",
-        "symbol": "HAL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.757617",
-        "symbol": "BKR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.767125",
-        "symbol": "FANG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.776659",
-        "symbol": "KMI",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.786158",
-        "symbol": "WMB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.795717",
-        "symbol": "TRGP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.805233",
-        "symbol": "LNG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.814868",
-        "symbol": "META",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.824557",
-        "symbol": "GOOGL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": "incorrect",
-        "actual_return": -0.006713028749140117
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.834197",
-        "symbol": "GOOG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.843576",
-        "symbol": "NFLX",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.853092",
-        "symbol": "DIS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.862765",
-        "symbol": "CMCSA",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.872575",
-        "symbol": "TMUS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.882237",
-        "symbol": "CHTR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.891739",
-        "symbol": "EA",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.901227",
-        "symbol": "MTCH",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.910816",
-        "symbol": "NEE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.920447",
-        "symbol": "SO",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.930025",
-        "symbol": "AEP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.939662",
-        "symbol": "PEG",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.949234",
-        "symbol": "AWK",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.959051",
-        "symbol": "ATO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.968625",
-        "symbol": "PLD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.978213",
-        "symbol": "AMT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.987544",
-        "symbol": "CCI",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:02.996995",
-        "symbol": "SPG",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.006500",
-        "symbol": "O",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.016018",
-        "symbol": "WELL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.025568",
-        "symbol": "DLR",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.035010",
-        "symbol": "VTR",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.044529",
-        "symbol": "ARE",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.054081",
-        "symbol": "MAA",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.063534",
-        "symbol": "ECL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.073072",
-        "symbol": "DD",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.082477",
-        "symbol": "NEM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.092010",
-        "symbol": "FCX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.101505",
-        "symbol": "NUE",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.111062",
-        "symbol": "STLD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.120544",
-        "symbol": "VMC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.130058",
-        "symbol": "MLM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.139619",
-        "symbol": "ALB",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:03.149269",
-        "symbol": "MOS",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:13.498474",
-        "symbol": "AAPL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.0050322907585839275,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:13.566310",
-        "symbol": "GS",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.004967709241416074,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T12:58:13.587479",
-        "symbol": "USB",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.00043375973596532127,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.592850",
-        "symbol": "AAPL",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.603224",
-        "symbol": "MSFT",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.613284",
-        "symbol": "AVGO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.623777",
-        "symbol": "ORCL",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.633907",
-        "symbol": "ADBE",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.644187",
-        "symbol": "CRM",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.654374",
-        "symbol": "AMD",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.664546",
-        "symbol": "CSCO",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": "correct",
-        "actual_return": 0.012401202110399098
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.675025",
-        "symbol": "INTC",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.685065",
-        "symbol": "IBM",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.695397",
-        "symbol": "TXN",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.705638",
-        "symbol": "AMAT",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.716015",
-        "symbol": "LRCX",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.728103",
-        "symbol": "MU",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.738329",
-        "symbol": "INTU",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
-      {
-        "timestamp": "2026-02-04T13:04:06.748494",
-        "symbol": "NOW",
-        "direction": "short",
-        "confidence": 0.6,
-        "expected_return": 0.7450197390882333,
-        "regime": "risk_off",
-        "outcome": null,
-        "actual_return": null
-      },
       {
         "timestamp": "2026-02-04T13:04:06.759136",
         "symbol": "ADI",
@@ -5100,6 +2520,2586 @@
         "direction": "short",
         "confidence": 0.6,
         "expected_return": 0.00043389297687727163,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:23.974913",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:23.991766",
+        "symbol": "MSFT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.004416",
+        "symbol": "AVGO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.015860",
+        "symbol": "ORCL",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.026663",
+        "symbol": "ADBE",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.037585",
+        "symbol": "CRM",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.047782",
+        "symbol": "AMD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.057942",
+        "symbol": "CSCO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": "correct",
+        "actual_return": 0.012401202110399098
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.068154",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.078219",
+        "symbol": "IBM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.088780",
+        "symbol": "TXN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.099028",
+        "symbol": "AMAT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.109155",
+        "symbol": "LRCX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.119543",
+        "symbol": "MU",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.129594",
+        "symbol": "INTU",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.139926",
+        "symbol": "NOW",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.150026",
+        "symbol": "ADI",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.160298",
+        "symbol": "KLAC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.170851",
+        "symbol": "SNPS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.181428",
+        "symbol": "CDNS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.191741",
+        "symbol": "FTNT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.202180",
+        "symbol": "MCHP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.212331",
+        "symbol": "TEL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.222725",
+        "symbol": "HPQ",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.233237",
+        "symbol": "KEYS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.243601",
+        "symbol": "ON",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.253909",
+        "symbol": "GLW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.264275",
+        "symbol": "ZBRA",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.274919",
+        "symbol": "CDW",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.285887",
+        "symbol": "AKAM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.296189",
+        "symbol": "EPAM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.306509",
+        "symbol": "FFIV",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.317053",
+        "symbol": "WDC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.327730",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.337943",
+        "symbol": "SWKS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.348139",
+        "symbol": "SEDG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.358839",
+        "symbol": "ENPH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.369018",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.379201",
+        "symbol": "RUN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.389559",
+        "symbol": "ANET",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.399976",
+        "symbol": "DDOG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.410127",
+        "symbol": "ZS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.420581",
+        "symbol": "OKTA",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.430793",
+        "symbol": "NET",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.441072",
+        "symbol": "MDB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.451466",
+        "symbol": "SNOW",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.461801",
+        "symbol": "JPM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.472346",
+        "symbol": "BAC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.483062",
+        "symbol": "WFC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": "incorrect",
+        "actual_return": -0.010414616979053182
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.493302",
+        "symbol": "GS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.504070",
+        "symbol": "MS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": "incorrect",
+        "actual_return": -0.0023305120654158336
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.514577",
+        "symbol": "C",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.525287",
+        "symbol": "SCHW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.535961",
+        "symbol": "AXP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.546421",
+        "symbol": "USB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.557068",
+        "symbol": "PNC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.567769",
+        "symbol": "TFC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.578036",
+        "symbol": "BK",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.588594",
+        "symbol": "ICE",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.599333",
+        "symbol": "MCO",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.609625",
+        "symbol": "SPGI",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.620124",
+        "symbol": "FIS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.630381",
+        "symbol": "FISV",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.641102",
+        "symbol": "ADP",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.651592",
+        "symbol": "PAYX",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.661926",
+        "symbol": "GPN",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.672511",
+        "symbol": "CFG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.683067",
+        "symbol": "KEY",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.693487",
+        "symbol": "RF",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.703822",
+        "symbol": "HBAN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.713986",
+        "symbol": "MTB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.724347",
+        "symbol": "FITB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.734785",
+        "symbol": "ZION",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.745097",
+        "symbol": "CMA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.755484",
+        "symbol": "NTRS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.765854",
+        "symbol": "STT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.775996",
+        "symbol": "BRO",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.786360",
+        "symbol": "AJG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.796556",
+        "symbol": "MMC",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.806820",
+        "symbol": "CINF",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.817537",
+        "symbol": "L",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.827847",
+        "symbol": "TRV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.838825",
+        "symbol": "PGR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.849872",
+        "symbol": "CB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.860436",
+        "symbol": "UNH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.871266",
+        "symbol": "LLY",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.881591",
+        "symbol": "JNJ",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.892375",
+        "symbol": "MRK",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.902892",
+        "symbol": "ABBV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.913169",
+        "symbol": "PFE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.923750",
+        "symbol": "TMO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": "incorrect",
+        "actual_return": -0.03668497532895251
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.934363",
+        "symbol": "ABT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.944692",
+        "symbol": "DHR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.955197",
+        "symbol": "BMY",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.965769",
+        "symbol": "AMGN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.976020",
+        "symbol": "GILD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.986713",
+        "symbol": "REGN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:24.997019",
+        "symbol": "MRNA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.008014",
+        "symbol": "BIIB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.018924",
+        "symbol": "ILMN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.028969",
+        "symbol": "DXCM",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.039278",
+        "symbol": "MDT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.049735",
+        "symbol": "BSX",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.059702",
+        "symbol": "ZBH",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.070123",
+        "symbol": "IDXX",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.080140",
+        "symbol": "IQV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.090521",
+        "symbol": "A",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.101046",
+        "symbol": "MTD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.110913",
+        "symbol": "WAT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.121186",
+        "symbol": "HOLX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.131024",
+        "symbol": "ALGN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.141384",
+        "symbol": "TECH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.151575",
+        "symbol": "BIO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.161851",
+        "symbol": "CRL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.172285",
+        "symbol": "ELV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.182578",
+        "symbol": "HUM",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.192498",
+        "symbol": "CNC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.202899",
+        "symbol": "MOH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.213086",
+        "symbol": "CVS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.223422",
+        "symbol": "MCK",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.233635",
+        "symbol": "CAH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.243499",
+        "symbol": "VTRS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.254058",
+        "symbol": "ZTS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.264034",
+        "symbol": "DGX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.274321",
+        "symbol": "AMZN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.284701",
+        "symbol": "TSLA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.294730",
+        "symbol": "MCD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.305247",
+        "symbol": "NKE",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.315639",
+        "symbol": "LOW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.325741",
+        "symbol": "TJX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.336044",
+        "symbol": "BKNG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.346149",
+        "symbol": "MAR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.356299",
+        "symbol": "HLT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.366548",
+        "symbol": "CMG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.376437",
+        "symbol": "YUM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.386799",
+        "symbol": "AZO",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.396788",
+        "symbol": "PHM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.407075",
+        "symbol": "GRMN",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.417379",
+        "symbol": "POOL",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.427267",
+        "symbol": "ULTA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.437435",
+        "symbol": "EXPE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.447389",
+        "symbol": "F",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.457795",
+        "symbol": "GM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.468111",
+        "symbol": "APTV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.478082",
+        "symbol": "BWA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.488419",
+        "symbol": "LEA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.498386",
+        "symbol": "RL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.508681",
+        "symbol": "TPR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.518994",
+        "symbol": "VFC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.528991",
+        "symbol": "PVH",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.539236",
+        "symbol": "KO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.549519",
+        "symbol": "PEP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.559587",
+        "symbol": "WMT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.570006",
+        "symbol": "PM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.580037",
+        "symbol": "MDLZ",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.590360",
+        "symbol": "CL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.600821",
+        "symbol": "KMB",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.611114",
+        "symbol": "HSY",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.621452",
+        "symbol": "HRL",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.631465",
+        "symbol": "TSN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.641846",
+        "symbol": "MNST",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.652074",
+        "symbol": "KDP",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.662039",
+        "symbol": "EL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.672407",
+        "symbol": "CHD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.682687",
+        "symbol": "CLX",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.692736",
+        "symbol": "KHC",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.703188",
+        "symbol": "CPB",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.713179",
+        "symbol": "MKC",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.723557",
+        "symbol": "ADM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.733975",
+        "symbol": "CAT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.744323",
+        "symbol": "UNP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.754947",
+        "symbol": "UPS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.765477",
+        "symbol": "RTX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.775572",
+        "symbol": "LMT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.786064",
+        "symbol": "BA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.796259",
+        "symbol": "GE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.806780",
+        "symbol": "GD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.817364",
+        "symbol": "NOC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.827510",
+        "symbol": "TXT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.837920",
+        "symbol": "HII",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.848232",
+        "symbol": "LHX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.858493",
+        "symbol": "TDG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.869001",
+        "symbol": "AXON",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.879115",
+        "symbol": "ETN",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.889507",
+        "symbol": "EMR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.899976",
+        "symbol": "ROK",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.910155",
+        "symbol": "AME",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.920625",
+        "symbol": "ITW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.930763",
+        "symbol": "PH",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.941454",
+        "symbol": "DOV",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.951911",
+        "symbol": "ODFL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.962039",
+        "symbol": "JBHT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.972194",
+        "symbol": "CSX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.982510",
+        "symbol": "NSC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:25.992472",
+        "symbol": "FDX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.002949",
+        "symbol": "CHRW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.013158",
+        "symbol": "WAB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.023528",
+        "symbol": "GWW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.034104",
+        "symbol": "CTAS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.044231",
+        "symbol": "CPRT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.054850",
+        "symbol": "PCAR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.065169",
+        "symbol": "CARR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.075380",
+        "symbol": "JCI",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.085925",
+        "symbol": "LII",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.096106",
+        "symbol": "XOM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.106563",
+        "symbol": "CVX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.117040",
+        "symbol": "COP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.127237",
+        "symbol": "SLB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.137741",
+        "symbol": "MPC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.147926",
+        "symbol": "PSX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.158354",
+        "symbol": "VLO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.168783",
+        "symbol": "DVN",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.178963",
+        "symbol": "HAL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.189388",
+        "symbol": "BKR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.200096",
+        "symbol": "FANG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.210287",
+        "symbol": "KMI",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.220663",
+        "symbol": "WMB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.230758",
+        "symbol": "TRGP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.241117",
+        "symbol": "LNG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.251498",
+        "symbol": "META",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.261526",
+        "symbol": "GOOGL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": "incorrect",
+        "actual_return": -0.006713028749140117
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.271936",
+        "symbol": "GOOG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.282387",
+        "symbol": "NFLX",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.292413",
+        "symbol": "DIS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.302710",
+        "symbol": "CMCSA",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.312647",
+        "symbol": "TMUS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.323081",
+        "symbol": "CHTR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.333417",
+        "symbol": "EA",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.343384",
+        "symbol": "MTCH",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.353622",
+        "symbol": "NEE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.363697",
+        "symbol": "SO",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.373952",
+        "symbol": "AEP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.384249",
+        "symbol": "PEG",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.394184",
+        "symbol": "AWK",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.404379",
+        "symbol": "ATO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.414377",
+        "symbol": "PLD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.424709",
+        "symbol": "AMT",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.434926",
+        "symbol": "CCI",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.444836",
+        "symbol": "SPG",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.455164",
+        "symbol": "O",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.465409",
+        "symbol": "WELL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.475435",
+        "symbol": "DLR",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.485666",
+        "symbol": "VTR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.495728",
+        "symbol": "ARE",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.506019",
+        "symbol": "MAA",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.516365",
+        "symbol": "ECL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.526503",
+        "symbol": "DD",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.536809",
+        "symbol": "NEM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.546878",
+        "symbol": "FCX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.557125",
+        "symbol": "NUE",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.567515",
+        "symbol": "STLD",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.577569",
+        "symbol": "VMC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.587846",
+        "symbol": "MLM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.597922",
+        "symbol": "ALB",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.608056",
+        "symbol": "MOS",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.7450197390882333,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:45.541544",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.005033066034527346,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:45.602016",
+        "symbol": "GS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.004966933965472654,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:45.623449",
+        "symbol": "USB",
+        "direction": "short",
+        "confidence": 0.6,
+        "expected_return": 0.0004338258419632303,
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
@@ -8805,6 +8805,106 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.905388",
+        "symbol": "WDC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.915822",
+        "symbol": "PLTR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.926038",
+        "symbol": "VLO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.936447",
+        "symbol": "FCX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.946406",
+        "symbol": "MPC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.956809",
+        "symbol": "WTW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.967377",
+        "symbol": "GWW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.977476",
+        "symbol": "FDX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.988040",
+        "symbol": "ITW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.998338",
+        "symbol": "PEP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "QuickMeanReversion": [
@@ -11027,6 +11127,66 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.618295",
+        "symbol": "EXPE",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.628290",
+        "symbol": "EPAM",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.638567",
+        "symbol": "IQV",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.648878",
+        "symbol": "SPGI",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.659043",
+        "symbol": "OMC",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.669585",
+        "symbol": "INTU",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "OpeningRangeBreakout": [
@@ -12816,6 +12976,56 @@
         "direction": "long",
         "confidence": 0.65,
         "expected_return": 0.005035123201887708,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.679687",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.690085",
+        "symbol": "NXPI",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.700458",
+        "symbol": "RUN",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.710484",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:45.577289",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005033066034527346,
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
@@ -16514,6 +16724,106 @@
       },
       {
         "timestamp": "2026-02-04T13:04:09.635896",
+        "symbol": "ARE",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.008640",
+        "symbol": "JNJ",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.019232",
+        "symbol": "GOOGL",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": "incorrect",
+        "actual_return": -0.006713028749140117
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.029548",
+        "symbol": "GOOG",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.040154",
+        "symbol": "MRK",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.050797",
+        "symbol": "NEE",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.061190",
+        "symbol": "FFIV",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.071776",
+        "symbol": "DD",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.082325",
+        "symbol": "CHTR",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.092761",
+        "symbol": "MOS",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.103385",
         "symbol": "ARE",
         "direction": "short",
         "confidence": 0.5,
@@ -20223,6 +20533,106 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.219029",
+        "symbol": "INTU",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.229350",
+        "symbol": "NFLX",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.239896",
+        "symbol": "FIS",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.250871",
+        "symbol": "ISRG",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.261537",
+        "symbol": "CRM",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.272297",
+        "symbol": "CL",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.283076",
+        "symbol": "JNJ",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.293372",
+        "symbol": "LMT",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.304159",
+        "symbol": "CHD",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.314447",
+        "symbol": "CHRW",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "CrossSectionMomentum": [
@@ -22068,6 +22478,56 @@
       },
       {
         "timestamp": "2026-02-04T13:04:09.362883",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.113797",
+        "symbol": "MU",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.124403",
+        "symbol": "WDC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.135139",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.145625",
+        "symbol": "ALB",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.156147",
         "symbol": "INTC",
         "direction": "long",
         "confidence": 0.65,
@@ -25197,6 +25657,106 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.720782",
+        "symbol": "NXPI",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.730804",
+        "symbol": "ON",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.741088",
+        "symbol": "NOW",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.751386",
+        "symbol": "SEDG",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.761532",
+        "symbol": "ENPH",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.771887",
+        "symbol": "KLAC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.782257",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.792271",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.802576",
+        "symbol": "MRVL",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.812651",
+        "symbol": "MCHP",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "VWAPReversion": [
@@ -27821,6 +28381,86 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.823085",
+        "symbol": "SEDG",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.833349",
+        "symbol": "KEYS",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.843391",
+        "symbol": "CSCO",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": "correct",
+        "actual_return": 0.012401202110399098
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.853749",
+        "symbol": "ENPH",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.863960",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.874315",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.884759",
+        "symbol": "RUN",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:26.894928",
+        "symbol": "GLW",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "SectorRotation": [
@@ -28283,6 +28923,96 @@
         "regime": "risk_off",
         "outcome": "incorrect",
         "actual_return": -0.010414616979053182
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.324971",
+        "symbol": "HON",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.008594354302140738,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.335680",
+        "symbol": "UPS",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.008594354302140738,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.346020",
+        "symbol": "CAT",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.008594354302140738,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.356649",
+        "symbol": "XOM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.008594354302140738,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.367312",
+        "symbol": "CVX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.008594354302140738,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.377652",
+        "symbol": "COP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.008594354302140738,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.388592",
+        "symbol": "JPM",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.008594354302140738,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.399316",
+        "symbol": "BAC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.008594354302140738,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.409947",
+        "symbol": "WFC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.008594354302140738,
+        "regime": "risk_off",
+        "outcome": "incorrect",
+        "actual_return": -0.010414616979053182
       }
     ],
     "CalendarEffects": [
@@ -28585,6 +29315,66 @@
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.166713",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.39,
+        "expected_return": 0.00125,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.177113",
+        "symbol": "MSFT",
+        "direction": "long",
+        "confidence": 0.39,
+        "expected_return": 0.00125,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.187598",
+        "symbol": "NVDA",
+        "direction": "long",
+        "confidence": 0.39,
+        "expected_return": 0.00125,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.197819",
+        "symbol": "AVGO",
+        "direction": "long",
+        "confidence": 0.39,
+        "expected_return": 0.00125,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:27.208425",
+        "symbol": "ORCL",
+        "direction": "long",
+        "confidence": 0.39,
+        "expected_return": 0.00125,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:45.590304",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.39,
+        "expected_return": 0.005033066034527346,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "CS_Momentum_LS": [
@@ -28727,8 +29517,38 @@
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:45.562243",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 1.0,
+        "expected_return": 0.005033066034527346,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:45.612802",
+        "symbol": "GS",
+        "direction": "long",
+        "confidence": 1.0,
+        "expected_return": 0.004966933965472654,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T13:09:45.634108",
+        "symbol": "USB",
+        "direction": "short",
+        "confidence": 1.0,
+        "expected_return": 0.0004338258419632303,
+        "regime": "neutral",
+        "outcome": null,
+        "actual_return": null
       }
     ]
   },
-  "last_updated": "2026-02-04T13:04:33.321197"
+  "last_updated": "2026-02-04T13:09:55.718276"
 }
