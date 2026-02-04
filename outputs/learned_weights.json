@@ -129,20 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 164,
+  "total_rounds": 165,
   "reward_history": [
-    {
-      "timestamp": "2026-01-21T19:26:25.901677",
-      "returns": {
-        "RelativeStrengthIntraday": -0.0036623844940273684,
-        "IntradayMomentum": -0.0036623844940273684,
-        "TS_Momentum_LS": 0.00036222359754118575,
-        "CrossSectionMomentum": -0.00019277772383283556,
-        "QualityValue_LS": -0.008921863678231686,
-        "MeanReversion_LS": 0.0032759997942920006
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-01-21T19:32:22.472803",
       "returns": {
@@ -1205,7 +1193,17 @@
         "QualityValue_LS": -0.009986573381322573
       },
       "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T12:30:02.257763",
+      "returns": {
+        "VolumeSpike": 0.012401202110399098,
+        "TS_Momentum_LS": -0.008748386202432509,
+        "SectorRotation": -0.010414616979053182,
+        "QualityValue_LS": -0.006713028749140117
+      },
+      "regime": "risk_off"
     }
   ],
-  "last_updated": "2026-02-03T23:33:47.775410"
+  "last_updated": "2026-02-04T12:30:02.258343"
 }

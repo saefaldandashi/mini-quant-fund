@@ -756,7 +756,7 @@ def create_strategies(enable_long_short=False, enable_futures=False, trading_mod
         logging.info(f"Added {len(futures_strategies)} Futures strategies (backtest proxies)")
     
     # Add Alpha Enhancement strategies (pairs trading, sector rotation, calendar effects, order flow)
-    enable_alpha = config.get('enable_alpha', True) if config else True
+    enable_alpha = getattr(config, 'ENABLE_ALPHA_STRATEGIES', True)
     if enable_alpha:
         from src.strategies import create_alpha_strategies
         alpha_strategies = create_alpha_strategies()
@@ -911,7 +911,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
     
     Returns tuple of (success: bool, output: str, error: str or None, debate_info: dict)
     """
-    global last_ticker_sentiments, trading_mode_setting
+    global last_ticker_sentiments, trading_mode_setting, capital_exposure_pct
     
     import time as time_module
     rebalance_start_time = time_module.time()
@@ -3700,11 +3700,26 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         # floor() rounds toward negative infinity, so -0.5 becomes -1
         import math
         target_shares = {}
+        
+        # DEBUG: Log enhanced_weights before calculating target_shares
+        short_weights = {s: w for s, w in enhanced_weights.items() if w < 0}
+        long_weights = {s: w for s, w in enhanced_weights.items() if w > 0}
+        log(f"DEBUG: enhanced_weights has {len(long_weights)} longs, {len(short_weights)} shorts")
+        if short_weights:
+            log(f"  DEBUG SHORT WEIGHTS: {list(short_weights.items())[:5]}")
+        
         for symbol, weight in enhanced_weights.items():
             price = current_prices.get(symbol, 0.0)
             if price > 0 and abs(weight) > 0.001:  # Filter by absolute weight
                 target_value = equity * weight
                 target_shares[symbol] = math.floor(target_value / price)
+        
+        # DEBUG: Log target_shares after calculation
+        short_shares = {s: q for s, q in target_shares.items() if q < 0}
+        long_shares = {s: q for s, q in target_shares.items() if q > 0}
+        log(f"DEBUG: target_shares has {len(long_shares)} longs, {len(short_shares)} shorts")
+        if short_shares:
+            log(f"  DEBUG SHORT SHARES: {list(short_shares.items())[:5]}")
         
         log("")
         
