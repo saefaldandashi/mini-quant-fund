@@ -3695,12 +3695,16 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             logging.error(traceback.format_exc())
         
         # Recalculate target shares after validation
+        # CRITICAL: Use math.floor to properly handle negative weights (shorts)
+        # int() truncates toward zero, which would turn -0.5 into 0
+        # floor() rounds toward negative infinity, so -0.5 becomes -1
+        import math
         target_shares = {}
         for symbol, weight in enhanced_weights.items():
             price = current_prices.get(symbol, 0.0)
-            if price > 0:
+            if price > 0 and abs(weight) > 0.001:  # Filter by absolute weight
                 target_value = equity * weight
-                target_shares[symbol] = int(target_value / price)
+                target_shares[symbol] = math.floor(target_value / price)
         
         log("")
         

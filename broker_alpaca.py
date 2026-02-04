@@ -2,6 +2,7 @@
 Alpaca broker adapter with paper trading safety checks.
 """
 import os
+import math
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime, timedelta
@@ -379,7 +380,9 @@ class AlpacaBroker:
         result = {}
         
         for symbol, weight in target_weights.items():
-            if weight <= 0.001:
+            # Skip weights that are too small in ABSOLUTE terms
+            # This allows negative weights (shorts) to pass through
+            if abs(weight) <= 0.001:
                 continue
                 
             if symbol not in prices:
@@ -392,13 +395,20 @@ class AlpacaBroker:
                 continue
             
             # Calculate target notional based on actual weight
+            # For shorts, weight is negative, so target_notional will be negative
             target_notional = investable_equity * weight
-            shares = int(target_notional / price)  # Floor to whole shares
             
-            if shares > 0:
+            # For shorts: negative notional / positive price = negative shares
+            # Use math.floor to always round toward negative infinity
+            # This ensures shorts always round away from zero (more shares shorted)
+            shares = math.floor(target_notional / price)
+            
+            # Include positions with shares != 0 (both long and short)
+            if shares != 0:
                 result[symbol] = shares
+                position_type = "LONG" if shares > 0 else "SHORT"
                 logging.info(
-                    f"{symbol}: weight={weight:.1%}, target ${target_notional:.2f} / ${price:.2f} = {shares} shares"
+                    f"{symbol}: {position_type} weight={weight:.1%}, target ${target_notional:.2f} / ${price:.2f} = {shares} shares"
                 )
         
         return result
