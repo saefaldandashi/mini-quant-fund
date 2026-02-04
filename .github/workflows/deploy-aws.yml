@@ -54,6 +54,29 @@ jobs:
             
             APP_DIR="$HOME/mini-fund-tool"
             
+            # 0. CLEAN DISK SPACE FIRST
+            echo "🧹 Cleaning disk space..."
+            sudo apt-get clean -y 2>/dev/null || true
+            sudo journalctl --vacuum-time=1d 2>/dev/null || true
+            rm -rf /tmp/* 2>/dev/null || true
+            rm -rf $HOME/.cache/* 2>/dev/null || true
+            
+            if [ -d "$APP_DIR" ]; then
+              # Clean up large output files and caches
+              rm -rf $APP_DIR/outputs/cache/* 2>/dev/null || true
+              rm -rf $APP_DIR/outputs/llm_cache/* 2>/dev/null || true
+              rm -rf $APP_DIR/outputs/news_cache/* 2>/dev/null || true
+              rm -rf $APP_DIR/outputs/news_filter/* 2>/dev/null || true
+              rm -rf $APP_DIR/outputs/*.json 2>/dev/null || true
+              rm -rf $APP_DIR/.git/objects/pack/*.tmp 2>/dev/null || true
+              rm -f $APP_DIR/server.log 2>/dev/null || true
+              # Prune git
+              cd $APP_DIR && git gc --prune=now 2>/dev/null || true
+            fi
+            
+            echo "📊 Disk usage after cleanup:"
+            df -h / | tail -1
+            
             # 1. Clone or pull repo
             if [ ! -d "$APP_DIR" ]; then
               echo "📦 First-time setup: Cloning repository..."
