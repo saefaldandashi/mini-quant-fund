@@ -1750,7 +1750,7 @@
                 <h3>📡 Data Sources</h3>
                 <div id="data-sources" style="font-size: 0.75em; color: var(--text-secondary);">
                     <div style="margin-bottom: 4px;">📊 Alpaca <span class="source-status">●</span></div>
-                    <div style="margin-bottom: 4px;">📰 Alpha Vantage <span class="source-status">●</span></div>
+                    <div style="margin-bottom: 4px;">🌍 Global Intel <span class="source-status">●</span></div>
                     <div style="margin-bottom: 4px;">📈 Yahoo Finance <span class="source-status">●</span></div>
                     <div style="margin-bottom: 4px;">🏛️ FRED <span id="fred-status" class="source-status" style="color: var(--text-dim);">○</span></div>
                     <div>🤖 Gemini <span class="source-status">●</span></div>
@@ -1997,28 +1997,6 @@
                     <span id="geo-events-count">0 events tracked</span>
                     <span id="geo-filter-stats">Acceptance rate: --</span>
                     <span id="geo-last-update">Last update: --</span>
-                </div>
-            </div>
-            
-            <!-- News Headlines -->
-            <div class="card">
-                <div class="card-header" style="flex-wrap: wrap; gap: 10px;">
-                    <h2><span>📰</span> Latest News</h2>
-                    <div style="display: flex; gap: 8px; align-items: center;">
-                        <div class="search-wrapper" style="max-width: 150px;">
-                            <input type="text" class="search-input" id="news-search" placeholder="Filter..." oninput="filterNews(this.value)" style="padding: 6px 12px 6px 32px; font-size: 0.8em;">
-                        </div>
-                        <button class="action-btn secondary" onclick="refreshNews()" style="padding: 6px 12px; font-size: 0.7em;">↻ Refresh</button>
-                    </div>
-                </div>
-                <div class="news-filter-row" id="news-ticker-filters">
-                    <button class="news-filter-btn active" onclick="setNewsFilter('all')">All</button>
-                    <!-- Ticker buttons will be dynamically added -->
-                </div>
-                <div class="card-body" style="padding: 0; max-height: 350px; overflow-y: auto;">
-                    <div id="news-list" style="padding: 15px;">
-                        <div style="text-align: center; color: var(--text-dim); padding: 20px;">Loading news...</div>
-                    </div>
                 </div>
             </div>
             
@@ -3663,125 +3641,12 @@
             }
         }
         
-        // Load News Headlines
-        async function loadNews(forceRefresh = false) {
-            try {
-                const container = document.getElementById('news-list');
-                
-                // Fetch news - use refresh=true to get fresh data from API
-                const url = forceRefresh 
-                    ? '/api/alpha-vantage/fetch?limit=30&refresh=true' 
-                    : '/api/alpha-vantage/fetch?limit=30';
-                const res = await fetch(url, { method: 'POST' });
-                const data = await res.json();
-                
-                // Check for rate limit status
-                const rateLimit = data.rate_limit || {};
-                let rateLimitBanner = '';
-                if (rateLimit.rate_limited) {
-                    rateLimitBanner = `
-                        <div style="background: rgba(255,152,0,0.15); border: 1px solid rgba(255,152,0,0.3); border-radius: 6px; padding: 8px; margin-bottom: 10px;">
-                            <div style="color: #ff9800; font-size: 0.8em; font-weight: 600;">⚠️ API Daily Limit Reached</div>
-                            <div style="color: var(--text-dim); font-size: 0.7em; margin-top: 4px;">
-                                Showing cached news from ${rateLimit.hours_since_fresh_news || '?'}h ago.<br>
-                                Limit resets at midnight UTC.
-                            </div>
-                        </div>
-                    `;
-                }
-                
-                if (data.articles && data.articles.length > 0) {
-                    // Sort by timestamp (newest first)
-                    const sorted = data.articles.sort((a, b) => 
-                        new Date(b.timestamp) - new Date(a.timestamp)
-                    );
-                    
-                    container.innerHTML = rateLimitBanner + sorted.slice(0, 25).map(article => {
-                        const score = article.overall_sentiment_score || 0;
-                        const scoreColor = score > 0.1 ? 'var(--success)' : score < -0.1 ? 'var(--danger)' : 'var(--text-dim)';
-                        const scoreBg = score > 0.1 ? 'rgba(0,245,147,0.15)' : score < -0.1 ? 'rgba(255,71,87,0.15)' : 'var(--bg-secondary)';
-                        
-                        // Calculate relative time
-                        const newsDate = new Date(article.timestamp);
-                        const hoursAgo = Math.round((Date.now() - newsDate) / (1000 * 60 * 60));
-                        const timeStr = hoursAgo < 1 ? 'Just now' : hoursAgo < 24 ? `${hoursAgo}h ago` : `${Math.round(hoursAgo/24)}d ago`;
-                        
-                        return `
-                            <div style="padding: 10px 0; border-bottom: 1px solid var(--border);">
-                                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
-                                    <div style="flex: 1;">
-                                        <div style="font-size: 0.85em; margin-bottom: 4px;">${article.headline || article.title}</div>
-                                        <div style="font-size: 0.7em; color: var(--text-dim);">
-                                            ${article.source} • ${timeStr}
-                                        </div>
-                                    </div>
-                                    <span style="padding: 2px 8px; border-radius: 4px; font-size: 0.7em; background: ${scoreBg}; color: ${scoreColor}; white-space: nowrap;">
-                                        ${score > 0 ? '+' : ''}${(score * 100).toFixed(0)}%
-                                    </span>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-                    
-                    // Show count and cache status
-                    const countDiv = document.createElement('div');
-                    countDiv.style.cssText = 'text-align: center; font-size: 0.7em; color: var(--text-dim); padding: 8px;';
-                    const cacheNote = rateLimit.rate_limited ? ' (cached)' : '';
-                    countDiv.textContent = `Showing ${Math.min(25, sorted.length)} of ${data.articles_fetched} articles${cacheNote}`;
-                    container.appendChild(countDiv);
-                } else {
-                    container.innerHTML = rateLimitBanner + '<div style="text-align: center; color: var(--text-dim); padding: 20px;">No news available. Click Refresh to fetch.</div>';
-                }
-            } catch (e) {
-                console.error('News error:', e);
-                document.getElementById('news-list').innerHTML = '<div style="text-align: center; color: var(--text-dim); padding: 20px;">Failed to load news</div>';
-            }
-        }
-        
-        // Refresh News - Force fetch from API
-        async function refreshNews() {
-            document.getElementById('news-list').innerHTML = '<div style="text-align: center; color: var(--text-dim); padding: 20px;"><div class="loading"></div> Fetching latest news from Alpha Vantage...</div>';
-            await loadNews(true);  // Force refresh
-        }
-        
-        // News filtering
-        let allNews = [];
-        let currentNewsFilter = 'all';
-        
-        function filterNews(query) {
-            query = query.toLowerCase().trim();
-            if (!allNews.length) return;
-            
-            let filtered = allNews;
-            
-            if (currentNewsFilter !== 'all') {
-                filtered = filtered.filter(a => 
-                    (a.tickers || []).some(t => t.toUpperCase() === currentNewsFilter)
-                );
-            }
-            
-            if (query) {
-                filtered = filtered.filter(a => 
-                    (a.headline || a.title || '').toLowerCase().includes(query) ||
-                    (a.source || '').toLowerCase().includes(query)
-                );
-            }
-            
-            renderNewsItems(filtered);
-        }
-        
-        function setNewsFilter(ticker) {
-            currentNewsFilter = ticker;
-            
-            document.querySelectorAll('.news-filter-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.textContent === ticker || (ticker === 'all' && btn.textContent === 'All'));
-            });
-            
-            filterNews(document.getElementById('news-search').value);
-        }
+        // News is now exclusively from Global Intelligence Feed
+        // (Alpha Vantage removed - all news comes from geopolitical intelligence system)
         
         function renderNewsItems(articles) {
-            const container = document.getElementById('news-list');
+            const container = document.getElementById('geo-events-container');
+            if (!container) return;
             
             if (!articles.length) {
                 container.innerHTML = '<div style="text-align: center; color: var(--text-dim); padding: 20px;">No matching news</div>';

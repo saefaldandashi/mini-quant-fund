@@ -129,46 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 170,
+  "total_rounds": 173,
   "reward_history": [
-    {
-      "timestamp": "2026-01-21T21:04:36.831958",
-      "returns": {
-        "IntradayMomentum": 0.01515663736759081,
-        "RelativeStrengthIntraday": 0.01515663736759081,
-        "TS_Momentum_LS": 0.005237221373926343,
-        "QualityValue_LS": 0.00026121105732689683,
-        "MeanReversion_LS": -0.004457079945849662,
-        "CrossSectionMomentum": 0.012422271683132917
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T21:21:05.019933",
-      "returns": {
-        "TS_Momentum_LS": 0.0017239470188088143,
-        "IntradayMomentum": 0.012003015496536729,
-        "RelativeStrengthIntraday": 0.012003015496536729,
-        "CrossSectionMomentum": 0.006161576660982156,
-        "QualityValue_LS": -0.002028774833908117,
-        "NewsSentimentEvent": 0.0028905072505082847,
-        "MeanReversion_LS": -0.004452262550156661
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T21:23:11.096452",
-      "returns": {
-        "TS_Momentum_LS": 0.0014898911631283254,
-        "IntradayMomentum": 0.009613595920100759,
-        "RelativeStrengthIntraday": 0.009613595920100759,
-        "NewsSentimentEvent": 0.0018701517091797388,
-        "MeanReversion_LS": -0.0036226632176078106,
-        "QualityValue_LS": -0.002682559984507608,
-        "CrossSectionMomentum": 0.005602692671097583
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-01-21T22:06:44.489101",
       "returns": {
@@ -1193,7 +1155,34 @@
         "SectorRotation": -0.010414616979053182
       },
       "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T13:16:24.724920",
+      "returns": {
+        "VolumeSpike": 0.012401202110399098,
+        "TS_Momentum_LS": -0.00011464231135663927,
+        "SectorRotation": -0.010414616979053182
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T13:21:50.175430",
+      "returns": {
+        "TS_Momentum_LS": -0.001684372757122887,
+        "VolumeSpike": 0.012401202110399098,
+        "SectorRotation": -0.010414616979053182
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T13:26:53.302475",
+      "returns": {
+        "TS_Momentum_LS": -0.001684372757122887,
+        "VolumeSpike": 0.012401202110399098,
+        "SectorRotation": -0.010414616979053182
+      },
+      "regime": "risk_off"
     }
   ],
-  "last_updated": "2026-02-04T13:09:55.728807"
+  "last_updated": "2026-02-04T13:26:53.302763"
 }

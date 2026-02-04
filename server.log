@@ -29,7 +29,7 @@ Open your browser: http://localhost:5000
 Strategies: 9 active strategies with debate mechanism
 Data Sources:
   - Market Data: Alpaca API (IEX feed)
-  - News & Sentiment: Alpha Vantage News Sentiment API ✓
+  - News & Sentiment: Global Intelligence Feed (50+ sources) ✓
 
 Active Protections:
   ✅ Real-time risk monitor (drawdown/VIX circuit breakers)
@@ -50,4 +50,4 @@ INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a
  * Running on http://127.0.0.1:5000
  * Running on http://10.85.120.201:5000
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug:127.0.0.1 - - [04/Feb/2026 13:10:43] "GET /api/health HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [04/Feb/2026 13:29:53] "GET /api/health HTTP/1.1" 200 -

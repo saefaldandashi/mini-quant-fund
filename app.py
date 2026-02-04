@@ -1313,211 +1313,141 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log(f"Loaded price data for {len(feature_store._price_history)} symbols")
         
         # ============================================================
-        # NEWS INTELLIGENCE PIPELINE (Alpha Vantage)
+        # NEWS INTELLIGENCE PIPELINE (Global Intelligence Feed)
         # ============================================================
         log("=" * 60)
-        log("NEWS INTELLIGENCE PIPELINE (Alpha Vantage)")
+        log("NEWS INTELLIGENCE PIPELINE (Global Intelligence Feed)")
         log("=" * 60)
         
-        # Try to load fresh news from Alpha Vantage
+        # PRIMARY NEWS SOURCE: Global Intelligence Feed (50+ RSS feeds, no rate limits)
         macro_features = None
+        unique_articles = []
+        ticker_features = {}
         
-        # Check for cached sentiments (optional speed optimization)
-        cached_sentiments = load_ultrafast_cache(max_age_minutes=30)
-        skip_news_fetch = False  # Always fetch fresh news
-        
-        if cached_sentiments and False:  # Disabled - always use fresh news
-            log("📦 Using cached ticker sentiments")
-            unique_articles = []
-            ticker_features = cached_sentiments
-            last_ticker_sentiments.update(cached_sentiments)  # Update global
-            if hasattr(macro_loader, 'last_features') and macro_loader.last_features:
-                macro_features = macro_loader.last_features
-                log(f"⚡⚡ Using cached macro features")
-        
-        if not skip_news_fetch:
-            try:
-                symbols_with_data = list(feature_store._price_history.keys())
-                
-                # Use pre-fetched articles from parallel fetch, or fetch now
-                if av_articles_parallel:
-                    av_articles = av_articles_parallel
-                    log(f"Using pre-fetched {len(av_articles)} news articles")
-                else:
-                    log("Fetching market news from Alpha Vantage...")
-                    av_articles = alpha_vantage_news.fetch_market_news(days_back=7)
+        try:
+            # Get news from Global Intelligence Feed (always fresh, no rate limits)
+            geo_events = geopolitical_intel.get_filtered_events(
+                max_age_hours=24, 
+                max_events=100,
+                min_impact=0.3
+            )
             
-                # Also fetch ticker-specific news for top symbols
-                if symbols_with_data and len(av_articles) < 20:
-                    top_symbols = symbols_with_data[:5]  # Limit API calls
-                    log(f"Fetching news for top symbols: {', '.join(top_symbols)}")
-                    ticker_articles = alpha_vantage_news.fetch_ticker_news(top_symbols, days_back=7)
-                    av_articles.extend(ticker_articles)
+            if geo_events:
+                log(f"📰 Global Intelligence Feed: {len(geo_events)} events from 50+ sources")
                 
-                # Deduplicate by ID AND headline similarity (same news from different sources)
-                seen_ids = set()
-                seen_headlines = set()
-                unique_articles = []
-                for a in av_articles:
-                    # Normalize headline for comparison (lowercase, strip spaces)
-                    headline_key = a.headline.lower().strip()[:80] if a.headline else ""
-                    
-                    # Skip if we've seen this ID or very similar headline
-                    if a.id in seen_ids:
-                        continue
-                    if headline_key and headline_key in seen_headlines:
-                        continue
-                    
-                    seen_ids.add(a.id)
-                    if headline_key:
-                        seen_headlines.add(headline_key)
-                    unique_articles.append(a)
+                # Convert geo events to article-like format for sentiment aggregation
+                for event in geo_events[:50]:
+                    class GeoArticle:
+                        pass
+                    article = GeoArticle()
+                    article.id = getattr(event, 'event_id', str(hash(event.headline if hasattr(event, 'headline') else str(event))))
+                    article.headline = getattr(event, 'headline', getattr(event, 'title', str(event)))
+                    article.summary = getattr(event, 'summary', '')
+                    article.source = getattr(event, 'source', 'Global Intel')
+                    article.timestamp = getattr(event, 'timestamp', datetime.now())
+                    article.tickers = getattr(event, 'affected_tickers', [])
+                    article.overall_sentiment_score = getattr(event, 'sentiment', 0.0)
+                    article.overall_sentiment_label = 'Bullish' if article.overall_sentiment_score > 0.1 else ('Bearish' if article.overall_sentiment_score < -0.1 else 'Neutral')
+                    article.ticker_sentiments = []
+                    unique_articles.append(article)
                 
-                log(f"Received {len(unique_articles)} articles from Alpha Vantage")
+                log(f"   Sources: Reuters, BBC, AP, Al Jazeera, Financial Times, etc.")
+            else:
+                log("⚠️ No events from Global Intelligence Feed")
+        except Exception as e:
+            log(f"Global Intelligence Feed error: {e}")
+        
+        if unique_articles:
+            # AGGREGATE TICKER-LEVEL SENTIMENT
+            log("")
+            log("📊 AGGREGATING TICKER SENTIMENT...")
             
-                if unique_articles:
-                    # AGGREGATE TICKER-LEVEL SENTIMENT (THE KEY FEATURE WE WERE MISSING!)
-                    log("")
-                    log("📊 AGGREGATING TICKER SENTIMENT...")
-                    
-                    ticker_features = ticker_sentiment_aggregator.aggregate_from_articles(
-                        unique_articles,
-                        as_of=end_date,
-                        universe=list(feature_store._price_history.keys()) if feature_store._price_history else None,
-                    )
-                    last_ticker_sentiments = ticker_features
-                    # Save to file for ultra-fast mode
-                    save_ultrafast_cache(ticker_features)
-                    
-                    # Log ticker sentiment summary
-                    bullish = ticker_sentiment_aggregator.get_bullish_stocks(threshold=0.2)
-                    bearish = ticker_sentiment_aggregator.get_bearish_stocks(threshold=-0.2)
-                    momentum = ticker_sentiment_aggregator.get_momentum_stocks(threshold=0.1)
-                    
-                    log(f"  📈 Bullish stocks: {len(bullish)} {bullish[:5] if bullish else []}")
-                    log(f"  📉 Bearish stocks: {len(bearish)} {bearish[:5] if bearish else []}")
-                    log(f"  🚀 Momentum stocks: {len(momentum)} {momentum[:5] if momentum else []}")
-                    
-                    # Show top sentiment stocks
-                    if ticker_features:
-                        top_bullish = sorted(
-                            ticker_features.items(),
-                            key=lambda x: x[1].sentiment_score,
-                            reverse=True
-                        )[:3]
-                        log("")
-                        log("  🔝 Top Bullish by Sentiment:")
-                        for ticker, feat in top_bullish:
-                            log(f"     {ticker}: {feat.sentiment_score:+.2f} (conf: {feat.sentiment_confidence:.0%})")
-                    
-                    # Show sample headlines
-                    log("")
-                    log("📰 Sample Alpha Vantage Headlines:")
-                    for article in unique_articles[:3]:
-                        tickers_str = ", ".join(article.tickers[:3]) if article.tickers else "Market"
-                        sentiment = article.overall_sentiment_label
-                        log(f"  [{tickers_str}] [{sentiment}] {article.headline[:50]}...")
-                    
-                    # Convert to News Intelligence Pipeline format
-                    from src.news_intelligence.pipeline import NewsArticle as NIPNewsArticle
-                    
-                    pipeline_articles = []
-                    for article in unique_articles:
-                        try:
-                            ts = article.timestamp
-                            if ts.tzinfo is None:
-                                ts = pytz.UTC.localize(ts)
-                            pipeline_articles.append(NIPNewsArticle(
-                                timestamp=ts,
-                                source=article.source,
-                                title=article.headline,
-                                body=article.summary or "",
-                                url=article.url,
-                            ))
-                        except:
-                            continue
-                    
-                    if pipeline_articles:
-                        events, stats = news_intelligence.process_articles(pipeline_articles, end_date)
-                        log("")
-                        log(f"✅ Processed {stats.total_articles} articles → {stats.events_extracted} events")
-                        log(f"   Relevance filter: {stats.pass_rate*100:.0f}% pass rate")
-                        log(f"   High-impact events: {stats.high_impact_events}")
-                        
-                        # Write news events to parquet storage for reports
-                        if data_writer and events:
-                            try:
-                                for event in events[:20]:  # Top 20 events
-                                    data_writer.write_news_event(
-                                        event_id=f"{event.timestamp}_{hash(event.headline)}",
-                                        headline=event.headline,
-                                        tags=list(event.tags) if hasattr(event, 'tags') else [],
-                                        impact_score=event.impact_score,
-                                        direction=event.direction,
-                                        severity=event.severity,
-                                        rationale=event.rationale,
-                                        entities=list(event.entities) if hasattr(event, 'entities') else [],
-                                        timestamp=event.timestamp,
-                                    )
-                            except Exception as e:
-                                logging.warning(f"Could not write news events: {e}")
-                else:
-                    # Fallback: Use Geopolitical Intelligence when Alpha Vantage is stale/empty
-                    log("⚠️ No fresh articles from Alpha Vantage (rate limited)")
-                    log("🌍 Using Geopolitical Intelligence as backup news source...")
-                    
-                    # Get geopolitical events
-                    geo_events = geopolitical_intel.get_filtered_events(auto_refresh_if_empty=True)
-                    if geo_events:
-                        log(f"   Loaded {len(geo_events)} high-quality global events")
-                        
-                        # Convert to news intelligence pipeline format
-                        from src.news_intelligence.pipeline import NewsArticle as NIPNewsArticle
-                        
-                        geo_articles = []
-                        for event in geo_events[:50]:  # Top 50 events
-                            try:
-                                ts = event.timestamp
-                                if ts.tzinfo is None:
-                                    ts = pytz.UTC.localize(ts)
-                                geo_articles.append(NIPNewsArticle(
-                                    timestamp=ts,
-                                    source=event.source if hasattr(event, 'source') else 'Geopolitical',
-                                    title=event.headline,
-                                    body=event.summary if hasattr(event, 'summary') else '',
-                                    url=event.url if hasattr(event, 'url') else '',
-                                ))
-                            except Exception as e:
-                                logging.debug(f"Could not convert geo event: {e}")
-                                continue
-                        
-                        if geo_articles:
-                            events, stats = news_intelligence.process_articles(geo_articles, end_date)
-                            log(f"✅ Processed {stats.total_articles} geo events → {stats.events_extracted} market events")
-                        
-                        # Log sample headlines
-                        log("")
-                        log("📰 Sample Global Headlines (from Geopolitical Intel):")
-                        for event in geo_events[:3]:
-                            severity = f"{event.severity:.0%}" if hasattr(event, 'severity') else "N/A"
-                            log(f"   [{severity}] {event.headline[:60]}...")
-                    else:
-                        # Last resort: sample data
-                        log("No geo events available, using sample data...")
-                        sample_path = Path("data/sample_news.json")
-                        if sample_path.exists():
-                            events, stats = news_intelligence.load_from_json(str(sample_path), end_date)
-                            log(f"Loaded {stats.events_extracted} sample events")
+            ticker_features = ticker_sentiment_aggregator.aggregate_from_articles(
+                unique_articles,
+                as_of=end_date,
+                universe=list(feature_store._price_history.keys()) if feature_store._price_history else None,
+            )
+            last_ticker_sentiments = ticker_features
+            # Save to file for ultra-fast mode
+            save_ultrafast_cache(ticker_features)
+            
+            # Log ticker sentiment summary
+            bullish = ticker_sentiment_aggregator.get_bullish_stocks(threshold=0.2)
+            bearish = ticker_sentiment_aggregator.get_bearish_stocks(threshold=-0.2)
+            momentum = ticker_sentiment_aggregator.get_momentum_stocks(threshold=0.1)
+            
+            log(f"  📈 Bullish stocks: {len(bullish)} {bullish[:5] if bullish else []}")
+            log(f"  📉 Bearish stocks: {len(bearish)} {bearish[:5] if bearish else []}")
+            log(f"  🚀 Momentum stocks: {len(momentum)} {momentum[:5] if momentum else []}")
+            
+            # Show top sentiment stocks
+            if ticker_features:
+                top_bullish = sorted(
+                    ticker_features.items(),
+                    key=lambda x: x[1].sentiment_score,
+                    reverse=True
+                )[:3]
+                log("")
+                log("  🔝 Top Bullish by Sentiment:")
+                for ticker, feat in top_bullish:
+                    log(f"     {ticker}: {feat.sentiment_score:+.2f} (conf: {feat.sentiment_confidence:.0%})")
+            
+            # Show sample headlines from Global Intelligence Feed
+            log("")
+            log("📰 Sample Headlines (Global Intelligence Feed):")
+            for article in unique_articles[:3]:
+                tickers_str = ", ".join(article.tickers[:3]) if article.tickers else "Market"
+                sentiment = article.overall_sentiment_label
+                headline = article.headline[:50] if hasattr(article, 'headline') else str(article)[:50]
+                log(f"  [{tickers_str}] [{sentiment}] {headline}...")
+            
+            # Convert to News Intelligence Pipeline format
+            from src.news_intelligence.pipeline import NewsArticle as NIPNewsArticle
+            
+            pipeline_articles = []
+            for article in unique_articles:
+                try:
+                    ts = article.timestamp
+                    if ts.tzinfo is None:
+                        ts = pytz.UTC.localize(ts)
+                    pipeline_articles.append(NIPNewsArticle(
+                        timestamp=ts,
+                        source=getattr(article, 'source', 'Global Intel'),
+                        title=getattr(article, 'headline', str(article)),
+                        body=getattr(article, 'summary', '') or "",
+                        url=getattr(article, 'url', ''),
+                    ))
+                except:
+                    continue
+            
+            if pipeline_articles:
+                events, stats = news_intelligence.process_articles(pipeline_articles, end_date)
+                log("")
+                log(f"✅ Processed {stats.total_articles} articles → {stats.events_extracted} events")
+                log(f"   Relevance filter: {stats.pass_rate*100:.0f}% pass rate")
+                log(f"   High-impact events: {stats.high_impact_events}")
                 
-            except Exception as e:
-                log(f"Alpha Vantage error: {e}")
-                log("Loading sample macro news for analysis...")
-                
-                # Load sample news through News Intelligence Pipeline
-                sample_path = Path("data/sample_news.json")
-                if sample_path.exists():
-                    events, stats = news_intelligence.load_from_json(str(sample_path), end_date)
-                    log(f"Loaded {stats.events_extracted} sample events for analysis")
+                # Write news events to parquet storage for reports
+                if data_writer and events:
+                    try:
+                        for event in events[:20]:  # Top 20 events
+                            data_writer.write_news_event(
+                                event_id=f"{event.timestamp}_{hash(event.headline)}",
+                                headline=event.headline,
+                                tags=list(event.tags) if hasattr(event, 'tags') else [],
+                                impact_score=event.impact_score,
+                                direction=event.direction,
+                                severity=event.severity,
+                                rationale=event.rationale,
+                                entities=list(event.entities) if hasattr(event, 'entities') else [],
+                                timestamp=event.timestamp,
+                            )
+                    except Exception as e:
+                        logging.warning(f"Could not write news events: {e}")
+        else:
+            # No news from Global Intelligence Feed
+            log("⚠️ No fresh news from Global Intelligence Feed")
+            log("   The system will proceed with technical and fundamental analysis only")
         
         # Get macro features from News Intelligence (store temporarily)
         macro_features_temp = None
@@ -8825,7 +8755,7 @@ if __name__ == '__main__':
     print("\nStrategies: 9 active strategies with debate mechanism")
     print("Data Sources:")
     print("  - Market Data: Alpaca API (IEX feed)")
-    print("  - News & Sentiment: Alpha Vantage News Sentiment API ✓")
+    print("  - News & Sentiment: Global Intelligence Feed (50+ sources) ✓")
     print("\nActive Protections:")
     print("  ✅ Real-time risk monitor (drawdown/VIX circuit breakers)")
     print("  ✅ Liquidity filter (rejects illiquid stocks)")
