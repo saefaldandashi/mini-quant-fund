@@ -1083,33 +1083,6 @@
         .sortable.asc::after { content: ' ↑'; color: var(--accent); }
         .sortable.desc::after { content: ' ↓'; color: var(--accent); }
         
-        /* News filter */
-        .news-filter-row {
-            display: flex;
-            gap: 8px;
-            padding: 10px 15px;
-            border-bottom: 1px solid var(--border);
-            flex-wrap: wrap;
-        }
-        
-        .news-filter-btn {
-            padding: 5px 12px;
-            font-size: 0.75em;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .news-filter-btn:hover,
-        .news-filter-btn.active {
-            background: var(--accent-dim);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        
         /* Geopolitical Event Cards */
         .geo-event-card {
             cursor: pointer;
@@ -2513,7 +2486,6 @@
             loadAccuracy();
             loadExecutionQuality();
             loadTickerSentiment();
-            loadNews();
             loadRiskAppetite();
             loadRegime();
             loadGeoIntel();  // Load geopolitical intelligence
@@ -3453,7 +3425,6 @@
         async function refreshData() {
             // Show loading state
             updateStatus('running', 'Refreshing all data...');
-            document.getElementById('news-list').innerHTML = '<div style="text-align: center; color: var(--text-dim); padding: 20px;"><div class="loading"></div> Fetching...</div>';
             
             try {
                 // Trigger server-side refresh of ALL data sources
@@ -3467,7 +3438,6 @@
                     loadMacro(),
                     loadAccuracy(),
                     loadTickerSentiment(),
-                    loadNews(true),  // Force refresh news
                     loadMarketData(),
                     loadRegime(),
                 ]);
@@ -3682,42 +3652,7 @@
             }).join('');
         }
         
-        // Enhance loadNews to populate filters
-        const originalLoadNews = loadNews;
-        loadNews = async function(forceRefresh = false) {
-            await originalLoadNews(forceRefresh);
-            
-            // Extract tickers from news and create filter buttons
-            try {
-                const res = await fetch('/api/alpha-vantage/fetch?limit=50', { method: 'POST' });
-                const data = await res.json();
-                
-                if (data.articles) {
-                    allNews = data.articles.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                    
-                    // Get unique tickers
-                    const tickerCounts = {};
-                    allNews.forEach(a => {
-                        (a.tickers || []).forEach(t => {
-                            tickerCounts[t] = (tickerCounts[t] || 0) + 1;
-                        });
-                    });
-                    
-                    // Get top tickers
-                    const topTickers = Object.entries(tickerCounts)
-                        .sort((a, b) => b[1] - a[1])
-                        .slice(0, 8)
-                        .map(([t]) => t);
-                    
-                    // Update filter buttons
-                    const filterRow = document.getElementById('news-ticker-filters');
-                    filterRow.innerHTML = '<button class="news-filter-btn active" onclick="setNewsFilter(\'all\')">All</button>' +
-                        topTickers.map(t => `<button class="news-filter-btn" onclick="setNewsFilter('${t}')">${t}</button>`).join('');
-                }
-            } catch (e) {
-                console.log('Could not populate news filters');
-            }
-        };
+        // News is exclusively from Global Intelligence Feed (loadNews removed)
         
         // Capital Exposure Functions
         function toggleExposureMode() {
