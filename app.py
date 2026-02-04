@@ -4446,6 +4446,57 @@ def auto_rebalance_scheduler():
                             updated = outcome_tracker.update_outcomes(price_returns)
                             logging.info(f"📊 Updated {updated} signal outcomes. Accuracy metrics refreshed.")
                 
+                # === CRITICAL FIX: Also update Trade Memory P&L ===
+                # This was missing - trades were recorded but P&L never calculated
+                try:
+                    broker_temp = AlpacaBroker(
+                        api_key=api_key,
+                        secret_key=secret_key,
+                        paper=True
+                    )
+                    positions = broker_temp.get_positions()
+                    current_position_symbols = set(positions.keys()) if positions else set()
+                    
+                    # Get current prices for all trades
+                    current_prices = {}
+                    all_trade_symbols = set(t.symbol for t in learning_engine.trade_memory.trades[-500:])  # Last 500 trades
+                    symbols_to_fetch = all_trade_symbols | current_position_symbols
+                    
+                    if symbols_to_fetch:
+                        price_data = broker_temp.get_historical_bars(list(symbols_to_fetch), days=2)
+                        for symbol, df in price_data.items():
+                            if df is not None and not df.empty:
+                                current_prices[symbol] = df['close'].iloc[-1]
+                    
+                    # Update P&L for all trades without P&L
+                    pnl_updated = 0
+                    for trade in learning_engine.trade_memory.trades:
+                        if trade.pnl_percent is None and trade.symbol in current_prices:
+                            price = current_prices[trade.symbol]
+                            if trade.side == 'buy':
+                                trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
+                                trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
+                                trade.was_profitable = trade.pnl_dollars > 0
+                                pnl_updated += 1
+                    
+                    if pnl_updated > 0:
+                        learning_engine.trade_memory._save()
+                        logging.info(f"💰 Updated P&L for {pnl_updated} trades in trade memory")
+                    
+                    # Close positions no longer held by broker
+                    for symbol, trade in list(learning_engine.trade_memory.open_positions.items()):
+                        if symbol not in current_position_symbols and symbol in current_prices:
+                            price = current_prices[symbol]
+                            learning_engine.trade_memory.update_outcome(
+                                symbol=symbol,
+                                exit_price=price,
+                                exit_reason='position_closed'
+                            )
+                            logging.info(f"📉 Closed position tracking for {symbol}")
+                            
+                except Exception as pnl_e:
+                    logging.warning(f"Trade memory P&L update error: {pnl_e}")
+                
                 last_outcome_check = now
             except Exception as e:
                 logging.error(f"Outcome tracking error: {e}")

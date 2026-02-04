@@ -144,8 +144,15 @@ class TradeMemory:
                 self.trades = []
     
     def _save(self):
-        """Persist trade history to disk."""
+        """Persist trade history to disk. Keeps only last 1000 trades to prevent file bloat."""
         self.storage_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # CRITICAL FIX: Truncate to last 1000 trades to prevent file growth
+        MAX_TRADES = 1000
+        if len(self.trades) > MAX_TRADES:
+            logging.info(f"Truncating trade history from {len(self.trades)} to {MAX_TRADES}")
+            self.trades = self.trades[-MAX_TRADES:]
+        
         try:
             with open(self.storage_path, 'w') as f:
                 json.dump({
@@ -461,7 +468,11 @@ class TradeMemory:
         """Get summary statistics of trading history."""
         closed = self.get_closed_trades()
         
-        if not closed:
+        # CRITICAL FIX: Also include trades with P&L calculated but not formally "closed"
+        # This allows learning from all trades where we have P&L data
+        trades_with_pnl = [t for t in self.trades if t.pnl_percent is not None]
+        
+        if not closed and not trades_with_pnl:
             return {
                 'total_trades': len(self.trades),
                 'closed_trades': 0,
@@ -471,20 +482,24 @@ class TradeMemory:
                 'total_pnl': 0.0,
             }
         
-        winners = [t for t in closed if t.was_profitable]
-        total_pnl = sum(t.pnl_dollars or 0 for t in closed)
-        avg_pnl = sum(t.pnl_percent or 0 for t in closed) / len(closed)
+        # Use trades_with_pnl if we don't have formal closed trades
+        trades_for_stats = closed if closed else trades_with_pnl
+        
+        winners = [t for t in trades_for_stats if t.was_profitable]
+        total_pnl = sum(t.pnl_dollars or 0 for t in trades_for_stats)
+        avg_pnl = sum(t.pnl_percent or 0 for t in trades_for_stats) / len(trades_for_stats) if trades_for_stats else 0
         
         return {
             'total_trades': len(self.trades),
             'closed_trades': len(closed),
+            'trades_with_pnl': len(trades_with_pnl),  # NEW: Track this metric
             'open_positions': len(self.open_positions),
-            'win_rate': len(winners) / len(closed) if closed else 0.0,
+            'win_rate': len(winners) / len(trades_for_stats) if trades_for_stats else 0.0,
             'avg_pnl_percent': avg_pnl,
             'total_pnl': total_pnl,
-            'best_trade': max(closed, key=lambda t: t.pnl_percent or 0).symbol if closed else None,
-            'worst_trade': min(closed, key=lambda t: t.pnl_percent or 0).symbol if closed else None,
-            'avg_holding_days': sum(t.holding_period_days or 0 for t in closed) / len(closed),
+            'best_trade': max(trades_for_stats, key=lambda t: t.pnl_percent or 0).symbol if trades_for_stats else None,
+            'worst_trade': min(trades_for_stats, key=lambda t: t.pnl_percent or 0).symbol if trades_for_stats else None,
+            'avg_holding_days': sum(t.holding_period_days or 0 for t in closed) / len(closed) if closed else 0,
         }
     
     def get_expired_positions(self) -> List[Tuple[str, TradeRecord]]:

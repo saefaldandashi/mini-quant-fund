@@ -104,10 +104,16 @@ class OutcomeTracker:
                 logger.warning(f"Could not load outcome tracker: {e}")
     
     def _save(self):
-        """Save signals to storage."""
+        """Save signals to storage. Keeps only last 2000 signals to prevent file bloat."""
         try:
             path = Path(self.storage_path)
             path.parent.mkdir(parents=True, exist_ok=True)
+            
+            # CRITICAL FIX: Truncate to last 2000 signals to prevent file growth
+            MAX_SIGNALS = 2000
+            if len(self.signals) > MAX_SIGNALS:
+                logger.info(f"Truncating signal history from {len(self.signals)} to {MAX_SIGNALS}")
+                self.signals = self.signals[-MAX_SIGNALS:]
             
             data = {
                 'signals': [],
