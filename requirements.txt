@@ -47,6 +47,9 @@ playwright>=1.40.0  # For reliable PDF export
 # Data Storage
 pyarrow>=14.0.0  # For parquet file support
 
+# Market Data
+yfinance>=0.2.0  # Yahoo Finance data for fundamentals
+
 # HTML Rendering
 Jinja2>=3.1.0
 feedparser>=6.0.0
