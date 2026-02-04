@@ -3357,6 +3357,14 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             
             try:
                 global current_regime
+                
+                # Ensure market_indicators is available for regime detection
+                try:
+                    if 'market_indicators' not in dir() or market_indicators is None:
+                        market_indicators = macro_loader.fetch_all()
+                except:
+                    market_indicators = None
+                
                 # Get regime indicators - use features.prices (not undefined 'prices')
                 spy_price = features.prices.get('SPY', 0) if features.prices else 0
                 spy_200ma = features.ma_200.get('SPY', spy_price) if hasattr(features, 'ma_200') and features.ma_200 else spy_price
