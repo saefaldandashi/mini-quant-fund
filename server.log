@@ -50,5 +50,6 @@ INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a
  * Running on http://127.0.0.1:5000
  * Running on http://10.85.120.201:5000
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:werkzeug:127.0.0.1 - - [04/Feb/2026 12:42:09] "GET /api/health HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [04/Feb/2026 13:07:19] "GET /api/health HTTP/1.1" 200 -
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
 WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.

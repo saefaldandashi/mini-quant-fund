@@ -422,14 +422,14 @@ class AlpacaBroker:
         extended_hours: bool = False
     ) -> Optional[Dict]:
         """
-        Place a market order.
+        Place a market order. During extended hours, automatically converts to LIMIT order.
         
         Args:
             symbol: Stock symbol
             qty: Quantity (must be > 0)
             side: OrderSide.BUY or OrderSide.SELL
             dry_run: If True, log but don't place order
-            extended_hours: If True, allow execution in pre/post-market (requires LIMIT order)
+            extended_hours: If True, use LIMIT order for pre/post-market
         
         Returns:
             Order info dict if placed, None if dry_run
@@ -445,15 +445,48 @@ class AlpacaBroker:
             return None
         
         try:
-            # Extended hours requires LIMIT orders, but we'll use DAY for simplicity
-            # Alpaca requires extended_hours=True + LIMIT order for pre/post market
-            order_request = MarketOrderRequest(
-                symbol=symbol,
-                qty=qty,
-                side=side,
-                time_in_force=TimeInForce.DAY,
-                extended_hours=extended_hours
-            )
+            # CRITICAL: Extended hours REQUIRES LIMIT orders - Alpaca rejects market orders
+            if extended_hours:
+                # Get current quote for limit price
+                try:
+                    quote = self.get_current_quote(symbol)
+                    if side == OrderSide.BUY:
+                        # Buy at ask (or bid + 1% if ask unavailable)
+                        limit_price = quote.get('ask', 0) if quote.get('ask', 0) > 0 else quote.get('bid', 0) * 1.01
+                    else:
+                        # Sell at bid (or ask - 1% if bid unavailable)
+                        limit_price = quote.get('bid', 0) if quote.get('bid', 0) > 0 else quote.get('ask', 0) * 0.99
+                    
+                    if limit_price <= 0:
+                        logging.warning(f"Cannot get valid quote for {symbol} during extended hours, skipping")
+                        return None
+                    
+                    # Round to 2 decimal places
+                    limit_price = round(limit_price, 2)
+                    
+                except Exception as e:
+                    logging.warning(f"Could not get quote for {symbol}: {e}, skipping extended hours order")
+                    return None
+                
+                # Use LIMIT order with DAY time-in-force for extended hours
+                from alpaca.trading.requests import LimitOrderRequest
+                order_request = LimitOrderRequest(
+                    symbol=symbol,
+                    qty=qty,
+                    side=side,
+                    time_in_force=TimeInForce.DAY,
+                    limit_price=limit_price,
+                    extended_hours=True
+                )
+                logging.info(f"Extended hours: Using LIMIT order for {symbol} at ${limit_price:.2f}")
+            else:
+                # Regular hours: use market order
+                order_request = MarketOrderRequest(
+                    symbol=symbol,
+                    qty=qty,
+                    side=side,
+                    time_in_force=TimeInForce.DAY,
+                )
             
             order = self.trading_client.submit_order(order_request)
             

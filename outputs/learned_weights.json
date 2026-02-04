@@ -129,56 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 165,
+  "total_rounds": 169,
   "reward_history": [
-    {
-      "timestamp": "2026-01-21T19:32:22.472803",
-      "returns": {
-        "RelativeStrengthIntraday": 0.00025354969574056157,
-        "TS_Momentum_LS": 0.0033422644787486746,
-        "IntradayMomentum": 0.00025354969574056157,
-        "QualityValue_LS": -0.006099860862770342,
-        "CrossSectionMomentum": 0.004527467617410993,
-        "MeanReversion_LS": 0.002567471545849704
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T19:40:47.562069",
-      "returns": {
-        "TS_Momentum_LS": 0.006593690924025636,
-        "IntradayMomentum": 0.0030425963488846038,
-        "RelativeStrengthIntraday": 0.0030425963488846038,
-        "CrossSectionMomentum": 0.011871264111068456,
-        "MeanReversion_LS": 0.004369157663317184,
-        "QualityValue_LS": -0.0027227099524643437
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T19:42:23.981241",
-      "returns": {
-        "RelativeStrengthIntraday": 0.0018030200585984338,
-        "TS_Momentum_LS": 0.008031519168733726,
-        "IntradayMomentum": 0.0018030200585984338,
-        "CrossSectionMomentum": 0.014909593549532692,
-        "MeanReversion_LS": 0.00453110697724695,
-        "QualityValue_LS": -0.003948661995246491
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T19:46:13.395116",
-      "returns": {
-        "IntradayMomentum": 0.003493351363533945,
-        "RelativeStrengthIntraday": 0.003493351363533945,
-        "CrossSectionMomentum": 0.016080959950591483,
-        "TS_Momentum_LS": 0.00939374814442544,
-        "MeanReversion_LS": 0.006150600116543506,
-        "QualityValue_LS": -0.0016818072746302092
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-01-21T21:01:24.990412",
       "returns": {
@@ -1203,7 +1155,47 @@
         "QualityValue_LS": -0.006713028749140117
       },
       "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T12:48:37.598239",
+      "returns": {
+        "VolumeSpike": 0.012401202110399098,
+        "TS_Momentum_LS": -0.008748386202432509,
+        "QualityValue_LS": -0.006713028749140117,
+        "SectorRotation": -0.010414616979053182
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T12:53:25.342426",
+      "returns": {
+        "TS_Momentum_LS": -0.008748386202432509,
+        "VolumeSpike": 0.012401202110399098,
+        "SectorRotation": -0.010414616979053182,
+        "QualityValue_LS": -0.006713028749140117
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T12:58:18.494958",
+      "returns": {
+        "TS_Momentum_LS": -0.008748386202432509,
+        "VolumeSpike": 0.012401202110399098,
+        "SectorRotation": -0.010414616979053182,
+        "QualityValue_LS": -0.006713028749140117
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T13:04:33.331493",
+      "returns": {
+        "TS_Momentum_LS": -0.008748386202432509,
+        "VolumeSpike": 0.012401202110399098,
+        "QualityValue_LS": -0.006713028749140117,
+        "SectorRotation": -0.010414616979053182
+      },
+      "regime": "risk_off"
     }
   ],
-  "last_updated": "2026-02-04T12:30:02.258343"
+  "last_updated": "2026-02-04T13:04:33.331615"
 }

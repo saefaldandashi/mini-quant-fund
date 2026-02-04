@@ -491,6 +491,55 @@ strategy_enhancer = get_enhancer(EnhancedConfig(risk_appetite="moderate"))
 # Current regime state
 current_regime = None
 
+# ============================================================
+# REBALANCE COOLDOWN SYSTEM - Prevents infinite loops
+# ============================================================
+_rebalance_lock = False  # True when rebalance is in progress
+_last_rebalance_attempt = None  # Timestamp of last attempt
+_last_rebalance_success = None  # Timestamp of last successful rebalance
+_consecutive_failures = 0  # Count of consecutive failures
+REBALANCE_COOLDOWN_SECONDS = 120  # Minimum 2 minutes between attempts
+MAX_CONSECUTIVE_FAILURES = 3  # After 3 failures, extend cooldown to 15 min
+
+def _get_rebalance_cooldown() -> tuple:
+    """Check if rebalance is allowed based on cooldown."""
+    global _rebalance_lock, _last_rebalance_attempt, _consecutive_failures
+    
+    if _rebalance_lock:
+        return False, "Rebalance already in progress"
+    
+    if _last_rebalance_attempt:
+        elapsed = (datetime.now() - _last_rebalance_attempt).total_seconds()
+        
+        # Extended cooldown after consecutive failures
+        if _consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
+            cooldown = 900  # 15 minutes
+        else:
+            cooldown = REBALANCE_COOLDOWN_SECONDS
+        
+        if elapsed < cooldown:
+            remaining = int(cooldown - elapsed)
+            return False, f"Cooldown: {remaining}s remaining (failures: {_consecutive_failures})"
+    
+    return True, "OK"
+
+def _start_rebalance():
+    """Mark rebalance as started."""
+    global _rebalance_lock, _last_rebalance_attempt
+    _rebalance_lock = True
+    _last_rebalance_attempt = datetime.now()
+
+def _end_rebalance(success: bool):
+    """Mark rebalance as ended."""
+    global _rebalance_lock, _last_rebalance_success, _consecutive_failures
+    _rebalance_lock = False
+    if success:
+        _last_rebalance_success = datetime.now()
+        _consecutive_failures = 0
+    else:
+        _consecutive_failures += 1
+        logging.warning(f"Rebalance failed. Consecutive failures: {_consecutive_failures}")
+
 # Macro data loader (Yahoo Finance + FRED)
 FRED_API_KEY = os.environ.get("FRED_API_KEY")
 macro_loader = get_macro_loader(FRED_API_KEY)
@@ -906,7 +955,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
     
     Args:
         allow_after_hours: If True, allow execution outside market hours
-        force_rebalance: If True, bypass daily limit check
+        force_rebalance: If True, bypass daily limit check AND cooldown check
         cancel_orders: If True, cancel existing open orders first
     
     Returns tuple of (success: bool, output: str, error: str or None, debate_info: dict)
@@ -915,6 +964,18 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
     
     import time as time_module
     rebalance_start_time = time_module.time()
+    
+    # ============================================================
+    # COOLDOWN CHECK - Prevents infinite loops
+    # ============================================================
+    if not force_rebalance:
+        can_run, reason = _get_rebalance_cooldown()
+        if not can_run:
+            logging.warning(f"Rebalance blocked: {reason}")
+            return False, f"Rebalance blocked: {reason}", reason, {}
+    
+    # Mark rebalance as started
+    _start_rebalance()
     
     output_lines = []
     debate_info = {"transcript": None, "scores": None, "final_weights": {}}
@@ -3615,16 +3676,24 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         try:
             system_int = get_integration(broker)
             
-            # Prepare volume data
+            # Prepare volume data (use volume_ratio from features, or estimate)
             volumes_data = {}
             for symbol in enhanced_weights:
-                if symbol in feature_store.volumes:
-                    volumes_data[symbol] = feature_store.volumes.get(symbol, 0)
+                # Check if we have volume_ratio from features (most common)
+                if hasattr(features, 'volume_ratio') and features.volume_ratio and symbol in features.volume_ratio:
+                    # Convert volume_ratio to estimated volume (ratio * baseline)
+                    volumes_data[symbol] = int(features.volume_ratio.get(symbol, 1.0) * 1_000_000)
                 else:
-                    # Estimate volume for mega caps
+                    # Estimate volume based on market cap tier
                     tier = get_market_cap_tier(symbol)
                     if tier == MarketCapTier.MEGA_CAP:
-                        volumes_data[symbol] = 10_000_000  # Assumed high volume
+                        volumes_data[symbol] = 10_000_000
+                    elif tier == MarketCapTier.LARGE_CAP:
+                        volumes_data[symbol] = 5_000_000
+                    elif tier == MarketCapTier.MID_CAP:
+                        volumes_data[symbol] = 1_000_000
+                    else:
+                        volumes_data[symbol] = 500_000
             
             # Prepare expected returns (from strategy signals)
             exp_returns = {}
@@ -4180,6 +4249,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log(f"✅ REBALANCE COMPLETE in {total_time:.1f} seconds")
         log("=" * 60)
         
+        # Mark rebalance as successful
+        _end_rebalance(success=True)
+        
         return True, "\n".join(output_lines), None, debate_info
         
     except Exception as e:
@@ -4189,6 +4261,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         total_time = time_module.time() - rebalance_start_time
         log(f"❌ REBALANCE FAILED after {total_time:.1f} seconds")
+        
+        # Mark rebalance as failed - triggers cooldown
+        _end_rebalance(success=False)
         
         return False, "\n".join(output_lines), str(e), debate_info
 
