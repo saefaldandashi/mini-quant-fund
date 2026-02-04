@@ -9,16 +9,17 @@
 # 2. Add these secrets:
 #    - EC2_HOST: Your EC2 public IP (e.g., 54.123.45.67)
 #    - EC2_SSH_KEY: The entire contents of your .pem private key file
-#    - EC2_USER: Usually "ec2-user" for Amazon Linux or "ubuntu" for Ubuntu
+#    - EC2_USER: Usually "ubuntu" for Ubuntu or "ec2-user" for Amazon Linux
 #    - ALPACA_API_KEY: Your Alpaca API key
 #    - ALPACA_SECRET_KEY: Your Alpaca secret key
-#    - GEMINI_API_KEY: Your Gemini API key (for Gemini LLM)
-#    - OPENAI_API_KEY: Your OpenAI API key (for GPT)
-#    - ANTHROPIC_API_KEY: Your Anthropic API key (for Claude)
-#    - ALPHA_VANTAGE_API_KEY: Your Alpha Vantage API key (optional)
-#    - FRED_API_KEY: Your FRED API key for economic data (optional)
+#    - GEMINI_API_KEY: Your Gemini API key (optional)
 #    - APP_USERNAME: Username for web authentication (default: admin)
 #    - APP_PASSWORD: Password for web authentication (REQUIRED for security)
+#
+# EC2 REQUIREMENTS:
+#    - Ubuntu 22.04+ or Amazon Linux 2023
+#    - Python 3.11+
+#    - Port 5000 open in security group
 #
 # =============================================================================
 
@@ -35,89 +36,188 @@ jobs:
   deploy:
     name: Deploy to EC2
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Validate secrets
+        run: |
+          if [ -z "${{ secrets.EC2_HOST }}" ]; then
+            echo "❌ ERROR: EC2_HOST secret is not set!"
+            echo "Go to GitHub repo → Settings → Secrets → Actions → New repository secret"
+            echo "Add EC2_HOST with your EC2 public IP address"
+            exit 1
+          fi
+          if [ -z "${{ secrets.EC2_SSH_KEY }}" ]; then
+            echo "❌ ERROR: EC2_SSH_KEY secret is not set!"
+            echo "Add EC2_SSH_KEY with contents of your .pem file"
+            exit 1
+          fi
+          if [ -z "${{ secrets.ALPACA_API_KEY }}" ]; then
+            echo "❌ ERROR: ALPACA_API_KEY secret is not set!"
+            exit 1
+          fi
+          echo "✅ All required secrets are set"
+      
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
-        env:
-          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
-          ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
-          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-          APP_USERNAME: ${{ secrets.APP_USERNAME }}
-          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
+          username: ${{ secrets.EC2_USER || 'ubuntu' }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          script_stop: true
-          envs: ALPACA_API_KEY,ALPACA_SECRET_KEY,GEMINI_API_KEY,OPENAI_API_KEY,ANTHROPIC_API_KEY,ALPHA_VANTAGE_API_KEY,FRED_API_KEY,APP_USERNAME,APP_PASSWORD
+          script_stop: false
+          command_timeout: 10m
           script: |
-            echo "🚀 Starting deployment..."
+            set -e
+            echo "🚀 Starting deployment at $(date)"
             
-            # Navigate to app directory
-            cd ~/mini-fund-tool
+            # ========================================
+            # 1. FIRST-TIME SETUP (if needed)
+            # ========================================
+            APP_DIR="$HOME/mini-fund-tool"
             
-            # Pull latest code (force reset to remote to avoid divergence issues)
-            echo "📥 Pulling latest code..."
-            git fetch origin main
-            git reset --hard origin/main
+            if [ ! -d "$APP_DIR" ]; then
+              echo "📦 First-time setup: Cloning repository..."
+              cd $HOME
+              git clone https://github.com/${{ github.repository }}.git mini-fund-tool
+              cd $APP_DIR
+            else
+              echo "📥 Pulling latest code..."
+              cd $APP_DIR
+              git fetch origin main
+              git reset --hard origin/main
+            fi
             
-            # Create/update .env file with secrets
-            echo "🔐 Updating environment variables..."
-            cat > .env << EOF
-            ALPACA_API_KEY=$ALPACA_API_KEY
-            ALPACA_SECRET_KEY=$ALPACA_SECRET_KEY
-            GEMINI_API_KEY=$GEMINI_API_KEY
-            OPENAI_API_KEY=$OPENAI_API_KEY
-            ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY
-            ALPHA_VANTAGE_API_KEY=$ALPHA_VANTAGE_API_KEY
-            FRED_API_KEY=$FRED_API_KEY
-            APP_USERNAME=$APP_USERNAME
-            APP_PASSWORD=$APP_PASSWORD
-            EOF
+            # ========================================
+            # 2. PYTHON ENVIRONMENT
+            # ========================================
+            echo "🐍 Setting up Python environment..."
             
-            # Activate virtual environment
+            # Install Python if needed (Ubuntu)
+            if ! command -v python3.11 &> /dev/null; then
+              if command -v apt-get &> /dev/null; then
+                sudo apt-get update -qq
+                sudo apt-get install -y python3.11 python3.11-venv python3-pip -qq
+              fi
+            fi
+            
+            # Create virtual environment if it doesn't exist
+            if [ ! -d ".venv" ]; then
+              echo "Creating virtual environment..."
+              python3 -m venv .venv || python3.11 -m venv .venv
+            fi
+            
+            # Activate and install dependencies
             source .venv/bin/activate
-            
-            # Install any new dependencies
             echo "📦 Installing dependencies..."
+            pip install --upgrade pip -q
             pip install -r requirements.txt -q
             
-            # Restart the service
+            # ========================================
+            # 3. ENVIRONMENT VARIABLES
+            # ========================================
+            echo "🔐 Updating environment variables..."
+            cat > .env << 'ENVEOF'
+            ALPACA_API_KEY=${{ secrets.ALPACA_API_KEY }}
+            ALPACA_SECRET_KEY=${{ secrets.ALPACA_SECRET_KEY }}
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+            ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
+            ALPHA_VANTAGE_API_KEY=${{ secrets.ALPHA_VANTAGE_API_KEY }}
+            FRED_API_KEY=${{ secrets.FRED_API_KEY }}
+            APP_USERNAME=${{ secrets.APP_USERNAME || 'admin' }}
+            APP_PASSWORD=${{ secrets.APP_PASSWORD }}
+            ENVEOF
+            
+            # ========================================
+            # 4. SYSTEMD SERVICE
+            # ========================================
+            echo "⚙️ Setting up systemd service..."
+            
+            sudo tee /etc/systemd/system/quantfund.service > /dev/null << SERVICEEOF
+            [Unit]
+            Description=Mini Quant Fund Trading Bot
+            After=network.target
+            
+            [Service]
+            Type=simple
+            User=$USER
+            WorkingDirectory=$APP_DIR
+            Environment="PATH=$APP_DIR/.venv/bin:/usr/local/bin:/usr/bin"
+            EnvironmentFile=$APP_DIR/.env
+            ExecStart=$APP_DIR/.venv/bin/python app.py
+            Restart=always
+            RestartSec=10
+            StandardOutput=journal
+            StandardError=journal
+            
+            [Install]
+            WantedBy=multi-user.target
+            SERVICEEOF
+            
+            sudo systemctl daemon-reload
+            sudo systemctl enable quantfund
+            
+            # ========================================
+            # 5. RESTART SERVICE
+            # ========================================
             echo "🔄 Restarting service..."
             sudo systemctl restart quantfund
             
-            # Wait for service to start
-            sleep 5
+            # Wait for startup
+            sleep 8
             
-            # Check service status
+            # ========================================
+            # 6. HEALTH CHECK
+            # ========================================
+            echo "🏥 Running health check..."
+            
             if sudo systemctl is-active --quiet quantfund; then
-              echo "✅ Deployment successful! Service is running."
+              echo "✅ Service is running!"
               
-              # Health check
-              HEALTH=$(curl -s http://localhost:5000/api/health | python3 -c "import sys,json; print(json.load(sys.stdin).get('status', 'unknown'))")
-              echo "🏥 Health: $HEALTH"
+              # Try health endpoint
+              for i in 1 2 3 4 5; do
+                if curl -s --max-time 5 http://localhost:5000/ > /dev/null 2>&1; then
+                  echo "✅ Web server responding!"
+                  break
+                fi
+                echo "   Waiting for web server... ($i/5)"
+                sleep 3
+              done
+              
+              echo ""
+              echo "=========================================="
+              echo "✅ DEPLOYMENT SUCCESSFUL!"
+              echo "=========================================="
+              echo "🌐 URL: http://${{ secrets.EC2_HOST }}:5000"
+              echo "👤 User: ${{ secrets.APP_USERNAME || 'admin' }}"
+              echo "=========================================="
             else
               echo "❌ Service failed to start!"
+              echo ""
+              echo "=== Last 50 lines of logs ==="
               sudo journalctl -u quantfund -n 50 --no-pager
               exit 1
             fi
-
-      - name: Notify Success
-        if: success()
-        run: |
-          echo "✅ Deployment to AWS EC2 completed successfully!"
-          echo "🌐 App URL: http://${{ secrets.EC2_HOST }}:5000"
       
-      - name: Notify Failure
-        if: failure()
+      - name: Deployment Summary
+        if: always()
         run: |
-          echo "❌ Deployment failed! Check the logs above."
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Deployment completed successfully!"
+            echo "🌐 Your app is running at: http://${{ secrets.EC2_HOST }}:5000"
+          else
+            echo "❌ Deployment failed. Check the logs above."
+            echo ""
+            echo "Common issues:"
+            echo "  1. EC2_HOST, EC2_SSH_KEY, or EC2_USER secrets not set correctly"
+            echo "  2. EC2 security group doesn't allow SSH (port 22) from GitHub"
+            echo "  3. EC2 security group doesn't allow HTTP (port 5000)"
+            echo "  4. EC2 instance is stopped or terminated"
+            echo ""
+            echo "To debug, SSH into your EC2 and run:"
+            echo "  sudo journalctl -u quantfund -f"
+          fi
