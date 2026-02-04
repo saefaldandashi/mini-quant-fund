@@ -76,13 +76,17 @@ class PairsTradingStrategy(Strategy):
         
         # Config
         config = config or {}
-        self.entry_zscore = config.get('entry_zscore', 2.0)  # Enter when |z| > 2
-        self.exit_zscore = config.get('exit_zscore', 0.5)    # Exit when |z| < 0.5
+        self.entry_zscore = config.get('entry_zscore', 1.8)  # Lower threshold for faster entry
+        self.exit_zscore = config.get('exit_zscore', 0.4)    # Exit when |z| < 0.4
         self.stop_zscore = config.get('stop_zscore', 3.5)    # Stop loss at |z| > 3.5
-        self.lookback = config.get('lookback', 60)           # Days for stats
-        self.min_correlation = config.get('min_correlation', 0.7)
-        self.max_pairs = config.get('max_pairs', 5)          # Max simultaneous pairs
-        self.weight_per_pair = config.get('weight_per_pair', 0.15)  # 15% per pair (7.5% each leg)
+        self.lookback = config.get('lookback', 20)           # Shorter lookback for faster response
+        self.min_correlation = config.get('min_correlation', 0.65)  # Lower threshold for more pairs
+        self.max_pairs = config.get('max_pairs', 6)          # Increased for diversification
+        self.weight_per_pair = config.get('weight_per_pair', 0.12)  # 12% per pair (6% each leg)
+        
+        # NEW: Intraday mode configuration
+        self.intraday_mode = config.get('intraday_mode', True)  # Use intraday prices if available
+        self.fast_recompute = config.get('fast_recompute', True)  # Recompute stats every signal
         
         # Custom pairs or use defaults
         self.pairs = config.get('pairs', self.DEFAULT_PAIRS)
@@ -90,9 +94,10 @@ class PairsTradingStrategy(Strategy):
         # State: Track active pair positions
         self.active_positions: Dict[Tuple[str, str], Dict] = {}
         
-        # Cache for pair statistics
+        # Cache for pair statistics (cleared more often in fast mode)
         self._pair_stats: Dict[Tuple[str, str], PairStats] = {}
         self._price_history: Dict[str, List[float]] = {}
+        self._last_compute_time: Optional[datetime] = None
     
     def generate_signals(self, features: Features, t: datetime) -> SignalOutput:
         """Generate pairs trading signals."""

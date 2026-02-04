@@ -37,6 +37,7 @@ from src.data.market_data import MarketDataLoader
 from src.data.news_data import NewsDataLoader
 from src.data.alpha_vantage_news import AlphaVantageNewsLoader, AlphaVantageArticle
 from src.data.geopolitical_intel import get_geopolitical_intel, GeopoliticalIntelligence
+from src.data.options_signals import get_options_loader
 from src.data.ticker_sentiment import TickerSentimentAggregator, StockSentimentFeatures
 from src.data.sentiment import SentimentAnalyzer
 from src.data.feature_store import FeatureStore
@@ -512,6 +513,7 @@ def _load_auto_rebalance_settings() -> dict:
         "last_run": None,
         "next_run": None,
         "auto_start_on_boot": True,  # Auto-start when server launches
+        "intraday_mode": True,  # Enable 15-min intraday rebalances during market hours
     }
     try:
         if os.path.exists(AUTO_REBALANCE_SETTINGS_FILE):
@@ -1550,13 +1552,28 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             
             earnings_reactor = get_earnings_reactor()
             
-            # Scan geopolitical intel (this caught the MSFT drop!)
+            # === PRIMARY NEWS SOURCE: Global Intelligence Feed ===
+            # This updates every minute from 30+ RSS feeds (Reuters, BBC, etc.)
+            # Much more reliable than Alpha Vantage (no rate limits!)
             geo_signals = earnings_reactor.scan_geopolitical_intel(geopolitical_intel)
-            log(f"📡 Scanned geo intel: {len(geo_signals)} earnings signals found")
+            log(f"📡 GLOBAL INTEL FEED: {len(geo_signals)} earnings signals found")
             
-            # Scan Alpha Vantage news
-            av_signals = earnings_reactor.scan_alpha_vantage(alpha_vantage_news)
-            log(f"📰 Scanned AV news: {len(av_signals)} earnings signals found")
+            # Show recent high-impact events from Global Intel
+            filtered_events = geopolitical_intel.get_filtered_events(auto_refresh_if_empty=False)
+            if filtered_events:
+                log(f"   📰 {len(filtered_events)} filtered market-moving events available")
+                for event in filtered_events[:3]:
+                    headline = event.headline[:60] if hasattr(event, 'headline') else str(event)[:60]
+                    log(f"      • {headline}...")
+            
+            # Alpha Vantage as SECONDARY/FALLBACK only (rate-limited to 25/day)
+            av_signals = []
+            try:
+                av_signals = earnings_reactor.scan_alpha_vantage(alpha_vantage_news)
+                if av_signals:
+                    log(f"📰 Alpha Vantage (fallback): {len(av_signals)} additional signals")
+            except Exception as av_err:
+                log(f"   ⚠️ Alpha Vantage unavailable: {av_err}")
             
             # Get trading weights from signals
             earnings_signals = earnings_reactor.get_trading_signals(max_age_hours=24)
@@ -3016,6 +3033,26 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 
                 macro_ctx += cross_asset_ctx
                 
+                # === OPTIONS MARKET SENTIMENT (Put/Call Ratio, Unusual Activity) ===
+                try:
+                    options_loader = get_options_loader()
+                    market_options_sentiment = options_loader.get_market_sentiment()
+                    
+                    if market_options_sentiment.get('signals'):
+                        options_lines = ["\n\nOPTIONS MARKET SENTIMENT:"]
+                        options_lines.append(f"  Overall: {market_options_sentiment['sentiment'].upper()} (conf: {market_options_sentiment['confidence']:.0%})")
+                        
+                        for sym, data in market_options_sentiment.get('signals', {}).items():
+                            direction = data['direction'].upper()
+                            pcr = data.get('pcr', 0)
+                            unusual = " ⚠️UNUSUAL" if data.get('unusual') else ""
+                            options_lines.append(f"  {sym}: {direction} P/C={pcr:.2f}{unusual}")
+                        
+                        macro_ctx += "\n".join(options_lines)
+                        log(f"   📊 Added options sentiment: {market_options_sentiment['sentiment']}")
+                except Exception as e:
+                    logging.debug(f"Options sentiment error: {e}")
+                
                 # Summarize debate
                 debate_summary = adversarial_transcript.to_string()[:500] if adversarial_transcript else "No debate conducted"
                 
@@ -3026,25 +3063,44 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                         top3 = sorted(signal.desired_weights.items(), key=lambda x: -abs(x[1]))[:3]
                         signals_summary += f"\n{name} (conf={signal.confidence:.0%}): {', '.join([f'{s}:{w:+.0%}' for s,w in top3])}"
                 
-                # Build news context from Alpha Vantage (latest headlines)
+                # === BUILD NEWS CONTEXT FROM GLOBAL INTELLIGENCE FEED (PRIMARY) ===
+                # This is our real-time news source - updates every minute from 30+ RSS feeds
                 news_ctx = None
                 try:
-                    av_articles = alpha_vantage_news.get_cached_articles()
-                    if av_articles:
-                        # Get most recent headlines (up to 10)
+                    # PRIMARY: Use Global Intelligence Feed
+                    filtered_events = geopolitical_intel.get_filtered_events(auto_refresh_if_empty=False)
+                    
+                    if filtered_events:
                         news_lines = []
-                        for article in av_articles[:10]:
-                            title = getattr(article, 'title', getattr(article, 'headline', 'Unknown'))
-                            sentiment = getattr(article, 'overall_sentiment_label', 'N/A')
-                            news_lines.append(f"- {title[:80]} [{sentiment}]")
+                        for event in filtered_events[:15]:  # Top 15 market-moving headlines
+                            headline = event.headline if hasattr(event, 'headline') else str(event)
+                            direction = getattr(event, 'direction', None)
+                            direction_str = f"[{direction.name}]" if direction and hasattr(direction, 'name') else ""
+                            source = getattr(event, 'source', 'Unknown')[:20]
+                            news_lines.append(f"- [{source}] {headline[:80]} {direction_str}")
+                        
                         if news_lines:
-                            news_ctx = "\n".join(news_lines)
-                            
-                            # Add staleness warning
-                            rate_status = alpha_vantage_news.get_rate_limit_status()
-                            hours_stale = rate_status.get('hours_since_fresh_news', 0)
-                            if hours_stale > 24:
-                                news_ctx = f"[⚠️ NEWS DATA IS {hours_stale:.0f} HOURS OLD - RATE LIMITED]\n{news_ctx}"
+                            cache_age = geopolitical_intel.get_cached_filtered_events_age()
+                            freshness = f"[✅ NEWS UPDATED {cache_age:.0f} MIN AGO]" if cache_age and cache_age < 60 else ""
+                            news_ctx = f"{freshness}\n" + "\n".join(news_lines)
+                            log(f"   📰 Built news context from {len(news_lines)} Global Intel events")
+                    
+                    # FALLBACK: Alpha Vantage if Global Intel is empty
+                    if not news_ctx:
+                        av_articles = alpha_vantage_news.get_cached_articles()
+                        if av_articles:
+                            news_lines = []
+                            for article in av_articles[:10]:
+                                title = getattr(article, 'title', getattr(article, 'headline', 'Unknown'))
+                                sentiment = getattr(article, 'overall_sentiment_label', 'N/A')
+                                news_lines.append(f"- {title[:80]} [{sentiment}]")
+                            if news_lines:
+                                rate_status = alpha_vantage_news.get_rate_limit_status()
+                                hours_stale = rate_status.get('hours_since_fresh_news', 0)
+                                if hours_stale > 24:
+                                    news_ctx = f"[⚠️ FALLBACK NEWS - {hours_stale:.0f}H OLD]\n" + "\n".join(news_lines)
+                                else:
+                                    news_ctx = "[Alpha Vantage Fallback]\n" + "\n".join(news_lines)
                 except Exception as e:
                     logging.debug(f"Could not build news context: {e}")
                 
@@ -4033,10 +4089,16 @@ def auto_rebalance_scheduler():
     last_outcome_check = datetime.now()
     last_holding_check = datetime.now()
     last_daily_check = datetime.now().date()  # Track daily reset
+    last_intraday_rebalance = datetime.now()  # Track intraday rebalances
+    last_news_refresh = datetime.now()  # Track Global Intel refreshes
     outcome_check_interval = timedelta(hours=1)  # Check outcomes hourly
     holding_check_interval = timedelta(minutes=5)  # Check holding periods every 5 mins
+    intraday_rebalance_interval = timedelta(minutes=15)  # 15-min intraday rebalance
+    news_refresh_interval = timedelta(minutes=5)  # Refresh Global Intel every 5 mins
     
     logging.info("🔄 Auto-rebalance scheduler thread STARTED")
+    logging.info("   📰 Global Intel refresh: every 5 minutes")
+    logging.info("   ⚡ Intraday rebalance: every 15 minutes (during market hours)")
     
     while not scheduler_stop_event.is_set():
         now = datetime.now()
@@ -4072,6 +4134,49 @@ def auto_rebalance_scheduler():
                         )
                         auto_rebalance_settings["last_run"] = now.isoformat()
                         _save_auto_rebalance_settings()
+        
+        # === GLOBAL INTELLIGENCE FEED REFRESH (every 5 minutes) ===
+        # This ensures we always have fresh news for strategy decisions
+        if now - last_news_refresh >= news_refresh_interval:
+            try:
+                new_events = geopolitical_intel.update_events(hours_back=24)
+                filtered_count = len(geopolitical_intel.get_filtered_events(auto_refresh_if_empty=False))
+                logging.info(f"📰 Global Intel refreshed: {new_events} new events, {filtered_count} filtered total")
+                last_news_refresh = now
+            except Exception as e:
+                logging.error(f"Global Intel refresh error: {e}")
+                last_news_refresh = now
+        
+        # === INTRADAY 15-MINUTE REBALANCE (during market hours only) ===
+        # This captures intraday opportunities and reacts to breaking news
+        if auto_rebalance_settings.get("enabled") and auto_rebalance_settings.get("intraday_mode", True):
+            if now - last_intraday_rebalance >= intraday_rebalance_interval:
+                # Check if market is open (9:30 AM - 4:00 PM ET)
+                try:
+                    et_tz = pytz.timezone('US/Eastern')
+                    et_now = datetime.now(et_tz)
+                    market_open = et_now.replace(hour=9, minute=30, second=0, microsecond=0)
+                    market_close = et_now.replace(hour=16, minute=0, second=0, microsecond=0)
+                    
+                    is_market_hours = (
+                        et_now.weekday() < 5 and  # Monday-Friday
+                        market_open <= et_now <= market_close
+                    )
+                    
+                    if is_market_hours and not last_run_status["running"]:
+                        logging.info("⚡ INTRADAY REBALANCE (15-min cycle) - capturing opportunities")
+                        run_bot_threaded(
+                            allow_after_hours=False,
+                            force_rebalance=True,
+                            cancel_orders=False,  # Don't cancel pending orders
+                            exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
+                        )
+                        last_intraday_rebalance = now
+                    elif not is_market_hours:
+                        last_intraday_rebalance = now  # Reset timer outside market hours
+                except Exception as e:
+                    logging.error(f"Intraday rebalance check error: {e}")
+                    last_intraday_rebalance = now
         
         # === HOLDING PERIOD AUTO-EXIT CHECK ===
         if now - last_holding_check >= holding_check_interval:

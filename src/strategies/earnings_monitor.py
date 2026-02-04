@@ -25,19 +25,21 @@ logger = logging.getLogger(__name__)
 class EarningsMonitorConfig:
     """Configuration for the earnings monitor."""
     
-    # Check interval (seconds) - more frequent during market hours
-    check_interval_market_hours: int = 300  # 5 minutes
-    check_interval_after_hours: int = 900   # 15 minutes
+    # Check interval (seconds) - more frequent during earnings hours
+    check_interval_market_hours: int = 180    # 3 minutes during market
+    check_interval_pre_market: int = 120      # 2 minutes during pre-market (6:00-9:30 AM)
+    check_interval_after_hours: int = 180     # 3 minutes during after-hours (4:00-8:00 PM)
+    check_interval_overnight: int = 900       # 15 minutes overnight
     
     # Thresholds for auto-trigger
-    min_confidence_auto_trigger: float = 0.55  # 55% confidence
-    min_price_move_auto_trigger: float = 5.0   # 5% price move mentioned
+    min_confidence_auto_trigger: float = 0.50  # 50% confidence (lowered for faster reaction)
+    min_price_move_auto_trigger: float = 4.0   # 4% price move mentioned
     
     # How many signals needed to trigger
     min_signals_for_trigger: int = 1  # Just 1 high-confidence signal is enough
     
-    # Cooldown after triggering (prevent spam)
-    trigger_cooldown_minutes: int = 30
+    # Cooldown after triggering (prevent spam) - shorter during earnings season
+    trigger_cooldown_minutes: int = 20
     
     # Only trade these symbols (None = all)
     whitelist_symbols: Optional[Set[str]] = None
@@ -45,11 +47,12 @@ class EarningsMonitorConfig:
     # Never trade these symbols
     blacklist_symbols: Set[str] = field(default_factory=lambda: {'SPY', 'QQQ', 'IWM', 'DIA'})
     
-    # Enable during market hours only
-    market_hours_only: bool = False
+    # Enable pre-market/after-hours scanning (CRITICAL for earnings)
+    enable_pre_market: bool = True   # 6:00 AM - 9:30 AM ET
+    enable_after_hours: bool = True  # 4:00 PM - 8:00 PM ET
     
     # Maximum auto-triggers per day
-    max_triggers_per_day: int = 5
+    max_triggers_per_day: int = 8  # Increased for earnings season
 
 
 @dataclass
@@ -222,34 +225,60 @@ class EarningsMonitor:
         self._trigger_history.append(event)
     
     def _monitor_loop(self):
-        """Main monitoring loop."""
+        """Main monitoring loop with pre-market and after-hours support."""
         logger.info("📡 Earnings monitor started")
+        logger.info("   ⏰ Pre-market scanning (6:00-9:30 AM ET): ENABLED")
+        logger.info("   ⏰ After-hours scanning (4:00-8:00 PM ET): ENABLED")
         
         while self._running:
             try:
-                # Determine check interval based on market hours
-                # Simple check: 9:30 AM - 4:00 PM ET on weekdays
+                # Determine session and check interval
                 now = datetime.now(pytz.timezone('US/Eastern'))
+                is_weekday = now.weekday() < 5
+                
+                # Define trading sessions (ET timezone)
+                # Pre-market: 6:00 AM - 9:30 AM
+                is_pre_market = (
+                    is_weekday and
+                    (now.hour >= 6 and now.hour < 9) or
+                    (now.hour == 9 and now.minute < 30)
+                )
+                
+                # Regular market: 9:30 AM - 4:00 PM
                 is_market_hours = (
-                    now.weekday() < 5 and  # Monday-Friday
+                    is_weekday and
                     now.hour >= 9 and now.hour < 16 and
                     (now.hour > 9 or now.minute >= 30)
                 )
                 
-                if self.config.market_hours_only and not is_market_hours:
-                    logger.debug("Outside market hours, skipping scan")
-                    time.sleep(self.config.check_interval_after_hours)
-                    continue
-                
-                # Perform scan
-                self._perform_scan()
-                
-                # Sleep until next scan
-                interval = (
-                    self.config.check_interval_market_hours 
-                    if is_market_hours 
-                    else self.config.check_interval_after_hours
+                # After-hours: 4:00 PM - 8:00 PM
+                is_after_hours = (
+                    is_weekday and
+                    now.hour >= 16 and now.hour < 20
                 )
+                
+                # Determine interval and whether to scan
+                should_scan = True
+                if is_pre_market and self.config.enable_pre_market:
+                    interval = self.config.check_interval_pre_market
+                    session = "PRE-MARKET"
+                elif is_market_hours:
+                    interval = self.config.check_interval_market_hours
+                    session = "MARKET"
+                elif is_after_hours and self.config.enable_after_hours:
+                    interval = self.config.check_interval_after_hours
+                    session = "AFTER-HOURS"
+                else:
+                    interval = self.config.check_interval_overnight
+                    session = "OVERNIGHT"
+                    should_scan = is_weekday  # Still scan on weekdays overnight
+                
+                if should_scan:
+                    logger.debug(f"[{session}] Performing earnings scan...")
+                    self._perform_scan()
+                else:
+                    logger.debug(f"[{session}] Skipping scan (weekend)")
+                
                 time.sleep(interval)
                 
             except Exception as e:

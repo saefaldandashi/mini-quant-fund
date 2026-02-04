@@ -99,6 +99,10 @@ class SectorRotationStrategy(Strategy):
         self.volatility_weight = config.get('volatility_weight', 0.2)
         self.use_etfs = config.get('use_etfs', False)  # Use stocks by default
         
+        # NEW: Fast rotation mode - use shorter lookbacks
+        self.fast_rotation = config.get('fast_rotation', True)  # Use 5-day momentum
+        self.intraday_adaptation = config.get('intraday_adaptation', True)  # React to intraday moves
+        
         # Track sector performance
         self._sector_returns: Dict[str, List[float]] = {s: [] for s in self.SECTORS}
     
@@ -200,27 +204,46 @@ class SectorRotationStrategy(Strategy):
         )
     
     def _calculate_sector_momentum(self, features: Features) -> Dict[str, float]:
-        """Calculate momentum score for each sector."""
+        """Calculate momentum score for each sector - now with fast rotation support."""
         sector_scores = {}
         
         for sector, info in self.SECTORS.items():
-            # Get returns for stocks in sector
             stocks = info['stocks']
-            returns = []
+            returns_5d = []
+            returns_21d = []
+            intraday_moves = []
             
             for stock in stocks:
-                # Use 21-day returns
+                # Fast rotation: prioritize 5-day returns
+                if self.fast_rotation:
+                    ret_5 = features.returns_5d.get(stock) if hasattr(features, 'returns_5d') else None
+                    if ret_5 is not None and not np.isnan(ret_5):
+                        returns_5d.append(ret_5)
+                
+                # 21-day returns for medium-term signal
                 ret_21 = features.returns_21d.get(stock)
                 if ret_21 is not None and not np.isnan(ret_21):
-                    returns.append(ret_21)
+                    returns_21d.append(ret_21)
+                
+                # Intraday adaptation: use 1-day returns as well
+                if self.intraday_adaptation:
+                    ret_1 = features.returns_1d.get(stock) if hasattr(features, 'returns_1d') else None
+                    if ret_1 is not None and not np.isnan(ret_1):
+                        intraday_moves.append(ret_1)
             
-            if returns:
-                # Momentum = average return, normalized
-                avg_ret = np.mean(returns)
-                # Scale to roughly -1 to 1
-                sector_scores[sector] = np.tanh(avg_ret * 10)
+            # Combine fast and slow momentum
+            fast_momentum = np.mean(returns_5d) if returns_5d else 0.0
+            slow_momentum = np.mean(returns_21d) if returns_21d else 0.0
+            intraday_momentum = np.mean(intraday_moves) if intraday_moves else 0.0
+            
+            # Weight: 40% fast (5d), 30% slow (21d), 30% intraday (1d)
+            if self.fast_rotation:
+                combined = 0.4 * fast_momentum + 0.3 * slow_momentum + 0.3 * intraday_momentum
             else:
-                sector_scores[sector] = 0.0
+                combined = slow_momentum
+            
+            # Scale to roughly -1 to 1
+            sector_scores[sector] = np.tanh(combined * 10)
         
         return sector_scores
     
