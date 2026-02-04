@@ -3,7 +3,7 @@
   "history": {
     "TS_Momentum_LS": [
       {
-        "timestamp": "2026-02-04T11:36:58.003676",
+        "timestamp": "2026-02-04T11:46:53.714869",
         "symbol": "TXN",
         "direction": "long",
         "confidence": 0.6,
@@ -13,7 +13,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.012080",
+        "timestamp": "2026-02-04T11:46:53.722836",
         "symbol": "AMAT",
         "direction": "long",
         "confidence": 0.6,
@@ -23,7 +23,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.019478",
+        "timestamp": "2026-02-04T11:46:53.730612",
         "symbol": "LRCX",
         "direction": "long",
         "confidence": 0.6,
@@ -33,7 +33,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.026800",
+        "timestamp": "2026-02-04T11:46:53.739466",
         "symbol": "MU",
         "direction": "long",
         "confidence": 0.6,
@@ -43,7 +43,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.034212",
+        "timestamp": "2026-02-04T11:46:53.747420",
         "symbol": "INTU",
         "direction": "short",
         "confidence": 0.6,
@@ -53,7 +53,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.041668",
+        "timestamp": "2026-02-04T11:46:53.755536",
         "symbol": "NOW",
         "direction": "short",
         "confidence": 0.6,
@@ -63,7 +63,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.049116",
+        "timestamp": "2026-02-04T11:46:53.764020",
         "symbol": "ADI",
         "direction": "long",
         "confidence": 0.6,
@@ -73,7 +73,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.059352",
+        "timestamp": "2026-02-04T11:46:53.771982",
         "symbol": "KLAC",
         "direction": "long",
         "confidence": 0.6,
@@ -83,7 +83,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.067189",
+        "timestamp": "2026-02-04T11:46:53.780291",
         "symbol": "SNPS",
         "direction": "short",
         "confidence": 0.6,
@@ -93,7 +93,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.076071",
+        "timestamp": "2026-02-04T11:46:53.788581",
         "symbol": "CDNS",
         "direction": "short",
         "confidence": 0.6,
@@ -103,7 +103,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.086252",
+        "timestamp": "2026-02-04T11:46:53.796942",
         "symbol": "FTNT",
         "direction": "short",
         "confidence": 0.6,
@@ -113,7 +113,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.093626",
+        "timestamp": "2026-02-04T11:46:53.805157",
         "symbol": "MCHP",
         "direction": "long",
         "confidence": 0.6,
@@ -123,7 +123,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.101164",
+        "timestamp": "2026-02-04T11:46:53.814038",
         "symbol": "TEL",
         "direction": "long",
         "confidence": 0.6,
@@ -133,7 +133,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.108710",
+        "timestamp": "2026-02-04T11:46:53.822396",
         "symbol": "HPQ",
         "direction": "short",
         "confidence": 0.6,
@@ -143,7 +143,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.116592",
+        "timestamp": "2026-02-04T11:46:53.830739",
         "symbol": "KEYS",
         "direction": "long",
         "confidence": 0.6,
@@ -153,7 +153,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.124284",
+        "timestamp": "2026-02-04T11:46:53.839212",
         "symbol": "ON",
         "direction": "long",
         "confidence": 0.6,
@@ -163,7 +163,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.131760",
+        "timestamp": "2026-02-04T11:46:53.847580",
         "symbol": "GLW",
         "direction": "long",
         "confidence": 0.6,
@@ -173,7 +173,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.139167",
+        "timestamp": "2026-02-04T11:46:53.856529",
         "symbol": "ZBRA",
         "direction": "short",
         "confidence": 0.6,
@@ -183,7 +183,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.147022",
+        "timestamp": "2026-02-04T11:46:53.864511",
         "symbol": "CDW",
         "direction": "short",
         "confidence": 0.6,
@@ -193,7 +193,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.154621",
+        "timestamp": "2026-02-04T11:46:53.872441",
         "symbol": "AKAM",
         "direction": "long",
         "confidence": 0.6,
@@ -203,7 +203,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.162263",
+        "timestamp": "2026-02-04T11:46:53.880672",
         "symbol": "EPAM",
         "direction": "long",
         "confidence": 0.6,
@@ -213,7 +213,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.169876",
+        "timestamp": "2026-02-04T11:46:53.888448",
         "symbol": "FFIV",
         "direction": "short",
         "confidence": 0.6,
@@ -223,7 +223,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.177961",
+        "timestamp": "2026-02-04T11:46:53.896468",
         "symbol": "WDC",
         "direction": "long",
         "confidence": 0.6,
@@ -233,7 +233,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.186063",
+        "timestamp": "2026-02-04T11:46:53.904502",
         "symbol": "STX",
         "direction": "long",
         "confidence": 0.6,
@@ -243,7 +243,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.193950",
+        "timestamp": "2026-02-04T11:46:53.912585",
         "symbol": "SWKS",
         "direction": "short",
         "confidence": 0.6,
@@ -253,7 +253,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.201632",
+        "timestamp": "2026-02-04T11:46:53.921017",
         "symbol": "SEDG",
         "direction": "long",
         "confidence": 0.6,
@@ -263,7 +263,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.209254",
+        "timestamp": "2026-02-04T11:46:53.928974",
         "symbol": "ENPH",
         "direction": "long",
         "confidence": 0.6,
@@ -273,7 +273,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.216555",
+        "timestamp": "2026-02-04T11:46:53.937971",
         "symbol": "FSLR",
         "direction": "long",
         "confidence": 0.6,
@@ -283,7 +283,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.223757",
+        "timestamp": "2026-02-04T11:46:53.947471",
         "symbol": "RUN",
         "direction": "long",
         "confidence": 0.6,
@@ -293,7 +293,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.231119",
+        "timestamp": "2026-02-04T11:46:53.956640",
         "symbol": "ANET",
         "direction": "long",
         "confidence": 0.6,
@@ -303,7 +303,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.238461",
+        "timestamp": "2026-02-04T11:46:53.966539",
         "symbol": "DDOG",
         "direction": "short",
         "confidence": 0.6,
@@ -313,7 +313,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.245929",
+        "timestamp": "2026-02-04T11:46:53.975018",
         "symbol": "ZS",
         "direction": "short",
         "confidence": 0.6,
@@ -323,7 +323,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.253354",
+        "timestamp": "2026-02-04T11:46:53.983159",
         "symbol": "OKTA",
         "direction": "short",
         "confidence": 0.6,
@@ -333,7 +333,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.260879",
+        "timestamp": "2026-02-04T11:46:53.992401",
         "symbol": "NET",
         "direction": "short",
         "confidence": 0.6,
@@ -343,7 +343,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.268159",
+        "timestamp": "2026-02-04T11:46:54.001723",
         "symbol": "MDB",
         "direction": "long",
         "confidence": 0.6,
@@ -353,7 +353,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.275413",
+        "timestamp": "2026-02-04T11:46:54.012261",
         "symbol": "SNOW",
         "direction": "short",
         "confidence": 0.6,
@@ -363,7 +363,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.282835",
+        "timestamp": "2026-02-04T11:46:54.021737",
         "symbol": "JPM",
         "direction": "long",
         "confidence": 0.6,
@@ -373,7 +373,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.290293",
+        "timestamp": "2026-02-04T11:46:54.031378",
         "symbol": "BAC",
         "direction": "long",
         "confidence": 0.6,
@@ -383,7 +383,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.297717",
+        "timestamp": "2026-02-04T11:46:54.040251",
         "symbol": "WFC",
         "direction": "long",
         "confidence": 0.6,
@@ -393,7 +393,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.305037",
+        "timestamp": "2026-02-04T11:46:54.048867",
         "symbol": "GS",
         "direction": "long",
         "confidence": 0.6,
@@ -403,7 +403,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.312518",
+        "timestamp": "2026-02-04T11:46:54.058116",
         "symbol": "MS",
         "direction": "long",
         "confidence": 0.6,
@@ -413,7 +413,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.319686",
+        "timestamp": "2026-02-04T11:46:54.066621",
         "symbol": "C",
         "direction": "long",
         "confidence": 0.6,
@@ -423,7 +423,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.327079",
+        "timestamp": "2026-02-04T11:46:54.074898",
         "symbol": "SCHW",
         "direction": "long",
         "confidence": 0.6,
@@ -433,7 +433,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.334405",
+        "timestamp": "2026-02-04T11:46:54.084488",
         "symbol": "AXP",
         "direction": "long",
         "confidence": 0.6,
@@ -443,7 +443,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.341864",
+        "timestamp": "2026-02-04T11:46:54.093912",
         "symbol": "USB",
         "direction": "long",
         "confidence": 0.6,
@@ -453,7 +453,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.349422",
+        "timestamp": "2026-02-04T11:46:54.101801",
         "symbol": "PNC",
         "direction": "long",
         "confidence": 0.6,
@@ -463,7 +463,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.356721",
+        "timestamp": "2026-02-04T11:46:54.110153",
         "symbol": "TFC",
         "direction": "long",
         "confidence": 0.6,
@@ -473,7 +473,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.364065",
+        "timestamp": "2026-02-04T11:46:54.119364",
         "symbol": "BK",
         "direction": "long",
         "confidence": 0.6,
@@ -483,7 +483,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.371576",
+        "timestamp": "2026-02-04T11:46:54.128095",
         "symbol": "ICE",
         "direction": "short",
         "confidence": 0.6,
@@ -493,7 +493,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.379143",
+        "timestamp": "2026-02-04T11:46:54.136022",
         "symbol": "MCO",
         "direction": "short",
         "confidence": 0.6,
@@ -503,7 +503,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.386604",
+        "timestamp": "2026-02-04T11:46:54.144247",
         "symbol": "SPGI",
         "direction": "short",
         "confidence": 0.6,
@@ -513,7 +513,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.394463",
+        "timestamp": "2026-02-04T11:46:54.152292",
         "symbol": "FIS",
         "direction": "short",
         "confidence": 0.6,
@@ -523,7 +523,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.401820",
+        "timestamp": "2026-02-04T11:46:54.160457",
         "symbol": "FISV",
         "direction": "short",
         "confidence": 0.6,
@@ -533,7 +533,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.409264",
+        "timestamp": "2026-02-04T11:46:54.168939",
         "symbol": "ADP",
         "direction": "short",
         "confidence": 0.6,
@@ -543,7 +543,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.416542",
+        "timestamp": "2026-02-04T11:46:54.178885",
         "symbol": "PAYX",
         "direction": "short",
         "confidence": 0.6,
@@ -553,7 +553,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.424058",
+        "timestamp": "2026-02-04T11:46:54.187264",
         "symbol": "GPN",
         "direction": "short",
         "confidence": 0.6,
@@ -563,7 +563,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.431554",
+        "timestamp": "2026-02-04T11:46:54.195570",
         "symbol": "CFG",
         "direction": "long",
         "confidence": 0.6,
@@ -573,7 +573,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.439179",
+        "timestamp": "2026-02-04T11:46:54.203805",
         "symbol": "KEY",
         "direction": "long",
         "confidence": 0.6,
@@ -583,7 +583,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.446801",
+        "timestamp": "2026-02-04T11:46:54.211796",
         "symbol": "RF",
         "direction": "long",
         "confidence": 0.6,
@@ -593,7 +593,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.454197",
+        "timestamp": "2026-02-04T11:46:54.221577",
         "symbol": "HBAN",
         "direction": "long",
         "confidence": 0.6,
@@ -603,7 +603,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.462038",
+        "timestamp": "2026-02-04T11:46:54.229258",
         "symbol": "MTB",
         "direction": "long",
         "confidence": 0.6,
@@ -613,7 +613,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.469709",
+        "timestamp": "2026-02-04T11:46:54.237081",
         "symbol": "FITB",
         "direction": "long",
         "confidence": 0.6,
@@ -623,7 +623,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.477173",
+        "timestamp": "2026-02-04T11:46:54.245474",
         "symbol": "ZION",
         "direction": "long",
         "confidence": 0.6,
@@ -633,7 +633,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.484671",
+        "timestamp": "2026-02-04T11:46:54.253541",
         "symbol": "CMA",
         "direction": "long",
         "confidence": 0.6,
@@ -643,7 +643,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.492151",
+        "timestamp": "2026-02-04T11:46:54.261730",
         "symbol": "NTRS",
         "direction": "long",
         "confidence": 0.6,
@@ -653,7 +653,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.499919",
+        "timestamp": "2026-02-04T11:46:54.269955",
         "symbol": "STT",
         "direction": "long",
         "confidence": 0.6,
@@ -663,7 +663,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.507574",
+        "timestamp": "2026-02-04T11:46:54.280359",
         "symbol": "BRO",
         "direction": "short",
         "confidence": 0.6,
@@ -673,7 +673,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.514907",
+        "timestamp": "2026-02-04T11:46:54.292678",
         "symbol": "AJG",
         "direction": "short",
         "confidence": 0.6,
@@ -683,7 +683,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.522313",
+        "timestamp": "2026-02-04T11:46:54.300668",
         "symbol": "MMC",
         "direction": "short",
         "confidence": 0.6,
@@ -693,7 +693,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.529764",
+        "timestamp": "2026-02-04T11:46:54.308941",
         "symbol": "CINF",
         "direction": "long",
         "confidence": 0.6,
@@ -703,7 +703,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.537261",
+        "timestamp": "2026-02-04T11:46:54.321426",
         "symbol": "L",
         "direction": "long",
         "confidence": 0.6,
@@ -713,7 +713,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.544829",
+        "timestamp": "2026-02-04T11:46:54.329252",
         "symbol": "TRV",
         "direction": "long",
         "confidence": 0.6,
@@ -723,7 +723,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.552062",
+        "timestamp": "2026-02-04T11:46:54.337410",
         "symbol": "PGR",
         "direction": "short",
         "confidence": 0.6,
@@ -733,7 +733,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.559369",
+        "timestamp": "2026-02-04T11:46:54.345866",
         "symbol": "CB",
         "direction": "long",
         "confidence": 0.6,
@@ -743,7 +743,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.566737",
+        "timestamp": "2026-02-04T11:46:54.353858",
         "symbol": "UNH",
         "direction": "long",
         "confidence": 0.6,
@@ -753,7 +753,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.574163",
+        "timestamp": "2026-02-04T11:46:54.362003",
         "symbol": "LLY",
         "direction": "long",
         "confidence": 0.6,
@@ -763,7 +763,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.581589",
+        "timestamp": "2026-02-04T11:46:54.370301",
         "symbol": "JNJ",
         "direction": "long",
         "confidence": 0.6,
@@ -773,7 +773,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.588996",
+        "timestamp": "2026-02-04T11:46:54.378341",
         "symbol": "MRK",
         "direction": "long",
         "confidence": 0.6,
@@ -783,7 +783,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.596435",
+        "timestamp": "2026-02-04T11:46:54.386499",
         "symbol": "ABBV",
         "direction": "long",
         "confidence": 0.6,
@@ -793,7 +793,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.604022",
+        "timestamp": "2026-02-04T11:46:54.394956",
         "symbol": "PFE",
         "direction": "long",
         "confidence": 0.6,
@@ -803,7 +803,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.611434",
+        "timestamp": "2026-02-04T11:46:54.403218",
         "symbol": "TMO",
         "direction": "long",
         "confidence": 0.6,
@@ -813,7 +813,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.618591",
+        "timestamp": "2026-02-04T11:46:54.411553",
         "symbol": "ABT",
         "direction": "short",
         "confidence": 0.6,
@@ -823,7 +823,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.625905",
+        "timestamp": "2026-02-04T11:46:54.420215",
         "symbol": "DHR",
         "direction": "long",
         "confidence": 0.6,
@@ -833,7 +833,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.633497",
+        "timestamp": "2026-02-04T11:46:54.428381",
         "symbol": "BMY",
         "direction": "long",
         "confidence": 0.6,
@@ -843,7 +843,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.641387",
+        "timestamp": "2026-02-04T11:46:54.436974",
         "symbol": "AMGN",
         "direction": "long",
         "confidence": 0.6,
@@ -853,7 +853,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.649121",
+        "timestamp": "2026-02-04T11:46:54.445028",
         "symbol": "GILD",
         "direction": "long",
         "confidence": 0.6,
@@ -863,7 +863,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.656477",
+        "timestamp": "2026-02-04T11:46:54.453162",
         "symbol": "REGN",
         "direction": "long",
         "confidence": 0.6,
@@ -873,7 +873,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.664000",
+        "timestamp": "2026-02-04T11:46:54.461241",
         "symbol": "MRNA",
         "direction": "long",
         "confidence": 0.6,
@@ -883,7 +883,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.671590",
+        "timestamp": "2026-02-04T11:46:54.469379",
         "symbol": "BIIB",
         "direction": "long",
         "confidence": 0.6,
@@ -893,7 +893,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.679278",
+        "timestamp": "2026-02-04T11:46:54.477441",
         "symbol": "ILMN",
         "direction": "long",
         "confidence": 0.6,
@@ -903,7 +903,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.686605",
+        "timestamp": "2026-02-04T11:46:54.485406",
         "symbol": "DXCM",
         "direction": "short",
         "confidence": 0.6,
@@ -913,7 +913,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.694240",
+        "timestamp": "2026-02-04T11:46:54.493433",
         "symbol": "MDT",
         "direction": "long",
         "confidence": 0.6,
@@ -923,7 +923,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.701945",
+        "timestamp": "2026-02-04T11:46:54.501756",
         "symbol": "BSX",
         "direction": "short",
         "confidence": 0.6,
@@ -933,7 +933,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.709812",
+        "timestamp": "2026-02-04T11:46:54.509726",
         "symbol": "ZBH",
         "direction": "short",
         "confidence": 0.6,
@@ -943,7 +943,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.717473",
+        "timestamp": "2026-02-04T11:46:54.517673",
         "symbol": "IDXX",
         "direction": "short",
         "confidence": 0.6,
@@ -953,7 +953,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.725616",
+        "timestamp": "2026-02-04T11:46:54.526007",
         "symbol": "IQV",
         "direction": "long",
         "confidence": 0.6,
@@ -963,7 +963,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.733036",
+        "timestamp": "2026-02-04T11:46:54.534186",
         "symbol": "A",
         "direction": "long",
         "confidence": 0.6,
@@ -973,7 +973,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.740915",
+        "timestamp": "2026-02-04T11:46:54.542175",
         "symbol": "MTD",
         "direction": "long",
         "confidence": 0.6,
@@ -983,7 +983,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.748490",
+        "timestamp": "2026-02-04T11:46:54.550096",
         "symbol": "WAT",
         "direction": "long",
         "confidence": 0.6,
@@ -993,7 +993,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.755994",
+        "timestamp": "2026-02-04T11:46:54.558251",
         "symbol": "HOLX",
         "direction": "long",
         "confidence": 0.6,
@@ -1003,7 +1003,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.763496",
+        "timestamp": "2026-02-04T11:46:54.566259",
         "symbol": "ALGN",
         "direction": "long",
         "confidence": 0.6,
@@ -1013,7 +1013,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.770898",
+        "timestamp": "2026-02-04T11:46:54.574186",
         "symbol": "TECH",
         "direction": "long",
         "confidence": 0.6,
@@ -1023,7 +1023,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.778759",
+        "timestamp": "2026-02-04T11:46:54.582216",
         "symbol": "BIO",
         "direction": "long",
         "confidence": 0.6,
@@ -1033,7 +1033,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.786068",
+        "timestamp": "2026-02-04T11:46:54.590526",
         "symbol": "CRL",
         "direction": "long",
         "confidence": 0.6,
@@ -1043,7 +1043,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.793569",
+        "timestamp": "2026-02-04T11:46:54.598473",
         "symbol": "ELV",
         "direction": "long",
         "confidence": 0.6,
@@ -1053,7 +1053,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.801116",
+        "timestamp": "2026-02-04T11:46:54.606852",
         "symbol": "HUM",
         "direction": "short",
         "confidence": 0.6,
@@ -1063,7 +1063,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.808691",
+        "timestamp": "2026-02-04T11:46:54.614776",
         "symbol": "CNC",
         "direction": "long",
         "confidence": 0.6,
@@ -1073,7 +1073,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.816243",
+        "timestamp": "2026-02-04T11:46:54.622904",
         "symbol": "MOH",
         "direction": "long",
         "confidence": 0.6,
@@ -1083,7 +1083,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.823785",
+        "timestamp": "2026-02-04T11:46:54.631077",
         "symbol": "CVS",
         "direction": "long",
         "confidence": 0.6,
@@ -1093,7 +1093,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.831291",
+        "timestamp": "2026-02-04T11:46:54.641095",
         "symbol": "MCK",
         "direction": "long",
         "confidence": 0.6,
@@ -1103,7 +1103,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.838731",
+        "timestamp": "2026-02-04T11:46:54.649047",
         "symbol": "CAH",
         "direction": "long",
         "confidence": 0.6,
@@ -1113,7 +1113,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.846424",
+        "timestamp": "2026-02-04T11:46:54.657197",
         "symbol": "VTRS",
         "direction": "long",
         "confidence": 0.6,
@@ -1123,7 +1123,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.854131",
+        "timestamp": "2026-02-04T11:46:54.664910",
         "symbol": "ZTS",
         "direction": "short",
         "confidence": 0.6,
@@ -1133,7 +1133,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.861766",
+        "timestamp": "2026-02-04T11:46:54.672694",
         "symbol": "DGX",
         "direction": "long",
         "confidence": 0.6,
@@ -1143,7 +1143,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.870245",
+        "timestamp": "2026-02-04T11:46:54.680534",
         "symbol": "AMZN",
         "direction": "long",
         "confidence": 0.6,
@@ -1153,7 +1153,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.877850",
+        "timestamp": "2026-02-04T11:46:54.688712",
         "symbol": "TSLA",
         "direction": "long",
         "confidence": 0.6,
@@ -1163,7 +1163,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.886125",
+        "timestamp": "2026-02-04T11:46:54.696734",
         "symbol": "MCD",
         "direction": "long",
         "confidence": 0.6,
@@ -1173,7 +1173,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.893685",
+        "timestamp": "2026-02-04T11:46:54.706392",
         "symbol": "NKE",
         "direction": "short",
         "confidence": 0.6,
@@ -1183,7 +1183,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.901164",
+        "timestamp": "2026-02-04T11:46:54.714260",
         "symbol": "LOW",
         "direction": "long",
         "confidence": 0.6,
@@ -1193,7 +1193,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.909006",
+        "timestamp": "2026-02-04T11:46:54.722515",
         "symbol": "TJX",
         "direction": "long",
         "confidence": 0.6,
@@ -1203,7 +1203,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.916669",
+        "timestamp": "2026-02-04T11:46:54.730531",
         "symbol": "BKNG",
         "direction": "short",
         "confidence": 0.6,
@@ -1213,7 +1213,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.924338",
+        "timestamp": "2026-02-04T11:46:54.738510",
         "symbol": "MAR",
         "direction": "long",
         "confidence": 0.6,
@@ -1223,7 +1223,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.932019",
+        "timestamp": "2026-02-04T11:46:54.746583",
         "symbol": "HLT",
         "direction": "long",
         "confidence": 0.6,
@@ -1233,7 +1233,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.940082",
+        "timestamp": "2026-02-04T11:46:54.754658",
         "symbol": "CMG",
         "direction": "short",
         "confidence": 0.6,
@@ -1243,7 +1243,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.947933",
+        "timestamp": "2026-02-04T11:46:54.769220",
         "symbol": "YUM",
         "direction": "long",
         "confidence": 0.6,
@@ -1253,7 +1253,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.955543",
+        "timestamp": "2026-02-04T11:46:54.777229",
         "symbol": "AZO",
         "direction": "short",
         "confidence": 0.6,
@@ -1263,7 +1263,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.963298",
+        "timestamp": "2026-02-04T11:46:54.785157",
         "symbol": "PHM",
         "direction": "long",
         "confidence": 0.6,
@@ -1273,7 +1273,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.971013",
+        "timestamp": "2026-02-04T11:46:54.793182",
         "symbol": "GRMN",
         "direction": "short",
         "confidence": 0.6,
@@ -1283,7 +1283,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.978687",
+        "timestamp": "2026-02-04T11:46:54.801018",
         "symbol": "POOL",
         "direction": "short",
         "confidence": 0.6,
@@ -1293,7 +1293,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.986453",
+        "timestamp": "2026-02-04T11:46:54.808795",
         "symbol": "ULTA",
         "direction": "long",
         "confidence": 0.6,
@@ -1303,7 +1303,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:58.994132",
+        "timestamp": "2026-02-04T11:46:54.816773",
         "symbol": "EXPE",
         "direction": "long",
         "confidence": 0.6,
@@ -1313,7 +1313,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.001847",
+        "timestamp": "2026-02-04T11:46:54.825283",
         "symbol": "F",
         "direction": "long",
         "confidence": 0.6,
@@ -1323,7 +1323,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.009498",
+        "timestamp": "2026-02-04T11:46:54.833303",
         "symbol": "GM",
         "direction": "long",
         "confidence": 0.6,
@@ -1333,7 +1333,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.017196",
+        "timestamp": "2026-02-04T11:46:54.841363",
         "symbol": "APTV",
         "direction": "long",
         "confidence": 0.6,
@@ -1343,7 +1343,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.024835",
+        "timestamp": "2026-02-04T11:46:54.849862",
         "symbol": "BWA",
         "direction": "long",
         "confidence": 0.6,
@@ -1353,7 +1353,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.032822",
+        "timestamp": "2026-02-04T11:46:54.857933",
         "symbol": "LEA",
         "direction": "long",
         "confidence": 0.6,
@@ -1363,7 +1363,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.040487",
+        "timestamp": "2026-02-04T11:46:54.866747",
         "symbol": "RL",
         "direction": "long",
         "confidence": 0.6,
@@ -1373,7 +1373,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.048345",
+        "timestamp": "2026-02-04T11:46:54.874900",
         "symbol": "TPR",
         "direction": "long",
         "confidence": 0.6,
@@ -1383,7 +1383,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.056207",
+        "timestamp": "2026-02-04T11:46:54.883054",
         "symbol": "VFC",
         "direction": "long",
         "confidence": 0.6,
@@ -1393,7 +1393,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.064021",
+        "timestamp": "2026-02-04T11:46:54.891014",
         "symbol": "PVH",
         "direction": "short",
         "confidence": 0.6,
@@ -1403,7 +1403,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.071435",
+        "timestamp": "2026-02-04T11:46:54.899032",
         "symbol": "KO",
         "direction": "long",
         "confidence": 0.6,
@@ -1413,7 +1413,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.079043",
+        "timestamp": "2026-02-04T11:46:54.907130",
         "symbol": "PEP",
         "direction": "long",
         "confidence": 0.6,
@@ -1423,7 +1423,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.086773",
+        "timestamp": "2026-02-04T11:46:54.915236",
         "symbol": "WMT",
         "direction": "long",
         "confidence": 0.6,
@@ -1433,7 +1433,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.094549",
+        "timestamp": "2026-02-04T11:46:54.923563",
         "symbol": "PM",
         "direction": "long",
         "confidence": 0.6,
@@ -1443,7 +1443,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.102269",
+        "timestamp": "2026-02-04T11:46:54.931443",
         "symbol": "MDLZ",
         "direction": "short",
         "confidence": 0.6,
@@ -1453,7 +1453,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.110042",
+        "timestamp": "2026-02-04T11:46:54.940060",
         "symbol": "CL",
         "direction": "long",
         "confidence": 0.6,
@@ -1463,7 +1463,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.118041",
+        "timestamp": "2026-02-04T11:46:54.949144",
         "symbol": "KMB",
         "direction": "short",
         "confidence": 0.6,
@@ -1473,7 +1473,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.126235",
+        "timestamp": "2026-02-04T11:46:54.956959",
         "symbol": "HSY",
         "direction": "long",
         "confidence": 0.6,
@@ -1483,7 +1483,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.134037",
+        "timestamp": "2026-02-04T11:46:54.964778",
         "symbol": "HRL",
         "direction": "short",
         "confidence": 0.6,
@@ -1493,7 +1493,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.141805",
+        "timestamp": "2026-02-04T11:46:54.972731",
         "symbol": "TSN",
         "direction": "long",
         "confidence": 0.6,
@@ -1503,7 +1503,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.149640",
+        "timestamp": "2026-02-04T11:46:54.980892",
         "symbol": "MNST",
         "direction": "long",
         "confidence": 0.6,
@@ -1513,7 +1513,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.157290",
+        "timestamp": "2026-02-04T11:46:54.988844",
         "symbol": "KDP",
         "direction": "short",
         "confidence": 0.6,
@@ -1523,7 +1523,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.164914",
+        "timestamp": "2026-02-04T11:46:54.996670",
         "symbol": "EL",
         "direction": "long",
         "confidence": 0.6,
@@ -1533,7 +1533,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.172428",
+        "timestamp": "2026-02-04T11:46:55.004496",
         "symbol": "CHD",
         "direction": "long",
         "confidence": 0.6,
@@ -1543,7 +1543,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.180067",
+        "timestamp": "2026-02-04T11:46:55.018779",
         "symbol": "CLX",
         "direction": "short",
         "confidence": 0.6,
@@ -1553,7 +1553,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.187466",
+        "timestamp": "2026-02-04T11:46:55.033221",
         "symbol": "KHC",
         "direction": "short",
         "confidence": 0.6,
@@ -1563,7 +1563,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.195080",
+        "timestamp": "2026-02-04T11:46:55.043330",
         "symbol": "CPB",
         "direction": "short",
         "confidence": 0.6,
@@ -1573,7 +1573,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.202742",
+        "timestamp": "2026-02-04T11:46:55.051246",
         "symbol": "MKC",
         "direction": "short",
         "confidence": 0.6,
@@ -1583,7 +1583,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.210738",
+        "timestamp": "2026-02-04T11:46:55.059223",
         "symbol": "ADM",
         "direction": "long",
         "confidence": 0.6,
@@ -1593,7 +1593,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.218085",
+        "timestamp": "2026-02-04T11:46:55.067142",
         "symbol": "CAT",
         "direction": "long",
         "confidence": 0.6,
@@ -1603,7 +1603,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.225674",
+        "timestamp": "2026-02-04T11:46:55.075089",
         "symbol": "UNP",
         "direction": "long",
         "confidence": 0.6,
@@ -1613,7 +1613,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.233579",
+        "timestamp": "2026-02-04T11:46:55.083098",
         "symbol": "UPS",
         "direction": "long",
         "confidence": 0.6,
@@ -1623,7 +1623,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.241325",
+        "timestamp": "2026-02-04T11:46:55.091036",
         "symbol": "RTX",
         "direction": "long",
         "confidence": 0.6,
@@ -1633,7 +1633,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.248961",
+        "timestamp": "2026-02-04T11:46:55.099024",
         "symbol": "LMT",
         "direction": "long",
         "confidence": 0.6,
@@ -1643,7 +1643,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.256744",
+        "timestamp": "2026-02-04T11:46:55.107141",
         "symbol": "BA",
         "direction": "long",
         "confidence": 0.6,
@@ -1653,7 +1653,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.264177",
+        "timestamp": "2026-02-04T11:46:55.115041",
         "symbol": "GE",
         "direction": "long",
         "confidence": 0.6,
@@ -1663,7 +1663,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.271901",
+        "timestamp": "2026-02-04T11:46:55.123246",
         "symbol": "GD",
         "direction": "long",
         "confidence": 0.6,
@@ -1673,7 +1673,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.279348",
+        "timestamp": "2026-02-04T11:46:55.131059",
         "symbol": "NOC",
         "direction": "long",
         "confidence": 0.6,
@@ -1683,7 +1683,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.286704",
+        "timestamp": "2026-02-04T11:46:55.138856",
         "symbol": "TXT",
         "direction": "long",
         "confidence": 0.6,
@@ -1693,7 +1693,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.294192",
+        "timestamp": "2026-02-04T11:46:55.146887",
         "symbol": "HII",
         "direction": "long",
         "confidence": 0.6,
@@ -1703,7 +1703,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.301677",
+        "timestamp": "2026-02-04T11:46:55.154820",
         "symbol": "LHX",
         "direction": "long",
         "confidence": 0.6,
@@ -1713,7 +1713,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.309179",
+        "timestamp": "2026-02-04T11:46:55.162669",
         "symbol": "TDG",
         "direction": "short",
         "confidence": 0.6,
@@ -1723,7 +1723,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.316692",
+        "timestamp": "2026-02-04T11:46:55.170373",
         "symbol": "AXON",
         "direction": "short",
         "confidence": 0.6,
@@ -1733,7 +1733,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.324166",
+        "timestamp": "2026-02-04T11:46:55.178270",
         "symbol": "ETN",
         "direction": "short",
         "confidence": 0.6,
@@ -1743,7 +1743,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.331563",
+        "timestamp": "2026-02-04T11:46:55.190207",
         "symbol": "EMR",
         "direction": "long",
         "confidence": 0.6,
@@ -1753,7 +1753,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.338824",
+        "timestamp": "2026-02-04T11:46:55.197910",
         "symbol": "ROK",
         "direction": "long",
         "confidence": 0.6,
@@ -1763,7 +1763,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.346196",
+        "timestamp": "2026-02-04T11:46:55.205692",
         "symbol": "AME",
         "direction": "long",
         "confidence": 0.6,
@@ -1773,7 +1773,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.353606",
+        "timestamp": "2026-02-04T11:46:55.213488",
         "symbol": "ITW",
         "direction": "long",
         "confidence": 0.6,
@@ -1783,7 +1783,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.361219",
+        "timestamp": "2026-02-04T11:46:55.221305",
         "symbol": "PH",
         "direction": "long",
         "confidence": 0.6,
@@ -1793,7 +1793,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.368739",
+        "timestamp": "2026-02-04T11:46:55.229149",
         "symbol": "DOV",
         "direction": "long",
         "confidence": 0.6,
@@ -1803,7 +1803,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.376171",
+        "timestamp": "2026-02-04T11:46:55.237441",
         "symbol": "ODFL",
         "direction": "long",
         "confidence": 0.6,
@@ -1813,7 +1813,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.383476",
+        "timestamp": "2026-02-04T11:46:55.245297",
         "symbol": "JBHT",
         "direction": "long",
         "confidence": 0.6,
@@ -1823,7 +1823,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.390920",
+        "timestamp": "2026-02-04T11:46:55.253162",
         "symbol": "CSX",
         "direction": "long",
         "confidence": 0.6,
@@ -1833,7 +1833,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.398290",
+        "timestamp": "2026-02-04T11:46:55.261194",
         "symbol": "NSC",
         "direction": "long",
         "confidence": 0.6,
@@ -1843,7 +1843,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.405566",
+        "timestamp": "2026-02-04T11:46:55.269271",
         "symbol": "FDX",
         "direction": "long",
         "confidence": 0.6,
@@ -1853,7 +1853,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.413032",
+        "timestamp": "2026-02-04T11:46:55.277041",
         "symbol": "CHRW",
         "direction": "long",
         "confidence": 0.6,
@@ -1863,7 +1863,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.420318",
+        "timestamp": "2026-02-04T11:46:55.285147",
         "symbol": "WAB",
         "direction": "long",
         "confidence": 0.6,
@@ -1873,7 +1873,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.427743",
+        "timestamp": "2026-02-04T11:46:55.292888",
         "symbol": "GWW",
         "direction": "long",
         "confidence": 0.6,
@@ -1883,7 +1883,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.435195",
+        "timestamp": "2026-02-04T11:46:55.300742",
         "symbol": "CTAS",
         "direction": "short",
         "confidence": 0.6,
@@ -1893,7 +1893,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.442672",
+        "timestamp": "2026-02-04T11:46:55.308637",
         "symbol": "CPRT",
         "direction": "short",
         "confidence": 0.6,
@@ -1903,7 +1903,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.450144",
+        "timestamp": "2026-02-04T11:46:55.316587",
         "symbol": "PCAR",
         "direction": "long",
         "confidence": 0.6,
@@ -1913,7 +1913,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.457613",
+        "timestamp": "2026-02-04T11:46:55.324489",
         "symbol": "CARR",
         "direction": "short",
         "confidence": 0.6,
@@ -1923,7 +1923,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.465076",
+        "timestamp": "2026-02-04T11:46:55.332405",
         "symbol": "JCI",
         "direction": "long",
         "confidence": 0.6,
@@ -1933,7 +1933,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.472559",
+        "timestamp": "2026-02-04T11:46:55.340424",
         "symbol": "LII",
         "direction": "short",
         "confidence": 0.6,
@@ -1943,7 +1943,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.480102",
+        "timestamp": "2026-02-04T11:46:55.348375",
         "symbol": "XOM",
         "direction": "long",
         "confidence": 0.6,
@@ -1953,7 +1953,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.487807",
+        "timestamp": "2026-02-04T11:46:55.356380",
         "symbol": "CVX",
         "direction": "long",
         "confidence": 0.6,
@@ -1963,7 +1963,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.495310",
+        "timestamp": "2026-02-04T11:46:55.364252",
         "symbol": "COP",
         "direction": "long",
         "confidence": 0.6,
@@ -1973,7 +1973,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.502765",
+        "timestamp": "2026-02-04T11:46:55.372256",
         "symbol": "SLB",
         "direction": "long",
         "confidence": 0.6,
@@ -1983,7 +1983,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.510205",
+        "timestamp": "2026-02-04T11:46:55.380142",
         "symbol": "MPC",
         "direction": "long",
         "confidence": 0.6,
@@ -1993,7 +1993,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.517380",
+        "timestamp": "2026-02-04T11:46:55.388186",
         "symbol": "PSX",
         "direction": "long",
         "confidence": 0.6,
@@ -2003,7 +2003,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.524631",
+        "timestamp": "2026-02-04T11:46:55.396208",
         "symbol": "VLO",
         "direction": "long",
         "confidence": 0.6,
@@ -2013,7 +2013,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.531972",
+        "timestamp": "2026-02-04T11:46:55.404252",
         "symbol": "DVN",
         "direction": "long",
         "confidence": 0.6,
@@ -2023,7 +2023,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.539311",
+        "timestamp": "2026-02-04T11:46:55.412148",
         "symbol": "HAL",
         "direction": "long",
         "confidence": 0.6,
@@ -2033,7 +2033,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.546683",
+        "timestamp": "2026-02-04T11:46:55.419978",
         "symbol": "BKR",
         "direction": "long",
         "confidence": 0.6,
@@ -2043,7 +2043,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.553907",
+        "timestamp": "2026-02-04T11:46:55.427955",
         "symbol": "FANG",
         "direction": "long",
         "confidence": 0.6,
@@ -2053,7 +2053,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.561244",
+        "timestamp": "2026-02-04T11:46:55.435921",
         "symbol": "KMI",
         "direction": "long",
         "confidence": 0.6,
@@ -2063,7 +2063,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.568702",
+        "timestamp": "2026-02-04T11:46:55.444793",
         "symbol": "WMB",
         "direction": "long",
         "confidence": 0.6,
@@ -2073,7 +2073,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.576136",
+        "timestamp": "2026-02-04T11:46:55.452923",
         "symbol": "TRGP",
         "direction": "long",
         "confidence": 0.6,
@@ -2083,7 +2083,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.583586",
+        "timestamp": "2026-02-04T11:46:55.461016",
         "symbol": "LNG",
         "direction": "short",
         "confidence": 0.6,
@@ -2093,7 +2093,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.591176",
+        "timestamp": "2026-02-04T11:46:55.469138",
         "symbol": "META",
         "direction": "short",
         "confidence": 0.6,
@@ -2103,7 +2103,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.598783",
+        "timestamp": "2026-02-04T11:46:55.478677",
         "symbol": "GOOGL",
         "direction": "long",
         "confidence": 0.6,
@@ -2113,7 +2113,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.610987",
+        "timestamp": "2026-02-04T11:46:55.487153",
         "symbol": "GOOG",
         "direction": "long",
         "confidence": 0.6,
@@ -2123,7 +2123,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.638471",
+        "timestamp": "2026-02-04T11:46:55.495287",
         "symbol": "NFLX",
         "direction": "short",
         "confidence": 0.6,
@@ -2133,7 +2133,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.659204",
+        "timestamp": "2026-02-04T11:46:55.503659",
         "symbol": "DIS",
         "direction": "short",
         "confidence": 0.6,
@@ -2143,7 +2143,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.678369",
+        "timestamp": "2026-02-04T11:46:55.511588",
         "symbol": "CMCSA",
         "direction": "short",
         "confidence": 0.6,
@@ -2153,7 +2153,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.692472",
+        "timestamp": "2026-02-04T11:46:55.519646",
         "symbol": "TMUS",
         "direction": "short",
         "confidence": 0.6,
@@ -2163,7 +2163,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.704210",
+        "timestamp": "2026-02-04T11:46:55.527838",
         "symbol": "CHTR",
         "direction": "short",
         "confidence": 0.6,
@@ -2173,7 +2173,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.765499",
+        "timestamp": "2026-02-04T11:46:55.536331",
         "symbol": "EA",
         "direction": "long",
         "confidence": 0.6,
@@ -2183,7 +2183,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.774388",
+        "timestamp": "2026-02-04T11:46:55.544450",
         "symbol": "MTCH",
         "direction": "short",
         "confidence": 0.6,
@@ -2193,7 +2193,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.782593",
+        "timestamp": "2026-02-04T11:46:55.552519",
         "symbol": "NEE",
         "direction": "long",
         "confidence": 0.6,
@@ -2203,7 +2203,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.790625",
+        "timestamp": "2026-02-04T11:46:55.560602",
         "symbol": "SO",
         "direction": "short",
         "confidence": 0.6,
@@ -2213,7 +2213,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.798644",
+        "timestamp": "2026-02-04T11:46:55.568686",
         "symbol": "AEP",
         "direction": "long",
         "confidence": 0.6,
@@ -2223,7 +2223,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.806517",
+        "timestamp": "2026-02-04T11:46:55.576873",
         "symbol": "PEG",
         "direction": "short",
         "confidence": 0.6,
@@ -2233,7 +2233,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.815121",
+        "timestamp": "2026-02-04T11:46:55.585026",
         "symbol": "AWK",
         "direction": "short",
         "confidence": 0.6,
@@ -2243,7 +2243,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.822842",
+        "timestamp": "2026-02-04T11:46:55.593084",
         "symbol": "ATO",
         "direction": "long",
         "confidence": 0.6,
@@ -2253,7 +2253,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.830387",
+        "timestamp": "2026-02-04T11:46:55.601096",
         "symbol": "PLD",
         "direction": "long",
         "confidence": 0.6,
@@ -2263,7 +2263,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.837977",
+        "timestamp": "2026-02-04T11:46:55.609162",
         "symbol": "AMT",
         "direction": "short",
         "confidence": 0.6,
@@ -2273,7 +2273,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.845544",
+        "timestamp": "2026-02-04T11:46:55.617133",
         "symbol": "CCI",
         "direction": "short",
         "confidence": 0.6,
@@ -2283,7 +2283,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.853057",
+        "timestamp": "2026-02-04T11:46:55.625307",
         "symbol": "SPG",
         "direction": "long",
         "confidence": 0.6,
@@ -2293,7 +2293,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.860838",
+        "timestamp": "2026-02-04T11:46:55.633346",
         "symbol": "O",
         "direction": "long",
         "confidence": 0.6,
@@ -2303,7 +2303,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.868407",
+        "timestamp": "2026-02-04T11:46:55.641339",
         "symbol": "WELL",
         "direction": "long",
         "confidence": 0.6,
@@ -2313,7 +2313,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.876006",
+        "timestamp": "2026-02-04T11:46:55.649606",
         "symbol": "DLR",
         "direction": "short",
         "confidence": 0.6,
@@ -2323,7 +2323,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.883451",
+        "timestamp": "2026-02-04T11:46:55.658338",
         "symbol": "VTR",
         "direction": "long",
         "confidence": 0.6,
@@ -2333,7 +2333,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.891081",
+        "timestamp": "2026-02-04T11:46:55.666422",
         "symbol": "ARE",
         "direction": "short",
         "confidence": 0.6,
@@ -2343,7 +2343,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.898424",
+        "timestamp": "2026-02-04T11:46:55.674509",
         "symbol": "MAA",
         "direction": "short",
         "confidence": 0.6,
@@ -2353,7 +2353,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.905998",
+        "timestamp": "2026-02-04T11:46:55.682589",
         "symbol": "ECL",
         "direction": "long",
         "confidence": 0.6,
@@ -2363,7 +2363,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.913472",
+        "timestamp": "2026-02-04T11:46:55.690706",
         "symbol": "DD",
         "direction": "short",
         "confidence": 0.6,
@@ -2373,7 +2373,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.920951",
+        "timestamp": "2026-02-04T11:46:55.699469",
         "symbol": "NEM",
         "direction": "long",
         "confidence": 0.6,
@@ -2383,7 +2383,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.928389",
+        "timestamp": "2026-02-04T11:46:55.707513",
         "symbol": "FCX",
         "direction": "long",
         "confidence": 0.6,
@@ -2393,7 +2393,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.935868",
+        "timestamp": "2026-02-04T11:46:55.715491",
         "symbol": "NUE",
         "direction": "long",
         "confidence": 0.6,
@@ -2403,7 +2403,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.943393",
+        "timestamp": "2026-02-04T11:46:55.723507",
         "symbol": "STLD",
         "direction": "long",
         "confidence": 0.6,
@@ -2413,7 +2413,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.950789",
+        "timestamp": "2026-02-04T11:46:55.731557",
         "symbol": "VMC",
         "direction": "long",
         "confidence": 0.6,
@@ -2423,7 +2423,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.958168",
+        "timestamp": "2026-02-04T11:46:55.739644",
         "symbol": "MLM",
         "direction": "long",
         "confidence": 0.6,
@@ -2433,7 +2433,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.965606",
+        "timestamp": "2026-02-04T11:46:55.747599",
         "symbol": "ALB",
         "direction": "long",
         "confidence": 0.6,
@@ -2443,7 +2443,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:36:59.973006",
+        "timestamp": "2026-02-04T11:46:55.755604",
         "symbol": "MOS",
         "direction": "short",
         "confidence": 0.6,
@@ -2453,7 +2453,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.882662",
+        "timestamp": "2026-02-04T11:51:56.599095",
         "symbol": "AAPL",
         "direction": "long",
         "confidence": 0.6,
@@ -2463,7 +2463,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.893364",
+        "timestamp": "2026-02-04T11:51:56.607080",
         "symbol": "MSFT",
         "direction": "short",
         "confidence": 0.6,
@@ -2473,7 +2473,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.902631",
+        "timestamp": "2026-02-04T11:51:56.614959",
         "symbol": "AVGO",
         "direction": "long",
         "confidence": 0.6,
@@ -2483,7 +2483,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.911060",
+        "timestamp": "2026-02-04T11:51:56.622802",
         "symbol": "ORCL",
         "direction": "short",
         "confidence": 0.6,
@@ -2493,7 +2493,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.919097",
+        "timestamp": "2026-02-04T11:51:56.630792",
         "symbol": "ADBE",
         "direction": "short",
         "confidence": 0.6,
@@ -2503,7 +2503,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.927650",
+        "timestamp": "2026-02-04T11:51:56.638511",
         "symbol": "CRM",
         "direction": "short",
         "confidence": 0.6,
@@ -2513,7 +2513,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.935583",
+        "timestamp": "2026-02-04T11:51:56.646460",
         "symbol": "AMD",
         "direction": "long",
         "confidence": 0.6,
@@ -2523,7 +2523,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.943295",
+        "timestamp": "2026-02-04T11:51:56.654429",
         "symbol": "CSCO",
         "direction": "long",
         "confidence": 0.6,
@@ -2533,7 +2533,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.950815",
+        "timestamp": "2026-02-04T11:51:56.662393",
         "symbol": "INTC",
         "direction": "long",
         "confidence": 0.6,
@@ -2543,7 +2543,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.958691",
+        "timestamp": "2026-02-04T11:51:56.670391",
         "symbol": "IBM",
         "direction": "long",
         "confidence": 0.6,
@@ -2553,7 +2553,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.966843",
+        "timestamp": "2026-02-04T11:51:56.678365",
         "symbol": "TXN",
         "direction": "long",
         "confidence": 0.6,
@@ -2563,7 +2563,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.974638",
+        "timestamp": "2026-02-04T11:51:56.686498",
         "symbol": "AMAT",
         "direction": "long",
         "confidence": 0.6,
@@ -2573,7 +2573,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.982533",
+        "timestamp": "2026-02-04T11:51:56.694646",
         "symbol": "LRCX",
         "direction": "long",
         "confidence": 0.6,
@@ -2583,7 +2583,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.990204",
+        "timestamp": "2026-02-04T11:51:56.702530",
         "symbol": "MU",
         "direction": "long",
         "confidence": 0.6,
@@ -2593,7 +2593,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:01.998452",
+        "timestamp": "2026-02-04T11:51:56.710493",
         "symbol": "INTU",
         "direction": "short",
         "confidence": 0.6,
@@ -2603,7 +2603,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.006171",
+        "timestamp": "2026-02-04T11:51:56.718734",
         "symbol": "NOW",
         "direction": "short",
         "confidence": 0.6,
@@ -2613,7 +2613,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.014290",
+        "timestamp": "2026-02-04T11:51:56.726658",
         "symbol": "ADI",
         "direction": "long",
         "confidence": 0.6,
@@ -2623,7 +2623,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.022273",
+        "timestamp": "2026-02-04T11:51:56.734763",
         "symbol": "KLAC",
         "direction": "long",
         "confidence": 0.6,
@@ -2633,7 +2633,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.029956",
+        "timestamp": "2026-02-04T11:51:56.743057",
         "symbol": "SNPS",
         "direction": "short",
         "confidence": 0.6,
@@ -2643,7 +2643,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.037673",
+        "timestamp": "2026-02-04T11:51:56.751322",
         "symbol": "CDNS",
         "direction": "short",
         "confidence": 0.6,
@@ -2653,7 +2653,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.045404",
+        "timestamp": "2026-02-04T11:51:56.759364",
         "symbol": "FTNT",
         "direction": "short",
         "confidence": 0.6,
@@ -2663,7 +2663,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.053079",
+        "timestamp": "2026-02-04T11:51:56.767805",
         "symbol": "MCHP",
         "direction": "long",
         "confidence": 0.6,
@@ -2673,7 +2673,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.060776",
+        "timestamp": "2026-02-04T11:51:56.776145",
         "symbol": "TEL",
         "direction": "long",
         "confidence": 0.6,
@@ -2683,7 +2683,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.068383",
+        "timestamp": "2026-02-04T11:51:56.784606",
         "symbol": "HPQ",
         "direction": "short",
         "confidence": 0.6,
@@ -2693,7 +2693,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.075981",
+        "timestamp": "2026-02-04T11:51:56.792977",
         "symbol": "KEYS",
         "direction": "long",
         "confidence": 0.6,
@@ -2703,7 +2703,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.083350",
+        "timestamp": "2026-02-04T11:51:56.801381",
         "symbol": "ON",
         "direction": "long",
         "confidence": 0.6,
@@ -2713,7 +2713,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.090918",
+        "timestamp": "2026-02-04T11:51:56.809610",
         "symbol": "GLW",
         "direction": "long",
         "confidence": 0.6,
@@ -2723,7 +2723,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.098364",
+        "timestamp": "2026-02-04T11:51:56.817587",
         "symbol": "ZBRA",
         "direction": "short",
         "confidence": 0.6,
@@ -2733,7 +2733,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.106004",
+        "timestamp": "2026-02-04T11:51:56.825877",
         "symbol": "CDW",
         "direction": "short",
         "confidence": 0.6,
@@ -2743,7 +2743,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.113769",
+        "timestamp": "2026-02-04T11:51:56.834115",
         "symbol": "AKAM",
         "direction": "long",
         "confidence": 0.6,
@@ -2753,7 +2753,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.121322",
+        "timestamp": "2026-02-04T11:51:56.842300",
         "symbol": "EPAM",
         "direction": "long",
         "confidence": 0.6,
@@ -2763,7 +2763,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.129091",
+        "timestamp": "2026-02-04T11:51:56.850358",
         "symbol": "FFIV",
         "direction": "short",
         "confidence": 0.6,
@@ -2773,7 +2773,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.136678",
+        "timestamp": "2026-02-04T11:51:56.858533",
         "symbol": "WDC",
         "direction": "long",
         "confidence": 0.6,
@@ -2783,7 +2783,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.144332",
+        "timestamp": "2026-02-04T11:51:56.866887",
         "symbol": "STX",
         "direction": "long",
         "confidence": 0.6,
@@ -2793,7 +2793,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.152044",
+        "timestamp": "2026-02-04T11:51:56.875121",
         "symbol": "SWKS",
         "direction": "short",
         "confidence": 0.6,
@@ -2803,7 +2803,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.159687",
+        "timestamp": "2026-02-04T11:51:56.883488",
         "symbol": "SEDG",
         "direction": "long",
         "confidence": 0.6,
@@ -2813,7 +2813,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.167326",
+        "timestamp": "2026-02-04T11:51:56.892012",
         "symbol": "ENPH",
         "direction": "long",
         "confidence": 0.6,
@@ -2823,7 +2823,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.175072",
+        "timestamp": "2026-02-04T11:51:56.900320",
         "symbol": "FSLR",
         "direction": "long",
         "confidence": 0.6,
@@ -2833,7 +2833,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.182698",
+        "timestamp": "2026-02-04T11:51:56.908598",
         "symbol": "RUN",
         "direction": "long",
         "confidence": 0.6,
@@ -2843,7 +2843,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.190601",
+        "timestamp": "2026-02-04T11:51:56.916939",
         "symbol": "ANET",
         "direction": "long",
         "confidence": 0.6,
@@ -2853,7 +2853,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.198496",
+        "timestamp": "2026-02-04T11:51:56.925337",
         "symbol": "DDOG",
         "direction": "short",
         "confidence": 0.6,
@@ -2863,7 +2863,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.206454",
+        "timestamp": "2026-02-04T11:51:56.933571",
         "symbol": "ZS",
         "direction": "short",
         "confidence": 0.6,
@@ -2873,7 +2873,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.214850",
+        "timestamp": "2026-02-04T11:51:56.941871",
         "symbol": "OKTA",
         "direction": "short",
         "confidence": 0.6,
@@ -2883,7 +2883,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.222799",
+        "timestamp": "2026-02-04T11:51:56.950230",
         "symbol": "NET",
         "direction": "short",
         "confidence": 0.6,
@@ -2893,7 +2893,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.230369",
+        "timestamp": "2026-02-04T11:51:56.958317",
         "symbol": "MDB",
         "direction": "long",
         "confidence": 0.6,
@@ -2903,7 +2903,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.238287",
+        "timestamp": "2026-02-04T11:51:56.966661",
         "symbol": "SNOW",
         "direction": "short",
         "confidence": 0.6,
@@ -2913,7 +2913,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.246075",
+        "timestamp": "2026-02-04T11:51:56.975053",
         "symbol": "JPM",
         "direction": "long",
         "confidence": 0.6,
@@ -2923,7 +2923,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.253772",
+        "timestamp": "2026-02-04T11:51:56.983276",
         "symbol": "BAC",
         "direction": "long",
         "confidence": 0.6,
@@ -2933,7 +2933,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.261373",
+        "timestamp": "2026-02-04T11:51:56.991895",
         "symbol": "WFC",
         "direction": "long",
         "confidence": 0.6,
@@ -2943,7 +2943,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.269019",
+        "timestamp": "2026-02-04T11:51:57.000205",
         "symbol": "GS",
         "direction": "long",
         "confidence": 0.6,
@@ -2953,7 +2953,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.276330",
+        "timestamp": "2026-02-04T11:51:57.008537",
         "symbol": "MS",
         "direction": "long",
         "confidence": 0.6,
@@ -2963,7 +2963,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.284070",
+        "timestamp": "2026-02-04T11:51:57.016991",
         "symbol": "C",
         "direction": "long",
         "confidence": 0.6,
@@ -2973,7 +2973,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.291873",
+        "timestamp": "2026-02-04T11:51:57.025405",
         "symbol": "SCHW",
         "direction": "long",
         "confidence": 0.6,
@@ -2983,7 +2983,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.299322",
+        "timestamp": "2026-02-04T11:51:57.033764",
         "symbol": "AXP",
         "direction": "long",
         "confidence": 0.6,
@@ -2993,7 +2993,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.306839",
+        "timestamp": "2026-02-04T11:51:57.042253",
         "symbol": "USB",
         "direction": "long",
         "confidence": 0.6,
@@ -3003,7 +3003,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.314215",
+        "timestamp": "2026-02-04T11:51:57.050985",
         "symbol": "PNC",
         "direction": "long",
         "confidence": 0.6,
@@ -3013,7 +3013,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.321787",
+        "timestamp": "2026-02-04T11:51:57.059392",
         "symbol": "TFC",
         "direction": "long",
         "confidence": 0.6,
@@ -3023,7 +3023,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.329278",
+        "timestamp": "2026-02-04T11:51:57.068001",
         "symbol": "BK",
         "direction": "long",
         "confidence": 0.6,
@@ -3033,7 +3033,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.336903",
+        "timestamp": "2026-02-04T11:51:57.076291",
         "symbol": "ICE",
         "direction": "short",
         "confidence": 0.6,
@@ -3043,7 +3043,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.344516",
+        "timestamp": "2026-02-04T11:51:57.084863",
         "symbol": "MCO",
         "direction": "short",
         "confidence": 0.6,
@@ -3053,7 +3053,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.352208",
+        "timestamp": "2026-02-04T11:51:57.092916",
         "symbol": "SPGI",
         "direction": "short",
         "confidence": 0.6,
@@ -3063,7 +3063,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.359853",
+        "timestamp": "2026-02-04T11:51:57.100916",
         "symbol": "FIS",
         "direction": "short",
         "confidence": 0.6,
@@ -3073,7 +3073,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.367528",
+        "timestamp": "2026-02-04T11:51:57.108868",
         "symbol": "FISV",
         "direction": "short",
         "confidence": 0.6,
@@ -3083,7 +3083,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.375191",
+        "timestamp": "2026-02-04T11:51:57.116935",
         "symbol": "ADP",
         "direction": "short",
         "confidence": 0.6,
@@ -3093,7 +3093,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.382712",
+        "timestamp": "2026-02-04T11:51:57.125010",
         "symbol": "PAYX",
         "direction": "short",
         "confidence": 0.6,
@@ -3103,7 +3103,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.390126",
+        "timestamp": "2026-02-04T11:51:57.133122",
         "symbol": "GPN",
         "direction": "short",
         "confidence": 0.6,
@@ -3113,7 +3113,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.397757",
+        "timestamp": "2026-02-04T11:51:57.141246",
         "symbol": "CFG",
         "direction": "long",
         "confidence": 0.6,
@@ -3123,7 +3123,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.405363",
+        "timestamp": "2026-02-04T11:51:57.149108",
         "symbol": "KEY",
         "direction": "long",
         "confidence": 0.6,
@@ -3133,7 +3133,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.413713",
+        "timestamp": "2026-02-04T11:51:57.157155",
         "symbol": "RF",
         "direction": "long",
         "confidence": 0.6,
@@ -3143,7 +3143,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.421700",
+        "timestamp": "2026-02-04T11:51:57.165177",
         "symbol": "HBAN",
         "direction": "long",
         "confidence": 0.6,
@@ -3153,7 +3153,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.429309",
+        "timestamp": "2026-02-04T11:51:57.173008",
         "symbol": "MTB",
         "direction": "long",
         "confidence": 0.6,
@@ -3163,7 +3163,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.436929",
+        "timestamp": "2026-02-04T11:51:57.181124",
         "symbol": "FITB",
         "direction": "long",
         "confidence": 0.6,
@@ -3173,7 +3173,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.444529",
+        "timestamp": "2026-02-04T11:51:57.189168",
         "symbol": "ZION",
         "direction": "long",
         "confidence": 0.6,
@@ -3183,7 +3183,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.452136",
+        "timestamp": "2026-02-04T11:51:57.197235",
         "symbol": "CMA",
         "direction": "long",
         "confidence": 0.6,
@@ -3193,7 +3193,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.459734",
+        "timestamp": "2026-02-04T11:51:57.205417",
         "symbol": "NTRS",
         "direction": "long",
         "confidence": 0.6,
@@ -3203,7 +3203,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.467359",
+        "timestamp": "2026-02-04T11:51:57.213325",
         "symbol": "STT",
         "direction": "long",
         "confidence": 0.6,
@@ -3213,7 +3213,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.475014",
+        "timestamp": "2026-02-04T11:51:57.221421",
         "symbol": "BRO",
         "direction": "short",
         "confidence": 0.6,
@@ -3223,7 +3223,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.482583",
+        "timestamp": "2026-02-04T11:51:57.229506",
         "symbol": "AJG",
         "direction": "short",
         "confidence": 0.6,
@@ -3233,7 +3233,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.490249",
+        "timestamp": "2026-02-04T11:51:57.237696",
         "symbol": "MMC",
         "direction": "short",
         "confidence": 0.6,
@@ -3243,7 +3243,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.497880",
+        "timestamp": "2026-02-04T11:51:57.245925",
         "symbol": "CINF",
         "direction": "long",
         "confidence": 0.6,
@@ -3253,7 +3253,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.505431",
+        "timestamp": "2026-02-04T11:51:57.254023",
         "symbol": "L",
         "direction": "long",
         "confidence": 0.6,
@@ -3263,7 +3263,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.513323",
+        "timestamp": "2026-02-04T11:51:57.262142",
         "symbol": "TRV",
         "direction": "long",
         "confidence": 0.6,
@@ -3273,7 +3273,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.521111",
+        "timestamp": "2026-02-04T11:51:57.270558",
         "symbol": "PGR",
         "direction": "short",
         "confidence": 0.6,
@@ -3283,7 +3283,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.528716",
+        "timestamp": "2026-02-04T11:51:57.278629",
         "symbol": "CB",
         "direction": "long",
         "confidence": 0.6,
@@ -3293,7 +3293,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.536465",
+        "timestamp": "2026-02-04T11:51:57.286684",
         "symbol": "UNH",
         "direction": "long",
         "confidence": 0.6,
@@ -3303,7 +3303,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.544426",
+        "timestamp": "2026-02-04T11:51:57.294755",
         "symbol": "LLY",
         "direction": "long",
         "confidence": 0.6,
@@ -3313,7 +3313,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.552065",
+        "timestamp": "2026-02-04T11:51:57.302811",
         "symbol": "JNJ",
         "direction": "long",
         "confidence": 0.6,
@@ -3323,7 +3323,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.559694",
+        "timestamp": "2026-02-04T11:51:57.310914",
         "symbol": "MRK",
         "direction": "long",
         "confidence": 0.6,
@@ -3333,7 +3333,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.567353",
+        "timestamp": "2026-02-04T11:51:57.318998",
         "symbol": "ABBV",
         "direction": "long",
         "confidence": 0.6,
@@ -3343,7 +3343,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.574996",
+        "timestamp": "2026-02-04T11:51:57.327364",
         "symbol": "PFE",
         "direction": "long",
         "confidence": 0.6,
@@ -3353,7 +3353,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.582574",
+        "timestamp": "2026-02-04T11:51:57.335435",
         "symbol": "TMO",
         "direction": "long",
         "confidence": 0.6,
@@ -3363,7 +3363,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.590461",
+        "timestamp": "2026-02-04T11:51:57.343346",
         "symbol": "ABT",
         "direction": "short",
         "confidence": 0.6,
@@ -3373,7 +3373,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.598057",
+        "timestamp": "2026-02-04T11:51:57.351717",
         "symbol": "DHR",
         "direction": "long",
         "confidence": 0.6,
@@ -3383,7 +3383,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.606147",
+        "timestamp": "2026-02-04T11:51:57.359580",
         "symbol": "BMY",
         "direction": "long",
         "confidence": 0.6,
@@ -3393,7 +3393,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.613451",
+        "timestamp": "2026-02-04T11:51:57.367408",
         "symbol": "AMGN",
         "direction": "long",
         "confidence": 0.6,
@@ -3403,7 +3403,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.621112",
+        "timestamp": "2026-02-04T11:51:57.375696",
         "symbol": "GILD",
         "direction": "long",
         "confidence": 0.6,
@@ -3413,7 +3413,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.628875",
+        "timestamp": "2026-02-04T11:51:57.383753",
         "symbol": "REGN",
         "direction": "long",
         "confidence": 0.6,
@@ -3423,7 +3423,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.636595",
+        "timestamp": "2026-02-04T11:51:57.391798",
         "symbol": "MRNA",
         "direction": "long",
         "confidence": 0.6,
@@ -3433,7 +3433,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.644262",
+        "timestamp": "2026-02-04T11:51:57.399648",
         "symbol": "BIIB",
         "direction": "long",
         "confidence": 0.6,
@@ -3443,7 +3443,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.651952",
+        "timestamp": "2026-02-04T11:51:57.407665",
         "symbol": "ILMN",
         "direction": "long",
         "confidence": 0.6,
@@ -3453,7 +3453,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.659853",
+        "timestamp": "2026-02-04T11:51:57.415451",
         "symbol": "DXCM",
         "direction": "short",
         "confidence": 0.6,
@@ -3463,7 +3463,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.667641",
+        "timestamp": "2026-02-04T11:51:57.423452",
         "symbol": "MDT",
         "direction": "long",
         "confidence": 0.6,
@@ -3473,7 +3473,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.675399",
+        "timestamp": "2026-02-04T11:51:57.431530",
         "symbol": "BSX",
         "direction": "short",
         "confidence": 0.6,
@@ -3483,7 +3483,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.682859",
+        "timestamp": "2026-02-04T11:51:57.439512",
         "symbol": "ZBH",
         "direction": "short",
         "confidence": 0.6,
@@ -3493,7 +3493,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.690461",
+        "timestamp": "2026-02-04T11:51:57.447753",
         "symbol": "IDXX",
         "direction": "short",
         "confidence": 0.6,
@@ -3503,7 +3503,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.698191",
+        "timestamp": "2026-02-04T11:51:57.455811",
         "symbol": "IQV",
         "direction": "long",
         "confidence": 0.6,
@@ -3513,7 +3513,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.706115",
+        "timestamp": "2026-02-04T11:51:57.464102",
         "symbol": "A",
         "direction": "long",
         "confidence": 0.6,
@@ -3523,7 +3523,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.713640",
+        "timestamp": "2026-02-04T11:51:57.472040",
         "symbol": "MTD",
         "direction": "long",
         "confidence": 0.6,
@@ -3533,7 +3533,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.721278",
+        "timestamp": "2026-02-04T11:51:57.480202",
         "symbol": "WAT",
         "direction": "long",
         "confidence": 0.6,
@@ -3543,7 +3543,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.728943",
+        "timestamp": "2026-02-04T11:51:57.488268",
         "symbol": "HOLX",
         "direction": "long",
         "confidence": 0.6,
@@ -3553,7 +3553,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.736870",
+        "timestamp": "2026-02-04T11:51:57.496338",
         "symbol": "ALGN",
         "direction": "long",
         "confidence": 0.6,
@@ -3563,7 +3563,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.744402",
+        "timestamp": "2026-02-04T11:51:57.504375",
         "symbol": "TECH",
         "direction": "long",
         "confidence": 0.6,
@@ -3573,7 +3573,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.752289",
+        "timestamp": "2026-02-04T11:51:57.512359",
         "symbol": "BIO",
         "direction": "long",
         "confidence": 0.6,
@@ -3583,7 +3583,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.760032",
+        "timestamp": "2026-02-04T11:51:57.520412",
         "symbol": "CRL",
         "direction": "long",
         "confidence": 0.6,
@@ -3593,7 +3593,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.767705",
+        "timestamp": "2026-02-04T11:51:57.528487",
         "symbol": "ELV",
         "direction": "long",
         "confidence": 0.6,
@@ -3603,7 +3603,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.775723",
+        "timestamp": "2026-02-04T11:51:57.536497",
         "symbol": "HUM",
         "direction": "short",
         "confidence": 0.6,
@@ -3613,7 +3613,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.783586",
+        "timestamp": "2026-02-04T11:51:57.544421",
         "symbol": "CNC",
         "direction": "long",
         "confidence": 0.6,
@@ -3623,7 +3623,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.791393",
+        "timestamp": "2026-02-04T11:51:57.552463",
         "symbol": "MOH",
         "direction": "long",
         "confidence": 0.6,
@@ -3633,7 +3633,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.800076",
+        "timestamp": "2026-02-04T11:51:57.560606",
         "symbol": "CVS",
         "direction": "long",
         "confidence": 0.6,
@@ -3643,7 +3643,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.808396",
+        "timestamp": "2026-02-04T11:51:57.568668",
         "symbol": "MCK",
         "direction": "long",
         "confidence": 0.6,
@@ -3653,7 +3653,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.816367",
+        "timestamp": "2026-02-04T11:51:57.576741",
         "symbol": "CAH",
         "direction": "long",
         "confidence": 0.6,
@@ -3663,7 +3663,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.824641",
+        "timestamp": "2026-02-04T11:51:57.584791",
         "symbol": "VTRS",
         "direction": "long",
         "confidence": 0.6,
@@ -3673,7 +3673,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.832777",
+        "timestamp": "2026-02-04T11:51:57.592903",
         "symbol": "ZTS",
         "direction": "short",
         "confidence": 0.6,
@@ -3683,7 +3683,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.840845",
+        "timestamp": "2026-02-04T11:51:57.600972",
         "symbol": "DGX",
         "direction": "long",
         "confidence": 0.6,
@@ -3693,7 +3693,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.849049",
+        "timestamp": "2026-02-04T11:51:57.609064",
         "symbol": "AMZN",
         "direction": "long",
         "confidence": 0.6,
@@ -3703,7 +3703,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.857760",
+        "timestamp": "2026-02-04T11:51:57.616820",
         "symbol": "TSLA",
         "direction": "long",
         "confidence": 0.6,
@@ -3713,7 +3713,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.865727",
+        "timestamp": "2026-02-04T11:51:57.624741",
         "symbol": "MCD",
         "direction": "long",
         "confidence": 0.6,
@@ -3723,7 +3723,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.873937",
+        "timestamp": "2026-02-04T11:51:57.632772",
         "symbol": "NKE",
         "direction": "short",
         "confidence": 0.6,
@@ -3733,7 +3733,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.882071",
+        "timestamp": "2026-02-04T11:51:57.640799",
         "symbol": "LOW",
         "direction": "long",
         "confidence": 0.6,
@@ -3743,7 +3743,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.890025",
+        "timestamp": "2026-02-04T11:51:57.648844",
         "symbol": "TJX",
         "direction": "long",
         "confidence": 0.6,
@@ -3753,7 +3753,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.897848",
+        "timestamp": "2026-02-04T11:51:57.656911",
         "symbol": "BKNG",
         "direction": "short",
         "confidence": 0.6,
@@ -3763,7 +3763,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.905717",
+        "timestamp": "2026-02-04T11:51:57.664920",
         "symbol": "MAR",
         "direction": "long",
         "confidence": 0.6,
@@ -3773,7 +3773,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.914082",
+        "timestamp": "2026-02-04T11:51:57.673028",
         "symbol": "HLT",
         "direction": "long",
         "confidence": 0.6,
@@ -3783,7 +3783,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.921934",
+        "timestamp": "2026-02-04T11:51:57.681075",
         "symbol": "CMG",
         "direction": "short",
         "confidence": 0.6,
@@ -3793,7 +3793,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.929825",
+        "timestamp": "2026-02-04T11:51:57.689130",
         "symbol": "YUM",
         "direction": "long",
         "confidence": 0.6,
@@ -3803,7 +3803,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.937745",
+        "timestamp": "2026-02-04T11:51:57.697150",
         "symbol": "AZO",
         "direction": "short",
         "confidence": 0.6,
@@ -3813,7 +3813,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.945860",
+        "timestamp": "2026-02-04T11:51:57.705211",
         "symbol": "PHM",
         "direction": "long",
         "confidence": 0.6,
@@ -3823,7 +3823,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.953938",
+        "timestamp": "2026-02-04T11:51:57.713620",
         "symbol": "GRMN",
         "direction": "short",
         "confidence": 0.6,
@@ -3833,7 +3833,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.961865",
+        "timestamp": "2026-02-04T11:51:57.721546",
         "symbol": "POOL",
         "direction": "short",
         "confidence": 0.6,
@@ -3843,7 +3843,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.969780",
+        "timestamp": "2026-02-04T11:51:57.729536",
         "symbol": "ULTA",
         "direction": "long",
         "confidence": 0.6,
@@ -3853,7 +3853,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.977635",
+        "timestamp": "2026-02-04T11:51:57.737594",
         "symbol": "EXPE",
         "direction": "long",
         "confidence": 0.6,
@@ -3863,7 +3863,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.985867",
+        "timestamp": "2026-02-04T11:51:57.745627",
         "symbol": "F",
         "direction": "long",
         "confidence": 0.6,
@@ -3873,7 +3873,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:02.993583",
+        "timestamp": "2026-02-04T11:51:57.753657",
         "symbol": "GM",
         "direction": "long",
         "confidence": 0.6,
@@ -3883,7 +3883,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.001228",
+        "timestamp": "2026-02-04T11:51:57.761744",
         "symbol": "APTV",
         "direction": "long",
         "confidence": 0.6,
@@ -3893,7 +3893,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.009245",
+        "timestamp": "2026-02-04T11:51:57.769811",
         "symbol": "BWA",
         "direction": "long",
         "confidence": 0.6,
@@ -3903,7 +3903,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.017527",
+        "timestamp": "2026-02-04T11:51:57.777884",
         "symbol": "LEA",
         "direction": "long",
         "confidence": 0.6,
@@ -3913,7 +3913,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.025351",
+        "timestamp": "2026-02-04T11:51:57.785975",
         "symbol": "RL",
         "direction": "long",
         "confidence": 0.6,
@@ -3923,7 +3923,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.033189",
+        "timestamp": "2026-02-04T11:51:57.794052",
         "symbol": "TPR",
         "direction": "long",
         "confidence": 0.6,
@@ -3933,7 +3933,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.041322",
+        "timestamp": "2026-02-04T11:51:57.802396",
         "symbol": "VFC",
         "direction": "long",
         "confidence": 0.6,
@@ -3943,7 +3943,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.063940",
+        "timestamp": "2026-02-04T11:51:57.810113",
         "symbol": "PVH",
         "direction": "short",
         "confidence": 0.6,
@@ -3953,7 +3953,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.071872",
+        "timestamp": "2026-02-04T11:51:57.818115",
         "symbol": "KO",
         "direction": "long",
         "confidence": 0.6,
@@ -3963,7 +3963,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.079739",
+        "timestamp": "2026-02-04T11:51:57.826154",
         "symbol": "PEP",
         "direction": "long",
         "confidence": 0.6,
@@ -3973,7 +3973,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.087216",
+        "timestamp": "2026-02-04T11:51:57.834185",
         "symbol": "WMT",
         "direction": "long",
         "confidence": 0.6,
@@ -3983,7 +3983,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.094677",
+        "timestamp": "2026-02-04T11:51:57.842140",
         "symbol": "PM",
         "direction": "long",
         "confidence": 0.6,
@@ -3993,7 +3993,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.102688",
+        "timestamp": "2026-02-04T11:51:57.850358",
         "symbol": "MDLZ",
         "direction": "short",
         "confidence": 0.6,
@@ -4003,7 +4003,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.110158",
+        "timestamp": "2026-02-04T11:51:57.858094",
         "symbol": "CL",
         "direction": "long",
         "confidence": 0.6,
@@ -4013,7 +4013,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.117798",
+        "timestamp": "2026-02-04T11:51:57.866381",
         "symbol": "KMB",
         "direction": "short",
         "confidence": 0.6,
@@ -4023,7 +4023,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.125764",
+        "timestamp": "2026-02-04T11:51:57.874744",
         "symbol": "HSY",
         "direction": "long",
         "confidence": 0.6,
@@ -4033,7 +4033,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.133577",
+        "timestamp": "2026-02-04T11:51:57.883071",
         "symbol": "HRL",
         "direction": "short",
         "confidence": 0.6,
@@ -4043,7 +4043,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.141519",
+        "timestamp": "2026-02-04T11:51:57.891427",
         "symbol": "TSN",
         "direction": "long",
         "confidence": 0.6,
@@ -4053,7 +4053,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.149200",
+        "timestamp": "2026-02-04T11:51:57.899699",
         "symbol": "MNST",
         "direction": "long",
         "confidence": 0.6,
@@ -4063,7 +4063,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.156881",
+        "timestamp": "2026-02-04T11:51:57.908030",
         "symbol": "KDP",
         "direction": "short",
         "confidence": 0.6,
@@ -4073,7 +4073,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.164556",
+        "timestamp": "2026-02-04T11:51:57.916284",
         "symbol": "EL",
         "direction": "long",
         "confidence": 0.6,
@@ -4083,7 +4083,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.172228",
+        "timestamp": "2026-02-04T11:51:57.924582",
         "symbol": "CHD",
         "direction": "long",
         "confidence": 0.6,
@@ -4093,7 +4093,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.180036",
+        "timestamp": "2026-02-04T11:51:57.932824",
         "symbol": "CLX",
         "direction": "short",
         "confidence": 0.6,
@@ -4103,7 +4103,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.188054",
+        "timestamp": "2026-02-04T11:51:57.941026",
         "symbol": "KHC",
         "direction": "short",
         "confidence": 0.6,
@@ -4113,7 +4113,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.201491",
+        "timestamp": "2026-02-04T11:51:57.949325",
         "symbol": "CPB",
         "direction": "short",
         "confidence": 0.6,
@@ -4123,7 +4123,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.209204",
+        "timestamp": "2026-02-04T11:51:57.957672",
         "symbol": "MKC",
         "direction": "short",
         "confidence": 0.6,
@@ -4133,7 +4133,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.216990",
+        "timestamp": "2026-02-04T11:51:57.965930",
         "symbol": "ADM",
         "direction": "long",
         "confidence": 0.6,
@@ -4143,7 +4143,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.224769",
+        "timestamp": "2026-02-04T11:51:57.974029",
         "symbol": "CAT",
         "direction": "long",
         "confidence": 0.6,
@@ -4153,7 +4153,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.232564",
+        "timestamp": "2026-02-04T11:51:57.982262",
         "symbol": "UNP",
         "direction": "long",
         "confidence": 0.6,
@@ -4163,7 +4163,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.240291",
+        "timestamp": "2026-02-04T11:51:57.990444",
         "symbol": "UPS",
         "direction": "long",
         "confidence": 0.6,
@@ -4173,7 +4173,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.248077",
+        "timestamp": "2026-02-04T11:51:57.998907",
         "symbol": "RTX",
         "direction": "long",
         "confidence": 0.6,
@@ -4183,7 +4183,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.255833",
+        "timestamp": "2026-02-04T11:51:58.006989",
         "symbol": "LMT",
         "direction": "long",
         "confidence": 0.6,
@@ -4193,7 +4193,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.263547",
+        "timestamp": "2026-02-04T11:51:58.015044",
         "symbol": "BA",
         "direction": "long",
         "confidence": 0.6,
@@ -4203,7 +4203,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.271253",
+        "timestamp": "2026-02-04T11:51:58.023497",
         "symbol": "GE",
         "direction": "long",
         "confidence": 0.6,
@@ -4213,7 +4213,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.278977",
+        "timestamp": "2026-02-04T11:51:58.031713",
         "symbol": "GD",
         "direction": "long",
         "confidence": 0.6,
@@ -4223,7 +4223,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.286602",
+        "timestamp": "2026-02-04T11:51:58.039963",
         "symbol": "NOC",
         "direction": "long",
         "confidence": 0.6,
@@ -4233,7 +4233,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.294133",
+        "timestamp": "2026-02-04T11:51:58.048213",
         "symbol": "TXT",
         "direction": "long",
         "confidence": 0.6,
@@ -4243,7 +4243,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.301675",
+        "timestamp": "2026-02-04T11:51:58.056374",
         "symbol": "HII",
         "direction": "long",
         "confidence": 0.6,
@@ -4253,7 +4253,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.309211",
+        "timestamp": "2026-02-04T11:51:58.064433",
         "symbol": "LHX",
         "direction": "long",
         "confidence": 0.6,
@@ -4263,7 +4263,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.317088",
+        "timestamp": "2026-02-04T11:51:58.072610",
         "symbol": "TDG",
         "direction": "short",
         "confidence": 0.6,
@@ -4273,7 +4273,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.324752",
+        "timestamp": "2026-02-04T11:51:58.080745",
         "symbol": "AXON",
         "direction": "short",
         "confidence": 0.6,
@@ -4283,7 +4283,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.332425",
+        "timestamp": "2026-02-04T11:51:58.089354",
         "symbol": "ETN",
         "direction": "short",
         "confidence": 0.6,
@@ -4293,7 +4293,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.340093",
+        "timestamp": "2026-02-04T11:51:58.097609",
         "symbol": "EMR",
         "direction": "long",
         "confidence": 0.6,
@@ -4303,7 +4303,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.347743",
+        "timestamp": "2026-02-04T11:51:58.105917",
         "symbol": "ROK",
         "direction": "long",
         "confidence": 0.6,
@@ -4313,7 +4313,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.355444",
+        "timestamp": "2026-02-04T11:51:58.114161",
         "symbol": "AME",
         "direction": "long",
         "confidence": 0.6,
@@ -4323,7 +4323,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.363093",
+        "timestamp": "2026-02-04T11:51:58.122407",
         "symbol": "ITW",
         "direction": "long",
         "confidence": 0.6,
@@ -4333,7 +4333,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.370781",
+        "timestamp": "2026-02-04T11:51:58.130494",
         "symbol": "PH",
         "direction": "long",
         "confidence": 0.6,
@@ -4343,7 +4343,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.378454",
+        "timestamp": "2026-02-04T11:51:58.138951",
         "symbol": "DOV",
         "direction": "long",
         "confidence": 0.6,
@@ -4353,7 +4353,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.386101",
+        "timestamp": "2026-02-04T11:51:58.147122",
         "symbol": "ODFL",
         "direction": "long",
         "confidence": 0.6,
@@ -4363,7 +4363,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.393583",
+        "timestamp": "2026-02-04T11:51:58.155729",
         "symbol": "JBHT",
         "direction": "long",
         "confidence": 0.6,
@@ -4373,7 +4373,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.401067",
+        "timestamp": "2026-02-04T11:51:58.163946",
         "symbol": "CSX",
         "direction": "long",
         "confidence": 0.6,
@@ -4383,7 +4383,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.408603",
+        "timestamp": "2026-02-04T11:51:58.171926",
         "symbol": "NSC",
         "direction": "long",
         "confidence": 0.6,
@@ -4393,7 +4393,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.416233",
+        "timestamp": "2026-02-04T11:51:58.180211",
         "symbol": "FDX",
         "direction": "long",
         "confidence": 0.6,
@@ -4403,7 +4403,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.423861",
+        "timestamp": "2026-02-04T11:51:58.188044",
         "symbol": "CHRW",
         "direction": "long",
         "confidence": 0.6,
@@ -4413,7 +4413,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.431750",
+        "timestamp": "2026-02-04T11:51:58.196038",
         "symbol": "WAB",
         "direction": "long",
         "confidence": 0.6,
@@ -4423,7 +4423,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.439752",
+        "timestamp": "2026-02-04T11:51:58.204056",
         "symbol": "GWW",
         "direction": "long",
         "confidence": 0.6,
@@ -4433,7 +4433,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.447063",
+        "timestamp": "2026-02-04T11:51:58.211980",
         "symbol": "CTAS",
         "direction": "short",
         "confidence": 0.6,
@@ -4443,7 +4443,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.454635",
+        "timestamp": "2026-02-04T11:51:58.220038",
         "symbol": "CPRT",
         "direction": "short",
         "confidence": 0.6,
@@ -4453,7 +4453,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.462125",
+        "timestamp": "2026-02-04T11:51:58.228098",
         "symbol": "PCAR",
         "direction": "long",
         "confidence": 0.6,
@@ -4463,7 +4463,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.469646",
+        "timestamp": "2026-02-04T11:51:58.236160",
         "symbol": "CARR",
         "direction": "short",
         "confidence": 0.6,
@@ -4473,7 +4473,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.477269",
+        "timestamp": "2026-02-04T11:51:58.244260",
         "symbol": "JCI",
         "direction": "long",
         "confidence": 0.6,
@@ -4483,7 +4483,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.484874",
+        "timestamp": "2026-02-04T11:51:58.252374",
         "symbol": "LII",
         "direction": "short",
         "confidence": 0.6,
@@ -4493,7 +4493,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.492497",
+        "timestamp": "2026-02-04T11:51:58.260405",
         "symbol": "XOM",
         "direction": "long",
         "confidence": 0.6,
@@ -4503,7 +4503,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.500082",
+        "timestamp": "2026-02-04T11:51:58.268485",
         "symbol": "CVX",
         "direction": "long",
         "confidence": 0.6,
@@ -4513,7 +4513,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.507680",
+        "timestamp": "2026-02-04T11:51:58.276495",
         "symbol": "COP",
         "direction": "long",
         "confidence": 0.6,
@@ -4523,7 +4523,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.515218",
+        "timestamp": "2026-02-04T11:51:58.284531",
         "symbol": "SLB",
         "direction": "long",
         "confidence": 0.6,
@@ -4533,7 +4533,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.522821",
+        "timestamp": "2026-02-04T11:51:58.292587",
         "symbol": "MPC",
         "direction": "long",
         "confidence": 0.6,
@@ -4543,7 +4543,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.530394",
+        "timestamp": "2026-02-04T11:51:58.300607",
         "symbol": "PSX",
         "direction": "long",
         "confidence": 0.6,
@@ -4553,7 +4553,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.537895",
+        "timestamp": "2026-02-04T11:51:58.308570",
         "symbol": "VLO",
         "direction": "long",
         "confidence": 0.6,
@@ -4563,7 +4563,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.545394",
+        "timestamp": "2026-02-04T11:51:58.316615",
         "symbol": "DVN",
         "direction": "long",
         "confidence": 0.6,
@@ -4573,7 +4573,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.552968",
+        "timestamp": "2026-02-04T11:51:58.324612",
         "symbol": "HAL",
         "direction": "long",
         "confidence": 0.6,
@@ -4583,7 +4583,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.560600",
+        "timestamp": "2026-02-04T11:51:58.332669",
         "symbol": "BKR",
         "direction": "long",
         "confidence": 0.6,
@@ -4593,7 +4593,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.568249",
+        "timestamp": "2026-02-04T11:51:58.340543",
         "symbol": "FANG",
         "direction": "long",
         "confidence": 0.6,
@@ -4603,7 +4603,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.575858",
+        "timestamp": "2026-02-04T11:51:58.348519",
         "symbol": "KMI",
         "direction": "long",
         "confidence": 0.6,
@@ -4613,7 +4613,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.583346",
+        "timestamp": "2026-02-04T11:51:58.356452",
         "symbol": "WMB",
         "direction": "long",
         "confidence": 0.6,
@@ -4623,7 +4623,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.590873",
+        "timestamp": "2026-02-04T11:51:58.364295",
         "symbol": "TRGP",
         "direction": "long",
         "confidence": 0.6,
@@ -4633,7 +4633,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.599300",
+        "timestamp": "2026-02-04T11:51:58.372261",
         "symbol": "LNG",
         "direction": "short",
         "confidence": 0.6,
@@ -4643,7 +4643,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.608236",
+        "timestamp": "2026-02-04T11:51:58.380293",
         "symbol": "META",
         "direction": "short",
         "confidence": 0.6,
@@ -4653,7 +4653,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.616998",
+        "timestamp": "2026-02-04T11:51:58.388359",
         "symbol": "GOOGL",
         "direction": "long",
         "confidence": 0.6,
@@ -4663,7 +4663,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.625552",
+        "timestamp": "2026-02-04T11:51:58.396391",
         "symbol": "GOOG",
         "direction": "long",
         "confidence": 0.6,
@@ -4673,7 +4673,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.633396",
+        "timestamp": "2026-02-04T11:51:58.404360",
         "symbol": "NFLX",
         "direction": "short",
         "confidence": 0.6,
@@ -4683,7 +4683,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.641105",
+        "timestamp": "2026-02-04T11:51:58.412346",
         "symbol": "DIS",
         "direction": "short",
         "confidence": 0.6,
@@ -4693,7 +4693,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.648921",
+        "timestamp": "2026-02-04T11:51:58.420331",
         "symbol": "CMCSA",
         "direction": "short",
         "confidence": 0.6,
@@ -4703,7 +4703,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.656677",
+        "timestamp": "2026-02-04T11:51:58.428316",
         "symbol": "TMUS",
         "direction": "short",
         "confidence": 0.6,
@@ -4713,7 +4713,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.664376",
+        "timestamp": "2026-02-04T11:51:58.436308",
         "symbol": "CHTR",
         "direction": "short",
         "confidence": 0.6,
@@ -4723,7 +4723,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.672266",
+        "timestamp": "2026-02-04T11:51:58.444293",
         "symbol": "EA",
         "direction": "long",
         "confidence": 0.6,
@@ -4733,7 +4733,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.679840",
+        "timestamp": "2026-02-04T11:51:58.452261",
         "symbol": "MTCH",
         "direction": "short",
         "confidence": 0.6,
@@ -4743,7 +4743,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.687637",
+        "timestamp": "2026-02-04T11:51:58.460317",
         "symbol": "NEE",
         "direction": "long",
         "confidence": 0.6,
@@ -4753,7 +4753,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.695221",
+        "timestamp": "2026-02-04T11:51:58.468294",
         "symbol": "SO",
         "direction": "short",
         "confidence": 0.6,
@@ -4763,7 +4763,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.702833",
+        "timestamp": "2026-02-04T11:51:58.477188",
         "symbol": "AEP",
         "direction": "long",
         "confidence": 0.6,
@@ -4773,7 +4773,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.710497",
+        "timestamp": "2026-02-04T11:51:58.485111",
         "symbol": "PEG",
         "direction": "short",
         "confidence": 0.6,
@@ -4783,7 +4783,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.718225",
+        "timestamp": "2026-02-04T11:51:58.493152",
         "symbol": "AWK",
         "direction": "short",
         "confidence": 0.6,
@@ -4793,7 +4793,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.726061",
+        "timestamp": "2026-02-04T11:51:58.501232",
         "symbol": "ATO",
         "direction": "long",
         "confidence": 0.6,
@@ -4803,7 +4803,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.734167",
+        "timestamp": "2026-02-04T11:51:58.509370",
         "symbol": "PLD",
         "direction": "long",
         "confidence": 0.6,
@@ -4813,7 +4813,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.742033",
+        "timestamp": "2026-02-04T11:51:58.517415",
         "symbol": "AMT",
         "direction": "short",
         "confidence": 0.6,
@@ -4823,7 +4823,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.749703",
+        "timestamp": "2026-02-04T11:51:58.525501",
         "symbol": "CCI",
         "direction": "short",
         "confidence": 0.6,
@@ -4833,7 +4833,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.757361",
+        "timestamp": "2026-02-04T11:51:58.533395",
         "symbol": "SPG",
         "direction": "long",
         "confidence": 0.6,
@@ -4843,7 +4843,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.765015",
+        "timestamp": "2026-02-04T11:51:58.541326",
         "symbol": "O",
         "direction": "long",
         "confidence": 0.6,
@@ -4853,7 +4853,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.772651",
+        "timestamp": "2026-02-04T11:51:58.549279",
         "symbol": "WELL",
         "direction": "long",
         "confidence": 0.6,
@@ -4863,7 +4863,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.780427",
+        "timestamp": "2026-02-04T11:51:58.557195",
         "symbol": "DLR",
         "direction": "short",
         "confidence": 0.6,
@@ -4873,7 +4873,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.787921",
+        "timestamp": "2026-02-04T11:51:58.565302",
         "symbol": "VTR",
         "direction": "long",
         "confidence": 0.6,
@@ -4883,7 +4883,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.795427",
+        "timestamp": "2026-02-04T11:51:58.573411",
         "symbol": "ARE",
         "direction": "short",
         "confidence": 0.6,
@@ -4893,7 +4893,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.803061",
+        "timestamp": "2026-02-04T11:51:58.581144",
         "symbol": "MAA",
         "direction": "short",
         "confidence": 0.6,
@@ -4903,7 +4903,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.810642",
+        "timestamp": "2026-02-04T11:51:58.589079",
         "symbol": "ECL",
         "direction": "long",
         "confidence": 0.6,
@@ -4913,7 +4913,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.818198",
+        "timestamp": "2026-02-04T11:51:58.597976",
         "symbol": "DD",
         "direction": "short",
         "confidence": 0.6,
@@ -4923,7 +4923,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.825689",
+        "timestamp": "2026-02-04T11:51:58.606059",
         "symbol": "NEM",
         "direction": "long",
         "confidence": 0.6,
@@ -4933,7 +4933,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.833271",
+        "timestamp": "2026-02-04T11:51:58.614082",
         "symbol": "FCX",
         "direction": "long",
         "confidence": 0.6,
@@ -4943,7 +4943,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.840800",
+        "timestamp": "2026-02-04T11:51:58.622130",
         "symbol": "NUE",
         "direction": "long",
         "confidence": 0.6,
@@ -4953,7 +4953,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.848423",
+        "timestamp": "2026-02-04T11:51:58.630130",
         "symbol": "STLD",
         "direction": "long",
         "confidence": 0.6,
@@ -4963,7 +4963,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.855941",
+        "timestamp": "2026-02-04T11:51:58.638152",
         "symbol": "VMC",
         "direction": "long",
         "confidence": 0.6,
@@ -4973,7 +4973,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.864038",
+        "timestamp": "2026-02-04T11:51:58.646155",
         "symbol": "MLM",
         "direction": "long",
         "confidence": 0.6,
@@ -4983,7 +4983,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.871568",
+        "timestamp": "2026-02-04T11:51:58.654143",
         "symbol": "ALB",
         "direction": "long",
         "confidence": 0.6,
@@ -4993,7 +4993,7 @@
         "actual_return": null
       },
       {
-        "timestamp": "2026-02-04T11:42:03.879092",
+        "timestamp": "2026-02-04T11:51:58.662142",
         "symbol": "MOS",
         "direction": "short",
         "confidence": 0.6,
@@ -7903,6 +7903,206 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.849682",
+        "symbol": "WDC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.857765",
+        "symbol": "PLTR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.866027",
+        "symbol": "VLO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.874135",
+        "symbol": "FCX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.882219",
+        "symbol": "MPC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.890215",
+        "symbol": "WTW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.898218",
+        "symbol": "GWW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.906272",
+        "symbol": "FDX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.914315",
+        "symbol": "ITW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.922424",
+        "symbol": "PEP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.742311",
+        "symbol": "WDC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.750404",
+        "symbol": "PLTR",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.758579",
+        "symbol": "VLO",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.766769",
+        "symbol": "FCX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.774939",
+        "symbol": "MPC",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.783049",
+        "symbol": "WTW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.790977",
+        "symbol": "GWW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.799122",
+        "symbol": "FDX",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.807257",
+        "symbol": "ITW",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.815402",
+        "symbol": "PEP",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "QuickMeanReversion": [
@@ -9645,6 +9845,126 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.765179",
+        "symbol": "EXPE",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.773260",
+        "symbol": "EPAM",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.781446",
+        "symbol": "IQV",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.789574",
+        "symbol": "SPGI",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.797510",
+        "symbol": "OMC",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.807540",
+        "symbol": "INTU",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:56.535081",
+        "symbol": "EXPE",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:56.550846",
+        "symbol": "EPAM",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:56.562669",
+        "symbol": "IQV",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:56.572800",
+        "symbol": "SPGI",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:56.582008",
+        "symbol": "OMC",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:56.590675",
+        "symbol": "INTU",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "OpeningRangeBreakout": [
@@ -11060,6 +11380,86 @@
       },
       {
         "timestamp": "2026-02-04T11:42:04.098432",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.815685",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.825394",
+        "symbol": "NXPI",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.833433",
+        "symbol": "RUN",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.841371",
+        "symbol": "AAPL",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.710139",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.718203",
+        "symbol": "NXPI",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.726242",
+        "symbol": "RUN",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.005,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.734308",
         "symbol": "AAPL",
         "direction": "long",
         "confidence": 0.65,
@@ -13969,6 +14369,206 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.087502",
+        "symbol": "JNJ",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.095708",
+        "symbol": "GOOGL",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.103765",
+        "symbol": "GOOG",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.111812",
+        "symbol": "MRK",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.119859",
+        "symbol": "NEE",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.128588",
+        "symbol": "FFIV",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.136755",
+        "symbol": "DD",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.144959",
+        "symbol": "CHTR",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.153228",
+        "symbol": "MOS",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.161480",
+        "symbol": "ARE",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.062206",
+        "symbol": "JNJ",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.070412",
+        "symbol": "GOOGL",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.078631",
+        "symbol": "GOOG",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.086811",
+        "symbol": "MRK",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.095025",
+        "symbol": "NEE",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.103215",
+        "symbol": "FFIV",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.111425",
+        "symbol": "DD",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.119579",
+        "symbol": "CHTR",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.127781",
+        "symbol": "MOS",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.136044",
+        "symbol": "ARE",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.08,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "MeanReversion_LS": [
@@ -16871,6 +17471,206 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.169671",
+        "symbol": "INTU",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.177826",
+        "symbol": "NFLX",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.186046",
+        "symbol": "FIS",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.194410",
+        "symbol": "ISRG",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.202524",
+        "symbol": "CRM",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.212409",
+        "symbol": "CL",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.220562",
+        "symbol": "JNJ",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.228768",
+        "symbol": "LMT",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.236994",
+        "symbol": "CHD",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.245177",
+        "symbol": "CHRW",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.977497",
+        "symbol": "INTU",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.986210",
+        "symbol": "NFLX",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.994744",
+        "symbol": "FIS",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.003343",
+        "symbol": "ISRG",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.011776",
+        "symbol": "CRM",
+        "direction": "long",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.020190",
+        "symbol": "CL",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.028640",
+        "symbol": "JNJ",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.037225",
+        "symbol": "LMT",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.045650",
+        "symbol": "CHD",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:59.053976",
+        "symbol": "CHRW",
+        "direction": "short",
+        "confidence": 0.5,
+        "expected_return": 0.05,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "CrossSectionMomentum": [
@@ -18316,6 +19116,106 @@
       },
       {
         "timestamp": "2026-02-04T11:42:04.372483",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.253228",
+        "symbol": "MU",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.261279",
+        "symbol": "WDC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.271025",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.279404",
+        "symbol": "ALB",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.287907",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.670126",
+        "symbol": "MU",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.678168",
+        "symbol": "WDC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.686132",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.694104",
+        "symbol": "ALB",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.4342236203439557,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.702132",
         "symbol": "INTC",
         "direction": "long",
         "confidence": 0.65,
@@ -20645,6 +21545,206 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.930453",
+        "symbol": "NXPI",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.938793",
+        "symbol": "ON",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.946816",
+        "symbol": "NOW",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.957163",
+        "symbol": "SEDG",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.965013",
+        "symbol": "ENPH",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.973043",
+        "symbol": "KLAC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.981154",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.989581",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:55.997678",
+        "symbol": "MRVL",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.006400",
+        "symbol": "MCHP",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.890945",
+        "symbol": "NXPI",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.899251",
+        "symbol": "ON",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.907777",
+        "symbol": "NOW",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.916264",
+        "symbol": "SEDG",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.926476",
+        "symbol": "ENPH",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.934991",
+        "symbol": "KLAC",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.943403",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.951958",
+        "symbol": "STX",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.960447",
+        "symbol": "MRVL",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.968973",
+        "symbol": "MCHP",
+        "direction": "long",
+        "confidence": 0.65,
+        "expected_return": 0.003,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ],
     "VWAPReversion": [
@@ -22619,8 +23719,168 @@
         "regime": "risk_off",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.014597",
+        "symbol": "SEDG",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.023531",
+        "symbol": "KEYS",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.033386",
+        "symbol": "CSCO",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.041896",
+        "symbol": "ENPH",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.050166",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.061447",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.071155",
+        "symbol": "RUN",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:46:56.079355",
+        "symbol": "GLW",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.823766",
+        "symbol": "SEDG",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.832223",
+        "symbol": "KEYS",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.840651",
+        "symbol": "CSCO",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.849016",
+        "symbol": "ENPH",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.857470",
+        "symbol": "FSLR",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.865823",
+        "symbol": "INTC",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.874227",
+        "symbol": "RUN",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-04T11:51:58.882521",
+        "symbol": "GLW",
+        "direction": "long",
+        "confidence": 0.7,
+        "expected_return": 0.004,
+        "regime": "risk_off",
+        "outcome": null,
+        "actual_return": null
       }
     ]
   },
-  "last_updated": "2026-02-04T11:42:04.372615"
+  "last_updated": "2026-02-04T11:51:59.136171"
 }

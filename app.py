@@ -1461,6 +1461,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         # Get macro features from News Intelligence (store temporarily)
         macro_features_temp = None
         risk_sentiment_temp = None
+        market_indicators = None  # Initialize for regime detection
         
         try:
             macro_features_temp = news_intelligence.get_daily_macro_features(end_date)
@@ -1488,6 +1489,15 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     
         except Exception as e:
             log(f"Warning: Could not compute macro features: {e}")
+        
+        # Fetch market indicators for regime detection
+        try:
+            market_indicators = macro_loader.fetch_all()
+            if market_indicators:
+                log(f"📈 Market Indicators: VIX={getattr(market_indicators, 'vix', 'N/A')}, SPY change={getattr(market_indicators, 'spy_change_pct', 'N/A')}%")
+        except Exception as e:
+            log(f"Warning: Could not fetch market indicators: {e}")
+            market_indicators = None
         
         # ============================================================
         # GEOPOLITICAL INTELLIGENCE PIPELINE (NEW!)
