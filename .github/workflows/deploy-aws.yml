@@ -39,6 +39,8 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
           APP_USERNAME: ${{ secrets.APP_USERNAME }}
           APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
           GITHUB_REPO: ${{ github.repository }}
@@ -48,7 +50,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           command_timeout: 10m
-          envs: ALPACA_API_KEY,ALPACA_SECRET_KEY,GEMINI_API_KEY,OPENAI_API_KEY,ANTHROPIC_API_KEY,ALPHA_VANTAGE_API_KEY,APP_USERNAME,APP_PASSWORD,GITHUB_REPO
+          envs: ALPACA_API_KEY,ALPACA_SECRET_KEY,GEMINI_API_KEY,OPENAI_API_KEY,ANTHROPIC_API_KEY,ALPHA_VANTAGE_API_KEY,FRED_API_KEY,NEWSAPI_KEY,APP_USERNAME,APP_PASSWORD,GITHUB_REPO
           script: |
             echo "🚀 Starting deployment at $(date)"
             
@@ -122,6 +124,8 @@ jobs:
             OPENAI_API_KEY=${OPENAI_API_KEY}
             ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
             ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY}
+            FRED_API_KEY=${FRED_API_KEY}
+            NEWSAPI_KEY=${NEWSAPI_KEY}
             APP_USERNAME=${APP_USERNAME:-admin}
             APP_PASSWORD=${APP_PASSWORD}
             EOF
