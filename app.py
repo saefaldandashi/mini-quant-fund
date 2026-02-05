@@ -35,7 +35,7 @@ from alpaca.trading.enums import OrderSide
 # Import multi-strategy components
 from src.data.market_data import MarketDataLoader
 from src.data.news_data import NewsDataLoader
-from src.data.alpha_vantage_news import AlphaVantageNewsLoader, AlphaVantageArticle
+# Alpha Vantage REMOVED - Using Global Intelligence Feed only
 from src.data.geopolitical_intel import get_geopolitical_intel, GeopoliticalIntelligence
 from src.data.options_signals import get_options_loader
 from src.data.ticker_sentiment import TickerSentimentAggregator, StockSentimentFeatures
@@ -235,12 +235,8 @@ smart_sizer = SmartPositionSizer(target_vol=0.12, max_position=0.15, use_kelly=T
 # Initialize News Intelligence Pipeline
 news_intelligence = NewsIntelligencePipeline(cache_dir="outputs/news_intelligence")
 
-# Initialize Alpha Vantage News Loader (replaces World News API)
-alpha_vantage_news = AlphaVantageNewsLoader(
-    api_key="MU0B7DN9XFBK5I7C",
-    cache_dir="outputs/alpha_vantage_cache",
-    cache_ttl_hours=1,  # Cache for 1 hour (rate limits)
-)
+# Alpha Vantage REMOVED - Using Global Intelligence Feed (geopolitical_intel) as sole news source
+# Benefits: No rate limits, updates every minute, 30+ RSS feeds
 
 # Initialize Geopolitical Intelligence Layer
 # Monitors global events: military tensions, conflicts, diplomatic crises
@@ -1046,21 +1042,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         # === NEWS FRESHNESS CHECK ===
         # Alert if news data is stale (could miss earnings events like MSFT -10%)
         log("")
-        log("📰 NEWS FRESHNESS CHECK:")
+        log("📰 NEWS FRESHNESS CHECK (Global Intelligence Feed):")
         try:
-            av_status = alpha_vantage_news.get_rate_limit_status()
-            hours_stale = av_status.get('hours_since_fresh_news', 0)
-            
-            if hours_stale > 24:
-                log(f"⚠️ WARNING: Alpha Vantage news is {hours_stale:.0f} hours old!")
-                log("   → May miss earnings announcements")
-                log("   → Run /api/alpha-vantage/force-refresh to update")
-            elif hours_stale > 12:
-                log(f"⚠️ Alpha Vantage news is {hours_stale:.0f} hours old - consider refreshing")
-            else:
-                log(f"✅ Alpha Vantage news is fresh ({hours_stale:.1f} hours old)")
-            
-            # Check geo intel freshness
+            # Check Global Intelligence Feed freshness (our SOLE news source)
             geo_events = geopolitical_intel.get_filtered_events(auto_refresh_if_empty=False)
             if geo_events:
                 from datetime import timezone
@@ -1259,10 +1243,11 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 return data, False
         
         def fetch_news_data():
-            """Fetch news from Alpha Vantage."""
+            """Fetch news from Global Intelligence Feed (geopolitical_intel)."""
             try:
-                articles = alpha_vantage_news.fetch_market_news(days_back=7)
-                return articles, False
+                # Use geopolitical_intel as sole news source
+                events = geopolitical_intel.get_filtered_events(auto_refresh_if_empty=True)
+                return events, bool(events)  # Return events and whether from cache
             except Exception as e:
                 logging.warning(f"News fetch error: {e}")
                 return [], False
@@ -1570,16 +1555,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     headline = event.headline[:60] if hasattr(event, 'headline') else str(event)[:60]
                     log(f"      • {headline}...")
             
-            # Alpha Vantage as SECONDARY/FALLBACK only (rate-limited to 25/day)
-            av_signals = []
-            try:
-                av_signals = earnings_reactor.scan_alpha_vantage(alpha_vantage_news)
-                if av_signals:
-                    log(f"📰 Alpha Vantage (fallback): {len(av_signals)} additional signals")
-            except Exception as av_err:
-                log(f"   ⚠️ Alpha Vantage unavailable: {av_err}")
-            
-            # Get trading weights from signals
+            # Get trading weights from signals (Global Intel Feed is the ONLY source)
             earnings_signals = earnings_reactor.get_trading_signals(max_age_hours=24)
             
             if earnings_signals:
@@ -3228,16 +3204,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                         log(f"   📰 Built comprehensive news context: {len(filtered_events)} events analyzed")
                         log(f"      Stance: {overall_stance}")
                     
-                    # FALLBACK: Alpha Vantage if Global Intel is empty
+                    # Global Intelligence Feed is sole news source (no fallback needed)
                     if not news_ctx:
-                        av_articles = alpha_vantage_news.get_cached_articles()
-                        if av_articles:
-                            news_lines = ["[⚠️ FALLBACK TO ALPHA VANTAGE - Global Intel empty]"]
-                            for article in av_articles[:10]:
-                                title = getattr(article, 'title', getattr(article, 'headline', 'Unknown'))
-                                sentiment = getattr(article, 'overall_sentiment_label', 'N/A')
-                                news_lines.append(f"- {title[:80]} [{sentiment}]")
-                            news_ctx = "\n".join(news_lines)
+                        news_ctx = "[No significant news events in Global Intelligence Feed]"
                 except Exception as e:
                     logging.debug(f"Could not build news context: {e}")
                 
@@ -5715,7 +5684,12 @@ def get_alpaca_trade_history():
 @app.route('/api/data-sources')
 def get_data_sources():
     """Get information about data sources."""
-    av_stats = alpha_vantage_news.get_cache_stats()
+    # Get Global Intelligence Feed stats
+    try:
+        events = geopolitical_intel.get_filtered_events()
+        event_count = len(events) if events else 0
+    except:
+        event_count = 0
     
     return jsonify({
         "market_data": {
@@ -5725,29 +5699,27 @@ def get_data_sources():
             "lookback": "~300 trading days",
             "note": "Real-time market data from Alpaca paper trading account"
         },
-        "sentiment_data": {
-            "source": "Alpha Vantage News Sentiment API",
-            "api_key_status": "✅ Configured" if alpha_vantage_news.api_key else "❌ Missing",
-            "method": "Alpha Vantage built-in sentiment analysis",
+        "news_data": {
+            "source": "Global Intelligence Feed",
+            "status": "✅ Active",
+            "method": "30+ RSS feeds aggregation (Reuters, BBC, Al Jazeera, etc.)",
             "features": [
-                "Ticker-specific news",
-                "Topic filtering (earnings, macro, M&A, etc.)",
-                "Built-in sentiment scores",
-                "Real-time market news"
+                "Real-time updates (every minute)",
+                "No rate limits",
+                "Global coverage",
+                "Geopolitical risk assessment",
+                "Earnings detection"
             ],
-            "cached_articles": av_stats['total_articles'],
-            "api_calls_today": av_stats['api_calls_made'],
-            "cache_hits": av_stats['cache_hits'],
-            "note": "Financial news with built-in sentiment from Alpha Vantage"
+            "cached_events": event_count,
+            "note": "Sole news source - replaces Alpha Vantage"
         },
         "macro_intelligence": {
-            "source": "News Intelligence Pipeline",
+            "source": "FRED API + Yahoo Finance",
             "features": [
-                "Relevance gate (filters noise)",
-                "Macro/Geo taxonomy (10 tags)",
-                "Event extraction",
-                "Impact scoring",
-                "Risk sentiment analysis"
+                "VIX, Treasury yields, Gold, Oil",
+                "CPI, Unemployment, Fed Funds Rate",
+                "Financial Stress Index",
+                "Economic indicators"
             ],
             "output": "8 daily macro indices + risk-on/off signal"
         },
@@ -6394,42 +6366,40 @@ def get_cached_articles():
 # NEWS INTELLIGENCE API ENDPOINTS
 # ============================================================
 
-def refresh_macro_from_alpha_vantage():
-    """Fetch news from Alpha Vantage and process through macro pipeline."""
+def refresh_macro_from_global_intel():
+    """Fetch news from Global Intelligence Feed and process through macro pipeline."""
     import pytz
     from src.news_intelligence.pipeline import NewsArticle as NIPNewsArticle
     
     as_of = datetime.now(pytz.UTC)
     
-    # Fetch from Alpha Vantage
-    articles = alpha_vantage_news.fetch_market_news(days_back=3)
+    # Fetch from Global Intelligence Feed
+    events = geopolitical_intel.get_filtered_events(auto_refresh_if_empty=True)
     
-    if not articles:
-        # Try cached articles
-        articles = alpha_vantage_news.get_cached_articles()
-    
-    if not articles:
-        return None, None, "No articles available"
+    if not events:
+        return None, None, "No events available in Global Intelligence Feed"
     
     # Convert to pipeline format
     pipeline_articles = []
-    for article in articles:
+    for event in events[:100]:  # Process top 100 events
         try:
-            ts = article.timestamp
-            if ts.tzinfo is None:
+            ts = getattr(event, 'timestamp', as_of)
+            if hasattr(ts, 'tzinfo') and ts.tzinfo is None:
                 ts = pytz.UTC.localize(ts)
+            elif not hasattr(ts, 'tzinfo'):
+                ts = as_of
             pipeline_articles.append(NIPNewsArticle(
                 timestamp=ts,
-                source=article.source,
-                title=article.headline,
-                body=article.summary or "",
-                url=article.url,
+                source=getattr(event, 'source', 'Global Intel'),
+                title=getattr(event, 'headline', str(event)),
+                body=getattr(event, 'summary', ''),
+                url=getattr(event, 'url', ''),
             ))
         except:
             continue
     
     if pipeline_articles:
-        events, stats = news_intelligence.process_articles(pipeline_articles, as_of)
+        processed_events, stats = news_intelligence.process_articles(pipeline_articles, as_of)
         
         # Get computed features
         macro_features = news_intelligence.get_daily_macro_features(as_of)
@@ -6440,16 +6410,16 @@ def refresh_macro_from_alpha_vantage():
         last_macro_features["risk_sentiment"] = risk_sentiment
         last_macro_features["last_updated"] = as_of
         
-        return macro_features, risk_sentiment, f"Processed {len(pipeline_articles)} articles"
+        return macro_features, risk_sentiment, f"Processed {len(pipeline_articles)} events from Global Intel"
     
-    return None, None, "No articles to process"
+    return None, None, "No events to process"
 
 
 @app.route('/api/macro/refresh', methods=['POST'])
 def refresh_macro_data():
-    """Refresh macro data from Alpha Vantage."""
+    """Refresh macro data from Global Intelligence Feed."""
     try:
-        features, sentiment, message = refresh_macro_from_alpha_vantage()
+        features, sentiment, message = refresh_macro_from_global_intel()
         
         if features:
             return jsonify({
@@ -6629,7 +6599,7 @@ def get_macro_features():
             "computation_method": {
                 "description": "Hybrid: 60-70% real data (FRED/Yahoo) + 30-40% news sentiment",
                 "real_data_sources": ["Yahoo Finance (VIX, SPY, Treasury, Gold, Oil)", "FRED (CPI, Unemployment, Fed Funds, Financial Stress)"],
-                "news_source": "Alpha Vantage News Sentiment API",
+                "news_source": "Global Intelligence Feed (30+ RSS sources)",
             },
             "metadata": {
                 "event_count": getattr(news_features, 'event_count', 0) if news_features else 0,
@@ -7218,11 +7188,11 @@ def get_all_data_sources():
                 "type": "Market Data & Trading",
                 "status": "connected",
             },
-            "alpha_vantage": {
-                "name": "Alpha Vantage",
-                "type": "News & Sentiment",
+            "global_intel": {
+                "name": "Global Intelligence Feed",
+                "type": "News & Geopolitical Risk",
                 "status": "connected",
-                "articles_cached": len(alpha_vantage_news.get_cached_articles()),
+                "events_cached": len(geopolitical_intel.get_filtered_events()) if geopolitical_intel else 0,
             },
             "yahoo_finance": {
                 "name": "Yahoo Finance",
@@ -7259,15 +7229,15 @@ def background_data_refresh():
             # Refresh macro data
             macro_loader.fetch_all(force=True)
             
-            # Refresh news
+            # Refresh Global Intelligence Feed
             try:
-                alpha_vantage_news.fetch_market_news(days_back=1)
+                geopolitical_intel.get_filtered_events(auto_refresh_if_empty=True)
             except:
                 pass
             
-            # Refresh macro intelligence
+            # Refresh macro intelligence from Global Intel
             try:
-                refresh_macro_from_alpha_vantage()
+                refresh_macro_from_global_intel()
             except:
                 pass
             
@@ -7304,8 +7274,8 @@ def trigger_background_refresh():
     try:
         # Refresh all data sources
         macro_loader.fetch_all(force=True)
-        alpha_vantage_news.fetch_market_news(days_back=1)
-        refresh_macro_from_alpha_vantage()
+        geopolitical_intel.get_filtered_events(auto_refresh_if_empty=True)
+        refresh_macro_from_global_intel()
         
         global last_background_refresh
         last_background_refresh = datetime.now()
@@ -7437,42 +7407,36 @@ def get_macro_stats():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/api/alpha-vantage/stats')
-def get_alpha_vantage_stats():
-    """Get Alpha Vantage news loader statistics."""
-    try:
-        stats = alpha_vantage_news.get_cache_stats()
-        return jsonify({
-            'source': 'Alpha Vantage News Sentiment API',
-            'api_key_configured': bool(alpha_vantage_news.api_key),
-            'total_articles_cached': stats['total_articles'],
-            'api_calls_made': stats['api_calls_made'],
-            'cache_hits': stats['cache_hits'],
-            'oldest_article': stats['oldest_article'].isoformat() if stats['oldest_article'] else None,
-            'newest_article': stats['newest_article'].isoformat() if stats['newest_article'] else None,
-        })
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
+# Alpha Vantage endpoints REMOVED - Using Global Intelligence Feed only
+# All news comes from geopolitical_intel which aggregates 30+ RSS feeds
 
 def refresh_ticker_sentiment_from_cache():
-    """Refresh ticker sentiment from cached Alpha Vantage articles."""
+    """Refresh ticker sentiment from Global Intelligence Feed."""
     global last_ticker_sentiments
     import pytz
     
     try:
-        # Get cached articles
-        articles = alpha_vantage_news.get_cached_articles()
-        if not articles:
-            return False, "No cached articles"
+        # Get events from Global Intelligence Feed
+        events = geopolitical_intel.get_filtered_events()
+        if not events:
+            return False, "No events in Global Intelligence Feed"
         
-        # Process through ticker sentiment aggregator
+        # Process events for ticker sentiment
         as_of = datetime.now(pytz.UTC)
-        ticker_features = ticker_sentiment_aggregator.aggregate_from_articles(
-            articles,
-            as_of=as_of,
-            universe=None,  # Accept all tickers
-        )
+        ticker_features = {}
+        
+        # Extract any ticker mentions from event headlines
+        for event in events[:50]:
+            headline = getattr(event, 'headline', '')
+            # Basic ticker extraction (would need enhancement for production)
+            for word in headline.split():
+                if word.isupper() and len(word) <= 5 and word.isalpha():
+                    if word not in ticker_features:
+                        ticker_features[word] = {
+                            'sentiment': getattr(event, 'direction', 'neutral'),
+                            'mentions': 0
+                        }
+                    ticker_features[word]['mentions'] += 1
         
         if ticker_features:
             last_ticker_sentiments = ticker_features
@@ -7711,144 +7675,8 @@ def get_active_themes():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/api/alpha-vantage/fetch', methods=['POST', 'GET'])
-def fetch_alpha_vantage_news():
-    """Get Alpha Vantage news - uses cache if available."""
-    try:
-        # Accept both JSON and query params
-        if request.is_json:
-            data = request.get_json() or {}
-        else:
-            data = {}
-        
-        days_back = int(request.args.get('days_back', data.get('days_back', 7)))
-        limit = int(request.args.get('limit', data.get('limit', 20)))
-        force_refresh = request.args.get('refresh', 'false').lower() == 'true'
-        tickers = data.get('tickers', [])
-        
-        articles = []
-        api_tried = False
-        
-        # If force refresh, try API first
-        if force_refresh:
-            api_tried = True
-            if tickers:
-                articles = alpha_vantage_news.fetch_ticker_news(tickers, days_back)
-            else:
-                articles = alpha_vantage_news.fetch_market_news(days_back)
-        
-        # Always fall back to cache if no articles from API
-        if not articles:
-            articles = alpha_vantage_news.get_cached_articles()
-            if articles and api_tried:
-                print(f"API rate-limited, using {len(articles)} cached articles")
-        
-        # If still no articles and didn't try API yet, try once
-        if not articles and not api_tried:
-            if tickers:
-                articles = alpha_vantage_news.fetch_ticker_news(tickers, days_back)
-            else:
-                articles = alpha_vantage_news.fetch_market_news(days_back)
-        
-        # Return full article data for UI
-        article_data = []
-        for a in articles[:limit]:
-            article_data.append({
-                'headline': a.headline,
-                'source': a.source,
-                'timestamp': a.timestamp.isoformat() if hasattr(a.timestamp, 'isoformat') else str(a.timestamp),
-                'url': a.url,
-                'summary': a.summary[:200] if a.summary else '',
-                'overall_sentiment_score': a.overall_sentiment,  # Correct attribute name
-                'overall_sentiment_label': a.overall_sentiment_label,
-                'tickers': a.tickers[:5] if a.tickers else [],
-            })
-        
-        # Get rate limit status
-        rate_limit_status = alpha_vantage_news.get_rate_limit_status()
-        
-        return jsonify({
-            'success': True,
-            'articles_fetched': len(articles),
-            'articles': article_data,
-            'rate_limit': rate_limit_status,
-        })
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@app.route('/api/alpha-vantage/rate-limit')
-def get_alpha_vantage_rate_limit():
-    """Get Alpha Vantage API rate limit status."""
-    try:
-        status = alpha_vantage_news.get_rate_limit_status()
-        return jsonify(status)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@app.route('/api/alpha-vantage/clear-cache', methods=['POST'])
-def clear_alpha_vantage_cache():
-    """Clear Alpha Vantage cache."""
-    try:
-        alpha_vantage_news.clear_cache()
-        return jsonify({"success": True, "message": "Alpha Vantage cache cleared"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@app.route('/api/alpha-vantage/force-refresh', methods=['POST'])
-def force_refresh_alpha_vantage():
-    """
-    Force refresh Alpha Vantage news, resetting the rate limit flag.
-    Use this when daily quota has reset but the system is stuck.
-    """
-    try:
-        # Reset rate limit
-        alpha_vantage_news.reset_rate_limit()
-        
-        # Try to fetch fresh articles
-        days_back = request.args.get('days', 3, type=int)
-        articles = alpha_vantage_news.fetch_market_news(days_back=days_back)
-        
-        # Get updated status
-        status = alpha_vantage_news.get_rate_limit_status()
-        
-        if articles:
-            return jsonify({
-                "success": True,
-                "message": f"Fetched {len(articles)} fresh articles",
-                "articles_count": len(articles),
-                "rate_limited": status.get('rate_limited', False),
-                "sample_headlines": [a.headline[:60] for a in articles[:5]]
-            })
-        else:
-            return jsonify({
-                "success": False,
-                "message": "API returned no articles - may still be rate limited",
-                "rate_limited": status.get('rate_limited', False),
-                "rate_limit_message": status.get('rate_limit_message', ''),
-            })
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@app.route('/api/alpha-vantage/deduplicate', methods=['POST'])
-def deduplicate_alpha_vantage_cache():
-    """Remove duplicate articles from cache."""
-    try:
-        before_count = len(alpha_vantage_news._articles_cache)
-        removed = alpha_vantage_news.deduplicate_cache()
-        after_count = len(alpha_vantage_news._articles_cache)
-        return jsonify({
-            "success": True, 
-            "before": before_count,
-            "after": after_count,
-            "removed": removed,
-            "message": f"Removed {removed} duplicates, {after_count} articles remain"
-        })
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+# Alpha Vantage endpoints REMOVED - all news from Global Intelligence Feed
+# Use /api/geopolitical-intel for news data
 
 
 @app.route('/api/earnings-reactor/scan', methods=['POST', 'GET'])
@@ -7862,9 +7690,8 @@ def scan_earnings_signals():
         
         reactor = get_earnings_reactor()
         
-        # Scan both sources
+        # Scan Global Intelligence Feed only
         geo_signals = reactor.scan_geopolitical_intel(geopolitical_intel)
-        av_signals = reactor.scan_alpha_vantage(alpha_vantage_news)
         
         # Get trading weights
         trading_signals = reactor.get_trading_signals(max_age_hours=24)
@@ -7874,8 +7701,7 @@ def scan_earnings_signals():
         
         return jsonify({
             "success": True,
-            "signals_from_geo": len(geo_signals),
-            "signals_from_av": len(av_signals),
+            "signals_from_global_intel": len(geo_signals),
             "total_trading_signals": len(trading_signals),
             "trading_signals": {k: f"{v*100:.1f}%" for k, v in trading_signals.items()},
             "recent_signals": [s.to_dict() for s in recent[:20]],

@@ -5596,7 +5596,61 @@
       "losing_strategies": [
         "TS_Momentum_LS"
       ]
+    },
+    {
+      "timestamp": "2026-02-05T18:38:56.751909",
+      "market_context": {
+        "regime": "neutral",
+        "volatility_regime": "medium",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "QuickMeanReversion": 0.5,
+        "VolumeSpike": 0.7,
+        "RelativeStrengthIntraday": 0.6,
+        "VWAPReversion": 0.6,
+        "TS_Momentum_LS": 0.6,
+        "IntradayMomentum": 0.65,
+        "OpeningRangeBreakout": 0.65,
+        "CrossSectionMomentum": 0.65,
+        "MeanReversion_LS": 0.5,
+        "SectorRotation": 0.6,
+        "QualityValue_LS": 0.5,
+        "CalendarEffects": 0.39
+      },
+      "outcome_return": -0.009680159445850111,
+      "winning_strategies": [],
+      "losing_strategies": [
+        "TS_Momentum_LS"
+      ]
+    },
+    {
+      "timestamp": "2026-02-05T18:43:24.243234",
+      "market_context": {
+        "regime": "neutral",
+        "volatility_regime": "medium",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "VolumeSpike": 0.6999999999999998,
+        "IntradayMomentum": 0.65,
+        "VWAPReversion": 0.6,
+        "TS_Momentum_LS": 0.6,
+        "QuickMeanReversion": 0.5,
+        "OpeningRangeBreakout": 0.65,
+        "RelativeStrengthIntraday": 0.6,
+        "CrossSectionMomentum": 0.65,
+        "MeanReversion_LS": 0.5,
+        "CalendarEffects": 0.39,
+        "QualityValue_LS": 0.5,
+        "SectorRotation": 0.6
+      },
+      "outcome_return": -0.017830247639093088,
+      "winning_strategies": [],
+      "losing_strategies": [
+        "TS_Momentum_LS"
+      ]
     }
   ],
-  "last_updated": "2026-02-05T18:32:31.690045"
+  "last_updated": "2026-02-05T18:44:12.675659"
 }
