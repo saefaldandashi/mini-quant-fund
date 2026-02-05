@@ -39,19 +39,28 @@ class SignalValidator:
     
     def __init__(
         self,
-        min_confidence: float = 0.3,
+        min_confidence: float = 0.45,  # INCREASED from 0.3 for better win rate
         max_staleness_hours: float = 24.0,
         consistency_threshold: float = 0.5,
+        require_momentum_confirmation: bool = True,  # NEW: Check momentum alignment
+        min_confluence_score: float = 0.5,  # NEW: Minimum strategy agreement
     ):
         self.min_confidence = min_confidence
         self.max_staleness_hours = max_staleness_hours
         self.consistency_threshold = consistency_threshold
+        self.require_momentum_confirmation = require_momentum_confirmation
+        self.min_confluence_score = min_confluence_score
         
         # Track validation stats
         self.total_validated = 0
         self.total_passed = 0
         self.total_warnings = 0
         self.total_blocked = 0
+        
+        # Win rate improvement stats
+        self.momentum_confirmed = 0
+        self.momentum_rejected = 0
+        self.confluence_boosted = 0
     
     def validate_signal(
         self,
@@ -63,6 +72,10 @@ class SignalValidator:
         macro_sentiment: Optional[float] = None,
         data_timestamp: Optional[datetime] = None,
         current_time: Optional[datetime] = None,
+        # NEW: Win-rate improvement parameters
+        momentum_signal: Optional[float] = None,  # -1 to +1, from technical analysis
+        rsi: Optional[float] = None,  # 0-100
+        confluence_score: Optional[float] = None,  # 0-1, how many strategies agree
     ) -> ValidationResult:
         """
         Validate a single trading signal.
@@ -160,7 +173,71 @@ class SignalValidator:
         if abs(signal_weight) > 0.25:
             blocking_issues.append(f"Position too large ({signal_weight:.1%} > 25%)")
         
-        # === CHECK 6: Zero Weight Signals ===
+        # === CHECK 6: MOMENTUM CONFIRMATION (Win-Rate Improvement) ===
+        if self.require_momentum_confirmation and momentum_signal is not None:
+            momentum_aligns = (
+                (signal_direction == 'long' and momentum_signal > 0.1) or
+                (signal_direction == 'short' and momentum_signal < -0.1)
+            )
+            momentum_conflicts = (
+                (signal_direction == 'long' and momentum_signal < -0.3) or
+                (signal_direction == 'short' and momentum_signal > 0.3)
+            )
+            
+            if momentum_aligns:
+                # Strong momentum confirmation - boost confidence
+                confidence_score = min(1.0, confidence_score * 1.15)
+                adjustments['momentum_confirmed'] = True
+                self.momentum_confirmed += 1
+            elif momentum_conflicts:
+                # Strong momentum against signal - reduce confidence significantly
+                warnings.append(f"Momentum conflict: {momentum_signal:.2f} vs {signal_direction}")
+                confidence_score *= 0.6
+                adjustments['momentum_conflict'] = True
+                self.momentum_rejected += 1
+                
+                # If momentum is VERY strong against us, block the trade
+                if abs(momentum_signal) > 0.5:
+                    blocking_issues.append(f"Strong momentum against signal ({momentum_signal:.2f})")
+        
+        # === CHECK 7: RSI CONFIRMATION ===
+        if rsi is not None:
+            if signal_direction == 'long':
+                if rsi > 80:
+                    # Buying overbought - risky
+                    warnings.append(f"Buying overbought stock (RSI={rsi:.0f})")
+                    confidence_score *= 0.7
+                elif rsi < 30:
+                    # Buying oversold - potentially good value
+                    confidence_score = min(1.0, confidence_score * 1.1)
+                    adjustments['rsi_oversold_buy'] = True
+            else:  # short
+                if rsi < 20:
+                    # Shorting oversold - risky
+                    warnings.append(f"Shorting oversold stock (RSI={rsi:.0f})")
+                    confidence_score *= 0.7
+                elif rsi > 70:
+                    # Shorting overbought - good confirmation
+                    confidence_score = min(1.0, confidence_score * 1.1)
+                    adjustments['rsi_overbought_short'] = True
+        
+        # === CHECK 8: CONFLUENCE SCORING (Win-Rate Improvement) ===
+        if confluence_score is not None:
+            if confluence_score >= 0.7:
+                # High confluence - multiple strategies agree strongly
+                confidence_score = min(1.0, confidence_score * 1.2)
+                adjustments['high_confluence'] = True
+                self.confluence_boosted += 1
+            elif confluence_score >= self.min_confluence_score:
+                # Moderate confluence - acceptable
+                confidence_score = min(1.0, confidence_score * 1.05)
+            elif confluence_score < 0.3:
+                # Low confluence - only one strategy, risky
+                warnings.append(f"Low confluence ({confluence_score:.0%}) - single strategy signal")
+                confidence_score *= 0.8
+                adjustments['low_confluence'] = True
+        
+        # === CHECK 9: Zero Weight Signals ===
         if abs(signal_weight) < 0.001:
             # Not really a signal, just neutral
             return ValidationResult(
@@ -198,9 +275,21 @@ class SignalValidator:
         signals: Dict[str, Dict],
         ticker_sentiments: Dict[str, Dict],
         macro_sentiment: Optional[float] = None,
+        # NEW: Win-rate improvement data
+        momentum_signals: Optional[Dict[str, float]] = None,
+        rsi_values: Optional[Dict[str, float]] = None,
+        confluence_scores: Optional[Dict[str, float]] = None,
     ) -> Tuple[Dict[str, float], List[str]]:
         """
         Validate an entire portfolio of signals.
+        
+        Args:
+            signals: Dict of ticker -> {weight, confidence}
+            ticker_sentiments: Dict of ticker -> sentiment data
+            macro_sentiment: Overall macro sentiment
+            momentum_signals: Dict of ticker -> momentum signal (-1 to +1)
+            rsi_values: Dict of ticker -> RSI (0-100)
+            confluence_scores: Dict of ticker -> confluence score (0-1)
         
         Returns:
             - Adjusted weights with validation applied
@@ -208,6 +297,10 @@ class SignalValidator:
         """
         adjusted_weights = {}
         all_warnings = []
+        
+        momentum_signals = momentum_signals or {}
+        rsi_values = rsi_values or {}
+        confluence_scores = confluence_scores or {}
         
         for ticker, signal in signals.items():
             direction = 'long' if signal.get('weight', 0) > 0 else 'short'
@@ -221,6 +314,9 @@ class SignalValidator:
                 signal_confidence=confidence,
                 ticker_sentiment=ticker_sentiments.get(ticker),
                 macro_sentiment=macro_sentiment,
+                momentum_signal=momentum_signals.get(ticker),
+                rsi=rsi_values.get(ticker),
+                confluence_score=confluence_scores.get(ticker),
             )
             
             if not result.is_valid:
@@ -250,6 +346,10 @@ class SignalValidator:
             'total_warnings': self.total_warnings,
             'pass_rate': self.total_passed / max(1, self.total_validated),
             'block_rate': self.total_blocked / max(1, self.total_validated),
+            # Win-rate improvement stats
+            'momentum_confirmed': self.momentum_confirmed,
+            'momentum_rejected': self.momentum_rejected,
+            'confluence_boosted': self.confluence_boosted,
         }
 
 

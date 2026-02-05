@@ -129,24 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 237,
+  "total_rounds": 239,
   "reward_history": [
-    {
-      "timestamp": "2026-01-26T20:59:03.745319",
-      "returns": {
-        "TS_Momentum_LS": 0.0011803253056081177,
-        "QualityValue_LS": 0.0011803253056081177
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T21:01:27.924335",
-      "returns": {
-        "TS_Momentum_LS": 0.0009762619183504995,
-        "QualityValue_LS": 0.0009762619183504995
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-01-26T21:02:38.307439",
       "returns": {
@@ -957,7 +941,21 @@
         "TS_Momentum_LS": -0.014130977261047988
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T21:02:23.141044",
+      "returns": {
+        "TS_Momentum_LS": -0.01219282802136849
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T21:05:51.187500",
+      "returns": {
+        "TS_Momentum_LS": -0.01142990515204504
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-02-05T20:46:49.956756"
+  "last_updated": "2026-02-05T21:05:51.187794"
 }

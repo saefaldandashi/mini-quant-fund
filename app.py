@@ -2997,11 +2997,40 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     'confidence': conf,
                 }
         
-        # Run validation
+        # Extract momentum and RSI data from features for win-rate improvement
+        momentum_signals = {}
+        rsi_values = {}
+        confluence_scores = {}
+        
+        # Get momentum from features
+        if features and hasattr(features, 'momentum_score'):
+            momentum_signals = features.momentum_score.copy() if features.momentum_score else {}
+        
+        # Get RSI from features
+        if features and hasattr(features, 'rsi_14'):
+            rsi_values = features.rsi_14.copy() if features.rsi_14 else {}
+        
+        # Calculate confluence scores (how many strategies agree on direction)
+        strategy_count = len([s for s in signals.values() if s.desired_weights])
+        for ticker in validation_signals.keys():
+            agreeing = 0
+            for name, signal in signals.items():
+                if ticker in signal.desired_weights:
+                    signal_weight = signal.desired_weights[ticker]
+                    final_weight = final_weights.get(ticker, 0)
+                    # Check if same direction
+                    if (signal_weight > 0 and final_weight > 0) or (signal_weight < 0 and final_weight < 0):
+                        agreeing += 1
+            confluence_scores[ticker] = agreeing / max(1, strategy_count)
+        
+        # Run validation with new win-rate improvement data
         validated_weights, validation_warnings = signal_validator.validate_portfolio(
             signals=validation_signals,
             ticker_sentiments=ticker_sentiments_dict,
             macro_sentiment=macro_sent,
+            momentum_signals=momentum_signals,
+            rsi_values=rsi_values,
+            confluence_scores=confluence_scores,
         )
         
         # Log validation results
@@ -3010,6 +3039,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log(f"  ✅ Passed: {validation_stats['total_passed']}")
         log(f"  ❌ Blocked: {validation_stats['total_blocked']}")
         log(f"  ⚠️ Warnings: {validation_stats['total_warnings']}")
+        log(f"  📈 Momentum Confirmed: {validation_stats.get('momentum_confirmed', 0)}")
+        log(f"  📉 Momentum Rejected: {validation_stats.get('momentum_rejected', 0)}")
+        log(f"  🎯 Confluence Boosted: {validation_stats.get('confluence_boosted', 0)}")
         
         for warning in validation_warnings[:10]:  # Limit to first 10
             log(f"  {warning}")
