@@ -5512,6 +5512,26 @@ def run_bot_endpoint():
     return jsonify({"status": "started", "message": f"🔴 LIVE Rebalance initiated ({int(exposure_pct*100)}% exposure)"})
 
 
+@app.route('/api/reset-cooldown', methods=['POST'])
+@requires_auth
+def reset_cooldown():
+    """Reset the rebalance cooldown and failure counter. Useful after fixing issues."""
+    global _consecutive_failures, _last_rebalance_attempt, _rebalance_lock
+    
+    old_failures = _consecutive_failures
+    _consecutive_failures = 0
+    _last_rebalance_attempt = None
+    _rebalance_lock = False  # Also unlock if stuck
+    
+    logging.info(f"Cooldown reset: cleared {old_failures} failures, unlocked rebalance")
+    
+    return jsonify({
+        "status": "ok",
+        "message": f"Cooldown reset. Cleared {old_failures} consecutive failures.",
+        "can_rebalance": True
+    })
+
+
 @app.route('/api/auto-rebalance', methods=['POST', 'GET'])
 @requires_auth
 def set_auto_rebalance():
