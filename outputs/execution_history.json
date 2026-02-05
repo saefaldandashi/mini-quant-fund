@@ -239,10 +239,10 @@
       "avg_improvement": 0.0
     },
     "GLW": {
-      "total_orders": 11,
-      "limit_attempts": 0,
+      "total_orders": 12,
+      "limit_attempts": 1,
       "limit_fills": 0,
-      "avg_spread": 0.09141006540800004,
+      "avg_spread": 0.09807015102584785,
       "avg_improvement": 0.0
     },
     "C": {
@@ -288,10 +288,10 @@
       "avg_improvement": 0.0
     },
     "ENPH": {
-      "total_orders": 1,
-      "limit_attempts": 1,
+      "total_orders": 2,
+      "limit_attempts": 2,
       "limit_fills": 0,
-      "avg_spread": 0.02911510866174495,
+      "avg_spread": 0.05705448405959149,
       "avg_improvement": 0.0
     },
     "META": {
@@ -309,5 +309,5 @@
       "avg_improvement": 0.0
     }
   },
-  "last_updated": "2026-02-05T20:41:53.548512"
+  "last_updated": "2026-02-05T20:46:40.884290"
 }

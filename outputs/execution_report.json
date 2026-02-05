@@ -16649,8 +16649,44 @@
       "price_improvement": 0.0,
       "price_improvement_pct": 0.0,
       "slippage": 0.0
+    },
+    {
+      "symbol": "ENPH",
+      "side": "short",
+      "quantity": 5,
+      "order_type": "limit_fallback",
+      "decision_price": 47.45,
+      "limit_price": 47.4,
+      "fill_price": 47.45,
+      "decision_time": "2026-02-05T20:46:37.608200",
+      "submit_time": "2026-02-05T20:46:39.180257",
+      "fill_time": "2026-02-05T20:46:39.180257",
+      "spread_pct": 0.1688119856509776,
+      "spread_category": "moderate",
+      "filled_at_limit": false,
+      "price_improvement": 0.0,
+      "price_improvement_pct": 0.0,
+      "slippage": 0.0
+    },
+    {
+      "symbol": "GLW",
+      "side": "short",
+      "quantity": 2,
+      "order_type": "limit_fallback",
+      "decision_price": 112.4,
+      "limit_price": 112.3,
+      "fill_price": 112.4,
+      "decision_time": "2026-02-05T20:46:39.210829",
+      "submit_time": "2026-02-05T20:46:40.885101",
+      "fill_time": "2026-02-05T20:46:40.885101",
+      "spread_pct": 0.12471049349723907,
+      "spread_category": "normal",
+      "filled_at_limit": false,
+      "price_improvement": 0.0,
+      "price_improvement_pct": 0.0,
+      "slippage": 0.0
     }
   ],
-  "last_updated": "2026-02-05T20:41:53.551539",
-  "total_historical": 925
+  "last_updated": "2026-02-05T20:46:40.889083",
+  "total_historical": 927
 }

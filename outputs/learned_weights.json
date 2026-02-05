@@ -129,16 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 236,
+  "total_rounds": 237,
   "reward_history": [
-    {
-      "timestamp": "2026-01-26T20:58:04.895738",
-      "returns": {
-        "TS_Momentum_LS": 0.0014297361122564147,
-        "QualityValue_LS": 0.0014297361122564147
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-01-26T20:59:03.745319",
       "returns": {
@@ -958,7 +950,14 @@
         "TS_Momentum_LS": -0.014782015808739375
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T20:46:49.946976",
+      "returns": {
+        "TS_Momentum_LS": -0.014130977261047988
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-02-05T20:42:00.025569"
+  "last_updated": "2026-02-05T20:46:49.956756"
 }

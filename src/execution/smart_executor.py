@@ -507,11 +507,20 @@ class SmartExecutor:
                 spread_analysis, side
             )
             
-            result = self._execute_limit_with_fallback(
-                symbol, side, quantity, current_price,
-                limit_price, dynamic_timeout, spread_analysis, decision_time
-            )
-            used_limit = True
+            # SAFETY: If limit price is 0 (quote data unavailable), use market order
+            if limit_price <= 0:
+                self.log(f"    ⚠️ No valid quote data - using market order")
+                result = self._execute_market_order(
+                    symbol, side, quantity, current_price,
+                    spread_analysis, decision_time
+                )
+                used_limit = False
+            else:
+                result = self._execute_limit_with_fallback(
+                    symbol, side, quantity, current_price,
+                    limit_price, dynamic_timeout, spread_analysis, decision_time
+                )
+                used_limit = True
         
         result.execution_time_ms = (time.time() - start_time) * 1000
         result.spread_pct = spread_analysis.spread_pct

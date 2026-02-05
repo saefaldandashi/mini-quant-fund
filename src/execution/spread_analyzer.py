@@ -260,6 +260,12 @@ class SpreadAnalyzer:
             # For tight spreads, just use market (return mid as reference)
             return analysis.mid
         
+        # SAFETY CHECK: If bid/ask is 0, we can't calculate a valid limit price
+        # This can happen if quote data is unavailable
+        if analysis.bid <= 0 or analysis.ask <= 0 or analysis.spread <= 0:
+            # Return 0 to signal caller should use market order instead
+            return 0
+        
         limit_pct = analysis.recommended_limit_pct * aggression
         limit_pct = min(limit_pct, 0.50)  # Cap at mid price
         
@@ -269,6 +275,10 @@ class SpreadAnalyzer:
         else:
             # For sells, start from ask and move toward bid
             limit_price = analysis.ask - (analysis.spread * limit_pct)
+        
+        # SAFETY: Ensure limit price is positive
+        if limit_price <= 0:
+            return 0
         
         # Round to 2 decimal places
         return round(limit_price, 2)

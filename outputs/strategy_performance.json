@@ -31,15 +31,15 @@
       "total_predictions": 2,
       "correct_predictions": 2,
       "accuracy": 1.0,
-      "cumulative_return": 0.028853127456206454,
-      "avg_return_per_trade": 0.014426563728103227,
-      "sharpe_ratio": 40.58652210526998,
+      "cumulative_return": 0.02891299306978736,
+      "avg_return_per_trade": 0.01445649653489368,
+      "sharpe_ratio": 44.41057011495586,
       "max_drawdown": 0.0,
-      "volatility": 0.00035545208063614796,
+      "volatility": 0.0003255192738456933,
       "win_rate": 1.0,
-      "profit_factor": 28.853127456206455,
+      "profit_factor": 28.912993069787362,
       "performance_by_regime": {
-        "mild_bear": 0.014426563728103227
+        "mild_bear": 0.01445649653489368
       },
       "best_regime": "mild_bear",
       "worst_regime": "mild_bear",
@@ -47,7 +47,7 @@
       "avg_confidence_when_wrong": 0,
       "confidence_calibration": 0.6,
       "rolling_accuracy_20": 1.0,
-      "rolling_return_20": 0.028853127456206454,
+      "rolling_return_20": 0.02891299306978736,
       "improving": false,
       "momentum_score": 0.0
     },
@@ -131,16 +131,6 @@
   },
   "history": {
     "TS_Momentum_LS": [
-      {
-        "timestamp": "2026-02-05T20:41:20.611048",
-        "symbol": "MCHP",
-        "direction": "long",
-        "confidence": 0.6,
-        "expected_return": 0.7456489718210699,
-        "regime": "neutral",
-        "outcome": null,
-        "actual_return": null
-      },
       {
         "timestamp": "2026-02-05T20:41:20.652441",
         "symbol": "TEL",
@@ -5130,6 +5120,16 @@
         "regime": "neutral",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-05T20:46:37.296763",
+        "symbol": "META",
+        "direction": "long",
+        "confidence": 0.6,
+        "expected_return": 0.01,
+        "regime": "mild_bear",
+        "outcome": "correct",
+        "actual_return": 0.014130977261047988
       }
     ],
     "RelativeStrengthIntraday": [
@@ -57654,8 +57654,18 @@
         "regime": "mild_bear",
         "outcome": null,
         "actual_return": null
+      },
+      {
+        "timestamp": "2026-02-05T20:46:37.338845",
+        "symbol": "META",
+        "direction": "long",
+        "confidence": 1.0,
+        "expected_return": 0.01,
+        "regime": "mild_bear",
+        "outcome": null,
+        "actual_return": null
       }
     ]
   },
-  "last_updated": "2026-02-05T20:46:18.607825"
+  "last_updated": "2026-02-05T20:46:49.798642"
 }

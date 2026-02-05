@@ -6180,7 +6180,34 @@
       "losing_strategies": [
         "TS_Momentum_LS"
       ]
+    },
+    {
+      "timestamp": "2026-02-05T20:46:49.980452",
+      "market_context": {
+        "regime": "neutral",
+        "volatility_regime": "medium",
+        "trend_strength": "weak"
+      },
+      "strategy_signals": {
+        "TS_Momentum_LS": 0.6,
+        "QuickMeanReversion": 0.5,
+        "IntradayMomentum": 0.65,
+        "VolumeSpike": 0.7,
+        "RelativeStrengthIntraday": 0.6,
+        "VWAPReversion": 0.6,
+        "OpeningRangeBreakout": 0.65,
+        "QualityValue_LS": 0.5,
+        "CrossSectionMomentum": 0.65,
+        "MeanReversion_LS": 0.5,
+        "CalendarEffects": 0.39,
+        "SectorRotation": 0.6
+      },
+      "outcome_return": 0.014130977261047988,
+      "winning_strategies": [],
+      "losing_strategies": [
+        "TS_Momentum_LS"
+      ]
     }
   ],
-  "last_updated": "2026-02-05T20:42:00.029265"
+  "last_updated": "2026-02-05T20:54:34.345450"
 }
