@@ -129,47 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 214,
+  "total_rounds": 217,
   "reward_history": [
-    {
-      "timestamp": "2026-01-23T19:20:37.944366",
-      "returns": {
-        "OpeningRangeBreakout": -0.00026868317607015946,
-        "TS_Momentum_LS": 0.0009929241101471976,
-        "VWAPReversion": -0.000349082668457306,
-        "RelativeStrengthIntraday": 0.0033400159695486007,
-        "CrossSectionMomentum": 0.003427232148922182,
-        "QualityValue_LS": 0.0019109250618343746,
-        "MeanReversion_LS": -0.00044548147407290394
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T19:25:29.978020",
-      "returns": {
-        "RelativeStrengthIntraday": 0.008996844951664987,
-        "VWAPReversion": 0.0008249681633436017,
-        "OpeningRangeBreakout": 0.014290014556624188,
-        "TS_Momentum_LS": 0.005831682300440942,
-        "CrossSectionMomentum": 0.013079436099624897,
-        "QualityValue_LS": 0.000929219016997693,
-        "MeanReversion_LS": 0.004024979881399993
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T19:30:44.977306",
-      "returns": {
-        "RelativeStrengthIntraday": 0.006622044105399161,
-        "TS_Momentum_LS": 0.003766007309552132,
-        "VWAPReversion": 0.0017855552075443978,
-        "OpeningRangeBreakout": 0.008273782394267086,
-        "QualityValue_LS": -0.00012097814724636809,
-        "MeanReversion_LS": 0.003162464338797824,
-        "CrossSectionMomentum": 0.009879224476840469
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-01-23T19:35:35.014023",
       "returns": {
@@ -1010,7 +971,28 @@
         "TS_Momentum_LS": -0.017830247639093088
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T18:50:37.291123",
+      "returns": {
+        "TS_Momentum_LS": -0.014142082213500546
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T18:54:53.059935",
+      "returns": {
+        "TS_Momentum_LS": -0.01793819216132353
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:00:04.418202",
+      "returns": {
+        "TS_Momentum_LS": -0.019049619511833
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-02-05T18:43:24.242124"
+  "last_updated": "2026-02-05T19:00:04.418930"
 }

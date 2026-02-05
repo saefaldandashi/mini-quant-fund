@@ -84,15 +84,42 @@ class GeopoliticalEvent:
 
 @dataclass
 class GeopoliticalRiskAssessment:
-    """Overall geopolitical risk assessment."""
+    """
+    Comprehensive geopolitical risk assessment with multi-timeframe analysis.
+    
+    NEW FEATURES:
+    - Tail risk indicator for black swan events
+    - Multi-timeframe risk (immediate/situational/structural)
+    - Active conflict tracking
+    - Graduated safe haven signals
+    """
     timestamp: datetime
-    overall_risk_score: float  # 0-1
-    risk_level: str  # low, moderate, elevated, high, critical
+    overall_risk_score: float  # 0-1 (combined weighted score)
+    risk_level: str  # low, guarded, moderate, elevated, high, critical
     active_events: List[GeopoliticalEvent]
     regional_risks: Dict[str, float]  # region -> risk score
     recommended_exposure_adjustment: float  # multiplier 0.0-1.0
     key_concerns: List[str]
     safe_haven_signal: bool  # should rotate to safe havens?
+    
+    # NEW: Multi-timeframe risk assessment
+    immediate_risk: float = 0.0       # Last 6 hours, fast decay - intraday trading
+    situational_risk: float = 0.0     # Last 48 hours - swing trading
+    structural_risk: float = 0.0      # Ongoing conflicts - position management
+    
+    # NEW: Tail risk for black swan probability
+    tail_risk_score: float = 0.0      # 0-1, probability of catastrophic escalation
+    tail_risk_triggers: List[str] = field(default_factory=list)  # Active tail risk triggers
+    
+    # NEW: Active conflicts being tracked
+    active_conflicts: List[str] = field(default_factory=list)  # e.g., ["ukraine_russia", "israel_hamas"]
+    
+    # NEW: Graduated safe haven signal
+    safe_haven_level: str = "none"    # none, hedging, moderate, strong
+    
+    # NEW: Market validation
+    market_confirms_risk: bool = False  # True if VIX/gold/bonds confirm the risk
+    vix_level: float = 0.0
     
     def to_dict(self) -> dict:
         return {
@@ -105,6 +132,16 @@ class GeopoliticalRiskAssessment:
             "recommended_exposure_adjustment": self.recommended_exposure_adjustment,
             "key_concerns": self.key_concerns,
             "safe_haven_signal": self.safe_haven_signal,
+            # NEW fields
+            "immediate_risk": self.immediate_risk,
+            "situational_risk": self.situational_risk,
+            "structural_risk": self.structural_risk,
+            "tail_risk_score": self.tail_risk_score,
+            "tail_risk_triggers": self.tail_risk_triggers,
+            "active_conflicts": self.active_conflicts,
+            "safe_haven_level": self.safe_haven_level,
+            "market_confirms_risk": self.market_confirms_risk,
+            "vix_level": self.vix_level,
         }
 
 
@@ -640,6 +677,198 @@ class GeopoliticalIntelligence:
     
     # MINIMUM SEVERITY THRESHOLD - Events below this are discarded
     MIN_SEVERITY_THRESHOLD = 0.25
+    
+    # ==========================================================================
+    # NEW: FAILED NEGOTIATION PATTERNS (P0 Fix)
+    # These OVERRIDE de-escalation keywords - "peace talks" with failure = ESCALATION
+    # ==========================================================================
+    NEGOTIATION_FAILURE_PATTERNS = [
+        "without breakthrough", "no breakthrough", "talks fail", "talks failed",
+        "talks collapse", "talks collapsed", "negotiations fail", "negotiations failed",
+        "no progress", "little progress", "stalled", "deadlock", "impasse",
+        "without agreement", "no agreement reached", "talks end without",
+        "collapsed", "broke down", "breakdown", "walked out", "stormed out",
+        "rejected", "refuses to", "ultimatum", "no deal", "deal falls through",
+        "suspended", "postponed indefinitely", "stalemate continues",
+    ]
+    
+    # ==========================================================================
+    # NEW: CONCRETE DE-ESCALATION OUTCOMES (P1 Fix)
+    # Only these actually reduce risk - "talks happening" doesn't count
+    # ==========================================================================
+    CONCRETE_DE_ESCALATION_OUTCOMES = [
+        "ceasefire signed", "ceasefire begins", "ceasefire holds",
+        "agreement reached", "agreement signed", "deal struck", "deal signed",
+        "treaty signed", "accord reached", "peace deal",
+        "troops withdrawn", "troops withdrawing", "pullback begins",
+        "sanctions lifted", "sanctions removed", "embargo lifted",
+        "hostages freed", "hostages released", "prisoners released",
+        "prisoners exchanged", "humanitarian corridor opens",
+        "weapons inspectors", "inspections begin", "disarmament",
+        "border reopened", "flights resume", "trade resumes",
+    ]
+    
+    # ==========================================================================
+    # NEW: ACTIVE CONFLICTS - Structural Risk Floor (P0 Fix)
+    # These ongoing conflicts should NEVER score below their floor
+    # ==========================================================================
+    ACTIVE_CONFLICTS = {
+        "ukraine_russia": {
+            "start_date": "2022-02-24",
+            "min_risk_floor": 0.35,  # Never below 35% while war continues
+            "affected_regions": ["russia", "europe"],
+            "escalation_triggers": ["nuclear", "nato direct", "article 5", "tactical nuclear"],
+            "keywords": ["ukraine", "russia", "kyiv", "moscow", "zelensky", "putin", "crimea", "donbas"],
+        },
+        "israel_hamas": {
+            "start_date": "2023-10-07",
+            "min_risk_floor": 0.30,
+            "affected_regions": ["middle_east"],
+            "escalation_triggers": ["iran strikes israel", "hezbollah full", "regional war"],
+            "keywords": ["gaza", "israel", "hamas", "netanyahu", "hezbollah", "iran"],
+        },
+        "iran_tensions": {
+            "start_date": "2024-01-01",
+            "min_risk_floor": 0.25,
+            "affected_regions": ["middle_east"],
+            "escalation_triggers": ["iran nuclear", "strait of hormuz", "iran attacks"],
+            "keywords": ["iran", "tehran", "irgc", "revolutionary guard", "houthis"],
+        },
+        "taiwan_tensions": {
+            "start_date": "2022-08-01",
+            "min_risk_floor": 0.20,
+            "affected_regions": ["asia"],
+            "escalation_triggers": ["china invades taiwan", "blockade taiwan", "taiwan strait crisis"],
+            "keywords": ["taiwan", "taipei", "china", "strait", "pla"],
+        },
+    }
+    
+    # ==========================================================================
+    # NEW: KEYWORD SEVERITY WEIGHTS (P1 Fix)
+    # Different keywords have different severity - "nuclear attack" >> "tensions"
+    # ==========================================================================
+    KEYWORD_SEVERITY_WEIGHTS = {
+        # CRITICAL (10x weight)
+        "nuclear attack": 10.0, "nuclear war": 10.0, "nuclear strike": 10.0,
+        "article 5": 10.0, "nato direct": 9.0,
+        
+        # VERY HIGH (7-8x weight)
+        "invasion": 8.0, "invades": 8.0, "declares war": 8.0, "war declared": 8.0,
+        "nuclear threat": 7.0, "nuclear test": 7.0,
+        "strait of hormuz blocked": 8.0, "suez blocked": 7.0,
+        
+        # HIGH (4-6x weight)
+        "attack": 5.0, "airstrike": 5.0, "missile strike": 5.0,
+        "sanctions imposed": 4.0, "embargo": 4.0,
+        "coup": 6.0, "assassination": 6.0,
+        "default": 5.0, "bank run": 5.0,
+        
+        # MEDIUM (2-3x weight)
+        "escalation": 3.0, "escalating": 3.0, "retaliation": 3.0,
+        "military buildup": 3.0, "troops deployed": 3.0,
+        "tariffs": 2.0, "trade war": 2.0,
+        
+        # LOW (1x weight - default)
+        "tensions": 1.0, "concerns": 1.0, "dispute": 1.0,
+    }
+    
+    # ==========================================================================
+    # NEW: TIME DECAY BY EVENT TYPE (P1 Fix)
+    # Military events persist longer than terrorism
+    # ==========================================================================
+    TIME_DECAY_HALF_LIFE = {
+        "military_combat": 24,       # War events persist 24h half-life
+        "diplomatic_breakdown": 48,  # Diplomatic rifts last longer
+        "political_instability": 36, # Political events persist
+        "sanctions_imposed": 72,     # Sanctions last weeks
+        "energy_disruption": 24,     # Energy shocks are urgent
+        "terrorism": 6,              # Security threats are fast-moving
+        "cyber_attacks": 12,         # Cyber events moderate
+        "financial_crisis": 12,      # Markets price in quickly
+        "trade_war": 168,            # Trade wars last weeks
+        "regulatory_shock": 48,      # Regulatory changes persist
+        "natural_disasters": 24,     # Disasters are urgent
+        "pandemic": 48,              # Health events persist
+        "general": 12,               # Default
+    }
+    
+    # ==========================================================================
+    # NEW: CRITICAL EVENT COMBINATIONS (P3 Fix)
+    # Certain keyword combinations indicate extreme risk
+    # NOTE: These require ALL terms to appear in SAME headline to trigger
+    # ==========================================================================
+    CRITICAL_COMBINATIONS = {
+        # NUCLEAR - only when imminent threat language
+        ("nuclear", "attack", "imminent"): 10.0,
+        ("nuclear", "strike", "threatens"): 9.0,
+        ("tactical", "nuclear", "deploy"): 9.0,
+        # NATO ARTICLE 5 - only if invoked
+        ("nato", "article 5", "invoke"): 10.0,
+        ("nato", "direct", "intervention"): 8.0,
+        # IRAN-ISRAEL DIRECT CONFLICT
+        ("iran", "strikes", "israel"): 8.0,
+        ("israel", "strikes", "iran"): 8.0,
+        # TAIWAN INVASION
+        ("china", "invades", "taiwan"): 10.0,
+        ("pla", "blockade", "taiwan"): 8.0,
+        # ENERGY CHOKEPOINTS BLOCKED
+        ("hormuz", "blocked", "closed"): 8.0,
+        ("suez", "blocked", "crisis"): 7.0,
+        # FINANCIAL CONTAGION
+        ("bank", "run", "spreads"): 6.0,
+        ("sovereign", "default", "contagion"): 6.0,
+    }
+    
+    # ==========================================================================
+    # NEW: REGIONAL CONTAGION MATRIX (P2 Fix)
+    # Risk in one region spills over to others
+    # ==========================================================================
+    REGIONAL_CONTAGION = {
+        "middle_east": {
+            "europe": 0.25,      # Energy dependence
+            "asia": 0.15,        # Shipping routes
+            "americas": 0.10,    # Oil prices
+        },
+        "russia": {
+            "europe": 0.40,      # Direct neighbor + energy
+            "asia": 0.15,        # China alignment
+            "americas": 0.10,    # Geopolitical impact
+        },
+        "asia": {
+            "americas": 0.20,    # Trade dependence
+            "europe": 0.10,      # Supply chains
+        },
+        "europe": {
+            "americas": 0.15,    # Economic ties
+            "asia": 0.10,        # Trade
+        },
+    }
+    
+    # ==========================================================================
+    # NEW: STEEPER EXPOSURE ADJUSTMENT (P0 Fix)
+    # More aggressive risk reduction at moderate levels
+    # ==========================================================================
+    RISK_TO_EXPOSURE = [
+        (0.75, 1.00, "critical", 0.20),   # Was 0.30 - now 80% reduction
+        (0.60, 0.75, "high", 0.35),       # Was 0.50 - now 65% reduction  
+        (0.45, 0.60, "elevated", 0.55),   # Was 0.70 - now 45% reduction
+        (0.30, 0.45, "moderate", 0.70),   # Was 0.85 - now 30% reduction
+        (0.15, 0.30, "guarded", 0.85),    # New tier
+        (0.00, 0.15, "low", 1.00),        # Full exposure
+    ]
+    
+    # ==========================================================================
+    # NEW: TAIL RISK TRIGGERS (P1 Fix)
+    # Events that indicate black swan probability
+    # ==========================================================================
+    TAIL_RISK_TRIGGERS = {
+        "nuclear_escalation": ["nuclear threat", "nuclear test", "nuclear capable", "tactical nuclear", "nuclear option"],
+        "nato_direct": ["article 5", "nato troops", "nato direct involvement", "nato intervention"],
+        "iran_israel_war": ["iran strikes israel", "israel strikes iran", "regional war middle east"],
+        "taiwan_invasion": ["china invades taiwan", "taiwan strait crisis", "pla blockade"],
+        "financial_contagion": ["lehman moment", "systemic collapse", "banking crisis spreads", "contagion"],
+        "energy_crisis": ["strait of hormuz closed", "oil embargo", "energy blackout", "grid collapse"],
+    }
     
     # Regions and their market indices
     REGIONAL_INDICES = {
@@ -1560,13 +1789,19 @@ class GeopoliticalIntelligence:
     
     def get_risk_assessment(self, refresh: bool = False) -> GeopoliticalRiskAssessment:
         """
-        Get comprehensive geopolitical risk assessment with SENTIMENT-AWARE scoring.
+        COMPREHENSIVE Geopolitical Risk Assessment v2.0
         
-        This method uses:
-        1. Escalation vs De-escalation classification
-        2. Time decay for older events
-        3. Baseline normalization (comparing to typical news volume)
-        4. Regional risk aggregation with caps
+        MAJOR IMPROVEMENTS:
+        1. Failed negotiations = ESCALATION (not de-escalation)
+        2. Structural risk floor for active conflicts
+        3. Steeper exposure adjustment curve
+        4. Event-type-specific time decay
+        5. Concrete de-escalation requirement
+        6. Tail risk indicator
+        7. Keyword severity weighting
+        8. VIX integration
+        9. Regional contagion modeling
+        10. Multi-timeframe risk (immediate/situational/structural)
         """
         # Update events if needed
         if refresh or not self.last_update or \
@@ -1575,53 +1810,138 @@ class GeopoliticalIntelligence:
         
         now = datetime.now(pytz.UTC)
         
-        # Get events from last 24 hours
+        # Get events from different time windows
+        cutoff_6h = now - timedelta(hours=6)
         cutoff_24h = now - timedelta(hours=24)
-        recent_events = [e for e in self.events_cache 
-                        if e.timestamp.replace(tzinfo=pytz.UTC) > cutoff_24h]
+        cutoff_48h = now - timedelta(hours=48)
         
-        # STEP 1: Classify events as ESCALATION or DE-ESCALATION
+        events_6h = [e for e in self.events_cache if e.timestamp.replace(tzinfo=pytz.UTC) > cutoff_6h]
+        events_24h = [e for e in self.events_cache if e.timestamp.replace(tzinfo=pytz.UTC) > cutoff_24h]
+        events_48h = [e for e in self.events_cache if e.timestamp.replace(tzinfo=pytz.UTC) > cutoff_48h]
+        
+        # ================================================================
+        # STEP 1: CLASSIFY EVENTS WITH ENHANCED LOGIC
+        # Key fix: Failed negotiations = ESCALATION
+        # ================================================================
         escalation_events = []
         de_escalation_events = []
         neutral_events = []
         
-        for event in recent_events:
-            # Re-analyze the event's sentiment
+        for event in events_24h:
             text = f"{event.headline} {event.summary}"
             text_lower = text.lower()
             
-            # Count escalation vs de-escalation keywords
-            escalation_count = 0
-            de_escalation_count = 0
+            # FIX P0: Check for FAILED NEGOTIATION patterns FIRST
+            has_failure_pattern = any(fp in text_lower for fp in self.NEGOTIATION_FAILURE_PATTERNS)
+            
+            # Count escalation vs de-escalation with SEVERITY WEIGHTING
+            escalation_score = 0.0
+            de_escalation_score = 0.0
             
             for category, keywords in self.ESCALATION_KEYWORDS.items():
                 for kw in keywords:
                     if kw in text_lower:
-                        escalation_count += 1
+                        # Apply severity weight if available
+                        weight = self.KEYWORD_SEVERITY_WEIGHTS.get(kw, 1.0)
+                        escalation_score += weight
             
             for category, keywords in self.DE_ESCALATION_KEYWORDS.items():
                 for kw in keywords:
                     if kw in text_lower:
-                        de_escalation_count += 1
+                        de_escalation_score += 1.0
+            
+            # FIX P0: If has failure pattern, convert de-escalation to escalation
+            if has_failure_pattern and de_escalation_score > 0:
+                # "Peace talks without breakthrough" = ESCALATION
+                escalation_score += de_escalation_score * 1.5  # Boost escalation
+                de_escalation_score = 0  # Cancel de-escalation
+            
+            # FIX P1: Only count de-escalation if CONCRETE outcome present
+            has_concrete_de_escalation = any(
+                cde in text_lower for cde in self.CONCRETE_DE_ESCALATION_OUTCOMES
+            )
+            if not has_concrete_de_escalation:
+                de_escalation_score *= 0.3  # Heavily discount non-concrete de-escalation
             
             # Classify based on net sentiment
-            if escalation_count > de_escalation_count * 1.2:
+            if escalation_score > de_escalation_score * 1.5:
                 escalation_events.append(event)
-            elif de_escalation_count > escalation_count * 1.2:
+            elif de_escalation_score > escalation_score * 1.5 and has_concrete_de_escalation:
                 de_escalation_events.append(event)
             else:
                 neutral_events.append(event)
         
-        # STEP 2: Calculate regional risks with CAPS and DAMPENING
-        regional_risks = {}
-        regional_escalation = {}  # Track escalation per region
-        regional_de_escalation = {}  # Track de-escalation per region
+        # ================================================================
+        # STEP 2: CHECK FOR CRITICAL COMBINATIONS (P3 Fix)
+        # NOTE: Combinations must appear in SAME headline to be meaningful
+        # ================================================================
+        combination_boost = 0.0
+        combination_triggers = []
         
-        # Count escalation events per region
+        for event in events_24h:
+            event_text = f"{event.headline} {event.summary}".lower()
+            for combo, boost in self.CRITICAL_COMBINATIONS.items():
+                if all(term in event_text for term in combo):
+                    combination_boost += boost * 0.015  # Each combo adds max 0.15
+                    trigger_name = " + ".join(combo)
+                    if trigger_name not in combination_triggers:
+                        combination_triggers.append(trigger_name)
+        
+        # Cap combination boost at 0.25 total
+        combination_boost = min(0.25, combination_boost)
+        
+        # ================================================================
+        # STEP 3: IDENTIFY ACTIVE CONFLICTS (P0 Fix - Structural Risk Floor)
+        # ================================================================
+        active_conflict_ids = []
+        structural_risk_floor = 0.15  # Base minimum
+        conflict_escalation_boost = 0.0
+        
+        for conflict_id, config in self.ACTIVE_CONFLICTS.items():
+            # Check if any events mention this conflict
+            conflict_keywords = config.get("keywords", [])
+            has_conflict_mention = any(
+                any(kw in f"{e.headline} {e.summary}".lower() for kw in conflict_keywords)
+                for e in events_48h
+            )
+            
+            if has_conflict_mention:
+                active_conflict_ids.append(conflict_id)
+                # Apply structural risk floor
+                structural_risk_floor = max(structural_risk_floor, config["min_risk_floor"])
+                
+                # Check for escalation triggers within this conflict
+                for event in events_48h:
+                    event_text = f"{event.headline} {event.summary}".lower()
+                    for trigger in config.get("escalation_triggers", []):
+                        if trigger in event_text:
+                            conflict_escalation_boost += 0.10  # Major escalation trigger
+                            if f"{conflict_id}: {trigger}" not in combination_triggers:
+                                combination_triggers.append(f"{conflict_id}: {trigger}")
+        
+        # Cap conflict escalation boost
+        combination_boost += min(0.20, conflict_escalation_boost)
+        
+        # ================================================================
+        # STEP 4: CALCULATE REGIONAL RISKS WITH CONTAGION (P2 Fix)
+        # ================================================================
+        regional_risks = {}
+        regional_escalation = {}
+        regional_de_escalation = {}
+        
+        BASELINE_EVENTS_PER_REGION = {
+            "americas": 15, "europe": 10, "asia": 8,
+            "middle_east": 5, "russia": 5, "africa": 4, "global": 10,
+        }
+        DEFAULT_BASELINE = 5
+        
+        # Count escalation events per region with severity weighting
         for event in escalation_events:
-            if event.market_impact_score > 0.3:  # Only significant events
+            if event.market_impact_score > 0.3:
                 for region in event.regions:
-                    regional_escalation[region] = regional_escalation.get(region, 0) + 1
+                    # Weight by severity
+                    weight = 1 + event.severity
+                    regional_escalation[region] = regional_escalation.get(region, 0) + weight
         
         # Count de-escalation events per region
         for event in de_escalation_events:
@@ -1629,143 +1949,258 @@ class GeopoliticalIntelligence:
                 for region in event.regions:
                     regional_de_escalation[region] = regional_de_escalation.get(region, 0) + 1
         
-        # BASELINE: Typical number of geopolitical headlines per region per day
-        # Different regions have different "normal" news volumes
-        # US/Americas gets more coverage - higher baseline prevents false risk inflation
-        BASELINE_EVENTS_PER_REGION = {
-            "americas": 15,      # US news is very high volume - needs high baseline
-            "europe": 10,        # Also high news volume
-            "asia": 8,           # Moderate
-            "middle_east": 5,    # Lower baseline - each event is more significant
-            "russia": 5,         # Lower baseline
-            "africa": 4,         # Lower baseline
-            "global": 10,        # Catch-all
-        }
-        DEFAULT_BASELINE = 5
+        # Calculate initial regional risks
+        all_regions = set(list(regional_escalation.keys()) + list(regional_de_escalation.keys()))
         
-        for region in set(list(regional_escalation.keys()) + list(regional_de_escalation.keys())):
+        for region in all_regions:
             esc_count = regional_escalation.get(region, 0)
             de_esc_count = regional_de_escalation.get(region, 0)
-            
-            # Get region-specific baseline
             baseline = BASELINE_EVENTS_PER_REGION.get(region, DEFAULT_BASELINE)
             
-            # Net escalation (escalation - de-escalation dampening)
-            net_escalation = max(0, esc_count - de_esc_count * 0.5)
+            net_escalation = max(0, esc_count - de_esc_count * 0.3)  # Reduced de-esc dampening
             
-            # Calculate risk as deviation from region-specific baseline
-            # If net_escalation = BASELINE, risk = 40% (normal for that region)
-            # If net_escalation = 2x BASELINE, risk = 60% (elevated)
-            # If net_escalation = 3x BASELINE, risk = 75% (high)
-            # If net_escalation = 4x+ BASELINE, risk = 85%+ (critical)
             if net_escalation <= baseline:
-                # Below or at baseline - LOW to MODERATE risk
                 regional_risk = 0.15 + (net_escalation / baseline) * 0.25
             elif net_escalation <= baseline * 2:
-                # 1x to 2x baseline - ELEVATED risk
                 excess = (net_escalation - baseline) / baseline
                 regional_risk = 0.4 + excess * 0.2
             elif net_escalation <= baseline * 3:
-                # 2x to 3x baseline - HIGH risk
                 excess = (net_escalation - baseline * 2) / baseline
                 regional_risk = 0.6 + excess * 0.15
             else:
-                # 3x+ baseline - CRITICAL (cap at 85%)
                 regional_risk = 0.75 + min(0.1, (net_escalation - baseline * 3) * 0.015)
             
-            # Apply de-escalation dampening
-            if de_esc_count > esc_count:
-                regional_risk *= 0.5  # Strong de-escalation signal
-            elif de_esc_count > 0 and esc_count > 0:
-                # Mixed signals - apply partial dampening
-                ratio = de_esc_count / (esc_count + de_esc_count)
-                regional_risk *= (1.0 - ratio * 0.3)
-            
-            regional_risks[region] = round(min(0.85, regional_risk), 2)  # Cap at 85%
+            regional_risks[region] = round(min(0.70, regional_risk), 2)  # Cap at 70% before contagion
         
-        # Get live regional market data (panic detection)
-        market_data = self.fetch_regional_market_data()
+        # Apply CONTAGION from one region to others (P2 Fix)
+        contagion_applied = {}
+        for source_region, targets in self.REGIONAL_CONTAGION.items():
+            source_risk = regional_risks.get(source_region, 0)
+            if source_risk > 0.3:  # Only spread if source has significant risk
+                for target_region, spillover_factor in targets.items():
+                    spillover = source_risk * spillover_factor
+                    if target_region not in regional_risks:
+                        regional_risks[target_region] = 0.15
+                    contagion_applied[target_region] = contagion_applied.get(target_region, 0) + spillover
         
-        # Incorporate market panic signals (actual market reaction validation)
-        for region, data in market_data.items():
-            if data.get("is_panic"):
-                # Market is actually reacting - boost risk
-                regional_risks[region] = min(0.95, regional_risks.get(region, 0.3) + 0.15)
-            elif region in regional_risks and regional_risks[region] > 0.7:
-                # High risk but market is calm - dampen risk assessment
-                if data.get("change_pct", 0) > -0.5:  # Market not falling
-                    regional_risks[region] = max(0.4, regional_risks[region] - 0.15)
+        # Add contagion to regional risks (capped at 75% after contagion)
+        for region, spillover in contagion_applied.items():
+            regional_risks[region] = min(0.75, regional_risks.get(region, 0.15) + spillover)
         
-        # STEP 3: Calculate overall risk using WEIGHTED approach
-        significant_events = [e for e in escalation_events if e.market_impact_score > 0.35]
+        # Final cap on all regional risks at 80%
+        for region in regional_risks:
+            regional_risks[region] = min(0.80, regional_risks[region])
         
-        if significant_events:
-            # Time decay: more recent = higher weight
-            weighted_scores = []
-            for event in significant_events:
+        # ================================================================
+        # STEP 5: APPLY STRUCTURAL RISK FLOOR FOR ACTIVE CONFLICTS
+        # ================================================================
+        for conflict_id in active_conflict_ids:
+            config = self.ACTIVE_CONFLICTS.get(conflict_id, {})
+            for region in config.get("affected_regions", []):
+                if region in regional_risks:
+                    regional_risks[region] = max(regional_risks[region], config["min_risk_floor"])
+                else:
+                    regional_risks[region] = config["min_risk_floor"]
+        
+        # ================================================================
+        # STEP 6: CALCULATE MULTI-TIMEFRAME RISK (P2 Fix)
+        # ================================================================
+        
+        # IMMEDIATE RISK (last 6 hours) - for intraday trading
+        # Uses blend of max and average to avoid single-event spikes
+        immediate_scores = []
+        for event in events_6h:
+            if event in escalation_events:
                 age_hours = (now - event.timestamp.replace(tzinfo=pytz.UTC)).total_seconds() / 3600
-                # Exponential decay: half-life of 6 hours
-                recency_weight = 2 ** (-age_hours / 6)
-                weighted_scores.append(event.market_impact_score * recency_weight)
-            
-            # Overall score: blend of max severity and weighted average
-            max_score = max(weighted_scores)
-            avg_score = sum(weighted_scores) / len(weighted_scores)
-            
-            # De-escalation dampening on overall risk
-            de_esc_ratio = len(de_escalation_events) / max(1, len(escalation_events))
-            dampening = 1.0 - min(0.3, de_esc_ratio * 0.2)  # Max 30% dampening
-            
-            overall_risk = (0.5 * max_score + 0.5 * avg_score) * dampening
-        else:
-            # No significant escalation events
-            overall_risk = 0.15  # Low baseline
+                decay = 2 ** (-age_hours / 3)  # 3-hour half-life for immediate
+                immediate_scores.append(event.market_impact_score * decay * 0.7)  # Dampen slightly
         
-        # Also consider regional risks in overall calculation
+        if immediate_scores:
+            max_imm = max(immediate_scores)
+            avg_imm = sum(immediate_scores) / len(immediate_scores)
+            immediate_risk = 0.5 * max_imm + 0.5 * avg_imm  # Blend max and avg
+        else:
+            immediate_risk = 0.10
+        
+        # SITUATIONAL RISK (last 48 hours) - for swing trading
+        situational_scores = []
+        for event in events_48h:
+            if event in escalation_events:
+                age_hours = (now - event.timestamp.replace(tzinfo=pytz.UTC)).total_seconds() / 3600
+                # Event-type-specific decay (P1 Fix)
+                half_life = self.TIME_DECAY_HALF_LIFE.get(event.event_type, 12)
+                decay = 2 ** (-age_hours / half_life)
+                situational_scores.append(event.market_impact_score * event.severity * decay * 0.6)
+        
+        if situational_scores:
+            max_sit = max(situational_scores)
+            avg_sit = sum(situational_scores) / len(situational_scores)
+            situational_risk = 0.4 * max_sit + 0.6 * avg_sit
+        else:
+            situational_risk = 0.15
+        
+        # STRUCTURAL RISK - based on active conflicts, but capped
+        # Multiple conflicts don't stack infinitely
+        if len(active_conflict_ids) >= 3:
+            structural_risk = min(0.45, structural_risk_floor + 0.05)  # Max 45% structural
+        else:
+            structural_risk = structural_risk_floor
+        
+        # ================================================================
+        # STEP 7: CALCULATE TAIL RISK (P1 Fix)
+        # Tail risk = probability of catastrophic escalation
+        # Requires specific warning language, not just general mentions
+        # ================================================================
+        tail_risk_score = 0.0
+        tail_risk_triggers = []
+        
+        # Check each headline individually for tail risk triggers
+        for event in events_24h:
+            event_text = f"{event.headline} {event.summary}".lower()
+            for trigger_name, trigger_keywords in self.TAIL_RISK_TRIGGERS.items():
+                for kw in trigger_keywords:
+                    if kw in event_text:
+                        # Only count each trigger category once
+                        if trigger_name not in tail_risk_triggers:
+                            tail_risk_score += 0.12  # Each trigger category adds 12%
+                            tail_risk_triggers.append(trigger_name)
+                        break  # Don't double-count same trigger in same event
+        
+        # Boost tail risk if multiple active conflicts detected
+        if len(active_conflict_ids) >= 3:
+            tail_risk_score += 0.10  # 3+ conflicts = 10% additional tail risk
+        
+        tail_risk_score = min(0.75, tail_risk_score)  # Cap at 75%
+        
+        # ================================================================
+        # STEP 8: VIX INTEGRATION (P2 Fix)
+        # ================================================================
+        vix_level = 20.0  # Default
+        vix_multiplier = 1.0
+        market_confirms_risk = False
+        
+        try:
+            from src.data.macro_data import MacroDataLoader
+            macro = MacroDataLoader()
+            indicators = macro.fetch_all()
+            vix_level = indicators.vix or 20.0
+            
+            if vix_level > 30:
+                vix_multiplier = 1.30
+                market_confirms_risk = True
+            elif vix_level > 25:
+                vix_multiplier = 1.15
+                market_confirms_risk = True
+            elif vix_level > 20:
+                vix_multiplier = 1.0
+            else:
+                vix_multiplier = 0.9  # Low VIX = complacency
+        except Exception as e:
+            logging.debug(f"Could not get VIX: {e}")
+        
+        # ================================================================
+        # STEP 9: CALCULATE OVERALL RISK
+        # ================================================================
+        
+        # Blend multi-timeframe risks
+        base_risk = (
+            0.30 * immediate_risk +      # 30% weight to immediate
+            0.40 * situational_risk +    # 40% weight to situational
+            0.30 * structural_risk       # 30% weight to structural
+        )
+        
+        # Add regional contribution
         if regional_risks:
             max_regional = max(regional_risks.values())
             avg_regional = sum(regional_risks.values()) / len(regional_risks)
             regional_contribution = 0.4 * max_regional + 0.6 * avg_regional
-            
-            # Blend event-based and regional-based risk
-            overall_risk = 0.6 * overall_risk + 0.4 * regional_contribution
+            base_risk = 0.55 * base_risk + 0.45 * regional_contribution
         
-        # Cap overall risk at 85% unless there's actual market panic
+        # Add combination boost
+        base_risk += combination_boost
+        
+        # Apply VIX multiplier
+        overall_risk = base_risk * vix_multiplier
+        
+        # Ensure minimum from structural floor
+        overall_risk = max(overall_risk, structural_risk_floor)
+        
+        # If tail risk is high, boost overall
+        if tail_risk_score > 0.3:
+            overall_risk = max(overall_risk, 0.4 + tail_risk_score * 0.3)
+        
+        # Cap at 95%
+        overall_risk = min(0.95, overall_risk)
+        
+        # Get market data for panic detection
+        market_data = self.fetch_regional_market_data()
         market_panic_count = sum(1 for d in market_data.values() if d.get("is_panic"))
-        if market_panic_count < 2:
-            overall_risk = min(0.85, overall_risk)
         
-        # STEP 4: Determine risk level with GRADUATED thresholds
+        if market_panic_count >= 2:
+            overall_risk = min(0.95, overall_risk + 0.15)
+            market_confirms_risk = True
+        
+        # ================================================================
+        # STEP 10: DETERMINE RISK LEVEL AND EXPOSURE (P0 Fix - Steeper Curve)
+        # ================================================================
+        risk_level = "low"
+        exposure_adj = 1.0
+        
+        for min_risk, max_risk, level, exposure in self.RISK_TO_EXPOSURE:
+            if min_risk <= overall_risk < max_risk:
+                risk_level = level
+                exposure_adj = exposure
+                break
+        
         if overall_risk >= 0.75:
             risk_level = "critical"
-            exposure_adj = 0.3
-        elif overall_risk >= 0.55:
-            risk_level = "high"
-            exposure_adj = 0.5
-        elif overall_risk >= 0.40:
-            risk_level = "elevated"
-            exposure_adj = 0.7
-        elif overall_risk >= 0.25:
-            risk_level = "moderate"
-            exposure_adj = 0.85
+            exposure_adj = 0.20
+        
+        # ================================================================
+        # STEP 11: GRADUATED SAFE HAVEN SIGNAL (P1 Fix)
+        # ================================================================
+        if overall_risk >= 0.60 or tail_risk_score >= 0.50:
+            safe_haven_level = "strong"
+            safe_haven_signal = True
+        elif overall_risk >= 0.45 or tail_risk_score >= 0.30:
+            safe_haven_level = "moderate"
+            safe_haven_signal = True
+        elif overall_risk >= 0.35 and (tail_risk_score >= 0.15 or len(active_conflict_ids) >= 2):
+            safe_haven_level = "hedging"
+            safe_haven_signal = False
         else:
-            risk_level = "low"
-            exposure_adj = 1.0
+            safe_haven_level = "none"
+            safe_haven_signal = False
         
-        # STEP 5: Safe haven signal (only for genuine crises)
-        safe_haven_signal = (
-            overall_risk >= 0.65 or
-            any(e.event_type == "military" and e.severity > 0.75 for e in significant_events) or
-            market_panic_count >= 2
-        )
+        # Override for specific triggers
+        if any(t in tail_risk_triggers for t in ["nuclear_escalation", "nato_direct"]):
+            safe_haven_level = "strong"
+            safe_haven_signal = True
         
-        # STEP 6: Extract key concerns (prioritize escalation events)
+        # ================================================================
+        # STEP 12: EXTRACT KEY CONCERNS
+        # ================================================================
         key_concerns = []
+        
+        # Add tail risk triggers first
+        for trigger in tail_risk_triggers[:3]:
+            key_concerns.append(f"⚠️ TAIL RISK: {trigger.replace('_', ' ').title()}")
+        
+        # Add critical combinations
+        for combo in combination_triggers[:2]:
+            key_concerns.append(f"🔥 CRITICAL: {combo}")
+        
+        # Add top escalation events
+        significant_events = [e for e in escalation_events if e.market_impact_score > 0.35]
         for event in sorted(significant_events, 
                            key=lambda x: x.market_impact_score * x.severity, 
                            reverse=True)[:5]:
-            key_concerns.append(f"{event.event_type.upper()}: {event.headline[:80]}...")
+            if len(key_concerns) < 8:
+                key_concerns.append(f"{event.event_type.upper()}: {event.headline[:70]}...")
         
+        # ================================================================
+        # BUILD AND RETURN ASSESSMENT
+        # ================================================================
         self.last_assessment = GeopoliticalRiskAssessment(
             timestamp=now,
             overall_risk_score=round(overall_risk, 3),
@@ -1775,22 +2210,66 @@ class GeopoliticalIntelligence:
             recommended_exposure_adjustment=exposure_adj,
             key_concerns=key_concerns,
             safe_haven_signal=safe_haven_signal,
+            # NEW fields
+            immediate_risk=round(immediate_risk, 3),
+            situational_risk=round(situational_risk, 3),
+            structural_risk=round(structural_risk, 3),
+            tail_risk_score=round(tail_risk_score, 3),
+            tail_risk_triggers=tail_risk_triggers,
+            active_conflicts=active_conflict_ids,
+            safe_haven_level=safe_haven_level,
+            market_confirms_risk=market_confirms_risk,
+            vix_level=vix_level,
         )
         
         return self.last_assessment
     
     def get_context_for_llm(self) -> str:
         """
-        Generate context string for LLM debate/reasoning.
+        Generate comprehensive context string for LLM debate/reasoning.
+        Now includes multi-timeframe risk, tail risk, and active conflicts.
         """
         assessment = self.get_risk_assessment()
         
         context_parts = [
-            f"## Geopolitical Risk Assessment",
+            f"## Geopolitical Risk Assessment v2.0",
             f"Overall Risk: {assessment.risk_level.upper()} ({assessment.overall_risk_score:.0%})",
-            f"Recommended Exposure Adjustment: {assessment.recommended_exposure_adjustment:.0%}",
-            f"Safe Haven Rotation Signal: {'YES' if assessment.safe_haven_signal else 'No'}",
+            f"Recommended Exposure: {assessment.recommended_exposure_adjustment:.0%}",
+            f"",
+            f"### Multi-Timeframe Analysis:",
+            f"  - Immediate Risk (6h): {assessment.immediate_risk:.0%}",
+            f"  - Situational Risk (48h): {assessment.situational_risk:.0%}",
+            f"  - Structural Risk (ongoing): {assessment.structural_risk:.0%}",
         ]
+        
+        # Tail risk section
+        if assessment.tail_risk_score > 0.1:
+            context_parts.append(f"\n### ⚠️ TAIL RISK: {assessment.tail_risk_score:.0%}")
+            if assessment.tail_risk_triggers:
+                for trigger in assessment.tail_risk_triggers:
+                    context_parts.append(f"  - {trigger.replace('_', ' ').title()}")
+        
+        # Active conflicts
+        if assessment.active_conflicts:
+            context_parts.append(f"\n### Active Conflicts Being Monitored:")
+            for conflict in assessment.active_conflicts:
+                config = self.ACTIVE_CONFLICTS.get(conflict, {})
+                floor = config.get("min_risk_floor", 0)
+                context_parts.append(f"  - {conflict.replace('_', ' ').title()} (min floor: {floor:.0%})")
+        
+        # Safe haven signal
+        context_parts.append(f"\n### Safe Haven Signal: {assessment.safe_haven_level.upper()}")
+        if assessment.safe_haven_level == "strong":
+            context_parts.append("  → ROTATE to gold, treasuries, defensive sectors")
+        elif assessment.safe_haven_level == "moderate":
+            context_parts.append("  → Add 10-15% allocation to safe havens")
+        elif assessment.safe_haven_level == "hedging":
+            context_parts.append("  → Consider put protection or VIX calls")
+        
+        # Market validation
+        if assessment.market_confirms_risk:
+            context_parts.append(f"\n### Market Validation: CONFIRMED")
+            context_parts.append(f"  VIX: {assessment.vix_level:.1f}")
         
         if assessment.regional_risks:
             context_parts.append("\n### Regional Risks:")
