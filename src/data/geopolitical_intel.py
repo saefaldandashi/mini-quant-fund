@@ -133,7 +133,7 @@ class GeopoliticalIntelligence:
     # ==========================================================================
     ESCALATION_KEYWORDS = {
         # ------------------------------------------------------------------
-        # CATEGORY 1: MILITARY & DEFENSE - Active Combat
+        # CATEGORY 1: MILITARY & DEFENSE - Active Combat & Tensions
         # ------------------------------------------------------------------
         "military_combat": [
             # Active Combat
@@ -147,6 +147,9 @@ class GeopoliticalIntelligence:
             "aircraft scrambled", "drones", "drone strike", "uav attack", "tanks",
             "armored vehicles", "nuclear", "nuclear threat", "atomic", "hypersonic",
             "icbm", "cruise missile", "chemical weapons", "biological weapons",
+            # Military Exercises & Tensions (can escalate)
+            "military drills", "military exercises", "war games", "naval exercises",
+            "live fire exercise", "show of force", "gunboat diplomacy",
             # Casualties & Damage
             "casualties", "killed", "deaths", "fatalities", "wounded", "injured",
             "victims", "destroyed", "destruction", "devastation", "civilian deaths",
@@ -177,11 +180,21 @@ class GeopoliticalIntelligence:
         # CATEGORY 3: POLITICAL INSTABILITY
         # ------------------------------------------------------------------
         "political_instability": [
+            # Government Collapse
             "coup", "coup attempt", "military takeover", "regime change",
-            "government overthrown", "assassination", "attempted assassination",
+            "government overthrown", "government collapse", "government falls",
+            "assassination", "attempted assassination",
             "political crisis", "constitutional crisis", "impeachment", "ousted",
-            "removed from power", "protests escalate", "riots", "civil unrest",
-            "revolution", "uprising", "violent protests", "state of siege",
+            "removed from power", "state of siege", "power vacuum",
+            "prime minister resigns", "president resigns", "cabinet resigns",
+            # Civil Unrest & Protests
+            "mass protests", "protests escalate", "riots", "civil unrest",
+            "revolution", "uprising", "violent protests", "demonstrations",
+            "general strike", "nationwide strike", "civil disobedience",
+            "protesters killed", "police crackdown", "state of emergency",
+            # Disputed Elections
+            "disputed election", "election fraud", "election violence",
+            "contested results", "refuses to concede", "electoral crisis",
         ],
         
         # ------------------------------------------------------------------
@@ -204,27 +217,37 @@ class GeopoliticalIntelligence:
         # CATEGORY 5: ENERGY & COMMODITY DISRUPTION
         # ------------------------------------------------------------------
         "energy_disruption": [
+            # Infrastructure Attacks
             "pipeline attack", "pipeline sabotage", "oil facility attack",
-            "refinery fire", "supply disruption", "supply cut", "production halt",
-            "output cut", "export ban", "export halt", "shipping blocked",
-            "strait closed", "oil spike", "price surge", "energy crisis",
-            "fuel shortage", "opec cut", "production cut", "nord stream",
-            "pipeline explosion", "tanker seized", "ship attacked", "port blocked",
-            "terminal closed",
+            "refinery fire", "refinery explosion", "power plant attack",
+            "pipeline explosion", "tanker seized", "ship attacked",
+            # Supply Disruptions
+            "supply disruption", "supply cut", "production halt",
+            "output cut", "export ban", "export halt", "production cut",
+            "opec cut", "supply shortage", "oil embargo", "gas embargo",
+            "fuel shortage", "energy crisis", "power outage", "blackout",
+            # Strategic Chokepoints (CRITICAL - high severity boost)
+            "strait of hormuz blocked", "hormuz blocked", "hormuz closed",
+            "suez canal blocked", "suez blocked", "suez closed",
+            "strait of malacca", "bab el-mandeb", "panama canal blocked",
+            "shipping blocked", "strait closed", "chokepoint",
+            "red sea attacks", "houthi attacks", "shipping rerouted",
+            # Price Shocks
+            "oil spike", "price surge", "oil prices surge", "gas prices surge",
+            "nord stream", "port blocked", "terminal closed",
         ],
         
         # ------------------------------------------------------------------
         # CATEGORY 6: TERRORISM & SECURITY THREATS
         # ------------------------------------------------------------------
         "terrorism": [
-            "terrorist attack", "terror attack", "bombing", "suicide bombing",
+            "terrorist attack", "terror attack", "suicide bombing",
             "mass shooting", "gunman", "hostage", "hostages taken", "kidnapping",
-            "abduction", "explosion", "blast", "attack claimed by",
+            "abduction", "attack claimed by",
             "terror threat", "threat level raised", "security alert", "high alert",
-            "evacuation", "lockdown", "intelligence warning", "imminent threat",
-            "credible threat",
-            # Terror Groups
-            "isis", "isil", "islamic state", "al-qaeda", "taliban", "hezbollah",
+            "intelligence warning", "imminent threat", "credible threat",
+            # Terror Groups (need word boundaries - handled in check_keyword)
+            "islamic state", "al-qaeda", "taliban", "hezbollah",
             "hamas", "boko haram", "al-shabaab", "terror cell", "extremist",
         ],
         
@@ -263,6 +286,24 @@ class GeopoliticalIntelligence:
             "economic warfare", "economic attack", "currency manipulation",
             "technology ban", "export controls", "supply chain disruption",
             "decoupling", "economic decoupling", "investment ban", "capital controls",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 9b: REGULATORY & POLICY SHOCKS
+        # ------------------------------------------------------------------
+        "regulatory_shock": [
+            # Nationalization & Expropriation
+            "nationalization", "nationalize", "nationalized", "expropriation",
+            "seize assets", "assets seized", "government takeover",
+            "forced sale", "compulsory acquisition",
+            # Capital Controls
+            "capital controls", "currency controls", "currency not convertible",
+            "bank holiday", "deposit freeze", "withdrawal limits",
+            "foreign exchange ban", "fx controls",
+            # Regulatory Crackdowns
+            "regulatory crackdown", "antitrust action", "break up",
+            "banned", "outlawed", "prohibited", "license revoked",
+            "sector ban", "industry ban", "sudden regulation",
         ],
         
         # ------------------------------------------------------------------
@@ -930,8 +971,13 @@ class GeopoliticalIntelligence:
         matched_keywords = []
         event_type = "general"
         
-        # Short keywords that need word boundaries
-        short_keywords = ["war", "fed", "ecb", "boj", "qe", "qt", "oil", "lng", "gdp", "cpi", "pmi", "ism"]
+        # Short keywords that need word boundaries to avoid false matches
+        # e.g., "war" shouldn't match "warns", "isis" shouldn't match "crisis"
+        short_keywords = [
+            "war", "fed", "ecb", "boj", "qe", "qt", "oil", "lng", "gdp", "cpi", "pmi", "ism",
+            "isis", "isil", "hamas", "coup", "riot", "ban", "cut", "halt", "run",
+            "eu", "uk", "us", "un", "imf", "wto", "who",
+        ]
         
         def check_keyword(kw: str, text: str) -> bool:
             """Check if keyword exists with proper word boundaries for short words."""
@@ -1058,9 +1104,26 @@ class GeopoliticalIntelligence:
         urgency_bonus = min(0.15, urgency_count * 0.05)
         
         # Critical event types get base bonus
-        critical_types = ["central_bank", "financial_stress", "military"]
+        critical_types = ["central_bank", "financial_stress", "military_combat"]
         if event_type in critical_types:
             base_severity += 0.1
+        
+        # CRITICAL INFRASTRUCTURE BOOST - Chokepoints, power grid, etc.
+        critical_infra_keywords = [
+            "strait of hormuz", "suez canal", "panama canal", "strait of malacca",
+            "power grid", "grid down", "blackout", "banking system",
+            "nuclear plant", "dam collapse", "dam breach",
+        ]
+        if any(cik in text_lower for cik in critical_infra_keywords):
+            base_severity += 0.25  # Major boost for critical infrastructure
+        
+        # POLITICAL CRISIS BOOST
+        political_crisis_keywords = [
+            "coup", "government overthrown", "revolution", "civil war",
+            "nationalization", "expropriation", "capital controls",
+        ]
+        if any(pck in text_lower for pck in political_crisis_keywords):
+            base_severity += 0.15
         
         # Regional high-risk bonus (if mentions volatile regions)
         for region, region_kws in self.REGIONAL_KEYWORDS.items():
