@@ -3510,7 +3510,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             
             # Use effective risk appetite for strategy enhancer
             if geo_override_active:
-                from src.optimizations.smart_sizing import get_enhancer, EnhancedConfig
+                # Re-use the already imported get_enhancer and EnhancedConfig from strategy_enhancer
                 temp_enhancer = get_enhancer(EnhancedConfig(risk_appetite=effective_risk_appetite))
             else:
                 temp_enhancer = strategy_enhancer
