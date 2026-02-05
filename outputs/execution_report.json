@@ -15749,8 +15749,44 @@
       "price_improvement": 0.0,
       "price_improvement_pct": 0.0,
       "slippage": 0.0
+    },
+    {
+      "symbol": "WDC",
+      "side": "cover",
+      "quantity": 6,
+      "order_type": "market",
+      "decision_price": 258.5,
+      "limit_price": null,
+      "fill_price": 258.5,
+      "decision_time": "2026-02-05T18:31:16.245926",
+      "submit_time": "2026-02-05T18:31:16.668493",
+      "fill_time": "2026-02-05T18:31:16.668493",
+      "spread_pct": 0.20065930915866498,
+      "spread_category": "moderate",
+      "filled_at_limit": false,
+      "price_improvement": 0.0,
+      "price_improvement_pct": 0.0,
+      "slippage": 0.0
+    },
+    {
+      "symbol": "AAPL",
+      "side": "buy",
+      "quantity": 73,
+      "order_type": "market",
+      "decision_price": 277.55,
+      "limit_price": null,
+      "fill_price": 277.55,
+      "decision_time": "2026-02-05T18:31:16.684366",
+      "submit_time": "2026-02-05T18:31:17.107801",
+      "fill_time": "2026-02-05T18:31:17.107801",
+      "spread_pct": 0.050423194669563555,
+      "spread_category": "normal",
+      "filled_at_limit": false,
+      "price_improvement": 0.0,
+      "price_improvement_pct": 0.0,
+      "slippage": 0.0
     }
   ],
-  "last_updated": "2026-02-04T16:42:31.801111",
-  "total_historical": 875
+  "last_updated": "2026-02-05T18:31:17.110644",
+  "total_historical": 877
 }

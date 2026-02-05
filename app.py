@@ -981,11 +981,14 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
     debate_info = {"transcript": None, "scores": None, "final_weights": {}}
     
     def log(msg):
+        """Log a message to output_lines, log_queue, AND update last_run_status in real-time."""
         timestamp = datetime.now().strftime('%H:%M:%S')
         elapsed = time_module.time() - rebalance_start_time
         formatted = f"[{elapsed:5.1f}s] {timestamp} - {msg}"
         output_lines.append(formatted)
         log_queue.put(formatted)
+        # REAL-TIME UPDATE: Update last_run_status.output so UI can see progress
+        last_run_status["output"] = "\n".join(output_lines)
     
     try:
         log("=" * 60)
