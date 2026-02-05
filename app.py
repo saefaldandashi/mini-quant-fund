@@ -11,6 +11,7 @@ import queue
 import time
 import json
 import pytz
+import numpy as np
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, Tuple
@@ -3002,9 +3003,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         rsi_values = {}
         confluence_scores = {}
         
-        # Get momentum from features
-        if features and hasattr(features, 'momentum_score'):
-            momentum_signals = features.momentum_score.copy() if features.momentum_score else {}
+        # Get momentum from features (correct property name: tech_momentum_score)
+        if features and hasattr(features, 'tech_momentum_score'):
+            momentum_signals = features.tech_momentum_score.copy() if features.tech_momentum_score else {}
         
         # Get RSI from features
         if features and hasattr(features, 'rsi_14'):

@@ -129,37 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 239,
+  "total_rounds": 242,
   "reward_history": [
-    {
-      "timestamp": "2026-01-26T21:02:38.307439",
-      "returns": {
-        "TS_Momentum_LS": 5.884950725108118e-05,
-        "VWAPReversion": -0.00023525721455455015,
-        "QualityValue_LS": 0.0003273060444370964,
-        "MeanReversion_LS": -0.00023525721455455015
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T22:11:58.916005",
-      "returns": {
-        "TS_Momentum_LS": 4.5807065642198014e-05,
-        "VWAPReversion": -0.001578875412209192,
-        "QualityValue_LS": 0.0011381279526888166,
-        "MeanReversion_LS": -0.001578875412209192
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-30T12:04:32.361848",
-      "returns": {
-        "TS_Momentum_LS": -0.0006342100214935485,
-        "QualityValue_LS": -0.005840754916573017,
-        "CrossSectionMomentum": 0.0038856577681761215
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-01-30T12:06:33.001541",
       "returns": {
@@ -955,7 +926,34 @@
         "TS_Momentum_LS": -0.01142990515204504
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T21:11:17.317598",
+      "returns": {
+        "TS_Momentum_LS": -0.005762446841840327,
+        "CalendarEffects": -0.0010149938438510219,
+        "QualityValue_LS": -0.0010149938438510219
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T21:15:56.590042",
+      "returns": {
+        "TS_Momentum_LS": -0.004846018306407571,
+        "QualityValue_LS": -0.0010878938333539739,
+        "CalendarEffects": -0.0010878938333539739
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T21:21:11.853541",
+      "returns": {
+        "TS_Momentum_LS": -0.004460340887502354,
+        "CalendarEffects": -0.0021238130903371726,
+        "QualityValue_LS": -0.0021238130903371726
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-02-05T21:05:51.187794"
+  "last_updated": "2026-02-05T21:21:11.853815"
 }
