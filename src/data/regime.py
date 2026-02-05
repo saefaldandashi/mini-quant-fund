@@ -213,9 +213,16 @@ class RegimeClassifier:
         recent_returns = returns.tail(self.corr_window)
         corr_matrix = recent_returns.corr()
         
-        # Average off-diagonal correlation
+        # Average off-diagonal correlation (with NaN handling)
         mask = ~np.eye(corr_matrix.shape[0], dtype=bool)
-        avg_corr = corr_matrix.values[mask].mean()
+        off_diag = corr_matrix.values[mask]
+        
+        # Use nanmean to handle any NaN values in correlation matrix
+        avg_corr = np.nanmean(off_diag)
+        
+        # If still NaN (all correlations failed), return neutral
+        if np.isnan(avg_corr):
+            return 0.5
         
         return avg_corr
     

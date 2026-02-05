@@ -154,13 +154,16 @@ class TransactionCostModel:
     """
     
     # Default cost parameters (basis points)
+    # RELAXED: Previous settings blocked too many trades (0 executed out of 5 planned)
     DEFAULT_PARAMS = {
         'base_slippage_bps': 3.0,        # Base slippage for liquid stocks
         'commission_bps': 0.0,           # Alpaca is commission-free
         'market_impact_coeff': 0.1,      # Impact coefficient
         'borrow_rate_annual': 0.02,      # 2% annual borrow rate for shorts
-        'min_trade_threshold_bps': 10.0, # Min cost threshold to skip trade
-        'min_benefit_ratio': 1.5,        # Expected benefit must be 1.5x cost
+        'min_trade_threshold_bps': 50.0, # Raised from 10 - allow more trades
+        'min_benefit_ratio': 1.0,        # Reduced from 1.5 - break-even is acceptable
+        'high_conviction_threshold': 0.7, # NEW: High conviction bypass
+        'small_trade_min_dollars': 200,   # NEW: Reduced from implicit $300
     }
     
     # Liquidity adjustments (multipliers)
@@ -172,13 +175,14 @@ class TransactionCostModel:
         LiquidityCategory.ILLIQUID: 10.0,
     }
     
-    # VIX adjustments
+    # VIX adjustments - RELAXED to avoid blocking trades
+    # Previous multipliers were too aggressive (1.3x at VIX 22 blocked most trades)
     VIX_THRESHOLDS = {
-        'low': 15.0,      # < 15: 0.8x costs
-        'normal': 20.0,   # 15-20: 1.0x costs
-        'elevated': 25.0, # 20-25: 1.3x costs
-        'high': 30.0,     # 25-30: 1.6x costs
-        # > 30: 2.0x costs
+        'low': 15.0,      # < 15: 0.9x costs (was 0.8x)
+        'normal': 22.0,   # 15-22: 1.0x costs (extended range)
+        'elevated': 28.0, # 22-28: 1.15x costs (was 1.3x at 20-25)
+        'high': 35.0,     # 28-35: 1.3x costs (was 1.6x at 25-30)
+        # > 35: 1.5x costs (was 2.0x at 30+)
     }
     
     def __init__(
@@ -200,17 +204,20 @@ class TransactionCostModel:
         self.vix_level = vix
     
     def get_vix_multiplier(self) -> float:
-        """Get cost multiplier based on VIX."""
-        if self.vix_level < self.VIX_THRESHOLDS['low']:
-            return 0.8
-        elif self.vix_level < self.VIX_THRESHOLDS['normal']:
-            return 1.0
-        elif self.vix_level < self.VIX_THRESHOLDS['elevated']:
-            return 1.3
-        elif self.vix_level < self.VIX_THRESHOLDS['high']:
-            return 1.6
-        else:
-            return 2.0
+        """
+        Get cost multiplier based on VIX.
+        RELAXED: Previous multipliers blocked too many trades.
+        """
+        if self.vix_level < self.VIX_THRESHOLDS['low']:  # < 15
+            return 0.9  # Was 0.8, now slightly higher to be conservative
+        elif self.vix_level < self.VIX_THRESHOLDS['normal']:  # 15-22
+            return 1.0  # No adjustment in normal range
+        elif self.vix_level < self.VIX_THRESHOLDS['elevated']:  # 22-28
+            return 1.15  # Was 1.3, now gentler
+        elif self.vix_level < self.VIX_THRESHOLDS['high']:  # 28-35
+            return 1.3  # Was 1.6, now more reasonable
+        else:  # > 35
+            return 1.5  # Was 2.0, now capped lower
     
     def classify_liquidity(
         self,
@@ -478,28 +485,43 @@ class TransactionCostModel:
                 reason="Force execute enabled"
             )
         
+        # HIGH CONVICTION OVERRIDE: If confidence > threshold, bypass cost checks
+        # This ensures strong signals aren't blocked by transaction cost concerns
+        high_conviction_threshold = self.params.get('high_conviction_threshold', 0.7)
+        if confidence >= high_conviction_threshold:
+            return TradeCostResult(
+                should_trade=True,
+                cost_estimate=cost_estimate,
+                expected_benefit=expected_benefit,
+                net_expected_value=net_value,
+                reason=f"High conviction override ({confidence:.0%} >= {high_conviction_threshold:.0%})"
+            )
+        
         # Relax thresholds during extended hours (spreads are capped but still wider)
         if is_extended_hours:
-            min_ratio = 1.0  # Lower ratio during extended hours
-            min_threshold_bps = 200.0  # Higher threshold for capped spreads
+            min_ratio = 0.8  # Even lower ratio during extended hours
+            min_threshold_bps = 300.0  # Higher threshold for capped spreads
         else:
             min_ratio = self.params['min_benefit_ratio']
             min_threshold_bps = self.params['min_trade_threshold_bps']
         
         # Skip if cost exceeds threshold and benefit doesn't justify
+        # BUT only for very high costs (>50 bps)
         if cost_estimate.total_cost_bps > min_threshold_bps:
-            if expected_benefit < total_cost * min_ratio:
+            benefit_ratio = expected_benefit / total_cost if total_cost > 0 else float('inf')
+            if benefit_ratio < min_ratio:
                 return TradeCostResult(
                     should_trade=False,
                     cost_estimate=cost_estimate,
                     expected_benefit=expected_benefit,
                     net_expected_value=net_value,
                     reason=f"Cost ({cost_estimate.total_cost_bps:.1f} bps) exceeds benefit "
-                           f"(ratio: {expected_benefit/total_cost:.2f}x < {min_ratio}x required)"
+                           f"(ratio: {benefit_ratio:.2f}x < {min_ratio}x required)"
                 )
         
-        # Very small trades with high relative costs
-        if cost_estimate.notional_value < 500 and cost_estimate.total_cost_bps > 50:
+        # Very small trades with high relative costs - but be more lenient
+        small_trade_min = self.params.get('small_trade_min_dollars', 200)
+        if cost_estimate.notional_value < small_trade_min and cost_estimate.total_cost_bps > 100:
             return TradeCostResult(
                 should_trade=False,
                 cost_estimate=cost_estimate,

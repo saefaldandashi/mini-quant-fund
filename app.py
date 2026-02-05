@@ -1301,6 +1301,62 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log(f"Loaded price data for {len(feature_store._price_history)} symbols")
         
         # ============================================================
+        # FUNDAMENTAL DATA LOADING (P/E, ROE, Margins, etc.)
+        # ============================================================
+        log("=" * 60)
+        log("LOADING FUNDAMENTAL DATA")
+        log("=" * 60)
+        
+        fundamentals_data = {}
+        try:
+            fundamentals_loader = get_fundamentals_loader()
+            symbols_for_fundamentals = list(feature_store._price_history.keys())[:100]  # Top 100 for efficiency
+            
+            log(f"Fetching fundamentals for {len(symbols_for_fundamentals)} symbols...")
+            fundamentals_data = fundamentals_loader.get_fundamentals(symbols_for_fundamentals)
+            
+            # Log sample fundamentals
+            sample_count = 0
+            value_stocks = []
+            quality_stocks = []
+            
+            for sym, fd in fundamentals_data.items():
+                if fd.value_score and fd.value_score > 0.6:
+                    value_stocks.append((sym, fd.value_score, fd.pe_ratio))
+                if fd.quality_score and fd.quality_score > 0.7:
+                    quality_stocks.append((sym, fd.quality_score, fd.roe))
+                
+                if sample_count < 3 and fd.pe_ratio:
+                    log(f"   {sym}: P/E={fd.pe_ratio:.1f}, P/B={fd.price_to_book or 0:.2f}, ROE={fd.roe*100 if fd.roe else 0:.1f}%, D/E={fd.debt_to_equity or 0:.2f}")
+                    sample_count += 1
+            
+            log(f"✅ Loaded fundamentals for {len(fundamentals_data)} symbols")
+            log(f"   📈 Value stocks (score>0.6): {len(value_stocks)} - {[s[0] for s in sorted(value_stocks, key=lambda x: -x[1])[:5]]}")
+            log(f"   ⭐ Quality stocks (score>0.7): {len(quality_stocks)} - {[s[0] for s in sorted(quality_stocks, key=lambda x: -x[1])[:5]]}")
+            
+            # Inject fundamentals into feature store for strategies to use
+            feature_store.fundamentals = fundamentals_data
+            
+            # Also create PE and sector PE dicts for short scanner
+            pe_ratios = {sym: fd.pe_ratio for sym, fd in fundamentals_data.items() if fd.pe_ratio}
+            sector_pes = {}
+            for sym, fd in fundamentals_data.items():
+                if fd.sector and fd.pe_ratio:
+                    if fd.sector not in sector_pes:
+                        sector_pes[fd.sector] = []
+                    sector_pes[fd.sector].append(fd.pe_ratio)
+            # Calculate median PE per sector
+            sector_median_pe = {sector: np.median(pes) for sector, pes in sector_pes.items() if pes}
+            
+            # Make PE data available globally for short scanner
+            feature_store._pe_ratios = pe_ratios
+            feature_store._sector_pe = {sym: sector_median_pe.get(fd.sector) for sym, fd in fundamentals_data.items() if fd.sector}
+            
+        except Exception as e:
+            log(f"⚠️ Fundamentals loading error: {e}")
+            log("   Proceeding with technical analysis only")
+        
+        # ============================================================
         # NEWS INTELLIGENCE PIPELINE (Global Intelligence Feed)
         # ============================================================
         log("=" * 60)
@@ -1314,11 +1370,16 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         try:
             # Get news from Global Intelligence Feed (always fresh, no rate limits)
+            # Note: get_filtered_events accepts (auto_refresh_if_empty, max_age_minutes)
             geo_events = geopolitical_intel.get_filtered_events(
-                max_age_hours=24, 
-                max_events=100,
-                min_impact=0.3
+                auto_refresh_if_empty=True, 
+                max_age_minutes=60  # 1 hour max age
             )
+            
+            # Filter by impact score locally if needed (events have impact_score attribute)
+            if geo_events:
+                # Filter to high-impact events only (>0.3 impact)
+                geo_events = [e for e in geo_events if getattr(e, 'impact_score', 0.5) >= 0.3][:100]
             
             if geo_events:
                 log(f"📰 Global Intelligence Feed: {len(geo_events)} events from 50+ sources")
@@ -2445,11 +2506,22 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 except Exception as e:
                     logging.debug(f"Quick cross-asset for scanner: {e}")
                 
-                # Run short scan with cross-asset signals
+                # Run short scan with cross-asset signals AND fundamental data
+                # Build features dict with RSI and fundamental data
+                scanner_features = {'rsi_14': rsi_values} if rsi_values else {}
+                
+                # Add PE ratio data for valuation-based shorts
+                if hasattr(feature_store, '_pe_ratios') and feature_store._pe_ratios:
+                    scanner_features['pe_ratio'] = feature_store._pe_ratios
+                    scanner_features['sector_pe'] = getattr(feature_store, '_sector_pe', {})
+                    log(f"   Short scanner data: RSI={len(rsi_values or {})}, MA200={len(ma_200_values or {})}, PE={len(feature_store._pe_ratios)}")
+                else:
+                    log(f"   Short scanner data: RSI={len(rsi_values or {})}, MA200={len(ma_200_values or {})}, MA50={len(ma_50_values or {})}")
+                
                 short_candidates = short_scanner.scan(
                     symbols=config.UNIVERSE[:100],  # Scan top 100
                     news_sentiments=scanner_sentiments,
-                    features={'rsi_14': rsi_values} if rsi_values else None,
+                    features=scanner_features if scanner_features else None,
                     prices=scanner_prices,
                     ma_200=ma_200_values,
                     ma_50=ma_50_values,  # Fallback if MA200 unavailable
@@ -2522,25 +2594,42 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log("=" * 60)
             
             earnings_added = 0
+            # IMPROVED: Preserve more earnings signal strength
+            # Strong signals (>30%) get scaled to 10% max, weaker ones to 5% max
+            STRONG_EARNINGS_THRESHOLD = 0.30  # 30% raw signal
+            STRONG_POSITION_MAX = 0.10  # 10% position for strong signals
+            WEAK_POSITION_MAX = 0.05  # 5% position for weaker signals
+            
             for symbol, weight in earnings_signals.items():
                 existing = combined_weights.get(symbol, 0)
+                
+                # Determine position size based on signal strength
+                signal_strength = abs(weight)
+                if signal_strength >= STRONG_EARNINGS_THRESHOLD:
+                    # Strong signal: scale to 10% max position
+                    scale_factor = STRONG_POSITION_MAX / signal_strength
+                    position_size = weight * scale_factor
+                else:
+                    # Weaker signal: scale to 5% max position
+                    scale_factor = WEAK_POSITION_MAX / max(signal_strength, 0.01)
+                    position_size = weight * min(scale_factor, 1.0)  # Don't inflate small signals
                 
                 # Earnings signals take PRIORITY - they are based on fresh breaking news
                 if weight < 0:  # SHORT signal from bad earnings
                     if existing > 0:
-                        log(f"   🔄 {symbol}: OVERRIDING long ({existing*100:+.1f}%) with earnings SHORT ({weight*100:+.1f}%)")
+                        log(f"   🔄 {symbol}: OVERRIDING long ({existing*100:+.1f}%) with earnings SHORT ({position_size*100:+.1f}%)")
                         log(f"      Reason: Bad earnings/price drop detected in news")
                     else:
-                        log(f"   📉 {symbol}: Adding earnings-driven SHORT ({weight*100:+.1f}%)")
-                    combined_weights[symbol] = weight * 0.05  # Scale to 5% max position
+                        log(f"   📉 {symbol}: Adding earnings-driven SHORT ({position_size*100:+.1f}%) [raw: {weight*100:.0f}%]")
+                    combined_weights[symbol] = position_size
                     earnings_added += 1
                 elif weight > 0:  # LONG signal from good earnings
                     if existing < 0:
-                        log(f"   🔄 {symbol}: OVERRIDING short ({existing*100:+.1f}%) with earnings LONG ({weight*100:+.1f}%)")
+                        log(f"   🔄 {symbol}: OVERRIDING short ({existing*100:+.1f}%) with earnings LONG ({position_size*100:+.1f}%)")
                         log(f"      Reason: Good earnings/price spike detected in news")
                     else:
-                        log(f"   📈 {symbol}: Adding earnings-driven LONG ({weight*100:+.1f}%)")
-                    combined_weights[symbol] = max(existing, weight * 0.05)  # Scale to 5% max position
+                        log(f"   📈 {symbol}: Adding earnings-driven LONG ({position_size*100:+.1f}%) [raw: {weight*100:.0f}%]")
+                    combined_weights[symbol] = max(existing, position_size)
                     earnings_added += 1
             
             log(f"   ✅ Integrated {earnings_added} earnings-driven positions")
@@ -2659,6 +2748,38 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 tech_adjustments = []
                 if hasattr(features, 'tech_composite_signal') and features.tech_composite_signal:
                     log(f"📊 Technical Analysis: {len(features.tech_composite_signal)} symbols analyzed")
+                    
+                    # Display top 5 technical signals with breakdown
+                    log("   Top Signals:")
+                    sorted_signals = sorted(
+                        features.tech_composite_signal.items(), 
+                        key=lambda x: abs(x[1]), 
+                        reverse=True
+                    )[:5]
+                    
+                    for symbol, signal in sorted_signals:
+                        direction = "📈" if signal > 0 else "📉"
+                        trend = getattr(features, 'trend_signal', {}).get(symbol, 0)
+                        momentum = getattr(features, 'momentum_signal', {}).get(symbol, 0)
+                        adx = getattr(features, 'adx', {}).get(symbol, 0)
+                        rsi = getattr(features, 'rsi_14', {}).get(symbol, 50)
+                        
+                        # Get additional indicators if available
+                        macd_cross = ""
+                        if hasattr(features, 'macd_bullish_crossover') and features.macd_bullish_crossover.get(symbol):
+                            macd_cross = ", MACD↑"
+                        elif hasattr(features, 'macd_bearish_crossover') and features.macd_bearish_crossover.get(symbol):
+                            macd_cross = ", MACD↓"
+                        
+                        bb_state = ""
+                        if hasattr(features, 'bollinger_percent_b'):
+                            pct_b = features.bollinger_percent_b.get(symbol, 0.5)
+                            if pct_b > 1:
+                                bb_state = ", BB↑OVERBOUGHT"
+                            elif pct_b < 0:
+                                bb_state = ", BB↓OVERSOLD"
+                        
+                        log(f"     {direction} {symbol}: signal={signal:.2f}, RSI={rsi:.0f}, trend={trend:.2f}, mom={momentum:.2f}, ADX={adx:.0f}{macd_cross}{bb_state}")
                     
                     bullish_count = 0
                     bearish_count = 0
@@ -3353,9 +3474,16 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     financial_stress=fin_stress,
                 )
                 
+                # Also compare with features.regime for consistency
+                early_regime = features.regime.description if features.regime else "unknown"
                 log(f"📊 Market Regime: {current_regime.regime.upper()}")
                 log(f"   Score: {current_regime.score:.2f}")
                 log(f"   Recommended Exposure: {current_regime.exposure_multiplier*100:.0f}%")
+                
+                # Log if regimes are inconsistent (helps debugging)
+                if features.regime and early_regime.lower() not in current_regime.regime.lower():
+                    log(f"   ℹ️ Note: Early regime was '{early_regime}' - using position-sizing regime")
+                
                 for ind, val in current_regime.indicators.items():
                     log(f"   {ind}: {val:.2f}")
             except Exception as e:
@@ -3368,18 +3496,37 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log("ENHANCED POSITION SIZING")
             log("=" * 60)
             
+            # GEOPOLITICAL RISK OVERRIDE: Force conservative stance when geo risk is HIGH
+            effective_risk_appetite = risk_appetite
+            geo_override_active = False
+            
+            if geo_assessment and geo_assessment.overall_risk_score > 0.50:
+                # HIGH geopolitical risk (>50%) - override to conservative
+                geo_risk_pct = geo_assessment.overall_risk_score * 100
+                if risk_appetite in ['maximum', 'aggressive']:
+                    effective_risk_appetite = 'moderate'
+                    geo_override_active = True
+                    log(f"⚠️ GEO RISK OVERRIDE: {risk_appetite.upper()} → MODERATE (geo risk: {geo_risk_pct:.0f}%)")
+            
+            # Use effective risk appetite for strategy enhancer
+            if geo_override_active:
+                from src.optimizations.smart_sizing import get_enhancer, EnhancedConfig
+                temp_enhancer = get_enhancer(EnhancedConfig(risk_appetite=effective_risk_appetite))
+            else:
+                temp_enhancer = strategy_enhancer
+            
             # Apply strategy enhancer
-            enhanced_weights, size_reasons = strategy_enhancer.enhance_position_sizes(
+            enhanced_weights, size_reasons = temp_enhancer.enhance_position_sizes(
                 base_weights=kelly_adjusted_weights,
                 confidences=confidences,
                 target_exposure=capital_exposure_pct,
             )
             
-            log(f"🎯 Risk Appetite: {risk_appetite.upper()}")
-            log(f"   Kelly Multiplier: {strategy_enhancer.config.kelly_multiplier}x")
-            log(f"   Min Position: {strategy_enhancer.config.min_position_pct*100:.1f}%")
-            log(f"   Max Positions: {strategy_enhancer.config.max_positions}")
-            log(f"   Investment Floor: {strategy_enhancer.config.min_investment_floor*100:.0f}%")
+            log(f"🎯 Risk Appetite: {effective_risk_appetite.upper()}{' (GEO OVERRIDE)' if geo_override_active else ''}")
+            log(f"   Kelly Multiplier: {temp_enhancer.config.kelly_multiplier}x")
+            log(f"   Min Position: {temp_enhancer.config.min_position_pct*100:.1f}%")
+            log(f"   Max Positions: {temp_enhancer.config.max_positions}")
+            log(f"   Investment Floor: {temp_enhancer.config.min_investment_floor*100:.0f}%")
             
             # Count adjustments
             positions_before = len(kelly_adjusted_weights)
@@ -3920,7 +4067,12 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log("=" * 60)
             log("SMART EXECUTION ENGINE")
             log("=" * 60)
-            log("  No trades needed - portfolio already aligned")
+            if trades_skipped_by_cost > 0:
+                log(f"  ⚠️ All {trades_skipped_by_cost} trades skipped due to transaction costs")
+                log(f"     Total cost avoided: ${cost_avoided:.2f}")
+                log("     Consider running during market hours for tighter spreads")
+            else:
+                log("  No trades needed - portfolio already aligned")
             orders_executed = 0
         else:
             # === LEVERAGE/MARGIN PRE-EXECUTION VALIDATION ===

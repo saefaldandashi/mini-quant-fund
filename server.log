@@ -50,3 +50,478 @@ INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a
  * Running on http://127.0.0.1:5000
  * Running on http://192.168.0.200:5000
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+WARNING:root:Batch fetch failed: HTTPSConnectionPool(host='data.alpaca.markets', port=443): Max retries exceeded with url: /v2/stocks/bars?start=2025-11-30T19%3A11%3A49.721251%2B00%3A00&end=2026-02-05T19%3A11%3A49.721251%2B00%3A00&timeframe=1Day&feed=iex&symbols=SPY&limit=10000 (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))
+ERROR:yfinance:HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: TASI.SR"}}}
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ADI.AD"}}}
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:src.llm.llm_service:LLM call failed: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.
+ERROR:src.llm.llm_service:LLM call failed: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.
+ERROR:src.llm.llm_service:LLM call failed: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:src.llm.llm_service:LLM call failed: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.
+ERROR:src.llm.llm_service:LLM call failed: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+ERROR:root:Error placing BUY order for RTX: {"available":"2","code":40310000,"existing_qty":"7","held_for_orders":"5","message":"insufficient qty available for order (requested: 5, available: 2)","related_orders":["76b7a852-e188-4053-8727-75b4fedc927f"],"symbol":"RTX"}
+ERROR:root:Error placing BUY order for RTX: {"available":"2","code":40310000,"existing_qty":"7","held_for_orders":"5","message":"insufficient qty available for order (requested: 5, available: 2)","related_orders":["76b7a852-e188-4053-8727-75b4fedc927f"],"symbol":"RTX"}
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:src.data.market_data:Failed to load intraday bars: HTTPSConnectionPool(host='data.alpaca.markets', port=443): Max retries exceeded with url: /v2/stocks/bars?start=2026-02-04T15%3A32%3A17.746363%2B00%3A00&end=2026-02-05T15%3A32%3A17.746363%2B00%3A00&timeframe=15Min&feed=iex&symbols=AAPL%2CMSFT%2CNVDA%2CAVGO%2CORCL%2CADBE%2CCRM%2CAMD%2CCSCO%2CACN%2CINTC%2CIBM%2CQCOM%2CTXN%2CAMAT%2CLRCX%2CMU%2CINTU%2CNOW%2CADI%2CKLAC%2CSNPS%2CCDNS%2CPANW%2CMRVL%2CFTNT%2CNXPI%2CMCHP%2CTEL%2CHPQ%2CKEYS%2CON%2CCTSH%2CGLW%2CANSS%2CZBRA%2CCDW%2CAKAM%2CEPAM%2CFFIV%2CJNPR%2CNTAP%2CWDC%2CSTX%2CSWKS%2CQRVO%2CSEDG%2CENPH%2CFSLR%2CRUN&limit=10000 (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))
+WARNING:src.data.feature_store:No intraday data available, strategies will use fallback
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:src.llm.llm_service:LLM call failed: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.
+WARNING:root:Could not get price for JNPR
+ERROR:root:Error placing SELL order for AAPL: {"available":"55","code":40310000,"existing_qty":"129","held_for_orders":"74","message":"insufficient qty available for order (requested: 74, available: 55)","related_orders":["80e40b53-bec7-47f8-9bdb-5052bc225ce8"],"symbol":"AAPL"}
+ERROR:root:Error placing SELL order for AAPL: {"available":"55","code":40310000,"existing_qty":"129","held_for_orders":"74","message":"insufficient qty available for order (requested: 74, available: 55)","related_orders":["80e40b53-bec7-47f8-9bdb-5052bc225ce8"],"symbol":"AAPL"}
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+ERROR:root:Error placing SELL order for AAPL: {"available":"53","code":40310000,"existing_qty":"53","held_for_orders":"0","message":"insufficient qty available for order (requested: 77, available: 53)","related_orders":["c2e762a2-64b1-42dd-bdd3-34d441236951"],"symbol":"AAPL"}
+ERROR:root:Error placing SELL order for AAPL: {"available":"53","code":40310000,"existing_qty":"53","held_for_orders":"0","message":"insufficient qty available for order (requested: 77, available: 53)","related_orders":["c2e762a2-64b1-42dd-bdd3-34d441236951"],"symbol":"AAPL"}
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+WARNING:root:Batch fetch failed: HTTPSConnectionPool(host='data.alpaca.markets', port=443): Max retries exceeded with url: /v2/stocks/bars?start=2025-11-30T19%3A52%3A15.230051%2B00%3A00&end=2026-02-05T19%3A52%3A15.230051%2B00%3A00&timeframe=1Day&feed=iex&symbols=SPY&limit=10000 (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:src.data.market_data:Failed to load intraday bars: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+WARNING:src.data.feature_store:No intraday data available, strategies will use fallback
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:src.data.market_data:Failed to load intraday bars: HTTPSConnectionPool(host='data.alpaca.markets', port=443): Max retries exceeded with url: /v2/stocks/bars?start=2026-02-04T15%3A53%3A27.921992%2B00%3A00&end=2026-02-05T15%3A53%3A27.921992%2B00%3A00&timeframe=15Min&feed=iex&symbols=AAPL%2CMSFT%2CNVDA%2CAVGO%2CORCL%2CADBE%2CCRM%2CAMD%2CCSCO%2CACN%2CINTC%2CIBM%2CQCOM%2CTXN%2CAMAT%2CLRCX%2CMU%2CINTU%2CNOW%2CADI%2CKLAC%2CSNPS%2CCDNS%2CPANW%2CMRVL%2CFTNT%2CNXPI%2CMCHP%2CTEL%2CHPQ%2CKEYS%2CON%2CCTSH%2CGLW%2CANSS%2CZBRA%2CCDW%2CAKAM%2CEPAM%2CFFIV%2CJNPR%2CNTAP%2CWDC%2CSTX%2CSWKS%2CQRVO%2CSEDG%2CENPH%2CFSLR%2CRUN&limit=10000 (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))
+WARNING:src.data.feature_store:No intraday data available, strategies will use fallback
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+ERROR:root:Error placing SELL order for AAPL: {"available":"74","code":40310000,"existing_qty":"74","held_for_orders":"0","message":"insufficient qty available for order (requested: 76, available: 74)","related_orders":["c71e2ef7-467f-4ea9-bf8e-d00735d478f3"],"symbol":"AAPL"}
+ERROR:root:Error placing SELL order for AAPL: {"available":"74","code":40310000,"existing_qty":"74","held_for_orders":"0","message":"insufficient qty available for order (requested: 76, available: 74)","symbol":"AAPL"}
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+WARNING:root:Batch fetch failed: ('Connection aborted.', ConnectionResetError(54, 'Connection reset by peer'))
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+ERROR:root:Error placing SELL order for AAPL: {"available":"74","code":40310000,"existing_qty":"74","held_for_orders":"0","message":"insufficient qty available for order (requested: 75, available: 74)","symbol":"AAPL"}
+ERROR:root:Error placing SELL order for AAPL: {"available":"74","code":40310000,"existing_qty":"74","held_for_orders":"0","message":"insufficient qty available for order (requested: 75, available: 74)","symbol":"AAPL"}
+WARNING:root:Trade memory P&L update error: 'close'
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:src.llm.llm_service:LLM call failed: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.
+ERROR:src.llm.llm_service:LLM call failed: 429 Resource exhausted. Please try again later. Please refer to https://cloud.google.com/vertex-ai/generative-ai/docs/error-code-429 for more details.
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:root:Error cancelling orders: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/orders (Caused by NameResolutionError("HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:root:Error checking market status: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/clock (Caused by NameResolutionError("HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:root:Could not calculate daily P&L: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/account (Caused by NameResolutionError("HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)"))
+ERROR:root:Traceback (most recent call last):
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+        (self._dns_host, self.port),
+    ...<2 lines>...
+        socket_options=self.socket_options,
+    )
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/util/connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/saef.aldandashi/miniconda3/lib/python3.13/socket.py", line 977, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ~~~~~~~~~~~~~~^^
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/connection.py", line 211, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/requests/adapters.py", line 644, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/urllib3/util/retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/positions (Caused by NameResolutionError("HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/app.py", line 1094, in run_multi_strategy_rebalance
+    positions_raw = broker.trading_client.get_all_positions()
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/alpaca/trading/client.py", line 244, in get_all_positions
+    response = self.get("/positions")
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/alpaca/common/rest.py", line 225, in get
+    return self._request("GET", path, data, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/alpaca/common/rest.py", line 131, in _request
+    return self._one_request(method, url, opts, retry)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/alpaca/common/rest.py", line 195, in _one_request
+    response = self._session.request(method, url, **opts)
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/Users/saef.aldandashi/Desktop/mini fund tool/.venv/lib/python3.13/site-packages/requests/adapters.py", line 677, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/positions (Caused by NameResolutionError("HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)"))
+
+WARNING:root:Rebalance failed. Consecutive failures: 1
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+WARNING:root:Error checking market status: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/clock (Caused by NameResolutionError("HTTPSConnection(host='paper-api.alpaca.markets', port=443): Failed to resolve 'paper-api.alpaca.markets' ([Errno 8] nodename nor servname provided, or not known)"))
+WARNING:src.risk.realtime_monitor:Could not get account data: ('Connection aborted.', OSError(49, "Can't assign requested address"))
+WARNING:root:Batch fetch failed: ('Connection aborted.', OSError(49, "Can't assign requested address"))
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Invalid quote for LOW: bid=274.84, ask=0.0
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Invalid quote for LOW: bid=274.75, ask=0.0
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+WARNING:root:Invalid quote for LOW: bid=274.67, ask=0.0
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+WARNING:src.data.macro_data:Error fetching SPY from Yahoo: HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=10)
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+WARNING:root:Invalid quote for LOW: bid=274.54, ask=0.0
+WARNING:src.data.cross_asset_data:Error fetching XLI from Yahoo: HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=10)
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")

@@ -43,11 +43,11 @@
       "avg_improvement": 0.0
     },
     "AAPL": {
-      "total_orders": 110,
-      "limit_attempts": 11,
+      "total_orders": 120,
+      "limit_attempts": 14,
       "limit_fills": 1,
-      "avg_spread": 0.4513324625499847,
-      "avg_improvement": -7.632779319842937e-09
+      "avg_spread": 0.22347061671399587,
+      "avg_improvement": -8.195634389077639e-10
     },
     "CVX": {
       "total_orders": 35,
@@ -253,17 +253,17 @@
       "avg_improvement": 0.0
     },
     "CME": {
-      "total_orders": 1,
-      "limit_attempts": 0,
-      "limit_fills": 0,
-      "avg_spread": 0.020000000000000004,
-      "avg_improvement": 0.0
+      "total_orders": 3,
+      "limit_attempts": 2,
+      "limit_fills": 1,
+      "avg_spread": 0.16910037061392386,
+      "avg_improvement": -0.013999999999987267
     },
     "CFG": {
-      "total_orders": 1,
-      "limit_attempts": 0,
+      "total_orders": 3,
+      "limit_attempts": 1,
       "limit_fills": 0,
-      "avg_spread": 0.027171862027323846,
+      "avg_spread": 0.038563444110484436,
       "avg_improvement": 0.0
     },
     "INTC": {
@@ -274,19 +274,40 @@
       "avg_improvement": 0.0
     },
     "RTX": {
-      "total_orders": 2,
-      "limit_attempts": 1,
+      "total_orders": 10,
+      "limit_attempts": 3,
       "limit_fills": 0,
-      "avg_spread": 0.767712881683702,
+      "avg_spread": 1.9228569054158822,
       "avg_improvement": 0.0
     },
     "MTB": {
-      "total_orders": 1,
-      "limit_attempts": 0,
+      "total_orders": 3,
+      "limit_attempts": 2,
       "limit_fills": 0,
-      "avg_spread": 0.05847701767209932,
+      "avg_spread": 0.13232147400718564,
+      "avg_improvement": 0.0
+    },
+    "ENPH": {
+      "total_orders": 1,
+      "limit_attempts": 1,
+      "limit_fills": 0,
+      "avg_spread": 0.02911510866174495,
+      "avg_improvement": 0.0
+    },
+    "META": {
+      "total_orders": 10,
+      "limit_attempts": 10,
+      "limit_fills": 3,
+      "avg_spread": 0.48046662841387944,
+      "avg_improvement": 2.2539454300155186
+    },
+    "LOW": {
+      "total_orders": 4,
+      "limit_attempts": 4,
+      "limit_fills": 0,
+      "avg_spread": 0.059040000000000016,
       "avg_improvement": 0.0
     }
   },
-  "last_updated": "2026-02-05T19:00:01.816778"
+  "last_updated": "2026-02-05T20:41:53.548512"
 }

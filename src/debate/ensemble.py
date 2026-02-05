@@ -183,8 +183,11 @@ class EnsembleOptimizer:
             # Blend with learned weight if available
             if strategy_weights and name in strategy_weights:
                 learned = strategy_weights[name]
-                # Blend: 50% debate, 50% learned
-                effective_weights[name] = 0.5 * debate_weight + 0.5 * (learned * sum(s.total_score for s in scores.values()))
+                # INCREASED LEARNING INFLUENCE: 40% debate, 60% learned
+                # This gives more weight to strategies that have proven track records
+                total_score = sum(s.total_score for s in scores.values())
+                learned_component = learned * total_score if total_score > 0 else learned
+                effective_weights[name] = 0.4 * debate_weight + 0.6 * learned_component
             else:
                 effective_weights[name] = debate_weight
         

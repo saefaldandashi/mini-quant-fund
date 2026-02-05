@@ -87,20 +87,30 @@ class NewsSentimentEventStrategy(Strategy):
                 
                 ts = self.ticker_sentiments[symbol]
                 
+                # Skip if ts is not a valid sentiment object (might be int/float in error case)
+                if ts is None or isinstance(ts, (int, float)):
+                    continue
+                
                 # Get sentiment data - ts is a StockSentimentFeatures object or dict
-                if hasattr(ts, 'sentiment_score'):
-                    sent_score = ts.sentiment_score
-                    confidence = ts.sentiment_confidence
-                    momentum = ts.sentiment_momentum
-                    news_vol = ts.news_volume
-                    bullish_ratio = ts.bullish_ratio
-                else:
-                    # Dict format
-                    sent_score = ts.get('sentiment_score', 0)
-                    confidence = ts.get('sentiment_confidence', 0)
-                    momentum = ts.get('sentiment_momentum', 0)
-                    news_vol = ts.get('news_volume', 0)
-                    bullish_ratio = ts.get('bullish_ratio', 0.5)
+                try:
+                    if hasattr(ts, 'sentiment_score'):
+                        sent_score = ts.sentiment_score
+                        confidence = ts.sentiment_confidence
+                        momentum = ts.sentiment_momentum
+                        news_vol = ts.news_volume
+                        bullish_ratio = ts.bullish_ratio
+                    elif isinstance(ts, dict):
+                        # Dict format
+                        sent_score = ts.get('sentiment_score', 0)
+                        confidence = ts.get('sentiment_confidence', 0)
+                        momentum = ts.get('sentiment_momentum', 0)
+                        news_vol = ts.get('news_volume', 0)
+                        bullish_ratio = ts.get('bullish_ratio', 0.5)
+                    else:
+                        # Unknown type, skip
+                        continue
+                except (AttributeError, TypeError):
+                    continue
                 
                 # Skip low confidence
                 if confidence < self.min_confidence:

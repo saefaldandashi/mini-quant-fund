@@ -129,205 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 217,
+  "total_rounds": 236,
   "reward_history": [
-    {
-      "timestamp": "2026-01-23T19:35:35.014023",
-      "returns": {
-        "RelativeStrengthIntraday": 0.003169129690144721,
-        "TS_Momentum_LS": 0.0023532475812221365,
-        "VWAPReversion": 0.0010318586986875294,
-        "OpeningRangeBreakout": 0.005040067588661745,
-        "CrossSectionMomentum": 0.0055857172167907585,
-        "QualityValue_LS": -0.001878916878698152,
-        "MeanReversion_LS": 0.0031268360803696385
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T19:40:33.390120",
-      "returns": {
-        "VWAPReversion": 0.0018589593042383384,
-        "OpeningRangeBreakout": 0.002894219035571549,
-        "RelativeStrengthIntraday": 0.0016592104825307696,
-        "TS_Momentum_LS": 0.0011977913344760464,
-        "CrossSectionMomentum": 0.0019024568194319208,
-        "QualityValue_LS": -0.0025181673264987226,
-        "MeanReversion_LS": 0.007022947107748103
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T19:45:51.704165",
-      "returns": {
-        "RelativeStrengthIntraday": 0.0025333742343073185,
-        "TS_Momentum_LS": 0.0018516627257448167,
-        "OpeningRangeBreakout": 0.004257122846317893,
-        "VWAPReversion": 0.0019390012983238239,
-        "QualityValue_LS": -0.0013267819505420671,
-        "CrossSectionMomentum": 0.0032209747743037285,
-        "MeanReversion_LS": 0.0066576866989314165
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T21:36:11.772643",
-      "returns": {
-        "TS_Momentum_LS": -0.0020341882192821885,
-        "RelativeStrengthIntraday": -0.005849080873687825,
-        "QualityValue_LS": -0.0020940679211437024,
-        "MeanReversion_LS": 0.002850933420651237,
-        "CrossSectionMomentum": -0.0034472976163931034
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T21:41:07.003876",
-      "returns": {
-        "RelativeStrengthIntraday": -0.004461587060777482,
-        "TS_Momentum_LS": -0.003150660558753184,
-        "CrossSectionMomentum": -0.0054357829495565195,
-        "QualityValue_LS": -0.0018439471592727257,
-        "MeanReversion_LS": 0.0020023673969480735
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T21:46:11.614647",
-      "returns": {
-        "RelativeStrengthIntraday": -0.005468466111445301,
-        "TS_Momentum_LS": -0.0034543243737388193,
-        "QualityValue_LS": -0.0016837845834587301,
-        "MeanReversion_LS": 0.0006715262907702287,
-        "CrossSectionMomentum": -0.005411804510506769
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T21:51:09.500602",
-      "returns": {
-        "RelativeStrengthIntraday": -0.007217256041552543,
-        "TS_Momentum_LS": -0.004373383208958424,
-        "QualityValue_LS": -0.0011573437389784396,
-        "MeanReversion_LS": -8.936804619629935e-05,
-        "CrossSectionMomentum": -0.00718976205351774
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T21:56:13.179329",
-      "returns": {
-        "TS_Momentum_LS": -0.002652294820201974,
-        "RelativeStrengthIntraday": -0.00226990641281085,
-        "OpeningRangeBreakout": -0.000601865553097731,
-        "CrossSectionMomentum": -0.0032487732951738168,
-        "QualityValue_LS": -0.0007768043530756688,
-        "MeanReversion_LS": 0.00020090332685982932
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T22:01:17.338578",
-      "returns": {
-        "VWAPReversion": -0.00024397083753706887,
-        "RelativeStrengthIntraday": -0.002030642601399199,
-        "OpeningRangeBreakout": -0.0013712664484157734,
-        "TS_Momentum_LS": -0.002146470474099621,
-        "QualityValue_LS": -3.707119910968952e-05,
-        "CrossSectionMomentum": -0.002527976608281526,
-        "MeanReversion_LS": -0.0007267771625552548
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T17:11:55.025750",
-      "returns": {
-        "TS_Momentum_LS": 0.0009540614141644033,
-        "QualityValue_LS": 0.0025497871840492996,
-        "MeanReversion_LS": 3.907165032957808e-05,
-        "CrossSectionMomentum": -0.002918126131655461
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T17:15:28.222916",
-      "returns": {
-        "TS_Momentum_LS": 0.0009540614141644033,
-        "CrossSectionMomentum": -0.002918126131655461,
-        "QualityValue_LS": 0.0025497871840492996,
-        "MeanReversion_LS": 3.907165032957808e-05
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T17:18:31.433029",
-      "returns": {
-        "TS_Momentum_LS": 0.0009540614141644033,
-        "QualityValue_LS": 0.0025497871840492996,
-        "MeanReversion_LS": 3.907165032957808e-05,
-        "CrossSectionMomentum": -0.002918126131655461
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T18:28:28.238907",
-      "returns": {
-        "VWAPReversion": 3.907165032957808e-05,
-        "MeanReversion_LS": 3.907165032957808e-05,
-        "TS_Momentum_LS": 0.001687827221195564,
-        "CrossSectionMomentum": -0.002918126131655461,
-        "QualityValue_LS": 0.00481518168305407
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T20:39:06.503541",
-      "returns": {
-        "TS_Momentum_LS": 0.002631442726107221,
-        "QualityValue_LS": 0.002631442726107221
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T20:46:50.101619",
-      "returns": {
-        "TS_Momentum_LS": 0.0016564732092093724,
-        "QualityValue_LS": 0.0016564732092093724
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T20:51:40.888676",
-      "returns": {
-        "TS_Momentum_LS": 0.0016791469189047117,
-        "QualityValue_LS": 0.0016791469189047117
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T20:52:43.975786",
-      "returns": {
-        "TS_Momentum_LS": 0.0020872736934200936,
-        "QualityValue_LS": 0.0020872736934200936
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T20:55:43.900625",
-      "returns": {
-        "TS_Momentum_LS": 0.0020419262740295602,
-        "QualityValue_LS": 0.0020419262740295602
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-26T20:56:43.823668",
-      "returns": {
-        "TS_Momentum_LS": 0.001452409821951754,
-        "QualityValue_LS": 0.001452409821951754
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-01-26T20:58:04.895738",
       "returns": {
@@ -992,7 +795,170 @@
         "TS_Momentum_LS": -0.019049619511833
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:12:58.080891",
+      "returns": {
+        "TS_Momentum_LS": -0.014964588335505733,
+        "QualityValue_LS": -0.000634753593438351,
+        "CalendarEffects": -0.000634753593438351
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:17:55.793234",
+      "returns": {
+        "TS_Momentum_LS": -0.015768634521396038,
+        "QualityValue_LS": 2.097633353611795e-05,
+        "CalendarEffects": 2.097633353611795e-05
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:22:54.331694",
+      "returns": {
+        "TS_Momentum_LS": -0.010278267023020033,
+        "QualityValue_LS": 0.004364836711705263,
+        "CalendarEffects": 0.004364836711705263
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:27:58.125656",
+      "returns": {
+        "TS_Momentum_LS": -0.013023770066553522,
+        "QualityValue_LS": -0.000974230549695895,
+        "CalendarEffects": -0.000974230549695895
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:32:57.969673",
+      "returns": {
+        "TS_Momentum_LS": -0.01289794731171342,
+        "CalendarEffects": 0.0029505520316761547,
+        "QualityValue_LS": 0.0029505520316761547
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:37:39.415820",
+      "returns": {
+        "TS_Momentum_LS": -0.016225189797403738,
+        "QualityValue_LS": -0.002844160897699795,
+        "CalendarEffects": -0.002844160897699795
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:38:30.265482",
+      "returns": {
+        "TS_Momentum_LS": -0.015658710753543553,
+        "CalendarEffects": -0.0027718560728790444,
+        "QualityValue_LS": -0.0027718560728790444
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:43:06.494260",
+      "returns": {
+        "TS_Momentum_LS": -0.014953866143314598,
+        "CalendarEffects": -0.000931393851677145,
+        "QualityValue_LS": -0.000931393851677145
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:48:05.173428",
+      "returns": {
+        "TS_Momentum_LS": -0.003106140798246899,
+        "QualityValue_LS": -0.0033708868342587637,
+        "CalendarEffects": -0.0033708868342587637
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:53:07.269990",
+      "returns": {
+        "TS_Momentum_LS": -0.0048584312716596495,
+        "QualityValue_LS": -0.005834651683034401,
+        "CalendarEffects": -0.005834651683034401
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:53:57.694088",
+      "returns": {
+        "TS_Momentum_LS": -0.0048584312716596495,
+        "QualityValue_LS": -0.005834651683034401,
+        "CalendarEffects": -0.005834651683034401
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T19:58:17.098606",
+      "returns": {
+        "TS_Momentum_LS": -0.003559870892646171,
+        "QualityValue_LS": -0.0028350511338095883,
+        "CalendarEffects": -0.0028350511338095883
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T20:03:17.006166",
+      "returns": {
+        "TS_Momentum_LS": -0.0045941459475719645,
+        "QualityValue_LS": -0.002807508688320996,
+        "CalendarEffects": -0.002807508688320996
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T20:08:09.148628",
+      "returns": {
+        "TS_Momentum_LS": -0.0027210676486163032,
+        "QualityValue_LS": -0.00018267509407747656,
+        "CalendarEffects": -0.00018267509407747656
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T20:09:07.108075",
+      "returns": {
+        "TS_Momentum_LS": -0.0025688580804663647,
+        "QualityValue_LS": -0.000511490263417404,
+        "CalendarEffects": -0.000511490263417404
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T20:31:45.422229",
+      "returns": {
+        "TS_Momentum_LS": -0.010875784522590026
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T20:36:31.205671",
+      "returns": {
+        "TS_Momentum_LS": -0.011930915961952192
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T20:38:23.856406",
+      "returns": {
+        "TS_Momentum_LS": -0.014071111647467079
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T20:42:00.025256",
+      "returns": {
+        "TS_Momentum_LS": -0.014782015808739375
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-02-05T19:00:04.418930"
+  "last_updated": "2026-02-05T20:42:00.025569"
 }
