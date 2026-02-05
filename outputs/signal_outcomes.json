@@ -32907,10 +32907,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "STX_20260204_062145",
@@ -32923,10 +32923,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "SEDG_20260204_062145",
@@ -32939,10 +32939,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "FSLR_20260204_062145",
@@ -32955,10 +32955,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "BAC_20260204_062145",
@@ -32971,10 +32971,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_062145",
@@ -32987,10 +32987,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_062145",
@@ -33003,10 +33003,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_062145",
@@ -33019,10 +33019,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_062145",
@@ -33035,10 +33035,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_062145",
@@ -33051,10 +33051,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_062145",
@@ -33067,10 +33067,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "WMT_20260204_062145",
@@ -33083,10 +33083,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_062145",
@@ -33099,10 +33099,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_062145",
@@ -33115,10 +33115,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_062145",
@@ -33131,10 +33131,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GOOGL_20260204_062145",
@@ -33147,10 +33147,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_062145",
@@ -33163,10 +33163,10 @@
       "macro_stance": 0.15147822155506807,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_062145",
@@ -33419,10 +33419,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "WDC_20260204_062642",
@@ -33451,10 +33451,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "INTC_20260204_062642",
@@ -33499,10 +33499,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "FCX_20260204_062642",
@@ -33531,10 +33531,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_062642",
@@ -33547,10 +33547,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "VLO_20260204_062642",
@@ -33595,10 +33595,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_062642",
@@ -33611,10 +33611,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "AAPL_20260204_062642",
@@ -33643,10 +33643,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_062642",
@@ -33659,10 +33659,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "GS_20260204_062642",
@@ -33675,10 +33675,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "WMT_20260204_062642",
@@ -33691,10 +33691,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "MSFT_20260204_062642",
@@ -33739,10 +33739,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CSCO_20260204_062642",
@@ -33771,10 +33771,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "BAC_20260204_062642",
@@ -33787,10 +33787,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_062642",
@@ -33803,10 +33803,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_062642",
@@ -33819,10 +33819,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "PEP_20260204_062642",
@@ -33851,10 +33851,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MPC_20260204_062642",
@@ -34171,10 +34171,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "WDC_20260204_063141",
@@ -34203,10 +34203,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "SEDG_20260204_063141",
@@ -34219,10 +34219,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "FSLR_20260204_063141",
@@ -34235,10 +34235,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "BAC_20260204_063141",
@@ -34251,10 +34251,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_063141",
@@ -34267,10 +34267,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_063141",
@@ -34283,10 +34283,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_063141",
@@ -34299,10 +34299,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_063141",
@@ -34315,10 +34315,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_063141",
@@ -34331,10 +34331,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_063141",
@@ -34347,10 +34347,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "PEP_20260204_063141",
@@ -34379,10 +34379,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_063141",
@@ -34395,10 +34395,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_063141",
@@ -34411,10 +34411,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_063141",
@@ -34427,10 +34427,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "MPC_20260204_063141",
@@ -34475,10 +34475,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_063141",
@@ -34491,10 +34491,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_063141",
@@ -34763,10 +34763,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "NXPI_20260204_063642",
@@ -34955,10 +34955,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "STX_20260204_063642",
@@ -34971,10 +34971,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "SEDG_20260204_063642",
@@ -34987,10 +34987,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "BAC_20260204_063642",
@@ -35003,10 +35003,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_063642",
@@ -35019,10 +35019,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_063642",
@@ -35035,10 +35035,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_063642",
@@ -35051,10 +35051,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_063642",
@@ -35067,10 +35067,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_063642",
@@ -35083,10 +35083,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_063642",
@@ -35099,10 +35099,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "WMT_20260204_063642",
@@ -35115,10 +35115,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_063642",
@@ -35131,10 +35131,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_063642",
@@ -35147,10 +35147,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_063642",
@@ -35163,10 +35163,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GOOGL_20260204_063642",
@@ -35179,10 +35179,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_063642",
@@ -35195,10 +35195,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_063642",
@@ -35435,10 +35435,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "NXPI_20260204_064142",
@@ -35547,10 +35547,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "WDC_20260204_064142",
@@ -35579,10 +35579,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "SEDG_20260204_064142",
@@ -35595,10 +35595,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "BAC_20260204_064142",
@@ -35611,10 +35611,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_064142",
@@ -35627,10 +35627,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_064142",
@@ -35643,10 +35643,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_064142",
@@ -35659,10 +35659,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_064142",
@@ -35675,10 +35675,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_064142",
@@ -35691,10 +35691,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_064142",
@@ -35707,10 +35707,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "PEP_20260204_064142",
@@ -35739,10 +35739,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_064142",
@@ -35755,10 +35755,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_064142",
@@ -35771,10 +35771,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_064142",
@@ -35787,10 +35787,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "MPC_20260204_064142",
@@ -35835,10 +35835,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_064142",
@@ -35851,10 +35851,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_064142",
@@ -36107,10 +36107,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "NXPI_20260204_064642",
@@ -36235,10 +36235,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CSCO_20260204_064642",
@@ -36315,10 +36315,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "STX_20260204_064642",
@@ -36331,10 +36331,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "BAC_20260204_064642",
@@ -36347,10 +36347,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_064642",
@@ -36363,10 +36363,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_064642",
@@ -36379,10 +36379,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_064642",
@@ -36395,10 +36395,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_064642",
@@ -36411,10 +36411,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_064642",
@@ -36427,10 +36427,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_064642",
@@ -36443,10 +36443,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "WMT_20260204_064642",
@@ -36459,10 +36459,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_064642",
@@ -36475,10 +36475,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_064642",
@@ -36491,10 +36491,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_064642",
@@ -36507,10 +36507,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GOOGL_20260204_064642",
@@ -36523,10 +36523,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_064642",
@@ -36539,10 +36539,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_064642",
@@ -36779,10 +36779,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "WDC_20260204_065143",
@@ -36811,10 +36811,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "INTC_20260204_065143",
@@ -36859,10 +36859,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "FCX_20260204_065143",
@@ -36891,10 +36891,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_065143",
@@ -36907,10 +36907,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "VLO_20260204_065143",
@@ -36955,10 +36955,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_065143",
@@ -36971,10 +36971,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "AAPL_20260204_065143",
@@ -37003,10 +37003,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_065143",
@@ -37019,10 +37019,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "GS_20260204_065143",
@@ -37035,10 +37035,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "WMT_20260204_065143",
@@ -37051,10 +37051,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "MSFT_20260204_065143",
@@ -37099,10 +37099,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NXPI_20260204_065143",
@@ -37131,10 +37131,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "MRVL_20260204_065143",
@@ -37211,10 +37211,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_065143",
@@ -37227,10 +37227,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_065143",
@@ -37243,10 +37243,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_065143",
@@ -37259,10 +37259,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "NEE_20260204_065143",
@@ -37611,10 +37611,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "STX_20260204_065642",
@@ -37627,10 +37627,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "SEDG_20260204_065642",
@@ -37643,10 +37643,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "FSLR_20260204_065642",
@@ -37659,10 +37659,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "BAC_20260204_065642",
@@ -37675,10 +37675,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_065642",
@@ -37691,10 +37691,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_065642",
@@ -37707,10 +37707,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_065642",
@@ -37723,10 +37723,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_065642",
@@ -37739,10 +37739,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_065642",
@@ -37755,10 +37755,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_065642",
@@ -37771,10 +37771,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "WMT_20260204_065642",
@@ -37787,10 +37787,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_065642",
@@ -37803,10 +37803,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_065642",
@@ -37819,10 +37819,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_065642",
@@ -37835,10 +37835,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GOOGL_20260204_065642",
@@ -37851,10 +37851,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_065642",
@@ -37867,10 +37867,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_065642",
@@ -38123,10 +38123,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "NXPI_20260204_070142",
@@ -38235,10 +38235,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "WDC_20260204_070142",
@@ -38267,10 +38267,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "SEDG_20260204_070142",
@@ -38283,10 +38283,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "ENPH_20260204_070142",
@@ -38315,10 +38315,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_070142",
@@ -38331,10 +38331,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_070142",
@@ -38347,10 +38347,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_070142",
@@ -38363,10 +38363,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_070142",
@@ -38379,10 +38379,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_070142",
@@ -38395,10 +38395,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_070142",
@@ -38411,10 +38411,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "PEP_20260204_070142",
@@ -38443,10 +38443,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_070142",
@@ -38459,10 +38459,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_070142",
@@ -38475,10 +38475,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_070142",
@@ -38491,10 +38491,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "MPC_20260204_070142",
@@ -38539,10 +38539,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_070142",
@@ -38555,10 +38555,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_070142",
@@ -38891,10 +38891,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "WDC_20260204_070642",
@@ -38923,10 +38923,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "SEDG_20260204_070642",
@@ -38939,10 +38939,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "ENPH_20260204_070642",
@@ -38971,10 +38971,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "BAC_20260204_070642",
@@ -38987,10 +38987,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_070642",
@@ -39003,10 +39003,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_070642",
@@ -39019,10 +39019,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_070642",
@@ -39035,10 +39035,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_070642",
@@ -39051,10 +39051,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_070642",
@@ -39067,10 +39067,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_070642",
@@ -39083,10 +39083,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "PEP_20260204_070642",
@@ -39115,10 +39115,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_070642",
@@ -39131,10 +39131,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_070642",
@@ -39147,10 +39147,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_070642",
@@ -39163,10 +39163,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "MPC_20260204_070642",
@@ -39211,10 +39211,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_070642",
@@ -39227,10 +39227,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_070642",
@@ -39499,10 +39499,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CSCO_20260204_071143",
@@ -39547,10 +39547,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "INTC_20260204_071143",
@@ -39595,10 +39595,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRVL_20260204_071143",
@@ -39755,10 +39755,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "BAC_20260204_071143",
@@ -39771,10 +39771,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_071143",
@@ -39787,10 +39787,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_071143",
@@ -39803,10 +39803,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_071143",
@@ -39819,10 +39819,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_071143",
@@ -39835,10 +39835,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_071143",
@@ -39851,10 +39851,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_071143",
@@ -39867,10 +39867,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "WMT_20260204_071143",
@@ -39883,10 +39883,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_071143",
@@ -39899,10 +39899,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_071143",
@@ -39915,10 +39915,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_071143",
@@ -39931,10 +39931,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GOOGL_20260204_071143",
@@ -39947,10 +39947,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_071143",
@@ -39963,10 +39963,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_071143",
@@ -40203,10 +40203,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "ENPH_20260204_071643",
@@ -40235,10 +40235,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "STX_20260204_071643",
@@ -40251,10 +40251,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRVL_20260204_071643",
@@ -40443,10 +40443,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "BAC_20260204_071643",
@@ -40459,10 +40459,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_071643",
@@ -40475,10 +40475,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_071643",
@@ -40491,10 +40491,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_071643",
@@ -40507,10 +40507,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_071643",
@@ -40523,10 +40523,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_071643",
@@ -40539,10 +40539,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_071643",
@@ -40555,10 +40555,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "WMT_20260204_071643",
@@ -40571,10 +40571,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_071643",
@@ -40587,10 +40587,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_071643",
@@ -40603,10 +40603,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_071643",
@@ -40619,10 +40619,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GOOGL_20260204_071643",
@@ -40635,10 +40635,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_071643",
@@ -40651,10 +40651,10 @@
       "macro_stance": 0.15147822155506813,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_071643",
@@ -40875,10 +40875,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "NXPI_20260204_072145",
@@ -40923,10 +40923,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "ENPH_20260204_072145",
@@ -40955,10 +40955,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRVL_20260204_072145",
@@ -41051,10 +41051,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "WDC_20260204_072145",
@@ -41083,10 +41083,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_072145",
@@ -41099,10 +41099,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_072145",
@@ -41115,10 +41115,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_072145",
@@ -41131,10 +41131,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_072145",
@@ -41147,10 +41147,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_072145",
@@ -41163,10 +41163,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_072145",
@@ -41179,10 +41179,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "PEP_20260204_072145",
@@ -41211,10 +41211,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_072145",
@@ -41227,10 +41227,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_072145",
@@ -41243,10 +41243,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_072145",
@@ -41259,10 +41259,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "MPC_20260204_072145",
@@ -41307,10 +41307,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_072145",
@@ -41323,10 +41323,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_072145",
@@ -41563,10 +41563,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.38917018872661746,
+      "outcome_5d": -0.6303485702358724,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "NXPI_20260204_072645",
@@ -41755,10 +41755,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -9.545259545259544,
+      "outcome_5d": -4.544768611670036,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "STX_20260204_072645",
@@ -41771,10 +41771,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -5.692099932478056,
+      "outcome_5d": 20.85316258544605,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "SEDG_20260204_072645",
@@ -41787,10 +41787,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 13.202065848934797,
+      "outcome_5d": 1.6227180527383478,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "ENPH_20260204_072645",
@@ -41819,10 +41819,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.8004776777512443,
+      "outcome_5d": 5.703929797787088,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GS_20260204_072645",
@@ -41835,10 +41835,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -2.765644642362508,
+      "outcome_5d": -4.359717281162723,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MS_20260204_072645",
@@ -41851,10 +41851,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.5610476242550075,
+      "outcome_5d": -1.6417176573426562,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "JNJ_20260204_072645",
@@ -41867,10 +41867,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.576993200489051,
+      "outcome_5d": 7.255592662061394,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "MRK_20260204_072645",
@@ -41883,10 +41883,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.0839625490788105,
+      "outcome_5d": 8.353178237772486,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "HOLX_20260204_072645",
@@ -41899,10 +41899,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -0.12053033346726139,
+      "outcome_5d": -0.6659563132658475,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "KO_20260204_072645",
@@ -41915,10 +41915,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.5852516582130374,
+      "outcome_5d": 7.588509424775691,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "WMT_20260204_072645",
@@ -41931,10 +41931,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.21917808219178436,
+      "outcome_5d": 8.628881724079406,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "CL_20260204_072645",
@@ -41947,10 +41947,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 1.3419216317767102,
+      "outcome_5d": 10.029722011772257,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "LMT_20260204_072645",
@@ -41963,10 +41963,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -4.008976032084544,
+      "outcome_5d": 1.5934241776010882,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": false
     },
     {
       "signal_id": "XOM_20260204_072645",
@@ -41979,10 +41979,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 2.6683829668800563,
+      "outcome_5d": 10.38752150819182,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "GOOGL_20260204_072645",
@@ -41995,10 +41995,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": -1.9950564971751295,
+      "outcome_5d": 0.7806826434277436,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NFLX_20260204_072645",
@@ -42011,10 +42011,10 @@
       "macro_stance": 0.1514782215550681,
       "regime": "risk_off",
       "strategy_source": "ensemble",
-      "outcome_1d": null,
-      "outcome_5d": null,
-      "outcome_timestamp": null,
-      "was_correct": null
+      "outcome_1d": 0.2813731007315523,
+      "outcome_5d": -3.9985633903986684,
+      "outcome_timestamp": "2026-02-05T07:28:11.092244+00:00",
+      "was_correct": true
     },
     {
       "signal_id": "NEE_20260204_072645",
@@ -76737,5 +76737,5 @@
       "was_correct": null
     }
   ],
-  "last_updated": "2026-02-05T10:25:11.685042"
+  "last_updated": "2026-02-05T11:28:11.096557"
 }

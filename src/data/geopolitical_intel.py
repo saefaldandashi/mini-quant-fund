@@ -421,8 +421,8 @@ class GeopoliticalIntelligence:
             ["deal", "agreement", "disarmament", "inspection", "treaty", "talks", "denuclearize", "willingness"]
         ),
         "sanctions": (
-            ["imposed", "new", "expanded", "tightened", "added"],
-            ["lifted", "removed", "eased", "waived", "suspended"]
+            ["imposed", "new", "expanded", "tightened", "added", "announces", "slaps"],
+            ["lifted", "removed", "eased", "waived", "suspended", "impact", "working", "effect"]
         ),
         "trade": (
             ["war", "dispute", "tensions", "tariffs", "barriers"],
@@ -444,7 +444,28 @@ class GeopoliticalIntelligence:
             ["rise", "escalate", "increase", "mount", "grow"],
             ["ease", "reduce", "calm", "de-escalate", "subside"]
         ),
+        # NEW: Business/corporate terms that shouldn't be geopolitical
+        "threatens": (
+            ["military", "attack", "war", "retaliation", "strike", "invasion", "missile"],
+            ["delay", "lawsuit", "legal", "business", "revenue", "profit", "stock"]
+        ),
+        "raid": (
+            ["military", "air", "airstrike", "drone", "commando", "special forces", "terrorist"],
+            ["police", "immigration", "ice", "tax", "fbi", "sec", "antitrust"]
+        ),
     }
+    
+    # ==========================================================================
+    # BUSINESS-CONTEXT EXCLUSIONS - Words that negate geopolitical classification
+    # If these appear near a keyword, reduce its geopolitical weight
+    # ==========================================================================
+    BUSINESS_CONTEXT_WORDS = [
+        "stock", "shares", "profit", "revenue", "earnings", "quarterly",
+        "market cap", "valuation", "ipo", "merger", "acquisition",
+        "ceo", "cfo", "board", "shareholders", "dividend", "buyback",
+        "software", "app", "platform", "startup", "tech company",
+        "lawsuit", "legal", "court", "attorney", "settlement",
+    ]
     
     # ==========================================================================
     # REGIONAL-SPECIFIC HIGH-RISK KEYWORDS
@@ -551,6 +572,11 @@ class GeopoliticalIntelligence:
         "arrested", "murder", "robbery", "burglary", "theft", "assault",
         "shooting", "stabbing", "drug bust", "gang violence",
         "local police", "city council", "town hall",
+        # Domestic US Politics (not geopolitical)
+        "ice raids", "immigration enforcement", "border patrol", "deportation",
+        "immigration policy", "migrants detained", "asylum seekers",
+        "gun control", "abortion", "supreme court ruling", "congressional hearing",
+        "midterm elections", "primaries", "campaign trail", "polling",
         # Sports/Entertainment
         "world cup", "olympics", "football", "soccer", "basketball", "baseball",
         "tennis", "golf", "celebrity", "kardashian", "hollywood", "movie",
@@ -565,6 +591,10 @@ class GeopoliticalIntelligence:
         "weather forecast", "sunny", "cloudy", "chance of rain",
         # Obituaries
         "obituary", "funeral", "passed away", "dies at",
+        # Business/Corporate (not geopolitical)
+        "software sell-off", "stock buyback", "quarterly earnings", "annual report",
+        "profit warning", "revenue growth", "market share", "product launch",
+        "ceo resigns", "board meeting", "shareholder vote", "ipo filing",
     ]
     
     # MINIMUM SEVERITY THRESHOLD - Events below this are discarded
@@ -890,6 +920,10 @@ class GeopoliticalIntelligence:
             if discard_kw in text_lower:
                 return "irrelevant", 0.0, []
         
+        # STEP 1b: Check for BUSINESS CONTEXT - reduce score if this is corporate news
+        business_context_count = sum(1 for bw in self.BUSINESS_CONTEXT_WORDS if bw in text_lower)
+        is_business_context = business_context_count >= 2  # 2+ business words = likely corporate news
+        
         # STEP 2: Classify as ESCALATION or DE-ESCALATION
         escalation_score = 0.0
         de_escalation_score = 0.0
@@ -1040,6 +1074,13 @@ class GeopoliticalIntelligence:
         # If predominantly de-escalation, cap severity at GUARDED level
         if de_escalation_score > escalation_score * 1.5:
             severity = min(severity, 0.35)  # Cap at GUARDED level
+        
+        # STEP 6: Apply BUSINESS CONTEXT dampening
+        # If this appears to be corporate/business news, reduce geopolitical severity
+        if is_business_context:
+            severity *= 0.4  # Heavy dampening for business news
+            if matched_keywords:
+                matched_keywords.append("(business_context)")
         
         return event_type, severity, matched_keywords
     
@@ -1526,41 +1567,58 @@ class GeopoliticalIntelligence:
                     regional_de_escalation[region] = regional_de_escalation.get(region, 0) + 1
         
         # BASELINE: Typical number of geopolitical headlines per region per day
-        # This prevents "100% risk" just because there are many headlines
-        BASELINE_EVENTS_PER_REGION = 5  # Normal daily geopolitical news volume
+        # Different regions have different "normal" news volumes
+        # US/Americas gets more coverage - higher baseline prevents false risk inflation
+        BASELINE_EVENTS_PER_REGION = {
+            "americas": 15,      # US news is very high volume - needs high baseline
+            "europe": 10,        # Also high news volume
+            "asia": 8,           # Moderate
+            "middle_east": 5,    # Lower baseline - each event is more significant
+            "russia": 5,         # Lower baseline
+            "africa": 4,         # Lower baseline
+            "global": 10,        # Catch-all
+        }
+        DEFAULT_BASELINE = 5
         
         for region in set(list(regional_escalation.keys()) + list(regional_de_escalation.keys())):
             esc_count = regional_escalation.get(region, 0)
             de_esc_count = regional_de_escalation.get(region, 0)
             
+            # Get region-specific baseline
+            baseline = BASELINE_EVENTS_PER_REGION.get(region, DEFAULT_BASELINE)
+            
             # Net escalation (escalation - de-escalation dampening)
             net_escalation = max(0, esc_count - de_esc_count * 0.5)
             
-            # Calculate risk as deviation from baseline
-            # If net_escalation = BASELINE, risk = 50% (normal)
-            # If net_escalation = 2x BASELINE, risk = 75% (elevated)
-            # If net_escalation = 3x BASELINE, risk = 85% (high)
-            # If net_escalation = 4x+ BASELINE, risk = 95% (critical)
-            if net_escalation <= BASELINE_EVENTS_PER_REGION:
+            # Calculate risk as deviation from region-specific baseline
+            # If net_escalation = BASELINE, risk = 40% (normal for that region)
+            # If net_escalation = 2x BASELINE, risk = 60% (elevated)
+            # If net_escalation = 3x BASELINE, risk = 75% (high)
+            # If net_escalation = 4x+ BASELINE, risk = 85%+ (critical)
+            if net_escalation <= baseline:
                 # Below or at baseline - LOW to MODERATE risk
-                regional_risk = 0.2 + (net_escalation / BASELINE_EVENTS_PER_REGION) * 0.3
-            elif net_escalation <= BASELINE_EVENTS_PER_REGION * 2:
+                regional_risk = 0.15 + (net_escalation / baseline) * 0.25
+            elif net_escalation <= baseline * 2:
                 # 1x to 2x baseline - ELEVATED risk
-                excess = (net_escalation - BASELINE_EVENTS_PER_REGION) / BASELINE_EVENTS_PER_REGION
-                regional_risk = 0.5 + excess * 0.25
-            elif net_escalation <= BASELINE_EVENTS_PER_REGION * 3:
+                excess = (net_escalation - baseline) / baseline
+                regional_risk = 0.4 + excess * 0.2
+            elif net_escalation <= baseline * 3:
                 # 2x to 3x baseline - HIGH risk
-                excess = (net_escalation - BASELINE_EVENTS_PER_REGION * 2) / BASELINE_EVENTS_PER_REGION
-                regional_risk = 0.75 + excess * 0.1
+                excess = (net_escalation - baseline * 2) / baseline
+                regional_risk = 0.6 + excess * 0.15
             else:
-                # 3x+ baseline - CRITICAL (cap at 95%)
-                regional_risk = 0.85 + min(0.1, (net_escalation - BASELINE_EVENTS_PER_REGION * 3) * 0.02)
+                # 3x+ baseline - CRITICAL (cap at 85%)
+                regional_risk = 0.75 + min(0.1, (net_escalation - baseline * 3) * 0.015)
             
             # Apply de-escalation dampening
             if de_esc_count > esc_count:
-                regional_risk *= 0.6  # Strong de-escalation signal
+                regional_risk *= 0.5  # Strong de-escalation signal
+            elif de_esc_count > 0 and esc_count > 0:
+                # Mixed signals - apply partial dampening
+                ratio = de_esc_count / (esc_count + de_esc_count)
+                regional_risk *= (1.0 - ratio * 0.3)
             
-            regional_risks[region] = round(min(0.95, regional_risk), 2)  # Cap at 95%
+            regional_risks[region] = round(min(0.85, regional_risk), 2)  # Cap at 85%
         
         # Get live regional market data (panic detection)
         market_data = self.fetch_regional_market_data()
