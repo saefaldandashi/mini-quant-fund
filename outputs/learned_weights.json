@@ -129,463 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 173,
+  "total_rounds": 210,
   "reward_history": [
-    {
-      "timestamp": "2026-01-21T22:06:44.489101",
-      "returns": {
-        "RelativeStrengthIntraday": 0.006244098993011791,
-        "NewsSentimentEvent": 0.0011961730393254774,
-        "IntradayMomentum": 0.006244098993011791,
-        "TS_Momentum_LS": 0.00288583133915515,
-        "CrossSectionMomentum": 0.009002278656414129,
-        "MeanReversion_LS": -0.003237476243593315,
-        "QualityValue_LS": 0.000324752763729802
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T22:09:45.827223",
-      "returns": {
-        "RelativeStrengthIntraday": 0.005177091632766953,
-        "IntradayMomentum": 0.005177091632766953,
-        "TS_Momentum_LS": 0.003410760521494331,
-        "CrossSectionMomentum": 0.010902881342855135,
-        "NewsSentimentEvent": 0.0009534387519084674,
-        "MeanReversion_LS": -0.0020413693242851364,
-        "QualityValue_LS": 0.0001396873638382716
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T22:41:35.532031",
-      "returns": {
-        "NewsSentimentEvent": 0.0007677505070338543,
-        "RelativeStrengthIntraday": 0.002341098385800404,
-        "IntradayMomentum": 0.002341098385800404,
-        "CrossSectionMomentum": 0.014890317399805886,
-        "TS_Momentum_LS": 0.005701407917049217,
-        "MeanReversion_LS": -0.0030550192559022846,
-        "QualityValue_LS": 8.883139195023924e-07
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T22:44:51.597201",
-      "returns": {
-        "CrossSectionMomentum": 0.014371086537526112,
-        "RelativeStrengthIntraday": 0.0013302493076736653,
-        "TS_Momentum_LS": 0.005497102174064131,
-        "IntradayMomentum": 0.0013302493076736653,
-        "MeanReversion_LS": -0.0032982952394902667,
-        "QualityValue_LS": 0.000995614838336539
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T22:47:27.933956",
-      "returns": {
-        "RelativeStrengthIntraday": 0.0007686664864921973,
-        "IntradayMomentum": 0.0007686664864921973,
-        "TS_Momentum_LS": 0.005301484249018209,
-        "QualityValue_LS": -0.0009244386855381497,
-        "MeanReversion_LS": -0.0032982952394902667,
-        "CrossSectionMomentum": 0.014329623292365548
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T22:50:07.156979",
-      "returns": {
-        "RelativeStrengthIntraday": 0.0035485014513404883,
-        "TS_Momentum_LS": 0.00727847178353308,
-        "IntradayMomentum": 0.0035485014513404883,
-        "QualityValue_LS": -0.001479634885212741,
-        "CrossSectionMomentum": 0.017351243416640603,
-        "MeanReversion_LS": -0.0017372743447998512
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T22:53:09.597116",
-      "returns": {
-        "TS_Momentum_LS": 0.007445719932351954,
-        "IntradayMomentum": 0.0021445443983867385,
-        "RelativeStrengthIntraday": 0.0021445443983867385,
-        "CrossSectionMomentum": 0.01751104278334403,
-        "QualityValue_LS": -0.001479634885212741,
-        "MeanReversion_LS": -0.0017170013461675925
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T22:55:40.836303",
-      "returns": {
-        "RelativeStrengthIntraday": 0.0024253358089775523,
-        "TS_Momentum_LS": 0.0072375817417077715,
-        "IntradayMomentum": 0.0024253358089775523,
-        "CrossSectionMomentum": 0.01771788264479853,
-        "QualityValue_LS": -0.0023355623597110086,
-        "MeanReversion_LS": -0.0018386393379616714
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T22:58:09.469339",
-      "returns": {
-        "RelativeStrengthIntraday": 0.0015268032950871712,
-        "CrossSectionMomentum": 0.01645459702784984,
-        "TS_Momentum_LS": 0.006279053332011435,
-        "IntradayMomentum": 0.0015268032950871712,
-        "MeanReversion_LS": -0.0028117432723141268,
-        "QualityValue_LS": -0.0023124291847247086
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T23:17:53.094783",
-      "returns": {
-        "TS_Momentum_LS": 0.0027847541432178854,
-        "CrossSectionMomentum": 0.008527617815267657,
-        "IntradayMomentum": -0.009985644539133509,
-        "RelativeStrengthIntraday": -0.009985644539133509,
-        "NewsSentimentEvent": -0.009985644539133509,
-        "MeanReversion_LS": -0.0026843840737032034,
-        "QualityValue_LS": -0.003908618258789336
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T23:29:12.051555",
-      "returns": {
-        "TS_Momentum_LS": 0.009674769847408709,
-        "IntradayMomentum": 0.00012284624213353173,
-        "RelativeStrengthIntraday": 0.00012284624213353173,
-        "NewsSentimentEvent": 0.00011613070900924147,
-        "MeanReversion_LS": 0.001534138887875477,
-        "QualityValue_LS": -0.0032377561841823777,
-        "CrossSectionMomentum": 0.01639100318270531
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T23:32:52.480934",
-      "returns": {
-        "CrossSectionMomentum": 0.018985154151805843,
-        "TS_Momentum_LS": 0.011867399485110198,
-        "IntradayMomentum": 0.002986918630159033,
-        "RelativeStrengthIntraday": 0.002986918630159033,
-        "NewsSentimentEvent": 0.0022456886492881866,
-        "MeanReversion_LS": 0.003785369891410201,
-        "QualityValue_LS": -0.0010169713854840724
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T23:37:58.204406",
-      "returns": {
-        "IntradayMomentum": 0.0009090621917875061,
-        "TS_Momentum_LS": 0.011890193112359039,
-        "RelativeStrengthIntraday": 0.0009090621917875061,
-        "NewsSentimentEvent": 0.002806957377419038,
-        "MeanReversion_LS": 0.006361102661220281,
-        "QualityValue_LS": 0.0009446758036450206,
-        "CrossSectionMomentum": 0.017193943060138654
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T23:43:04.299834",
-      "returns": {
-        "NewsSentimentEvent": 0.00362964254013577,
-        "IntradayMomentum": 1.0529677897137412e-05,
-        "TS_Momentum_LS": 0.0151445880558316,
-        "RelativeStrengthIntraday": 1.0529677897137412e-05,
-        "CrossSectionMomentum": 0.021131752693489877,
-        "MeanReversion_LS": 0.010336249298092568,
-        "QualityValue_LS": 0.004761631857808543
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T23:47:53.545622",
-      "returns": {
-        "TS_Momentum_LS": 0.016104405314058854,
-        "NewsSentimentEvent": 0.005406293151773169,
-        "IntradayMomentum": 0.0009652204739057032,
-        "RelativeStrengthIntraday": 0.0009652204739057032,
-        "CrossSectionMomentum": 0.022034298397906514,
-        "MeanReversion_LS": 0.013053951590647987,
-        "QualityValue_LS": 0.006242148145484217
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T23:52:59.051313",
-      "returns": {
-        "RelativeStrengthIntraday": -0.0010003194002296256,
-        "TS_Momentum_LS": 0.014919853773641769,
-        "IntradayMomentum": -0.0010003194002296256,
-        "CrossSectionMomentum": 0.020728107705863547,
-        "QualityValue_LS": 0.007953995103109195,
-        "MeanReversion_LS": 0.012323822616528526,
-        "NewsSentimentEvent": 0.0047380918453746035
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-21T23:57:54.356721",
-      "returns": {
-        "RelativeStrengthIntraday": 0.002649968937450243,
-        "IntradayMomentum": 0.002649968937450243,
-        "TS_Momentum_LS": 0.016228298561826483,
-        "QualityValue_LS": 0.005779486805585398,
-        "CrossSectionMomentum": 0.022886502896359275,
-        "MeanReversion_LS": 0.013986894168689375,
-        "NewsSentimentEvent": 0.007397526730336805
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:02:53.254695",
-      "returns": {
-        "RelativeStrengthIntraday": 0.005008616786412559,
-        "TS_Momentum_LS": 0.016351013189036513,
-        "IntradayMomentum": 0.005008616786412559,
-        "QualityValue_LS": 0.007815196701139528,
-        "CrossSectionMomentum": 0.02233596450365448,
-        "MeanReversion_LS": 0.017353599993795505,
-        "NewsSentimentEvent": 0.008193897539220866
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:07:54.174079",
-      "returns": {
-        "RelativeStrengthIntraday": 0.0023130192447412563,
-        "TS_Momentum_LS": 0.01607247608406437,
-        "CrossSectionMomentum": 0.022105930970279925,
-        "IntradayMomentum": 0.0023130192447412563,
-        "NewsSentimentEvent": 0.006846098768385215,
-        "MeanReversion_LS": 0.016623471019676046,
-        "QualityValue_LS": 0.00855545484497726
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:28:03.893833",
-      "returns": {
-        "TS_Momentum_LS": 0.011192889271446122,
-        "IntradayMomentum": 0.002088386116268664,
-        "RelativeStrengthIntraday": 0.002088386116268664,
-        "QualityValue_LS": 0.0033736478381127164,
-        "MeanReversion_LS": 0.009119367674560135,
-        "NewsSentimentEvent": 0.0044634173045373085,
-        "CrossSectionMomentum": 0.01599843007752024
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:30:13.906806",
-      "returns": {
-        "IntradayMomentum": 0.0016391198593236763,
-        "TS_Momentum_LS": 0.009899556417457381,
-        "RelativeStrengthIntraday": 0.0016391198593236763,
-        "QualityValue_LS": 0.005108627862732499,
-        "CrossSectionMomentum": 0.01333625300771744,
-        "NewsSentimentEvent": 0.0034728779448705443,
-        "MeanReversion_LS": 0.007659109726321338
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:32:43.183772",
-      "returns": {
-        "TS_Momentum_LS": 0.008718798295814203,
-        "IntradayMomentum": 0.0022568609626232557,
-        "RelativeStrengthIntraday": 0.0022568609626232557,
-        "QualityValue_LS": 0.0064272126814437025,
-        "CrossSectionMomentum": 0.011324003136753009,
-        "MeanReversion_LS": 0.005489004164355361,
-        "NewsSentimentEvent": 0.004547654727714604
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:37:42.936239",
-      "returns": {
-        "TS_Momentum_LS": 0.010163442880078918,
-        "IntradayMomentum": 0.005907149300302928,
-        "RelativeStrengthIntraday": 0.005907149300302928,
-        "QualityValue_LS": 0.008509188710987232,
-        "CrossSectionMomentum": 0.01334111563265312,
-        "MeanReversion_LS": 0.007517140203575878,
-        "NewsSentimentEvent": 0.007521658243345884
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:42:17.197833",
-      "returns": {
-        "TS_Momentum_LS": 0.007175859339714192,
-        "RelativeStrengthIntraday": 0.003535808744476088,
-        "IntradayMomentum": 0.003535808744476088,
-        "CrossSectionMomentum": 0.009929893736460096,
-        "QualityValue_LS": 0.006465806628111362,
-        "NewsSentimentEvent": 0.003535808744476088,
-        "MeanReversion_LS": 0.005225992829717162
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:48:25.643195",
-      "returns": {
-        "CrossSectionMomentum": 0.010203539862095726,
-        "IntradayMomentum": 0.003423606619169339,
-        "RelativeStrengthIntraday": 0.003423606619169339,
-        "TS_Momentum_LS": 0.006902310858439208,
-        "NewsSentimentEvent": 0.003423606619169339,
-        "MeanReversion_LS": 0.004072003431680989,
-        "QualityValue_LS": 0.008312024745378404
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:55:24.050261",
-      "returns": {
-        "RelativeStrengthIntraday": 0.010772845826767928,
-        "TS_Momentum_LS": 0.00708699989960263,
-        "CrossSectionMomentum": 0.012901924219716901,
-        "QualityValue_LS": 0.007804314763129933,
-        "MeanReversion_LS": 0.0012578889347155688
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:56:51.986236",
-      "returns": {
-        "TS_Momentum_LS": 0.0066496868825468135,
-        "RelativeStrengthIntraday": 0.010324037325540675,
-        "QualityValue_LS": 0.008542802010036744,
-        "MeanReversion_LS": 0.0012982374682226094,
-        "CrossSectionMomentum": 0.012579102209238718
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T00:57:54.504993",
-      "returns": {
-        "TS_Momentum_LS": 0.006237799038368776,
-        "RelativeStrengthIntraday": 0.010436239450847425,
-        "QualityValue_LS": 0.008058169754254205,
-        "CrossSectionMomentum": 0.012055567869791749,
-        "MeanReversion_LS": 0.001642249716094865
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T01:02:02.618322",
-      "returns": {
-        "RelativeStrengthIntraday": 0.009987430949620063,
-        "TS_Momentum_LS": 0.005917799980292304,
-        "VolumeSpike": 0.015954485911028275,
-        "IntradayMomentum": 0.03266789346856574,
-        "CrossSectionMomentum": 0.012205719914183538,
-        "QualityValue_LS": 0.006096563004657969,
-        "MeanReversion_LS": 0.002046970007708987
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T01:03:02.273628",
-      "returns": {
-        "VolumeSpike": 0.015954485911028275,
-        "RelativeStrengthIntraday": 0.009987430949620063,
-        "IntradayMomentum": 0.03266789346856574,
-        "TS_Momentum_LS": 0.005917799980292304,
-        "MeanReversion_LS": 0.002046970007708987,
-        "QualityValue_LS": 0.006096563004657969,
-        "CrossSectionMomentum": 0.012205719914183538
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T01:15:31.923582",
-      "returns": {
-        "IntradayMomentum": 0.03266789346856574,
-        "RelativeStrengthIntraday": 0.009987430949620063,
-        "VolumeSpike": 0.015954485911028275,
-        "TS_Momentum_LS": 0.005917799980292304,
-        "CrossSectionMomentum": 0.012205719914183538,
-        "QualityValue_LS": 0.006096563004657969,
-        "MeanReversion_LS": 0.002046970007708987
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-22T12:05:26.478092",
-      "returns": {
-        "RelativeStrengthIntraday": 0.024311189689797008,
-        "OpeningRangeBreakout": 0.015954485911028275,
-        "IntradayMomentum": 0.03266789346856574,
-        "TS_Momentum_LS": 0.005917799980292304,
-        "QualityValue_LS": 0.006537717538282046,
-        "CrossSectionMomentum": 0.01953660344307136,
-        "MeanReversion_LS": 0.002046970007708987
-      },
-      "regime": "risk_on"
-    },
-    {
-      "timestamp": "2026-01-22T15:51:24.095935",
-      "returns": {
-        "RelativeStrengthIntraday": 0.025675660570532742,
-        "IntradayMomentum": 0.03266789346856574,
-        "CrossSectionMomentum": 0.020497712750566593,
-        "TS_Momentum_LS": 0.006661953175256625,
-        "OpeningRangeBreakout": 0.018683427672499742,
-        "MeanReversion_LS": 0.003143279514953712,
-        "QualityValue_LS": 0.00872729155700465
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T14:11:19.081296",
-      "returns": {
-        "RelativeStrengthIntraday": 0.03941061367034684,
-        "MeanReversion_LS": -0.0027034845091707866
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-01-23T14:13:34.679147",
-      "returns": {
-        "TS_Momentum_LS": 0.0078834751014715,
-        "RelativeStrengthIntraday": 0.03941061367034684,
-        "QualityValue_LS": 0.002026625499237178,
-        "MeanReversion_LS": -0.0027034845091707866,
-        "CrossSectionMomentum": 0.007181735966086643
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T14:30:09.087615",
-      "returns": {
-        "RelativeStrengthIntraday": 0.03941061367034684,
-        "TS_Momentum_LS": 0.0078834751014715,
-        "MeanReversion_LS": -0.0027034845091707866,
-        "QualityValue_LS": 0.002026625499237178,
-        "CrossSectionMomentum": 0.007181735966086643
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-23T14:35:14.003872",
-      "returns": {
-        "RelativeStrengthIntraday": 0.03941061367034684,
-        "MeanReversion_LS": -0.0027034845091707866
-      },
-      "regime": "risk_off"
-    },
     {
       "timestamp": "2026-01-23T18:12:29.348556",
       "returns": {
@@ -1182,7 +727,311 @@
         "SectorRotation": -0.010414616979053182
       },
       "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T13:35:47.242877",
+      "returns": {
+        "TS_Momentum_LS": -0.001684372757122887,
+        "VolumeSpike": 0.012401202110399098,
+        "SectorRotation": -0.010414616979053182
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T13:40:31.932904",
+      "returns": {
+        "VolumeSpike": 0.012401202110399098,
+        "TS_Momentum_LS": -0.001684372757122887,
+        "SectorRotation": -0.010414616979053182
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T13:45:37.189776",
+      "returns": {
+        "TS_Momentum_LS": -0.001684372757122887,
+        "VolumeSpike": 0.012401202110399098,
+        "SectorRotation": -0.010414616979053182
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T13:55:38.757225",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": -0.0036846424451413115,
+        "SectorRotation": -0.01723052218180235
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:00:23.772494",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": -0.003684642445141311,
+        "SectorRotation": -0.01723052218180235
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:05:29.086175",
+      "returns": {
+        "TS_Momentum_LS": -0.0036846424451413115,
+        "VolumeSpike": 0.011456254212752932,
+        "SectorRotation": -0.01723052218180235
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:10:41.409951",
+      "returns": {
+        "TS_Momentum_LS": -0.0036846424451413115,
+        "VolumeSpike": 0.011456254212752932,
+        "SectorRotation": -0.01723052218180235
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:15:37.239921",
+      "returns": {
+        "TS_Momentum_LS": -0.003707463741606403,
+        "VolumeSpike": 0.011456254212752932,
+        "SectorRotation": -0.01723052218180235
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:20:38.631218",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:25:51.486116",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.0008002224051255794
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:30:44.535258",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:35:52.613576",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:41:04.990041",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.0008002224051255794
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:45:57.654392",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:51:04.446451",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255792,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T14:56:10.776346",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:01:08.486260",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:06:26.095991",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:11:25.032202",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.0008002224051255794
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:16:24.941115",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.0008002224051255794
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:21:25.736034",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:26:35.713518",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:31:27.634820",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:36:42.934891",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.0008002224051255794
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:41:46.793902",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.0008002224051255792
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:46:40.396644",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.0008002224051255794
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:51:51.770424",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T15:56:54.739533",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T16:01:55.757480",
+      "returns": {
+        "TS_Momentum_LS": 0.0008002224051255794,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T16:07:00.063916",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.0016284064637881724
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T16:12:05.675248",
+      "returns": {
+        "TS_Momentum_LS": 0.004442758247829367,
+        "VolumeSpike": 0.011456254212752932
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T16:17:09.027417",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.004442758247829367
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T16:22:17.145459",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.004442758247829367
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T16:27:29.393941",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.004442758247829367
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T16:32:18.880732",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.004442758247829367
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T16:37:26.637182",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.004442758247829367
+      },
+      "regime": "risk_off"
+    },
+    {
+      "timestamp": "2026-02-04T16:42:34.381484",
+      "returns": {
+        "VolumeSpike": 0.011456254212752932,
+        "TS_Momentum_LS": 0.004442758247829367
+      },
+      "regime": "risk_off"
     }
   ],
-  "last_updated": "2026-02-04T13:26:53.302763"
+  "last_updated": "2026-02-04T16:42:34.383239"
 }

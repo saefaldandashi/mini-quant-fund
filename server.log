@@ -51,3 +51,81 @@ INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a
  * Running on http://10.85.120.201:5000
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
 INFO:werkzeug:127.0.0.1 - - [04/Feb/2026 13:29:53] "GET /api/health HTTP/1.1" 200 -
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit approaching, stopping
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit approaching, stopping
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit approaching, stopping
+ERROR:yfinance:HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: TASI.SR"}}}
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: ADI.AD"}}}
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+WARNING:root:Invalid quote for GS: bid=938.66, ask=0.0
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit approaching, stopping
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+WARNING:root:Invalid quote for GS: bid=938.66, ask=0.0
+WARNING:root:Invalid quote for GLW: bid=106.21, ask=0.0
+WARNING:root:⏰ Found 3 positions exceeding holding period!
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit approaching, stopping
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:347: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/feature_store.py:435: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = price_df.pct_change().dropna()
+/Users/saef.aldandashi/Desktop/mini fund tool/src/data/regime.py:208: FutureWarning: The default fill_method='pad' in DataFrame.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+  returns = prices.pct_change().dropna()
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for ANSS
+WARNING:root:Could not get price for JNPR
+WARNING:root:Could not get price for FLT
+WARNING:root:Could not get price for DFS
+ERROR:yfinance:$TASI.SR: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+ERROR:yfinance:$ADI.AD: possibly delisted; no price data found  (period=5d) (Yahoo error = "No data found, symbol may be delisted")
+WARNING:root:Could not get price for JNPR
+WARNING:root:Invalid quote for GS: bid=938.66, ask=0.0
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit approaching, stopping
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit: We have detected your API key as MU0B7DN9XFBK5I7C and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+WARNING:src.data.alpha_vantage_news:Alpha Vantage daily limit approaching, stopping

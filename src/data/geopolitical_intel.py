@@ -113,190 +113,411 @@ class GeopoliticalIntelligence:
     Comprehensive geopolitical risk monitoring system.
     
     Monitors multiple data sources to detect events that could impact markets.
+    Uses SENTIMENT-AWARE keyword classification to distinguish between
+    escalation (risk-increasing) and de-escalation (risk-decreasing) events.
     """
     
-    # Keywords that indicate high-impact geopolitical events
-    # COMPREHENSIVE EXPANSION for ALL market-moving categories
-    HIGH_IMPACT_KEYWORDS = {
-        # ======================================================
-        # GEOPOLITICAL RISK & CONFLICT
-        # ======================================================
-        "military": [
-            "airstrike", "military", "jets", "troops", "deploy", "missile", 
-            "strike", "attack", "invasion", "war", "conflict", "combat",
-            "bombing", "airspace", "naval", "defense", "offensive",
-            "retaliation", "mobilization", "ceasefire", "peace talks",
-            "drone attack", "terrorism", "insurgency", "counteroffensive",
-            "military escalation", "naval incident", "territorial",
-        ],
-        "diplomatic": [
-            "sanctions", "embargo", "diplomatic", "treaty", "alliance",
-            "ambassador", "expelled", "relations", "summit", "talks",
-            "tariff", "trade war", "trade deal", "export controls",
-            "blacklist", "asset freeze", "swift", "secondary sanctions",
-            "trade embargo", "import ban", "export ban", "retaliation",
-        ],
-        "civil_unrest": [
-            "protest", "riot", "uprising", "revolution", "coup",
-            "martial law", "curfew", "emergency", "unrest",
-            "election", "elections", "referendum", "impeachment", "government",
-            "regime change", "political crisis", "constitutional crisis",
+    # ==========================================================================
+    # SEVERITY TIERS - Different risk levels for different event intensities
+    # ==========================================================================
+    SEVERITY_TIERS = {
+        "CRITICAL": {"range": (0.8, 1.0), "description": "Imminent major market impact"},
+        "HIGH": {"range": (0.6, 0.8), "description": "Significant market-moving event"},
+        "ELEVATED": {"range": (0.4, 0.6), "description": "Moderate concern, monitor closely"},
+        "GUARDED": {"range": (0.2, 0.4), "description": "Low-level concern"},
+        "LOW": {"range": (0.0, 0.2), "description": "Normal conditions"},
+    }
+    
+    # ==========================================================================
+    # ESCALATION KEYWORDS - Events that INCREASE geopolitical risk
+    # ==========================================================================
+    ESCALATION_KEYWORDS = {
+        # ------------------------------------------------------------------
+        # CATEGORY 1: MILITARY & DEFENSE - Active Combat
+        # ------------------------------------------------------------------
+        "military_combat": [
+            # Active Combat
+            "attack", "attacked", "attacking", "strike", "airstrike", "strikes", "struck",
+            "bombing", "bombed", "bomb blast", "shelling", "shelled", "artillery fire",
+            "invasion", "invaded", "invading", "assault", "offensive", "ground offensive",
+            "raid", "raided", "ambush", "firefight", "clashes", "skirmish",
+            # Weapons & Deployment
+            "missiles", "missile launch", "ballistic", "troops deployed", "troop buildup",
+            "mobilization", "warships", "naval fleet", "carrier group", "fighter jets",
+            "aircraft scrambled", "drones", "drone strike", "uav attack", "tanks",
+            "armored vehicles", "nuclear", "nuclear threat", "atomic", "hypersonic",
+            "icbm", "cruise missile", "chemical weapons", "biological weapons",
+            # Casualties & Damage
+            "casualties", "killed", "deaths", "fatalities", "wounded", "injured",
+            "victims", "destroyed", "destruction", "devastation", "civilian deaths",
+            "collateral damage", "mass casualty", "massacre", "war crimes", "atrocities",
+            # Military Escalation
+            "escalation", "escalating", "escalates", "retaliation", "retaliatory",
+            "counterattack", "counter-offensive", "declared war", "war declaration",
+            "martial law", "state of emergency", "full-scale", "all-out",
+            "military operation", "special operation",
         ],
         
-        # ======================================================
-        # CENTRAL BANKS & MONETARY POLICY (CRITICAL)
-        # ======================================================
+        # ------------------------------------------------------------------
+        # CATEGORY 2: DIPLOMATIC BREAKDOWN
+        # ------------------------------------------------------------------
+        "diplomatic_breakdown": [
+            # Diplomatic Breakdown
+            "breakdown", "collapsed", "failed", "talks failed", "negotiations collapsed",
+            "walked out", "stormed out", "deadlock", "stalemate", "impasse",
+            "diplomatic rift", "severed ties", "expelled diplomats", "embassy closed",
+            "recalled ambassador",
+            # Threats & Ultimatums
+            "ultimatum", "final warning", "threatens", "threatened", "threatening",
+            "red line", "crossed red line", "provocation", "provocative",
+            "hostile", "hostility", "rejects", "rejected", "refuses",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 3: POLITICAL INSTABILITY
+        # ------------------------------------------------------------------
+        "political_instability": [
+            "coup", "coup attempt", "military takeover", "regime change",
+            "government overthrown", "assassination", "attempted assassination",
+            "political crisis", "constitutional crisis", "impeachment", "ousted",
+            "removed from power", "protests escalate", "riots", "civil unrest",
+            "revolution", "uprising", "violent protests", "state of siege",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 4: SANCTIONS & RESTRICTIONS (Imposed)
+        # ------------------------------------------------------------------
+        "sanctions_imposed": [
+            "sanctions", "sanctions imposed", "new sanctions", "sanctions package",
+            "sanctions regime", "asset freeze", "assets frozen", "travel ban",
+            "visa restrictions", "blacklist", "blacklisted", "entity list",
+            "embargo", "trade embargo", "blockade", "naval blockade",
+            # Financial Restrictions
+            "swift ban", "swift exclusion", "banking sanctions", "financial sanctions",
+            "secondary sanctions", "treasury designation", "ofac",
+            # Sector Sanctions
+            "oil embargo", "energy sanctions", "technology sanctions", "chip ban",
+            "arms embargo", "weapons ban", "luxury goods ban",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 5: ENERGY & COMMODITY DISRUPTION
+        # ------------------------------------------------------------------
+        "energy_disruption": [
+            "pipeline attack", "pipeline sabotage", "oil facility attack",
+            "refinery fire", "supply disruption", "supply cut", "production halt",
+            "output cut", "export ban", "export halt", "shipping blocked",
+            "strait closed", "oil spike", "price surge", "energy crisis",
+            "fuel shortage", "opec cut", "production cut", "nord stream",
+            "pipeline explosion", "tanker seized", "ship attacked", "port blocked",
+            "terminal closed",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 6: TERRORISM & SECURITY THREATS
+        # ------------------------------------------------------------------
+        "terrorism": [
+            "terrorist attack", "terror attack", "bombing", "suicide bombing",
+            "mass shooting", "gunman", "hostage", "hostages taken", "kidnapping",
+            "abduction", "explosion", "blast", "attack claimed by",
+            "terror threat", "threat level raised", "security alert", "high alert",
+            "evacuation", "lockdown", "intelligence warning", "imminent threat",
+            "credible threat",
+            # Terror Groups
+            "isis", "isil", "islamic state", "al-qaeda", "taliban", "hezbollah",
+            "hamas", "boko haram", "al-shabaab", "terror cell", "extremist",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 7: CYBER ATTACKS
+        # ------------------------------------------------------------------
+        "cyber_attacks": [
+            "cyberattack", "cyber attack", "hacked", "ransomware", "malware",
+            "data breach", "data stolen", "critical infrastructure attack",
+            "power grid attack", "grid down", "ddos attack", "systems down",
+            "state-sponsored hack", "technology war", "chip war",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 8: FINANCIAL STRESS & CRISIS
+        # ------------------------------------------------------------------
+        "financial_crisis": [
+            "default", "debt default", "sovereign default", "bankruptcy",
+            "insolvency", "bank run", "financial panic", "currency crisis",
+            "currency collapse", "hyperinflation", "stagflation", "recession",
+            "depression", "economic collapse", "market crash", "circuit breaker",
+            "bank failure", "banking crisis", "deposit outflows", "liquidity stress",
+            "capital adequacy", "loan losses", "debt restructuring", "credit downgrade",
+            "debt distress", "capital shortfall", "liquidity crisis",
+            "sovereign debt crisis", "distressed debt", "contagion risk",
+            "funding stress", "margin calls", "systemic risk",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 9: TRADE WAR & ECONOMIC WARFARE
+        # ------------------------------------------------------------------
+        "trade_war": [
+            "tariffs", "tariff increase", "import duties", "trade war",
+            "trade dispute", "trade tensions", "protectionism", "trade barriers",
+            "dumping", "anti-dumping", "retaliatory tariffs", "trade deficit widens",
+            "economic warfare", "economic attack", "currency manipulation",
+            "technology ban", "export controls", "supply chain disruption",
+            "decoupling", "economic decoupling", "investment ban", "capital controls",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 10: NATURAL DISASTERS & CLIMATE
+        # ------------------------------------------------------------------
+        "natural_disasters": [
+            "earthquake", "tsunami", "hurricane", "typhoon", "cyclone", "tornado",
+            "flooding", "floods", "flash flood", "wildfire", "forest fire",
+            "volcanic eruption", "drought", "famine", "heatwave", "cold snap",
+            "emergency declared", "mass evacuation", "infrastructure damage",
+            "supply chain impact", "crop failure", "harvest destroyed",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 11: PANDEMIC & HEALTH EMERGENCY
+        # ------------------------------------------------------------------
+        "pandemic": [
+            "outbreak", "epidemic", "pandemic", "new variant", "mutation",
+            "cases surge", "hospitalization spike", "lockdown", "quarantine",
+            "travel ban", "border closed", "health emergency", "who declares",
+            "death toll rises", "fatality rate", "overwhelmed hospitals",
+            "icu capacity", "vaccine resistant", "immune escape",
+        ],
+    }
+    
+    # ==========================================================================
+    # DE-ESCALATION KEYWORDS - Events that DECREASE geopolitical risk
+    # ==========================================================================
+    DE_ESCALATION_KEYWORDS = {
+        # ------------------------------------------------------------------
+        # CATEGORY 1: PEACE & MILITARY DE-ESCALATION
+        # ------------------------------------------------------------------
+        "peace_process": [
+            "ceasefire", "truce", "armistice", "peace deal", "peace agreement",
+            "peace treaty", "peace talks", "peace process", "cessation of hostilities",
+            "laying down arms", "end of war", "war ends", "conflict resolved",
+            # Military Withdrawal
+            "withdrawal", "withdrawing", "pullback", "troops withdrawn", "pulling out",
+            "de-escalation", "de-escalating", "stand down", "stepping back",
+            "demobilization", "demobilizing", "retreating", "retreat",
+            # Diplomatic Military
+            "military hotline", "deconfliction", "buffer zone", "safe zone",
+            "peacekeepers", "peacekeeping force", "un observers", "monitoring mission",
+            # Disarmament
+            "denuclearize", "denuclearization", "disarmament", "weapons dismantled",
+            "nuclear deal", "arms reduction", "treaty signed",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 2: POSITIVE DIPLOMACY
+        # ------------------------------------------------------------------
+        "diplomatic_progress": [
+            "talks", "negotiations", "dialogue", "agreement", "accord", "deal reached",
+            "breakthrough", "progress", "momentum", "willing to negotiate",
+            "open to talks", "constructive", "productive talks", "framework agreement",
+            "memorandum of understanding", "mou signed",
+            # Positive Signals
+            "signals willingness", "willing to", "open to", "agree to",
+            "resume talks", "restart negotiations", "return to table",
+            "diplomatic channels", "positive signal",
+            # Relationship Improvement
+            "normalization", "normalizing ties", "thaw", "warming relations",
+            "cooperation", "collaboration", "partnership", "alliance strengthened",
+            "reconciliation", "rapprochement", "diplomatic solution",
+            "peaceful resolution", "mutual understanding",
+            # Confidence Building
+            "confidence building measures", "goodwill gesture", "olive branch",
+            "prisoner exchange", "hostage release", "humanitarian corridor",
+            "back channel", "quiet diplomacy",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 3: SANCTIONS RELIEF
+        # ------------------------------------------------------------------
+        "sanctions_relief": [
+            "sanctions lifted", "sanctions removed", "sanctions relief",
+            "sanctions waiver", "sanctions exemption", "delisted",
+            "removed from blacklist", "unfrozen", "assets released", "embargo lifted",
+            "restrictions eased", "trade resumed",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 4: ECONOMIC STABILITY & RECOVERY
+        # ------------------------------------------------------------------
+        "economic_recovery": [
+            "trade deal", "trade agreement", "tariffs reduced", "tariffs lifted",
+            "free trade", "trade liberalization", "market access", "trade opening",
+            "trade surplus", "export growth", "stimulus", "economic support",
+            "bailout", "rescue package", "recovery", "economic rebound", "growth",
+            "gdp growth", "investment", "foreign investment", "stabilization",
+            "market calm", "confidence returns",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 5: ENERGY STABILITY
+        # ------------------------------------------------------------------
+        "energy_stability": [
+            "production increase", "output boost", "supply restored",
+            "shipments resume", "pipeline reopened", "opec increase", "quota raised",
+            "strategic reserve release", "alternative supply", "prices stabilize",
+            "market calm", "inventory build", "stockpiles rise", "demand eases",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 6: SECURITY IMPROVEMENT
+        # ------------------------------------------------------------------
+        "security_improvement": [
+            "threat neutralized", "threat eliminated", "terror leader killed",
+            "captured", "cell dismantled", "network disrupted", "threat level lowered",
+            "all clear", "situation resolved", "hostages freed", "hostages released",
+            "security upgraded", "systems restored", "back online",
+            "vulnerability patched", "cyber cooperation", "security enhanced",
+        ],
+        
+        # ------------------------------------------------------------------
+        # CATEGORY 7: HEALTH IMPROVEMENT
+        # ------------------------------------------------------------------
+        "health_improvement": [
+            "cases declining", "curve flattening", "restrictions lifted", "reopening",
+            "vaccine rollout", "vaccination campaign", "herd immunity", "endemic",
+            "treatment approved", "cure found", "outbreak contained",
+        ],
+    }
+    
+    # ==========================================================================
+    # CONTEXT-DEPENDENT KEYWORDS - Need surrounding context to classify
+    # ==========================================================================
+    CONTEXT_KEYWORDS = {
+        # Format: keyword -> (escalation_context_words, de_escalation_context_words)
+        "war": (
+            ["declares", "begins", "erupts", "intensifies", "casualties", "attacks"],
+            ["talks", "ends", "ceasefire", "peace", "negotiations", "resolved"]
+        ),
+        "military": (
+            ["action", "strike", "offensive", "buildup", "deploys", "attacks"],
+            ["talks", "diplomacy", "withdrawal", "cooperation", "training"]
+        ),
+        "conflict": (
+            ["escalates", "intensifies", "spreads", "violence", "fighting"],
+            ["resolution", "resolved", "ends", "de-escalation", "peace"]
+        ),
+        "forces": (
+            ["attack", "advance", "invade", "strike", "mobilize"],
+            ["withdraw", "return", "retreat", "stand down", "leave"]
+        ),
+        "troops": (
+            ["deploy", "advance", "attack", "mobilize", "buildup"],
+            ["withdraw", "return home", "pullback", "leave", "retreat"]
+        ),
+        "weapons": (
+            ["used", "deployed", "fired", "launch", "strike"],
+            ["inspectors", "destroyed", "dismantled", "ban", "treaty"]
+        ),
+        "nuclear": (
+            ["threat", "test", "program", "weapons", "arsenal", "attack", "launch", "warhead"],
+            ["deal", "agreement", "disarmament", "inspection", "treaty", "talks", "denuclearize", "willingness"]
+        ),
+        "sanctions": (
+            ["imposed", "new", "expanded", "tightened", "added"],
+            ["lifted", "removed", "eased", "waived", "suspended"]
+        ),
+        "trade": (
+            ["war", "dispute", "tensions", "tariffs", "barriers"],
+            ["deal", "agreement", "talks", "cooperation", "opening"]
+        ),
+        "summit": (
+            ["canceled", "failed", "collapsed", "postponed", "no progress"],
+            ["agreed", "successful", "productive", "breakthrough", "signed"]
+        ),
+        "talks": (
+            ["collapse", "fail", "stall", "breakdown", "deadlock"],
+            ["progress", "breakthrough", "agree", "productive", "resume"]
+        ),
+        "crisis": (
+            ["deepens", "worsens", "escalates", "spreads", "intensifies"],
+            ["eases", "resolved", "contained", "stabilizes", "over"]
+        ),
+        "tensions": (
+            ["rise", "escalate", "increase", "mount", "grow"],
+            ["ease", "reduce", "calm", "de-escalate", "subside"]
+        ),
+    }
+    
+    # ==========================================================================
+    # REGIONAL-SPECIFIC HIGH-RISK KEYWORDS
+    # ==========================================================================
+    REGIONAL_KEYWORDS = {
+        "middle_east": [
+            "iran", "tehran", "ayatollah", "revolutionary guard", "irgc",
+            "israel", "idf", "netanyahu", "gaza", "west bank", "hamas",
+            "hezbollah", "houthis", "saudi", "riyadh", "mbs", "aramco",
+            "strait of hormuz", "persian gulf", "nuclear deal", "jcpoa",
+            "yemen", "lebanon", "syria", "iraq",
+        ],
+        "russia_ukraine": [
+            "putin", "kremlin", "moscow", "zelensky", "kyiv", "kiev",
+            "crimea", "donbas", "donetsk", "luhansk", "nato expansion",
+            "article 5", "wagner", "prigozhin", "nord stream", "gazprom",
+            "russian forces", "ukrainian forces",
+        ],
+        "asia_pacific": [
+            "china", "beijing", "xi jinping", "ccp", "taiwan", "taipei",
+            "strait", "south china sea", "spratlys", "north korea",
+            "pyongyang", "kim jong un", "india-china", "lac", "galwan",
+            "aukus", "quad",
+        ],
+        "europe": [
+            "nato", "eu", "brussels", "brexit", "eurozone", "balkans",
+            "serbia", "kosovo", "ecb", "european commission",
+        ],
+    }
+    
+    # ==========================================================================
+    # ORIGINAL HIGH_IMPACT_KEYWORDS (for backward compatibility & economic data)
+    # ==========================================================================
+    HIGH_IMPACT_KEYWORDS = {
+        # Central Banks & Monetary Policy
         "central_bank": [
-            # Core Institutions
             "federal reserve", "fed", "fomc", "ecb", "european central bank",
             "bank of england", "boe", "bank of japan", "boj", "pboc",
-            "snb", "rba", "rbnz", "boc", "bank of canada",
-            "bis", "imf", "international monetary fund",
-            # Key Officials
             "jerome powell", "powell", "lagarde", "christine lagarde",
-            "bailey", "andrew bailey", "ueda", "kazuo ueda", "fed chair",
-            # Policy Actions
             "interest rate hike", "interest rate cut", "rate hike", "rate cut",
-            "rate hold", "rate decision", "policy tightening", "policy easing",
-            "monetary tightening", "monetary easing", "emergency meeting",
-            "inter-meeting decision", "forward guidance", "dot plot",
-            "policy statement", "balance sheet policy", "minutes",
-            # Liquidity Tools
+            "rate decision", "policy tightening", "policy easing",
             "quantitative easing", "qe", "quantitative tightening", "qt",
-            "balance sheet runoff", "repo operations", "reverse repo",
-            "standing facilities", "discount window", "liquidity injection",
-            "liquidity withdrawal", "emergency facility", "yield curve control",
-            "currency intervention",
-            # Communication Tone (Sentiment)
-            "hawkish", "dovish", "neutral stance", "restrictive policy",
-            "accommodative policy", "data-dependent", "higher for longer",
-            "policy pivot", "tightening bias", "easing bias", "monetary policy",
-            "central bank", "rate decision", "fomc meeting",
+            "hawkish", "dovish", "monetary policy", "fomc meeting",
         ],
         
-        # ======================================================
-        # MACROECONOMIC INDICATORS
-        # ======================================================
+        # Macroeconomic Indicators
         "economic": [
-            # Inflation
             "cpi", "pce", "core cpi", "core pce", "inflation", "core inflation",
-            "inflation expectations", "disinflation", "deflation",
-            "price pressures", "sticky inflation", "inflation surprise",
-            # Labor Market
             "unemployment", "unemployment rate", "jobless claims", "initial claims",
-            "continuing claims", "nonfarm payrolls", "non-farm payrolls", "nfp",
-            "employment growth", "wage growth", "average hourly earnings",
-            "labor participation", "layoffs", "hiring freeze",
-            # Growth & Demand
+            "nonfarm payrolls", "non-farm payrolls", "nfp", "wage growth",
             "gdp", "gdp growth", "recession", "economic slowdown", "contraction",
-            "economic expansion", "pmi", "ism", "retail sales",
-            "consumer spending", "consumer confidence", "industrial production",
-            # Housing & Credit
-            "housing starts", "building permits", "home sales", "mortgage rates",
-            "credit conditions", "lending standards", "delinquencies", "defaults",
-            # Legacy
-            "tariff", "trade war", "currency", "devaluation", "default",
-            "bailout", "crisis", "collapse", "shutdown",
+            "pmi", "ism", "retail sales", "consumer spending", "consumer confidence",
         ],
         
-        # ======================================================
-        # FINANCIAL MARKETS & STRESS
-        # ======================================================
+        # Financial Markets
         "financial_stress": [
-            # Market Structure
-            "equity markets", "bond markets", "yield curve", "curve inversion",
-            "term premium", "real yields", "credit spreads", "swap spreads",
-            "funding markets",
-            # Volatility & Risk
-            "market volatility", "vix", "implied volatility", "volatility spike",
-            "risk-off", "risk-on", "flight to safety", "market selloff",
-            "market rally", "liquidity crunch",
-            # Banking & Credit Stress (SPECIFIC - avoid generic words like "rescue")
-            "bank run", "bank failure", "banking crisis", "deposit outflows",
-            "liquidity stress", "capital adequacy", "stress test",
-            "loan losses", "defaults", "debt restructuring", "credit downgrade",
-            "bankruptcy filing", "debt distress", "bailout package", "bank rescue",
-            "capital shortfall", "liquidity crisis", "sovereign debt crisis",
-            "imf support", "imf bailout", "distressed debt", "contagion risk",
-            "funding stress", "margin calls", "financial crisis", "junk bonds",
-            "systemic risk", "too big to fail", "emergency lending",
+            "yield curve", "curve inversion", "credit spreads", "market volatility",
+            "vix", "volatility spike", "risk-off", "risk-on", "flight to safety",
+            "market selloff", "market rally", "liquidity crunch",
         ],
         
-        # ======================================================
-        # SHIPPING, TRADE & GLOBAL SUPPLY CHAINS (VERY IMPORTANT)
-        # ======================================================
+        # Shipping & Supply Chain
         "shipping": [
-            # Shipping & Logistics
-            "shipping", "shipping disruption", "shipping delays",
-            "port congestion", "container shortage", "vessel shortage",
-            "freight rates", "charter rates", "demurrage",
-            "logistics bottlenecks", "rerouting", "reroute", "maritime risk",
-            "freight", "container", "port", "tanker", "cargo",
-            "insurance premium", "shipping rates", "chokepoint",
-            # Strategic Chokepoints
-            "suez canal", "panama canal", "strait of hormuz",
-            "bab el-mandeb", "strait of malacca", "bosphorus",
-            "red sea", "south china sea", "black sea",
-            # Trade & Transport
-            "global trade", "trade flows", "trade deficit",
-            "export restrictions", "customs delays", "trade sanctions",
-            "reshoring", "nearshoring", "supply chain", "logistics",
-            "blockade",
-        ],
-        "infrastructure": [
-            "flight cancelled", "flights cancelled", "airspace closed",
-            "port closed", "shipping disrupted", "pipeline", "embargo",
-            "supply chain disruption", "logistics crisis",
+            "shipping", "shipping disruption", "port congestion", "container shortage",
+            "freight rates", "suez canal", "panama canal", "strait of hormuz",
+            "red sea", "south china sea", "supply chain", "logistics",
         ],
         
-        # ======================================================
-        # ENERGY & COMMODITIES
-        # ======================================================
+        # Energy
         "energy": [
-            # Energy Markets
-            "opec", "opec+", "oil", "crude oil", "brent", "wti",
-            "natural gas", "lng", "energy supply", "energy shortages",
-            "energy sanctions", "refinery", "refinery outages",
-            "pipeline disruption", "oil prices", "energy crisis",
-            "fuel", "gasoline", "petroleum",
-            # OPEC & Supply
-            "production cut", "production cuts", "output cut",
-            "production increase", "spare capacity", "inventory draw",
-            "inventory build", "strategic petroleum reserve", "spr",
-            "drilling activity", "rig counts",
-            "tanker", "force majeure", "strategic reserves",
-            # Industrial & Ag Commodities
-            "gold", "silver", "copper", "aluminum", "steel",
-            "rare earth", "rare earths", "commodity", "commodities",
-            "mining", "precious metals", "safe haven",
-            "grain exports", "wheat", "corn", "soybeans", "fertilizer",
-        ],
-        
-        # ======================================================
-        # FISCAL & REGULATORY POLICY
-        # ======================================================
-        "fiscal_regulatory": [
-            # Fiscal Policy
-            "government spending", "fiscal stimulus", "austerity",
-            "budget deficit", "public debt", "debt ceiling", "treasury issuance",
-            "government shutdown",
-            # Regulation
-            "regulatory crackdown", "financial regulation", "capital requirements",
-            "banking reform", "market intervention", "price controls",
-            "subsidies", "tax changes", "tax reform",
-            "antitrust", "doj", "ftc", "sec",
-        ],
-        
-        # ======================================================
-        # FUTURES, RATES & DERIVATIVES
-        # ======================================================
-        "rates_derivatives": [
-            # Futures & Term Structure
-            "futures curve", "contango", "backwardation", "roll yield",
-            "open interest", "contract expiry", "front month", "calendar spread",
-            # Rates & Fixed Income
-            "treasury yields", "bond auction", "yield spike", "duration risk",
-            "curve steepening", "curve flattening", "rate volatility", "swap rates",
+            "opec", "opec+", "oil", "crude oil", "brent", "wti", "natural gas",
+            "lng", "energy supply", "energy crisis", "production cut", "output cut",
+            "gold", "safe haven", "commodities",
         ],
     }
     
@@ -305,7 +526,14 @@ class GeopoliticalIntelligence:
         "unexpectedly", "sharply", "emergency", "historic", "unprecedented",
         "sudden", "significant", "severe", "escalates", "intensifies",
         "collapses", "surges", "spikes", "plunges", "widens", "narrows",
-        "crisis", "rare", "record", "shock",
+        "crisis", "rare", "record", "shock", "imminent", "breaking",
+        "urgent", "major", "massive", "critical", "dramatic",
+    ]
+    
+    # URGENCY WORDS - Words that indicate immediate market relevance
+    URGENCY_WORDS = [
+        "breaking", "urgent", "imminent", "immediate", "critical",
+        "major", "massive", "flash", "just in", "developing",
     ]
     
     # HARD DISCARD - Events that should NEVER be classified as market-moving
@@ -646,70 +874,172 @@ class GeopoliticalIntelligence:
     
     def _classify_event(self, text: str) -> Tuple[str, float, List[str]]:
         """
-        Classify event type and severity from text.
+        Classify event type and severity from text using SENTIMENT-AWARE classification.
         Returns: (event_type, severity, matched_keywords)
         
-        IMPORTANT: Returns severity=0 for hard-discard events
+        IMPORTANT: 
+        - Returns severity=0 for hard-discard events
+        - Escalation events INCREASE severity
+        - De-escalation events DECREASE severity (but still tracked)
+        - Context-dependent keywords are analyzed with surrounding words
         """
         text_lower = " " + text.lower() + " "  # Add spaces for word boundary matching
         
         # STEP 1: Check hard discard FIRST - reject irrelevant content immediately
         for discard_kw in self.HARD_DISCARD_KEYWORDS:
             if discard_kw in text_lower:
-                # This is noise - return immediately with 0 severity
                 return "irrelevant", 0.0, []
         
+        # STEP 2: Classify as ESCALATION or DE-ESCALATION
+        escalation_score = 0.0
+        de_escalation_score = 0.0
         matched_keywords = []
         event_type = "general"
-        max_matches = 0
-        all_matches = []
         
-        # Short keywords that need word boundaries to avoid false positives
-        # e.g., "war" should not match "warns", "ware", etc.
-        short_keywords = ["war", "fed", "ecb", "boj", "qe", "qt", "oil", "lng", "gdp", "cpi", "ppi", "pmi", "ism"]
+        # Short keywords that need word boundaries
+        short_keywords = ["war", "fed", "ecb", "boj", "qe", "qt", "oil", "lng", "gdp", "cpi", "pmi", "ism"]
         
-        # Check all categories
-        for etype, keywords in self.HIGH_IMPACT_KEYWORDS.items():
+        def check_keyword(kw: str, text: str) -> bool:
+            """Check if keyword exists with proper word boundaries for short words."""
+            if kw in short_keywords or len(kw) <= 3:
+                return (f" {kw} " in text or f" {kw}," in text or 
+                        f" {kw}." in text or f" {kw}:" in text or
+                        f" {kw})" in text or f"({kw} " in text)
+            return kw in text
+        
+        # STEP 2a: Check ESCALATION keywords
+        escalation_matches = {}
+        for category, keywords in self.ESCALATION_KEYWORDS.items():
             matches = []
             for kw in keywords:
-                if kw in short_keywords:
-                    # Require word boundaries for short keywords
-                    if f" {kw} " in text_lower or f" {kw}," in text_lower or f" {kw}." in text_lower:
-                        matches.append(kw)
-                elif kw in text_lower:
+                if check_keyword(kw, text_lower):
                     matches.append(kw)
-            all_matches.extend(matches)
-            if len(matches) > max_matches:
-                max_matches = len(matches)
+            if matches:
+                escalation_matches[category] = matches
+                escalation_score += len(matches) * 0.15  # Each escalation keyword adds 0.15
+        
+        # STEP 2b: Check DE-ESCALATION keywords
+        de_escalation_matches = {}
+        for category, keywords in self.DE_ESCALATION_KEYWORDS.items():
+            matches = []
+            for kw in keywords:
+                if check_keyword(kw, text_lower):
+                    matches.append(kw)
+            if matches:
+                de_escalation_matches[category] = matches
+                de_escalation_score += len(matches) * 0.12  # De-escalation reduces risk
+        
+        # STEP 2c: Handle CONTEXT-DEPENDENT keywords
+        for context_kw, (escalation_ctx, de_escalation_ctx) in self.CONTEXT_KEYWORDS.items():
+            if check_keyword(context_kw, text_lower):
+                # Check surrounding context (20 chars before/after)
+                kw_pos = text_lower.find(context_kw)
+                if kw_pos != -1:
+                    context_window = text_lower[max(0, kw_pos-30):kw_pos+len(context_kw)+30]
+                    
+                    # Check if escalation context words are present
+                    has_escalation = any(ctx in context_window for ctx in escalation_ctx)
+                    has_de_escalation = any(ctx in context_window for ctx in de_escalation_ctx)
+                    
+                    if has_escalation and not has_de_escalation:
+                        escalation_score += 0.2
+                        matched_keywords.append(f"{context_kw} (escalation)")
+                    elif has_de_escalation and not has_escalation:
+                        de_escalation_score += 0.15
+                        matched_keywords.append(f"{context_kw} (de-escalation)")
+                    # If both or neither, treat as neutral (don't add to either score)
+        
+        # STEP 3: Determine event type from matched categories
+        all_escalation_kws = [kw for kws in escalation_matches.values() for kw in kws]
+        all_de_escalation_kws = [kw for kws in de_escalation_matches.values() for kw in kws]
+        matched_keywords.extend(all_escalation_kws[:5])  # Limit to prevent huge lists
+        matched_keywords.extend(all_de_escalation_kws[:3])
+        
+        # Map category to event type
+        category_to_type = {
+            "military_combat": "military",
+            "diplomatic_breakdown": "diplomatic",
+            "political_instability": "civil_unrest",
+            "sanctions_imposed": "diplomatic",
+            "energy_disruption": "energy",
+            "terrorism": "military",
+            "cyber_attacks": "infrastructure",
+            "financial_crisis": "financial_stress",
+            "trade_war": "economic",
+            "natural_disasters": "infrastructure",
+            "pandemic": "economic",
+            "peace_process": "diplomatic",
+            "diplomatic_progress": "diplomatic",
+            "sanctions_relief": "diplomatic",
+            "economic_recovery": "economic",
+            "energy_stability": "energy",
+            "security_improvement": "military",
+            "health_improvement": "economic",
+        }
+        
+        # Find the category with most matches
+        max_category = None
+        max_count = 0
+        for cat, kws in {**escalation_matches, **de_escalation_matches}.items():
+            if len(kws) > max_count:
+                max_count = len(kws)
+                max_category = cat
+        
+        if max_category:
+            event_type = category_to_type.get(max_category, "general")
+        
+        # Also check legacy HIGH_IMPACT_KEYWORDS for economic/central bank news
+        for etype, keywords in self.HIGH_IMPACT_KEYWORDS.items():
+            matches = [kw for kw in keywords if check_keyword(kw, text_lower)]
+            if len(matches) > max_count:
                 event_type = etype
-                matched_keywords = matches
+                matched_keywords.extend(matches[:3])
         
-        # Calculate severity based on keyword matches and SEVERITY_MODIFIERS
-        # Use class-level modifiers for consistency
+        # STEP 4: Calculate NET SEVERITY (escalation - de-escalation)
+        net_risk = escalation_score - (de_escalation_score * 0.7)  # De-escalation dampens but doesn't fully negate
+        
+        # Check for severity modifiers
         severity_count = sum(1 for w in self.SEVERITY_MODIFIERS if w in text_lower)
+        urgency_count = sum(1 for w in self.URGENCY_WORDS if w in text_lower)
         
-        # Also check for urgency words
-        urgency_words = ["breaking", "urgent", "imminent", "immediate", "critical", "major", "massive"]
-        urgency_count = sum(1 for w in urgency_words if w in text_lower)
+        # Base severity calculation
+        if escalation_score > 0 and de_escalation_score > 0:
+            # Mixed signals - use net but with dampening
+            base_severity = max(0.15, min(0.6, net_risk))
+        elif escalation_score > 0:
+            # Pure escalation - higher severity
+            base_severity = min(0.9, 0.3 + net_risk)
+        elif de_escalation_score > 0:
+            # Pure de-escalation - lower severity but still track
+            base_severity = max(0.15, 0.35 - de_escalation_score * 0.3)
+        else:
+            # No sentiment keywords matched, check legacy keywords
+            if matched_keywords:
+                base_severity = 0.35
+            else:
+                base_severity = 0.1
         
-        # Base severity now starts higher (0.3) so market-moving events pass
-        # Each keyword match adds to severity
-        base_severity = 0.3 if max_matches > 0 else 0.1
-        keyword_bonus = min(0.4, max_matches * 0.12)  # Up to 0.4 from keywords
-        severity_bonus = min(0.25, severity_count * 0.08)  # Up to 0.25 from severity modifiers
-        urgency_bonus = min(0.15, urgency_count * 0.05)  # Up to 0.15 from urgency
+        # Add bonuses
+        severity_bonus = min(0.2, severity_count * 0.06)
+        urgency_bonus = min(0.15, urgency_count * 0.05)
         
-        # CRITICAL event types get base bonus (central_bank, financial_stress)
-        critical_types = ["central_bank", "financial_stress"]
+        # Critical event types get base bonus
+        critical_types = ["central_bank", "financial_stress", "military"]
         if event_type in critical_types:
-            base_severity += 0.15
-        
-        # VERY IMPORTANT event types get base bonus
-        high_impact_types = ["military", "energy", "shipping", "rates_derivatives"]
-        if event_type in high_impact_types:
             base_severity += 0.1
         
-        severity = min(1.0, base_severity + keyword_bonus + severity_bonus + urgency_bonus)
+        # Regional high-risk bonus (if mentions volatile regions)
+        for region, region_kws in self.REGIONAL_KEYWORDS.items():
+            if any(rkw in text_lower for rkw in region_kws):
+                base_severity += 0.05  # Small regional risk bonus
+                break
+        
+        severity = min(1.0, base_severity + severity_bonus + urgency_bonus)
+        
+        # STEP 5: Apply de-escalation cap
+        # If predominantly de-escalation, cap severity at GUARDED level
+        if de_escalation_score > escalation_score * 1.5:
+            severity = min(severity, 0.35)  # Cap at GUARDED level
         
         return event_type, severity, matched_keywords
     
@@ -1126,9 +1456,13 @@ class GeopoliticalIntelligence:
     
     def get_risk_assessment(self, refresh: bool = False) -> GeopoliticalRiskAssessment:
         """
-        Get comprehensive geopolitical risk assessment.
+        Get comprehensive geopolitical risk assessment with SENTIMENT-AWARE scoring.
         
-        This is the main method that integrates all intelligence.
+        This method uses:
+        1. Escalation vs De-escalation classification
+        2. Time decay for older events
+        3. Baseline normalization (comparing to typical news volume)
+        4. Regional risk aggregation with caps
         """
         # Update events if needed
         if refresh or not self.last_update or \
@@ -1137,75 +1471,179 @@ class GeopoliticalIntelligence:
         
         now = datetime.now(pytz.UTC)
         
-        # Get high-impact events from last 24 hours
+        # Get events from last 24 hours
         cutoff_24h = now - timedelta(hours=24)
         recent_events = [e for e in self.events_cache 
                         if e.timestamp.replace(tzinfo=pytz.UTC) > cutoff_24h]
         
-        # Filter to significant events
-        significant_events = [e for e in recent_events if e.market_impact_score > 0.4]
+        # STEP 1: Classify events as ESCALATION or DE-ESCALATION
+        escalation_events = []
+        de_escalation_events = []
+        neutral_events = []
         
-        # Calculate regional risks
+        for event in recent_events:
+            # Re-analyze the event's sentiment
+            text = f"{event.headline} {event.summary}"
+            text_lower = text.lower()
+            
+            # Count escalation vs de-escalation keywords
+            escalation_count = 0
+            de_escalation_count = 0
+            
+            for category, keywords in self.ESCALATION_KEYWORDS.items():
+                for kw in keywords:
+                    if kw in text_lower:
+                        escalation_count += 1
+            
+            for category, keywords in self.DE_ESCALATION_KEYWORDS.items():
+                for kw in keywords:
+                    if kw in text_lower:
+                        de_escalation_count += 1
+            
+            # Classify based on net sentiment
+            if escalation_count > de_escalation_count * 1.2:
+                escalation_events.append(event)
+            elif de_escalation_count > escalation_count * 1.2:
+                de_escalation_events.append(event)
+            else:
+                neutral_events.append(event)
+        
+        # STEP 2: Calculate regional risks with CAPS and DAMPENING
         regional_risks = {}
-        for event in significant_events:
-            for region in event.regions:
-                current_risk = regional_risks.get(region, 0)
-                regional_risks[region] = min(1.0, current_risk + event.market_impact_score * 0.2)
+        regional_escalation = {}  # Track escalation per region
+        regional_de_escalation = {}  # Track de-escalation per region
         
-        # Get live regional market data
+        # Count escalation events per region
+        for event in escalation_events:
+            if event.market_impact_score > 0.3:  # Only significant events
+                for region in event.regions:
+                    regional_escalation[region] = regional_escalation.get(region, 0) + 1
+        
+        # Count de-escalation events per region
+        for event in de_escalation_events:
+            if event.market_impact_score > 0.25:
+                for region in event.regions:
+                    regional_de_escalation[region] = regional_de_escalation.get(region, 0) + 1
+        
+        # BASELINE: Typical number of geopolitical headlines per region per day
+        # This prevents "100% risk" just because there are many headlines
+        BASELINE_EVENTS_PER_REGION = 5  # Normal daily geopolitical news volume
+        
+        for region in set(list(regional_escalation.keys()) + list(regional_de_escalation.keys())):
+            esc_count = regional_escalation.get(region, 0)
+            de_esc_count = regional_de_escalation.get(region, 0)
+            
+            # Net escalation (escalation - de-escalation dampening)
+            net_escalation = max(0, esc_count - de_esc_count * 0.5)
+            
+            # Calculate risk as deviation from baseline
+            # If net_escalation = BASELINE, risk = 50% (normal)
+            # If net_escalation = 2x BASELINE, risk = 75% (elevated)
+            # If net_escalation = 3x BASELINE, risk = 85% (high)
+            # If net_escalation = 4x+ BASELINE, risk = 95% (critical)
+            if net_escalation <= BASELINE_EVENTS_PER_REGION:
+                # Below or at baseline - LOW to MODERATE risk
+                regional_risk = 0.2 + (net_escalation / BASELINE_EVENTS_PER_REGION) * 0.3
+            elif net_escalation <= BASELINE_EVENTS_PER_REGION * 2:
+                # 1x to 2x baseline - ELEVATED risk
+                excess = (net_escalation - BASELINE_EVENTS_PER_REGION) / BASELINE_EVENTS_PER_REGION
+                regional_risk = 0.5 + excess * 0.25
+            elif net_escalation <= BASELINE_EVENTS_PER_REGION * 3:
+                # 2x to 3x baseline - HIGH risk
+                excess = (net_escalation - BASELINE_EVENTS_PER_REGION * 2) / BASELINE_EVENTS_PER_REGION
+                regional_risk = 0.75 + excess * 0.1
+            else:
+                # 3x+ baseline - CRITICAL (cap at 95%)
+                regional_risk = 0.85 + min(0.1, (net_escalation - BASELINE_EVENTS_PER_REGION * 3) * 0.02)
+            
+            # Apply de-escalation dampening
+            if de_esc_count > esc_count:
+                regional_risk *= 0.6  # Strong de-escalation signal
+            
+            regional_risks[region] = round(min(0.95, regional_risk), 2)  # Cap at 95%
+        
+        # Get live regional market data (panic detection)
         market_data = self.fetch_regional_market_data()
         
-        # Incorporate market panic signals
+        # Incorporate market panic signals (actual market reaction validation)
         for region, data in market_data.items():
             if data.get("is_panic"):
-                regional_risks[region] = min(1.0, regional_risks.get(region, 0) + 0.3)
+                # Market is actually reacting - boost risk
+                regional_risks[region] = min(0.95, regional_risks.get(region, 0.3) + 0.15)
+            elif region in regional_risks and regional_risks[region] > 0.7:
+                # High risk but market is calm - dampen risk assessment
+                if data.get("change_pct", 0) > -0.5:  # Market not falling
+                    regional_risks[region] = max(0.4, regional_risks[region] - 0.15)
         
-        # Calculate overall risk
+        # STEP 3: Calculate overall risk using WEIGHTED approach
+        significant_events = [e for e in escalation_events if e.market_impact_score > 0.35]
+        
         if significant_events:
-            # Weight by recency (more recent = higher weight)
+            # Time decay: more recent = higher weight
             weighted_scores = []
             for event in significant_events:
                 age_hours = (now - event.timestamp.replace(tzinfo=pytz.UTC)).total_seconds() / 3600
-                recency_weight = max(0.3, 1.0 - (age_hours / 24))  # Decay over 24h
+                # Exponential decay: half-life of 6 hours
+                recency_weight = 2 ** (-age_hours / 6)
                 weighted_scores.append(event.market_impact_score * recency_weight)
             
-            # Overall score: combination of max and average
+            # Overall score: blend of max severity and weighted average
             max_score = max(weighted_scores)
             avg_score = sum(weighted_scores) / len(weighted_scores)
-            overall_risk = 0.6 * max_score + 0.4 * avg_score
+            
+            # De-escalation dampening on overall risk
+            de_esc_ratio = len(de_escalation_events) / max(1, len(escalation_events))
+            dampening = 1.0 - min(0.3, de_esc_ratio * 0.2)  # Max 30% dampening
+            
+            overall_risk = (0.5 * max_score + 0.5 * avg_score) * dampening
         else:
-            overall_risk = 0.1  # Low baseline
+            # No significant escalation events
+            overall_risk = 0.15  # Low baseline
         
-        # Determine risk level
-        if overall_risk >= 0.8:
+        # Also consider regional risks in overall calculation
+        if regional_risks:
+            max_regional = max(regional_risks.values())
+            avg_regional = sum(regional_risks.values()) / len(regional_risks)
+            regional_contribution = 0.4 * max_regional + 0.6 * avg_regional
+            
+            # Blend event-based and regional-based risk
+            overall_risk = 0.6 * overall_risk + 0.4 * regional_contribution
+        
+        # Cap overall risk at 85% unless there's actual market panic
+        market_panic_count = sum(1 for d in market_data.values() if d.get("is_panic"))
+        if market_panic_count < 2:
+            overall_risk = min(0.85, overall_risk)
+        
+        # STEP 4: Determine risk level with GRADUATED thresholds
+        if overall_risk >= 0.75:
             risk_level = "critical"
             exposure_adj = 0.3
-        elif overall_risk >= 0.6:
+        elif overall_risk >= 0.55:
             risk_level = "high"
             exposure_adj = 0.5
-        elif overall_risk >= 0.4:
+        elif overall_risk >= 0.40:
             risk_level = "elevated"
             exposure_adj = 0.7
-        elif overall_risk >= 0.2:
+        elif overall_risk >= 0.25:
             risk_level = "moderate"
-            exposure_adj = 0.9
+            exposure_adj = 0.85
         else:
             risk_level = "low"
             exposure_adj = 1.0
         
-        # Determine if safe haven rotation is warranted
+        # STEP 5: Safe haven signal (only for genuine crises)
         safe_haven_signal = (
-            overall_risk >= 0.6 or
-            any(e.event_type == "military" and e.severity > 0.7 for e in significant_events) or
-            sum(1 for d in market_data.values() if d.get("is_panic")) >= 2
+            overall_risk >= 0.65 or
+            any(e.event_type == "military" and e.severity > 0.75 for e in significant_events) or
+            market_panic_count >= 2
         )
         
-        # Extract key concerns
+        # STEP 6: Extract key concerns (prioritize escalation events)
         key_concerns = []
         for event in sorted(significant_events, 
-                           key=lambda x: x.market_impact_score, 
+                           key=lambda x: x.market_impact_score * x.severity, 
                            reverse=True)[:5]:
-            key_concerns.append(f"{event.event_type.upper()}: {event.headline[:80]}")
+            key_concerns.append(f"{event.event_type.upper()}: {event.headline[:80]}...")
         
         self.last_assessment = GeopoliticalRiskAssessment(
             timestamp=now,
@@ -1260,6 +1698,115 @@ class GeopoliticalIntelligence:
         """Get recommended exposure multiplier based on geopolitical risk."""
         assessment = self.get_risk_assessment()
         return assessment.recommended_exposure_adjustment
+    
+    def analyze_headline(self, headline: str) -> dict:
+        """
+        Analyze a single headline for debugging/transparency.
+        Returns detailed classification including:
+        - Event type
+        - Severity
+        - Escalation vs De-escalation breakdown
+        - Matched keywords
+        - Explanation
+        """
+        text_lower = " " + headline.lower() + " "
+        
+        # Check hard discard
+        for discard_kw in self.HARD_DISCARD_KEYWORDS:
+            if discard_kw in text_lower:
+                return {
+                    "headline": headline,
+                    "classification": "DISCARDED",
+                    "reason": f"Matched discard keyword: '{discard_kw}'",
+                    "severity": 0,
+                    "is_market_relevant": False,
+                }
+        
+        # Count escalation keywords
+        escalation_matches = []
+        for category, keywords in self.ESCALATION_KEYWORDS.items():
+            for kw in keywords:
+                if kw in text_lower:
+                    escalation_matches.append(f"{category}:{kw}")
+        
+        # Count de-escalation keywords
+        de_escalation_matches = []
+        for category, keywords in self.DE_ESCALATION_KEYWORDS.items():
+            for kw in keywords:
+                if kw in text_lower:
+                    de_escalation_matches.append(f"{category}:{kw}")
+        
+        # Get full classification
+        event_type, severity, keywords = self._classify_event(headline)
+        
+        # Determine net sentiment
+        if len(escalation_matches) > len(de_escalation_matches) * 1.2:
+            sentiment = "ESCALATION"
+        elif len(de_escalation_matches) > len(escalation_matches) * 1.2:
+            sentiment = "DE-ESCALATION"
+        else:
+            sentiment = "NEUTRAL/MIXED"
+        
+        # Build explanation
+        explanation = []
+        if escalation_matches:
+            explanation.append(f"Escalation signals: {len(escalation_matches)}")
+        if de_escalation_matches:
+            explanation.append(f"De-escalation signals: {len(de_escalation_matches)}")
+        if severity < 0.25:
+            explanation.append("Low severity - minimal market impact expected")
+        elif severity >= 0.75:
+            explanation.append("High severity - significant market impact possible")
+        
+        return {
+            "headline": headline,
+            "event_type": event_type,
+            "severity": round(severity, 3),
+            "sentiment": sentiment,
+            "escalation_keywords": escalation_matches[:5],  # Limit output
+            "de_escalation_keywords": de_escalation_matches[:5],
+            "matched_keywords": keywords[:5],
+            "is_market_relevant": severity >= self.MIN_SEVERITY_THRESHOLD,
+            "explanation": " | ".join(explanation) if explanation else "Standard news",
+        }
+    
+    def get_sentiment_summary(self) -> dict:
+        """
+        Get a summary of current escalation vs de-escalation balance.
+        Useful for UI display and debugging.
+        """
+        now = datetime.now(pytz.UTC)
+        cutoff_24h = now - timedelta(hours=24)
+        recent_events = [e for e in self.events_cache 
+                        if e.timestamp.replace(tzinfo=pytz.UTC) > cutoff_24h]
+        
+        escalation_count = 0
+        de_escalation_count = 0
+        neutral_count = 0
+        
+        for event in recent_events:
+            analysis = self.analyze_headline(event.headline)
+            if analysis["sentiment"] == "ESCALATION":
+                escalation_count += 1
+            elif analysis["sentiment"] == "DE-ESCALATION":
+                de_escalation_count += 1
+            else:
+                neutral_count += 1
+        
+        total = max(1, escalation_count + de_escalation_count + neutral_count)
+        
+        return {
+            "total_events_24h": len(recent_events),
+            "escalation_events": escalation_count,
+            "de_escalation_events": de_escalation_count,
+            "neutral_events": neutral_count,
+            "escalation_ratio": round(escalation_count / total, 2),
+            "de_escalation_ratio": round(de_escalation_count / total, 2),
+            "net_sentiment": "RISK-ON" if de_escalation_count > escalation_count * 1.2 else (
+                "RISK-OFF" if escalation_count > de_escalation_count * 1.2 else "NEUTRAL"
+            ),
+            "last_update": self.last_update.isoformat() if self.last_update else None,
+        }
 
 
 # Singleton instance
