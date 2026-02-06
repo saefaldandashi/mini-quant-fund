@@ -267,18 +267,31 @@ class SpreadAnalyzer:
             return 0
         
         limit_pct = analysis.recommended_limit_pct * aggression
-        limit_pct = min(limit_pct, 0.50)  # Cap at mid price
+        limit_pct = min(limit_pct, 0.50)  # Cap at 50% of spread
         
         if side.lower() == 'buy':
-            # For buys, start from bid and move toward ask
-            limit_price = analysis.bid + (analysis.spread * limit_pct)
+            # For buys: Start from ASK and move down slightly (to get price improvement)
+            # We want to be aggressive enough to fill, but still try to save a bit
+            # Use a small discount from ask (max 0.3% below ask to ensure fill)
+            max_discount = min(analysis.spread * limit_pct, analysis.ask * 0.003)  # Max 0.3% below ask
+            limit_price = analysis.ask - max_discount
         else:
-            # For sells, start from ask and move toward bid
-            limit_price = analysis.ask - (analysis.spread * limit_pct)
+            # For sells: Start from BID and move up slightly 
+            # Use a small premium above bid (max 0.3% above bid to ensure fill)
+            max_premium = min(analysis.spread * limit_pct, analysis.bid * 0.003)  # Max 0.3% above bid
+            limit_price = analysis.bid + max_premium
         
-        # SAFETY: Ensure limit price is positive
+        # SAFETY: Ensure limit price is positive and reasonable
         if limit_price <= 0:
             return 0
+        
+        # For buys, limit should never be below mid price (too aggressive discount)
+        if side.lower() == 'buy' and limit_price < analysis.mid:
+            limit_price = analysis.ask  # Just use ask price
+        
+        # For sells, limit should never be above mid price
+        if side.lower() == 'sell' and limit_price > analysis.mid:
+            limit_price = analysis.bid  # Just use bid price
         
         # Round to 2 decimal places
         return round(limit_price, 2)
