@@ -43,11 +43,11 @@
       "avg_improvement": 0.0
     },
     "AAPL": {
-      "total_orders": 124,
-      "limit_attempts": 15,
-      "limit_fills": 1,
-      "avg_spread": 0.11779812850385303,
-      "avg_improvement": -3.3569318457662014e-10
+      "total_orders": 127,
+      "limit_attempts": 16,
+      "limit_fills": 2,
+      "avg_spread": 0.17398905978474144,
+      "avg_improvement": 0.8207999998273787
     },
     "CVX": {
       "total_orders": 35,
@@ -239,10 +239,10 @@
       "avg_improvement": 0.0
     },
     "GLW": {
-      "total_orders": 13,
+      "total_orders": 14,
       "limit_attempts": 1,
       "limit_fills": 0,
-      "avg_spread": 1.0221382125050216,
+      "avg_spread": 1.3115377304978444,
       "avg_improvement": 0.0
     },
     "C": {
@@ -260,10 +260,10 @@
       "avg_improvement": 0.013040000000010878
     },
     "CFG": {
-      "total_orders": 4,
+      "total_orders": 6,
       "limit_attempts": 2,
       "limit_fills": 0,
-      "avg_spread": 0.04890129680463372,
+      "avg_spread": 0.0451234164636157,
       "avg_improvement": 0.0
     },
     "INTC": {
@@ -274,11 +274,11 @@
       "avg_improvement": 0.0
     },
     "RTX": {
-      "total_orders": 10,
-      "limit_attempts": 3,
-      "limit_fills": 0,
-      "avg_spread": 1.9228569054158822,
-      "avg_improvement": 0.0
+      "total_orders": 12,
+      "limit_attempts": 4,
+      "limit_fills": 1,
+      "avg_spread": 2.1346869935009662,
+      "avg_improvement": 0.0016000000000030924
     },
     "MTB": {
       "total_orders": 5,
@@ -288,26 +288,26 @@
       "avg_improvement": 0.0
     },
     "ENPH": {
-      "total_orders": 3,
-      "limit_attempts": 3,
+      "total_orders": 4,
+      "limit_attempts": 4,
       "limit_fills": 0,
-      "avg_spread": 0.08343092848835601,
+      "avg_spread": 0.09620912246026295,
       "avg_improvement": 0.0
     },
     "META": {
-      "total_orders": 15,
-      "limit_attempts": 14,
+      "total_orders": 19,
+      "limit_attempts": 15,
       "limit_fills": 5,
-      "avg_spread": 1.366162905114995,
-      "avg_improvement": 0.390156838507592
+      "avg_spread": 2.6913754850936478,
+      "avg_improvement": 0.15980824105270972
     },
     "LOW": {
-      "total_orders": 7,
-      "limit_attempts": 5,
-      "limit_fills": 0,
-      "avg_spread": 0.6072853532041463,
-      "avg_improvement": 0.0
+      "total_orders": 12,
+      "limit_attempts": 8,
+      "limit_fills": 2,
+      "avg_spread": 0.6656915193961362,
+      "avg_improvement": 0.022600000000004457
     }
   },
-  "last_updated": "2026-02-05T21:21:03.473361"
+  "last_updated": "2026-02-06T00:12:53.667405"
 }

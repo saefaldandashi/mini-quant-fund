@@ -495,8 +495,8 @@ _rebalance_lock = False  # True when rebalance is in progress
 _last_rebalance_attempt = None  # Timestamp of last attempt
 _last_rebalance_success = None  # Timestamp of last successful rebalance
 _consecutive_failures = 0  # Count of consecutive failures
-REBALANCE_COOLDOWN_SECONDS = 120  # Minimum 2 minutes between attempts
-MAX_CONSECUTIVE_FAILURES = 3  # After 3 failures, extend cooldown to 15 min
+REBALANCE_COOLDOWN_SECONDS = 30  # Minimum 30 seconds between manual attempts (reduced from 120)
+MAX_CONSECUTIVE_FAILURES = 3  # After 3 failures, extend cooldown to 5 min
 
 def _get_rebalance_cooldown() -> tuple:
     """Check if rebalance is allowed based on cooldown."""
@@ -510,7 +510,7 @@ def _get_rebalance_cooldown() -> tuple:
         
         # Extended cooldown after consecutive failures
         if _consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
-            cooldown = 900  # 15 minutes
+            cooldown = 300  # 5 minutes (reduced from 15)
         else:
             cooldown = REBALANCE_COOLDOWN_SECONDS
         
@@ -4426,12 +4426,17 @@ def auto_rebalance_scheduler():
     last_news_refresh = datetime.now()  # Track Global Intel refreshes
     outcome_check_interval = timedelta(hours=1)  # Check outcomes hourly
     holding_check_interval = timedelta(minutes=5)  # Check holding periods every 5 mins
-    intraday_rebalance_interval = timedelta(minutes=15)  # 15-min intraday rebalance
+    intraday_rebalance_interval = timedelta(minutes=5)  # 5-min intraday rebalance (was 15)
     news_refresh_interval = timedelta(minutes=5)  # Refresh Global Intel every 5 mins
     
     logging.info("🔄 Auto-rebalance scheduler thread STARTED")
     logging.info("   📰 Global Intel refresh: every 5 minutes")
-    logging.info("   ⚡ Intraday rebalance: every 15 minutes (during market hours)")
+    logging.info("   ⚡ Intraday rebalance: every 5 minutes (during market hours)")
+    
+    # Initialize next_run if not set
+    if auto_rebalance_settings.get("enabled") and not auto_rebalance_settings.get("next_run"):
+        auto_rebalance_settings["next_run"] = datetime.now() + timedelta(minutes=auto_rebalance_settings.get("interval_minutes", 30))
+        logging.info(f"   📅 Next auto-rebalance: {auto_rebalance_settings['next_run']}")
     
     while not scheduler_stop_event.is_set():
         now = datetime.now()
@@ -4497,7 +4502,7 @@ def auto_rebalance_scheduler():
                     )
                     
                     if is_market_hours and not last_run_status["running"]:
-                        logging.info("⚡ INTRADAY REBALANCE (15-min cycle) - capturing opportunities")
+                        logging.info("⚡ INTRADAY REBALANCE (5-min cycle) - capturing opportunities")
                         run_bot_threaded(
                             allow_after_hours=False,
                             force_rebalance=True,

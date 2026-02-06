@@ -129,66 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 242,
+  "total_rounds": 249,
   "reward_history": [
-    {
-      "timestamp": "2026-01-30T12:06:33.001541",
-      "returns": {
-        "TS_Momentum_LS": -0.0006342100214935485,
-        "QualityValue_LS": -0.005840754916573017,
-        "CrossSectionMomentum": 0.0038856577681761215
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-30T12:09:07.138699",
-      "returns": {
-        "TS_Momentum_LS": -0.0006342100214935485,
-        "CrossSectionMomentum": 0.0038856577681761215,
-        "QualityValue_LS": -0.005840754916573017
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-01-30T12:17:27.592677",
-      "returns": {
-        "TS_Momentum_LS": -0.0006342100214935485,
-        "QualityValue_LS": -0.005840754916573017,
-        "CrossSectionMomentum": 0.0038856577681761215
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-02-03T20:09:18.509196",
-      "returns": {
-        "TS_Momentum_LS": -0.013698031032759957,
-        "QualityValue_LS": -0.0012187336776740157,
-        "CrossSectionMomentum": -0.04838557989451008
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T20:13:22.865579",
-      "returns": {
-        "TS_Momentum_LS": -0.0045740698685792745,
-        "QualityValue_LS": -0.0025245197608960534
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T20:18:22.821419",
-      "returns": {
-        "TS_Momentum_LS": -0.006724742839516308
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T20:23:21.844835",
-      "returns": {
-        "TS_Momentum_LS": -0.006340945420695295
-      },
-      "regime": "risk_off"
-    },
     {
       "timestamp": "2026-02-03T20:28:23.557007",
       "returns": {
@@ -953,7 +895,66 @@
         "QualityValue_LS": -0.0021238130903371726
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T21:26:14.068943",
+      "returns": {
+        "TS_Momentum_LS": -0.004280691364637133,
+        "QualityValue_LS": 0.003533435014248949,
+        "CalendarEffects": 0.003533435014248949
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T21:27:33.652266",
+      "returns": {
+        "TS_Momentum_LS": -0.0052001841736535655,
+        "CalendarEffects": 0.0008392575409907489,
+        "QualityValue_LS": 0.0008392575409907489
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T21:31:27.469190",
+      "returns": {
+        "TS_Momentum_LS": -0.005293653985870079,
+        "CalendarEffects": 0.00020508443467351413,
+        "QualityValue_LS": 0.00020508443467351413
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T22:19:24.029780",
+      "returns": {
+        "TS_Momentum_LS": -0.001173813915861123,
+        "CalendarEffects": -0.001173813915861123,
+        "QualityValue_LS": -0.001173813915861123
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-05T22:24:14.848659",
+      "returns": {
+        "TS_Momentum_LS": -0.0005178422524958342,
+        "QualityValue_LS": -0.0005178422524958342,
+        "CalendarEffects": -0.0005178422524958342
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-06T00:13:04.684327",
+      "returns": {
+        "TS_Momentum_LS": 8.337500045116186e-07
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-06T00:14:02.534830",
+      "returns": {
+        "TS_Momentum_LS": 0.0018716155623626565
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-02-05T21:21:11.853815"
+  "last_updated": "2026-02-06T00:14:02.535110"
 }
