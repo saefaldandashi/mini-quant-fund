@@ -494,29 +494,28 @@ current_regime = None
 _rebalance_lock = False  # True when rebalance is in progress
 _last_rebalance_attempt = None  # Timestamp of last attempt
 _last_rebalance_success = None  # Timestamp of last successful rebalance
-_consecutive_failures = 0  # Count of consecutive failures
-REBALANCE_COOLDOWN_SECONDS = 30  # Minimum 30 seconds between manual attempts (reduced from 120)
-MAX_CONSECUTIVE_FAILURES = 3  # After 3 failures, extend cooldown to 5 min
+_consecutive_failures = 0  # Count of consecutive failures (informational only)
+REBALANCE_COOLDOWN_SECONDS = 5  # Just a double-click guard, nothing more
 
 def _get_rebalance_cooldown() -> tuple:
-    """Check if rebalance is allowed based on cooldown."""
-    global _rebalance_lock, _last_rebalance_attempt, _consecutive_failures
+    """Check if rebalance is allowed.
+    
+    Only two checks:
+    1. Is a rebalance already running? (prevent concurrent execution)
+    2. Was the last attempt < 5 seconds ago? (prevent accidental double-click)
+    
+    That's it. No failure-based lockouts. The user should ALWAYS be able to rebalance.
+    """
+    global _rebalance_lock, _last_rebalance_attempt
     
     if _rebalance_lock:
         return False, "Rebalance already in progress"
     
     if _last_rebalance_attempt:
         elapsed = (datetime.now() - _last_rebalance_attempt).total_seconds()
-        
-        # Extended cooldown after consecutive failures
-        if _consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
-            cooldown = 300  # 5 minutes (reduced from 15)
-        else:
-            cooldown = REBALANCE_COOLDOWN_SECONDS
-        
-        if elapsed < cooldown:
-            remaining = int(cooldown - elapsed)
-            return False, f"Cooldown: {remaining}s remaining (failures: {_consecutive_failures})"
+        if elapsed < REBALANCE_COOLDOWN_SECONDS:
+            remaining = int(REBALANCE_COOLDOWN_SECONDS - elapsed)
+            return False, f"Please wait {remaining}s (double-click protection)"
     
     return True, "OK"
 
@@ -2970,6 +2969,15 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log("SIGNAL VALIDATION")
         log("=" * 60)
         
+        # Reset validator stats for this run (prevent accumulation across runs)
+        signal_validator.total_validated = 0
+        signal_validator.total_passed = 0
+        signal_validator.total_blocked = 0
+        signal_validator.total_warnings = 0
+        signal_validator.momentum_confirmed = 0
+        signal_validator.momentum_rejected = 0
+        signal_validator.confluence_boosted = 0
+        
         # Convert ticker sentiments to dict format for validator
         ticker_sentiments_dict = {}
         for ticker, feat in last_ticker_sentiments.items():
@@ -3404,7 +3412,8 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         # Calculate target shares - include BOTH longs AND shorts
         # Use 0.1% (0.001) threshold to allow more positions through
         # The investment floor in enhance_position_sizes will scale them up properly
-        MIN_WEIGHT_THRESHOLD = 0.01  # 1% minimum weight to consider (was 0.1%)
+        # NOTE: Must be low enough to let positions through before enhance_position_sizes scales them
+        MIN_WEIGHT_THRESHOLD = 0.001  # 0.1% minimum weight to consider
         target_symbols = [s for s, w in final_weights.items() if abs(w) > MIN_WEIGHT_THRESHOLD]
         
         # Apply symbol cooldown filter - prevent over-trading same symbols
@@ -3440,6 +3449,8 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         if not target_symbols:
             log("No positions to take - going to cash")
             target_shares = {}
+            enhanced_weights = {}
+            confidences = {}
         else:
             # Pass the actual weights (not zeros!) to calculate proper share quantities
             target_weights_filtered = {s: final_weights[s] for s in target_symbols}
