@@ -2051,11 +2051,19 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             _perf_state = _loss_analysis.get("acceleration_mode", "normal").upper()
             _current_pnl = _loss_analysis.get("total_pnl_pct", 0.0)
             
-            scores, transcript = debate_engine.run_debate(
-                signals, features,
-                performance_state=_perf_state,
-                current_pnl_pct=_current_pnl,
-            )
+            # Try new signature first (with performance_state), fall back to old if needed
+            try:
+                scores, transcript = debate_engine.run_debate(
+                    signals, features,
+                    performance_state=_perf_state,
+                    current_pnl_pct=_current_pnl,
+                )
+            except TypeError:
+                # Backward compatibility: old version doesn't have these parameters
+                log("⚠️ Using legacy debate engine signature (performance_state not supported)")
+                scores, transcript = debate_engine.run_debate(
+                    signals, features,
+                )
         
         # Log initial rankings
         ranked = sorted(scores.items(), key=lambda x: x[1].total_score, reverse=True)
