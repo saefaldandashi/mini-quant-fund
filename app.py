@@ -14,7 +14,7 @@ import pytz
 import numpy as np
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Any, Dict, Tuple
 
 from flask import Flask, render_template, jsonify, request, send_file, Response
 from functools import wraps
@@ -369,8 +369,16 @@ last_run_status = {
     "strategy_scores": None,
 }
 
-# Capital exposure setting (0.0 - 1.0)
-capital_exposure_pct = 0.8
+# Global debate info storage (updated each rebalance, read by API endpoints)
+last_debate_info: Dict[str, Any] = {
+    "urgency": {},
+    "scores": {},
+    "transcript": None,
+}
+
+# Capital exposure setting — RAISED for 100-300% target
+# Was 0.8 (leaving 20% idle on top of the 5% cash buffer = double-buffering)
+capital_exposure_pct = 0.95
 
 # Risk appetite setting
 risk_appetite = "moderate"  # conservative, moderate, aggressive, maximum
@@ -380,9 +388,9 @@ long_short_settings = {
     "enable_long_short": True,  # Enable L/S strategies (can short)
     "enable_futures": True,  # Enable futures strategies (backtest proxies)
     "enable_shorting": True,  # Allow short positions
-    "max_gross_exposure": 2.0,  # 200% max gross
-    "net_exposure_min": -0.3,  # Can be 30% net short
-    "net_exposure_max": 1.0,  # Can be 100% net long
+    "max_gross_exposure": 2.5,  # 250% max gross (was 200%)
+    "net_exposure_min": -0.4,  # Can be 40% net short (was -0.3)
+    "net_exposure_max": 1.3,  # Can be 130% net long with leverage (was 1.0)
     "max_short_per_position": 0.10,  # 10% max per short
 }
 
@@ -390,8 +398,8 @@ long_short_settings = {
 # Stops trading when daily loss exceeds threshold
 daily_pnl_tracker = {
     "enabled": True,
-    "max_daily_loss_pct": 0.03,  # 3% max daily loss (of portfolio)
-    "max_daily_loss_dollars": 3000,  # $3000 max daily loss (absolute)
+    "max_daily_loss_pct": 0.04,  # 4% max daily loss (was 3% — slightly more room for bigger swings)
+    "max_daily_loss_dollars": 4000,  # $4000 max daily loss (was $3000)
     "trading_halted": False,
     "halt_reason": "",
     "day_start_equity": None,
@@ -491,15 +499,26 @@ current_regime = None
 # ============================================================
 # REBALANCE COOLDOWN SYSTEM - Prevents infinite loops
 # ============================================================
+# DESIGN:
+#   - _rebalance_lock prevents concurrent runs (always cleared in finally)
+#   - Cooldown only applies to auto/scheduler calls, NEVER blocks manual runs
+#   - Failure counter resets on any success AND caps at a sane maximum
+#   - Early returns (market closed, P&L halt, etc.) are NOT counted as failures
+# ============================================================
 _rebalance_lock = False  # True when rebalance is in progress
 _last_rebalance_attempt = None  # Timestamp of last attempt
 _last_rebalance_success = None  # Timestamp of last successful rebalance
-_consecutive_failures = 0  # Count of consecutive failures
-REBALANCE_COOLDOWN_SECONDS = 30  # Minimum 30 seconds between manual attempts (reduced from 120)
-MAX_CONSECUTIVE_FAILURES = 3  # After 3 failures, extend cooldown to 5 min
+_consecutive_failures = 0  # Count of consecutive REAL failures (exceptions only)
+REBALANCE_COOLDOWN_SECONDS = 30  # Minimum 30s between auto-scheduler attempts
+MAX_CONSECUTIVE_FAILURES = 5  # After 5 real failures, extend cooldown
+MAX_FAILURE_COOLDOWN = 120  # Max cooldown = 2 minutes (not 5)
 
 def _get_rebalance_cooldown() -> tuple:
-    """Check if rebalance is allowed based on cooldown."""
+    """Check if rebalance is allowed based on cooldown.
+    
+    NOTE: This is ONLY called when force_rebalance=False (auto-scheduler).
+    Manual rebalances always bypass this entirely.
+    """
     global _rebalance_lock, _last_rebalance_attempt, _consecutive_failures
     
     if _rebalance_lock:
@@ -508,9 +527,9 @@ def _get_rebalance_cooldown() -> tuple:
     if _last_rebalance_attempt:
         elapsed = (datetime.now() - _last_rebalance_attempt).total_seconds()
         
-        # Extended cooldown after consecutive failures
+        # Graduated cooldown based on failure count
         if _consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
-            cooldown = 300  # 5 minutes (reduced from 15)
+            cooldown = min(MAX_FAILURE_COOLDOWN, REBALANCE_COOLDOWN_SECONDS * 2)
         else:
             cooldown = REBALANCE_COOLDOWN_SECONDS
         
@@ -526,15 +545,27 @@ def _start_rebalance():
     _rebalance_lock = True
     _last_rebalance_attempt = datetime.now()
 
-def _end_rebalance(success: bool):
-    """Mark rebalance as ended."""
+def _end_rebalance(success: bool, is_early_return: bool = False):
+    """Mark rebalance as ended. ALWAYS called (via finally block).
+    
+    Args:
+        success: True if rebalance completed trades successfully
+        is_early_return: True if rebalance exited early (market closed, P&L halt, etc.)
+                         Early returns are NOT counted as failures.
+    """
     global _rebalance_lock, _last_rebalance_success, _consecutive_failures
-    _rebalance_lock = False
+    _rebalance_lock = False  # ALWAYS release the lock
     if success:
         _last_rebalance_success = datetime.now()
-        _consecutive_failures = 0
+        _consecutive_failures = 0  # Reset on any success
+    elif is_early_return:
+        # Early returns (market closed, halted, etc.) are not real failures
+        # Don't increment failure counter — these are expected conditions
+        pass
     else:
         _consecutive_failures += 1
+        # Cap failures at a reasonable number to prevent absurd cooldowns
+        _consecutive_failures = min(_consecutive_failures, 20)
         logging.warning(f"Rebalance failed. Consecutive failures: {_consecutive_failures}")
 
 # Macro data loader (Yahoo Finance + FRED)
@@ -555,7 +586,7 @@ def _load_auto_rebalance_settings() -> dict:
         "enabled": False,
         "interval_minutes": 60,
         "allow_after_hours": True,
-        "exposure_pct": 0.8,
+        "exposure_pct": 0.95,
         "last_run": None,
         "next_run": None,
         "auto_start_on_boot": True,  # Auto-start when server launches
@@ -963,7 +994,8 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
     rebalance_start_time = time_module.time()
     
     # ============================================================
-    # COOLDOWN CHECK - Prevents infinite loops
+    # COOLDOWN CHECK - Only applies to auto-scheduler (force_rebalance=False)
+    # Manual rebalances (force_rebalance=True) ALWAYS bypass cooldown
     # ============================================================
     if not force_rebalance:
         can_run, reason = _get_rebalance_cooldown()
@@ -971,11 +1003,12 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             logging.warning(f"Rebalance blocked: {reason}")
             return False, f"Rebalance blocked: {reason}", reason, {}
     
-    # Mark rebalance as started
+    # Mark rebalance as started — ALWAYS paired with _end_rebalance in finally block
     _start_rebalance()
     
     output_lines = []
     debate_info = {"transcript": None, "scores": None, "final_weights": {}}
+    _rebalance_outcome = {"success": False, "early_return": False}  # Tracks outcome for finally
     
     def log(msg):
         """Log a message to output_lines, log_queue, AND update last_run_status in real-time."""
@@ -1006,6 +1039,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         if not api_key or not secret_key:
             log("ERROR: Missing API keys!")
+            _rebalance_outcome["early_return"] = True
             return False, "\n".join(output_lines), "Missing API keys", debate_info
         
         # Initialize broker
@@ -1033,6 +1067,8 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         market_open = broker.is_market_open()
         if not market_open and not allow_after_hours:
             log("Market is closed. Enable 'Allow After Hours' to proceed.")
+            _rebalance_outcome["early_return"] = True
+            _rebalance_outcome["success"] = True  # Not a failure — expected condition
             return True, "\n".join(output_lines), None, debate_info
         
         if not market_open:
@@ -1079,6 +1115,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log("To resume trading, either:")
             log("  1. Wait until tomorrow (tracker resets at market open)")
             log("  2. Manually reset: daily_pnl_tracker['trading_halted'] = False")
+            _rebalance_outcome["early_return"] = True
             return False, "\n".join(output_lines), f"Daily P&L limit exceeded: {pnl_reason}", debate_info
         
         # === LOSS AWARENESS ANALYSIS ===
@@ -1146,14 +1183,40 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             for rec in analysis.recommendations[:3]:
                 log(f"    → {rec}")
             
-            # Apply exposure adjustment
+            # Apply exposure adjustment — NOW ASYMMETRIC (increases on wins!)
             original_exposure = capital_exposure_pct
             adjusted_exposure = loss_system.get_adjusted_exposure(original_exposure)
             
             if adjusted_exposure != original_exposure:
                 log("")
-                log(f"  ⚠️ EXPOSURE ADJUSTED: {original_exposure*100:.0f}% → {adjusted_exposure*100:.0f}%")
+                if adjusted_exposure > original_exposure:
+                    log(f"  🔥 EXPOSURE BOOSTED: {original_exposure*100:.0f}% → {adjusted_exposure*100:.0f}%")
+                else:
+                    log(f"  ⚠️ EXPOSURE REDUCED: {original_exposure*100:.0f}% → {adjusted_exposure*100:.0f}%")
                 capital_exposure_pct = adjusted_exposure
+            
+            # === WIN ACCELERATION ENGINE ===
+            try:
+                from src.risk.win_accelerator import get_win_accelerator
+                win_accel = get_win_accelerator()
+                
+                accel_state = win_accel.update(
+                    daily_pnl_pct=total_pnl_pct,
+                    weekly_pnl_pct=loss_system.weekly_pnl_pct,
+                    positions=positions_list,
+                    consecutive_wins=loss_system.consecutive_wins,
+                )
+                
+                if accel_state.mode.value not in ["normal", "cautious", "defensive"]:
+                    log("")
+                    log(f"  🚀 WIN ACCELERATION: {accel_state.mode.value.upper()} ({accel_state.multiplier:.0%}x)")
+                    if accel_state.win_streak_bonus > 0:
+                        log(f"  🔥 Win streak bonus: +{accel_state.win_streak_bonus:.0%}")
+                    if accel_state.pyramid_candidates:
+                        for pc in accel_state.pyramid_candidates[:3]:
+                            log(f"  🔺 Pyramid candidate: {pc['symbol']} (up {pc['pnl_pct']:.1%})")
+            except Exception as e:
+                logging.warning(f"Win accelerator error: {e}")
             
             # Check if we should halt
             should_continue, halt_reason = loss_system.should_trade()
@@ -1165,6 +1228,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 log("")
                 log("The system has detected significant losses and is protecting capital.")
                 log("Consider reviewing the portfolio and market conditions before resuming.")
+                _rebalance_outcome["early_return"] = True
                 return False, "\n".join(output_lines), f"Loss awareness halt: {halt_reason}", debate_info
             
             # Exit recommended positions
@@ -1181,6 +1245,8 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 "recommendations": analysis.recommendations,
                 "positions_to_exit": analysis.positions_to_exit,
                 "adjusted_exposure": adjusted_exposure,
+                "acceleration_mode": accel_state.mode.value if 'accel_state' in locals() else "normal",
+                "acceleration_multiplier": accel_state.multiplier if 'accel_state' in locals() else 1.0,
             }
             
         except Exception as e:
@@ -1977,17 +2043,33 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log(f"  Regime: {fast_metadata['market_context']['regime']}")
             log(f"  Blend: Intraday {fast_metadata['blend_weights']['intraday']:.0%} / Position {fast_metadata['blend_weights']['position']:.0%}")
         else:
-            # Normal debate engine
+            # Normal debate engine — with performance-state awareness
             debate_engine = DebateEngine()
-            scores, transcript = debate_engine.run_debate(signals, features)
+            
+            # Extract performance state from loss analysis if available
+            _loss_analysis = debate_info.get("loss_analysis", {})
+            _perf_state = _loss_analysis.get("acceleration_mode", "normal").upper()
+            _current_pnl = _loss_analysis.get("total_pnl_pct", 0.0)
+            
+            scores, transcript = debate_engine.run_debate(
+                signals, features,
+                performance_state=_perf_state,
+                current_pnl_pct=_current_pnl,
+            )
         
         # Log initial rankings
         ranked = sorted(scores.items(), key=lambda x: x[1].total_score, reverse=True)
         log("Initial Strategy Rankings:")
         for i, (name, score) in enumerate(ranked[:5], 1):
-            log(f"  {i}. {name}: {score.total_score:.2f}")
+            urgency_tag = " 🔴URGENT" if score.urgency_score > 0.7 else ""
+            opportunity_tag = " 💰BIG" if score.opportunity_score > 0.7 else ""
+            log(f"  {i}. {name}: {score.total_score:.2f} [conviction={score.conviction_score:.0%}]{urgency_tag}{opportunity_tag}")
             if score.strengths:
-                log(f"     Strengths: {', '.join(score.strengths[:2])}")
+                log(f"     Strengths: {', '.join(score.strengths[:3])}")
+        
+        # Log debate urgency & opportunity
+        if hasattr(transcript, 'aggregate_urgency'):
+            log(f"\n📊 Debate Urgency: {transcript.aggregate_urgency:.0%} | Opportunity: {transcript.aggregate_opportunity:.0%} | Mode: {transcript.performance_mode}")
         
         # Log agreements
         if transcript.agreements:
@@ -2139,6 +2221,21 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             debate_info["transcript"] = transcript.to_string() + "\n\n[Parallel LLM debate - scores computed directly]"
             debate_info["adversarial_transcript"] = "[Parallel LLM debate mode]"
         debate_info["scores"] = {name: score.total_score for name, score in scores.items()}
+        
+        # NEW: Store urgency, opportunity, conviction for frontend
+        debate_info["urgency"] = {
+            "aggregate": getattr(transcript, 'aggregate_urgency', 0.5),
+            "aggregate_opportunity": getattr(transcript, 'aggregate_opportunity', 0.5),
+            "performance_mode": getattr(transcript, 'performance_mode', 'NORMAL'),
+            "per_strategy": {
+                name: {
+                    "urgency": score.urgency_score,
+                    "opportunity": score.opportunity_score,
+                    "conviction": score.conviction_score,
+                }
+                for name, score in scores.items()
+            },
+        }
         
         # Record debate outcome for learning (only for sequential debate)
         if adversarial_transcript:
@@ -2343,8 +2440,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         ensemble = EnsembleOptimizer({
             'max_position': 0.15,
-            'max_leverage': 1.0,
-            'vol_target': 0.12,
+            'max_leverage': 2.5,   # Was 1.0 — now matches our 3x leverage config (2.5 for ensemble cap)
+            'vol_target': 0.30,    # Was 0.12 — now matches our raised vol target
+            'max_sector_exposure': 0.35,  # Match config
+            'max_turnover': 0.60,  # Allow more turnover for active trading
         })
         
         # Get current positions
@@ -3047,9 +3146,34 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         for warning in validation_warnings[:10]:  # Limit to first 10
             log(f"  {warning}")
         
-        # Apply validated weights
-        final_weights = validated_weights
+        # Apply validated weights — MERGE back into full weight set
+        # validated_weights only contains signals that went through validation (abs > 0.001)
+        # We must preserve signals that were too small for validation but still non-zero
+        pre_validation_weights = dict(final_weights)  # snapshot before overwrite
+        
+        # Start with all pre-validation weights
+        merged_weights = {}
+        for ticker, weight in pre_validation_weights.items():
+            if ticker in validated_weights:
+                # Use validated version (may be 0 if blocked)
+                merged_weights[ticker] = validated_weights[ticker]
+            else:
+                # Preserve signals that were below validation threshold
+                merged_weights[ticker] = weight
+        
+        # Remove truly blocked signals (set to 0 by validator)
+        final_weights = {k: v for k, v in merged_weights.items() if abs(v) > 0}
+        
         debate_info["final_weights"] = final_weights  # Update with actual final weights
+        
+        # DEBUG: Log weight pipeline state
+        blocked_count = len([v for v in validated_weights.values() if v == 0])
+        surviving = len(final_weights)
+        log(f"📊 Validation result: {len(validated_weights)} validated, {blocked_count} blocked, {surviving} surviving")
+        if surviving > 0:
+            top3 = sorted(final_weights.items(), key=lambda x: -abs(x[1]))[:3]
+            for s, w in top3:
+                log(f"   Top: {s} = {w:.4%}")
         log("")
         
         # === RECORD SIGNALS FOR OUTCOME TRACKING ===
@@ -3401,11 +3525,31 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log("EXECUTING TRADES")
         log("=" * 60)
         
-        # Calculate target shares - include BOTH longs AND shorts
-        # Use 0.1% (0.001) threshold to allow more positions through
-        # The investment floor in enhance_position_sizes will scale them up properly
-        MIN_WEIGHT_THRESHOLD = 0.01  # 1% minimum weight to consider (was 0.1%)
+        # DEBUG: Dump final_weights state entering trade execution
+        _fw_nonzero = {s: w for s, w in final_weights.items() if abs(w) > 0}
+        _fw_longs = len([w for w in _fw_nonzero.values() if w > 0])
+        _fw_shorts = len([w for w in _fw_nonzero.values() if w < 0])
+        log(f"DEBUG: final_weights entering execution: {len(_fw_nonzero)} nonzero ({_fw_longs} L, {_fw_shorts} S)")
+        if _fw_nonzero:
+            _top5 = sorted(_fw_nonzero.items(), key=lambda x: -abs(x[1]))[:5]
+            for _s, _w in _top5:
+                log(f"  DEBUG: {_s}: {_w:+.4%}")
+        
+        # Calculate target symbols — use ALL nonzero signals
+        # The position enhancer (enhance_position_sizes) scales small weights up to proper dollar amounts
+        # so we should NOT filter aggressively here — just exclude truly zero signals
+        MIN_WEIGHT_THRESHOLD = 0.0001  # 0.01% — extremely permissive, let enhancer handle sizing
         target_symbols = [s for s, w in final_weights.items() if abs(w) > MIN_WEIGHT_THRESHOLD]
+        
+        # === RESCUE: If STILL empty, take top signals by raw weight ===
+        if not target_symbols:
+            nonzero_signals = {s: w for s, w in final_weights.items() if abs(w) > 0}
+            if nonzero_signals:
+                sorted_signals = sorted(nonzero_signals.items(), key=lambda x: -abs(x[1]))[:20]
+                target_symbols = [s for s, _ in sorted_signals]
+                log(f"⚠️ RESCUE: Taking top {len(target_symbols)} signals (all very small)")
+                for s, w in sorted_signals[:5]:
+                    log(f"   {s}: {w:.6%}")
         
         # Apply symbol cooldown filter - prevent over-trading same symbols
         cooldown_symbols = get_symbols_on_cooldown()
@@ -3439,7 +3583,15 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         if not target_symbols:
             log("No positions to take - going to cash")
+            # Log WHY for debugging
+            all_weights = {s: w for s, w in final_weights.items() if abs(w) > 0}
+            if all_weights:
+                log(f"  ⚠️ WARNING: {len(all_weights)} signals exist but ALL below {MIN_WEIGHT_THRESHOLD:.1%} threshold!")
+                top5 = sorted(all_weights.items(), key=lambda x: -abs(x[1]))[:5]
+                for s, w in top5:
+                    log(f"    {s}: {w:.4%} (below threshold)")
             target_shares = {}
+            enhanced_weights = {}  # No positions = no weights (prevents UnboundLocalError downstream)
         else:
             # Pass the actual weights (not zeros!) to calculate proper share quantities
             target_weights_filtered = {s: final_weights[s] for s in target_symbols}
@@ -3575,10 +3727,21 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 regime_multiplier = current_regime.exposure_multiplier
                 log(f"   Regime Adjustment: {regime_multiplier*100:.0f}%")
             
-            # Apply capital exposure limit
-            effective_equity = equity * capital_exposure_pct * regime_multiplier
+            # Apply capital exposure limit + win acceleration multiplier
+            accel_multiplier = 1.0
+            try:
+                from src.risk.win_accelerator import get_win_accelerator
+                accel_multiplier = get_win_accelerator().get_multiplier()
+            except:
+                pass
+            
+            effective_equity = equity * capital_exposure_pct * regime_multiplier * accel_multiplier
             log(f"")
-            log(f"💵 Capital Exposure: {capital_exposure_pct*100:.0f}% × {regime_multiplier*100:.0f}% regime = ${effective_equity:,.2f} available")
+            if accel_multiplier > 1.0:
+                log(f"💵 Capital Exposure: {capital_exposure_pct*100:.0f}% × {regime_multiplier*100:.0f}% regime × {accel_multiplier*100:.0f}% acceleration = ${effective_equity:,.2f} available")
+                log(f"  🔥 Win acceleration adding {(accel_multiplier-1)*100:.0f}% extra capital deployment")
+            else:
+                log(f"💵 Capital Exposure: {capital_exposure_pct*100:.0f}% × {regime_multiplier*100:.0f}% regime = ${effective_equity:,.2f} available")
             
             # === CALCULATE DYNAMIC LEVERAGE ===
             # Get leverage settings from config
@@ -4337,8 +4500,8 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log(f"✅ REBALANCE COMPLETE in {total_time:.1f} seconds")
         log("=" * 60)
         
-        # Mark rebalance as successful
-        _end_rebalance(success=True)
+        # Mark outcome as success
+        _rebalance_outcome["success"] = True
         
         return True, "\n".join(output_lines), None, debate_info
         
@@ -4350,10 +4513,18 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         total_time = time_module.time() - rebalance_start_time
         log(f"❌ REBALANCE FAILED after {total_time:.1f} seconds")
         
-        # Mark rebalance as failed - triggers cooldown
-        _end_rebalance(success=False)
+        # This is a REAL failure (exception) — will increment failure counter
+        _rebalance_outcome["success"] = False
+        _rebalance_outcome["early_return"] = False
         
         return False, "\n".join(output_lines), str(e), debate_info
+    
+    finally:
+        # ALWAYS release the lock and update failure counter
+        _end_rebalance(
+            success=_rebalance_outcome["success"],
+            is_early_return=_rebalance_outcome["early_return"],
+        )
 
 
 def run_bot_threaded(allow_after_hours=False, force_rebalance=True, cancel_orders=True, exposure_pct=0.8):
@@ -4390,7 +4561,7 @@ def run_bot_threaded(allow_after_hours=False, force_rebalance=True, cancel_order
     last_run_status["strategy_scores"] = None
     
     def bot_worker():
-        global last_run_status
+        global last_run_status, last_debate_info
         
         try:
             success, output, error, debate_info = run_multi_strategy_rebalance(
@@ -4404,6 +4575,13 @@ def run_bot_threaded(allow_after_hours=False, force_rebalance=True, cancel_order
             last_run_status["debate_scores"] = debate_info.get("scores")
             last_run_status["trade_reasoning"] = debate_info.get("trade_reasoning")
             last_run_status["final_weights"] = debate_info.get("final_weights", {})
+            
+            # Update global debate info for API endpoints
+            last_debate_info.update({
+                "urgency": debate_info.get("urgency", {}),
+                "scores": debate_info.get("scores", {}),
+                "transcript": debate_info.get("transcript"),
+            })
         except Exception as e:
             last_run_status["output"] = f"Fatal error: {str(e)}"
             last_run_status["error"] = str(e)
@@ -7271,7 +7449,7 @@ def manage_risk_appetite():
         data = request.get_json() or {}
         new_appetite = data.get('risk_appetite', request.args.get('risk_appetite'))
         
-        if new_appetite in ['conservative', 'moderate', 'aggressive', 'maximum']:
+        if new_appetite in ['conservative', 'moderate', 'aggressive', 'maximum', 'alpha_hunter']:
             risk_appetite = new_appetite
             strategy_enhancer = get_enhancer(EnhancedConfig(risk_appetite=risk_appetite))
             return jsonify({
@@ -7284,7 +7462,7 @@ def manage_risk_appetite():
                 }
             })
         else:
-            return jsonify({"error": "Invalid risk appetite"}), 400
+            return jsonify({"error": "Invalid risk appetite. Options: conservative, moderate, aggressive, maximum, alpha_hunter"}), 400
     
     # GET
     return jsonify({
@@ -7295,7 +7473,7 @@ def manage_risk_appetite():
             "max_positions": strategy_enhancer.config.max_positions,
             "min_investment_floor": strategy_enhancer.config.min_investment_floor,
         },
-        "options": ["conservative", "moderate", "aggressive", "maximum"]
+        "options": ["conservative", "moderate", "aggressive", "maximum", "alpha_hunter"]
     })
 
 
@@ -8794,6 +8972,340 @@ def get_cross_asset_data():
         })
     except Exception as e:
         logging.error(f"Cross-asset data error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+# ==========================================================================
+# PHASE 1-8 API ENDPOINTS — Performance Acceleration, Capital Deployment,
+# Stop/Take Settings, Win Acceleration
+# ==========================================================================
+
+@app.route('/api/win-acceleration', methods=['GET'])
+def get_win_acceleration():
+    """Get current win acceleration state."""
+    try:
+        from src.risk.win_accelerator import get_win_accelerator
+        accel = get_win_accelerator()
+        return jsonify(accel.get_status())
+    except Exception as e:
+        logging.error(f"Win acceleration error: {e}")
+        return jsonify({"error": str(e), "enabled": False, "mode": "normal", "multiplier": 1.0}), 200
+
+
+@app.route('/api/win-acceleration/toggle', methods=['POST'])
+def toggle_win_acceleration():
+    """Enable/disable win acceleration."""
+    try:
+        from src.risk.win_accelerator import get_win_accelerator
+        accel = get_win_accelerator()
+        data = request.get_json() or {}
+        accel.enabled = data.get('enabled', not accel.enabled)
+        return jsonify({"success": True, "enabled": accel.enabled})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/win-acceleration/history', methods=['GET'])
+def get_win_acceleration_history():
+    """Get acceleration history."""
+    try:
+        from src.risk.win_accelerator import get_win_accelerator
+        accel = get_win_accelerator()
+        limit = request.args.get('limit', 20, type=int)
+        return jsonify({"history": accel.get_history(limit)})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/performance-mode', methods=['GET'])
+def get_performance_mode():
+    """Get current performance awareness state (loss awareness + win acceleration)."""
+    try:
+        from src.risk.loss_awareness import get_loss_awareness
+        from src.risk.win_accelerator import get_win_accelerator
+        
+        la = get_loss_awareness()
+        accel = get_win_accelerator()
+        
+        la_info = la.get_acceleration_info()
+        accel_info = accel.get_status()
+        
+        return jsonify({
+            "performance_state": la_info.get("state", "neutral"),
+            "loss_awareness": la_info,
+            "win_acceleration": accel_info,
+            "effective_multiplier": max(
+                la_info.get("multiplier", 1.0),
+                accel_info.get("multiplier", 1.0),
+            ) if la_info.get("state") not in ["concerning", "bad", "critical"] else la_info.get("multiplier", 1.0),
+            "consecutive_wins": la_info.get("consecutive_wins", 0),
+            "consecutive_losses": la_info.get("consecutive_losses", 0),
+        })
+    except Exception as e:
+        logging.error(f"Performance mode error: {e}")
+        return jsonify({"performance_state": "neutral", "effective_multiplier": 1.0}), 200
+
+
+@app.route('/api/debate-urgency', methods=['GET'])
+def get_debate_urgency():
+    """Get the latest debate urgency, opportunity, and conviction data."""
+    try:
+        # The debate_info is stored globally during each rebalance
+        urgency_data = last_debate_info.get("urgency", {})
+        scores_data = last_debate_info.get("scores", {})
+        
+        return jsonify({
+            "aggregate_urgency": urgency_data.get("aggregate", 0.5),
+            "aggregate_opportunity": urgency_data.get("aggregate_opportunity", 0.5),
+            "performance_mode": urgency_data.get("performance_mode", "NORMAL"),
+            "per_strategy": urgency_data.get("per_strategy", {}),
+            "strategy_scores": scores_data,
+            "urgency_level": (
+                "CRITICAL" if urgency_data.get("aggregate", 0.5) > 0.8
+                else "HIGH" if urgency_data.get("aggregate", 0.5) > 0.65
+                else "MODERATE" if urgency_data.get("aggregate", 0.5) > 0.45
+                else "LOW"
+            ),
+            "opportunity_level": (
+                "MASSIVE" if urgency_data.get("aggregate_opportunity", 0.5) > 0.8
+                else "LARGE" if urgency_data.get("aggregate_opportunity", 0.5) > 0.65
+                else "MODERATE" if urgency_data.get("aggregate_opportunity", 0.5) > 0.45
+                else "SMALL"
+            ),
+        })
+    except Exception as e:
+        logging.error(f"Debate urgency error: {e}")
+        return jsonify({
+            "aggregate_urgency": 0.5,
+            "aggregate_opportunity": 0.5,
+            "performance_mode": "NORMAL",
+            "urgency_level": "MODERATE",
+            "opportunity_level": "MODERATE",
+        }), 200
+
+
+@app.route('/api/capital-deployment', methods=['GET'])
+def get_capital_deployment():
+    """Get breakdown of capital deployment multipliers."""
+    try:
+        from src.risk.loss_awareness import get_loss_awareness
+        from src.risk.win_accelerator import get_win_accelerator
+        
+        la = get_loss_awareness()
+        accel = get_win_accelerator()
+        
+        # Get current regime info
+        regime_mult = 1.0
+        regime_name = "unknown"
+        try:
+            if current_regime:
+                regime_mult = current_regime.exposure_multiplier
+                regime_name = current_regime.regime
+        except:
+            pass
+        
+        # Performance multiplier
+        perf_mult = la.get_adjusted_exposure(base_exposure=1.0)
+        
+        # Win acceleration multiplier
+        accel_mult = accel.get_multiplier()
+        
+        # Calculate effective
+        base = capital_exposure_pct
+        effective = base * regime_mult * max(perf_mult, 1.0) * accel_mult
+        
+        # Get equity
+        equity = 100000
+        try:
+            api_key = os.getenv("ALPACA_API_KEY")
+            secret_key = os.getenv("ALPACA_SECRET_KEY")
+            if api_key and secret_key:
+                deploy_broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+                account = deploy_broker.get_account()
+                equity = float(account.get('equity', 100000))
+        except:
+            pass
+        
+        return jsonify({
+            "base_exposure_pct": base,
+            "regime_multiplier": regime_mult,
+            "regime_name": regime_name,
+            "performance_multiplier": perf_mult,
+            "acceleration_multiplier": accel_mult,
+            "effective_deployment_pct": min(1.50, effective),
+            "equity": equity,
+            "effective_capital": equity * min(1.50, effective),
+            "idle_cash": equity * max(0, 1.0 - min(1.50, effective)),
+        })
+    except Exception as e:
+        logging.error(f"Capital deployment error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/stop-take-settings', methods=['GET', 'POST'])
+def manage_stop_take_settings():
+    """Get or update stop-loss / take-profit settings."""
+    try:
+        if request.method == 'POST':
+            data = request.get_json() or {}
+            
+            # Update config STOP_TAKE_SETTINGS
+            if 'mode' in data:
+                config.STOP_TAKE_SETTINGS['mode'] = data['mode']
+            if 'stop_loss_pct' in data:
+                config.STOP_TAKE_SETTINGS['stop_loss_pct'] = float(data['stop_loss_pct'])
+            if 'trailing_stop_activation' in data:
+                config.STOP_TAKE_SETTINGS['trailing_stop_activation'] = float(data['trailing_stop_activation'])
+            if 'trailing_stop_distance' in data:
+                config.STOP_TAKE_SETTINGS['trailing_stop_distance'] = float(data['trailing_stop_distance'])
+            if 'winner_protection_threshold' in data:
+                config.STOP_TAKE_SETTINGS['winner_protection_threshold'] = float(data['winner_protection_threshold'])
+            
+            return jsonify({"success": True, "settings": config.STOP_TAKE_SETTINGS})
+        
+        # GET
+        return jsonify(config.STOP_TAKE_SETTINGS)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/return-tracker', methods=['GET'])
+def get_return_tracker():
+    """Get return tracking data for the dashboard."""
+    try:
+        equity = 100000
+        starting_equity = 100000
+        daily_pnl = 0
+        weekly_pnl = 0
+        
+        try:
+            api_key = os.getenv("ALPACA_API_KEY")
+            secret_key = os.getenv("ALPACA_SECRET_KEY")
+            if api_key and secret_key:
+                tracker_broker = AlpacaBroker(api_key=api_key, secret_key=secret_key, paper=True)
+                account = tracker_broker.get_account()
+                equity = float(account.get('equity', 100000))
+                daily_pnl = float(account.get('equity', 0)) - float(account.get('last_equity', equity))
+        except:
+            pass
+        
+        ytd_return_pct = ((equity - starting_equity) / starting_equity) * 100 if starting_equity > 0 else 0
+        
+        # Calculate pace for target
+        import math
+        from datetime import date
+        today = date.today()
+        start_of_year = date(today.year, 1, 1)
+        days_elapsed = (today - start_of_year).days or 1
+        trading_days_elapsed = int(days_elapsed * 252 / 365)
+        trading_days_remaining = 252 - trading_days_elapsed
+        
+        # What daily return is needed to hit targets
+        targets = {}
+        for target_name, target_pct in [("100%", 1.0), ("150%", 1.5), ("300%", 3.0)]:
+            needed_total = target_pct * starting_equity
+            remaining_needed = needed_total - (equity - starting_equity)
+            if trading_days_remaining > 0 and equity > 0:
+                daily_needed = remaining_needed / (trading_days_remaining * equity)
+                targets[target_name] = {
+                    "target_value": starting_equity + needed_total,
+                    "remaining_needed": remaining_needed,
+                    "daily_pct_needed": daily_needed * 100,
+                    "on_pace": ytd_return_pct >= (target_pct * 100 * trading_days_elapsed / 252),
+                }
+            else:
+                targets[target_name] = {"target_value": 0, "remaining_needed": 0, "daily_pct_needed": 0, "on_pace": False}
+        
+        return jsonify({
+            "equity": equity,
+            "starting_equity": starting_equity,
+            "ytd_return_pct": ytd_return_pct,
+            "daily_pnl": daily_pnl,
+            "trading_days_elapsed": trading_days_elapsed,
+            "trading_days_remaining": trading_days_remaining,
+            "targets": targets,
+        })
+    except Exception as e:
+        logging.error(f"Return tracker error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/preset/aggressive', methods=['POST'])
+def apply_aggressive_preset():
+    """One-click apply aggressive settings for 100-300% target."""
+    global capital_exposure_pct, risk_appetite
+    try:
+        capital_exposure_pct = 0.95
+        risk_appetite = "aggressive"
+        
+        from src.risk.win_accelerator import get_win_accelerator
+        accel = get_win_accelerator()
+        accel.enabled = True
+        
+        return jsonify({
+            "success": True,
+            "preset": "aggressive",
+            "settings_applied": {
+                "capital_exposure_pct": 0.95,
+                "risk_appetite": "aggressive",
+                "win_acceleration": True,
+            }
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/preset/defensive', methods=['POST'])
+def apply_defensive_preset():
+    """One-click apply defensive settings for risk-off days."""
+    global capital_exposure_pct, risk_appetite
+    try:
+        capital_exposure_pct = 0.60
+        risk_appetite = "conservative"
+        
+        from src.risk.win_accelerator import get_win_accelerator
+        accel = get_win_accelerator()
+        accel.enabled = False
+        
+        return jsonify({
+            "success": True,
+            "preset": "defensive",
+            "settings_applied": {
+                "capital_exposure_pct": 0.60,
+                "risk_appetite": "conservative",
+                "win_acceleration": False,
+            }
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/preset/alpha-hunter', methods=['POST'])
+def apply_alpha_hunter_preset():
+    """One-click apply alpha hunter settings for maximum returns."""
+    global capital_exposure_pct, risk_appetite
+    try:
+        capital_exposure_pct = 0.95
+        risk_appetite = "alpha_hunter"
+        
+        from src.risk.win_accelerator import get_win_accelerator
+        accel = get_win_accelerator()
+        accel.enabled = True
+        
+        strategy_enhancer = get_enhancer(EnhancedConfig(risk_appetite=risk_appetite))
+        
+        return jsonify({
+            "success": True,
+            "preset": "alpha_hunter",
+            "settings_applied": {
+                "capital_exposure_pct": 0.95,
+                "risk_appetite": "alpha_hunter",
+                "win_acceleration": True,
+                "kelly_multiplier": 1.25,
+                "max_positions": 6,
+            }
+        })
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 

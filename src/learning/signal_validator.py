@@ -323,10 +323,18 @@ class SignalValidator:
                 all_warnings.append(f"❌ {ticker}: BLOCKED - {', '.join(result.blocking_issues)}")
                 adjusted_weights[ticker] = 0  # Don't trade blocked signals
             else:
-                # Apply confidence adjustment to weight
+                # PRESERVE original weight — don't shrink via confidence ratio
+                # Position sizing (enhance_position_sizes) handles scaling later.
+                # Only BLOCK or PASS; never silently reduce weights to near-zero.
+                adjusted_weights[ticker] = weight
+                
+                # Store confidence adjustment as metadata (for logging/downstream use)
                 adjustment_factor = result.confidence_score / max(0.1, confidence)
-                adjusted_weight = weight * adjustment_factor
-                adjusted_weights[ticker] = adjusted_weight
+                if adjustment_factor < 0.5:
+                    all_warnings.append(
+                        f"⚠️ {ticker}: Low validation confidence "
+                        f"({result.confidence_score:.2f}, factor={adjustment_factor:.2f})"
+                    )
                 
                 if result.warnings:
                     for w in result.warnings:
