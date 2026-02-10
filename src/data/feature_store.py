@@ -234,36 +234,51 @@ class FeatureStore:
         if len(price_df) == 0:
             return features
         
-        # Compute features
+        # Compute features with progress logging
+        logger.debug(f"Computing features for {len(symbols)} symbols...")
         self._compute_price_features(features, price_df, symbols)
+        logger.debug("✓ Price features computed")
         self._compute_volatility_features(features, price_df, symbols)
+        logger.debug("✓ Volatility features computed")
         self._compute_ma_features(features, price_df, symbols)
+        logger.debug("✓ MA features computed")
         self._compute_rsi_features(features, price_df, symbols)  # RSI for intraday
+        logger.debug("✓ RSI features computed")
+        logger.debug("Computing correlation features (this may take a moment)...")
         self._compute_correlation_features(features, price_df)
+        logger.debug("✓ Correlation features computed")
         
         # Regime classification
+        logger.debug("Classifying market regime...")
         try:
             features.regime = self.regime_classifier.classify(price_df, as_of=pd.Timestamp(as_of))
+            logger.debug("✓ Regime classified")
         except Exception as e:
             logger.warning(f"Regime classification failed: {e}")
         
         # Sentiment
+        logger.debug("Computing sentiment...")
         try:
             features.sentiment = self.sentiment_analyzer.aggregate_sentiment(
                 self._news_cache, symbols, as_of
             )
+            logger.debug("✓ Sentiment computed")
         except Exception as e:
             logger.warning(f"Sentiment computation failed: {e}")
         
         # Cross-asset features (commodities, currencies, international)
+        logger.debug("Computing cross-asset features...")
         try:
             self._compute_cross_asset_features(features, symbols)
+            logger.debug("✓ Cross-asset features computed")
         except Exception as e:
             logger.warning(f"Cross-asset feature computation failed: {e}")
         
         # Comprehensive technical analysis (MACD, Bollinger, Stochastic, ADX)
+        logger.debug("Computing technical analysis...")
         try:
             self._compute_technical_analysis(features, symbols)
+            logger.debug("✓ Technical analysis computed")
         except Exception as e:
             logger.warning(f"Technical analysis computation failed: {e}")
         
@@ -429,9 +444,15 @@ class FeatureStore:
         self,
         features: Features,
         price_df: pd.DataFrame,
-        window: int = 63
+        window: int = 63,
+        max_symbols: int = 100  # Limit to avoid O(n²) explosion
     ) -> None:
-        """Compute correlation and covariance matrices."""
+        """
+        Compute correlation and covariance matrices.
+        
+        For large universes (>100 symbols), only compute correlations for top symbols
+        to avoid O(n²) performance issues.
+        """
         returns = price_df.pct_change().dropna()
         
         if len(returns) < window:
@@ -439,8 +460,37 @@ class FeatureStore:
         
         recent_returns = returns.tail(window)
         
-        features.correlation_matrix = recent_returns.corr()
-        features.covariance_matrix = recent_returns.cov() * 252  # Annualized
+        # Limit symbols for correlation computation to avoid hanging on large universes
+        if len(recent_returns.columns) > max_symbols:
+            # Use most liquid/active symbols (those with most data points)
+            symbol_activity = recent_returns.count().sort_values(ascending=False)
+            top_symbols = symbol_activity.head(max_symbols).index.tolist()
+            recent_returns = recent_returns[top_symbols]
+            logger.debug(f"Computing correlations for top {max_symbols} symbols (out of {len(price_df.columns)})")
+        
+        # Use numpy for faster computation on large matrices
+        try:
+            import numpy as np
+            returns_array = recent_returns.values
+            # Remove any columns with all NaN
+            valid_cols = ~np.isnan(returns_array).all(axis=0)
+            if valid_cols.sum() < 2:
+                return
+            returns_array = returns_array[:, valid_cols]
+            
+            # Compute correlation using numpy (faster than pandas for large matrices)
+            corr_array = np.corrcoef(returns_array.T)
+            cov_array = np.cov(returns_array.T) * 252  # Annualized
+            
+            # Convert back to DataFrame for consistency
+            valid_symbols = recent_returns.columns[valid_cols].tolist()
+            features.correlation_matrix = pd.DataFrame(corr_array, index=valid_symbols, columns=valid_symbols)
+            features.covariance_matrix = pd.DataFrame(cov_array, index=valid_symbols, columns=valid_symbols)
+        except Exception as e:
+            logger.warning(f"Fast correlation computation failed, falling back to pandas: {e}")
+            # Fallback to pandas method
+            features.correlation_matrix = recent_returns.corr()
+            features.covariance_matrix = recent_returns.cov() * 252  # Annualized
     
     def _compute_cross_asset_features(
         self,

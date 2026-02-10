@@ -1710,8 +1710,14 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log("")
         
         # Get features for current date
-        log("Computing features and market regime...")
+        num_symbols = len(feature_store._price_history.keys())
+        log(f"Computing features and market regime for {num_symbols} symbols...")
+        log("  (This may take 10-30 seconds for large universes)")
+        import time
+        feature_start = time.time()
         features = feature_store.get_features(end_date, list(feature_store._price_history.keys()))
+        feature_elapsed = time.time() - feature_start
+        log(f"✓ Features computed in {feature_elapsed:.1f}s")
         
         # === CRITICAL: Add intraday data for HFT-lite strategies ===
         # Without this, intraday strategies fall back to daily data and perform poorly
