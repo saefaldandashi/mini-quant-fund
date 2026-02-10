@@ -2075,10 +2075,14 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         ranked = sorted(scores.items(), key=lambda x: x[1].total_score, reverse=True)
         log("Initial Strategy Rankings:")
         for i, (name, score) in enumerate(ranked[:5], 1):
-            urgency_tag = " 🔴URGENT" if score.urgency_score > 0.7 else ""
-            opportunity_tag = " 💰BIG" if score.opportunity_score > 0.7 else ""
-            log(f"  {i}. {name}: {score.total_score:.2f} [conviction={score.conviction_score:.0%}]{urgency_tag}{opportunity_tag}")
-            if score.strengths:
+            # Backward compatibility: old StrategyScore doesn't have urgency_score/opportunity_score
+            urgency_score = getattr(score, 'urgency_score', 0.0)
+            opportunity_score = getattr(score, 'opportunity_score', 0.0)
+            conviction_score = getattr(score, 'conviction_score', getattr(score, 'confidence_score', 0.5))
+            urgency_tag = " 🔴URGENT" if urgency_score > 0.7 else ""
+            opportunity_tag = " 💰BIG" if opportunity_score > 0.7 else ""
+            log(f"  {i}. {name}: {score.total_score:.2f} [conviction={conviction_score:.0%}]{urgency_tag}{opportunity_tag}")
+            if hasattr(score, 'strengths') and score.strengths:
                 log(f"     Strengths: {', '.join(score.strengths[:3])}")
         
         # Log debate urgency & opportunity
@@ -2243,9 +2247,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             "performance_mode": getattr(transcript, 'performance_mode', 'NORMAL'),
             "per_strategy": {
                 name: {
-                    "urgency": score.urgency_score,
-                    "opportunity": score.opportunity_score,
-                    "conviction": score.conviction_score,
+                    "urgency": getattr(score, 'urgency_score', 0.0),
+                    "opportunity": getattr(score, 'opportunity_score', 0.0),
+                    "conviction": getattr(score, 'conviction_score', getattr(score, 'confidence_score', 0.5)),
                 }
                 for name, score in scores.items()
             },
