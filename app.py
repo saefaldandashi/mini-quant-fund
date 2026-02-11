@@ -16,8 +16,9 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, Tuple
 
-from flask import Flask, render_template, jsonify, request, send_file, Response
+from flask import Flask, render_template, jsonify, request, send_file, Response, session
 from functools import wraps
+from datetime import timedelta
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -117,7 +118,19 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 app = Flask(__name__)
 
 # =============================================================================
-# AUTHENTICATION SETUP
+# SESSION CONFIGURATION (FIX: Long session timeout to prevent frequent re-logins)
+# =============================================================================
+# Set a secret key for sessions (use environment variable or generate one)
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', os.urandom(24).hex())
+# Set session to be permanent and last 30 days (instead of default browser session)
+app.permanent_session_lifetime = timedelta(days=30)
+# Make sessions work across HTTP and HTTPS
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
+# =============================================================================
+# AUTHENTICATION SETUP (UPDATED: Session-based instead of Basic Auth on every request)
 # =============================================================================
 # Get credentials from environment variables (set these in .env or GitHub Secrets)
 AUTH_USERNAME = os.environ.get('APP_USERNAME', 'admin')
@@ -139,17 +152,54 @@ def authenticate():
     )
 
 def requires_auth(f):
-    """Decorator to require authentication for a route."""
+    """Decorator to require authentication for a route (UPDATED: Uses sessions)."""
     @wraps(f)
     def decorated(*args, **kwargs):
         if not AUTH_PASSWORD:
             # Auth disabled if no password configured
             return f(*args, **kwargs)
+        
+        # Check if user is already logged in via session
+        session.permanent = True  # Make session permanent (30 days)
+        if session.get('authenticated'):
+            return f(*args, **kwargs)
+        
+        # Fall back to Basic Auth for initial login
         auth = request.authorization
-        if not auth or not check_auth(auth.username, auth.password):
-            return authenticate()
-        return f(*args, **kwargs)
+        if auth and check_auth(auth.username, auth.password):
+            # Store authentication in session
+            session['authenticated'] = True
+            session['username'] = auth.username
+            return f(*args, **kwargs)
+        
+        # Not authenticated - prompt for credentials
+        return authenticate()
     return decorated
+
+# Add login endpoint for easier session management
+@app.route('/api/login', methods=['POST'])
+def login():
+    """Login endpoint to establish session."""
+    if not AUTH_PASSWORD:
+        return jsonify({"success": True, "message": "Authentication disabled"})
+    
+    data = request.get_json() or {}
+    username = data.get('username') or request.authorization.username if request.authorization else None
+    password = data.get('password') or request.authorization.password if request.authorization else None
+    
+    if username and password and check_auth(username, password):
+        session.permanent = True
+        session['authenticated'] = True
+        session['username'] = username
+        return jsonify({"success": True, "message": "Logged in successfully"})
+    
+    return jsonify({"success": False, "message": "Invalid credentials"}), 401
+
+@app.route('/api/logout', methods=['POST'])
+def logout():
+    """Logout endpoint to clear session."""
+    session.clear()
+    return jsonify({"success": True, "message": "Logged out successfully"})
 
 # Log authentication status
 if AUTH_PASSWORD:
