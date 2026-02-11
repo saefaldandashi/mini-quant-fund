@@ -640,6 +640,45 @@ class RealtimeRiskMonitor:
         self.last_vix = vix
         # CRITICAL FIX #8: Re-check VIX when updated to adjust exposure
         self._check_vix()
+    
+    def can_trade(self) -> bool:
+        """Check if trading is allowed based on current risk level."""
+        return not self.halt_trading and self.current_risk_level != RiskLevel.CRITICAL
+    
+    def get_position_size_multiplier(self) -> float:
+        """
+        Get position size multiplier based on risk level.
+        
+        Returns:
+            Multiplier to apply to position sizes (0.25 to 1.0)
+        """
+        if self.current_risk_level == RiskLevel.CRITICAL:
+            return 0.0  # No new trades
+        elif self.current_risk_level == RiskLevel.HIGH:
+            return 0.5  # Half position sizes
+        elif self.current_risk_level == RiskLevel.ELEVATED:
+            return 0.75  # Reduced position sizes
+        else:
+            return 1.0  # Normal
+    
+    def get_status(self) -> Dict[str, Any]:
+        """Get current risk monitor status."""
+        return {
+            'is_running': self.is_running,
+            'risk_level': self.current_risk_level.value,
+            'halt_trading': self.halt_trading,
+            'peak_equity': self.peak_equity,
+            'last_vix': self.last_vix,
+            'position_size_multiplier': self.get_position_size_multiplier(),
+            'recent_alerts': [
+                {
+                    'timestamp': a.timestamp.isoformat(),
+                    'level': a.level.value,
+                    'message': a.message,
+                }
+                for a in self.alerts[-5:]
+            ],
+        }
 
 
 # CRITICAL FIX #8: Global instance getter
