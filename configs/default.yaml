@@ -45,13 +45,13 @@ backtest:
   slippage_bps: 5
   ensemble_mode: weighted_vote  # weighted_vote, convex_optimization, stacking
 
-# Risk constraints
+# Risk constraints — TUNED for 100-300% annual target
 risk:
   max_position: 0.15  # Max 15% per position
-  max_sector: 0.30    # Max 30% per sector
-  max_leverage: 1.0   # No leverage by default
-  max_turnover: 0.50  # Max 50% turnover per rebalance
-  vol_target: 0.12    # 12% annualized vol target
+  max_sector: 0.35    # Max 35% per sector (was 30%)
+  max_leverage: 3.0   # 3x leverage (was 1.0)
+  max_turnover: 0.60  # Max 60% turnover per rebalance (was 50%)
+  vol_target: 0.30    # 30% annualized vol target (was 12%)
   max_drawdown_trigger: 0.15  # Reduce risk at 15% drawdown
 
 # Strategy configurations

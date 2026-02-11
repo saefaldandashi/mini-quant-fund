@@ -2,7 +2,7 @@
   "weights": {
     "TimeSeriesMomentum": {
       "strategy_name": "TimeSeriesMomentum",
-      "base_weight": 0.107734825010141,
+      "base_weight": 0.10789684368999726,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -16,23 +16,23 @@
     },
     "CrossSectionMomentum": {
       "strategy_name": "CrossSectionMomentum",
-      "base_weight": 0.13603440986047402,
-      "ema_performance": -0.0035155591617010602,
+      "base_weight": 0.13473512186940487,
+      "ema_performance": -0.0002071848581457364,
       "ema_alpha": 0.1,
-      "times_selected": 70,
-      "cumulative_reward": 0.5754114269644596,
+      "times_selected": 110,
+      "cumulative_reward": 0.5453761246928683,
       "ucb_bonus": 0.0,
       "regime_weights": {
-        "neutral": 0.14147201622451244,
+        "neutral": 0.13997025111093284,
         "risk_on": 0.13617187180012683,
         "risk_off": 0.1357053046701387
       },
-      "learned_confidence": 0.2,
-      "last_updated": "2026-02-03T20:09:18.509231"
+      "learned_confidence": 0.95,
+      "last_updated": "2026-02-11T13:12:39.813344"
     },
     "MeanReversion": {
       "strategy_name": "MeanReversion",
-      "base_weight": 0.10775054357386243,
+      "base_weight": 0.10791258589232339,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -44,7 +44,7 @@
     },
     "VolatilityRegimeVolTarget": {
       "strategy_name": "VolatilityRegimeVolTarget",
-      "base_weight": 0.10775054357386243,
+      "base_weight": 0.10791258589232339,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -56,7 +56,7 @@
     },
     "Carry": {
       "strategy_name": "Carry",
-      "base_weight": 0.10523589717808092,
+      "base_weight": 0.10539415780673728,
       "ema_performance": -0.00026882398252459593,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -72,7 +72,7 @@
     },
     "ValueQualityTilt": {
       "strategy_name": "ValueQualityTilt",
-      "base_weight": 0.11046969778132153,
+      "base_weight": 0.11063582934181707,
       "ema_performance": 0.0007588578368238671,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -88,7 +88,7 @@
     },
     "RiskParityMinVar": {
       "strategy_name": "RiskParityMinVar",
-      "base_weight": 0.107734825010141,
+      "base_weight": 0.10789684368999726,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -102,7 +102,7 @@
     },
     "TailRiskOverlay": {
       "strategy_name": "TailRiskOverlay",
-      "base_weight": 0.10775054357386243,
+      "base_weight": 0.10791258589232339,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -114,7 +114,7 @@
     },
     "NewsSentimentEvent": {
       "strategy_name": "NewsSentimentEvent",
-      "base_weight": 0.10953871443825416,
+      "base_weight": 0.10970344592507623,
       "ema_performance": 0.003584849420027366,
       "ema_alpha": 0.1,
       "times_selected": 62,
@@ -129,525 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 249,
+  "total_rounds": 312,
   "reward_history": [
-    {
-      "timestamp": "2026-02-03T20:28:23.557007",
-      "returns": {
-        "TS_Momentum_LS": -0.01191204221944187
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T20:33:16.123863",
-      "returns": {
-        "TS_Momentum_LS": -0.013579722388309646
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T20:38:17.543443",
-      "returns": {
-        "TS_Momentum_LS": -0.015550791499098587
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T20:43:14.069396",
-      "returns": {
-        "TS_Momentum_LS": -0.015012294783686056
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T20:48:22.378643",
-      "returns": {
-        "TS_Momentum_LS": -0.014928194199283656
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T20:53:14.926910",
-      "returns": {
-        "TS_Momentum_LS": -0.014433400830147384
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T20:58:15.774035",
-      "returns": {
-        "TS_Momentum_LS": -0.013961209114402367
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T21:03:24.853352",
-      "returns": {
-        "TS_Momentum_LS": -0.014998240099409971
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T21:08:21.599039",
-      "returns": {
-        "TS_Momentum_LS": -0.01607766461799343
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T21:13:17.302205",
-      "returns": {
-        "TS_Momentum_LS": -0.018073016138455595
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T21:18:39.580884",
-      "returns": {
-        "TS_Momentum_LS": -0.009190858399584481,
-        "QualityValue_LS": -0.001314789925787472
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T21:23:20.328328",
-      "returns": {
-        "TS_Momentum_LS": -0.008284379504006801,
-        "QualityValue_LS": -0.00023374043125117832
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T21:28:26.918292",
-      "returns": {
-        "TS_Momentum_LS": -0.007121056076558871,
-        "QualityValue_LS": -0.0013440074796937293
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T23:32:30.919033",
-      "returns": {
-        "TS_Momentum_LS": -0.013350400835586966,
-        "OpeningRangeBreakout": 0.006432286347746085,
-        "QualityValue_LS": -0.00960660837937279
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-03T23:33:47.775102",
-      "returns": {
-        "OpeningRangeBreakout": 0.008015876243960173,
-        "TS_Momentum_LS": -0.01352670664665179,
-        "QualityValue_LS": -0.009986573381322573
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T12:30:02.257763",
-      "returns": {
-        "VolumeSpike": 0.012401202110399098,
-        "TS_Momentum_LS": -0.008748386202432509,
-        "SectorRotation": -0.010414616979053182,
-        "QualityValue_LS": -0.006713028749140117
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T12:48:37.598239",
-      "returns": {
-        "VolumeSpike": 0.012401202110399098,
-        "TS_Momentum_LS": -0.008748386202432509,
-        "QualityValue_LS": -0.006713028749140117,
-        "SectorRotation": -0.010414616979053182
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T12:53:25.342426",
-      "returns": {
-        "TS_Momentum_LS": -0.008748386202432509,
-        "VolumeSpike": 0.012401202110399098,
-        "SectorRotation": -0.010414616979053182,
-        "QualityValue_LS": -0.006713028749140117
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T12:58:18.494958",
-      "returns": {
-        "TS_Momentum_LS": -0.008748386202432509,
-        "VolumeSpike": 0.012401202110399098,
-        "SectorRotation": -0.010414616979053182,
-        "QualityValue_LS": -0.006713028749140117
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T13:04:33.331493",
-      "returns": {
-        "TS_Momentum_LS": -0.008748386202432509,
-        "VolumeSpike": 0.012401202110399098,
-        "QualityValue_LS": -0.006713028749140117,
-        "SectorRotation": -0.010414616979053182
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T13:09:55.728470",
-      "returns": {
-        "TS_Momentum_LS": -0.008748386202432509,
-        "VolumeSpike": 0.012401202110399098,
-        "QualityValue_LS": -0.006713028749140117,
-        "SectorRotation": -0.010414616979053182
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T13:16:24.724920",
-      "returns": {
-        "VolumeSpike": 0.012401202110399098,
-        "TS_Momentum_LS": -0.00011464231135663927,
-        "SectorRotation": -0.010414616979053182
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T13:21:50.175430",
-      "returns": {
-        "TS_Momentum_LS": -0.001684372757122887,
-        "VolumeSpike": 0.012401202110399098,
-        "SectorRotation": -0.010414616979053182
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T13:26:53.302475",
-      "returns": {
-        "TS_Momentum_LS": -0.001684372757122887,
-        "VolumeSpike": 0.012401202110399098,
-        "SectorRotation": -0.010414616979053182
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T13:35:47.242877",
-      "returns": {
-        "TS_Momentum_LS": -0.001684372757122887,
-        "VolumeSpike": 0.012401202110399098,
-        "SectorRotation": -0.010414616979053182
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T13:40:31.932904",
-      "returns": {
-        "VolumeSpike": 0.012401202110399098,
-        "TS_Momentum_LS": -0.001684372757122887,
-        "SectorRotation": -0.010414616979053182
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T13:45:37.189776",
-      "returns": {
-        "TS_Momentum_LS": -0.001684372757122887,
-        "VolumeSpike": 0.012401202110399098,
-        "SectorRotation": -0.010414616979053182
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T13:55:38.757225",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": -0.0036846424451413115,
-        "SectorRotation": -0.01723052218180235
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:00:23.772494",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": -0.003684642445141311,
-        "SectorRotation": -0.01723052218180235
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:05:29.086175",
-      "returns": {
-        "TS_Momentum_LS": -0.0036846424451413115,
-        "VolumeSpike": 0.011456254212752932,
-        "SectorRotation": -0.01723052218180235
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:10:41.409951",
-      "returns": {
-        "TS_Momentum_LS": -0.0036846424451413115,
-        "VolumeSpike": 0.011456254212752932,
-        "SectorRotation": -0.01723052218180235
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:15:37.239921",
-      "returns": {
-        "TS_Momentum_LS": -0.003707463741606403,
-        "VolumeSpike": 0.011456254212752932,
-        "SectorRotation": -0.01723052218180235
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:20:38.631218",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:25:51.486116",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.0008002224051255794
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:30:44.535258",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:35:52.613576",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:41:04.990041",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.0008002224051255794
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:45:57.654392",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:51:04.446451",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255792,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T14:56:10.776346",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:01:08.486260",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:06:26.095991",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:11:25.032202",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.0008002224051255794
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:16:24.941115",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.0008002224051255794
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:21:25.736034",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:26:35.713518",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:31:27.634820",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:36:42.934891",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.0008002224051255794
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:41:46.793902",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.0008002224051255792
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:46:40.396644",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.0008002224051255794
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:51:51.770424",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T15:56:54.739533",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T16:01:55.757480",
-      "returns": {
-        "TS_Momentum_LS": 0.0008002224051255794,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T16:07:00.063916",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.0016284064637881724
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T16:12:05.675248",
-      "returns": {
-        "TS_Momentum_LS": 0.004442758247829367,
-        "VolumeSpike": 0.011456254212752932
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T16:17:09.027417",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.004442758247829367
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T16:22:17.145459",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.004442758247829367
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T16:27:29.393941",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.004442758247829367
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T16:32:18.880732",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.004442758247829367
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T16:37:26.637182",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.004442758247829367
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-04T16:42:34.381484",
-      "returns": {
-        "VolumeSpike": 0.011456254212752932,
-        "TS_Momentum_LS": 0.004442758247829367
-      },
-      "regime": "risk_off"
-    },
-    {
-      "timestamp": "2026-02-05T18:31:24.573834",
-      "returns": {
-        "TS_Momentum_LS": -0.013588329091912411
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-02-05T18:32:23.833791",
-      "returns": {
-        "TS_Momentum_LS": -0.016851841395303525
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-02-05T18:38:56.748877",
       "returns": {
@@ -954,7 +437,635 @@
         "TS_Momentum_LS": 0.0018716155623626565
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:17:04.542475",
+      "returns": {
+        "OpeningRangeBreakout": 0.0016602128322281103,
+        "RelativeStrengthIntraday": 0.0016602128322281097,
+        "IntradayMomentum": 0.0016602128322281103,
+        "TS_Momentum_LS": 0.006254415632267991,
+        "SectorRotation": 0.00016967426942353597,
+        "CalendarEffects": 0.0016602128322281097,
+        "MeanReversion_LS": -0.0001696742694235359
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:20:53.106052",
+      "returns": {
+        "OpeningRangeBreakout": -0.00034471930049546895,
+        "TS_Momentum_LS": 0.00430907209020744,
+        "RelativeStrengthIntraday": -0.00034471930049546895,
+        "CalendarEffects": 0.001008531540373488,
+        "SectorRotation": -0.0013021473248191221
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:25:49.477857",
+      "returns": {
+        "TS_Momentum_LS": 0.0047260206191372806,
+        "RelativeStrengthIntraday": -0.004857894503167986,
+        "OpeningRangeBreakout": -0.004857894503167986,
+        "SectorRotation": -0.0018039046864926755
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:30:56.911003",
+      "returns": {
+        "TS_Momentum_LS": 0.008842977956219116,
+        "SectorRotation": 0.0010393870296577538
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:32:06.137610",
+      "returns": {
+        "TS_Momentum_LS": 0.008972527137443918,
+        "SectorRotation": -0.0007669394723672145
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:35:49.160191",
+      "returns": {
+        "TS_Momentum_LS": 0.008698447202439267,
+        "SectorRotation": 0.0002365752509798922
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:40:41.414163",
+      "returns": {
+        "TS_Momentum_LS": 0.009848505417931237,
+        "SectorRotation": 0.0002365752509798922
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:46:04.216296",
+      "returns": {
+        "TS_Momentum_LS": 0.009755563667132266,
+        "SectorRotation": -0.0009676424170366357
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:47:20.227651",
+      "returns": {
+        "TS_Momentum_LS": 0.009313702311128118,
+        "SectorRotation": -0.0012352463432625895
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:51:03.182035",
+      "returns": {
+        "TS_Momentum_LS": 0.007194385597140052,
+        "SectorRotation": -0.0017704541957144974
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T19:56:02.571133",
+      "returns": {
+        "TS_Momentum_LS": 0.006600502280343799,
+        "SectorRotation": -0.0025063649928358266
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T20:01:16.599036",
+      "returns": {
+        "TS_Momentum_LS": 0.006676366648920757,
+        "SectorRotation": -0.004215851963051482
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T20:02:24.893958",
+      "returns": {
+        "TS_Momentum_LS": 0.006670312495090794,
+        "SectorRotation": -0.00394823999099114
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T20:06:14.794225",
+      "returns": {
+        "TS_Momentum_LS": -0.0036806280189307984,
+        "SectorRotation": -0.0036806280189307984
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T20:11:03.830582",
+      "returns": {
+        "TS_Momentum_LS": -0.005018687879233032,
+        "SectorRotation": -0.005018687879233032
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T20:16:22.399187",
+      "returns": {
+        "TS_Momentum_LS": -0.0038813369979760546,
+        "SectorRotation": -0.0038813369979760546
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T20:17:33.491193",
+      "returns": {
+        "TS_Momentum_LS": -0.004015142984006226,
+        "SectorRotation": -0.004015142984006226
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T20:21:27.273207",
+      "returns": {
+        "TS_Momentum_LS": -0.0032123070678248006,
+        "SectorRotation": -0.0032123070678248006
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T20:31:38.034766",
+      "returns": {
+        "RelativeStrengthIntraday": 0.0001565271835543215,
+        "OpeningRangeBreakout": 0.0001565271835543215,
+        "CalendarEffects": 0.0001565271835543215
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:07:01.306654",
+      "returns": {
+        "RelativeStrengthIntraday": 0.00032381921635762267,
+        "TS_Momentum_LS": -0.0011639633435010512,
+        "OpeningRangeBreakout": 0.00032381921635762267,
+        "VWAPReversion": -0.002651745903359725,
+        "CrossSectionMomentum": -0.0026517459033597248
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:11:18.396353",
+      "returns": {
+        "RelativeStrengthIntraday": -0.0002775593283061731,
+        "OpeningRangeBreakout": -0.0002775593283061731,
+        "VWAPReversion": 0.0009956845139064883,
+        "TS_Momentum_LS": 0.0003590625928001576,
+        "CrossSectionMomentum": 0.0009956845139064883
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:17:05.860103",
+      "returns": {
+        "VWAPReversion": 0.0003813804436300221,
+        "OpeningRangeBreakout": -0.0001387796641532969,
+        "RelativeStrengthIntraday": -0.0001387796641532969,
+        "TS_Momentum_LS": 0.0001213003897383626,
+        "CrossSectionMomentum": 0.0003813804436300221
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:18:23.095601",
+      "returns": {
+        "CrossSectionMomentum": -0.0020246438316190896,
+        "TS_Momentum_LS": -0.000989191971783936,
+        "RelativeStrengthIntraday": 4.625988805121764e-05,
+        "VWAPReversion": -0.0020246438316190896,
+        "OpeningRangeBreakout": 4.625988805121764e-05
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:22:11.708717",
+      "returns": {
+        "RelativeStrengthIntraday": 0.0020123051302216024,
+        "VWAPReversion": -0.0015767137803759245,
+        "TS_Momentum_LS": 0.00021779567492283898,
+        "OpeningRangeBreakout": 0.0020123051302216024,
+        "CrossSectionMomentum": -0.0015767137803759245
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:27:08.498838",
+      "returns": {
+        "VWAPReversion": -0.006593530354299787,
+        "TS_Momentum_LS": -0.0028453018452289014,
+        "OpeningRangeBreakout": 0.0009029266638419836,
+        "RelativeStrengthIntraday": 0.0009029266638419836,
+        "CrossSectionMomentum": -0.006593530354299787
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:32:18.039996",
+      "returns": {
+        "TS_Momentum_LS": -0.007975714512421609,
+        "CrossSectionMomentum": -0.007975714512421609
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:33:27.994241",
+      "returns": {
+        "TS_Momentum_LS": -0.007003066401150718,
+        "CrossSectionMomentum": -0.007003066401150718
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:37:23.126001",
+      "returns": {
+        "TS_Momentum_LS": 9.823182711202907e-05,
+        "VWAPReversion": 9.823182711202907e-05,
+        "CrossSectionMomentum": 9.823182711202907e-05
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:41:30.934642",
+      "returns": {
+        "TS_Momentum_LS": 0.0005331200852989942,
+        "SectorRotation": 0.0005331200852989942
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:47:24.281270",
+      "returns": {
+        "TS_Momentum_LS": -0.0005331200852993481,
+        "SectorRotation": -0.0005331200852993481
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:48:32.174660",
+      "returns": {
+        "TS_Momentum_LS": -0.0009329601492738149,
+        "SectorRotation": -0.0009329601492738149
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-09T21:52:24.252930",
+      "returns": {
+        "TS_Momentum_LS": -0.00019992003198723342,
+        "SectorRotation": -0.00019992003198723342
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:00:14.937827",
+      "returns": {
+        "TS_Momentum_LS": -1.1158728905197953e-05,
+        "IntradayMomentum": 0.0005597014925374105,
+        "CrossSectionMomentum": 0.0005597014925374105,
+        "CalendarEffects": 0.0003640865069539758,
+        "QualityValue_LS": 0.0003640865069539758,
+        "SectorRotation": -0.00022687240695449282
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:05:26.178502",
+      "returns": {
+        "TS_Momentum_LS": 0.0003482893260779283,
+        "QualityValue_LS": -0.00011587947352640693,
+        "CrossSectionMomentum": 0.0031173546642976587,
+        "CalendarEffects": 0.0006553557125170801,
+        "SectorRotation": -0.0018157584608565138
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:10:48.962245",
+      "returns": {
+        "TS_Momentum_LS": 0.0005728814259384496,
+        "QualityValue_LS": -0.000106192710502259,
+        "CrossSectionMomentum": 0.00575686540832121,
+        "SectorRotation": -0.0017678834355012974,
+        "CalendarEffects": 0.00010642582887395024
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:15:00.316329",
+      "returns": {
+        "TS_Momentum_LS": -0.0006700400717841624,
+        "QualityValue_LS": -0.0018324653428699188,
+        "CrossSectionMomentum": 0.0043749070372666315,
+        "CalendarEffects": -0.0020416785478379494,
+        "SectorRotation": -0.002658212356512142
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:19:40.437979",
+      "returns": {
+        "TS_Momentum_LS": 0.001786493698160175,
+        "CrossSectionMomentum": 0.008716864885158113,
+        "QualityValue_LS": 0.00014134698014008323,
+        "SectorRotation": -0.0010802967654378495,
+        "CalendarEffects": -0.0009772923161706138
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:24:26.710691",
+      "returns": {
+        "TS_Momentum_LS": 0.0007443340049443069,
+        "CrossSectionMomentum": 0.005966278271509211,
+        "SectorRotation": -0.0014666017186955591,
+        "QualityValue_LS": 0.00027401623057963576,
+        "CalendarEffects": -0.001155528955960887
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:25:20.526397",
+      "returns": {
+        "TS_Momentum_LS": -0.0005731828962026213,
+        "CrossSectionMomentum": 0.0016580860730628878,
+        "SectorRotation": -0.0016835611233675142,
+        "QualityValue_LS": 4.2715023459379106e-05,
+        "CalendarEffects": -0.0011191093369482122
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:29:42.438457",
+      "returns": {
+        "TS_Momentum_LS": -0.0009981547717474294,
+        "CrossSectionMomentum": 0.0005914125194962183,
+        "SectorRotation": -0.0026144215784005467,
+        "QualityValue_LS": 0.0004556164596539097,
+        "CalendarEffects": 0.00028304599504325726
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:30:58.590691",
+      "returns": {
+        "TS_Momentum_LS": -0.0012299667189220992,
+        "VolumeSpike": -0.001167496952100975,
+        "VWAPReversion": -0.001167496952100975,
+        "CrossSectionMomentum": 6.76648801159737e-05,
+        "SectorRotation": -0.0024214209148628527,
+        "QualityValue_LS": 4.904663831402915e-05,
+        "CalendarEffects": -0.0005855362555114986
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:34:47.469953",
+      "returns": {
+        "CrossSectionMomentum": 0.00022377018225220915,
+        "TS_Momentum_LS": -0.0016646534763428448,
+        "CalendarEffects": 8.495259142077484e-05,
+        "QualityValue_LS": 0.0003007926123585295,
+        "SectorRotation": -0.0038721512187108688
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:36:01.681172",
+      "returns": {
+        "TS_Momentum_LS": -0.0021655637735207506,
+        "QualityValue_LS": 0.00032885098792840146,
+        "SectorRotation": -0.0036708659551092605,
+        "CrossSectionMomentum": -0.0014283460713334936,
+        "CalendarEffects": 0.00016912771813043073
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:39:56.587232",
+      "returns": {
+        "CrossSectionMomentum": 0.000600242063673809,
+        "TS_Momentum_LS": -0.0023099151306944163,
+        "CalendarEffects": -0.0007049549803341734,
+        "QualityValue_LS": -0.0008359533737655459,
+        "SectorRotation": -0.004079107231532162
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:40:50.543281",
+      "returns": {
+        "TS_Momentum_LS": -0.0024305104215306883,
+        "CrossSectionMomentum": -0.0004823666710685267,
+        "CalendarEffects": -0.0003447566802278728,
+        "QualityValue_LS": -0.0010439789510756038,
+        "SectorRotation": -0.003684725585970648
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:44:53.382930",
+      "returns": {
+        "TS_Momentum_LS": -0.0021907239805862033,
+        "QualityValue_LS": -2.0573968431232807e-05,
+        "CrossSectionMomentum": -0.0010564116030790424,
+        "SectorRotation": -0.0030906994073522506,
+        "CalendarEffects": 1.2456082384101446e-06
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:45:58.803112",
+      "returns": {
+        "TS_Momentum_LS": -0.0023931063111999273,
+        "CrossSectionMomentum": -0.001844750485425284,
+        "SectorRotation": -0.003039773065962815,
+        "QualityValue_LS": 0.00015694359070788998,
+        "CalendarEffects": 0.00020025857123320677
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:49:52.548641",
+      "returns": {
+        "TS_Momentum_LS": -0.0021187932058318796,
+        "QualityValue_LS": 0.0007625581031201904,
+        "CrossSectionMomentum": -0.0007703901191092424,
+        "SectorRotation": -0.0032103475564231633,
+        "CalendarEffects": 0.00015587237339495503
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:50:57.921768",
+      "returns": {
+        "TS_Momentum_LS": -0.002232064669918178,
+        "CrossSectionMomentum": -0.0014616838440856803,
+        "CalendarEffects": 0.00015587237339495503,
+        "QualityValue_LS": 0.0006794063169294572,
+        "SectorRotation": -0.0030355118550616103
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:55:16.909058",
+      "returns": {
+        "TS_Momentum_LS": -0.0034226893471949633,
+        "CrossSectionMomentum": -0.007424886956627852,
+        "CalendarEffects": -0.00013548466465708342,
+        "QualityValue_LS": 0.0007064111127200495,
+        "SectorRotation": -0.002106188017900191
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T19:56:44.476011",
+      "returns": {
+        "TS_Momentum_LS": -0.0036120749707276682,
+        "CrossSectionMomentum": -0.007477056354401601,
+        "CalendarEffects": -0.000681779111004965,
+        "QualityValue_LS": 0.0003561578628488596,
+        "SectorRotation": -0.002244717020552298
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T20:01:00.652462",
+      "returns": {
+        "CrossSectionMomentum": -0.007408271670407005,
+        "TS_Momentum_LS": -0.0036531394642186845,
+        "CalendarEffects": -0.001078685654890901,
+        "QualityValue_LS": -5.868877168582905e-06,
+        "SectorRotation": -0.0017541551363093202
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T20:02:27.198205",
+      "returns": {
+        "TS_Momentum_LS": -0.003766607901134056,
+        "QualityValue_LS": 0.0014240715560925707,
+        "CrossSectionMomentum": -0.00782442255228993,
+        "SectorRotation": -0.002140508699462938
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T20:05:35.108714",
+      "returns": {
+        "TS_Momentum_LS": -0.0028861782802775426,
+        "CrossSectionMomentum": -0.007543705158403857,
+        "QualityValue_LS": 0.001070991455792346,
+        "SectorRotation": -0.0023236703842458035
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T20:07:27.241506",
+      "returns": {
+        "TS_Momentum_LS": -0.0026929062223024877,
+        "CrossSectionMomentum": -0.007519630382238634,
+        "SectorRotation": -0.002037475823489016,
+        "QualityValue_LS": -0.0003058378744237566
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-10T22:47:17.419136",
+      "returns": {
+        "TS_Momentum_LS": 0.002171279752070776,
+        "MeanReversion_LS": -0.003591268753971178,
+        "CrossSectionMomentum": -0.003962988822613629,
+        "CalendarEffects": 0.002461243180647494,
+        "QualityValue_LS": 0.006727273440935381,
+        "SectorRotation": 0.005078241582605669
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T12:45:34.237185",
+      "returns": {
+        "TS_Momentum_LS": 0.0009697811603582834,
+        "CalendarEffects": -0.0019537425359349037,
+        "QualityValue_LS": 0.0019340052351722804,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "SectorRotation": 0.0021467019995736057
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T12:46:58.439828",
+      "returns": {
+        "TS_Momentum_LS": 0.0009697811603582834,
+        "QualityValue_LS": 0.001633318308614748,
+        "SectorRotation": 0.0021467019995736057,
+        "CalendarEffects": -0.0019537425359349037,
+        "CrossSectionMomentum": 0.0029837969914827717
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T12:52:14.412661",
+      "returns": {
+        "TS_Momentum_LS": 0.0009697811603582834,
+        "QualityValue_LS": 0.001633318308614748,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "SectorRotation": 0.0021467019995736057,
+        "CalendarEffects": -0.0019537425359349037
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T12:57:09.514627",
+      "returns": {
+        "TS_Momentum_LS": 0.0009697811603582834,
+        "QualityValue_LS": 0.001633318308614748,
+        "CalendarEffects": -0.0019537425359349037,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "SectorRotation": 0.0021467019995736057
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:02:34.809637",
+      "returns": {
+        "TS_Momentum_LS": 0.0022262258827804434,
+        "QualityValue_LS": 0.001633318308614748,
+        "CalendarEffects": -0.0019537425359349037,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "SectorRotation": 0.0021467019995736057
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:07:22.113053",
+      "returns": {
+        "TS_Momentum_LS": 0.0022262258827804434,
+        "QualityValue_LS": 0.001633318308614748,
+        "CalendarEffects": -0.0019537425359349037,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "SectorRotation": 0.0021467019995736057
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:12:39.812673",
+      "returns": {
+        "TS_Momentum_LS": 0.0022262258827804434,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "SectorRotation": 0.0021467019995736057,
+        "QualityValue_LS": 0.001633318308614748,
+        "CalendarEffects": -0.0019537425359349037
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-02-06T00:14:02.535110"
+  "last_updated": "2026-02-11T13:12:39.815007"
 }

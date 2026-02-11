@@ -2,7 +2,7 @@
 Risk management and constraint enforcement.
 """
 import numpy as np
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, List, Optional, Any, Tuple, Set
 from datetime import datetime
 from dataclasses import dataclass, field
 import logging
@@ -14,43 +14,56 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RiskConstraints:
-    """Risk constraint configuration."""
-    max_position_size: float = 0.05  # REDUCED from 15% to 5% - prevents huge losses
-    max_sector_exposure: float = 0.25  # REDUCED from 30% to 25%
+    """Risk constraint configuration — tuned for 100-300% annual target."""
+    max_position_size: float = 0.15  # 15% max per position (was 5% — too conservative)
+    max_sector_exposure: float = 0.35  # 35% per sector (was 25% — allow concentration in trends)
     max_leverage: float = 1.0
-    max_turnover: float = 0.50
-    max_drawdown_trigger: float = 0.10  # REDUCED from 15% to 10% - tighter control
-    vol_target: float = 0.12
-    vol_ceiling: float = 0.18  # REDUCED from 20% to 18%
+    max_turnover: float = 0.60  # Slightly more room for active rebalancing
+    max_drawdown_trigger: float = 0.15  # 15% drawdown trigger (was 10%)
+    vol_target: float = 0.30  # 30% annualized vol target (was 12% — way too low for 300%)
+    vol_ceiling: float = 0.40  # 40% vol ceiling (was 18%)
     
-    # Stop-loss / take-profit - NOW ENABLED BY DEFAULT
-    enable_stop_loss: bool = True  # CRITICAL FIX: Enable stop-loss!
-    stop_loss_pct: float = 0.02    # 2% stop-loss (was 5%)
-    enable_take_profit: bool = True  # CRITICAL FIX: Enable take-profit!
-    take_profit_pct: float = 0.04  # 4% take-profit (was 20%) - locks in gains
+    # Stop-loss / take-profit — RETUNED to let winners run
+    enable_stop_loss: bool = True
+    stop_loss_pct: float = 0.05  # 5% stop-loss (was 2% — triggered on normal noise)
+    enable_take_profit: bool = True
+    take_profit_pct: float = 0.20  # 20% take-profit (was 4% — murdered winners)
     
-    # TRAILING STOP-LOSS (NEW) - Protects profits by moving stop up with price
+    # TIERED TAKE-PROFIT — gradually trim instead of hard cut
+    enable_tiered_take_profit: bool = True
+    take_profit_tiers: Dict = field(default_factory=lambda: {
+        0.08: 0.20,   # At +8% gain → trim 20% of position
+        0.15: 0.25,   # At +15% gain → trim another 25%
+        0.25: 0.25,   # At +25% gain → trim another 25%
+        # Remaining 30% rides with trailing stop
+    })
+    
+    # TRAILING STOP-LOSS — widened to let winners breathe
     enable_trailing_stop: bool = True
-    trailing_stop_activation: float = 0.02  # Activate after 2% profit
-    trailing_stop_distance: float = 0.015   # Trail 1.5% behind peak
+    trailing_stop_activation: float = 0.04  # Activate after 4% profit (was 2%)
+    trailing_stop_distance: float = 0.04    # Trail 4% behind peak (was 1.5%)
     
-    # CORRELATION LIMIT (NEW) - Prevents holding too many correlated positions
+    # WINNER PROTECTION — once up X%, never let it become a loss
+    enable_winner_protection: bool = True
+    winner_protection_threshold: float = 0.05  # After +5% gain, move stop to breakeven
+    
+    # CORRELATION LIMIT — slightly relaxed for trending markets
     enable_correlation_limit: bool = True
-    max_pairwise_correlation: float = 0.80  # Max allowed correlation between any two positions
-    max_avg_correlation: float = 0.60       # Max average correlation of portfolio
+    max_pairwise_correlation: float = 0.85  # (was 0.80) Allow more in strong trends
+    max_avg_correlation: float = 0.65       # (was 0.60)
     
-    # === LONG/SHORT CONSTRAINTS ===
+    # === LONG/SHORT CONSTRAINTS — opened up for alpha ===
     enable_shorting: bool = True
-    max_gross_exposure: float = 1.5  # REDUCED from 200% to 150% gross
-    net_exposure_min: float = -0.2   # REDUCED from -30% to -20% net short
-    net_exposure_max: float = 1.0    # Can be 100% net long
-    max_short_position: float = 0.05  # REDUCED from 10% to 5% max per short
-    max_long_position: float = 0.05   # REDUCED from 15% to 5% max per long
-    max_total_short: float = 0.30     # REDUCED from 100% to 30% max total short
+    max_gross_exposure: float = 2.50  # 250% gross (was 150% — use the leverage!)
+    net_exposure_min: float = -0.40   # Allow 40% net short (was -20%)
+    net_exposure_max: float = 1.30    # Allow >100% net long with leverage
+    max_short_position: float = 0.10  # 10% per short (was 5%)
+    max_long_position: float = 0.15   # 15% per long (was 5%)
+    max_total_short: float = 0.60     # 60% total short capacity (was 30%)
     
     # === MARGIN CONSTRAINTS (Futures) ===
-    min_free_cash_pct: float = 0.10   # Keep 10% cash buffer
-    max_margin_usage_pct: float = 0.80  # Use max 80% of available margin
+    min_free_cash_pct: float = 0.05   # 5% cash buffer (was 10% — double-buffering)
+    max_margin_usage_pct: float = 0.85  # 85% margin usage (was 80%)
 
 
 @dataclass
@@ -102,6 +115,12 @@ class RiskManager:
         
         # Trailing stop tracking - peak price since entry for each position
         self.position_peaks: Dict[str, float] = {}  # symbol -> highest price since entry
+        
+        # Tiered take-profit tracking — which tiers have already been triggered
+        self.triggered_tiers: Dict[str, Set[float]] = {}  # symbol -> set of triggered tier thresholds
+        
+        # Winner protection tracking — symbols where breakeven stop is active
+        self.winner_protected: Set[str] = set()
     
     def check_and_approve(
         self,
@@ -287,7 +306,15 @@ class RiskManager:
         result: RiskCheckResult,
         features: Features
     ) -> None:
-        """Check stop-loss, trailing stop, and take-profit levels."""
+        """
+        Check stop-loss, trailing stop, winner protection, and tiered take-profit.
+        
+        ORDER OF OPERATIONS (critical):
+        1. Winner protection — after +5%, move stop to breakeven
+        2. Trailing stop — after +4%, trail 4% behind peak
+        3. Fixed stop-loss — hard stop at -5%
+        4. Tiered take-profit — gradually trim at +8%, +15%, +25%
+        """
         for symbol, weight in list(result.approved_weights.items()):
             if symbol not in self.entry_prices:
                 continue
@@ -306,7 +333,26 @@ class RiskManager:
             else:
                 pnl = (entry - current) / entry  # Inverted for shorts
             
-            # === TRAILING STOP (NEW) ===
+            # === 1. WINNER PROTECTION ===
+            # Once a position is up past threshold, never let it become a loss
+            if self.constraints.enable_winner_protection:
+                wp_threshold = self.constraints.winner_protection_threshold
+                
+                if pnl >= wp_threshold:
+                    # Mark this symbol as protected
+                    self.winner_protected.add(symbol)
+                
+                if symbol in self.winner_protected and pnl <= 0:
+                    # Was a winner, now at breakeven or loss — EXIT
+                    result.approved_weights[symbol] = 0
+                    result.adjustments.append(
+                        f"WINNER PROTECTION triggered for {symbol} "
+                        f"(Was up >{wp_threshold:.0%}, now at {pnl:.1%})"
+                    )
+                    self._cleanup_position_tracking(symbol)
+                    continue
+            
+            # === 2. TRAILING STOP ===
             # Protects profits by moving stop up with price
             if self.constraints.enable_trailing_stop:
                 activation = self.constraints.trailing_stop_activation
@@ -314,7 +360,7 @@ class RiskManager:
                 
                 # Update peak price tracking
                 if symbol not in self.position_peaks:
-                    self.position_peaks[symbol] = current if is_long else entry  # Entry for shorts
+                    self.position_peaks[symbol] = current if is_long else entry
                 
                 # Update peak (highest for longs, lowest for shorts)
                 if is_long:
@@ -328,41 +374,60 @@ class RiskManager:
                     peak = self.position_peaks[symbol]
                     peak_pnl = (entry - peak) / entry
                 
-                # Check if trailing stop is activated (we've hit activation threshold)
+                # Check if trailing stop is activated
                 if peak_pnl >= activation:
-                    # Calculate trailing stop level
                     trailing_pnl = peak_pnl - trail_distance
                     
-                    # If current P&L falls below trailing stop, exit
                     if pnl < trailing_pnl:
                         result.approved_weights[symbol] = 0
                         result.adjustments.append(
                             f"TRAILING STOP triggered for {symbol} "
                             f"(Peak: {peak_pnl:.1%}, Now: {pnl:.1%}, Trail: {trailing_pnl:.1%})"
                         )
-                        # Clean up tracking
-                        self.position_peaks.pop(symbol, None)
+                        self._cleanup_position_tracking(symbol)
                         continue
             
-            # === FIXED STOP-LOSS ===
+            # === 3. FIXED STOP-LOSS ===
             if self.constraints.enable_stop_loss:
                 if pnl < -self.constraints.stop_loss_pct:
                     result.approved_weights[symbol] = 0
                     result.adjustments.append(
                         f"STOP-LOSS triggered for {symbol} (P&L: {pnl:.1%})"
                     )
-                    # Clean up trailing stop tracking
-                    self.position_peaks.pop(symbol, None)
+                    self._cleanup_position_tracking(symbol)
                     continue
             
-            # === TAKE-PROFIT ===
-            if self.constraints.enable_take_profit:
+            # === 4. TIERED TAKE-PROFIT ===
+            # Gradually trim positions instead of hard halving at a fixed %
+            if self.constraints.enable_tiered_take_profit and pnl > 0:
+                tiers = self.constraints.take_profit_tiers
+                if symbol not in self.triggered_tiers:
+                    self.triggered_tiers[symbol] = set()
+                
+                for tier_threshold, trim_pct in sorted(tiers.items()):
+                    if pnl >= tier_threshold and tier_threshold not in self.triggered_tiers[symbol]:
+                        # Trim this portion
+                        result.approved_weights[symbol] *= (1.0 - trim_pct)
+                        self.triggered_tiers[symbol].add(tier_threshold)
+                        result.adjustments.append(
+                            f"TIERED TAKE-PROFIT: {symbol} at +{pnl:.1%} → trimmed {trim_pct:.0%} "
+                            f"(tier {tier_threshold:.0%})"
+                        )
+            
+            # === 5. HARD TAKE-PROFIT (fallback for non-tiered mode) ===
+            elif self.constraints.enable_take_profit and not self.constraints.enable_tiered_take_profit:
                 if pnl > self.constraints.take_profit_pct:
-                    # Reduce position by half
                     result.approved_weights[symbol] *= 0.5
                     result.adjustments.append(
                         f"TAKE-PROFIT triggered for {symbol} (P&L: {pnl:.1%})"
                     )
+    
+    def _cleanup_position_tracking(self, symbol: str) -> None:
+        """Clean up all tracking state for a closed position."""
+        self.position_peaks.pop(symbol, None)
+        self.triggered_tiers.pop(symbol, None)
+        self.winner_protected.discard(symbol)
+        self.entry_prices.pop(symbol, None)
     
     # === LONG/SHORT CONSTRAINT CHECKS ===
     
@@ -621,7 +686,9 @@ class RiskManager:
         self.entry_prices = {}
         self.high_water_mark = 0.0
         self.current_drawdown = 0.0
-        self.position_peaks = {}  # Reset trailing stop tracking
+        self.position_peaks = {}
+        self.triggered_tiers = {}
+        self.winner_protected = set()
     
     def get_exposure_summary(self, weights: Dict[str, float]) -> Dict[str, float]:
         """

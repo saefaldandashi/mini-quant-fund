@@ -37,12 +37,12 @@ class EnsembleOptimizer:
         """
         self.config = config or {}
         
-        # Constraints
+        # Constraints (defaults aligned with aggressive config)
         self.max_position = self.config.get('max_position', 0.15)
-        self.max_sector_exposure = self.config.get('max_sector_exposure', 0.30)
-        self.max_leverage = self.config.get('max_leverage', 1.0)
-        self.max_turnover = self.config.get('max_turnover', 0.50)
-        self.vol_target = self.config.get('vol_target', 0.12)
+        self.max_sector_exposure = self.config.get('max_sector_exposure', 0.35)
+        self.max_leverage = self.config.get('max_leverage', 2.5)
+        self.max_turnover = self.config.get('max_turnover', 0.60)
+        self.vol_target = self.config.get('vol_target', 0.30)
         
         # Risk parameters
         self.risk_aversion = self.config.get('risk_aversion', 2.0)

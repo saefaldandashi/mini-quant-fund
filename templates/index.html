@@ -1578,8 +1578,8 @@
             </div>
             
             <div class="checkbox-row">
-                <input type="checkbox" id="force-rebalance">
-                <label for="force-rebalance">Force rebalance</label>
+                <input type="checkbox" id="force-rebalance" checked>
+                <label for="force-rebalance">Force rebalance (bypass cooldown)</label>
             </div>
             
             <div class="checkbox-row">
@@ -1596,8 +1596,8 @@
                 
                 <div style="display: flex; gap: 4px; margin-top: 10px;">
                     <button class="lev-quick-btn" data-lev="1.0" onclick="setLeverageQuick(1.0)" title="No leverage">1x</button>
-                    <button class="lev-quick-btn" data-lev="1.5" onclick="setLeverageQuick(1.5)" title="1.5x leverage">1.5x</button>
-                    <button class="lev-quick-btn active" data-lev="2.0" onclick="setLeverageQuick(2.0)" title="2x leverage (overnight max)">2x</button>
+                    <button class="lev-quick-btn" data-lev="2.0" onclick="setLeverageQuick(2.0)" title="2x leverage">2x</button>
+                    <button class="lev-quick-btn active" data-lev="3.0" onclick="setLeverageQuick(3.0)" title="3x leverage (aggressive)">3x</button>
                     <button class="lev-quick-btn" data-lev="4.0" onclick="setLeverageQuick(4.0)" title="4x leverage (PDT intraday)">4x</button>
                 </div>
                 
@@ -1649,13 +1649,14 @@
             <div class="mini-card">
                 <h3>⚡ Risk Appetite</h3>
                 <select id="risk-appetite" onchange="updateRiskAppetite()" style="width: 100%; padding: 8px; margin-top: 8px; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 6px; color: white; font-size: 0.85em;">
-                    <option value="conservative">Conservative (0.25x Kelly)</option>
+                    <option value="conservative">Conservative (0.35x Kelly)</option>
                     <option value="moderate" selected>Moderate (0.50x Kelly)</option>
                     <option value="aggressive">Aggressive (0.75x Kelly)</option>
                     <option value="maximum">Maximum (1.0x Kelly)</option>
+                    <option value="alpha_hunter">🔥 Alpha Hunter (1.25x Kelly)</option>
                 </select>
                 <div id="risk-appetite-info" style="margin-top: 8px; font-size: 0.7em; color: var(--text-dim);">
-                    Min Position: 2% | Max: 20 stocks
+                    Min Position: 3% | Max: 18 stocks
                 </div>
             </div>
             
@@ -1665,7 +1666,7 @@
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
                         <input type="radio" name="exposure-mode" id="exposure-manual" checked onchange="toggleExposureMode()">
                         <label for="exposure-manual" style="font-size: 0.8em; color: var(--text-secondary);">Manual</label>
-                        <input type="number" id="exposure-pct" value="80" min="10" max="100" style="width: 55px;">
+                        <input type="number" id="exposure-pct" value="95" min="10" max="150" style="width: 55px;">
                         <span style="font-size: 0.75em; color: var(--text-dim);">%</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
@@ -1701,6 +1702,120 @@
                     <button onclick="refreshGeoIntel()" style="font-size: 0.65em; padding: 3px 8px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 4px; color: var(--text-secondary); cursor: pointer;">
                         🔄 Refresh Intel
                     </button>
+                </div>
+            </div>
+            
+            <div class="mini-card" id="performance-mode-card">
+                <h3>🔥 Performance Mode</h3>
+                <div id="perf-mode-display" style="margin-top: 8px; text-align: center;">
+                    <div id="perf-mode-label" style="font-size: 1.1em; font-weight: 700; color: var(--text-secondary);">NORMAL</div>
+                    <div id="perf-mode-multiplier" style="font-size: 0.8em; color: var(--text-dim);">1.00x exposure</div>
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 6px; font-size: 0.7em;">
+                        <span id="perf-wins" style="color: var(--positive);">W: 0</span>
+                        <span id="perf-losses" style="color: var(--negative);">L: 0</span>
+                    </div>
+                </div>
+                <div style="margin-top: 8px; display: flex; align-items: center; gap: 6px; justify-content: center;">
+                    <label style="font-size: 0.7em; color: var(--text-dim);">Win Accel:</label>
+                    <label class="toggle-switch" style="--width: 36px; --height: 18px;">
+                        <input type="checkbox" id="win-accel-toggle" checked onchange="toggleWinAcceleration()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span id="win-accel-status" style="font-size: 0.65em; color: var(--positive);">ON</span>
+                </div>
+            </div>
+            
+            <div class="mini-card" id="capital-deployment-card">
+                <h3>💰 Capital Deployment</h3>
+                <div style="margin-top: 8px; font-size: 0.75em;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                        <span style="color: var(--text-dim);">Base</span>
+                        <span id="deploy-base" style="color: var(--text-secondary);">95%</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                        <span style="color: var(--text-dim);">Regime</span>
+                        <span id="deploy-regime" style="color: var(--text-secondary);">×100%</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                        <span style="color: var(--text-dim);">Acceleration</span>
+                        <span id="deploy-accel" style="color: var(--text-secondary);">×100%</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--border);">
+                        <span style="color: var(--accent); font-weight: 600;">Effective</span>
+                        <span id="deploy-effective" style="color: var(--accent); font-weight: 700;">95%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mini-card" id="presets-card">
+                <h3>🎯 Quick Presets</h3>
+                <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+                    <button onclick="applyPreset('aggressive')" style="padding: 6px; background: linear-gradient(135deg, #f59e0b22, #f59e0b11); border: 1px solid #f59e0b44; border-radius: 6px; color: #f59e0b; cursor: pointer; font-size: 0.75em; font-weight: 600;">
+                        ⚡ Aggressive (100%+ target)
+                    </button>
+                    <button onclick="applyPreset('alpha-hunter')" style="padding: 6px; background: linear-gradient(135deg, #ef444422, #ef444411); border: 1px solid #ef444444; border-radius: 6px; color: #ef4444; cursor: pointer; font-size: 0.75em; font-weight: 600;">
+                        🔥 Alpha Hunter (300% target)
+                    </button>
+                    <button onclick="applyPreset('defensive')" style="padding: 6px; background: linear-gradient(135deg, #3b82f622, #3b82f611); border: 1px solid #3b82f644; border-radius: 6px; color: #3b82f6; cursor: pointer; font-size: 0.75em; font-weight: 600;">
+                        🛡️ Defensive (Risk-Off)
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mini-card" id="return-tracker-card">
+                <h3>📈 Return Tracker</h3>
+                <div style="margin-top: 8px;">
+                    <div style="text-align: center; margin-bottom: 8px;">
+                        <div id="ytd-return" style="font-size: 1.4em; font-weight: 700; color: var(--positive);">+0.0%</div>
+                        <div style="font-size: 0.65em; color: var(--text-dim);">YTD Return</div>
+                    </div>
+                    <div style="font-size: 0.7em;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                            <span style="color: var(--text-dim);">100% target:</span>
+                            <span id="target-100" style="color: var(--text-secondary);">--/day needed</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                            <span style="color: var(--text-dim);">150% target:</span>
+                            <span id="target-150" style="color: var(--text-secondary);">--/day needed</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-dim);">300% target:</span>
+                            <span id="target-300" style="color: var(--text-secondary);">--/day needed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mini-card" id="debate-urgency-card">
+                <h3>⚡ Debate Urgency</h3>
+                <div style="margin-top: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.7em; color: var(--text-dim);">Urgency:</span>
+                        <span id="debate-urgency-level" style="font-size: 0.85em; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(255,193,7,0.15); color: #ffc107;">MODERATE</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-size: 0.7em; color: var(--text-dim);">Opportunity:</span>
+                        <span id="debate-opportunity-level" style="font-size: 0.85em; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(0,200,83,0.15); color: #00c853;">MODERATE</span>
+                    </div>
+                    <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.05);">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.65em; margin-bottom: 3px;">
+                            <span style="color: var(--text-dim);">Urgency Score:</span>
+                            <span id="debate-urgency-pct" style="color: var(--text-secondary);">50%</span>
+                        </div>
+                        <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-bottom: 6px;">
+                            <div id="debate-urgency-bar" style="width: 50%; height: 100%; background: linear-gradient(90deg, #ffc107, #ff5722); border-radius: 2px; transition: width 0.5s;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.65em; margin-bottom: 3px;">
+                            <span style="color: var(--text-dim);">Opportunity Score:</span>
+                            <span id="debate-opportunity-pct" style="color: var(--text-secondary);">50%</span>
+                        </div>
+                        <div style="width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px;">
+                            <div id="debate-opportunity-bar" style="width: 50%; height: 100%; background: linear-gradient(90deg, #00c853, #00bfa5); border-radius: 2px; transition: width 0.5s;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; text-align: center;">
+                        <span id="debate-mode-tag" style="font-size: 0.6em; color: var(--text-dim);">Mode: NORMAL</span>
+                    </div>
                 </div>
             </div>
             
@@ -2495,6 +2610,10 @@
             loadLeverageStatus();  // Load leverage status on startup
             loadLeverageConfig();  // Load and sync leverage settings/mode
             updateEarningsMonitorStatus();  // Load earnings monitor status
+            loadPerformanceMode();  // Load performance mode / win acceleration
+            loadCapitalDeployment();  // Load capital deployment breakdown
+            loadReturnTracker();  // Load YTD return tracker
+            loadDebateUrgency();  // Load debate urgency & opportunity
             
             // Refresh macro data on page load to get latest values
             try {
@@ -2514,6 +2633,10 @@
                     loadMarketData(); // Keep market data updated
                     loadLeverageStatus();  // Keep leverage/margin updated
                     updateEarningsMonitorStatus();  // Keep earnings monitor updated
+                    loadPerformanceMode();  // Keep performance mode updated
+                    loadCapitalDeployment();  // Keep capital deployment updated
+                    loadReturnTracker();  // Keep return tracker updated
+                    loadDebateUrgency();  // Keep debate urgency updated
                 }
                 checkStatus();
             }, 5000);
@@ -3727,6 +3850,249 @@
                 }
             } catch (e) {
                 console.error('Load risk appetite error:', e);
+            }
+        }
+        
+        // === NEW: Performance Mode / Win Acceleration ===
+        async function loadPerformanceMode() {
+            try {
+                const res = await fetch('/api/performance-mode');
+                const data = await res.json();
+                
+                const label = document.getElementById('perf-mode-label');
+                const mult = document.getElementById('perf-mode-multiplier');
+                const wins = document.getElementById('perf-wins');
+                const losses = document.getElementById('perf-losses');
+                
+                if (label) {
+                    const state = (data.performance_state || 'normal').toUpperCase();
+                    label.textContent = state;
+                    
+                    // Color coding
+                    const colors = {
+                        'SURGE': '#ef4444',
+                        'MOMENTUM': '#f59e0b',
+                        'EXCELLENT': '#22c55e',
+                        'GOOD': '#22c55e',
+                        'NEUTRAL': '#94a3b8',
+                        'CONCERNING': '#f59e0b',
+                        'BAD': '#ef4444',
+                        'CRITICAL': '#dc2626',
+                    };
+                    label.style.color = colors[state] || '#94a3b8';
+                    
+                    // Card glow for acceleration
+                    const card = document.getElementById('performance-mode-card');
+                    if (card) {
+                        if (['SURGE', 'MOMENTUM', 'EXCELLENT'].includes(state)) {
+                            card.style.borderColor = colors[state] + '66';
+                            card.style.boxShadow = `0 0 10px ${colors[state]}33`;
+                        } else {
+                            card.style.borderColor = '';
+                            card.style.boxShadow = '';
+                        }
+                    }
+                }
+                
+                if (mult) {
+                    const m = data.effective_multiplier || 1.0;
+                    mult.textContent = `${m.toFixed(2)}x exposure`;
+                    mult.style.color = m > 1 ? '#22c55e' : m < 1 ? '#ef4444' : '#94a3b8';
+                }
+                
+                if (wins) wins.textContent = `W: ${data.consecutive_wins || 0}`;
+                if (losses) losses.textContent = `L: ${data.consecutive_losses || 0}`;
+                
+            } catch (e) {
+                console.error('Performance mode error:', e);
+            }
+        }
+        
+        async function loadCapitalDeployment() {
+            try {
+                const res = await fetch('/api/capital-deployment');
+                const data = await res.json();
+                
+                const base = document.getElementById('deploy-base');
+                const regime = document.getElementById('deploy-regime');
+                const accel = document.getElementById('deploy-accel');
+                const effective = document.getElementById('deploy-effective');
+                
+                if (base) base.textContent = `${((data.base_exposure_pct || 0.95) * 100).toFixed(0)}%`;
+                if (regime) regime.textContent = `×${((data.regime_multiplier || 1.0) * 100).toFixed(0)}%`;
+                if (accel) {
+                    const am = data.acceleration_multiplier || 1.0;
+                    accel.textContent = `×${(am * 100).toFixed(0)}%`;
+                    accel.style.color = am > 1 ? '#22c55e' : '#94a3b8';
+                }
+                if (effective) {
+                    const ep = ((data.effective_deployment_pct || 0.95) * 100).toFixed(0);
+                    effective.textContent = `${ep}%`;
+                    effective.style.color = ep > 100 ? '#22c55e' : '#f59e0b';
+                }
+            } catch (e) {
+                console.error('Capital deployment error:', e);
+            }
+        }
+        
+        async function loadReturnTracker() {
+            try {
+                const res = await fetch('/api/return-tracker');
+                const data = await res.json();
+                
+                const ytd = document.getElementById('ytd-return');
+                if (ytd) {
+                    const r = data.ytd_return_pct || 0;
+                    ytd.textContent = `${r >= 0 ? '+' : ''}${r.toFixed(2)}%`;
+                    ytd.style.color = r >= 0 ? 'var(--positive)' : 'var(--negative)';
+                }
+                
+                if (data.targets) {
+                    const t100 = document.getElementById('target-100');
+                    const t150 = document.getElementById('target-150');
+                    const t300 = document.getElementById('target-300');
+                    
+                    if (t100 && data.targets['100%']) {
+                        const d = data.targets['100%'].daily_pct_needed;
+                        t100.textContent = `${d >= 0 ? '+' : ''}${d.toFixed(2)}%/day`;
+                        t100.style.color = data.targets['100%'].on_pace ? '#22c55e' : '#f59e0b';
+                    }
+                    if (t150 && data.targets['150%']) {
+                        const d = data.targets['150%'].daily_pct_needed;
+                        t150.textContent = `${d >= 0 ? '+' : ''}${d.toFixed(2)}%/day`;
+                        t150.style.color = data.targets['150%'].on_pace ? '#22c55e' : '#f59e0b';
+                    }
+                    if (t300 && data.targets['300%']) {
+                        const d = data.targets['300%'].daily_pct_needed;
+                        t300.textContent = `${d >= 0 ? '+' : ''}${d.toFixed(2)}%/day`;
+                        t300.style.color = data.targets['300%'].on_pace ? '#22c55e' : '#ef4444';
+                    }
+                }
+            } catch (e) {
+                console.error('Return tracker error:', e);
+            }
+        }
+        
+        async function loadDebateUrgency() {
+            try {
+                const res = await fetch('/api/debate-urgency');
+                const data = await res.json();
+                
+                // Update urgency level badge
+                const urgencyLevel = document.getElementById('debate-urgency-level');
+                if (urgencyLevel) {
+                    urgencyLevel.textContent = data.urgency_level || 'MODERATE';
+                    const uColors = {
+                        'CRITICAL': { bg: 'rgba(244,67,54,0.2)', color: '#f44336' },
+                        'HIGH': { bg: 'rgba(255,87,34,0.2)', color: '#ff5722' },
+                        'MODERATE': { bg: 'rgba(255,193,7,0.15)', color: '#ffc107' },
+                        'LOW': { bg: 'rgba(158,158,158,0.15)', color: '#9e9e9e' },
+                    };
+                    const uc = uColors[data.urgency_level] || uColors['MODERATE'];
+                    urgencyLevel.style.background = uc.bg;
+                    urgencyLevel.style.color = uc.color;
+                }
+                
+                // Update opportunity level badge
+                const oppLevel = document.getElementById('debate-opportunity-level');
+                if (oppLevel) {
+                    oppLevel.textContent = data.opportunity_level || 'MODERATE';
+                    const oColors = {
+                        'MASSIVE': { bg: 'rgba(0,200,83,0.25)', color: '#00c853' },
+                        'LARGE': { bg: 'rgba(0,191,165,0.2)', color: '#00bfa5' },
+                        'MODERATE': { bg: 'rgba(0,200,83,0.15)', color: '#00c853' },
+                        'SMALL': { bg: 'rgba(158,158,158,0.15)', color: '#9e9e9e' },
+                    };
+                    const oc = oColors[data.opportunity_level] || oColors['MODERATE'];
+                    oppLevel.style.background = oc.bg;
+                    oppLevel.style.color = oc.color;
+                }
+                
+                // Update bars and percentages
+                const urgencyPct = Math.round((data.aggregate_urgency || 0.5) * 100);
+                const oppPct = Math.round((data.aggregate_opportunity || 0.5) * 100);
+                
+                const uPctEl = document.getElementById('debate-urgency-pct');
+                if (uPctEl) uPctEl.textContent = urgencyPct + '%';
+                const uBar = document.getElementById('debate-urgency-bar');
+                if (uBar) uBar.style.width = urgencyPct + '%';
+                
+                const oPctEl = document.getElementById('debate-opportunity-pct');
+                if (oPctEl) oPctEl.textContent = oppPct + '%';
+                const oBar = document.getElementById('debate-opportunity-bar');
+                if (oBar) oBar.style.width = oppPct + '%';
+                
+                // Update mode tag
+                const modeTag = document.getElementById('debate-mode-tag');
+                if (modeTag) {
+                    const mode = data.performance_mode || 'NORMAL';
+                    modeTag.textContent = 'Mode: ' + mode;
+                    if (['SURGE', 'MOMENTUM', 'EXCELLENT'].includes(mode)) {
+                        modeTag.style.color = '#00c853';
+                    } else if (['CONCERNING', 'BAD', 'CRITICAL'].includes(mode)) {
+                        modeTag.style.color = '#f44336';
+                    } else {
+                        modeTag.style.color = 'var(--text-dim)';
+                    }
+                }
+                
+                // Glow effect on card when urgency is high
+                const card = document.getElementById('debate-urgency-card');
+                if (card) {
+                    if (data.urgency_level === 'CRITICAL' || data.urgency_level === 'HIGH') {
+                        card.style.boxShadow = '0 0 15px rgba(255,87,34,0.3)';
+                    } else {
+                        card.style.boxShadow = '';
+                    }
+                }
+            } catch (e) {
+                console.error('Debate urgency error:', e);
+            }
+        }
+        
+        async function toggleWinAcceleration() {
+            try {
+                const checkbox = document.getElementById('win-accel-toggle');
+                const status = document.getElementById('win-accel-status');
+                
+                const res = await fetch('/api/win-acceleration/toggle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled: checkbox.checked })
+                });
+                
+                if (status) {
+                    status.textContent = checkbox.checked ? 'ON' : 'OFF';
+                    status.style.color = checkbox.checked ? 'var(--positive)' : 'var(--text-dim)';
+                }
+            } catch (e) {
+                console.error('Toggle win acceleration error:', e);
+            }
+        }
+        
+        async function applyPreset(preset) {
+            try {
+                const res = await fetch(`/api/preset/${preset}`, { method: 'POST' });
+                const data = await res.json();
+                
+                if (data.success) {
+                    // Refresh all relevant UI elements
+                    loadRiskAppetite();
+                    loadPerformanceMode();
+                    loadCapitalDeployment();
+                    
+                    // Update exposure input
+                    const expInput = document.getElementById('exposure-pct');
+                    if (expInput && data.settings_applied) {
+                        expInput.value = Math.round((data.settings_applied.capital_exposure_pct || 0.95) * 100);
+                    }
+                    
+                    // Flash the button
+                    event.target.style.background = 'linear-gradient(135deg, #22c55e44, #22c55e22)';
+                    setTimeout(() => { event.target.style.background = ''; }, 1000);
+                }
+            } catch (e) {
+                console.error('Apply preset error:', e);
             }
         }
         

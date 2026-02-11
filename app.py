@@ -61,7 +61,7 @@ from src.debate.debate_engine import DebateEngine
 from src.debate.ensemble import EnsembleOptimizer, EnsembleMode
 from src.debate.adversarial import AdversarialDebateEngine, AdversarialTranscript
 from src.risk.risk_manager import RiskManager, RiskConstraints
-from src.risk.realtime_monitor import RealtimeRiskMonitor, RiskMonitorConfig, RiskLevel
+from src.risk.realtime_monitor import RealtimeRiskMonitor, RiskMonitorConfig, RiskLevel, set_realtime_monitor
 from src.risk.leverage_manager import LeverageManager, LeverageConfig, LeverageState
 from src.learning import LearningEngine, DebateLearner
 from src.learning.outcome_tracker import OutcomeTracker
@@ -853,32 +853,59 @@ def get_dynamic_trading_mode(
     vix_level: float,
     regime: str = 'neutral',
     spy_trend: str = 'neutral',
+    regime_object = None,  # CRITICAL FIX #12: Accept full regime object
 ) -> Tuple[str, str]:
     """
     Dynamically select trading mode based on market conditions.
+    
+    CRITICAL FIX #12: Enhanced regime-driven mode switching
     
     LOGIC:
     - High VIX (>25): Use intraday (quick in/out, reduce exposure time)
     - Low VIX (<15) + Trending: Use position (hold longer, capture trends)
     - High VIX + Range-bound: Use intraday (quick mean reversion)
+    - Crisis regime: Intraday (defensive, quick exits)
+    - Bull regime + Low VIX: Position (capture trends)
+    - Bear regime: Intraday (quick trades, avoid holding)
     - Default: Hybrid blend
     
     Returns:
         Tuple of (mode, explanation)
     """
-    # High volatility = intraday (quick in/out to reduce risk exposure)
-    if vix_level > 30:
-        return "intraday", f"VIX={vix_level:.0f} (>30) → INTRADAY: High vol, quick trades"
+    # CRITICAL FIX #12: Use regime object if available for better decisions
+    regime_type = None
+    volatility_regime = None
+    if regime_object:
+        if hasattr(regime_object, 'risk_regime'):
+            regime_type = getattr(regime_object.risk_regime, 'value', None) if hasattr(regime_object.risk_regime, 'value') else None
+        if hasattr(regime_object, 'volatility'):
+            volatility_regime = getattr(regime_object.volatility, 'value', None) if hasattr(regime_object.volatility, 'value') else None
+    
+    # CRITICAL FIX #12: Crisis regime → intraday (defensive)
+    if regime_type == 'crisis' or 'crisis' in str(regime).lower():
+        return "intraday", f"CRISIS REGIME → INTRADAY: Defensive, quick exits"
+    
+    # CRITICAL FIX #12: High volatility regime → intraday
+    if volatility_regime == 'high_vol' or vix_level > 30:
+        return "intraday", f"VIX={vix_level:.0f} (>30) / HIGH VOL → INTRADAY: High vol, quick trades"
     
     if vix_level > 25:
         return "intraday", f"VIX={vix_level:.0f} (25-30) → INTRADAY: Elevated vol"
     
+    # CRITICAL FIX #12: Bull regime + Low VIX → position (capture trends)
+    if (regime_type == 'bull' or 'bull' in str(regime).lower()) and vix_level < 15:
+        return "position", f"BULL REGIME + VIX={vix_level:.0f} (<15) → POSITION: Capture trends"
+    
+    # CRITICAL FIX #12: Bear regime → intraday (avoid holding)
+    if regime_type == 'bear' or 'bear' in str(regime).lower():
+        return "intraday", f"BEAR REGIME → INTRADAY: Avoid holding, quick trades"
+    
     # Low volatility + trending = position (hold longer)
-    if vix_level < 15 and 'trend' in regime.lower():
+    if vix_level < 15 and ('trend' in str(regime).lower() or spy_trend == 'up'):
         return "position", f"VIX={vix_level:.0f} (<15) + {regime} → POSITION: Low vol, trending"
     
     # Low volatility + mean reverting = hybrid
-    if vix_level < 15 and 'range' in regime.lower():
+    if vix_level < 15 and 'range' in str(regime).lower():
         return "hybrid", f"VIX={vix_level:.0f} (<15) + {regime} → HYBRID: Low vol, range-bound"
     
     # Moderate volatility = intraday (default for HFT-lite focus)
@@ -952,6 +979,9 @@ def init_risk_monitor(broker):
         config=config,
         on_alert=on_risk_alert,
     )
+    
+    # CRITICAL FIX #8: Set global instance for VIX exposure access
+    set_realtime_monitor(risk_monitor)
     
     return risk_monitor
 
@@ -1290,7 +1320,19 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             market_loader, news_loader, sentiment_analyzer, regime_classifier
         )
         
-        log(f"Fetching data for {len(config.UNIVERSE)} stocks...")
+        # CRITICAL FIX #7: Filter invalid/delisted symbols before data fetching
+        from src.data.symbol_validator import get_symbol_validator
+        symbol_validator = get_symbol_validator()
+        valid_universe, invalid_symbols = symbol_validator.validate_symbols(config.UNIVERSE)
+        
+        if invalid_symbols:
+            log(f"⚠️ Filtered {len(invalid_symbols)} invalid symbols before data fetch")
+            for invalid in invalid_symbols[:5]:  # Show first 5
+                log(f"   {invalid}")
+            if len(invalid_symbols) > 5:
+                log(f"   ... and {len(invalid_symbols) - 5} more")
+        
+        log(f"Fetching data for {len(valid_universe)} valid stocks (filtered from {len(config.UNIVERSE)})...")
         
         # ============================================================
         # PARALLEL DATA FETCHING (Reduces 40s -> ~15s)
@@ -1302,12 +1344,13 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         def fetch_price_data():
             """Fetch price data from cache or Alpaca."""
-            cached = price_cache.get_prices(config.UNIVERSE, days=300, end_date=end_date)
+            # CRITICAL FIX #7: Use validated symbols
+            cached = price_cache.get_prices(valid_universe, days=300, end_date=end_date)
             if cached is not None:
                 return cached, True  # (data, was_cached)
             else:
-                data = broker.get_historical_bars(config.UNIVERSE, days=300)
-                price_cache.set_prices(config.UNIVERSE, days=300, data=data, end_date=end_date)
+                data = broker.get_historical_bars(valid_universe, days=300)
+                price_cache.set_prices(valid_universe, days=300, data=data, end_date=end_date)
                 return data, False
         
         def fetch_news_data():
@@ -3729,12 +3772,30 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             else:
                 temp_enhancer = strategy_enhancer
             
+            # CRITICAL FIX #8: Apply VIX-based exposure adjustment from real-time risk monitor
+            vix_exposure_multiplier = 1.0
+            try:
+                from src.risk.realtime_monitor import get_realtime_monitor
+                realtime_monitor = get_realtime_monitor()
+                if realtime_monitor:
+                    if hasattr(realtime_monitor, 'get_vix_exposure_multiplier'):
+                        vix_exposure_multiplier = realtime_monitor.get_vix_exposure_multiplier()
+                    elif hasattr(realtime_monitor, 'vix_exposure_multiplier'):
+                        vix_exposure_multiplier = realtime_monitor.vix_exposure_multiplier
+                    if vix_exposure_multiplier < 1.0:
+                        log(f"🛡️ VIX-based exposure adjustment: {vix_exposure_multiplier:.0%} (from real-time risk monitor)")
+            except Exception as e:
+                log(f"⚠️ Could not get VIX exposure multiplier: {e}")
+            
+            # Apply VIX multiplier to capital exposure
+            adjusted_capital_exposure = capital_exposure_pct * vix_exposure_multiplier
+            
             # Apply strategy enhancer
             try:
                 enhanced_weights, size_reasons = temp_enhancer.enhance_position_sizes(
                     base_weights=kelly_adjusted_weights,
                     confidences=confidences,
-                    target_exposure=capital_exposure_pct,
+                    target_exposure=adjusted_capital_exposure,  # CRITICAL FIX #8: Use VIX-adjusted exposure
                 )
             except Exception as e:
                 log(f"⚠️ Strategy enhancer error: {e}")

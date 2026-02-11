@@ -463,22 +463,29 @@ class StrategyEnhancer:
             for k, v in weights.items()
         )
         
-        # Determine regime
+        # Load exposure adjustments from config
+        try:
+            import config as app_config
+            exp_adj = app_config.REGIME_SETTINGS.get("exposure_adjustments", {})
+        except:
+            exp_adj = {}
+        
+        # Determine regime — use config exposure values
         if score >= 0.7:
             regime = "strong_bull"
-            exposure = 1.0
+            exposure = exp_adj.get("strong_bull", 1.20)
         elif score >= 0.55:
             regime = "mild_bull"
-            exposure = 0.8
+            exposure = exp_adj.get("mild_bull", 1.00)
         elif score >= 0.45:
             regime = "neutral"
-            exposure = 0.6
+            exposure = exp_adj.get("neutral", 0.85)
         elif score >= 0.3:
             regime = "mild_bear"
-            exposure = 0.4
+            exposure = exp_adj.get("mild_bear", 0.60)
         else:
             regime = "strong_bear"
-            exposure = 0.2
+            exposure = exp_adj.get("strong_bear", 0.40)
         
         self.regime_state = RegimeState(
             regime=regime,

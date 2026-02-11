@@ -39,7 +39,7 @@ class LearningEngine:
         self,
         strategy_names: List[str],
         outputs_dir: str = "outputs",
-        learning_influence: float = 0.3,
+        learning_influence: float = 0.5,  # CRITICAL FIX #10: Increased from 0.3 to 0.5 (50%)
     ):
         """
         Initialize the learning engine.
@@ -86,19 +86,20 @@ class LearningEngine:
             total_trades = 0
             win_rate = 0.5
         
+        # CRITICAL FIX #10: Increased influence at all levels
         # Scale influence based on number of trades
         if total_trades < 10:
-            influence = 0.2  # Low influence, still learning
+            influence = 0.35  # CRITICAL FIX: Increased from 0.2 to 0.35
         elif total_trades < 30:
-            influence = 0.35  # Moderate influence
+            influence = 0.50  # CRITICAL FIX: Increased from 0.35 to 0.50
         elif total_trades < 100:
-            influence = 0.5  # High influence
+            influence = 0.65  # CRITICAL FIX: Increased from 0.5 to 0.65
         else:
-            influence = 0.65  # Strong influence - trust the learning
+            influence = 0.75  # CRITICAL FIX: Increased from 0.65 to 0.75
         
         # Boost further if win rate is good
         if win_rate > 0.55 and total_trades >= 30:
-            influence = min(0.7, influence * 1.15)
+            influence = min(0.85, influence * 1.1)  # CRITICAL FIX: Increased max from 0.7 to 0.85
         
         # Reduce if win rate is poor - MORE AGGRESSIVE REDUCTION
         # If we're losing more than winning, we should trust the learning LESS
@@ -580,7 +581,8 @@ class LearningEngine:
             
             # Blend base weights with learned weights
             adjusted = {}
-            blend_factor = 0.3  # 30% influence from learning
+            # CRITICAL FIX #10: Increased from 0.3 to 0.5 (50% influence from learning)
+            blend_factor = 0.5  # 50% influence from learning (was 30%)
             
             for strategy, base_weight in base_weights.items():
                 learned_weight = regime_weights.get(strategy, base_weight)

@@ -12,15 +12,15 @@ long_short:
   enable_futures: true          # Enable futures strategies (backtest proxies)
   enable_shorting: true         # Allow short selling
   
-  # Exposure limits
-  max_gross_exposure: 2.0       # 200% max gross (|long| + |short|)
-  net_exposure_min: -0.3        # Can be 30% net short
-  net_exposure_max: 1.0         # Can be 100% net long
+  # Exposure limits — TUNED for 100-300% target
+  max_gross_exposure: 2.5       # 250% max gross (was 200%)
+  net_exposure_min: -0.4        # Can be 40% net short (was -0.3)
+  net_exposure_max: 1.3         # Can be 130% net long with leverage (was 1.0)
   
   # Position limits
   max_single_long: 0.15         # 15% max per long position
   max_single_short: 0.10        # 10% max per short position
-  max_total_short: 1.0          # 100% max total short exposure
+  max_total_short: 0.60         # 60% max total short exposure (was 100%)
   
   # Costs (annual rates, applied daily)
   borrow_rate_default: 0.02     # 2% annual borrow cost for shorts

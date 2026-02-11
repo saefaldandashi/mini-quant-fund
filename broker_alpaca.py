@@ -335,6 +335,12 @@ class AlpacaBroker:
                             result[symbol] = df["close"]
                 except Exception as e:
                     logging.debug(f"Error processing {symbol}: {e}")
+                    # CRITICAL FIX #7: Mark symbol as bad if processing fails
+                    try:
+                        from src.data.symbol_validator import get_symbol_validator
+                        get_symbol_validator().mark_as_bad(symbol, f"Processing error: {e}")
+                    except:
+                        pass
                     continue
             
             logging.info(f"Fetched data for {len(result)}/{len(symbols)} symbols")
@@ -391,16 +397,38 @@ class AlpacaBroker:
         if not symbols:
             return {}
         
+        # CRITICAL FIX #7: Filter invalid symbols before fetching
+        try:
+            from src.data.symbol_validator import get_symbol_validator
+            symbol_validator = get_symbol_validator()
+            valid_symbols = symbol_validator.filter_symbols(symbols)
+            
+            if len(valid_symbols) < len(symbols):
+                invalid_count = len(symbols) - len(valid_symbols)
+                logging.debug(f"Filtered {invalid_count} invalid symbols before price fetch")
+        except Exception as e:
+            logging.debug(f"Symbol validator not available: {e}")
+            valid_symbols = symbols
+        
+        if not valid_symbols:
+            return {}
+        
         # Use historical bars with recent end date to get latest prices
         # Note: get_historical_bars already has retry, but this adds another layer
-        bars = self.get_historical_bars(symbols, days=5)
+        bars = self.get_historical_bars(valid_symbols, days=5)
         prices = {}
         
-        for symbol in symbols:
+        for symbol in valid_symbols:
             if symbol in bars and len(bars[symbol]) > 0:
                 prices[symbol] = float(bars[symbol].iloc[-1])
             else:
+                # CRITICAL FIX #7: Mark symbol as bad if data unavailable
                 logging.warning(f"Could not get price for {symbol}")
+                try:
+                    from src.data.symbol_validator import get_symbol_validator
+                    get_symbol_validator().mark_as_bad(symbol, "Price data unavailable")
+                except:
+                    pass
         
         return prices
     

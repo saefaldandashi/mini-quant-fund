@@ -347,7 +347,7 @@ class AdaptiveWeightLearner:
         self,
         debate_scores: Dict[str, float],
         regime: Optional[str] = None,
-        learned_weight_influence: float = 0.3,
+        learned_weight_influence: float = 0.5,  # CRITICAL FIX #10: Increased from 0.3 to 0.5
     ) -> Dict[str, float]:
         """
         Blend learned weights with debate engine scores.

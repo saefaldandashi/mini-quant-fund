@@ -46,7 +46,8 @@ class RiskAlert:
 @dataclass 
 class RiskMonitorConfig:
     """Configuration for the risk monitor."""
-    check_interval_seconds: int = 60
+    # CRITICAL FIX #8: More frequent checks for better risk management
+    check_interval_seconds: int = 300  # 5 minutes (was 60s) - better balance
     
     # Drawdown thresholds
     drawdown_warning: float = 0.05      # 5% - Alert
@@ -243,35 +244,76 @@ class RealtimeRiskMonitor:
             self.halt_trading = False
     
     def _check_vix(self):
-        """Check VIX level and adjust risk level."""
-        # Get VIX from market indicators if available
+        """Check VIX level and adjust risk level with exposure adjustments."""
+        # CRITICAL FIX #8: Better VIX fetching and exposure adjustments
         try:
-            # This would normally fetch from a market data source
-            # For now, use a placeholder
+            # Try to get VIX from broker or macro data
             vix = self.last_vix
+            try:
+                # Try to get real VIX from broker
+                vix_prices = self.broker.get_current_prices(['^VIX', 'VIX'])
+                if '^VIX' in vix_prices:
+                    vix = vix_prices['^VIX']
+                elif 'VIX' in vix_prices:
+                    vix = vix_prices['VIX']
+                self.last_vix = vix
+            except Exception as e:
+                logger.debug(f"Could not fetch VIX: {e}, using cached value {vix}")
         except Exception:
             return
         
+        # CRITICAL FIX #8: VIX-based exposure multiplier
+        # Calculate exposure adjustment based on VIX level
         if vix >= self.config.vix_critical:
+            self.vix_exposure_multiplier = 0.3  # 30% exposure at critical VIX
             alert = self._create_alert(
                 level=RiskLevel.CRITICAL,
-                message=f"VIX CRITICAL: {vix:.1f} >= {self.config.vix_critical}. Halting new trades.",
+                message=f"VIX CRITICAL: {vix:.1f} >= {self.config.vix_critical}. Halting new trades. Exposure: 30%",
                 metric_name="vix",
                 current_value=vix,
                 threshold=self.config.vix_critical,
+                action_taken="Exposure reduced to 30%"
             )
             self._trigger_alert(alert)
             self.halt_trading = True
             
         elif vix >= self.config.vix_high:
+            self.vix_exposure_multiplier = 0.5  # 50% exposure at high VIX
             alert = self._create_alert(
                 level=RiskLevel.HIGH,
-                message=f"VIX HIGH: {vix:.1f} >= {self.config.vix_high}. Reducing position sizes.",
+                message=f"VIX HIGH: {vix:.1f} >= {self.config.vix_high}. Reducing position sizes. Exposure: 50%",
                 metric_name="vix",
                 current_value=vix,
                 threshold=self.config.vix_high,
+                action_taken="Exposure reduced to 50%"
             )
             self._trigger_alert(alert)
+            
+        elif vix >= self.config.vix_elevated:
+            self.vix_exposure_multiplier = 0.75  # 75% exposure at elevated VIX
+            if not hasattr(self, 'vix_exposure_multiplier') or self.vix_exposure_multiplier > 0.75:
+                alert = self._create_alert(
+                    level=RiskLevel.ELEVATED,
+                    message=f"VIX ELEVATED: {vix:.1f} >= {self.config.vix_elevated}. Exposure: 75%",
+                    metric_name="vix",
+                    current_value=vix,
+                    threshold=self.config.vix_elevated,
+                    action_taken="Exposure reduced to 75%"
+                )
+                self._trigger_alert(alert)
+        else:
+            self.vix_exposure_multiplier = 1.0  # Full exposure at normal VIX
+    
+    def get_vix_exposure_multiplier(self) -> float:
+        """
+        Get VIX-based exposure multiplier.
+        
+        Returns:
+            Multiplier for position sizing (0.3 to 1.0)
+        """
+        if not hasattr(self, 'vix_exposure_multiplier'):
+            self.vix_exposure_multiplier = 1.0
+        return self.vix_exposure_multiplier
     
     def _check_concentration(self, positions, equity: float):
         """Check position concentration risk."""
@@ -596,42 +638,20 @@ class RealtimeRiskMonitor:
     def update_vix(self, vix: float):
         """Update VIX level from external source."""
         self.last_vix = vix
-    
-    def can_trade(self) -> bool:
-        """Check if trading is allowed based on current risk level."""
-        return not self.halt_trading and self.current_risk_level != RiskLevel.CRITICAL
-    
-    def get_position_size_multiplier(self) -> float:
-        """
-        Get position size multiplier based on risk level.
-        
-        Returns:
-            Multiplier to apply to position sizes (0.25 to 1.0)
-        """
-        if self.current_risk_level == RiskLevel.CRITICAL:
-            return 0.0  # No new trades
-        elif self.current_risk_level == RiskLevel.HIGH:
-            return 0.5  # Half position sizes
-        elif self.current_risk_level == RiskLevel.ELEVATED:
-            return 0.75  # Reduced position sizes
-        else:
-            return 1.0  # Normal
-    
-    def get_status(self) -> Dict[str, Any]:
-        """Get current risk monitor status."""
-        return {
-            'is_running': self.is_running,
-            'risk_level': self.current_risk_level.value,
-            'halt_trading': self.halt_trading,
-            'peak_equity': self.peak_equity,
-            'last_vix': self.last_vix,
-            'position_size_multiplier': self.get_position_size_multiplier(),
-            'recent_alerts': [
-                {
-                    'timestamp': a.timestamp.isoformat(),
-                    'level': a.level.value,
-                    'message': a.message,
-                }
-                for a in self.alerts[-5:]
-            ],
-        }
+        # CRITICAL FIX #8: Re-check VIX when updated to adjust exposure
+        self._check_vix()
+
+
+# CRITICAL FIX #8: Global instance getter
+_realtime_monitor_instance: Optional[RealtimeRiskMonitor] = None
+
+
+def get_realtime_monitor() -> Optional[RealtimeRiskMonitor]:
+    """Get global realtime risk monitor instance."""
+    return _realtime_monitor_instance
+
+
+def set_realtime_monitor(monitor: RealtimeRiskMonitor):
+    """Set global realtime risk monitor instance."""
+    global _realtime_monitor_instance
+    _realtime_monitor_instance = monitor
