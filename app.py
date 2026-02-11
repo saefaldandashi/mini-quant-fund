@@ -3599,6 +3599,12 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             for symbol, weight in shorts_sorted[:5]:
                 log(f"    {symbol}: {weight:.1%}")
         
+        # CRITICAL FIX: Initialize enhanced_weights and current_regime BEFORE if/else to prevent UnboundLocalError
+        enhanced_weights = {}
+        current_regime = None
+        target_shares = {}
+        size_reasons = {}
+        
         if not target_symbols:
             log("No positions to take - going to cash")
             # Log WHY for debugging
@@ -3608,8 +3614,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 top5 = sorted(all_weights.items(), key=lambda x: -abs(x[1]))[:5]
                 for s, w in top5:
                     log(f"    {s}: {w:.4%} (below threshold)")
-            target_shares = {}
-            enhanced_weights = {}  # No positions = no weights (prevents UnboundLocalError downstream)
+            # enhanced_weights already initialized above as {}
         else:
             # Pass the actual weights (not zeros!) to calculate proper share quantities
             target_weights_filtered = {s: final_weights[s] for s in target_symbols}
@@ -3642,8 +3647,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log("REGIME DETECTION")
             log("=" * 60)
             
+            # CRITICAL FIX: Initialize current_regime before try block to prevent UnboundLocalError
+            # current_regime already initialized above, but ensure it's set here too
+            # Note: Using local current_regime, not global, to avoid conflicts
             try:
-                global current_regime
                 
                 # Ensure market_indicators is available for regime detection
                 try:
@@ -3679,19 +3686,22 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 
                 # Also compare with features.regime for consistency
                 early_regime = features.regime.description if features.regime else "unknown"
-                log(f"📊 Market Regime: {current_regime.regime.upper()}")
-                log(f"   Score: {current_regime.score:.2f}")
-                log(f"   Recommended Exposure: {current_regime.exposure_multiplier*100:.0f}%")
-                
-                # Log if regimes are inconsistent (helps debugging)
-                if features.regime and early_regime.lower() not in current_regime.regime.lower():
-                    log(f"   ℹ️ Note: Early regime was '{early_regime}' - using position-sizing regime")
-                
-                for ind, val in current_regime.indicators.items():
-                    log(f"   {ind}: {val:.2f}")
+                if current_regime:  # CRITICAL FIX: Check current_regime before accessing attributes
+                    log(f"📊 Market Regime: {current_regime.regime.upper()}")
+                    log(f"   Score: {current_regime.score:.2f}")
+                    log(f"   Recommended Exposure: {current_regime.exposure_multiplier*100:.0f}%")
+                    
+                    # Log if regimes are inconsistent (helps debugging)
+                    if features.regime and early_regime.lower() not in current_regime.regime.lower():
+                        log(f"   ℹ️ Note: Early regime was '{early_regime}' - using position-sizing regime")
+                    
+                    for ind, val in current_regime.indicators.items():
+                        log(f"   {ind}: {val:.2f}")
+                else:
+                    log("⚠️ Regime detection returned None")
             except Exception as e:
                 log(f"Regime detection error: {e}")
-                current_regime = None
+                current_regime = None  # Ensure it's set to None on error
             
             # === PHASE 1: ENHANCED POSITION SIZING ===
             log("")
@@ -3719,11 +3729,17 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 temp_enhancer = strategy_enhancer
             
             # Apply strategy enhancer
-            enhanced_weights, size_reasons = temp_enhancer.enhance_position_sizes(
-                base_weights=kelly_adjusted_weights,
-                confidences=confidences,
-                target_exposure=capital_exposure_pct,
-            )
+            try:
+                enhanced_weights, size_reasons = temp_enhancer.enhance_position_sizes(
+                    base_weights=kelly_adjusted_weights,
+                    confidences=confidences,
+                    target_exposure=capital_exposure_pct,
+                )
+            except Exception as e:
+                log(f"⚠️ Strategy enhancer error: {e}")
+                # CRITICAL FIX: Fallback to kelly_adjusted_weights if enhancer fails
+                enhanced_weights = kelly_adjusted_weights.copy() if kelly_adjusted_weights else {}
+                size_reasons = {}
             
             log(f"🎯 Risk Appetite: {effective_risk_appetite.upper()}{' (GEO OVERRIDE)' if geo_override_active else ''}")
             log(f"   Kelly Multiplier: {temp_enhancer.config.kelly_multiplier}x")
@@ -3741,9 +3757,12 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             
             # Apply regime adjustment if enabled
             regime_multiplier = 1.0
-            if current_regime and strategy_enhancer.config.auto_regime_adjustment:
+            # CRITICAL FIX: Add defensive check for current_regime and its attributes
+            if current_regime is not None and hasattr(current_regime, 'exposure_multiplier') and strategy_enhancer.config.auto_regime_adjustment:
                 regime_multiplier = current_regime.exposure_multiplier
                 log(f"   Regime Adjustment: {regime_multiplier*100:.0f}%")
+            elif current_regime is None:
+                log(f"   Regime Adjustment: 100% (no regime detected)")
             
             # Apply capital exposure limit + win acceleration multiplier
             accel_multiplier = 1.0
