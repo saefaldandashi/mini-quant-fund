@@ -8,12 +8,56 @@ Fetches real-time macro indicators from:
 
 import os
 import logging
+import time
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from typing import Dict, Optional, List
+from functools import wraps
 import requests
+from requests.exceptions import ConnectionError, Timeout, RequestException
 
 logger = logging.getLogger(__name__)
+
+
+# CRITICAL FIX: Retry decorator for network reliability
+def retry_with_backoff(max_retries=3, base_delay=1.0, max_delay=10.0, exceptions=(ConnectionError, Timeout, RequestException)):
+    """
+    Retry decorator with exponential backoff for network operations.
+    
+    Args:
+        max_retries: Maximum number of retry attempts
+        base_delay: Initial delay in seconds
+        max_delay: Maximum delay in seconds
+        exceptions: Tuple of exceptions to catch and retry
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            last_exception = None
+            for attempt in range(max_retries):
+                try:
+                    return func(*args, **kwargs)
+                except exceptions as e:
+                    last_exception = e
+                    if attempt < max_retries - 1:
+                        # Exponential backoff: delay = base_delay * (2 ^ attempt)
+                        delay = min(base_delay * (2 ** attempt), max_delay)
+                        logger.warning(
+                            f"Network error in {func.__name__} (attempt {attempt + 1}/{max_retries}): {e}. "
+                            f"Retrying in {delay:.1f}s..."
+                        )
+                        time.sleep(delay)
+                    else:
+                        logger.error(f"Network error in {func.__name__} after {max_retries} attempts: {e}")
+                except Exception as e:
+                    # Non-network exceptions - don't retry, just raise
+                    raise
+            
+            # If we exhausted retries, raise the last exception
+            if last_exception:
+                raise last_exception
+        return wrapper
+    return decorator
 
 
 @dataclass
@@ -93,8 +137,9 @@ class YahooFinanceLoader:
         self.cache: Dict[str, tuple] = {}  # symbol -> (data, timestamp)
         self.cache_duration = timedelta(minutes=5)
     
+    @retry_with_backoff(max_retries=3, base_delay=1.0)
     def _fetch_quote(self, symbol: str) -> Optional[Dict]:
-        """Fetch quote data for a symbol."""
+        """Fetch quote data for a symbol with retry logic."""
         cache_key = symbol
         now = datetime.now()
         
@@ -104,17 +149,18 @@ class YahooFinanceLoader:
             if now - cached_at < self.cache_duration:
                 return data
         
+        # CRITICAL FIX: Network call with retry (decorator handles retries)
+        url = f"{self.BASE_URL}/{symbol}"
+        params = {
+            "interval": "1d",
+            "range": "5d",
+        }
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+        }
+        
         try:
-            url = f"{self.BASE_URL}/{symbol}"
-            params = {
-                "interval": "1d",
-                "range": "5d",
-            }
-            headers = {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-            }
-            
-            response = requests.get(url, params=params, headers=headers, timeout=10)
+            response = requests.get(url, params=params, headers=headers, timeout=15)  # Increased timeout
             
             if response.status_code == 200:
                 data = response.json()
@@ -221,8 +267,9 @@ class FREDLoader:
         """Check if FRED API is available."""
         return bool(self.api_key)
     
+    @retry_with_backoff(max_retries=3, base_delay=1.0)
     def _fetch_series(self, series_id: str) -> Optional[float]:
-        """Fetch latest value for a FRED series."""
+        """Fetch latest value for a FRED series with retry logic."""
         if not self.api_key:
             return None
         
@@ -235,16 +282,17 @@ class FREDLoader:
             if now - cached_at < self.cache_duration:
                 return data
         
+        # CRITICAL FIX: Network call with retry (decorator handles retries)
+        params = {
+            "series_id": series_id,
+            "api_key": self.api_key,
+            "file_type": "json",
+            "sort_order": "desc",
+            "limit": 1,
+        }
+        
         try:
-            params = {
-                "series_id": series_id,
-                "api_key": self.api_key,
-                "file_type": "json",
-                "sort_order": "desc",
-                "limit": 1,
-            }
-            
-            response = requests.get(self.BASE_URL, params=params, timeout=10)
+            response = requests.get(self.BASE_URL, params=params, timeout=15)  # Increased timeout
             
             if response.status_code == 200:
                 data = response.json()

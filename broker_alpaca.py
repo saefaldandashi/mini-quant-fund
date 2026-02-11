@@ -4,8 +4,10 @@ Alpaca broker adapter with paper trading safety checks.
 import os
 import math
 import logging
+import time
 from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime, timedelta
+from functools import wraps
 
 import pandas as pd
 from alpaca.trading.client import TradingClient
@@ -15,8 +17,50 @@ from alpaca.data.historical import StockHistoricalDataClient
 from alpaca.data.requests import StockBarsRequest
 from alpaca.data.timeframe import TimeFrame
 from alpaca.data.enums import DataFeed
+from requests.exceptions import ConnectionError, Timeout, RequestException
 
 import config
+
+
+# CRITICAL FIX: Retry decorator for network reliability
+def retry_with_backoff(max_retries=3, base_delay=1.0, max_delay=10.0, exceptions=(ConnectionError, Timeout, RequestException)):
+    """
+    Retry decorator with exponential backoff for network operations.
+    
+    Args:
+        max_retries: Maximum number of retry attempts
+        base_delay: Initial delay in seconds
+        max_delay: Maximum delay in seconds
+        exceptions: Tuple of exceptions to catch and retry
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            last_exception = None
+            for attempt in range(max_retries):
+                try:
+                    return func(*args, **kwargs)
+                except exceptions as e:
+                    last_exception = e
+                    if attempt < max_retries - 1:
+                        # Exponential backoff: delay = base_delay * (2 ^ attempt)
+                        delay = min(base_delay * (2 ** attempt), max_delay)
+                        logging.warning(
+                            f"Network error in {func.__name__} (attempt {attempt + 1}/{max_retries}): {e}. "
+                            f"Retrying in {delay:.1f}s..."
+                        )
+                        time.sleep(delay)
+                    else:
+                        logging.error(f"Network error in {func.__name__} after {max_retries} attempts: {e}")
+                except Exception as e:
+                    # Non-network exceptions - don't retry, just raise
+                    raise
+            
+            # If we exhausted retries, raise the last exception
+            if last_exception:
+                raise last_exception
+        return wrapper
+    return decorator
 
 
 # LIVE BLOCK: URLs that indicate live trading (must be blocked)
@@ -95,8 +139,15 @@ class AlpacaBroker:
         
         logging.info(f"Alpaca broker initialized (paper={paper}, base_url={base_url})")
     
+    # CRITICAL FIX: Helper method for get_all_positions with retry
+    @retry_with_backoff(max_retries=3, base_delay=1.0)
+    def _get_all_positions_with_retry(self):
+        """Get all positions with retry logic."""
+        return self.trading_client.get_all_positions()
+    
+    @retry_with_backoff(max_retries=3, base_delay=1.0)
     def get_account(self) -> Dict:
-        """Get account information."""
+        """Get account information with retry logic."""
         account = self.trading_client.get_account()
         return {
             "equity": float(account.equity),
@@ -105,9 +156,10 @@ class AlpacaBroker:
             "portfolio_value": float(account.portfolio_value),
         }
     
+    @retry_with_backoff(max_retries=3, base_delay=1.0)
     def get_margin_data(self) -> Dict:
         """
-        Get comprehensive margin data for leverage management.
+        Get comprehensive margin data for leverage management with retry logic.
         
         Returns:
             Dict with all margin-related fields from Alpaca account
@@ -115,7 +167,8 @@ class AlpacaBroker:
         account = self.trading_client.get_account()
         
         # Calculate gross exposure (sum of absolute position values)
-        positions = self.trading_client.get_all_positions()
+        # CRITICAL FIX: Add retry for get_all_positions
+        positions = self._get_all_positions_with_retry()
         long_value = sum(
             float(p.market_value) for p in positions 
             if float(p.qty) > 0
@@ -175,7 +228,8 @@ class AlpacaBroker:
         Returns:
             Dict mapping symbol to position info (qty, market_value, avg_entry_price, current_price, pnl, pnl_pct)
         """
-        positions = self.trading_client.get_all_positions()
+        # CRITICAL FIX: Use retry helper for positions
+        positions = self._get_all_positions_with_retry()
         result = {}
         
         if not positions:
@@ -323,9 +377,10 @@ class AlpacaBroker:
         
         return result
     
+    @retry_with_backoff(max_retries=3, base_delay=1.0)
     def get_current_prices(self, symbols: List[str]) -> Dict[str, float]:
         """
-        Get current/latest prices for symbols.
+        Get current/latest prices for symbols with retry logic.
         
         Args:
             symbols: List of symbols
@@ -337,6 +392,7 @@ class AlpacaBroker:
             return {}
         
         # Use historical bars with recent end date to get latest prices
+        # Note: get_historical_bars already has retry, but this adds another layer
         bars = self.get_historical_bars(symbols, days=5)
         prices = {}
         
@@ -864,9 +920,10 @@ class AlpacaBroker:
             'net': long_exposure - short_exposure,
         }
     
+    @retry_with_backoff(max_retries=3, base_delay=1.0)
     def get_current_quotes(self, symbols: List[str]) -> Dict[str, Dict]:
         """
-        Get real-time bid-ask quotes from Alpaca.
+        Get real-time bid-ask quotes from Alpaca with retry logic.
         
         This provides ACTUAL spreads instead of estimated ones,
         improving transaction cost accuracy significantly.
