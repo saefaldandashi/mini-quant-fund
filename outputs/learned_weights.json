@@ -2,7 +2,7 @@
   "weights": {
     "TimeSeriesMomentum": {
       "strategy_name": "TimeSeriesMomentum",
-      "base_weight": 0.10800398691244507,
+      "base_weight": 0.10809790566695698,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -16,23 +16,23 @@
     },
     "CrossSectionMomentum": {
       "strategy_name": "CrossSectionMomentum",
-      "base_weight": 0.13387590056001972,
-      "ema_performance": -0.002410916960966759,
+      "base_weight": 0.13312273117250356,
+      "ema_performance": -0.003907486210888095,
       "ema_alpha": 0.1,
-      "times_selected": 117,
-      "cumulative_reward": 0.5255418907299219,
+      "times_selected": 118,
+      "cumulative_reward": 0.5081652812697417,
       "ucb_bonus": 0.0,
       "regime_weights": {
-        "neutral": 0.13897853941278546,
+        "neutral": 0.13810970893977645,
         "risk_on": 0.13617187180012683,
         "risk_off": 0.1357053046701387
       },
-      "learned_confidence": 0.342065909046005,
-      "last_updated": "2026-02-11T13:47:51.009206"
+      "learned_confidence": 0.4813701337673736,
+      "last_updated": "2026-02-11T13:52:54.513850"
     },
     "MeanReversion": {
       "strategy_name": "MeanReversion",
-      "base_weight": 0.10801974474701982,
+      "base_weight": 0.108113677204324,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -44,7 +44,7 @@
     },
     "VolatilityRegimeVolTarget": {
       "strategy_name": "VolatilityRegimeVolTarget",
-      "base_weight": 0.10801974474701982,
+      "base_weight": 0.108113677204324,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -56,7 +56,7 @@
     },
     "Carry": {
       "strategy_name": "Carry",
-      "base_weight": 0.10549881582367641,
+      "base_weight": 0.10559055611649239,
       "ema_performance": -0.00026882398252459593,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -72,7 +72,7 @@
     },
     "ValueQualityTilt": {
       "strategy_name": "ValueQualityTilt",
-      "base_weight": 0.11074569241907194,
+      "base_weight": 0.11084199532229708,
       "ema_performance": 0.0007588578368238671,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -88,7 +88,7 @@
     },
     "RiskParityMinVar": {
       "strategy_name": "RiskParityMinVar",
-      "base_weight": 0.10800398691244507,
+      "base_weight": 0.10809790566695698,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -102,7 +102,7 @@
     },
     "TailRiskOverlay": {
       "strategy_name": "TailRiskOverlay",
-      "base_weight": 0.10801974474701982,
+      "base_weight": 0.108113677204324,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -114,7 +114,7 @@
     },
     "NewsSentimentEvent": {
       "strategy_name": "NewsSentimentEvent",
-      "base_weight": 0.10981238313128232,
+      "base_weight": 0.10990787444182101,
       "ema_performance": 0.003584849420027366,
       "ema_alpha": 0.1,
       "times_selected": 62,
@@ -129,17 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 319,
+  "total_rounds": 320,
   "reward_history": [
-    {
-      "timestamp": "2026-02-05T19:22:54.331694",
-      "returns": {
-        "TS_Momentum_LS": -0.010278267023020033,
-        "QualityValue_LS": 0.004364836711705263,
-        "CalendarEffects": 0.004364836711705263
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-02-05T19:27:58.125656",
       "returns": {
@@ -1087,7 +1078,18 @@
         "CalendarEffects": -0.0018054993761656192
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:52:54.513824",
+      "returns": {
+        "TS_Momentum_LS": 8.43390944738848e-05,
+        "CrossSectionMomentum": -0.017376609460180117,
+        "SectorRotation": 0.0032031052160538345,
+        "QualityValue_LS": 0.003303187904338279,
+        "CalendarEffects": -0.0018054993761656192
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-02-11T13:47:51.010841"
+  "last_updated": "2026-02-11T13:52:54.513939"
 }

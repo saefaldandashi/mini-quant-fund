@@ -382,7 +382,7 @@ last_debate_info: Dict[str, Any] = {
 capital_exposure_pct = 0.95
 
 # Risk appetite setting
-risk_appetite = "moderate"  # conservative, moderate, aggressive, maximum
+risk_appetite = "aggressive"  # conservative, moderate, aggressive, maximum, alpha_hunter - INCREASED for larger positions
 
 # Long/Short & Futures Mode settings
 long_short_settings = {

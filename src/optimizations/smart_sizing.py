@@ -135,7 +135,7 @@ class SmartPositionSizer:
     def __init__(
         self,
         target_vol: float = 0.30,   # 30% vol target (was 12% — way too low for 300% returns)
-        max_position: float = 0.20,  # 20% max position (was 15%)
+        max_position: float = 0.25,  # INCREASED: Was 0.20 (20%), now 0.25 (25%) for larger positions
         vol_lookback: int = 21,
         use_kelly: bool = True,
         drawdown_scaling: bool = True,

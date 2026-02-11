@@ -88,33 +88,33 @@ CASH_BUFFER_PCT = 0.05
 # ============================================================
 RISK_APPETITE_SETTINGS = {
     "conservative": {
-        "kelly_multiplier": 0.35,
-        "min_position_pct": 0.015,  # 1.5% minimum (was 2%) - CRITICAL FIX: Lower threshold
-        "max_positions": 25,
+        "kelly_multiplier": 0.60,  # INCREASED: Was 0.35, now 0.60 for larger positions
+        "min_position_pct": 0.01,  # LOWERED: Was 0.015, now 0.01 (1%) to allow more positions
+        "max_positions": 30,  # INCREASED: Was 25, now 30
         "description": "Lower risk, diversified positions"
     },
     "moderate": {
-        "kelly_multiplier": 0.50,
-        "min_position_pct": 0.02,  # 2% minimum (was 3%) - CRITICAL FIX: Lower threshold
-        "max_positions": 18,
+        "kelly_multiplier": 0.80,  # INCREASED: Was 0.50, now 0.80 for larger positions
+        "min_position_pct": 0.015,  # LOWERED: Was 0.02, now 0.015 (1.5%) to allow more positions
+        "max_positions": 25,  # INCREASED: Was 18, now 25
         "description": "Balanced risk and reward"
     },
     "aggressive": {
-        "kelly_multiplier": 0.75,
-        "min_position_pct": 0.03,  # 3% minimum (was 4%) - CRITICAL FIX: Lower threshold
-        "max_positions": 12,
+        "kelly_multiplier": 1.00,  # INCREASED: Was 0.75, now 1.00 (full Kelly)
+        "min_position_pct": 0.02,  # LOWERED: Was 0.03, now 0.02 (2%) to allow more positions
+        "max_positions": 18,  # INCREASED: Was 12, now 18
         "description": "Higher conviction, concentrated"
     },
     "maximum": {
-        "kelly_multiplier": 1.00,
-        "min_position_pct": 0.04,  # 4% minimum (was 6%) - CRITICAL FIX: Lower threshold
-        "max_positions": 8,
+        "kelly_multiplier": 1.25,  # INCREASED: Was 1.00, now 1.25 (125% Kelly)
+        "min_position_pct": 0.025,  # LOWERED: Was 0.04, now 0.025 (2.5%) to allow more positions
+        "max_positions": 12,  # INCREASED: Was 8, now 12
         "description": "Full Kelly, highly concentrated"
     },
     "alpha_hunter": {
-        "kelly_multiplier": 1.25,
-        "min_position_pct": 0.05,  # 5% minimum (was 8%) - CRITICAL FIX: Lower threshold
-        "max_positions": 6,
+        "kelly_multiplier": 1.50,  # INCREASED: Was 1.25, now 1.50 (150% Kelly) for maximum positions
+        "min_position_pct": 0.03,  # LOWERED: Was 0.05, now 0.03 (3%) to allow more positions
+        "max_positions": 10,  # INCREASED: Was 6, now 10
         "description": "Maximum conviction, ultra-concentrated"
     }
 }
