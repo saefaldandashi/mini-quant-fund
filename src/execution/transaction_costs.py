@@ -499,8 +499,8 @@ class TransactionCostModel:
         
         # Relax thresholds during extended hours (spreads are capped but still wider)
         if is_extended_hours:
-            min_ratio = 0.8  # Even lower ratio during extended hours
-            min_threshold_bps = 300.0  # Higher threshold for capped spreads
+            min_ratio = 0.5  # CRITICAL FIX: Much more lenient during extended hours (was 0.8)
+            min_threshold_bps = 500.0  # CRITICAL FIX: Higher threshold for extended hours (was 300.0)
         else:
             min_ratio = self.params['min_benefit_ratio']
             min_threshold_bps = self.params['min_trade_threshold_bps']

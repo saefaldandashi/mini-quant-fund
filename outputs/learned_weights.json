@@ -2,7 +2,7 @@
   "weights": {
     "TimeSeriesMomentum": {
       "strategy_name": "TimeSeriesMomentum",
-      "base_weight": 0.10789684368999726,
+      "base_weight": 0.10800398691244507,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -16,23 +16,23 @@
     },
     "CrossSectionMomentum": {
       "strategy_name": "CrossSectionMomentum",
-      "base_weight": 0.13473512186940487,
-      "ema_performance": -0.0002071848581457364,
+      "base_weight": 0.13387590056001972,
+      "ema_performance": -0.002410916960966759,
       "ema_alpha": 0.1,
-      "times_selected": 110,
-      "cumulative_reward": 0.5453761246928683,
+      "times_selected": 117,
+      "cumulative_reward": 0.5255418907299219,
       "ucb_bonus": 0.0,
       "regime_weights": {
-        "neutral": 0.13997025111093284,
+        "neutral": 0.13897853941278546,
         "risk_on": 0.13617187180012683,
         "risk_off": 0.1357053046701387
       },
-      "learned_confidence": 0.95,
-      "last_updated": "2026-02-11T13:12:39.813344"
+      "learned_confidence": 0.342065909046005,
+      "last_updated": "2026-02-11T13:47:51.009206"
     },
     "MeanReversion": {
       "strategy_name": "MeanReversion",
-      "base_weight": 0.10791258589232339,
+      "base_weight": 0.10801974474701982,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -44,7 +44,7 @@
     },
     "VolatilityRegimeVolTarget": {
       "strategy_name": "VolatilityRegimeVolTarget",
-      "base_weight": 0.10791258589232339,
+      "base_weight": 0.10801974474701982,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -56,7 +56,7 @@
     },
     "Carry": {
       "strategy_name": "Carry",
-      "base_weight": 0.10539415780673728,
+      "base_weight": 0.10549881582367641,
       "ema_performance": -0.00026882398252459593,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -72,7 +72,7 @@
     },
     "ValueQualityTilt": {
       "strategy_name": "ValueQualityTilt",
-      "base_weight": 0.11063582934181707,
+      "base_weight": 0.11074569241907194,
       "ema_performance": 0.0007588578368238671,
       "ema_alpha": 0.1,
       "times_selected": 61,
@@ -88,7 +88,7 @@
     },
     "RiskParityMinVar": {
       "strategy_name": "RiskParityMinVar",
-      "base_weight": 0.10789684368999726,
+      "base_weight": 0.10800398691244507,
       "ema_performance": -2.933981908037302e-05,
       "ema_alpha": 0.1,
       "times_selected": 2,
@@ -102,7 +102,7 @@
     },
     "TailRiskOverlay": {
       "strategy_name": "TailRiskOverlay",
-      "base_weight": 0.10791258589232339,
+      "base_weight": 0.10801974474701982,
       "ema_performance": 0.0,
       "ema_alpha": 0.1,
       "times_selected": 0,
@@ -114,7 +114,7 @@
     },
     "NewsSentimentEvent": {
       "strategy_name": "NewsSentimentEvent",
-      "base_weight": 0.10970344592507623,
+      "base_weight": 0.10981238313128232,
       "ema_performance": 0.003584849420027366,
       "ema_alpha": 0.1,
       "times_selected": 62,
@@ -129,63 +129,8 @@
       "last_updated": "2026-01-22T00:48:25.643294"
     }
   },
-  "total_rounds": 312,
+  "total_rounds": 319,
   "reward_history": [
-    {
-      "timestamp": "2026-02-05T18:38:56.748877",
-      "returns": {
-        "TS_Momentum_LS": -0.009680159445850111,
-        "QualityValue_LS": -0.0019804498709982124,
-        "CalendarEffects": -0.0019804498709982124
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-02-05T18:43:24.241797",
-      "returns": {
-        "TS_Momentum_LS": -0.017830247639093088
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-02-05T18:50:37.291123",
-      "returns": {
-        "TS_Momentum_LS": -0.014142082213500546
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-02-05T18:54:53.059935",
-      "returns": {
-        "TS_Momentum_LS": -0.01793819216132353
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-02-05T19:00:04.418202",
-      "returns": {
-        "TS_Momentum_LS": -0.019049619511833
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-02-05T19:12:58.080891",
-      "returns": {
-        "TS_Momentum_LS": -0.014964588335505733,
-        "QualityValue_LS": -0.000634753593438351,
-        "CalendarEffects": -0.000634753593438351
-      },
-      "regime": "neutral"
-    },
-    {
-      "timestamp": "2026-02-05T19:17:55.793234",
-      "returns": {
-        "TS_Momentum_LS": -0.015768634521396038,
-        "QualityValue_LS": 2.097633353611795e-05,
-        "CalendarEffects": 2.097633353611795e-05
-      },
-      "regime": "neutral"
-    },
     {
       "timestamp": "2026-02-05T19:22:54.331694",
       "returns": {
@@ -1065,7 +1010,84 @@
         "CalendarEffects": -0.0019537425359349037
       },
       "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:17:54.385758",
+      "returns": {
+        "TS_Momentum_LS": 0.0022262258827804434,
+        "QualityValue_LS": 0.001633318308614748,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "CalendarEffects": -0.0019537425359349037,
+        "SectorRotation": 0.0021467019995736057
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:22:52.834190",
+      "returns": {
+        "TS_Momentum_LS": 0.0022262258827804434,
+        "QualityValue_LS": 0.001633318308614748,
+        "SectorRotation": 0.0021467019995736057,
+        "CalendarEffects": -0.0019537425359349037,
+        "CrossSectionMomentum": 0.0029837969914827717
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:27:48.661455",
+      "returns": {
+        "TS_Momentum_LS": 0.0022262258827804434,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "SectorRotation": 0.0021467019995736057,
+        "QualityValue_LS": 0.001633318308614748,
+        "CalendarEffects": -0.0019537425359349037
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:32:56.387067",
+      "returns": {
+        "TS_Momentum_LS": 0.0022262258827804434,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "CalendarEffects": -0.0019537425359349037,
+        "QualityValue_LS": 0.001633318308614748,
+        "SectorRotation": 0.0021467019995736057
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:37:37.650292",
+      "returns": {
+        "TS_Momentum_LS": 0.0022262258827804434,
+        "CrossSectionMomentum": 0.0029837969914827717,
+        "CalendarEffects": -0.0019537425359349037,
+        "QualityValue_LS": 0.001633318308614748,
+        "SectorRotation": 0.0021467019995736057
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:42:37.026401",
+      "returns": {
+        "TS_Momentum_LS": 8.43390944738848e-05,
+        "QualityValue_LS": 0.003303187904338279,
+        "CrossSectionMomentum": -0.017376609460180117,
+        "CalendarEffects": -0.0018054993761656192,
+        "SectorRotation": 0.0032031052160538345
+      },
+      "regime": "neutral"
+    },
+    {
+      "timestamp": "2026-02-11T13:47:51.009167",
+      "returns": {
+        "TS_Momentum_LS": 8.43390944738848e-05,
+        "CrossSectionMomentum": -0.017376609460180117,
+        "SectorRotation": 0.0032031052160538345,
+        "QualityValue_LS": 0.003303187904338279,
+        "CalendarEffects": -0.0018054993761656192
+      },
+      "regime": "neutral"
     }
   ],
-  "last_updated": "2026-02-11T13:12:39.815007"
+  "last_updated": "2026-02-11T13:47:51.010841"
 }

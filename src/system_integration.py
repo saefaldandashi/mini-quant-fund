@@ -67,6 +67,13 @@ MARKET_CAP_DATA = {
     "WMT": MarketCapTier.MEGA_CAP, "ORCL": MarketCapTier.MEGA_CAP,
     
     # Large Cap ($10B-$200B) - Default for unknown large stocks
+    "MU": MarketCapTier.LARGE_CAP,  # Micron Technology - Large cap
+    "INTC": MarketCapTier.LARGE_CAP,  # Intel - Large cap
+    "AMD": MarketCapTier.LARGE_CAP,  # AMD - Large cap
+    "TXN": MarketCapTier.LARGE_CAP,  # Texas Instruments - Large cap
+    "NXPI": MarketCapTier.LARGE_CAP,  # NXP Semiconductors - Large cap
+    "WDC": MarketCapTier.LARGE_CAP,  # Western Digital - Large cap
+    "STX": MarketCapTier.LARGE_CAP,  # Seagate - Large cap
 }
 
 
@@ -157,25 +164,30 @@ class LiquidityFilter:
         data = self._volume_cache.get(symbol)
         
         if not data:
-            # No volume data - assume liquid for mega caps, illiquid for unknowns
+            # CRITICAL FIX: Assume liquid for mega-caps AND large-caps (not just mega-caps)
+            # This prevents incorrectly marking liquid stocks like MU, INTC as illiquid
             tier = get_market_cap_tier(symbol)
-            if tier == MarketCapTier.MEGA_CAP:
+            if tier in [MarketCapTier.MEGA_CAP, MarketCapTier.LARGE_CAP]:
+                # Assume liquid for large-cap+ stocks
+                assumed_volume = 10_000_000 if tier == MarketCapTier.MEGA_CAP else 5_000_000
+                assumed_value = 500_000_000 if tier == MarketCapTier.MEGA_CAP else 100_000_000
                 return LiquidityCheck(
                     symbol=symbol,
                     passes=True,
-                    avg_daily_volume=10_000_000,  # Assumed
-                    avg_daily_value=500_000_000,  # Assumed
+                    avg_daily_volume=assumed_volume,
+                    avg_daily_value=assumed_value,
                     spread_estimate_pct=0.02,
-                    reasons=["Mega-cap assumed liquid"]
+                    reasons=[f"{tier.value} assumed liquid (no volume data)"]
                 )
             else:
+                # Only mark as illiquid if it's mid-cap or smaller AND no data
                 return LiquidityCheck(
                     symbol=symbol,
                     passes=False,
                     avg_daily_volume=0,
                     avg_daily_value=0,
                     spread_estimate_pct=1.0,
-                    reasons=["No volume data available"]
+                    reasons=["No volume data available for small-cap"]
                 )
         
         avg_volume = data['avg_volume']
