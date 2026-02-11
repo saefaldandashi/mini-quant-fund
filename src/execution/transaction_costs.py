@@ -154,16 +154,16 @@ class TransactionCostModel:
     """
     
     # Default cost parameters (basis points)
-    # RELAXED: Previous settings blocked too many trades (0 executed out of 5 planned)
+    # CRITICAL FIX: Further relaxed to allow more trades through
     DEFAULT_PARAMS = {
         'base_slippage_bps': 3.0,        # Base slippage for liquid stocks
         'commission_bps': 0.0,           # Alpaca is commission-free
         'market_impact_coeff': 0.1,      # Impact coefficient
         'borrow_rate_annual': 0.02,      # 2% annual borrow rate for shorts
-        'min_trade_threshold_bps': 50.0, # Raised from 10 - allow more trades
-        'min_benefit_ratio': 1.0,        # Reduced from 1.5 - break-even is acceptable
-        'high_conviction_threshold': 0.7, # NEW: High conviction bypass
-        'small_trade_min_dollars': 200,   # NEW: Reduced from implicit $300
+        'min_trade_threshold_bps': 75.0, # CRITICAL FIX: Raised from 50 to 75 bps (allow higher costs)
+        'min_benefit_ratio': 0.8,        # CRITICAL FIX: Reduced from 1.0 to 0.8 (more lenient)
+        'high_conviction_threshold': 0.65, # CRITICAL FIX: Lowered from 0.7 to 0.65 (more trades bypass)
+        'small_trade_min_dollars': 100,   # CRITICAL FIX: Reduced from 200 to 100 (allow smaller trades)
     }
     
     # Liquidity adjustments (multipliers)
@@ -519,9 +519,10 @@ class TransactionCostModel:
                            f"(ratio: {benefit_ratio:.2f}x < {min_ratio}x required)"
                 )
         
-        # Very small trades with high relative costs - but be more lenient
-        small_trade_min = self.params.get('small_trade_min_dollars', 200)
-        if cost_estimate.notional_value < small_trade_min and cost_estimate.total_cost_bps > 100:
+        # Very small trades with high relative costs - CRITICAL FIX: More lenient
+        small_trade_min = self.params.get('small_trade_min_dollars', 100)  # Updated default
+        # CRITICAL FIX: Only reject if cost is VERY high (>150 bps) for small trades
+        if cost_estimate.notional_value < small_trade_min and cost_estimate.total_cost_bps > 150:
             return TradeCostResult(
                 should_trade=False,
                 cost_estimate=cost_estimate,
