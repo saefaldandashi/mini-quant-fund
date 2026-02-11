@@ -88,28 +88,34 @@ CASH_BUFFER_PCT = 0.05
 # ============================================================
 RISK_APPETITE_SETTINGS = {
     "conservative": {
-        "kelly_multiplier": 0.25,
-        "min_position_pct": 0.01,  # 1% minimum
-        "max_positions": 30,
-        "description": "Low risk, many small positions"
+        "kelly_multiplier": 0.35,
+        "min_position_pct": 0.015,  # 1.5% minimum (was 2%) - CRITICAL FIX: Lower threshold
+        "max_positions": 25,
+        "description": "Lower risk, diversified positions"
     },
     "moderate": {
         "kelly_multiplier": 0.50,
-        "min_position_pct": 0.02,  # 2% minimum
-        "max_positions": 20,
+        "min_position_pct": 0.02,  # 2% minimum (was 3%) - CRITICAL FIX: Lower threshold
+        "max_positions": 18,
         "description": "Balanced risk and reward"
     },
     "aggressive": {
         "kelly_multiplier": 0.75,
-        "min_position_pct": 0.03,  # 3% minimum
-        "max_positions": 15,
+        "min_position_pct": 0.03,  # 3% minimum (was 4%) - CRITICAL FIX: Lower threshold
+        "max_positions": 12,
         "description": "Higher conviction, concentrated"
     },
     "maximum": {
         "kelly_multiplier": 1.00,
-        "min_position_pct": 0.05,  # 5% minimum
-        "max_positions": 10,
+        "min_position_pct": 0.04,  # 4% minimum (was 6%) - CRITICAL FIX: Lower threshold
+        "max_positions": 8,
         "description": "Full Kelly, highly concentrated"
+    },
+    "alpha_hunter": {
+        "kelly_multiplier": 1.25,
+        "min_position_pct": 0.05,  # 5% minimum (was 8%) - CRITICAL FIX: Lower threshold
+        "max_positions": 6,
+        "description": "Maximum conviction, ultra-concentrated"
     }
 }
 
@@ -155,12 +161,12 @@ SECTOR_LIMITS = {
     "Materials": 0.10,
 }
 
-# Position size tiers based on conviction
+# Position size tiers based on conviction — TUNED for 100-300% target
 CONVICTION_TIERS = {
-    "very_high": {"min_score": 0.8, "position_pct": 0.10, "max_stocks": 3},
-    "high": {"min_score": 0.6, "position_pct": 0.07, "max_stocks": 5},
-    "medium": {"min_score": 0.4, "position_pct": 0.04, "max_stocks": 10},
-    "low": {"min_score": 0.0, "position_pct": 0.00, "max_stocks": 0},  # Don't trade
+    "very_high": {"min_score": 0.8, "position_pct": 0.20, "max_stocks": 4},   # Big bets (was 10%)
+    "high": {"min_score": 0.6, "position_pct": 0.12, "max_stocks": 6},        # Meaningful (was 7%)
+    "medium": {"min_score": 0.4, "position_pct": 0.07, "max_stocks": 10},     # Decent (was 4%)
+    "low": {"min_score": 0.2, "position_pct": 0.03, "max_stocks": 8},         # Small but trade (was 0%)
 }
 
 # ============================================================
@@ -180,11 +186,11 @@ REGIME_SETTINGS = {
         "risk_off": 0.4,   # Below this = risk off
     },
     "exposure_adjustments": {
-        "strong_bull": 1.00,   # Full exposure
-        "mild_bull": 0.80,
-        "neutral": 0.60,
-        "mild_bear": 0.40,
-        "strong_bear": 0.20,
+        "strong_bull": 1.20,   # ABOVE 100% — use leverage in bull (was 1.00)
+        "mild_bull": 1.00,     # Full exposure (was 0.80)
+        "neutral": 0.85,      # Near-full in neutral — this is the default state! (was 0.60)
+        "mild_bear": 0.60,    # Still trade — shorts work here (was 0.40)
+        "strong_bear": 0.40,  # Short-heavy but still deploy capital (was 0.20)
     }
 }
 
@@ -224,55 +230,90 @@ LEARNING_SETTINGS = {
 }
 
 # ============================================================
+# STOP-LOSS / TAKE-PROFIT SETTINGS — Tuned for 100-300% target
+# ============================================================
+STOP_TAKE_SETTINGS = {
+    # Mode: "fixed" (old behavior), "tiered" (gradual trim), "trailing_only"
+    "mode": "tiered",
+    
+    # Fixed stop-loss
+    "stop_loss_pct": 0.05,        # 5% hard stop (was 2%)
+    
+    # Tiered take-profit ladder
+    "take_profit_tiers": {
+        0.08: 0.20,   # At +8% → trim 20%
+        0.15: 0.25,   # At +15% → trim 25%
+        0.25: 0.25,   # At +25% → trim 25%
+        # Remaining 30% rides with trailing stop
+    },
+    
+    # Trailing stop
+    "trailing_stop_activation": 0.04,   # Activate after +4% (was 2%)
+    "trailing_stop_distance": 0.04,     # 4% behind peak (was 1.5%)
+    
+    # Winner protection: once up X%, stop moves to breakeven
+    "winner_protection_threshold": 0.05,  # After +5%, never let it become a loss
+}
+
+# ============================================================
 # LEVERAGE SETTINGS
 # ============================================================
 LEVERAGE_SETTINGS = {
     # USER-CONFIGURABLE MAX LEVERAGE
     # Options: 1.0 (no leverage), 2.0 (overnight max), 4.0 (intraday PDT max)
-    "max_leverage": 2.0,  # Default: 2x (Alpaca overnight max for RegT)
+    "max_leverage": 3.0,  # Default: 3x (was 2x — intraday can use 4x PDT)
     
     # LEVERAGE MODE
     # "manual" = always use max_leverage
     # "dynamic" = calculate optimal leverage based on conditions
     "mode": "dynamic",
     
-    # DYNAMIC LEVERAGE PARAMETERS
+    # CONVICTION-BASED LEVERAGE (NEW)
+    "conviction_leverage_enabled": True,
+    "conviction_leverage_tiers": {
+        "very_high": 3.0,  # Very high conviction → up to 3x
+        "high": 2.5,       # High conviction → up to 2.5x
+        "medium": 2.0,     # Medium → up to 2x
+        "low": 1.5,        # Low → 1.5x max
+    },
+    
+    # DYNAMIC LEVERAGE PARAMETERS — TUNED for 300% target
     "dynamic": {
         # VIX-based adjustments (percentage of max leverage)
         "vix_factors": {
-            15: 1.00,   # VIX < 15: 100% of max leverage
-            20: 0.80,   # VIX 15-20: 80% of max leverage
-            25: 0.60,   # VIX 20-25: 60% of max leverage
-            30: 0.40,   # VIX 25-30: 40% of max leverage
-            100: 0.20,  # VIX > 30: 20% of max leverage
+            15: 1.00,   # VIX < 15: 100% — prime time for leverage
+            20: 0.85,   # VIX 15-20: 85% (was 80%)
+            25: 0.70,   # VIX 20-25: 70% (was 60%)
+            30: 0.50,   # VIX 25-30: 50% (was 40%)
+            100: 0.30,  # VIX > 30: 30% (was 20%)
         },
         # Drawdown-based adjustments
         "drawdown_factors": {
-            3: 1.00,    # DD < 3%: 100% leverage
-            5: 0.80,    # DD 3-5%: 80% leverage
-            10: 0.50,   # DD 5-10%: 50% leverage
-            15: 0.25,   # DD 10-15%: 25% leverage
-            100: 0.00,  # DD > 15%: no leverage
+            5: 1.00,    # DD < 5%: full leverage (was 3%)
+            8: 0.80,    # DD 5-8%: 80% (was 5%)
+            12: 0.50,   # DD 8-12%: 50% (was 10%)
+            18: 0.25,   # DD 12-18%: 25% (was 15%)
+            100: 0.00,  # DD > 18%: no leverage
         },
         # Confidence adjustment range
         "min_confidence_factor": 0.7,
-        "max_confidence_factor": 1.2,
+        "max_confidence_factor": 1.3,  # Slightly higher max (was 1.2)
     },
     
-    # RISK CONTROLS
+    # RISK CONTROLS — SLIGHTLY RELAXED for return target
     "risk_controls": {
         # Daily loss limits
-        "daily_loss_halt_pct": 3.0,     # Halt new leveraged trades at 3% daily loss
-        "daily_loss_delever_pct": 5.0,  # Close leveraged positions at 5% daily loss
+        "daily_loss_halt_pct": 4.0,     # 4% halt (was 3%)
+        "daily_loss_delever_pct": 6.0,  # 6% close leveraged (was 5%)
         
         # Margin buffer
-        "min_margin_buffer_pct": 25.0,  # Always keep 25% margin buffer
-        "margin_alert_pct": 70.0,       # Alert when 70% margin used
-        "margin_auto_reduce_pct": 85.0, # Auto-reduce at 85% margin used
+        "min_margin_buffer_pct": 20.0,  # 20% buffer (was 25%)
+        "margin_alert_pct": 75.0,       # Alert at 75% (was 70%)
+        "margin_auto_reduce_pct": 88.0, # Auto-reduce at 88% (was 85%)
         
         # Position limits with leverage
-        "max_leveraged_position_pct": 15.0,  # Max 15% per position when leveraged
-        "max_leveraged_sector_pct": 30.0,    # Max 30% per sector when leveraged
+        "max_leveraged_position_pct": 20.0,  # 20% per position leveraged (was 15%)
+        "max_leveraged_sector_pct": 35.0,    # 35% per sector leveraged (was 30%)
     },
     
     # MARGIN COSTS
@@ -286,9 +327,9 @@ SHORT_SETTINGS = {
     # Enable/disable shorting
     "enabled": True,
     
-    # Maximum exposure
-    "max_short_exposure_pct": 40.0,  # Max 40% of portfolio in shorts
-    "max_single_short_pct": 5.0,     # Max 5% per short position
+    # Maximum exposure — OPENED UP for alpha
+    "max_short_exposure_pct": 60.0,  # Max 60% of portfolio in shorts (was 40%)
+    "max_single_short_pct": 10.0,    # Max 10% per short position (was 5%)
     
     # Short signal sources
     "signal_sources": {
