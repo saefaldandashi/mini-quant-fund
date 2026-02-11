@@ -1,0 +1,33 @@
+# Copy-Paste Commands (Just Copy and Paste These!)
+
+## Step 1: Connect to Your Server
+ssh your-username@your-server-address
+
+## Step 2: Go to Project Folder
+cd mini-fund-tool
+
+## Step 3: Get Latest Code
+git pull origin main
+
+## Step 4: Make Script Executable
+chmod +x deploy_to_cloud.sh
+
+## Step 5: Run Deployment Script
+bash deploy_to_cloud.sh
+
+## Step 6: Restart Your App (Choose ONE that matches your setup)
+
+# If using systemd:
+sudo systemctl restart your-service-name
+
+# If using PM2:
+pm2 restart your-app-name
+
+# If using Docker:
+docker-compose restart
+
+## Step 7: Watch Logs
+tail -f server.log
+
+## To Stop Watching Logs
+Press: Ctrl+C
