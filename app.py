@@ -492,7 +492,7 @@ def check_daily_pnl_limit(broker, log_func=None) -> Tuple[bool, str]:
         return True, "Error checking P&L"
 
 # Strategy enhancer
-strategy_enhancer = get_enhancer(EnhancedConfig(risk_appetite="moderate"))
+strategy_enhancer = get_enhancer(EnhancedConfig(risk_appetite="aggressive"))  # INCREASED for larger positions
 
 # Current regime state
 current_regime = None
