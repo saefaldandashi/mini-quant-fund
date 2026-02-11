@@ -231,7 +231,8 @@ logging.info("💰 Leverage Manager initialized (max 2x, 20% margin buffer)")
 # Initialize performance optimizations (persist across requests)
 parallel_executor = ParallelStrategyExecutor(max_workers=4, timeout_seconds=30)
 price_cache = PriceDataCache(cache_dir="outputs/cache", memory_ttl_minutes=5)
-smart_sizer = SmartPositionSizer(target_vol=0.12, max_position=0.15, use_kelly=True)
+# CRITICAL FIX: Disable Kelly in SmartPositionSizer - Kelly is applied in StrategyEnhancer to avoid double application
+smart_sizer = SmartPositionSizer(target_vol=0.12, max_position=0.15, use_kelly=False)
 
 # Initialize News Intelligence Pipeline
 news_intelligence = NewsIntelligencePipeline(cache_dir="outputs/news_intelligence")

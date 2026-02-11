@@ -39,15 +39,15 @@ class KellyCriterion:
     
     def __init__(
         self,
-        fractional_kelly: float = 0.25,  # Use 25% Kelly (more conservative)
-        max_kelly: float = 0.30,
-        min_kelly: float = 0.02,
+        fractional_kelly: float = 0.50,  # Half-Kelly (was 0.25 — too conservative for 300% target)
+        max_kelly: float = 0.50,  # Allow up to 50% Kelly (was 0.30)
+        min_kelly: float = 0.03,  # Slightly higher floor (was 0.02)
     ):
         """
         Initialize Kelly calculator.
         
         Args:
-            fractional_kelly: Fraction of full Kelly to use (0.25 = quarter Kelly)
+            fractional_kelly: Fraction of full Kelly to use (0.50 = half Kelly)
             max_kelly: Maximum Kelly fraction allowed
             min_kelly: Minimum Kelly fraction
         """
@@ -123,17 +123,19 @@ class KellyCriterion:
 class SmartPositionSizer:
     """
     Dynamic position sizing that considers:
-    - Kelly Criterion for edge-based sizing
     - Volatility scaling (reduce size in high vol)
     - Conviction weighting (higher confidence = larger size)
     - Correlation penalty (reduce for correlated positions)
     - Drawdown reduction (scale down during drawdowns)
+    
+    NOTE: Kelly Criterion is NOT applied here - it's applied in StrategyEnhancer
+    to avoid double-reducing position sizes. This sizer focuses on volatility and conviction.
     """
     
     def __init__(
         self,
-        target_vol: float = 0.12,
-        max_position: float = 0.15,
+        target_vol: float = 0.30,   # 30% vol target (was 12% — way too low for 300% returns)
+        max_position: float = 0.20,  # 20% max position (was 15%)
         vol_lookback: int = 21,
         use_kelly: bool = True,
         drawdown_scaling: bool = True,
@@ -142,10 +144,10 @@ class SmartPositionSizer:
         Initialize smart sizer.
         
         Args:
-            target_vol: Target portfolio volatility
-            max_position: Maximum position size
+            target_vol: Target portfolio volatility (30% for aggressive growth)
+            max_position: Maximum position size (20% for concentrated bets)
             vol_lookback: Lookback for volatility calculation
-            use_kelly: Whether to use Kelly sizing
+            use_kelly: DEPRECATED - Kelly is now handled by StrategyEnhancer. Set to False.
             drawdown_scaling: Whether to reduce size during drawdowns
         """
         self.target_vol = target_vol
@@ -206,18 +208,16 @@ class SmartPositionSizer:
             # 2. Conviction scaling
             conviction_scalar = self._conviction_scalar(confidence)
             
-            # 3. Kelly sizing
+            # 3. Kelly sizing - DISABLED: Kelly is applied in StrategyEnhancer to avoid double application
+            # CRITICAL FIX: Removed Kelly from SmartPositionSizer - it's applied once in StrategyEnhancer
             kelly_fraction = 1.0
-            if self.use_kelly and symbol in self._returns_history:
-                kelly_fraction = self.kelly.calculate_from_returns(
-                    self._returns_history[symbol]
-                )
-                kelly_fraction = kelly_fraction / 0.25  # Normalize around 1.0
+            # Note: Kelly sizing is now handled by StrategyEnhancer.enhance_position_sizes() 
+            # to avoid double-reducing position sizes
             
-            # 4. Drawdown scaling
+            # 4. Drawdown scaling — more tolerant
             dd_scalar = 1.0
-            if self.drawdown_scaling and self._current_drawdown > 0.05:
-                dd_scalar = max(0.5, 1.0 - self._current_drawdown)
+            if self.drawdown_scaling and self._current_drawdown > 0.08:  # 8% trigger (was 5%)
+                dd_scalar = max(0.5, 1.0 - self._current_drawdown * 0.8)  # Gentler scaling
             
             # Combine scalars (including cross-asset)
             total_scalar = vol_scalar * conviction_scalar * kelly_fraction * dd_scalar * cross_scalar
@@ -251,7 +251,7 @@ class SmartPositionSizer:
     def _vol_scalar(self, vol: float) -> float:
         """
         Calculate volatility scaling factor.
-        Higher vol -> smaller position.
+        Higher vol -> smaller position. Lower vol -> BIGGER position (press calm markets).
         """
         if vol <= 0:
             return 1.0
@@ -259,16 +259,16 @@ class SmartPositionSizer:
         # Target vol / actual vol
         scalar = self.target_vol / vol
         
-        # Clip to reasonable range
-        return max(0.3, min(2.0, scalar))
+        # Wider range to allow bigger positions in low vol (was 0.3-2.0)
+        return max(0.3, min(2.5, scalar))
     
     def _conviction_scalar(self, confidence: float) -> float:
         """
         Scale position based on conviction.
         Higher confidence -> larger position.
         """
-        # Map confidence to 0.7-1.3 range
-        return 0.7 + 0.6 * confidence
+        # Map confidence to 0.6-1.5 range (was 0.7-1.3 — wider for more differentiation)
+        return 0.6 + 0.9 * confidence
     
     def _cross_asset_scalar(self, symbol: str, cross_asset_signals: Dict[str, float]) -> float:
         """
