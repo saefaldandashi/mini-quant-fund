@@ -122,6 +122,10 @@ class RiskManager:
         # Winner protection tracking — symbols where breakeven stop is active
         self.winner_protected: Set[str] = set()
     
+    def update_constraints(self, constraints: 'RiskConstraints'):
+        """Update constraints without resetting state (entry_prices, winner_protected, etc.)."""
+        self.constraints = constraints
+    
     def check_and_approve(
         self,
         proposed_weights: Dict[str, float],

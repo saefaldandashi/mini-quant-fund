@@ -15,6 +15,8 @@ from dataclasses import dataclass, field
 import json
 from pathlib import Path
 
+from src.learning.atomic_io import atomic_json_save
+
 logger = logging.getLogger(__name__)
 
 
@@ -170,13 +172,12 @@ class ThompsonSamplingWeights:
     
     def _save(self):
         """Persist beliefs to disk."""
-        self.storage_path.parent.mkdir(parents=True, exist_ok=True)
         try:
-            with open(self.storage_path, 'w') as f:
-                json.dump({
-                    'beliefs': {name: b.to_dict() for name, b in self.beliefs.items()},
-                    'last_updated': str(np.datetime64('now')),
-                }, f, indent=2)
+            atomic_json_save(self.storage_path, {
+                'beliefs': {name: b.to_dict() for name, b in self.beliefs.items()},
+                'last_updated': str(np.datetime64('now')),
+            })
+            logger.info(f"Thompson beliefs saved ({len(self.beliefs)} strategies)")
         except Exception as e:
             logger.error(f"Could not save Thompson beliefs: {e}")
     

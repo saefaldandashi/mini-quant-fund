@@ -13,6 +13,8 @@ This is the KEY integration between reporting and learning.
 import json
 import logging
 from datetime import datetime, timedelta
+
+from .atomic_io import atomic_json_save
 from pathlib import Path
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, asdict
@@ -114,10 +116,9 @@ class ReportLearningStore:
         return default
     
     def _save_json(self, path: Path, data: Any):
-        """Save data to JSON file."""
+        """Save data to JSON file (atomic write)."""
         try:
-            with open(path, 'w') as f:
-                json.dump(data, f, indent=2, default=str)
+            atomic_json_save(path, data)
         except Exception as e:
             logging.error(f"Could not save {path}: {e}")
     

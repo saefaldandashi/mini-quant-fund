@@ -12,6 +12,8 @@ from dataclasses import dataclass, field, asdict
 from pathlib import Path
 import math
 
+from .atomic_io import atomic_json_save
+
 logger = logging.getLogger(__name__)
 
 
@@ -76,9 +78,13 @@ class FeedbackLoop:
     decay_half_life_days: int = 30
     min_samples_for_adjustment: int = 10
     
+    # Track how many trades have been processed to avoid re-recording
+    _last_processed_trade_count: int = 0
+    
     def __post_init__(self):
         self.strategy_performance = {}
         self.weight_adjustments = {}
+        self._last_processed_trade_count = 0
         self._load()
     
     def _load(self):
@@ -103,6 +109,7 @@ class FeedbackLoop:
                     )
                 
                 self.weight_adjustments = data.get('weight_adjustments', {})
+                self._last_processed_trade_count = data.get('last_processed_trade_count', 0)
                 
                 logger.info(f"Loaded feedback data for {len(self.strategy_performance)} strategies")
                 
@@ -130,12 +137,12 @@ class FeedbackLoop:
                     'last_updated': datetime.now().isoformat(),
                 }
             
-            with open(path, 'w') as f:
-                json.dump({
-                    'strategy_performance': perf_data,
-                    'weight_adjustments': self.weight_adjustments,
-                    'last_updated': datetime.now().isoformat(),
-                }, f, indent=2)
+            atomic_json_save(path, {
+                'strategy_performance': perf_data,
+                'weight_adjustments': self.weight_adjustments,
+                'last_processed_trade_count': self._last_processed_trade_count,
+                'last_updated': datetime.now().isoformat(),
+            })
                 
         except Exception as e:
             logger.warning(f"Could not save feedback data: {e}")
@@ -212,6 +219,28 @@ class FeedbackLoop:
                 regime=outcome.get('regime', 'unknown'),
                 confidence=outcome.get('confidence', 0.5),
             )
+    
+    def record_new_trades_only(self, trades: list, regime: str = "unknown"):
+        """
+        Process only trades that haven't been recorded yet.
+        Uses _last_processed_trade_count as a watermark to avoid re-recording.
+        """
+        new_trades = trades[self._last_processed_trade_count:]
+        recorded = 0
+        for trade in new_trades:
+            if trade.pnl_percent is not None and trade.entry_strategy:
+                self.record_outcome(
+                    strategy_name=trade.entry_strategy,
+                    was_correct=trade.was_profitable,
+                    signal_return=trade.pnl_percent / 100 if trade.pnl_percent else 0,
+                    regime=regime,
+                    confidence=getattr(trade, 'entry_confidence', 0.5),
+                )
+                recorded += 1
+        self._last_processed_trade_count = len(trades)
+        if recorded > 0:
+            logger.info(f"Feedback loop recorded {recorded} new trades (total processed: {self._last_processed_trade_count})")
+        return recorded
     
     def _update_weight_adjustments(self):
         """Recalculate weight adjustments based on performance."""

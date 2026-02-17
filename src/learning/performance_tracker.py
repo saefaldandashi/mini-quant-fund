@@ -13,6 +13,8 @@ import logging
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
 from pathlib import Path
+
+from .atomic_io import atomic_json_save, safe_json_load
 from typing import Dict, List, Optional, Tuple
 from collections import defaultdict
 import numpy as np
@@ -107,14 +109,12 @@ class PerformanceTracker:
     
     def _save(self):
         """Persist performance data to disk."""
-        self.storage_path.parent.mkdir(parents=True, exist_ok=True)
         try:
-            with open(self.storage_path, 'w') as f:
-                json.dump({
-                    'metrics': {name: m.to_dict() for name, m in self.metrics.items()},
-                    'history': dict(self.prediction_history),
-                    'last_updated': datetime.now().isoformat(),
-                }, f, indent=2, default=str)
+            atomic_json_save(self.storage_path, {
+                'metrics': {name: m.to_dict() for name, m in self.metrics.items()},
+                'history': dict(self.prediction_history),
+                'last_updated': datetime.now().isoformat(),
+            })
         except Exception as e:
             logging.error(f"Could not save performance tracker: {e}")
     

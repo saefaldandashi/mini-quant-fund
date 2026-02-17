@@ -166,6 +166,7 @@ class AdversarialDebateEngine:
         
         # Strategy characteristics (used as context for LLM, fallback for rules)
         self.strategy_strengths = {
+            # Position strategies
             "TimeSeriesMomentum": ["trending markets", "momentum persistence", "clear trends"],
             "CrossSectionMomentum": ["relative strength", "sector rotation", "winner persistence"],
             "MeanReversion": ["oversold bounces", "overbought pullbacks", "range-bound markets"],
@@ -175,9 +176,27 @@ class AdversarialDebateEngine:
             "RiskParityMinVar": ["diversification", "risk balance", "stability"],
             "TailRiskOverlay": ["crash protection", "tail risk", "extreme events"],
             "NewsSentimentEvent": ["information edge", "sentiment shifts", "event reactions"],
+            # Long/Short strategies
+            "TS_Momentum_LS": ["trending markets", "momentum persistence", "short weak stocks", "market-neutral"],
+            "CS_Momentum_LS": ["relative strength", "long winners short losers", "cross-sectional alpha"],
+            "MeanReversion_LS": ["oversold bounces", "overbought shorts", "market-neutral mean reversion"],
+            "QualityValue_LS": ["fundamental value", "short overvalued", "quality factor", "long-term alpha"],
+            # Intraday strategies
+            "IntradayMomentum": ["intraday trends", "quick momentum", "fast execution"],
+            "VWAPReversion": ["VWAP mean reversion", "institutional flow", "price anchoring"],
+            "VolumeSpike": ["volume anomalies", "breakout detection", "liquidity events"],
+            "RelativeStrengthIntraday": ["intraday relative performance", "sector rotation", "pair trades"],
+            "OpeningRangeBreakout": ["opening range", "morning momentum", "gap plays"],
+            "QuickMeanReversion": ["fast reversals", "overbought/oversold", "intraday ranging"],
+            # Alpha strategies
+            "SectorRotation": ["sector momentum", "macro sensitivity", "rotation timing"],
+            "CalendarEffects": ["seasonal patterns", "month-end flows", "holiday effects"],
+            "PairsTrading": ["statistical arbitrage", "pair correlation", "mean reversion pairs"],
+            "OrderFlow": ["order flow imbalance", "microstructure", "institutional footprint"],
         }
         
         self.strategy_weaknesses = {
+            # Position strategies
             "TimeSeriesMomentum": ["choppy markets", "trend reversals", "whipsaws"],
             "CrossSectionMomentum": ["crowded trades", "momentum crashes", "factor rotation"],
             "MeanReversion": ["trending markets", "regime changes", "false bottoms"],
@@ -187,6 +206,23 @@ class AdversarialDebateEngine:
             "RiskParityMinVar": ["correlation breakdown", "leverage risk", "bond-equity correlation"],
             "TailRiskOverlay": ["insurance costs", "false alarms", "opportunity cost"],
             "NewsSentimentEvent": ["noise vs signal", "stale news", "sentiment reversals"],
+            # Long/Short strategies
+            "TS_Momentum_LS": ["choppy markets", "whipsaws", "short squeezes", "borrow costs"],
+            "CS_Momentum_LS": ["momentum crashes", "crowded shorts", "factor rotation", "short squeezes"],
+            "MeanReversion_LS": ["trending markets", "false bottoms", "short squeezes", "gap risk"],
+            "QualityValue_LS": ["value traps", "growth dominance", "short squeezes", "factor timing"],
+            # Intraday strategies
+            "IntradayMomentum": ["choppy intraday", "lunch doldrums", "reversals"],
+            "VWAPReversion": ["trending days", "gap and go", "strong momentum"],
+            "VolumeSpike": ["false breakouts", "low liquidity", "noise spikes"],
+            "RelativeStrengthIntraday": ["sector correlation breakdown", "macro shocks"],
+            "OpeningRangeBreakout": ["false breakouts", "gap fills", "low range days"],
+            "QuickMeanReversion": ["intraday trends", "momentum persistence", "news-driven moves"],
+            # Alpha strategies
+            "SectorRotation": ["rapid rotation", "correlation spikes", "sector shocks"],
+            "CalendarEffects": ["calendar anomaly decay", "regime changes", "sample size"],
+            "PairsTrading": ["pair divergence", "structural breaks", "correlation regime shift"],
+            "OrderFlow": ["dark pool obfuscation", "HFT noise", "spoofing"],
         }
     
     def _llm_available(self) -> bool:

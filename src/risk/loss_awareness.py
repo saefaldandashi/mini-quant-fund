@@ -7,15 +7,23 @@ This module makes the bot self-aware of its performance and forces it to:
 3. Analyze WHY performance is what it is
 4. Adapt strategy dynamically
 
+KEY DESIGN PRINCIPLE: NEVER fully block rebalancing.
+The rebalance function is the ONLY mechanism that can exit losers and fix
+the portfolio. Blocking it creates a deadlock where losses persist forever.
+Instead, reduce exposure and prioritize exits during losing periods.
+
 KEY CHANGE: System is now ASYMMETRIC:
 - When winning: PRESS the advantage (increase exposure up to 1.5x)
-- When losing: REDUCE exposure (existing behavior, slightly relaxed)
-- This is the single most important change for 100-300% annual returns
+- When losing: REDUCE exposure but ALLOW rebalancing to fix positions
 """
+import json
 import logging
-from datetime import datetime, timedelta
+import os
+from datetime import datetime, timedelta, date
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
+
+from src.learning.atomic_io import atomic_json_save
 from enum import Enum
 
 logger = logging.getLogger(__name__)
@@ -71,43 +79,105 @@ class LossAwarenessSystem:
     """
     
     def __init__(self):
-        # Performance thresholds — RETUNED
+        # Performance thresholds — widened to avoid false alarms on normal fluctuations
         self.thresholds = {
-            "excellent": 0.015,     # > 1.5% (was 2%)
-            "good": 0.003,         # > 0.3% (was 0.5%)
-            "neutral": -0.003,     # > -0.3% (was -0.5%)
-            "concerning": -0.015,  # > -1.5% (unchanged)
-            "bad": -0.03,          # > -3% (unchanged)
+            "excellent": 0.02,      # > 2%
+            "good": 0.005,          # > 0.5%
+            "neutral": -0.01,       # > -1.0% (was -0.3% — too sensitive, normal noise triggered panic)
+            "concerning": -0.02,    # > -2.0% (was -1.5%)
+            "bad": -0.04,           # > -4% (was -3%)
         }
         
         # Weekly P&L tracking for MOMENTUM/SURGE detection
         self.weekly_pnl_pct: float = 0.0
+        self._daily_pnl_history: List[Dict] = []  # [{date, pnl_pct}, ...]
         
-        # Exposure adjustments by state — NOW ASYMMETRIC (key change)
-        # CRITICAL FIX: Less aggressive reduction to maintain better capital deployment
+        # Exposure adjustments by state — ASYMMETRIC
         self.exposure_adjustments = {
-            PerformanceState.SURGE: 1.50,       # 150% exposure — PRESS HARD (NEW)
-            PerformanceState.MOMENTUM: 1.35,    # 135% exposure — press advantage (NEW)
-            PerformanceState.EXCELLENT: 1.20,   # 120% exposure — INCREASE (was 1.0!)
-            PerformanceState.GOOD: 1.05,        # 105% — slight boost (was 0.9 — REDUCING on good days!)
-            PerformanceState.NEUTRAL: 0.95,     # 95% — near-full (was 0.8)
-            PerformanceState.CONCERNING: 0.75,  # CRITICAL FIX: 75% (was 65%) — less aggressive
-            PerformanceState.BAD: 0.55,         # CRITICAL FIX: 55% (was 40%) — less aggressive
-            PerformanceState.CRITICAL: 0.30,     # CRITICAL FIX: 30% (was 15%) — maintain some activity
+            PerformanceState.SURGE: 1.50,       # 150% exposure — PRESS HARD
+            PerformanceState.MOMENTUM: 1.35,    # 135% exposure — press advantage
+            PerformanceState.EXCELLENT: 1.20,   # 120% exposure — INCREASE
+            PerformanceState.GOOD: 1.05,        # 105% — slight boost
+            PerformanceState.NEUTRAL: 0.95,     # 95% — near-full
+            PerformanceState.CONCERNING: 0.75,  # 75% — reduce but keep trading
+            PerformanceState.BAD: 0.55,         # 55% — significant reduction
+            PerformanceState.CRITICAL: 0.30,    # 30% — maintain some activity
         }
         
         # Loss tolerance for individual positions
-        self.position_loss_threshold = -0.06  # Exit at -6% loss (was -5%)
-        self.position_loss_fast_exit = -0.04  # Consider exit at -4% if overall losing (was -3%)
+        self.position_loss_threshold = -0.06  # Exit at -6% loss
+        self.position_loss_fast_exit = -0.04  # Consider exit at -4% if overall losing
         
         # Tracking
         self.analysis_history: List[LossAnalysis] = []
         self.last_analysis: Optional[LossAnalysis] = None
         self.consecutive_losses = 0
-        self.consecutive_wins = 0  # NEW: track winning streaks
+        self.consecutive_wins = 0
         
+        # Per-day tracking to prevent counter inflation from frequent rebalance checks
+        self._last_loss_date: Optional[date] = None
+        self._last_win_date: Optional[date] = None
+        self._state_file = "outputs/loss_awareness_state.json"
+        self._load_state()
+        
+    def _load_state(self):
+        """Load persisted state from disk."""
+        try:
+            if os.path.exists(self._state_file):
+                with open(self._state_file, 'r') as f:
+                    state = json.load(f)
+                self.consecutive_losses = state.get('consecutive_losses', 0)
+                self.consecutive_wins = state.get('consecutive_wins', 0)
+                last_loss = state.get('last_loss_date')
+                last_win = state.get('last_win_date')
+                self._last_loss_date = date.fromisoformat(last_loss) if last_loss else None
+                self._last_win_date = date.fromisoformat(last_win) if last_win else None
+                self._daily_pnl_history = state.get('daily_pnl_history', [])
+                self.weekly_pnl_pct = state.get('weekly_pnl_pct', 0.0)
+                logger.info(f"Loaded loss awareness state: {self.consecutive_losses} losses, {self.consecutive_wins} wins, weekly_pnl={self.weekly_pnl_pct:.2%}")
+        except Exception as e:
+            logger.warning(f"Could not load loss awareness state: {e}")
+    
+    def _save_state(self):
+        """Persist state to disk so it survives restarts."""
+        try:
+            state = {
+                'consecutive_losses': self.consecutive_losses,
+                'consecutive_wins': self.consecutive_wins,
+                'last_loss_date': self._last_loss_date.isoformat() if self._last_loss_date else None,
+                'last_win_date': self._last_win_date.isoformat() if self._last_win_date else None,
+                'daily_pnl_history': self._daily_pnl_history[-10:],  # Keep last 10 days
+                'weekly_pnl_pct': self.weekly_pnl_pct,
+                'last_updated': datetime.now().isoformat(),
+            }
+            atomic_json_save(self._state_file, state)
+        except Exception as e:
+            logger.warning(f"Could not save loss awareness state: {e}")
+    
+    def _update_weekly_pnl(self, daily_pnl_pct: float):
+        """Automatically track daily P&L and compute rolling weekly P&L."""
+        today = datetime.now().date().isoformat()
+        
+        # Update or add today's entry
+        updated = False
+        for entry in self._daily_pnl_history:
+            if entry['date'] == today:
+                entry['pnl_pct'] = daily_pnl_pct
+                updated = True
+                break
+        if not updated:
+            self._daily_pnl_history.append({'date': today, 'pnl_pct': daily_pnl_pct})
+        
+        # Keep only last 10 days
+        self._daily_pnl_history = self._daily_pnl_history[-10:]
+        
+        # Compute rolling 5-day (weekly) P&L
+        recent = self._daily_pnl_history[-5:]
+        self.weekly_pnl_pct = sum(e['pnl_pct'] for e in recent)
+        logger.info(f"Weekly P&L updated: {self.weekly_pnl_pct:.2%} ({len(recent)} days)")
+
     def update_weekly_pnl(self, weekly_pnl_pct: float):
-        """Update weekly P&L for MOMENTUM/SURGE detection."""
+        """Manual override for weekly P&L. Normally auto-computed by analyze_losses()."""
         self.weekly_pnl_pct = weekly_pnl_pct
         
     def get_performance_state(self, pnl_pct: float) -> PerformanceState:
@@ -153,6 +223,9 @@ class LossAwarenessSystem:
         Returns:
             LossAnalysis with reasons and recommendations
         """
+        # Auto-compute weekly P&L for SURGE/MOMENTUM detection
+        self._update_weekly_pnl(total_pnl_pct)
+        
         state = self.get_performance_state(total_pnl_pct)
         
         # Separate winners and losers
@@ -183,16 +256,27 @@ class LossAwarenessSystem:
         self.last_analysis = analysis
         self.analysis_history.append(analysis)
         
-        # Track consecutive wins/losses
+        # Track consecutive wins/losses -- PER DAY to prevent inflation from frequent checks
+        today = datetime.now().date()
         if state in [PerformanceState.CONCERNING, PerformanceState.BAD, PerformanceState.CRITICAL]:
-            self.consecutive_losses += 1
+            if self._last_loss_date != today:
+                self.consecutive_losses += 1
+                self._last_loss_date = today
             self.consecutive_wins = 0
+            self._last_win_date = None
+        elif state == PerformanceState.NEUTRAL:
+            # Neutral RESETS the loss counter -- flat is not losing
+            self.consecutive_losses = max(0, self.consecutive_losses - 1)
+            self._last_loss_date = None
         elif state in [PerformanceState.GOOD, PerformanceState.EXCELLENT, PerformanceState.MOMENTUM, PerformanceState.SURGE]:
-            self.consecutive_wins += 1
+            if self._last_win_date != today:
+                self.consecutive_wins += 1
+                self._last_win_date = today
             self.consecutive_losses = 0
-        else:
-            # Neutral — don't reset streaks immediately
-            pass
+            self._last_loss_date = None
+        
+        # Persist to disk
+        self._save_state()
         
         return analysis
     
@@ -344,31 +428,23 @@ class LossAwarenessSystem:
         Get exposure adjusted for current performance.
         
         ASYMMETRIC: Increases on wins, decreases on losses.
+        
+        Uses the recommended_exposure computed by _generate_recommendations(),
+        which already accounts for both state AND consecutive losses.
+        This prevents double-penalizing (e.g., BAD state 0.55 * 5-loss 0.5 = 0.275
+        when the recommendation is 0.35).
         """
         if not self.last_analysis:
             return base_exposure
         
-        adjustment = self.exposure_adjustments.get(
-            self.last_analysis.state,
-            0.95
-        )
+        recommended = self.last_analysis.recommended_exposure
         
-        # Win streak bonus
-        if self.consecutive_wins >= 3:
-            streak_bonus = min(0.10, self.consecutive_wins * 0.02)
-            adjustment = min(1.50, adjustment + streak_bonus)
-        
-        # Consecutive loss penalty (more tolerant — 5 losses instead of 2)
-        if self.consecutive_losses >= 5:
-            adjustment *= 0.5
-        elif self.consecutive_losses >= 3:
-            adjustment *= 0.75
-        
-        # For winning states, allow going ABOVE base exposure
-        if adjustment > 1.0:
-            return base_exposure * adjustment  # Can exceed base
+        # For winning states (recommended > 1.0), scale up relative to base
+        if recommended > 1.0:
+            return base_exposure * recommended  # Can exceed base
         else:
-            return min(base_exposure, adjustment)
+            # For losing states, use the lower of base or recommended
+            return min(base_exposure, recommended)
     
     def get_acceleration_info(self) -> Dict:
         """Get current acceleration state for the frontend."""
@@ -435,6 +511,11 @@ class LossAwarenessSystem:
         """
         Determine if the bot should continue trading.
         
+        CRITICAL DESIGN: NEVER returns False. The rebalance function is the 
+        ONLY mechanism that can exit losers and fix the portfolio. Blocking it
+        creates a deadlock where losses persist forever. Instead, we return
+        True with reduced exposure guidance.
+        
         Returns:
             Tuple of (should_trade, reason)
         """
@@ -444,13 +525,13 @@ class LossAwarenessSystem:
         a = self.last_analysis
         
         if a.should_go_to_cash:
-            return False, f"Performance is {a.state.value} — GO TO CASH"
+            return True, f"RECOVERY MODE: {a.state.value} — exit losers, 20% exposure for new positions"
         
         if a.state == PerformanceState.CRITICAL:
-            return False, "Critical losses — trading halted"
+            return True, "CRITICAL RECOVERY: exit all losers, 15% exposure for hedges only"
         
         if self.consecutive_losses >= 7:
-            return False, f"{self.consecutive_losses} consecutive losses — strategy not working"
+            return True, f"RECOVERY MODE: {self.consecutive_losses} consecutive losing days — exit losers, reduced new positions"
         
         return True, f"OK to trade at {a.recommended_exposure*100:.0f}% exposure"
 

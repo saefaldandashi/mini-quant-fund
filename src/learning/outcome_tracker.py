@@ -12,6 +12,8 @@ from dataclasses import dataclass, field, asdict
 from pathlib import Path
 import pytz
 
+from .atomic_io import atomic_json_save
+
 logger = logging.getLogger(__name__)
 
 
@@ -104,16 +106,25 @@ class OutcomeTracker:
                 logger.warning(f"Could not load outcome tracker: {e}")
     
     def _save(self):
-        """Save signals to storage. Keeps only last 2000 signals to prevent file bloat."""
+        """Save signals to storage. Smart truncation preserves validated signals."""
         try:
             path = Path(self.storage_path)
             path.parent.mkdir(parents=True, exist_ok=True)
             
-            # CRITICAL FIX: Truncate to last 2000 signals to prevent file growth
-            MAX_SIGNALS = 2000
-            if len(self.signals) > MAX_SIGNALS:
-                logger.info(f"Truncating signal history from {len(self.signals)} to {MAX_SIGNALS}")
-                self.signals = self.signals[-MAX_SIGNALS:]
+            # Smart truncation: keep ALL validated signals + last N unvalidated
+            MAX_UNVALIDATED = 2000
+            MAX_VALIDATED = 5000
+            
+            validated = [s for s in self.signals if s.was_correct is not None]
+            unvalidated = [s for s in self.signals if s.was_correct is None]
+            
+            # Trim each category separately
+            if len(validated) > MAX_VALIDATED:
+                validated = validated[-MAX_VALIDATED:]
+            if len(unvalidated) > MAX_UNVALIDATED:
+                unvalidated = unvalidated[-MAX_UNVALIDATED:]
+            
+            self.signals = sorted(validated + unvalidated, key=lambda s: s.timestamp)
             
             data = {
                 'signals': [],
@@ -138,8 +149,7 @@ class OutcomeTracker:
                     'was_correct': bool(sig.was_correct) if sig.was_correct is not None else None,
                 })
             
-            with open(path, 'w') as f:
-                json.dump(data, f, indent=2)
+            atomic_json_save(path, data)
                 
         except Exception as e:
             logger.warning(f"Could not save outcome tracker: {e}")
@@ -237,9 +247,10 @@ class OutcomeTracker:
             if signal.outcome_5d is not None:
                 continue
             
-            # Skip if signal too recent (need at least 1 day)
+            # Skip if signal too recent (need at least 4 hours for price action)
+            # Previously 24h, but signals were being purged before reaching that threshold
             signal_age = (now.replace(tzinfo=None) - signal.timestamp.replace(tzinfo=None)).total_seconds() / 3600
-            if signal_age < 24:  # Less than 1 day old
+            if signal_age < 4:  # Less than 4 hours old
                 continue
             
             # Check if we have return data

@@ -738,6 +738,7 @@ class SmartExecutor:
                 )
             elif order_status.status.value == 'partially_filled':
                 filled_qty = int(order_status.filled_qty)
+                limit_fill_price = float(order_status.filled_avg_price or current_price)
                 remaining = quantity - filled_qty
                 self.log(f"    ⚠️ Partial fill: {filled_qty}/{quantity}, executing remainder at market")
                 
@@ -746,16 +747,40 @@ class SmartExecutor:
                 except:
                     pass
                 
+                # Track the actual total filled and blended price
+                total_filled = filled_qty
+                blended_price = limit_fill_price
+                
                 if remaining > 0:
                     is_extended = self.get_time_of_day() in [TimeOfDay.PRE_MARKET, TimeOfDay.AFTER_HOURS]
-                    self.broker.place_market_order(symbol, remaining, order_side, dry_run=False, extended_hours=is_extended)
+                    remainder_order = self.broker.place_market_order(
+                        symbol, remaining, order_side, dry_run=False, extended_hours=is_extended
+                    )
+                    # Try to get the fill price of the remainder order
+                    # place_market_order returns a dict {"id": ..., ...} or None
+                    rem_order_id = remainder_order.get('id') if isinstance(remainder_order, dict) else getattr(remainder_order, 'id', None)
+                    if rem_order_id:
+                        try:
+                            time.sleep(0.5)
+                            rem_status = self.broker.trading_client.get_order_by_id(rem_order_id)
+                            rem_filled = int(rem_status.filled_qty or 0)
+                            rem_price = float(rem_status.filled_avg_price or current_price)
+                            total_filled += rem_filled
+                            # Compute blended average price
+                            blended_price = (
+                                (filled_qty * limit_fill_price + rem_filled * rem_price) 
+                                / total_filled
+                            ) if total_filled > 0 else current_price
+                        except Exception:
+                            total_filled = quantity  # Assume full fill
+                            blended_price = limit_fill_price
                 
                 return ExecutionResult(
                     symbol=symbol,
                     side=side,
-                    quantity=quantity,
+                    quantity=total_filled,
                     success=True,
-                    fill_price=float(order_status.filled_avg_price or current_price),
+                    fill_price=blended_price,
                     order_type=OrderType.LIMIT_FALLBACK,
                     filled_at_limit=False,
                     execution_time_ms=0,

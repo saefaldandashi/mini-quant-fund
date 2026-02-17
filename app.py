@@ -82,6 +82,7 @@ from src.optimizations import (
     SmartPositionSizer,
     ThompsonSamplingWeights,
 )
+from src.optimizations.thompson_sampling import StrategyBelief
 from src.optimizations.strategy_enhancer import StrategyEnhancer, EnhancedConfig, get_enhancer
 from src.news_intelligence import (
     NewsIntelligencePipeline,
@@ -120,8 +121,11 @@ app = Flask(__name__)
 # =============================================================================
 # SESSION CONFIGURATION (FIX: Long session timeout to prevent frequent re-logins)
 # =============================================================================
-# Set a secret key for sessions (use environment variable or generate one)
-app.secret_key = os.environ.get('FLASK_SECRET_KEY', os.urandom(24).hex())
+# Set a secret key for sessions — MUST be stable across restarts & gunicorn workers.
+# If FLASK_SECRET_KEY env var is not set, derive a deterministic key from the machine
+# so sessions survive restarts (os.urandom would generate a new key each time, breaking all sessions).
+_default_secret = "mini-quant-fund-" + os.environ.get("USER", os.environ.get("USERNAME", "default"))
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', _default_secret)
 # Set session to be permanent and last 30 days (instead of default browser session)
 app.permanent_session_lifetime = timedelta(days=30)
 # Make sessions work across HTTP and HTTPS
@@ -556,7 +560,8 @@ current_regime = None
 #   - Failure counter resets on any success AND caps at a sane maximum
 #   - Early returns (market closed, P&L halt, etc.) are NOT counted as failures
 # ============================================================
-_rebalance_lock = False  # True when rebalance is in progress
+import threading as _threading
+_rebalance_lock = _threading.Lock()  # Thread-safe rebalance lock (was boolean — race condition)
 _last_rebalance_attempt = None  # Timestamp of last attempt
 _last_rebalance_success = None  # Timestamp of last successful rebalance
 _consecutive_failures = 0  # Count of consecutive REAL failures (exceptions only)
@@ -564,15 +569,18 @@ REBALANCE_COOLDOWN_SECONDS = 30  # Minimum 30s between auto-scheduler attempts
 MAX_CONSECUTIVE_FAILURES = 5  # After 5 real failures, extend cooldown
 MAX_FAILURE_COOLDOWN = 120  # Max cooldown = 2 minutes (not 5)
 
+# Persistent risk manager — keeps entry_prices, winner_protected, position_peaks across rebalances
+_persistent_risk_manager = None
+
 def _get_rebalance_cooldown() -> tuple:
     """Check if rebalance is allowed based on cooldown.
     
     NOTE: This is ONLY called when force_rebalance=False (auto-scheduler).
     Manual rebalances always bypass this entirely.
     """
-    global _rebalance_lock, _last_rebalance_attempt, _consecutive_failures
+    global _last_rebalance_attempt, _consecutive_failures
     
-    if _rebalance_lock:
+    if _rebalance_lock.locked():
         return False, "Rebalance already in progress"
     
     if _last_rebalance_attempt:
@@ -591,10 +599,13 @@ def _get_rebalance_cooldown() -> tuple:
     return True, "OK"
 
 def _start_rebalance():
-    """Mark rebalance as started."""
-    global _rebalance_lock, _last_rebalance_attempt
-    _rebalance_lock = True
+    """Mark rebalance as started. Returns False if another rebalance is already running."""
+    global _last_rebalance_attempt
+    acquired = _rebalance_lock.acquire(blocking=False)
+    if not acquired:
+        return False
     _last_rebalance_attempt = datetime.now()
+    return True
 
 def _end_rebalance(success: bool, is_early_return: bool = False):
     """Mark rebalance as ended. ALWAYS called (via finally block).
@@ -604,8 +615,11 @@ def _end_rebalance(success: bool, is_early_return: bool = False):
         is_early_return: True if rebalance exited early (market closed, P&L halt, etc.)
                          Early returns are NOT counted as failures.
     """
-    global _rebalance_lock, _last_rebalance_success, _consecutive_failures
-    _rebalance_lock = False  # ALWAYS release the lock
+    global _last_rebalance_success, _consecutive_failures
+    try:
+        _rebalance_lock.release()
+    except RuntimeError:
+        pass  # Lock wasn't held
     if success:
         _last_rebalance_success = datetime.now()
         _consecutive_failures = 0  # Reset on any success
@@ -647,13 +661,19 @@ def _load_auto_rebalance_settings() -> dict:
         if os.path.exists(AUTO_REBALANCE_SETTINGS_FILE):
             with open(AUTO_REBALANCE_SETTINGS_FILE, 'r') as f:
                 saved = json.load(f)
-                # Remove any legacy dry_run setting
                 saved.pop('dry_run', None)
-                # Merge with defaults (in case new keys added)
                 default.update(saved)
                 logging.info(f"📂 Loaded auto-rebalance settings: enabled={default['enabled']}")
     except Exception as e:
         logging.warning(f"Could not load auto-rebalance settings: {e}")
+    
+    # GUARD: Enforce minimum 15-minute interval to prevent churn
+    # Previous bug: 5-min interval caused 1000 trades in 2 days
+    MIN_INTERVAL = 15
+    if default.get("interval_minutes", 60) < MIN_INTERVAL:
+        logging.warning(f"⚠️ Auto-rebalance interval {default['interval_minutes']}min < minimum {MIN_INTERVAL}min. Overriding.")
+        default["interval_minutes"] = MIN_INTERVAL
+    
     return default
 
 def _save_auto_rebalance_settings():
@@ -824,73 +844,84 @@ def start_self_healing_monitor():
 
 def create_strategies(enable_long_short=False, enable_futures=False, trading_mode='intraday'):
     """
-    Create all strategy instances.
+    Create ALL strategy instances regardless of trading mode.
+    
+    DESIGN PRINCIPLE: The trading mode influences strategy CONFIGURATION
+    (lookback periods, thresholds), not strategy EXISTENCE. All strategies
+    are always created so the learning system can evaluate all of them
+    and weight the best ones for current conditions.
+    
+    Previously, 'intraday' mode excluded 9 position strategies entirely,
+    making them invisible to the learning system forever. Now ALL strategies
+    run, and the ensemble/debate/learning system decides which to weight.
     
     Args:
         enable_long_short: If True, include L/S strategies that can short
         enable_futures: If True, include futures strategies (backtest proxies)
-        trading_mode: 'intraday' for 15-30 min trading, 'position' for daily/weekly
+        trading_mode: 'intraday' or 'position' — affects configuration, not inclusion
     
     Returns:
         List of strategy instances
     """
     strategies = []
     
-    if trading_mode == 'intraday':
-        # INTRADAY MODE (15-30 minute trading - HFT-lite)
-        # These strategies are designed for quick in-and-out trades
-        from src.strategies import create_intraday_strategies
-        intraday_strategies = create_intraday_strategies()
-        strategies.extend(intraday_strategies)
-        logging.info(f"Added {len(intraday_strategies)} intraday strategies (15-30 min trading)")
-        
-        # Also include news sentiment (reactive to headlines)
-        strategies.append(NewsSentimentEventStrategy({'sentiment_threshold': 0.3}))
-        
-        # Add short-term momentum (with reduced lookback for intraday)
-        strategies.append(
-            CrossSectionMomentumStrategy({
-                'lookback': 5,  # 5-day momentum (not 126!)
-                'top_n': 5, 
-                'skip_recent': 0  # No skip for intraday
-            })
-        )
-    else:
-        # POSITION MODE (daily/weekly trading - legacy)
-        strategies = [
-            TimeSeriesMomentumStrategy({'lookback': 126, 'vol_target': 0.10, 'long_only': True}),
-            CrossSectionMomentumStrategy({'lookback': 126, 'top_n': 5, 'skip_recent': 21}),
-            MeanReversionStrategy({'z_threshold': 2.0, 'ma_type': 'ma_20'}),
-            VolatilityRegimeVolTargetStrategy({'target_vol': 0.12}),
-            CarryStrategy(),
-            ValueQualityTiltStrategy({'top_n': 10}),
-            RiskParityMinVarStrategy({'mode': 'risk_parity', 'max_weight': 0.15}),
-            TailRiskOverlayStrategy({'vol_trigger': 0.25, 'min_exposure': 0.3}),
-            NewsSentimentEventStrategy({'sentiment_threshold': 0.3}),
-        ]
+    # === INTRADAY STRATEGIES (always included) ===
+    from src.strategies import create_intraday_strategies
+    intraday_strategies = create_intraday_strategies()
+    strategies.extend(intraday_strategies)
+    logging.info(f"Added {len(intraday_strategies)} intraday strategies")
     
-    # Add Long/Short strategies if enabled
+    # === POSITION STRATEGIES (always included) ===
+    # Adjust lookback based on trading mode for responsiveness
+    momentum_lookback = 21 if trading_mode == 'intraday' else 126
+    momentum_skip = 0 if trading_mode == 'intraday' else 21
+    
+    strategies.extend([
+        TimeSeriesMomentumStrategy({
+            'lookback': momentum_lookback,
+            'vol_target': 0.10,
+            'long_only': True,
+        }),
+        CrossSectionMomentumStrategy({
+            'lookback': 5 if trading_mode == 'intraday' else 126,
+            'top_n': 5,
+            'skip_recent': momentum_skip,
+        }),
+        MeanReversionStrategy({'z_threshold': 2.0, 'ma_type': 'ma_20'}),
+        VolatilityRegimeVolTargetStrategy({'target_vol': 0.12}),
+        CarryStrategy(),
+        ValueQualityTiltStrategy({'top_n': 10}),
+        RiskParityMinVarStrategy({'mode': 'risk_parity', 'max_weight': 0.15}),
+        TailRiskOverlayStrategy({'vol_trigger': 0.25, 'min_exposure': 0.3}),
+    ])
+    logging.info(f"Added 8 position strategies (lookback adjusted for {trading_mode} mode)")
+    
+    # === NEWS SENTIMENT (always included) ===
+    strategies.append(NewsSentimentEventStrategy({'sentiment_threshold': 0.3}))
+    
+    # === LONG/SHORT strategies ===
     if enable_long_short:
         from src.strategies import create_long_short_strategies
         ls_strategies = create_long_short_strategies()
         strategies.extend(ls_strategies)
         logging.info(f"Added {len(ls_strategies)} Long/Short strategies")
     
-    # Add Futures strategies if enabled (backtest only with ETF proxies)
+    # === FUTURES strategies (ETF proxies) ===
     if enable_futures:
         from src.strategies import create_futures_strategies
         futures_strategies = create_futures_strategies()
         strategies.extend(futures_strategies)
-        logging.info(f"Added {len(futures_strategies)} Futures strategies (backtest proxies)")
+        logging.info(f"Added {len(futures_strategies)} Futures strategies (ETF proxies)")
     
-    # Add Alpha Enhancement strategies (pairs trading, sector rotation, calendar effects, order flow)
+    # === ALPHA ENHANCEMENT strategies ===
     enable_alpha = getattr(config, 'ENABLE_ALPHA_STRATEGIES', True)
     if enable_alpha:
         from src.strategies import create_alpha_strategies
         alpha_strategies = create_alpha_strategies()
         strategies.extend(alpha_strategies)
-        logging.info(f"Added {len(alpha_strategies)} Alpha Enhancement strategies (Pairs, Sector, Calendar, OrderFlow)")
+        logging.info(f"Added {len(alpha_strategies)} Alpha Enhancement strategies")
     
+    logging.info(f"Total strategies created: {len(strategies)} (mode={trading_mode})")
     return strategies
 
 
@@ -1085,7 +1116,8 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             return False, f"Rebalance blocked: {reason}", reason, {}
     
     # Mark rebalance as started — ALWAYS paired with _end_rebalance in finally block
-    _start_rebalance()
+    if not _start_rebalance():
+        return False, "Rebalance already in progress (lock held)", "Lock held", {}
     
     output_lines = []
     debate_info = {"transcript": None, "scores": None, "final_weights": {}}
@@ -1299,24 +1331,28 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             except Exception as e:
                 logging.warning(f"Win accelerator error: {e}")
             
-            # Check if we should halt
-            should_continue, halt_reason = loss_system.should_trade()
-            if not should_continue:
+            # Check trading status -- NEVER fully halt, always allow reduced rebalancing
+            should_continue, trade_reason = loss_system.should_trade()
+            if "RECOVERY" in trade_reason or "CRITICAL" in trade_reason:
                 log("")
-                log("🛑" * 20)
-                log(f"TRADING HALTED BY LOSS AWARENESS: {halt_reason}")
-                log("🛑" * 20)
+                log("⚠️" * 20)
+                log(f"LOSS AWARENESS WARNING: {trade_reason}")
+                log("⚠️" * 20)
                 log("")
-                log("The system has detected significant losses and is protecting capital.")
-                log("Consider reviewing the portfolio and market conditions before resuming.")
-                _rebalance_outcome["early_return"] = True
-                return False, "\n".join(output_lines), f"Loss awareness halt: {halt_reason}", debate_info
+                log("System is in recovery mode — will exit losers and trade at reduced exposure.")
+                log("Rebalance will CONTINUE to fix the portfolio (not halt).")
+                # Reduce exposure further for recovery mode
+                if "CRITICAL" in trade_reason:
+                    capital_exposure_pct = min(capital_exposure_pct, 0.15)
+                elif "RECOVERY" in trade_reason:
+                    capital_exposure_pct = min(capital_exposure_pct, 0.20)
+                log(f"  Recovery exposure set to: {capital_exposure_pct*100:.0f}%")
             
-            # Exit recommended positions
+            # Exit recommended positions -- these WILL be actioned during rebalance
             if analysis.positions_to_exit:
                 log("")
                 log(f"  📉 POSITIONS FLAGGED FOR EXIT: {', '.join(analysis.positions_to_exit)}")
-                # These will be handled in the normal rebalancing flow by setting weight to 0
+                log(f"  These positions will be exited during this rebalance cycle.")
             
             # Store for debate context
             debate_info["loss_analysis"] = {
@@ -1950,6 +1986,17 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         )
         log(f"Loaded {len(strategies)} strategies (L/S: {long_short_settings.get('enable_long_short')}, Futures: {long_short_settings.get('enable_futures')})")
         
+        # DYNAMIC STRATEGY REGISTRATION: Ensure ALL active strategies are visible to learning
+        active_strategy_names = [s.name for s in strategies]
+        learning_engine.register_strategies(active_strategy_names)
+        # Register dynamic strategies with Thompson sampler using correct API
+        for name in active_strategy_names:
+            if name not in thompson_sampler.strategy_names:
+                thompson_sampler.strategy_names.append(name)
+            if name not in thompson_sampler.beliefs:
+                thompson_sampler.beliefs[name] = StrategyBelief(strategy_name=name)
+        log(f"  Learning engine tracking {len(learning_engine.strategy_names)} strategies")
+        
         # INJECT MACRO CONTEXT INTO ALL STRATEGIES
         macro_ctx = features.macro_features if hasattr(features, 'macro_features') else None
         risk_ctx = features.risk_sentiment if hasattr(features, 'risk_sentiment') else None
@@ -2013,18 +2060,37 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         strat_time = time_module.time() - strat_start
         
-        # Log results
+        # Log results with active/silent/error breakdown
+        active_strategies = []
+        silent_strategies = []
+        error_strategies = []
+        
         for strategy in strategies:
             if strategy.name in signals:
                 signal = signals[strategy.name]
                 n_positions = len([w for w in signal.desired_weights.values() if abs(w) > 0.01])
-                log(f"✓ {strategy.name}: {n_positions} positions, "
-                    f"confidence={signal.confidence:.1%}, "
-                    f"exp_ret={signal.expected_return:.1%}")
+                if n_positions > 0:
+                    active_strategies.append(strategy.name)
+                    log(f"  ✓ {strategy.name}: {n_positions} positions, "
+                        f"confidence={signal.confidence:.1%}, "
+                        f"exp_ret={signal.expected_return:.1%}")
+                else:
+                    silent_strategies.append(strategy.name)
+                    log(f"  ○ {strategy.name}: 0 positions (no signals above threshold)")
             elif strategy.name in errors:
-                log(f"✗ {strategy.name}: ERROR - {errors[strategy.name][:50]}")
+                error_strategies.append(strategy.name)
+                log(f"  ✗ {strategy.name}: ERROR - {errors[strategy.name][:80]}")
+            else:
+                silent_strategies.append(strategy.name)
+                log(f"  ○ {strategy.name}: did not run")
         
-        log(f"\n⚡ Parallel execution: {len(signals)}/{len(strategies)} strategies in {strat_time:.2f}s")
+        log("")
+        log(f"⚡ Parallel execution: {len(signals)}/{len(strategies)} strategies in {strat_time:.2f}s")
+        log(f"   Active (producing signals): {len(active_strategies)}/{len(strategies)}")
+        if silent_strategies:
+            log(f"   Silent (no signals): {len(silent_strategies)} — {', '.join(silent_strategies)}")
+        if error_strategies:
+            log(f"   Errors: {len(error_strategies)} — {', '.join(error_strategies)}")
         log("")
         
         # Write strategy outputs to parquet storage for reports
@@ -2053,9 +2119,17 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             if holding_mins > 0:
                 for symbol in signal.desired_weights.keys():
                     if abs(signal.desired_weights[symbol]) > 0.01:
-                        # Store if not already set or if this strategy has shorter period
                         if symbol not in holding_periods or holding_mins < holding_periods[symbol][0]:
                             holding_periods[symbol] = (holding_mins, name)
+        
+        # Build strategy attribution map: symbol -> strategy that contributed most weight
+        # This ensures ALL trades (not just intraday) get properly attributed to their source strategy
+        strategy_attribution = {}
+        for name, signal in signals.items():
+            for symbol, weight in signal.desired_weights.items():
+                if abs(weight) > 0.01:
+                    if symbol not in strategy_attribution or abs(weight) > abs(strategy_attribution[symbol][1]):
+                        strategy_attribution[symbol] = (name, weight)
         
         # === DEBATE ENGINE ===
         log("=" * 60)
@@ -2454,28 +2528,37 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         )
         
         # Blend with Thompson Sampling for smarter exploration
-        # Adaptive Thompson influence - explore more early, exploit more with experience
-        trade_stats = learning_engine.trade_memory.get_statistics()
-        total_trades = trade_stats.get('total_trades', 0)
-        if total_trades < 20:
-            thompson_inf = 0.35  # 35% exploration when learning
-        elif total_trades < 50:
-            thompson_inf = 0.25  # 25% moderate exploration
-        elif total_trades < 100:
-            thompson_inf = 0.15  # 15% some exploration
-        else:
-            thompson_inf = 0.10  # 10% minimal exploration (mostly exploit)
-        
-        thompson_weights = thompson_sampler.blend_with_debate(
-            debate_scores={name: s.total_score for name, s in scores.items()},
-            regime=market_context_for_learning['regime'],
-            thompson_influence=thompson_inf,
+        # GUARD: Only blend Thompson when it has REAL data (at least one belief updated beyond prior)
+        thompson_has_data = any(
+            b.distribution.alpha > 1.0 or b.distribution.beta > 1.0
+            for b in thompson_sampler.beliefs.values()
         )
         
-        # Combine learned weights with Thompson weights
-        for name in learned_weights:
-            if name in thompson_weights:
-                learned_weights[name] = 0.7 * learned_weights[name] + 0.3 * thompson_weights[name]
+        if thompson_has_data:
+            trade_stats = learning_engine.trade_memory.get_statistics()
+            total_trades = trade_stats.get('total_trades', 0)
+            if total_trades < 20:
+                thompson_inf = 0.25  # 25% exploration when learning
+            elif total_trades < 50:
+                thompson_inf = 0.20  # 20% moderate exploration
+            elif total_trades < 100:
+                thompson_inf = 0.15  # 15% some exploration
+            else:
+                thompson_inf = 0.10  # 10% minimal exploration (mostly exploit)
+            
+            thompson_weights = thompson_sampler.blend_with_debate(
+                debate_scores={name: s.total_score for name, s in scores.items()},
+                regime=market_context_for_learning['regime'],
+                thompson_influence=thompson_inf,
+            )
+            
+            # Combine learned weights with Thompson weights
+            for name in learned_weights:
+                if name in thompson_weights:
+                    learned_weights[name] = 0.7 * learned_weights[name] + 0.3 * thompson_weights[name]
+            log(f"   ✅ Thompson Sampling blended at {thompson_inf:.0%} influence (data-backed)")
+        else:
+            log(f"   ⏳ Thompson Sampling skipped — no outcome data yet (using learned weights only)")
         
         # === PERFORMANCE FILTER: Penalize/disable underperforming strategies ===
         # If a strategy has enough history and is consistently losing, reduce its weight
@@ -2486,25 +2569,42 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     if strat_name not in learned_weights:
                         continue
                     
-                    # Only filter strategies with sufficient history (20+ predictions)
-                    if metrics.total_predictions >= 20:
-                        # If accuracy < 45%, reduce weight by 50%
-                        if metrics.accuracy < 0.45:
-                            old_weight = learned_weights[strat_name]
+                    # Immediate disable: 0% accuracy with 10+ trades = clearly broken
+                    if metrics.total_predictions >= 10 and metrics.accuracy == 0.0:
+                        learned_weights[strat_name] = 0.01
+                        log(f"   🚫 Disabled {strat_name}: 0% accuracy after {metrics.total_predictions} trades")
+                        continue
+                    
+                    # Filter strategies with sufficient history (15+ predictions)
+                    if metrics.total_predictions >= 15:
+                        # If accuracy < 50%, reduce weight by 50%
+                        if metrics.accuracy < 0.50:
                             learned_weights[strat_name] *= 0.5
                             log(f"   ⚠️ Penalized {strat_name}: {metrics.accuracy:.0%} accuracy → weight halved")
                         
-                        # If accuracy < 40%, reduce weight by 75%
+                        # If accuracy < 40%, reduce weight by another 50% (75% total)
                         if metrics.accuracy < 0.40:
-                            learned_weights[strat_name] *= 0.5  # Another 50% reduction
+                            learned_weights[strat_name] *= 0.5
                             log(f"   ❌ Severely penalized {strat_name}: {metrics.accuracy:.0%} accuracy")
                         
-                        # If accuracy < 35% with 50+ trades, effectively disable
-                        if metrics.accuracy < 0.35 and metrics.total_predictions >= 50:
-                            learned_weights[strat_name] = 0.01  # Minimal weight
+                        # If accuracy < 30% with 20+ trades, effectively disable
+                        if metrics.accuracy < 0.30 and metrics.total_predictions >= 20:
+                            learned_weights[strat_name] = 0.01
                             log(f"   🚫 Disabled {strat_name}: {metrics.accuracy:.0%} accuracy after {metrics.total_predictions} trades")
         except Exception as perf_filter_err:
             logging.debug(f"Performance filter error: {perf_filter_err}")
+        
+        # === FEEDBACK LOOP INTEGRATION: Apply learned adjustments from trade outcomes ===
+        try:
+            adjusted = feedback_loop.get_adjusted_weights(
+                learned_weights, 
+                regime=market_context_for_learning.get('regime') if isinstance(market_context_for_learning, dict) else None
+            )
+            if adjusted:
+                learned_weights = adjusted
+                log(f"   ✅ Feedback loop adjustments applied ({len(adjusted)} strategies)")
+        except Exception as fb_err:
+            logging.debug(f"Feedback loop integration error: {fb_err}")
         
         # Show learning summary
         learning_summary = learning_engine.get_learning_summary()
@@ -2606,10 +2706,42 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         for strategy_name, weight in sorted(learned_weights.items(), key=lambda x: -x[1])[:5]:
             log(f"  {strategy_name}: {weight:.1%}")
         
+        # Build historical performance dict for accuracy-weighted debate
+        hist_perf = {}
+        try:
+            perf_tracker = learning_engine.performance_tracker
+            if perf_tracker and perf_tracker.metrics:
+                for sname, smetrics in perf_tracker.metrics.items():
+                    if smetrics.total_predictions >= 5:
+                        hist_perf[sname] = smetrics.accuracy
+        except Exception:
+            pass
+        
         combined_weights, metadata = ensemble.combine(
             signals, scores, features, current_weights, EnsembleMode.WEIGHTED_VOTE,
-            strategy_weights=learned_weights  # Pass learned weights to ensemble
+            strategy_weights=learned_weights,
+            historical_performance=hist_perf if hist_perf else None,
         )
+        
+        # === MINIMUM CONFLUENCE FILTER ===
+        # Require at least 2 strategies to agree on direction for any position
+        # This prevents single-strategy-driven trades with low conviction
+        confluence_filtered = 0
+        for symbol, weight in list(combined_weights.items()):
+            if abs(weight) < 0.001:
+                continue
+            is_long = weight > 0
+            agreeing = sum(
+                1 for s in signals.values()
+                if symbol in s.desired_weights
+                and abs(s.desired_weights[symbol]) > 0.001
+                and (s.desired_weights[symbol] > 0) == is_long
+            )
+            if agreeing < 2:
+                combined_weights[symbol] = weight * 0.3
+                confluence_filtered += 1
+        if confluence_filtered > 0:
+            log(f"  Confluence filter: reduced {confluence_filtered} low-conviction positions (< 2 strategies agree)")
         
         debate_info["final_weights"] = combined_weights
         
@@ -3130,21 +3262,27 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log(f"  ⚠️ Could not get leverage limit: {e}")
             dynamic_max_leverage = 1.0
         
-        # Create risk manager with dynamic leverage and shorting from settings
-        risk_manager = RiskManager(RiskConstraints(
-            max_position_size=0.15 if dynamic_max_leverage <= 1.0 else 0.10,  # Tighter with leverage
-            max_sector_exposure=0.30 if dynamic_max_leverage <= 1.0 else 0.20,  # Tighter with leverage
+        # Create or update persistent risk manager (preserves entry_prices, winner_protected, position_peaks)
+        global _persistent_risk_manager
+        new_constraints = RiskConstraints(
+            max_position_size=0.15 if dynamic_max_leverage <= 1.0 else 0.10,
+            max_sector_exposure=0.30 if dynamic_max_leverage <= 1.0 else 0.20,
             max_leverage=dynamic_max_leverage,
             vol_target=0.12,
             enable_shorting=long_short_settings.get("enable_shorting", True),
             max_gross_exposure=min(
                 long_short_settings.get("max_gross_exposure", 2.0),
-                dynamic_max_leverage  # Cap by leverage limit
+                dynamic_max_leverage
             ),
             net_exposure_min=long_short_settings.get("net_exposure_min", -0.3),
             net_exposure_max=long_short_settings.get("net_exposure_max", 1.0),
             max_short_position=long_short_settings.get("max_short_per_position", 0.10),
-        ))
+        )
+        if _persistent_risk_manager is None:
+            _persistent_risk_manager = RiskManager(new_constraints)
+        else:
+            _persistent_risk_manager.update_constraints(new_constraints)
+        risk_manager = _persistent_risk_manager
         log(f"  ✓ Shorting: {'ENABLED' if long_short_settings.get('enable_shorting', True) else 'DISABLED'}")
         log(f"  ✓ Max Leverage: {dynamic_max_leverage:.2f}x (dynamic based on VIX/drawdown)")
         
@@ -3163,6 +3301,16 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 log(f"  - {adj}")
         
         final_weights = risk_result.approved_weights
+        
+        # CRITICAL FIX: Apply positions_to_exit from loss awareness
+        # Previously these were only logged but never zeroed in the weights
+        loss_analysis = debate_info.get("loss_analysis", {})
+        exits_to_force = loss_analysis.get("positions_to_exit", [])
+        if exits_to_force:
+            for exit_sym in exits_to_force:
+                if exit_sym in final_weights:
+                    log(f"  🛑 Forcing exit: {exit_sym} (loss awareness recommendation)")
+                    final_weights[exit_sym] = 0.0
         
         # DEBUG: Track shorts through the pipeline
         shorts_after_risk = {k: v for k, v in final_weights.items() if v < 0}
@@ -4008,39 +4156,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log(f"⚠️ Could not update leverage manager: {e}")
             effective_max_lev = 1.0
         
-        # === RECORD PREDICTIONS FOR LEARNING ===
-        # This is CRITICAL for the learning system to track strategy performance
-        log("")
-        log("📚 Recording predictions for learning system...")
-        predictions_recorded = 0
-        try:
-            # Get current regime for tracking
-            current_regime_label = current_regime.regime if current_regime else 'unknown'
-            
-            for symbol, weight in enhanced_weights.items():
-                if abs(weight) > MIN_WEIGHT_THRESHOLD:
-                    direction = 'long' if weight > 0 else 'short'
-                    confidence = confidences.get(symbol, 0.5)
-                    expected_return = abs(weight) * 0.02  # Estimate ~2% for full weight
-                    
-                    # Record prediction for each strategy that contributed to this symbol
-                    for strategy_name, signal in signals.items():
-                        if symbol in signal.desired_weights:
-                            learning_engine.performance_tracker.record_prediction(
-                                strategy_name=strategy_name,
-                                symbol=symbol,
-                                predicted_direction=direction,
-                                confidence=signal.confidence,  # Use strategy's own confidence
-                                expected_return=expected_return,
-                                regime=current_regime_label,
-                            )
-                            predictions_recorded += 1
-            
-            log(f"   ✅ Recorded {predictions_recorded} predictions across {len(enhanced_weights)} symbols")
-        except Exception as e:
-            log(f"   ⚠️ Could not record predictions: {e}")
-            import traceback
-            logging.error(traceback.format_exc())
+        # NOTE: Predictions are already recorded by learning_engine.record_signals() above.
+        # Do NOT record them again here -- duplicate recording inflates the denominator
+        # and artificially halves measured accuracy (e.g., 7/10 correct appears as 7/20 = 35%).
         
         # Initialize Smart Executor with VIX awareness - ALWAYS LIVE
         smart_executor = SmartExecutor(
@@ -4330,6 +4448,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             
             value = qty * price
             
+            # Skip tiny adjustments (< $100 or < 0.2% of equity) to prevent churn
+            if abs(value) < max(100, equity * 0.002):
+                continue
+            
             # Get conviction from final weights (higher weight = higher conviction)
             conviction = min(1.0, abs(final_weights.get(symbol, 0)) * 5)  # Scale to 0-1
             
@@ -4485,8 +4607,11 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             orders_executed = 0
             total_actual_cost = 0.0
             
-            # Create a map of orders to their cost estimates
-            order_cost_map = {o['symbol']: o.get('cost_estimate') for o in orders_to_execute}
+            # Create a map of orders to their cost estimates (list per symbol for multi-order support)
+            from collections import defaultdict
+            order_cost_map = defaultdict(list)
+            for o in orders_to_execute:
+                order_cost_map[o['symbol']].append(o.get('cost_estimate'))
             
             for result in results:
                 if result.success:
@@ -4497,9 +4622,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     record_symbol_trade(result.symbol)
                     
                     # Record actual vs estimated cost for learning
-                    if result.symbol in order_cost_map and order_cost_map[result.symbol]:
-                        cost_estimate = order_cost_map[result.symbol]
-                        
+                    cost_estimates = order_cost_map.get(result.symbol, [])
+                    cost_estimate = cost_estimates.pop(0) if cost_estimates else None
+                    if cost_estimate:
                         # Find the order's original price (mid price at decision time)
                         order_info = next((o for o in orders_to_execute if o['symbol'] == result.symbol), None)
                         if order_info:
@@ -4537,7 +4662,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     # Get holding period for this symbol (if any)
                     hp_info = holding_periods.get(result.symbol, (0, ''))
                     intended_holding = hp_info[0] if hp_info else 0
-                    entry_strat = hp_info[1] if hp_info else ''
+                    # Use strategy_attribution for PROPER strategy attribution (works for ALL strategies)
+                    # Fall back to holding_periods only for intraday holding info
+                    attr_info = strategy_attribution.get(result.symbol)
+                    entry_strat = attr_info[0] if attr_info else (hp_info[1] if hp_info else '')
                     
                     learning_engine.record_trade(
                         symbol=result.symbol,
@@ -4628,8 +4756,28 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                         'trend_strength': trend_strength,
                     }
                     
-                    learning_engine.record_outcomes(symbol_returns, market_context_for_patterns)
+                    strat_returns = learning_engine.record_outcomes(symbol_returns, market_context_for_patterns, source="rebalance")
                     log(f"📊 Pattern Learning: Recorded {len(symbol_returns)} position outcomes")
+                    
+                    # Update Thompson Sampler with actual strategy returns
+                    if strat_returns:
+                        try:
+                            regime_label = market_context_for_patterns.get('regime', 'unknown')
+                            thompson_sampler.update_from_outcome(strat_returns, regime=regime_label)
+                            log(f"📊 Thompson Sampler: Updated beliefs for {len(strat_returns)} strategies")
+                        except Exception as ts_err:
+                            logging.warning(f"Thompson sampler update failed: {ts_err}")
+                    
+                    # Also update feedback loop with any new trade outcomes
+                    try:
+                        fb_recorded = feedback_loop.record_new_trades_only(
+                            learning_engine.trade_memory.trades,
+                            regime=market_context_for_patterns.get('regime', 'unknown'),
+                        )
+                        if fb_recorded > 0:
+                            log(f"📊 Feedback Loop: Recorded {fb_recorded} new trade outcomes")
+                    except Exception as fb_err:
+                        logging.warning(f"Feedback loop recording in rebalance failed: {fb_err}")
         except Exception as e:
             log(f"⚠️ Could not record outcomes for pattern learning: {e}")
         
@@ -4742,6 +4890,91 @@ def run_bot_threaded(allow_after_hours=False, force_rebalance=True, cancel_order
     thread.start()
 
 
+def _is_market_holiday(date_obj) -> bool:
+    """Check if a date is a US market holiday. Covers major NYSE holidays."""
+    year = date_obj.year
+    from datetime import date as _date
+    
+    holidays = set()
+    # New Year's Day (Jan 1, or observed on Monday if Sunday)
+    nyd = _date(year, 1, 1)
+    if nyd.weekday() == 6:  # Sunday
+        holidays.add(_date(year, 1, 2))  # Observed Monday
+    else:
+        holidays.add(nyd)
+    
+    # MLK Day (3rd Monday in January)
+    jan1 = _date(year, 1, 1)
+    first_monday = jan1 + timedelta(days=(7 - jan1.weekday()) % 7)
+    holidays.add(first_monday + timedelta(weeks=2))
+    
+    # Presidents' Day (3rd Monday in February)
+    feb1 = _date(year, 2, 1)
+    first_monday_feb = feb1 + timedelta(days=(7 - feb1.weekday()) % 7)
+    holidays.add(first_monday_feb + timedelta(weeks=2))
+    
+    # Good Friday (approximate - 2 days before Easter; simplified)
+    # Easter calculation (Butcher's algorithm)
+    a = year % 19
+    b = year // 100
+    c = year % 100
+    d = b // 4
+    e = b % 4
+    f = (b + 8) // 25
+    g = (b - f + 1) // 3
+    h = (19 * a + b - d - g + 15) % 30
+    i = c // 4
+    k = c % 4
+    l = (32 + 2 * e + 2 * i - h - k) % 7
+    m = (a + 11 * h + 22 * l) // 451
+    month = (h + l - 7 * m + 114) // 31
+    day = ((h + l - 7 * m + 114) % 31) + 1
+    easter = _date(year, month, day)
+    holidays.add(easter - timedelta(days=2))  # Good Friday
+    
+    # Memorial Day (last Monday in May)
+    may31 = _date(year, 5, 31)
+    holidays.add(may31 - timedelta(days=may31.weekday()))
+    
+    # Juneteenth (June 19)
+    jn = _date(year, 6, 19)
+    if jn.weekday() == 5:  # Saturday
+        holidays.add(_date(year, 6, 18))
+    elif jn.weekday() == 6:  # Sunday
+        holidays.add(_date(year, 6, 20))
+    else:
+        holidays.add(jn)
+    
+    # Independence Day (July 4)
+    jul4 = _date(year, 7, 4)
+    if jul4.weekday() == 5:
+        holidays.add(_date(year, 7, 3))
+    elif jul4.weekday() == 6:
+        holidays.add(_date(year, 7, 5))
+    else:
+        holidays.add(jul4)
+    
+    # Labor Day (1st Monday in September)
+    sep1 = _date(year, 9, 1)
+    holidays.add(sep1 + timedelta(days=(7 - sep1.weekday()) % 7))
+    
+    # Thanksgiving (4th Thursday in November)
+    nov1 = _date(year, 11, 1)
+    first_thu = nov1 + timedelta(days=(3 - nov1.weekday()) % 7)
+    holidays.add(first_thu + timedelta(weeks=3))
+    
+    # Christmas (Dec 25)
+    xmas = _date(year, 12, 25)
+    if xmas.weekday() == 5:
+        holidays.add(_date(year, 12, 24))
+    elif xmas.weekday() == 6:
+        holidays.add(_date(year, 12, 26))
+    else:
+        holidays.add(xmas)
+    
+    return date_obj in holidays
+
+
 def auto_rebalance_scheduler():
     """Background thread for automatic rebalancing, holding period checks, and outcome tracking."""
     global auto_rebalance_settings, _scheduler_last_heartbeat
@@ -4753,7 +4986,7 @@ def auto_rebalance_scheduler():
     last_news_refresh = datetime.now()  # Track Global Intel refreshes
     outcome_check_interval = timedelta(hours=1)  # Check outcomes hourly
     holding_check_interval = timedelta(minutes=5)  # Check holding periods every 5 mins
-    intraday_rebalance_interval = timedelta(minutes=5)  # 5-min intraday rebalance (was 15)
+    intraday_rebalance_interval = timedelta(minutes=15)  # 15-min intraday rebalance (was 5 — too frequent, caused transaction cost drag)
     news_refresh_interval = timedelta(minutes=5)  # Refresh Global Intel every 5 mins
     
     logging.info("🔄 Auto-rebalance scheduler thread STARTED")
@@ -4774,8 +5007,10 @@ def auto_rebalance_scheduler():
         if now.date() > last_daily_check:
             last_daily_check = now.date()
             
-            # Check if it's a trading day (weekday) and market opening time
-            if now.weekday() < 5:  # Monday-Friday
+            # Check if it's a trading day (weekday, not a holiday)
+            et_tz_daily = pytz.timezone('US/Eastern')
+            et_date = datetime.now(et_tz_daily).date()
+            if now.weekday() < 5 and not _is_market_holiday(et_date):
                 logging.info(f"📅 NEW TRADING DAY: {now.strftime('%Y-%m-%d')}")
                 
                 # If auto-rebalance is enabled and we haven't run yet today
@@ -4825,6 +5060,7 @@ def auto_rebalance_scheduler():
                     
                     is_market_hours = (
                         et_now.weekday() < 5 and  # Monday-Friday
+                        not _is_market_holiday(et_now.date()) and  # Not a market holiday
                         market_open <= et_now <= market_close
                     )
                     
@@ -4844,31 +5080,40 @@ def auto_rebalance_scheduler():
                     last_intraday_rebalance = now
         
         # === HOLDING PERIOD AUTO-EXIT CHECK ===
+        # CRITICAL: Only during market hours. Previous bug: this triggered full rebalances
+        # every 5 minutes 24/7 (including weekends/holidays) when expired positions existed,
+        # causing 1000+ redundant trades in 2 days.
         if now - last_holding_check >= holding_check_interval:
             try:
-                expired = learning_engine.trade_memory.get_expired_positions()
-                if expired:
-                    logging.warning(f"⏰ Found {len(expired)} positions exceeding holding period!")
-                    
-                    # Force a rebalance to exit expired positions
-                    # The rebalance will naturally close these positions
-                    # because strategies should no longer be signaling for them
-                    expired_symbols = [s for s, _ in expired]
-                    logging.info(f"⏰ Positions to auto-exit: {expired_symbols}")
-                    
-                    # Record the auto-exit trigger
-                    for symbol, trade in expired:
-                        trade.exit_reason = 'holding_period_exceeded'
-                    
-                    # If not already running, trigger a rebalance
-                    if not last_run_status["running"]:
-                        logging.info("⏰ Triggering auto-exit rebalance for expired positions...")
-                        run_bot_threaded(
-                            allow_after_hours=True,  # Allow after hours for risk management
-                            force_rebalance=True,
-                            cancel_orders=True,
-                            exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
-                        )
+                # Only check during ACTUAL market hours (not after hours, not holidays)
+                et_tz = pytz.timezone('US/Eastern')
+                et_now = datetime.now(et_tz)
+                mkt_open_time = et_now.replace(hour=9, minute=30, second=0, microsecond=0)
+                mkt_close_time = et_now.replace(hour=16, minute=0, second=0, microsecond=0)
+                is_trading_day = et_now.weekday() < 5 and not _is_market_holiday(et_now.date())
+                is_mkt_hours = is_trading_day and mkt_open_time <= et_now <= mkt_close_time
+                
+                if is_mkt_hours:
+                    expired = learning_engine.trade_memory.get_expired_positions()
+                    if expired:
+                        logging.warning(f"⏰ Found {len(expired)} positions exceeding holding period!")
+                        expired_symbols = [s for s, _ in expired]
+                        logging.info(f"⏰ Positions to auto-exit: {expired_symbols}")
+                        
+                        for symbol, trade in expired:
+                            trade.exit_reason = 'holding_period_exceeded'
+                        
+                        # Only trigger if not already running AND at least 30 min since last rebalance
+                        # This prevents the infinite rebalance loop
+                        if not last_run_status["running"] and (now - last_intraday_rebalance >= timedelta(minutes=30)):
+                            logging.info("⏰ Triggering auto-exit rebalance for expired positions...")
+                            run_bot_threaded(
+                                allow_after_hours=False,
+                                force_rebalance=True,
+                                cancel_orders=True,
+                                exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
+                            )
+                            last_intraday_rebalance = now  # Prevent rapid re-triggers
                         
                 last_holding_check = now
             except Exception as e:
@@ -4929,7 +5174,7 @@ def auto_rebalance_scheduler():
                                         ret_5d = (ts.iloc[-1] / ts.iloc[0] - 1) * 100 if len(ts) >= 5 else ret_1d
                                         price_returns[ticker] = {'1d': ret_1d, '5d': ret_5d}
                             except Exception as e:
-                                pass
+                                logging.warning(f"Price fetch failed for {ticker}: {e}")
                         
                         if price_returns:
                             updated = outcome_tracker.update_outcomes(price_returns)
@@ -4957,14 +5202,18 @@ def auto_rebalance_scheduler():
                             if df is not None and not df.empty:
                                 current_prices[symbol] = df['close'].iloc[-1]
                     
-                    # Update P&L for all trades without P&L
+                    # Update P&L for all trades without P&L (handles BOTH long and short)
                     pnl_updated = 0
                     for trade in learning_engine.trade_memory.trades:
                         if trade.pnl_percent is None and trade.symbol in current_prices:
                             price = current_prices[trade.symbol]
-                            if trade.side == 'buy':
-                                trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
-                                trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
+                            if trade.entry_price and trade.entry_price > 0:
+                                if trade.side in ('sell', 'short'):
+                                    trade.pnl_dollars = (trade.entry_price - price) * trade.quantity
+                                    trade.pnl_percent = (trade.entry_price - price) / trade.entry_price * 100
+                                else:
+                                    trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
+                                    trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
                                 trade.was_profitable = trade.pnl_dollars > 0
                                 pnl_updated += 1
                     
@@ -4976,11 +5225,8 @@ def auto_rebalance_scheduler():
                     for symbol, trade in list(learning_engine.trade_memory.open_positions.items()):
                         if symbol not in current_position_symbols and symbol in current_prices:
                             price = current_prices[symbol]
-                            learning_engine.trade_memory.update_outcome(
-                                symbol=symbol,
-                                exit_price=price,
-                                exit_reason='position_closed'
-                            )
+                            learning_engine.trade_memory._close_position(trade, price, 'position_closed')
+                            del learning_engine.trade_memory.open_positions[symbol]
                             logging.info(f"📉 Closed position tracking for {symbol}")
                             
                 except Exception as pnl_e:
@@ -5135,12 +5381,20 @@ def get_loss_awareness_status():
         total_cost = sum(abs(p['market_value']) - p['unrealized_pl'] for p in positions_list)
         total_pnl_pct = total_pnl / total_cost if total_cost > 0 else 0
         
-        # Run analysis
-        analysis = loss_system.analyze_losses(
-            positions=positions_list,
-            total_pnl=total_pnl,
-            total_pnl_pct=total_pnl_pct,
-        )
+        # Use CACHED analysis if available (< 5 min old) to avoid mutating state on every poll.
+        # analyze_losses() updates consecutive loss counters and saves to disk,
+        # so calling it on every dashboard poll corrupts the counters.
+        if (loss_system.last_analysis and 
+            hasattr(loss_system, '_last_analysis_time') and
+            (datetime.now() - loss_system._last_analysis_time).total_seconds() < 300):
+            analysis = loss_system.last_analysis
+        else:
+            analysis = loss_system.analyze_losses(
+                positions=positions_list,
+                total_pnl=total_pnl,
+                total_pnl_pct=total_pnl_pct,
+            )
+            loss_system._last_analysis_time = datetime.now()
         
         should_trade, halt_reason = loss_system.should_trade()
         
@@ -5886,7 +6140,12 @@ def reset_cooldown():
     old_failures = _consecutive_failures
     _consecutive_failures = 0
     _last_rebalance_attempt = None
-    _rebalance_lock = False  # Also unlock if stuck
+    # Release the lock if stuck (don't replace it with a non-Lock value!)
+    if _rebalance_lock.locked():
+        try:
+            _rebalance_lock.release()
+        except RuntimeError:
+            pass
     
     logging.info(f"Cooldown reset: cleared {old_failures} failures, unlocked rebalance")
     
@@ -6443,13 +6702,17 @@ def update_learning_outcomes():
         updated_count = 0
         closed_count = 0
         
-        # 1. Update all open positions in trade memory with current prices
+        # 1. Update all open positions in trade memory with current prices (long AND short)
         for symbol, trade in list(learning_engine.trade_memory.open_positions.items()):
             if symbol in current_prices:
                 price = current_prices[symbol]
-                if trade.side == 'buy':
-                    trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
-                    trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
+                if trade.entry_price and trade.entry_price > 0:
+                    if trade.side in ('sell', 'short'):
+                        trade.pnl_dollars = (trade.entry_price - price) * trade.quantity
+                        trade.pnl_percent = (trade.entry_price - price) / trade.entry_price * 100
+                    else:
+                        trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
+                        trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
                     trade.was_profitable = trade.pnl_dollars > 0
                     updated_count += 1
                 
@@ -6459,13 +6722,17 @@ def update_learning_outcomes():
                     del learning_engine.trade_memory.open_positions[symbol]
                     closed_count += 1
         
-        # 2. Update trades that don't have PnL yet
+        # 2. Update trades that don't have PnL yet (long AND short)
         for trade in learning_engine.trade_memory.trades:
             if trade.pnl_percent is None and trade.symbol in current_prices:
                 price = current_prices[trade.symbol]
-                if trade.side == 'buy':
-                    trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
-                    trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
+                if trade.entry_price and trade.entry_price > 0:
+                    if trade.side in ('sell', 'short'):
+                        trade.pnl_dollars = (trade.entry_price - price) * trade.quantity
+                        trade.pnl_percent = (trade.entry_price - price) / trade.entry_price * 100
+                    else:
+                        trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
+                        trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
                     trade.was_profitable = trade.pnl_dollars > 0
                     updated_count += 1
         
@@ -6520,24 +6787,26 @@ def update_learning_outcomes():
         }
         
         # Record outcomes for pattern learning
+        strat_returns_api = {}
         if symbol_returns:
-            learning_engine.record_outcomes(symbol_returns, market_context)
+            strat_returns_api = learning_engine.record_outcomes(symbol_returns, market_context, source="api") or {}
         
-        # INTEGRATE FEEDBACK LOOP - record outcomes for strategy weight adjustments
+        # Update Thompson Sampler with strategy-level returns
+        if strat_returns_api:
+            try:
+                thompson_sampler.update_from_outcome(strat_returns_api, regime=regime)
+                logging.info(f"Thompson sampler updated with {len(strat_returns_api)} strategy returns")
+            except Exception as ts_err:
+                logging.warning(f"Thompson sampler update failed: {ts_err}")
+        
+        # INTEGRATE FEEDBACK LOOP - record ONLY NEW trade outcomes (not all trades)
         try:
-            for trade in learning_engine.trade_memory.trades:
-                if trade.pnl_percent is not None and trade.entry_strategy:
-                    feedback_loop.record_outcome(
-                        strategy_name=trade.entry_strategy,
-                        was_correct=trade.was_profitable,
-                        signal_return=trade.pnl_percent / 100 if trade.pnl_percent else 0,
-                        regime=regime,
-                        confidence=getattr(trade, 'entry_confidence', 0.5),
-                    )
-            # Recalculate weight adjustments
-            feedback_loop._calculate_weight_adjustments()
-            feedback_loop._save()
-            logging.info(f"Feedback loop updated with {len(feedback_loop.strategy_performance)} strategies")
+            recorded = feedback_loop.record_new_trades_only(
+                learning_engine.trade_memory.trades,
+                regime=regime,
+            )
+            if recorded > 0:
+                logging.info(f"Feedback loop recorded {recorded} new trades ({len(feedback_loop.strategy_performance)} strategies tracked)")
         except Exception as e:
             logging.warning(f"Feedback loop integration error: {e}")
         
@@ -9458,10 +9727,19 @@ def apply_alpha_hunter_preset():
         return jsonify({"error": str(e)}), 500
 
 
-if __name__ == '__main__':
-    # ==========================================================================
-    # STARTUP SEQUENCE - Initialize all critical components
-    # ==========================================================================
+# =============================================================================
+# STARTUP SEQUENCE - Initialize all critical components
+# Runs for BOTH `python app.py` AND `gunicorn app:app`
+# =============================================================================
+_startup_done = False
+
+def run_startup():
+    """Initialize broker, risk monitor, scheduler, self-healing.
+    Safe to call multiple times — only runs once."""
+    global _startup_done
+    if _startup_done:
+        return
+    _startup_done = True
     
     print(f"\n{'='*60}")
     print("MULTI-STRATEGY QUANT DEBATE BOT - Starting Up...")
@@ -9496,13 +9774,9 @@ if __name__ == '__main__':
     start_self_healing_monitor()
     print("✅ Self-healing monitor STARTED")
     
-    port = int(os.getenv("PORT", 5000))
-    debug = os.getenv("FLASK_DEBUG", "0") == "1"
-    
     print(f"\n{'='*60}")
     print("MULTI-STRATEGY QUANT DEBATE BOT - Web UI")
     print(f"{'='*60}")
-    print(f"\nOpen your browser: http://localhost:{port}")
     print("\nStrategies: 9 active strategies with debate mechanism")
     print("Data Sources:")
     print("  - Market Data: Alpaca API (IEX feed)")
@@ -9515,7 +9789,18 @@ if __name__ == '__main__':
     print("  ✅ Transaction cost filter (rejects unprofitable trades)")
     print("  ✅ Signal validation (sentiment consistency checks)")
     print("  ✅ Self-healing monitor (auto-restarts crashed threads)")
-    print("\nPress Ctrl+C to stop the server")
     print(f"{'='*60}\n")
+
+
+# Always run startup when module is loaded (works for both python app.py AND gunicorn)
+run_startup()
+
+
+if __name__ == '__main__':
+    port = int(os.getenv("PORT", 5000))
+    debug = os.getenv("FLASK_DEBUG", "0") == "1"
+    
+    print(f"\nOpen your browser: http://localhost:{port}")
+    print("Press Ctrl+C to stop the server\n")
     
     app.run(host='0.0.0.0', port=port, debug=debug, threaded=True)

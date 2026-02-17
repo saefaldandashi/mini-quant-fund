@@ -64,7 +64,7 @@ class EnsembleOptimizer:
         
         # Strategy type classification for signal conflict resolution
         self.strategy_types = {
-            # Long-only strategies
+            # Long-only position strategies
             'TimeSeriesMomentum': 'equity_long',
             'CrossSectionMomentum': 'equity_long',
             'MeanReversion': 'equity_long',
@@ -79,6 +79,18 @@ class EnsembleOptimizer:
             'TS_Momentum_LS': 'equity_ls',
             'MeanReversion_LS': 'equity_ls',
             'QualityValue_LS': 'equity_ls',
+            # Intraday strategies
+            'IntradayMomentum': 'intraday',
+            'VWAPReversion': 'intraday',
+            'VolumeSpike': 'intraday',
+            'RelativeStrengthIntraday': 'intraday',
+            'OpeningRangeBreakout': 'intraday',
+            'QuickMeanReversion': 'intraday',
+            # Alpha strategies
+            'SectorRotation': 'equity_long',
+            'CalendarEffects': 'equity_long',
+            'PairsTrading': 'equity_ls',
+            'OrderFlow': 'equity_long',
             # Futures strategies (use ETF proxies)
             'Futures_Carry': 'futures_proxy',
             'Futures_Macro': 'futures_proxy',
@@ -92,7 +104,8 @@ class EnsembleOptimizer:
         features: Features,
         current_weights: Dict[str, float],
         mode: EnsembleMode = EnsembleMode.WEIGHTED_VOTE,
-        strategy_weights: Optional[Dict[str, float]] = None
+        strategy_weights: Optional[Dict[str, float]] = None,
+        historical_performance: Optional[Dict[str, float]] = None,
     ) -> Tuple[Dict[str, float], Dict[str, Any]]:
         """
         Combine strategy signals into final weights.
@@ -104,6 +117,7 @@ class EnsembleOptimizer:
             current_weights: Current portfolio weights
             mode: Ensemble mode
             strategy_weights: Optional learned weights for each strategy (from learning engine)
+            historical_performance: Optional dict of strategy_name -> accuracy (0-1)
             
         Returns:
             Tuple of (final_weights, metadata)
@@ -130,13 +144,13 @@ class EnsembleOptimizer:
             )
         
         if mode == EnsembleMode.WEIGHTED_VOTE:
-            raw_weights = self._weighted_vote(signals, adjusted_scores, strategy_weights)
+            raw_weights = self._weighted_vote(signals, adjusted_scores, strategy_weights, historical_performance)
         elif mode == EnsembleMode.CONVEX_OPTIMIZATION:
             raw_weights = self._convex_optimization(signals, adjusted_scores, features, strategy_weights)
         elif mode == EnsembleMode.STACKING:
             raw_weights = self._stacking(signals, adjusted_scores, features, strategy_weights)
         else:
-            raw_weights = self._weighted_vote(signals, adjusted_scores, strategy_weights)
+            raw_weights = self._weighted_vote(signals, adjusted_scores, strategy_weights, historical_performance)
         
         # Apply constraints
         final_weights, constraints_applied = self._apply_constraints(
@@ -159,13 +173,17 @@ class EnsembleOptimizer:
         self,
         signals: Dict[str, SignalOutput],
         scores: Dict[str, StrategyScore],
-        strategy_weights: Optional[Dict[str, float]] = None
+        strategy_weights: Optional[Dict[str, float]] = None,
+        historical_performance: Optional[Dict[str, float]] = None,
     ) -> Dict[str, float]:
         """
         Simple weighted voting based on strategy scores.
         
         If strategy_weights are provided (from learning engine), 
         they are blended with debate scores for the final weighting.
+        
+        If historical_performance is provided, the debate component is scaled
+        by actual accuracy so 0% accuracy strategies get 0% debate influence.
         """
         combined = {}
         
@@ -180,18 +198,34 @@ class EnsembleOptimizer:
             # Base weight from debate score
             debate_weight = score.total_score
             
+            # Scale debate weight by historical accuracy if available
+            # 0% accuracy = near-0% debate influence, preventing bad strategies from arguing well
+            if historical_performance and name in historical_performance:
+                accuracy = historical_performance[name]
+                accuracy_scale = max(0.1, accuracy)  # Floor at 10% to allow recovery
+                debate_weight *= accuracy_scale
+            
+            # Normalize debate_weight to a fraction (0-1 scale)
+            total_score = sum(s.total_score for s in scores.values())
+            debate_fraction = debate_weight / total_score if total_score > 0 else 0
+            
             # Blend with learned weight if available
             if strategy_weights and name in strategy_weights:
                 learned = strategy_weights[name]
-                # INCREASED LEARNING INFLUENCE: 40% debate, 60% learned
-                # This gives more weight to strategies that have proven track records
-                total_score = sum(s.total_score for s in scores.values())
-                learned_component = learned * total_score if total_score > 0 else learned
-                effective_weights[name] = 0.4 * debate_weight + 0.6 * learned_component
+                # Both debate_fraction and learned are now on the same 0-1 scale
+                effective_weights[name] = 0.4 * debate_fraction + 0.6 * learned
             else:
-                effective_weights[name] = debate_weight
+                # No learned weight — use debate fraction (already normalized)
+                effective_weights[name] = debate_fraction
         
-        total_weight = sum(effective_weights.values())
+        # Exclude strategies with empty signals from weight calculation
+        # to prevent signal dilution (inactive strategies stealing weight share)
+        active_weights = {
+            name: w for name, w in effective_weights.items()
+            if name in signals and signals[name].desired_weights
+        }
+        total_weight = sum(active_weights.values())
+        effective_weights = active_weights
         
         if total_weight <= 0:
             return {}

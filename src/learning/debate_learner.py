@@ -16,6 +16,8 @@ from collections import defaultdict
 import logging
 from pathlib import Path
 
+from .atomic_io import atomic_json_save
+
 logger = logging.getLogger(__name__)
 
 
@@ -177,8 +179,7 @@ class DebateLearner:
         try:
             # Save debate history
             history_file = self.debates_dir / "debate_history.json"
-            with open(history_file, 'w') as f:
-                json.dump([asdict(d) for d in self.debate_history[-100:]], f, indent=2, default=str)
+            atomic_json_save(history_file, [asdict(d) for d in self.debate_history[-100:]])
             
             # Save strategy profiles
             profiles_file = self.debates_dir / "strategy_profiles.json"
@@ -196,13 +197,11 @@ class DebateLearner:
                     'accurate_losses': profile.accurate_losses,
                     'inaccurate_losses': profile.inaccurate_losses,
                 }
-            with open(profiles_file, 'w') as f:
-                json.dump(profiles_data, f, indent=2)
+            atomic_json_save(profiles_file, profiles_data)
             
             # Save attack patterns
             patterns_file = self.debates_dir / "attack_patterns.json"
-            with open(patterns_file, 'w') as f:
-                json.dump({k: asdict(v) for k, v in self.attack_patterns.items()}, f, indent=2)
+            atomic_json_save(patterns_file, {k: asdict(v) for k, v in self.attack_patterns.items()})
                 
         except Exception as e:
             logger.warning(f"Error saving debate history: {e}")

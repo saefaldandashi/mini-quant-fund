@@ -21,7 +21,7 @@ INTRADAY_STRATEGIES = {
 
 POSITION_STRATEGIES = {
     'TimeSeriesMomentum', 'CrossSectionMomentum', 'MeanReversion',
-    'VolatilityRegimeVolTarget', 'CarryStrategy', 'ValueQualityTilt',
+    'VolatilityRegimeVolTarget', 'Carry', 'ValueQualityTilt',
     'RiskParityMinVar', 'TailRiskOverlay',
 }
 

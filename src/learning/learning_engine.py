@@ -14,6 +14,7 @@ Provides a unified interface for the trading system to:
 """
 
 import logging
+import threading
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 import numpy as np
@@ -65,8 +66,21 @@ class LearningEngine:
         self.last_signals: Dict[str, Dict] = {}
         self.last_regime: Optional[str] = None
         self.pending_predictions: Dict[str, List[Dict]] = {}
+        self._predictions_lock = threading.Lock()
         
         logging.info(f"Learning engine initialized for {len(strategy_names)} strategies")
+    
+    def register_strategies(self, strategy_names: List[str]):
+        """
+        Dynamically register new strategy names that aren't in the initial list.
+        This ensures L/S, intraday, alpha, and any dynamically-created strategies
+        are tracked by the learning system.
+        """
+        new_names = [n for n in strategy_names if n not in self.strategy_names]
+        if new_names:
+            self.strategy_names.extend(new_names)
+            self.adaptive_weights.register_strategies(new_names)
+            logging.info(f"Learning engine registered {len(new_names)} new strategies: {new_names}")
     
     def get_adaptive_learning_influence(self) -> float:
         """
@@ -142,35 +156,36 @@ class LearningEngine:
         self.last_signals = strategy_signals
         self.last_regime = regime
         
-        # Record predictions for each strategy
-        for strategy_name, signal in strategy_signals.items():
-            weights = signal.get('weights', {})
-            confidence = signal.get('confidence', 0.5)
-            expected_return = signal.get('expected_return', 0.0)
-            
-            for symbol, weight in weights.items():
-                if abs(weight) > 0.01:
-                    direction = 'long' if weight > 0 else 'short'
-                    
-                    self.performance_tracker.record_prediction(
-                        strategy_name=strategy_name,
-                        symbol=symbol,
-                        predicted_direction=direction,
-                        confidence=confidence,
-                        expected_return=expected_return,
-                        regime=regime,
-                    )
-                    
-                    # Track pending predictions for outcome matching
-                    if strategy_name not in self.pending_predictions:
-                        self.pending_predictions[strategy_name] = []
-                    
-                    self.pending_predictions[strategy_name].append({
-                        'symbol': symbol,
-                        'direction': direction,
-                        'confidence': confidence,
-                        'timestamp': datetime.now().isoformat(),
-                    })
+        with self._predictions_lock:
+            # Record predictions for each strategy
+            for strategy_name, signal in strategy_signals.items():
+                weights = signal.get('weights', {})
+                confidence = signal.get('confidence', 0.5)
+                expected_return = signal.get('expected_return', 0.0)
+                
+                for symbol, weight in weights.items():
+                    if abs(weight) > 0.01:
+                        direction = 'long' if weight > 0 else 'short'
+                        
+                        self.performance_tracker.record_prediction(
+                            strategy_name=strategy_name,
+                            symbol=symbol,
+                            predicted_direction=direction,
+                            confidence=confidence,
+                            expected_return=expected_return,
+                            regime=regime,
+                        )
+                        
+                        # Track pending predictions for outcome matching
+                        if strategy_name not in self.pending_predictions:
+                            self.pending_predictions[strategy_name] = []
+                        
+                        self.pending_predictions[strategy_name].append({
+                            'symbol': symbol,
+                            'direction': direction,
+                            'confidence': confidence,
+                            'timestamp': datetime.now().isoformat(),
+                        })
     
     def record_trade(
         self,
@@ -251,6 +266,7 @@ class LearningEngine:
         self,
         symbol_returns: Dict[str, float],
         market_context: Dict[str, Any],
+        source: str = "rebalance",
     ):
         """
         Record trade outcomes and update learning.
@@ -261,11 +277,12 @@ class LearningEngine:
         Args:
             symbol_returns: Dict of symbol -> actual return
             market_context: Market conditions during this period
+            source: Who is calling ("rebalance" or "api"). API calls skip
+                    pending_predictions to avoid stealing from the rebalance.
         """
         # Update trade memory with current prices
         current_prices = {}
         for symbol, ret in symbol_returns.items():
-            # Estimate current price from return (simplified)
             trades = [t for t in self.trade_memory.trades if t.symbol == symbol]
             if trades:
                 last_trade = trades[-1]
@@ -273,72 +290,84 @@ class LearningEngine:
         
         self.trade_memory.update_position_prices(current_prices)
         
-        # Calculate strategy-level returns
+        # Calculate strategy-level returns from pending predictions
+        # CRITICAL: Only the rebalance path consumes pending_predictions.
+        # API calls must NOT touch them -- doing so would steal predictions
+        # from the rebalance and break the learning feedback loop.
         strategy_returns = {}
         winning_strategies = []
         losing_strategies = []
         
-        for strategy_name, predictions in self.pending_predictions.items():
-            total_return = 0.0
-            count = 0
-            
-            for pred in predictions:
-                symbol = pred['symbol']
-                if symbol in symbol_returns:
-                    actual_ret = symbol_returns[symbol]
+        with self._predictions_lock:
+            if source == "rebalance" and self.pending_predictions:
+                for strategy_name, predictions in self.pending_predictions.items():
+                    total_return = 0.0
+                    count = 0
                     
-                    # Record outcome in performance tracker
-                    self.performance_tracker.record_outcome(
-                        strategy_name=strategy_name,
-                        symbol=symbol,
-                        actual_return=actual_ret,
-                    )
+                    for pred in predictions:
+                        symbol = pred['symbol']
+                        if symbol in symbol_returns:
+                            actual_ret = symbol_returns[symbol]
+                            
+                            # Record outcome in performance tracker
+                            self.performance_tracker.record_outcome(
+                                strategy_name=strategy_name,
+                                symbol=symbol,
+                                actual_return=actual_ret,
+                            )
+                            
+                            # Accumulate strategy return
+                            if pred['direction'] == 'long':
+                                total_return += actual_ret
+                            else:
+                                total_return -= actual_ret
+                            count += 1
                     
-                    # Accumulate strategy return
-                    if pred['direction'] == 'long':
-                        total_return += actual_ret
-                    else:
-                        total_return -= actual_ret
-                    count += 1
-            
-            if count > 0:
-                avg_return = total_return / count
-                strategy_returns[strategy_name] = avg_return
+                    if count > 0:
+                        avg_return = total_return / count
+                        strategy_returns[strategy_name] = avg_return
+                        
+                        if avg_return > 0.005:
+                            winning_strategies.append(strategy_name)
+                        elif avg_return < -0.005:
+                            losing_strategies.append(strategy_name)
                 
-                if avg_return > 0.005:
-                    winning_strategies.append(strategy_name)
-                elif avg_return < -0.005:
-                    losing_strategies.append(strategy_name)
+                # Record observation for pattern learning
+                strategy_signals = {
+                    name: sum(p['confidence'] for p in preds) / len(preds) if preds else 0
+                    for name, preds in self.pending_predictions.items()
+                }
+                
+                # Clear pending predictions (only on rebalance path)
+                self.pending_predictions = {}
+            else:
+                strategy_signals = {}
         
-        # Update adaptive weights
+        # Update adaptive weights (outside lock)
         if strategy_returns:
             regime = market_context.get('regime', 'unknown')
             self.adaptive_weights.update_from_outcomes(strategy_returns, regime)
         
         # Record observation for pattern learning
-        strategy_signals = {
-            name: sum(p['confidence'] for p in preds) / len(preds) if preds else 0
-            for name, preds in self.pending_predictions.items()
-        }
-        
         total_return = np.mean(list(symbol_returns.values())) if symbol_returns else 0
         
-        self.pattern_learner.record_observation(
-            market_context=market_context,
-            strategy_signals=strategy_signals,
-            outcome_return=total_return,
-            winning_strategies=winning_strategies,
-            losing_strategies=losing_strategies,
-        )
-        
-        # Clear pending predictions
-        self.pending_predictions = {}
+        if strategy_signals:
+            self.pattern_learner.record_observation(
+                market_context=market_context,
+                strategy_signals=strategy_signals,
+                outcome_return=total_return,
+                winning_strategies=winning_strategies,
+                losing_strategies=losing_strategies,
+            )
         
         logging.info(
-            f"Recorded outcomes: {len(symbol_returns)} symbols, "
-            f"{len(winning_strategies)} winning strategies, "
-            f"{len(losing_strategies)} losing strategies"
+            f"Recorded outcomes ({source}): {len(symbol_returns)} symbols, "
+            f"{len(strategy_returns)} strategies, "
+            f"{len(winning_strategies)} winning, "
+            f"{len(losing_strategies)} losing"
         )
+        
+        return strategy_returns
     
     def get_learned_weights(
         self,

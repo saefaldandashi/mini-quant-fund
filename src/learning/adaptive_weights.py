@@ -13,6 +13,8 @@ import logging
 import math
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
+
+from .atomic_io import atomic_json_save, safe_json_load
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 from collections import defaultdict
@@ -102,8 +104,34 @@ class AdaptiveWeightLearner:
             if name not in self.weights:
                 self.weights[name] = WeightState(
                     strategy_name=name,
-                    base_weight=1.0 / len(self.strategy_names),
+                    base_weight=1.0 / max(len(self.strategy_names), 1),
                 )
+    
+    def register_strategies(self, new_names: List[str]):
+        """
+        Dynamically register new strategy names and initialize their weights.
+        Normalizes all weights after adding new strategies.
+        """
+        added = []
+        for name in new_names:
+            if name not in self.strategy_names:
+                self.strategy_names.append(name)
+            if name not in self.weights:
+                self.weights[name] = WeightState(
+                    strategy_name=name,
+                    base_weight=1.0 / max(len(self.strategy_names), 1),
+                    learned_confidence=0.5,
+                )
+                added.append(name)
+        
+        if added:
+            # Renormalize all base weights so they sum to ~1
+            total = sum(w.base_weight for w in self.weights.values())
+            if total > 0:
+                for w in self.weights.values():
+                    w.base_weight /= total
+            self._save()
+            logging.info(f"AdaptiveWeightLearner registered {len(added)} new strategies: {added}")
     
     def _load(self):
         """Load learned weights from disk."""
@@ -124,15 +152,13 @@ class AdaptiveWeightLearner:
     
     def _save(self):
         """Persist learned weights to disk."""
-        self.storage_path.parent.mkdir(parents=True, exist_ok=True)
         try:
-            with open(self.storage_path, 'w') as f:
-                json.dump({
-                    'weights': {name: w.to_dict() for name, w in self.weights.items()},
-                    'total_rounds': self.total_rounds,
-                    'reward_history': self.reward_history[-100:],
-                    'last_updated': datetime.now().isoformat(),
-                }, f, indent=2, default=str)
+            atomic_json_save(self.storage_path, {
+                'weights': {name: w.to_dict() for name, w in self.weights.items()},
+                'total_rounds': self.total_rounds,
+                'reward_history': self.reward_history[-100:],
+                'last_updated': datetime.now().isoformat(),
+            })
         except Exception as e:
             logging.error(f"Could not save learned weights: {e}")
     

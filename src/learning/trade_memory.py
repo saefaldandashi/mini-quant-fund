@@ -16,6 +16,8 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple
 import pandas as pd
 
+from .atomic_io import atomic_json_save, safe_json_load
+
 
 @dataclass
 class StrategySignalSnapshot:
@@ -133,9 +135,9 @@ class TradeMemory:
                     data = json.load(f)
                 self.trades = [TradeRecord.from_dict(t) for t in data.get('trades', [])]
                 
-                # Rebuild open positions
+                # Rebuild open positions (both longs and shorts)
                 for trade in self.trades:
-                    if trade.exit_price is None and trade.side == 'buy':
+                    if trade.exit_price is None and trade.side in ('buy', 'short'):
                         self.open_positions[trade.symbol] = trade
                 
                 logging.info(f"Loaded {len(self.trades)} trades from memory")
@@ -145,8 +147,6 @@ class TradeMemory:
     
     def _save(self):
         """Persist trade history to disk. Keeps only last 1000 trades to prevent file bloat."""
-        self.storage_path.parent.mkdir(parents=True, exist_ok=True)
-        
         # CRITICAL FIX: Truncate to last 1000 trades to prevent file growth
         MAX_TRADES = 1000
         if len(self.trades) > MAX_TRADES:
@@ -154,12 +154,11 @@ class TradeMemory:
             self.trades = self.trades[-MAX_TRADES:]
         
         try:
-            with open(self.storage_path, 'w') as f:
-                json.dump({
-                    'trades': [t.to_dict() for t in self.trades],
-                    'last_updated': datetime.now().isoformat(),
-                    'total_trades': len(self.trades),
-                }, f, indent=2, default=str)
+            atomic_json_save(self.storage_path, {
+                'trades': [t.to_dict() for t in self.trades],
+                'last_updated': datetime.now().isoformat(),
+                'total_trades': len(self.trades),
+            })
         except Exception as e:
             logging.error(f"Could not save trade memory: {e}")
     
@@ -247,13 +246,18 @@ class TradeMemory:
         
         self.trades.append(trade)
         
-        # Track open positions for buys
-        if side == 'buy':
+        # Track open positions for buys AND shorts
+        if side in ('buy', 'short'):
             self.open_positions[symbol] = trade
         elif side == 'sell' and symbol in self.open_positions:
-            # Close the position
+            # Close a long position
             open_trade = self.open_positions[symbol]
             self._close_position(open_trade, price, 'rebalance')
+            del self.open_positions[symbol]
+        elif side == 'cover' and symbol in self.open_positions:
+            # Close a short position
+            open_trade = self.open_positions[symbol]
+            self._close_position(open_trade, price, 'cover')
             del self.open_positions[symbol]
         
         self._save()
@@ -482,7 +486,8 @@ class TradeMemory:
                 'total_pnl': 0.0,
             }
         
-        # Use trades_with_pnl if we don't have formal closed trades
+        # Prefer closed trades (realized P&L) for accurate win rate stats
+        # trades_with_pnl includes unrealized snapshots which can be misleading
         trades_for_stats = closed if closed else trades_with_pnl
         
         winners = [t for t in trades_for_stats if t.was_profitable]
@@ -636,8 +641,7 @@ class TradeMemory:
                 )
             
             # Save
-            with open(cross_asset_path, 'w') as f:
-                json.dump(history, f, indent=2, default=str)
+            atomic_json_save(cross_asset_path, history)
             
             logging.debug(f"Recorded cross-asset context: {cross_signals}")
             

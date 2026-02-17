@@ -61,12 +61,12 @@ case $ACTION in
             --exclude '.env' \
             --exclude 'node_modules' \
             --exclude '.DS_Store' \
-            -e "ssh -i $KEY_PATH -o StrictHostKeyChecking=no" \
+            -e "ssh -i '$KEY_PATH' -o StrictHostKeyChecking=no" \
             . "$EC2_USER@$EC2_HOST:$APP_DIR/"
         
         echo ""
         echo -e "${YELLOW}📥 Installing dependencies...${NC}"
-        ssh_cmd "cd $APP_DIR && source .venv/bin/activate && pip install -r requirements.txt -q"
+        ssh_cmd "cd $APP_DIR && source .venv/bin/activate 2>/dev/null && pip install -r requirements.txt -q || python3 -m pip install -r requirements.txt -q"
         
         echo ""
         echo -e "${YELLOW}🔄 Restarting service...${NC}"

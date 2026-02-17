@@ -13,6 +13,8 @@ import logging
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from pathlib import Path
+
+from .atomic_io import atomic_json_save
 from typing import Dict, List, Optional, Tuple, Any
 from collections import defaultdict
 import numpy as np
@@ -113,15 +115,13 @@ class PatternLearner:
     
     def _save(self):
         """Persist learned patterns to disk."""
-        self.storage_path.parent.mkdir(parents=True, exist_ok=True)
         try:
-            with open(self.storage_path, 'w') as f:
-                json.dump({
-                    'patterns': {pid: p.to_dict() for pid, p in self.patterns.items()},
-                    'rules': {rid: r.to_dict() for rid, r in self.rules.items()},
-                    'observations': self.observations[-500:],
-                    'last_updated': datetime.now().isoformat(),
-                }, f, indent=2, default=str)
+            atomic_json_save(self.storage_path, {
+                'patterns': {pid: p.to_dict() for pid, p in self.patterns.items()},
+                'rules': {rid: r.to_dict() for rid, r in self.rules.items()},
+                'observations': self.observations[-500:],
+                'last_updated': datetime.now().isoformat(),
+            })
         except Exception as e:
             logging.error(f"Could not save patterns: {e}")
     
