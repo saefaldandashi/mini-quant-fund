@@ -715,28 +715,28 @@ class GeopoliticalIntelligence:
     ACTIVE_CONFLICTS = {
         "ukraine_russia": {
             "start_date": "2022-02-24",
-            "min_risk_floor": 0.35,  # Never below 35% while war continues
+            "min_risk_floor": 0.10,  # Priced in — markets have adapted. Only escalation spikes matter.
             "affected_regions": ["russia", "europe"],
             "escalation_triggers": ["nuclear", "nato direct", "article 5", "tactical nuclear"],
             "keywords": ["ukraine", "russia", "kyiv", "moscow", "zelensky", "putin", "crimea", "donbas"],
         },
         "israel_hamas": {
             "start_date": "2023-10-07",
-            "min_risk_floor": 0.30,
+            "min_risk_floor": 0.08,  # Priced in — ongoing for 2+ years
             "affected_regions": ["middle_east"],
             "escalation_triggers": ["iran strikes israel", "hezbollah full", "regional war"],
             "keywords": ["gaza", "israel", "hamas", "netanyahu", "hezbollah", "iran"],
         },
         "iran_tensions": {
             "start_date": "2024-01-01",
-            "min_risk_floor": 0.25,
+            "min_risk_floor": 0.06,  # Priced in — chronic background
             "affected_regions": ["middle_east"],
             "escalation_triggers": ["iran nuclear", "strait of hormuz", "iran attacks"],
             "keywords": ["iran", "tehran", "irgc", "revolutionary guard", "houthis"],
         },
         "taiwan_tensions": {
             "start_date": "2022-08-01",
-            "min_risk_floor": 0.20,
+            "min_risk_floor": 0.05,  # Priced in — no active hostilities
             "affected_regions": ["asia"],
             "escalation_triggers": ["china invades taiwan", "blockade taiwan", "taiwan strait crisis"],
             "keywords": ["taiwan", "taipei", "china", "strait", "pla"],
@@ -849,12 +849,12 @@ class GeopoliticalIntelligence:
     # More aggressive risk reduction at moderate levels
     # ==========================================================================
     RISK_TO_EXPOSURE = [
-        (0.75, 1.00, "critical", 0.20),   # Was 0.30 - now 80% reduction
-        (0.60, 0.75, "high", 0.35),       # Was 0.50 - now 65% reduction  
-        (0.45, 0.60, "elevated", 0.55),   # Was 0.70 - now 45% reduction
-        (0.30, 0.45, "moderate", 0.70),   # Was 0.85 - now 30% reduction
-        (0.15, 0.30, "guarded", 0.85),    # New tier
-        (0.00, 0.15, "low", 1.00),        # Full exposure
+        (0.80, 1.00, "critical", 0.40),   # Only for genuine crises (nuclear, Article 5)
+        (0.65, 0.80, "high", 0.60),       # Active military escalation with market impact
+        (0.50, 0.65, "elevated", 0.75),   # Significant new developments
+        (0.35, 0.50, "moderate", 0.85),   # Heightened activity but markets coping
+        (0.20, 0.35, "guarded", 0.92),    # Background noise — barely affect exposure
+        (0.00, 0.20, "low", 1.00),        # Full exposure
     ]
     
     # ==========================================================================
@@ -1894,7 +1894,7 @@ class GeopoliticalIntelligence:
         # STEP 3: IDENTIFY ACTIVE CONFLICTS (P0 Fix - Structural Risk Floor)
         # ================================================================
         active_conflict_ids = []
-        structural_risk_floor = 0.15  # Base minimum
+        structural_risk_floor = 0.03  # Base minimum — near zero when nothing is happening
         conflict_escalation_boost = 0.0
         
         for conflict_id, config in self.ACTIVE_CONFLICTS.items():
@@ -1983,13 +1983,13 @@ class GeopoliticalIntelligence:
                         regional_risks[target_region] = 0.15
                     contagion_applied[target_region] = contagion_applied.get(target_region, 0) + spillover
         
-        # Add contagion to regional risks (capped at 75% after contagion)
+        # Add contagion to regional risks (capped at 50% after contagion)
         for region, spillover in contagion_applied.items():
-            regional_risks[region] = min(0.75, regional_risks.get(region, 0.15) + spillover)
+            regional_risks[region] = min(0.50, regional_risks.get(region, 0.0) + spillover)
         
-        # Final cap on all regional risks at 80%
+        # Final cap on all regional risks at 60%
         for region in regional_risks:
-            regional_risks[region] = min(0.80, regional_risks[region])
+            regional_risks[region] = min(0.60, regional_risks[region])
         
         # ================================================================
         # STEP 5: APPLY STRUCTURAL RISK FLOOR FOR ACTIVE CONFLICTS
@@ -2018,9 +2018,9 @@ class GeopoliticalIntelligence:
         if immediate_scores:
             max_imm = max(immediate_scores)
             avg_imm = sum(immediate_scores) / len(immediate_scores)
-            immediate_risk = 0.5 * max_imm + 0.5 * avg_imm  # Blend max and avg
+            immediate_risk = 0.5 * max_imm + 0.5 * avg_imm
         else:
-            immediate_risk = 0.10
+            immediate_risk = 0.02  # No events = near-zero, not 10%
         
         # SITUATIONAL RISK (last 48 hours) - for swing trading
         situational_scores = []
@@ -2037,14 +2037,15 @@ class GeopoliticalIntelligence:
             avg_sit = sum(situational_scores) / len(situational_scores)
             situational_risk = 0.4 * max_sit + 0.6 * avg_sit
         else:
-            situational_risk = 0.15
+            situational_risk = 0.03  # No events = near-zero, not 15%
         
-        # STRUCTURAL RISK - based on active conflicts, but capped
-        # Multiple conflicts don't stack infinitely
-        if len(active_conflict_ids) >= 3:
-            structural_risk = min(0.45, structural_risk_floor + 0.05)  # Max 45% structural
-        else:
-            structural_risk = structural_risk_floor
+        # STRUCTURAL RISK - reflects PRICED-IN background, kept low
+        # Only spikes if there are actual escalation triggers within those conflicts
+        structural_risk = structural_risk_floor
+        if conflict_escalation_boost > 0:
+            structural_risk = min(0.50, structural_risk + conflict_escalation_boost)
+        elif len(active_conflict_ids) >= 3:
+            structural_risk = min(0.15, structural_risk + 0.02)  # Tiny bump for many conflicts, not 45%
         
         # ================================================================
         # STEP 7: CALCULATE TAIL RISK (P1 Fix)
@@ -2084,17 +2085,28 @@ class GeopoliticalIntelligence:
             macro = MacroDataLoader()
             indicators = macro.fetch_all()
             vix_level = indicators.vix or 20.0
+            spy_change = getattr(indicators, 'spy_change_pct', 0) or 0
             
+            # Market confirmation: only amplify when market ACTUALLY confirms risk
             if vix_level > 30:
-                vix_multiplier = 1.30
+                vix_multiplier = 1.20
                 market_confirms_risk = True
             elif vix_level > 25:
-                vix_multiplier = 1.15
+                vix_multiplier = 1.10
                 market_confirms_risk = True
             elif vix_level > 20:
                 vix_multiplier = 1.0
+            elif vix_level > 16:
+                vix_multiplier = 0.75  # Market calm — geo risk is overblown
             else:
-                vix_multiplier = 0.9  # Low VIX = complacency
+                vix_multiplier = 0.60  # Market very calm — heavy discount
+            
+            # Market adaptation: if SPY is positive, markets are ignoring geo risk
+            if spy_change > 0.5 and vix_level < 22:
+                vix_multiplier *= 0.70  # Additional 30% discount when market rallying
+                logging.info(f"Geo risk market adaptation: SPY +{spy_change:.2f}%, VIX {vix_level:.1f} — discounting geo risk")
+            elif spy_change > 0 and vix_level < 20:
+                vix_multiplier *= 0.85  # 15% discount when market mildly positive
         except Exception as e:
             logging.debug(f"Could not get VIX: {e}")
         
@@ -2109,12 +2121,13 @@ class GeopoliticalIntelligence:
             0.30 * structural_risk       # 30% weight to structural
         )
         
-        # Add regional contribution
+        # Add regional contribution — reduced weight since regional scores inflate
+        # from routine news coverage, not actual market-moving events
         if regional_risks:
             max_regional = max(regional_risks.values())
             avg_regional = sum(regional_risks.values()) / len(regional_risks)
             regional_contribution = 0.4 * max_regional + 0.6 * avg_regional
-            base_risk = 0.55 * base_risk + 0.45 * regional_contribution
+            base_risk = 0.75 * base_risk + 0.25 * regional_contribution
         
         # Add combination boost
         base_risk += combination_boost
@@ -2152,9 +2165,9 @@ class GeopoliticalIntelligence:
                 exposure_adj = exposure
                 break
         
-        if overall_risk >= 0.75:
+        if overall_risk >= 0.80:
             risk_level = "critical"
-            exposure_adj = 0.20
+            exposure_adj = 0.40
         
         # ================================================================
         # STEP 11: GRADUATED SAFE HAVEN SIGNAL (P1 Fix)

@@ -1776,13 +1776,14 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 for concern in geo_assessment.key_concerns[:3]:
                     log(f"     • {concern[:70]}...")
             
-            # CRITICAL: Override geopolitical_risk_index with REAL intelligence
-            if macro_features_temp and geo_assessment.overall_risk_score > 0.3:
-                # Update the geopolitical risk with our detected events
-                # Scale from 0-1 risk score to -1 to +1 index
+            # Override geopolitical_risk_index with real intelligence — only if significantly elevated
+            if macro_features_temp and geo_assessment.overall_risk_score > 0.40:
+                # Scale from 0-1 risk score to -1 to +1 index (centered at 0.5)
                 real_geo_risk = (geo_assessment.overall_risk_score - 0.5) * 2
                 log(f"   📊 Overriding geo_risk_index: {macro_features_temp.geopolitical_risk_index:.2f} → {real_geo_risk:.2f}")
                 macro_features_temp.geopolitical_risk_index = real_geo_risk
+            elif macro_features_temp:
+                log(f"   ℹ️ Geo risk {geo_assessment.overall_risk_score:.0%} below override threshold — using default macro index")
         
         except Exception as e:
             log(f"⚠️ Geopolitical intelligence error: {e}")
