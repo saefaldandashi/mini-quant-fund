@@ -311,6 +311,8 @@ class GeopoliticalIntelligence:
             "debt distress", "capital shortfall", "liquidity crisis",
             "sovereign debt crisis", "distressed debt", "contagion risk",
             "funding stress", "margin calls", "systemic risk",
+            "debt ceiling", "government shutdown", "fiscal cliff", "credit rating downgrade",
+            "treasury auction", "bond sell-off", "yield spike",
         ],
         
         # ------------------------------------------------------------------
@@ -323,6 +325,8 @@ class GeopoliticalIntelligence:
             "economic warfare", "economic attack", "currency manipulation",
             "technology ban", "export controls", "supply chain disruption",
             "decoupling", "economic decoupling", "investment ban", "capital controls",
+            "rare earth ban", "rare earth export", "semiconductor ban", "chip export",
+            "trade retaliation", "counter-tariffs", "trade escalation",
         ],
         
         # ------------------------------------------------------------------
@@ -650,11 +654,11 @@ class GeopoliticalIntelligence:
         "arrested", "murder", "robbery", "burglary", "theft", "assault",
         "shooting", "stabbing", "drug bust", "gang violence",
         "local police", "city council", "town hall",
-        # Domestic US Politics (not geopolitical)
+        # Domestic US Politics (not geopolitical unless trade/fiscal/regulatory)
         "ice raids", "immigration enforcement", "border patrol", "deportation",
         "immigration policy", "migrants detained", "asylum seekers",
-        "gun control", "abortion", "supreme court ruling", "congressional hearing",
-        "midterm elections", "primaries", "campaign trail", "polling",
+        "gun control", "abortion", "congressional hearing",
+        "campaign trail", "polling",
         # Sports/Entertainment
         "world cup", "olympics", "football", "soccer", "basketball", "baseball",
         "tennis", "golf", "celebrity", "kardashian", "hollywood", "movie",
@@ -868,6 +872,8 @@ class GeopoliticalIntelligence:
         "taiwan_invasion": ["china invades taiwan", "taiwan strait crisis", "pla blockade"],
         "financial_contagion": ["lehman moment", "systemic collapse", "banking crisis spreads", "contagion"],
         "energy_crisis": ["strait of hormuz closed", "oil embargo", "energy blackout", "grid collapse"],
+        "us_fiscal": ["debt ceiling breach", "us default", "government shutdown", "treasury default"],
+        "supply_chain_collapse": ["suez canal blocked", "panama canal closed", "global shipping halt", "port shutdown"],
     }
     
     # Regions and their market indices
