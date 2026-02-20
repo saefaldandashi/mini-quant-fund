@@ -163,6 +163,7 @@ class ShortScanner:
         ma_50: Optional[Dict[str, float]] = None,  # Fallback if MA200 unavailable
         rsi_values: Optional[Dict[str, float]] = None,
         cross_asset_signals: Optional[Dict[str, float]] = None,
+        market_context: Optional[Dict[str, float]] = None,
     ) -> List[ShortCandidate]:
         """
         Scan for short opportunities.
@@ -176,12 +177,39 @@ class ShortScanner:
             ma_50: 50-day moving averages (fallback if MA200 unavailable)
             rsi_values: RSI values
             cross_asset_signals: Cross-asset signals (oil_signal, dxy_signal, etc.)
+            market_context: Dict with spy_change_pct, vix, regime for regime-aware filtering
         
         Returns:
             List of ShortCandidate sorted by total_score descending
         """
         logger.info(f"🔍 Short scanner: Scanning {len(symbols)} symbols")
         logger.info(f"   Data available: prices={len(prices or {})}, RSI={len(rsi_values or {})}, MA200={len(ma_200 or {})}, MA50={len(ma_50 or {})}")
+        
+        # === MARKET REGIME GATE ===
+        # In bull markets, heavily restrict shorting to avoid fighting the trend
+        ctx = market_context or {}
+        spy_change = ctx.get('spy_change_pct', 0)
+        vix = ctx.get('vix', 20)
+        regime = ctx.get('regime', 'neutral')
+        
+        original_max = self.config.max_short_candidates
+        original_min_score = self.config.min_total_score
+        original_min_sources = self.config.min_sources_agreeing
+        original_rsi = self.config.rsi_overbought
+        
+        if regime in ('strong_bull', 'mild_bull') or (spy_change > 0.3 and vix < 22):
+            self.config.max_short_candidates = min(2, original_max)
+            self.config.min_total_score = max(0.45, original_min_score)
+            self.config.min_sources_agreeing = max(2, original_min_sources)
+            self.config.rsi_overbought = max(75.0, original_rsi)
+            logger.info(f"   REGIME GATE: Bull market (SPY {spy_change:+.2f}%, VIX {vix:.1f}, regime={regime})")
+            logger.info(f"   Tightened: max_shorts={self.config.max_short_candidates}, min_score={self.config.min_total_score}, min_sources={self.config.min_sources_agreeing}, RSI>{self.config.rsi_overbought}")
+        elif regime == 'neutral' and spy_change > 0:
+            self.config.max_short_candidates = min(5, original_max)
+            self.config.min_sources_agreeing = max(2, original_min_sources)
+            logger.info(f"   REGIME GATE: Neutral-positive (SPY {spy_change:+.2f}%) — moderate shorts allowed")
+        else:
+            logger.info(f"   REGIME GATE: Bear/risk-off (SPY {spy_change:+.2f}%, regime={regime}) — full shorting enabled")
         
         # Process cross-asset signals
         cross_asset_signals = cross_asset_signals or {}
@@ -211,6 +239,12 @@ class ShortScanner:
         
         self.last_scan_time = datetime.now()
         self.last_candidates = candidates
+        
+        # Restore original config values after scan (regime gate is per-scan, not permanent)
+        self.config.max_short_candidates = original_max
+        self.config.min_total_score = original_min_score
+        self.config.min_sources_agreeing = original_min_sources
+        self.config.rsi_overbought = original_rsi
         
         logger.info(f"🎯 Short scanner: Found {len(candidates)} candidates")
         for c in candidates[:5]:

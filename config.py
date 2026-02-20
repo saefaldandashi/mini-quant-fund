@@ -94,16 +94,16 @@ RISK_APPETITE_SETTINGS = {
         "description": "Lower risk, diversified positions"
     },
     "moderate": {
-        "kelly_multiplier": 0.80,  # INCREASED: Was 0.50, now 0.80 for larger positions
-        "min_position_pct": 0.015,  # LOWERED: Was 0.02, now 0.015 (1.5%) to allow more positions
-        "max_positions": 25,  # INCREASED: Was 18, now 25
+        "kelly_multiplier": 0.80,
+        "min_position_pct": 0.01,  # LOWERED: 1.5% -> 1.0% for more diversification
+        "max_positions": 30,  # INCREASED: 25 -> 30 to capture more signals
         "description": "Balanced risk and reward"
     },
     "aggressive": {
-        "kelly_multiplier": 1.00,  # INCREASED: Was 0.75, now 1.00 (full Kelly)
-        "min_position_pct": 0.02,  # LOWERED: Was 0.03, now 0.02 (2%) to allow more positions
-        "max_positions": 18,  # INCREASED: Was 12, now 18
-        "description": "Higher conviction, concentrated"
+        "kelly_multiplier": 1.00,  # Full Kelly
+        "min_position_pct": 0.01,  # LOWERED: 2% -> 1% — was filtering out 70% of signals
+        "max_positions": 25,  # INCREASED: 18 -> 25 for better diversification
+        "description": "Higher conviction, diversified"
     },
     "maximum": {
         "kelly_multiplier": 1.25,  # INCREASED: Was 1.00, now 1.25 (125% Kelly)

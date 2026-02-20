@@ -1297,8 +1297,12 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 log(f"    → {rec}")
             
             # Apply exposure adjustment — NOW ASYMMETRIC (increases on wins!)
+            # Pass regime info so the floor can be higher in bull markets
+            _regime_for_exposure = 'neutral'
+            if current_regime and hasattr(current_regime, 'regime'):
+                _regime_for_exposure = current_regime.regime
             original_exposure = capital_exposure_pct
-            adjusted_exposure = loss_system.get_adjusted_exposure(original_exposure)
+            adjusted_exposure = loss_system.get_adjusted_exposure(original_exposure, market_regime=_regime_for_exposure)
             
             if adjusted_exposure != original_exposure:
                 log("")
@@ -2862,6 +2866,14 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 else:
                     log(f"   Short scanner data: RSI={len(rsi_values or {})}, MA200={len(ma_200_values or {})}, MA50={len(ma_50_values or {})}")
                 
+                # Build market context for regime-aware short filtering
+                scanner_market_ctx = {}
+                if market_indicators:
+                    scanner_market_ctx['spy_change_pct'] = getattr(market_indicators, 'spy_change_pct', 0)
+                    scanner_market_ctx['vix'] = getattr(market_indicators, 'vix', 20)
+                if features and hasattr(features, 'regime') and features.regime:
+                    scanner_market_ctx['regime'] = features.regime.description.lower() if hasattr(features.regime, 'description') else 'neutral'
+                
                 short_candidates = short_scanner.scan(
                     symbols=config.UNIVERSE[:100],  # Scan top 100
                     news_sentiments=scanner_sentiments,
@@ -2871,6 +2883,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     ma_50=ma_50_values,  # Fallback if MA200 unavailable
                     rsi_values=rsi_values,
                     cross_asset_signals=scanner_cross_signals,
+                    market_context=scanner_market_ctx,
                 )
                 
                 # Add fundamental shorts to combined_weights
@@ -3951,17 +3964,31 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log("ENHANCED POSITION SIZING")
             log("=" * 60)
             
-            # GEOPOLITICAL RISK OVERRIDE: Force conservative stance when geo risk is HIGH
+            # GEOPOLITICAL RISK OVERRIDE: Regime-aware — only override when market confirms risk
             effective_risk_appetite = risk_appetite
             geo_override_active = False
             
             if geo_assessment and geo_assessment.overall_risk_score > 0.50:
-                # HIGH geopolitical risk (>50%) - override to conservative
                 geo_risk_pct = geo_assessment.overall_risk_score * 100
-                if risk_appetite in ['maximum', 'aggressive']:
-                    effective_risk_appetite = 'moderate'
-                    geo_override_active = True
-                    log(f"⚠️ GEO RISK OVERRIDE: {risk_appetite.upper()} → MODERATE (geo risk: {geo_risk_pct:.0f}%)")
+                regime_name = current_regime.regime if current_regime else 'neutral'
+                spy_today = getattr(market_indicators, 'spy_change_pct', 0) if market_indicators else 0
+                
+                if regime_name in ('mild_bear', 'strong_bear'):
+                    # Bear market + high geo risk: full override
+                    if risk_appetite in ['maximum', 'aggressive']:
+                        effective_risk_appetite = 'moderate'
+                        geo_override_active = True
+                        log(f"⚠️ GEO RISK OVERRIDE: {risk_appetite.upper()} → MODERATE (geo risk: {geo_risk_pct:.0f}%, bear market)")
+                elif regime_name == 'neutral' and spy_today <= 0:
+                    # Neutral with market down + geo risk: reduce by one level
+                    appetite_downgrade = {'maximum': 'aggressive', 'aggressive': 'moderate'}
+                    if risk_appetite in appetite_downgrade:
+                        effective_risk_appetite = appetite_downgrade[risk_appetite]
+                        geo_override_active = True
+                        log(f"⚠️ GEO RISK OVERRIDE: {risk_appetite.upper()} → {effective_risk_appetite.upper()} (geo risk: {geo_risk_pct:.0f}%, neutral-down)")
+                else:
+                    # Bull market or neutral-positive: geo risk not translating to market losses
+                    log(f"ℹ️ GEO RISK NOTED but NOT overriding: {geo_risk_pct:.0f}% geo risk, regime={regime_name}, SPY={spy_today:+.2f}%")
             
             # Use effective risk appetite for strategy enhancer
             if geo_override_active:
@@ -4447,6 +4474,33 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 continue
             
             value = qty * price
+            
+            # === MINIMUM HOLDING PERIOD ===
+            # Don't sell/reduce positions held less than 60 minutes unless losing > 2%
+            MIN_HOLD_MINUTES = 60
+            if side in ('sell', 'cover') and symbol in learning_engine.trade_memory.open_positions:
+                open_trade = learning_engine.trade_memory.open_positions[symbol]
+                try:
+                    entry_ts = datetime.fromisoformat(open_trade.timestamp.replace('Z', '+00:00'))
+                    if entry_ts.tzinfo:
+                        entry_ts = entry_ts.replace(tzinfo=None)
+                    held_minutes = (datetime.now() - entry_ts).total_seconds() / 60
+                    
+                    if held_minutes < MIN_HOLD_MINUTES:
+                        pnl_pct = 0
+                        if open_trade.entry_price and open_trade.entry_price > 0:
+                            if open_trade.side == 'short':
+                                pnl_pct = (open_trade.entry_price - price) / open_trade.entry_price
+                            else:
+                                pnl_pct = (price - open_trade.entry_price) / open_trade.entry_price
+                        
+                        if pnl_pct > -0.02:
+                            log(f"  ⏳ {symbol}: Skipping {side} — held only {held_minutes:.0f}min (min {MIN_HOLD_MINUTES}min, P&L {pnl_pct:+.1%})")
+                            continue
+                        else:
+                            log(f"  ⚠️ {symbol}: Allowing early {side} — loss {pnl_pct:+.1%} exceeds -2% stop threshold")
+                except Exception:
+                    pass  # If we can't determine hold time, allow the trade
             
             # Skip tiny adjustments (< $100 or < 0.2% of equity) to prevent churn
             if abs(value) < max(100, equity * 0.002):
@@ -4986,12 +5040,12 @@ def auto_rebalance_scheduler():
     last_news_refresh = datetime.now()  # Track Global Intel refreshes
     outcome_check_interval = timedelta(hours=1)  # Check outcomes hourly
     holding_check_interval = timedelta(minutes=5)  # Check holding periods every 5 mins
-    intraday_rebalance_interval = timedelta(minutes=15)  # 15-min intraday rebalance (was 5 — too frequent, caused transaction cost drag)
+    intraday_rebalance_interval = timedelta(minutes=30)  # 30-min intraday rebalance (was 15 — still too frequent, caused excessive churn)
     news_refresh_interval = timedelta(minutes=5)  # Refresh Global Intel every 5 mins
     
     logging.info("🔄 Auto-rebalance scheduler thread STARTED")
     logging.info("   📰 Global Intel refresh: every 5 minutes")
-    logging.info("   ⚡ Intraday rebalance: every 5 minutes (during market hours)")
+    logging.info("   ⚡ Intraday rebalance: every 30 minutes (during market hours)")
     
     # Initialize next_run if not set
     if auto_rebalance_settings.get("enabled") and not auto_rebalance_settings.get("next_run"):
@@ -9522,8 +9576,8 @@ def get_capital_deployment():
         except:
             pass
         
-        # Performance multiplier
-        perf_mult = la.get_adjusted_exposure(base_exposure=1.0)
+        # Performance multiplier (regime-aware floor)
+        perf_mult = la.get_adjusted_exposure(base_exposure=1.0, market_regime=regime_name)
         
         # Win acceleration multiplier
         accel_mult = accel.get_multiplier()

@@ -423,16 +423,12 @@ class LossAwarenessSystem:
         analysis.recommendations = recommendations
         analysis.positions_to_exit = positions_to_exit
     
-    def get_adjusted_exposure(self, base_exposure: float = 0.95) -> float:
+    def get_adjusted_exposure(self, base_exposure: float = 0.95, market_regime: str = 'neutral') -> float:
         """
         Get exposure adjusted for current performance.
         
         ASYMMETRIC: Increases on wins, decreases on losses.
-        
-        Uses the recommended_exposure computed by _generate_recommendations(),
-        which already accounts for both state AND consecutive losses.
-        This prevents double-penalizing (e.g., BAD state 0.55 * 5-loss 0.5 = 0.275
-        when the recommendation is 0.35).
+        FLOOR: Never go below 65% (80% in bull markets) to prevent negative feedback loops.
         """
         if not self.last_analysis:
             return base_exposure
@@ -441,10 +437,28 @@ class LossAwarenessSystem:
         
         # For winning states (recommended > 1.0), scale up relative to base
         if recommended > 1.0:
-            return base_exposure * recommended  # Can exceed base
+            adjusted = base_exposure * recommended  # Can exceed base
         else:
-            # For losing states, use the lower of base or recommended
-            return min(base_exposure, recommended)
+            adjusted = min(base_exposure, recommended)
+        
+        # Enforce exposure floor to prevent negative feedback loops:
+        # underperform -> cut exposure -> miss recovery -> look worse -> cut more
+        if market_regime in ('strong_bull', 'mild_bull'):
+            floor = 0.80
+        else:
+            floor = 0.65
+        
+        # Only allow below floor for truly catastrophic losses (> -3% realized in a day)
+        daily_loss = self.last_analysis.total_pnl_pct
+        if daily_loss < -0.03:
+            floor = 0.30  # Circuit breaker still works for extreme losses
+            logger.warning(f"Extreme daily loss {daily_loss:.2%} — allowing exposure below normal floor")
+        
+        if adjusted < floor:
+            logger.info(f"Exposure floor applied: {adjusted:.2%} -> {floor:.2%} (regime={market_regime})")
+            adjusted = floor
+        
+        return adjusted
     
     def get_acceleration_info(self) -> Dict:
         """Get current acceleration state for the frontend."""
