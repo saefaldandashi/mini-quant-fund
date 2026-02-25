@@ -68,7 +68,7 @@ class AdaptiveWeightLearner:
         self,
         strategy_names: List[str],
         storage_path: str = "outputs/learned_weights.json",
-        learning_rate: float = 0.05,
+        learning_rate: float = 0.15,
         exploration_factor: float = 1.0,
         min_weight: float = 0.02,
         max_weight: float = 0.40,
@@ -175,11 +175,19 @@ class AdaptiveWeightLearner:
         raw_weights = {}
         
         for name, state in self.weights.items():
+            # Strategies that have never been selected get zero weight after enough rounds
+            if state.times_selected == 0 and self.total_rounds > 50:
+                raw_weights[name] = 0.0
+                continue
+            
+            # Proven losers get near-zero weight
+            if state.cumulative_reward < -0.05 and state.times_selected > 20:
+                raw_weights[name] = self.min_weight * 0.1
+                continue
+            
             if regime and regime in state.regime_weights:
-                # Use regime-specific weight
                 weight = state.regime_weights[regime]
             else:
-                # Use base weight adjusted by EMA performance
                 weight = state.base_weight * (1 + state.ema_performance)
             
             # Add UCB exploration bonus
@@ -187,7 +195,7 @@ class AdaptiveWeightLearner:
                 ucb_bonus = self.exploration_factor * math.sqrt(
                     2 * math.log(self.total_rounds) / state.times_selected
                 )
-                weight += ucb_bonus * 0.1  # Small exploration bonus
+                weight += ucb_bonus * 0.1
             
             # Apply confidence scaling
             weight *= (0.5 + 0.5 * state.learned_confidence)
@@ -199,11 +207,13 @@ class AdaptiveWeightLearner:
     
     def _normalize_weights(self, raw_weights: Dict[str, float]) -> Dict[str, float]:
         """Normalize weights to sum to 1 and apply min/max constraints."""
-        # Clip to min/max
-        clipped = {
-            name: max(self.min_weight, min(self.max_weight, w))
-            for name, w in raw_weights.items()
-        }
+        inactive_threshold = self.min_weight * 0.25
+        clipped = {}
+        for name, w in raw_weights.items():
+            if w <= inactive_threshold:
+                clipped[name] = w  # Preserve low weight for inactive strategies
+            else:
+                clipped[name] = max(self.min_weight, min(self.max_weight, w))
         
         # Normalize to sum to 1
         total = sum(clipped.values())

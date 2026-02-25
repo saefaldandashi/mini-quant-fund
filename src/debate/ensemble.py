@@ -2,7 +2,7 @@
 Ensemble optimizer for combining strategy signals.
 """
 import numpy as np
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, List, Optional, Any, Tuple, Set
 from datetime import datetime
 from enum import Enum
 from scipy.optimize import minimize
@@ -10,6 +10,11 @@ import logging
 
 from src.strategies.base import SignalOutput
 from src.data.feature_store import Features
+
+try:
+    from config import DISABLED_STRATEGIES
+except ImportError:
+    DISABLED_STRATEGIES: Set[str] = set()
 from .debate_engine import StrategyScore
 
 logger = logging.getLogger(__name__)
@@ -37,12 +42,11 @@ class EnsembleOptimizer:
         """
         self.config = config or {}
         
-        # Constraints (defaults aligned with aggressive config)
         self.max_position = self.config.get('max_position', 0.15)
-        self.max_sector_exposure = self.config.get('max_sector_exposure', 0.35)
-        self.max_leverage = self.config.get('max_leverage', 2.5)
-        self.max_turnover = self.config.get('max_turnover', 0.60)
-        self.vol_target = self.config.get('vol_target', 0.30)
+        self.max_sector_exposure = self.config.get('max_sector_exposure', 0.30)
+        self.max_leverage = self.config.get('max_leverage', 1.5)
+        self.max_turnover = self.config.get('max_turnover', 0.50)
+        self.vol_target = self.config.get('vol_target', 0.12)
         
         # Risk parameters
         self.risk_aversion = self.config.get('risk_aversion', 2.0)
@@ -122,6 +126,17 @@ class EnsembleOptimizer:
         Returns:
             Tuple of (final_weights, metadata)
         """
+        # Filter out disabled strategies before processing
+        signals = {k: v for k, v in signals.items() if k not in DISABLED_STRATEGIES}
+        scores = {k: v for k, v in scores.items() if k not in DISABLED_STRATEGIES}
+        if strategy_weights:
+            strategy_weights = {k: v for k, v in strategy_weights.items() if k not in DISABLED_STRATEGIES}
+        if historical_performance:
+            historical_performance = {k: v for k, v in historical_performance.items() if k not in DISABLED_STRATEGIES}
+        
+        if not signals:
+            return {}, {'mode': mode.value, 'raw_weights': {}, 'constraints_applied': ['No active strategies']}
+        
         # Calculate strategy correlation penalties to encourage diversification
         correlation_adjustments = self._calculate_strategy_correlations(signals, scores)
         

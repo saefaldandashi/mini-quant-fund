@@ -80,42 +80,37 @@ MA_DAYS = 200  # 200-day moving average
 # State file for daily idempotency
 STATE_FILE = "state_last_rebalance.txt"
 
-# Cash buffer (use 95% of equity, keep 5% buffer)
-CASH_BUFFER_PCT = 0.05
+# Cash buffer — capital_exposure_pct (0.95) already provides a 5% buffer,
+# so this is set to 0 to avoid double-buffering
+CASH_BUFFER_PCT = 0.0
 
 # ============================================================
 # POSITION SIZING SETTINGS (Phase 1)
 # ============================================================
 RISK_APPETITE_SETTINGS = {
     "conservative": {
-        "kelly_multiplier": 0.60,  # INCREASED: Was 0.35, now 0.60 for larger positions
-        "min_position_pct": 0.01,  # LOWERED: Was 0.015, now 0.01 (1%) to allow more positions
-        "max_positions": 30,  # INCREASED: Was 25, now 30
-        "description": "Lower risk, diversified positions"
+        "kelly_multiplier": 0.25,
+        "min_position_pct": 0.01,
+        "max_positions": 30,
+        "description": "Low risk, many small positions"
     },
     "moderate": {
-        "kelly_multiplier": 0.80,
-        "min_position_pct": 0.01,  # LOWERED: 1.5% -> 1.0% for more diversification
-        "max_positions": 30,  # INCREASED: 25 -> 30 to capture more signals
+        "kelly_multiplier": 0.50,
+        "min_position_pct": 0.02,
+        "max_positions": 20,
         "description": "Balanced risk and reward"
     },
     "aggressive": {
-        "kelly_multiplier": 1.00,  # Full Kelly
-        "min_position_pct": 0.01,  # LOWERED: 2% -> 1% — was filtering out 70% of signals
-        "max_positions": 25,  # INCREASED: 18 -> 25 for better diversification
-        "description": "Higher conviction, diversified"
+        "kelly_multiplier": 1.00,
+        "min_position_pct": 0.02,
+        "max_positions": 20,
+        "description": "Higher conviction, concentrated"
     },
     "maximum": {
-        "kelly_multiplier": 1.25,  # INCREASED: Was 1.00, now 1.25 (125% Kelly)
-        "min_position_pct": 0.025,  # LOWERED: Was 0.04, now 0.025 (2.5%) to allow more positions
-        "max_positions": 12,  # INCREASED: Was 8, now 12
+        "kelly_multiplier": 1.00,
+        "min_position_pct": 0.05,
+        "max_positions": 10,
         "description": "Full Kelly, highly concentrated"
-    },
-    "alpha_hunter": {
-        "kelly_multiplier": 1.50,  # INCREASED: Was 1.25, now 1.50 (150% Kelly) for maximum positions
-        "min_position_pct": 0.03,  # LOWERED: Was 0.05, now 0.03 (3%) to allow more positions
-        "max_positions": 10,  # INCREASED: Was 6, now 10
-        "description": "Maximum conviction, ultra-concentrated"
     }
 }
 
@@ -161,12 +156,12 @@ SECTOR_LIMITS = {
     "Materials": 0.10,
 }
 
-# Position size tiers based on conviction — TUNED for 100-300% target
+# Position size tiers based on conviction
 CONVICTION_TIERS = {
-    "very_high": {"min_score": 0.8, "position_pct": 0.20, "max_stocks": 4},   # Big bets (was 10%)
-    "high": {"min_score": 0.6, "position_pct": 0.12, "max_stocks": 6},        # Meaningful (was 7%)
-    "medium": {"min_score": 0.4, "position_pct": 0.07, "max_stocks": 10},     # Decent (was 4%)
-    "low": {"min_score": 0.2, "position_pct": 0.03, "max_stocks": 8},         # Small but trade (was 0%)
+    "very_high": {"min_score": 0.8, "position_pct": 0.10, "max_stocks": 3},
+    "high": {"min_score": 0.6, "position_pct": 0.07, "max_stocks": 5},
+    "medium": {"min_score": 0.4, "position_pct": 0.04, "max_stocks": 10},
+    "low": {"min_score": 0.0, "position_pct": 0.02, "max_stocks": 10},
 }
 
 # ============================================================
@@ -186,11 +181,11 @@ REGIME_SETTINGS = {
         "risk_off": 0.4,   # Below this = risk off
     },
     "exposure_adjustments": {
-        "strong_bull": 1.20,   # ABOVE 100% — use leverage in bull (was 1.00)
-        "mild_bull": 1.00,     # Full exposure (was 0.80)
-        "neutral": 0.85,      # Near-full in neutral — this is the default state! (was 0.60)
-        "mild_bear": 0.60,    # Still trade — shorts work here (was 0.40)
-        "strong_bear": 0.40,  # Short-heavy but still deploy capital (was 0.20)
+        "strong_bull": 1.00,
+        "mild_bull": 0.95,
+        "neutral": 0.85,
+        "mild_bear": 0.65,
+        "strong_bear": 0.40,
     }
 }
 
@@ -230,127 +225,94 @@ LEARNING_SETTINGS = {
 }
 
 # ============================================================
-# STOP-LOSS / TAKE-PROFIT SETTINGS — Tuned for 100-300% target
+# STOP-LOSS / TAKE-PROFIT SETTINGS
 # ============================================================
 STOP_TAKE_SETTINGS = {
-    # Mode: "fixed" (old behavior), "tiered" (gradual trim), "trailing_only"
-    "mode": "tiered",
-    
-    # Fixed stop-loss
-    "stop_loss_pct": 0.05,        # 5% hard stop (was 2%)
-    
-    # Tiered take-profit ladder
-    "take_profit_tiers": {
-        0.08: 0.20,   # At +8% → trim 20%
-        0.15: 0.25,   # At +15% → trim 25%
-        0.25: 0.25,   # At +25% → trim 25%
-        # Remaining 30% rides with trailing stop
-    },
-    
-    # Trailing stop
-    "trailing_stop_activation": 0.04,   # Activate after +4% (was 2%)
-    "trailing_stop_distance": 0.04,     # 4% behind peak (was 1.5%)
-    
-    # Winner protection: once up X%, stop moves to breakeven
-    "winner_protection_threshold": 0.05,  # After +5%, never let it become a loss
+    "mode": "disabled",
+    "stop_loss_pct": 0.07,
+    "take_profit_tiers": {},
+    "trailing_stop_activation": 0.10,
+    "trailing_stop_distance": 0.05,
+    "winner_protection_threshold": 0.10,
 }
 
 # ============================================================
 # LEVERAGE SETTINGS
 # ============================================================
 LEVERAGE_SETTINGS = {
-    # USER-CONFIGURABLE MAX LEVERAGE
-    # Options: 1.0 (no leverage), 2.0 (overnight max), 4.0 (intraday PDT max)
-    "max_leverage": 3.0,  # Default: 3x (was 2x — intraday can use 4x PDT)
-    
-    # LEVERAGE MODE
-    # "manual" = always use max_leverage
-    # "dynamic" = calculate optimal leverage based on conditions
+    "max_leverage": 1.5,
     "mode": "dynamic",
-    
-    # CONVICTION-BASED LEVERAGE (NEW)
     "conviction_leverage_enabled": True,
     "conviction_leverage_tiers": {
-        "very_high": 3.0,  # Very high conviction → up to 3x
-        "high": 2.5,       # High conviction → up to 2.5x
-        "medium": 2.0,     # Medium → up to 2x
-        "low": 1.5,        # Low → 1.5x max
+        "very_high": 1.5,
+        "high": 1.3,
+        "medium": 1.1,
+        "low": 1.0,
     },
-    
-    # DYNAMIC LEVERAGE PARAMETERS — TUNED for 300% target
     "dynamic": {
-        # VIX-based adjustments (percentage of max leverage)
         "vix_factors": {
-            15: 1.00,   # VIX < 15: 100% — prime time for leverage
-            20: 0.85,   # VIX 15-20: 85% (was 80%)
-            25: 0.70,   # VIX 20-25: 70% (was 60%)
-            30: 0.50,   # VIX 25-30: 50% (was 40%)
-            100: 0.30,  # VIX > 30: 30% (was 20%)
+            15: 1.00,
+            20: 0.85,
+            25: 0.70,
+            30: 0.50,
+            100: 0.30,
         },
-        # Drawdown-based adjustments
         "drawdown_factors": {
-            5: 1.00,    # DD < 5%: full leverage (was 3%)
-            8: 0.80,    # DD 5-8%: 80% (was 5%)
-            12: 0.50,   # DD 8-12%: 50% (was 10%)
-            18: 0.25,   # DD 12-18%: 25% (was 15%)
-            100: 0.00,  # DD > 18%: no leverage
+            3: 1.00,
+            5: 0.85,
+            10: 0.60,
+            15: 0.30,
+            100: 0.00,
         },
-        # Confidence adjustment range
         "min_confidence_factor": 0.7,
-        "max_confidence_factor": 1.3,  # Slightly higher max (was 1.2)
+        "max_confidence_factor": 1.3,
     },
-    
-    # RISK CONTROLS — SLIGHTLY RELAXED for return target
     "risk_controls": {
-        # Daily loss limits
-        "daily_loss_halt_pct": 4.0,     # 4% halt (was 3%)
-        "daily_loss_delever_pct": 6.0,  # 6% close leveraged (was 5%)
-        
-        # Margin buffer
-        "min_margin_buffer_pct": 20.0,  # 20% buffer (was 25%)
-        "margin_alert_pct": 75.0,       # Alert at 75% (was 70%)
-        "margin_auto_reduce_pct": 88.0, # Auto-reduce at 88% (was 85%)
-        
-        # Position limits with leverage
-        "max_leveraged_position_pct": 20.0,  # 20% per position leveraged (was 15%)
-        "max_leveraged_sector_pct": 35.0,    # 35% per sector leveraged (was 30%)
+        "daily_loss_halt_pct": 3.0,
+        "daily_loss_delever_pct": 5.0,
+        "min_margin_buffer_pct": 25.0,
+        "margin_alert_pct": 70.0,
+        "margin_auto_reduce_pct": 85.0,
+        "max_leveraged_position_pct": 15.0,
+        "max_leveraged_sector_pct": 30.0,
     },
-    
-    # MARGIN COSTS
-    "margin_interest_rate": 0.07,  # 7% annual margin interest rate
+    "margin_interest_rate": 0.07,
 }
 
 # ============================================================
 # SHORT SELLING SETTINGS
 # ============================================================
 SHORT_SETTINGS = {
-    # Enable/disable shorting
     "enabled": True,
-    
-    # Maximum exposure — OPENED UP for alpha
-    "max_short_exposure_pct": 60.0,  # Max 60% of portfolio in shorts (was 40%)
-    "max_single_short_pct": 10.0,    # Max 10% per short position (was 5%)
-    
-    # Short signal sources
+    "max_short_exposure_pct": 30.0,
+    "max_single_short_pct": 5.0,
     "signal_sources": {
-        "news_driven": True,       # Shorts from negative news
-        "valuation_based": True,   # Shorts from high valuation
-        "technical_breakdown": True,  # Shorts from technical breakdowns
+        "news_driven": True,
+        "valuation_based": True,
+        "technical_breakdown": True,
     },
-    
-    # Valuation thresholds for short signals
     "valuation_thresholds": {
-        "pe_vs_sector_ratio": 2.0,      # Short if P/E > 2x sector average
-        "price_above_200ma_pct": 50.0,  # Short if price > 50% above 200 DMA
+        "pe_vs_sector_ratio": 2.0,
+        "price_above_200ma_pct": 50.0,
     },
-    
-    # Technical breakdown thresholds
     "technical_thresholds": {
-        "below_200ma_days": 5,          # Must be below 200 DMA for 5 days
-        "rsi_overbought": 70,           # RSI above 70 = overbought
-        "death_cross_lookback": 20,     # Days to detect death cross
+        "below_200ma_days": 5,
+        "rsi_overbought": 70,
+        "death_cross_lookback": 20,
     },
-    
-    # Borrow cost limits
-    "max_borrow_rate_pct": 10.0,  # Skip if borrow rate > 10% annually
+    "max_borrow_rate_pct": 10.0,
+}
+
+# ============================================================
+# DISABLED STRATEGIES — proven losers, disable until validated
+# ============================================================
+DISABLED_STRATEGIES = {
+    "CrossSectionMomentum",
+    "CS_Momentum_LS",
+    "CalendarEffects",
+    "OpeningRangeBreakout",
+    "VWAPReversion",
+    "QualityValue_LS",
+    "VolumeSpike",
+    "QuickMeanReversion",
 }

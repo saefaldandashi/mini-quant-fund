@@ -28,7 +28,7 @@ class MeanReversionStrategy(Strategy):
         # Config
         self.z_threshold = config.get('z_threshold', 2.0) if config else 2.0
         self.ma_type = config.get('ma_type', 'ma_20') if config else 'ma_20'
-        self.max_position = config.get('max_position', 0.1) if config else 0.1
+        self.max_position = config.get('max_position', 0.08) if config else 0.08
     
     def generate_signals(self, features: Features, t: datetime) -> SignalOutput:
         """Generate mean reversion signals with macro awareness."""
@@ -75,7 +75,7 @@ class MeanReversionStrategy(Strategy):
             
             # Calculate z-score (deviation from MA in vol units)
             deviation = (price - ma_val) / ma_val
-            z_score = deviation / (vol / np.sqrt(252) * 20)  # Rough daily vol * lookback
+            z_score = deviation / (vol / np.sqrt(252) * np.sqrt(20))  # Daily vol * sqrt(lookback)
             
             # Signal: negative z-score = oversold = buy
             if abs(z_score) > self.z_threshold:

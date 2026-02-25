@@ -14,56 +14,46 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RiskConstraints:
-    """Risk constraint configuration — tuned for 100-300% annual target."""
-    max_position_size: float = 0.15  # 15% max per position (was 5% — too conservative)
-    max_sector_exposure: float = 0.35  # 35% per sector (was 25% — allow concentration in trends)
-    max_leverage: float = 1.0
-    max_turnover: float = 0.60  # Slightly more room for active rebalancing
-    max_drawdown_trigger: float = 0.15  # 15% drawdown trigger (was 10%)
-    vol_target: float = 0.30  # 30% annualized vol target (was 12% — way too low for 300%)
-    vol_ceiling: float = 0.40  # 40% vol ceiling (was 18%)
+    """Risk constraint configuration."""
+    max_position_size: float = 0.15
+    max_sector_exposure: float = 0.30
+    max_leverage: float = 1.5
+    max_turnover: float = 0.75
+    max_drawdown_trigger: float = 0.15
+    vol_target: float = 0.12
+    vol_ceiling: float = 0.20
     
-    # Stop-loss / take-profit — RETUNED to let winners run
-    enable_stop_loss: bool = True
-    stop_loss_pct: float = 0.05  # 5% stop-loss (was 2% — triggered on normal noise)
-    enable_take_profit: bool = True
-    take_profit_pct: float = 0.20  # 20% take-profit (was 4% — murdered winners)
+    enable_stop_loss: bool = False
+    stop_loss_pct: float = 0.07
+    enable_take_profit: bool = False
+    take_profit_pct: float = 0.20
     
-    # TIERED TAKE-PROFIT — gradually trim instead of hard cut
-    enable_tiered_take_profit: bool = True
-    take_profit_tiers: Dict = field(default_factory=lambda: {
-        0.08: 0.20,   # At +8% gain → trim 20% of position
-        0.15: 0.25,   # At +15% gain → trim another 25%
-        0.25: 0.25,   # At +25% gain → trim another 25%
-        # Remaining 30% rides with trailing stop
-    })
+    enable_tiered_take_profit: bool = False
+    take_profit_tiers: Dict = field(default_factory=dict)
     
-    # TRAILING STOP-LOSS — widened to let winners breathe
-    enable_trailing_stop: bool = True
-    trailing_stop_activation: float = 0.04  # Activate after 4% profit (was 2%)
-    trailing_stop_distance: float = 0.04    # Trail 4% behind peak (was 1.5%)
+    enable_trailing_stop: bool = False
+    trailing_stop_activation: float = 0.10
+    trailing_stop_distance: float = 0.05
     
-    # WINNER PROTECTION — once up X%, never let it become a loss
-    enable_winner_protection: bool = True
-    winner_protection_threshold: float = 0.05  # After +5% gain, move stop to breakeven
+    enable_winner_protection: bool = False
+    winner_protection_threshold: float = 0.10
     
-    # CORRELATION LIMIT — slightly relaxed for trending markets
     enable_correlation_limit: bool = True
-    max_pairwise_correlation: float = 0.85  # (was 0.80) Allow more in strong trends
-    max_avg_correlation: float = 0.65       # (was 0.60)
+    max_pairwise_correlation: float = 0.80
+    max_avg_correlation: float = 0.60
     
-    # === LONG/SHORT CONSTRAINTS — opened up for alpha ===
+    # === LONG/SHORT CONSTRAINTS ===
     enable_shorting: bool = True
-    max_gross_exposure: float = 2.50  # 250% gross (was 150% — use the leverage!)
-    net_exposure_min: float = -0.40   # Allow 40% net short (was -20%)
-    net_exposure_max: float = 1.30    # Allow >100% net long with leverage
-    max_short_position: float = 0.10  # 10% per short (was 5%)
-    max_long_position: float = 0.15   # 15% per long (was 5%)
-    max_total_short: float = 0.60     # 60% total short capacity (was 30%)
+    max_gross_exposure: float = 2.0
+    net_exposure_min: float = -0.30
+    net_exposure_max: float = 1.0
+    max_short_position: float = 0.10
+    max_long_position: float = 0.15
+    max_total_short: float = 0.30
     
     # === MARGIN CONSTRAINTS (Futures) ===
-    min_free_cash_pct: float = 0.05   # 5% cash buffer (was 10% — double-buffering)
-    max_margin_usage_pct: float = 0.85  # 85% margin usage (was 80%)
+    min_free_cash_pct: float = 0.10
+    max_margin_usage_pct: float = 0.80
 
 
 @dataclass

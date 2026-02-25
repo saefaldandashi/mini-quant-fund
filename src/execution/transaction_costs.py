@@ -156,14 +156,14 @@ class TransactionCostModel:
     # Default cost parameters (basis points)
     # CRITICAL FIX: Further relaxed to allow more trades through
     DEFAULT_PARAMS = {
-        'base_slippage_bps': 3.0,        # Base slippage for liquid stocks
-        'commission_bps': 0.0,           # Alpaca is commission-free
-        'market_impact_coeff': 0.1,      # Impact coefficient
-        'borrow_rate_annual': 0.02,      # 2% annual borrow rate for shorts
-        'min_trade_threshold_bps': 75.0, # CRITICAL FIX: Raised from 50 to 75 bps (allow higher costs)
-        'min_benefit_ratio': 0.8,        # CRITICAL FIX: Reduced from 1.0 to 0.8 (more lenient)
-        'high_conviction_threshold': 0.65, # CRITICAL FIX: Lowered from 0.7 to 0.65 (more trades bypass)
-        'small_trade_min_dollars': 100,   # CRITICAL FIX: Reduced from 200 to 100 (allow smaller trades)
+        'base_slippage_bps': 3.0,
+        'commission_bps': 0.0,
+        'market_impact_coeff': 0.1,
+        'borrow_rate_annual': 0.02,
+        'min_trade_threshold_bps': 500.0,
+        'min_benefit_ratio': 0.3,
+        'high_conviction_threshold': 0.40,
+        'small_trade_min_dollars': 50,
     }
     
     # Liquidity adjustments (multipliers)

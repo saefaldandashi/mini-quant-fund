@@ -76,7 +76,7 @@ class FeedbackLoop:
     # Config
     learning_rate: float = 0.1
     decay_half_life_days: int = 30
-    min_samples_for_adjustment: int = 10
+    min_samples_for_adjustment: int = 5
     
     # Track how many trades have been processed to avoid re-recording
     _last_processed_trade_count: int = 0
@@ -240,6 +240,7 @@ class FeedbackLoop:
         self._last_processed_trade_count = len(trades)
         if recorded > 0:
             logger.info(f"Feedback loop recorded {recorded} new trades (total processed: {self._last_processed_trade_count})")
+        self._save()
         return recorded
     
     def _update_weight_adjustments(self):

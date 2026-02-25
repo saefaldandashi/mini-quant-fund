@@ -66,14 +66,14 @@ class MarginSnapshot:
 @dataclass
 class LeverageLimits:
     """Current leverage limits based on market conditions."""
-    max_leverage: float = 2.0          # Absolute maximum
-    vix_adjusted_max: float = 2.0      # VIX-based limit
-    drawdown_adjusted_max: float = 2.0 # Drawdown-based limit
-    effective_max: float = 2.0         # min of all limits
+    max_leverage: float = 1.5
+    vix_adjusted_max: float = 1.5
+    drawdown_adjusted_max: float = 1.5
+    effective_max: float = 1.5
     
-    overnight_max: float = 1.5         # Max for overnight positions
-    single_position_max_pct: float = 10.0  # Max % gross per position
-    sector_max_pct: float = 25.0       # Max % gross per sector
+    overnight_max: float = 1.3
+    single_position_max_pct: float = 15.0
+    sector_max_pct: float = 30.0
     
     # Margin buffer requirements
     min_margin_buffer_pct: float = 20.0  # Never use last 20%
@@ -89,71 +89,61 @@ class LeverageLimits:
 
 @dataclass
 class LeverageConfig:
-    """Configuration for leverage management — TUNED for 100-300% annual target."""
-    # Absolute limits — RAISED for aggressive growth
-    max_leverage_absolute: float = 3.0  # 3x max (was 2.0)
-    max_overnight_leverage: float = 2.0  # 2x overnight (was 1.5)
+    """Configuration for leverage management."""
+    max_leverage_absolute: float = 1.5
+    max_overnight_leverage: float = 1.3
     
-    # VIX-based limits — MORE AGGRESSIVE in calm markets
     vix_thresholds: Dict[float, float] = field(default_factory=lambda: {
-        15: 3.0,   # VIX < 15: FULL 3x leverage — prime time (was 2.0)
-        20: 2.5,   # VIX 15-20: 2.5x (was 1.75)
-        25: 2.0,   # VIX 20-25: 2x (was 1.5)
-        35: 1.5,   # VIX 25-35: reduced but still leveraged (was 1.0)
-        100: 1.0,  # VIX > 35: no leverage but don't de-lever (was 0.5)
+        15: 1.5,
+        20: 1.3,
+        25: 1.1,
+        35: 1.0,
+        100: 1.0,
     })
     
-    # Drawdown-based limits — MORE TOLERANT
     drawdown_thresholds: Dict[float, float] = field(default_factory=lambda: {
-        5: 1.0,    # Drawdown < 5%: full leverage multiplier
-        8: 0.80,   # Drawdown 5-8%: 80% (was 75% at 10%)
-        12: 0.60,  # Drawdown 8-12%: 60% (was 50% at 15%)
-        18: 0.30,  # Drawdown 12-18%: 30% (was 25% at 20%)
-        100: 0.0,  # Drawdown > 18%: no leverage
+        5: 1.0,
+        8: 0.80,
+        12: 0.60,
+        18: 0.30,
+        100: 0.0,
     })
     
-    # Margin buffer — SLIGHTLY RELAXED
     min_margin_buffer_pct: float = 20.0
     margin_alert_threshold: float = 75.0
-    margin_auto_reduce_threshold: float = 88.0  # (was 85%)
+    margin_auto_reduce_threshold: float = 85.0
     margin_emergency_threshold: float = 95.0
     
     # Position limits — RAISED
     max_single_position_pct: float = 15.0  # (was 10%)
-    max_sector_pct: float = 35.0  # (was 25%)
+    max_sector_pct: float = 30.0
     
-    # Daily loss limits — SLIGHTLY RELAXED for bigger swings
-    daily_loss_halt_pct: float = 4.0    # 4% halt (was 3%)
-    daily_loss_close_pct: float = 6.0   # 6% close leveraged (was 5%)
+    daily_loss_halt_pct: float = 3.0
+    daily_loss_close_pct: float = 5.0
     
-    # Strategy-specific leverage limits — SIGNIFICANTLY RAISED
     strategy_leverage_limits: Dict[str, float] = field(default_factory=lambda: {
-        # Position strategies (hold days/weeks)
-        'TimeSeriesMomentum': 2.0,         # (was 1.25)
-        'CrossSectionMomentum': 2.0,       # (was 1.25)
-        'MeanReversion': 2.0,             # (was 1.5)
-        'VolatilityRegimeVolTarget': 2.0,  # (was 1.5)
-        'Carry': 2.5,                     # (was 2.0) — low vol, safe for leverage
-        'ValueQualityTilt': 2.5,          # (was 2.0) — high conviction
-        'RiskParityMinVar': 2.0,          # (unchanged) — well-diversified
-        'TailRiskOverlay': 1.5,           # (was 1.0) — hedging benefits from leverage
-        'NewsSentimentEvent': 2.0,        # (was 1.25) — time-sensitive signals
-        # Long/Short strategies
-        'TS_Momentum_LS': 2.5,            # (was 1.5)
-        'MeanReversion_LS': 2.5,          # (was 1.5)
-        'QualityValue_LS': 2.5,           # (was 2.0)
-        # Intraday strategies — DRAMATICALLY RAISED (can use 4x PDT intraday)
-        'IntradayMomentum': 2.5,          # (was 1.0!)
-        'VWAPDeviation': 2.0,             # (was 1.0!)
-        'VolumeSpike': 2.0,              # (was 1.0!)
-        'OpeningRangeBreakout': 2.5,      # (was 1.0!) — short duration, defined risk
-        'RelativeStrengthIntraday': 2.0,  # (was 1.25)
-        'QuickMeanReversion': 2.0,        # (was 1.25)
-        # Alpha strategies
-        'PairsTrading': 2.5,              # Market-neutral = safe for leverage
-        'SectorRotation': 2.0,
-        'CalendarEffects': 1.5,
-        'OrderFlow': 2.0,
+        'TimeSeriesMomentum': 1.5,
+        'CrossSectionMomentum': 1.0,
+        'MeanReversion': 1.3,
+        'VolatilityRegimeVolTarget': 1.5,
+        'Carry': 1.3,
+        'ValueQualityTilt': 1.5,
+        'RiskParityMinVar': 1.5,
+        'TailRiskOverlay': 1.0,
+        'NewsSentimentEvent': 1.3,
+        'TS_Momentum_LS': 1.5,
+        'MeanReversion_LS': 1.3,
+        'QualityValue_LS': 1.0,
+        'IntradayMomentum': 1.3,
+        'VWAPDeviation': 1.0,
+        'VolumeSpike': 1.0,
+        'OpeningRangeBreakout': 1.0,
+        'RelativeStrengthIntraday': 1.3,
+        'QuickMeanReversion': 1.0,
+        'PairsTrading': 1.3,
+        'SectorRotation': 1.5,
+        'CalendarEffects': 1.0,
+        'OrderFlow': 1.3,
     })
     
     # Margin interest rate (annual)

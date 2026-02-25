@@ -225,6 +225,14 @@ class TradeMemory:
             sector_momentum=market_context.get('sector_momentum', {}),
         )
         
+        # Ensure entry_strategy is always populated
+        if not entry_strategy and signals:
+            best_sig = max(signals, key=lambda s: abs(s.weight_proposed))
+            if best_sig.strategy_name and best_sig.strategy_name != 'unknown':
+                entry_strategy = best_sig.strategy_name
+        if not entry_strategy:
+            entry_strategy = 'ensemble_blend'
+        
         trade = TradeRecord(
             trade_id=trade_id,
             timestamp=datetime.now().isoformat(),
@@ -248,6 +256,9 @@ class TradeMemory:
         
         # Track open positions for buys AND shorts
         if side in ('buy', 'short'):
+            if symbol in self.open_positions:
+                old_trade = self.open_positions[symbol]
+                self._close_position(old_trade, price, 'position_refresh')
             self.open_positions[symbol] = trade
         elif side == 'sell' and symbol in self.open_positions:
             # Close a long position
@@ -276,6 +287,16 @@ class TradeMemory:
         trade.holding_period_days = (datetime.now() - entry_dt).days
         
         # Calculate raw P/L
+        if not trade.entry_price or trade.entry_price <= 0:
+            trade.pnl_dollars = 0.0
+            trade.pnl_percent = 0.0
+            trade.was_profitable = False
+            trade.exit_reason = exit_reason or 'invalid_entry_price'
+            if trade.symbol in self.open_positions:
+                del self.open_positions[trade.symbol]
+            self._save()
+            return
+        
         if trade.side == 'buy':
             raw_pnl_dollars = (exit_price - trade.entry_price) * trade.quantity
             raw_pnl_percent = (exit_price - trade.entry_price) / trade.entry_price * 100
@@ -403,13 +424,70 @@ class TradeMemory:
             current_prices: Dict of symbol -> current price
         """
         for symbol, trade in self.open_positions.items():
-            if symbol in current_prices:
+            if symbol in current_prices and trade.entry_price > 0:
                 price = current_prices[symbol]
                 if trade.side == 'buy':
-                    trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
-                    trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
-                trade.was_profitable = trade.pnl_dollars > 0
+                    if trade.entry_price and trade.entry_price > 0:
+                        trade.pnl_dollars = (price - trade.entry_price) * trade.quantity
+                        trade.pnl_percent = (price - trade.entry_price) / trade.entry_price * 100
+                elif trade.side == 'short':
+                    if trade.entry_price and trade.entry_price > 0:
+                        trade.pnl_dollars = (trade.entry_price - price) * trade.quantity
+                        trade.pnl_percent = (trade.entry_price - price) / trade.entry_price * 100
+                trade.was_profitable = (trade.pnl_dollars or 0) > 0
         self._save()
+    
+    def reconcile_positions(self, broker_positions: Dict[str, int], current_prices: Dict[str, float]):
+        """
+        Reconcile trade memory open positions with actual broker positions.
+        Closes stale entries that no longer exist at the broker.
+        
+        Args:
+            broker_positions: Dict of symbol -> quantity from broker
+            current_prices: Dict of symbol -> current price
+        """
+        stale = []
+        for symbol, trade in list(self.open_positions.items()):
+            if symbol not in broker_positions or broker_positions[symbol] == 0:
+                price = current_prices.get(symbol, trade.entry_price)
+                self._close_position(trade, price, 'reconciliation')
+                stale.append(symbol)
+        
+        for symbol in stale:
+            self.open_positions.pop(symbol, None)
+        
+        if stale:
+            logging.info(f"Reconciliation closed {len(stale)} stale positions: {stale}")
+            self._save()
+    
+    def close_expired_positions(self, current_prices: Dict[str, float], max_hold_days: int = 30):
+        """
+        Close positions that have been open longer than max_hold_days.
+        
+        Args:
+            current_prices: Dict of symbol -> current price
+            max_hold_days: Maximum holding period in days
+        """
+        expired = []
+        now = datetime.now()
+        
+        for symbol, trade in list(self.open_positions.items()):
+            try:
+                entry_time = datetime.fromisoformat(trade.timestamp)
+                days_held = (now - entry_time).days
+                if days_held > max_hold_days:
+                    price = current_prices.get(symbol, trade.entry_price)
+                    self._close_position(trade, price, 'holding_period_exceeded')
+                    expired.append(symbol)
+            except (ValueError, TypeError):
+                continue
+        
+        for symbol in expired:
+            self.open_positions.pop(symbol, None)
+        
+        if expired:
+            logging.info(f"Closed {len(expired)} expired positions (>{max_hold_days} days): {expired}")
+            self._save()
     
     def get_recent_trades(self, n: int = 10) -> List[TradeRecord]:
         """

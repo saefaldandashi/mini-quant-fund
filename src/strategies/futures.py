@@ -150,7 +150,7 @@ class FuturesMacroOverlay(Strategy):
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("Futures_Macro", config)
         
-        self.max_position = config.get('max_position', 0.20) if config else 0.20
+        self.max_position = config.get('max_position', 0.08) if config else 0.08
         
         # Proxy ETFs
         self.proxies = {
@@ -275,7 +275,7 @@ class FuturesTrendFollowing(Strategy):
         super().__init__("Futures_Trend", config)
         
         self.vol_target = config.get('vol_target', 0.10) if config else 0.10
-        self.max_position = config.get('max_position', 0.25) if config else 0.25
+        self.max_position = config.get('max_position', 0.08) if config else 0.08
         self.lookback = config.get('lookback', 126) if config else 126
         
         # Assets to trade

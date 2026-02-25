@@ -989,7 +989,7 @@ class SystemIntegration:
         if expected_returns and confidences:
             for symbol in list(filtered.keys()):
                 notional = abs(filtered[symbol]) * 50000  # Assume $50K portfolio for sizing
-                expected_ret = expected_returns.get(symbol, 0.01)
+                expected_ret = abs(expected_returns.get(symbol, 0.01))
                 confidence = confidences.get(symbol, 0.5)
                 tier = get_market_cap_tier(symbol)
                 spread = self.liquidity_filter._volume_cache.get(symbol, {}).get('spread', 0.05)

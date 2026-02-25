@@ -7,8 +7,13 @@ Designed for <1 second debate resolution for intraday trading.
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, List, Optional, Any, Set, Tuple
 import logging
+
+try:
+    from config import DISABLED_STRATEGIES
+except ImportError:
+    DISABLED_STRATEGIES: Set[str] = set()
 
 logger = logging.getLogger(__name__)
 
@@ -194,9 +199,7 @@ def fast_score_strategy(
     elif strategy_name in POSITION_STRATEGIES:
         blend_weight = blend_weights['position']
     elif strategy_name in LONG_SHORT_STRATEGIES:
-        # L/S strategies are CRITICAL for shorts - boost them!
-        # Average of intraday and position, plus a 20% boost to ensure shorts are generated
-        blend_weight = (blend_weights['intraday'] + blend_weights['position']) / 2 + 0.20
+        blend_weight = (blend_weights['intraday'] + blend_weights['position']) / 2
     else:
         blend_weight = 0.5  # Unknown strategies get equal weight
     
@@ -247,7 +250,10 @@ def fast_debate(
     scores = {}
     score_details = {}
     
-    for name, signal in signals.items():
+    # Filter out disabled strategies
+    active_signals = {k: v for k, v in signals.items() if k not in DISABLED_STRATEGIES}
+    
+    for name, signal in active_signals.items():
         confidence = getattr(signal, 'confidence', 0.5)
         urgency = getattr(signal, 'urgency', 'normal')
         

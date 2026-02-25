@@ -580,13 +580,37 @@ class AlpacaBroker:
                 f"status={order.status}"
             )
             
-            return {
+            # Wait for fill confirmation on market orders (typically instant)
+            filled_avg_price = None
+            filled_qty = None
+            status_val = "submitted"
+            import time as _time
+            for _attempt in range(6):
+                _time.sleep(0.5)
+                try:
+                    refreshed = self.trading_client.get_order_by_id(order.id)
+                    status_val = refreshed.status.value if hasattr(refreshed.status, 'value') else str(refreshed.status)
+                    if status_val == 'filled':
+                        filled_avg_price = float(refreshed.filled_avg_price) if refreshed.filled_avg_price else None
+                        filled_qty = int(float(refreshed.filled_qty)) if refreshed.filled_qty else qty
+                        break
+                    elif status_val in ('canceled', 'expired', 'rejected'):
+                        logging.warning(f"Order {order.id} for {symbol} ended with status: {status_val}")
+                        break
+                except Exception as e:
+                    logging.warning(f"Error checking order status for {symbol}: {e}")
+            
+            result_dict = {
                 "id": order.id,
                 "symbol": symbol,
-                "qty": qty,
+                "qty": filled_qty or qty,
                 "side": side_str,
-                "status": order.status.value if hasattr(order.status, 'value') else str(order.status)
+                "status": "filled" if filled_avg_price else status_val,
             }
+            if filled_avg_price:
+                result_dict["filled_avg_price"] = filled_avg_price
+            
+            return result_dict
         except Exception as e:
             logging.error(f"Error placing {side_str} order for {symbol}: {e}")
             raise
@@ -976,13 +1000,14 @@ class AlpacaBroker:
                     bid = float(q.bid_price) if q.bid_price else 0
                     ask = float(q.ask_price) if q.ask_price else 0
                     
-                    # Calculate mid and spread
-                    if bid > 0 and ask > 0:
+                    # Calculate mid and spread with sanity cap
+                    if bid > 0 and ask > 0 and ask >= bid:
                         mid = (bid + ask) / 2
                         spread_pct = ((ask - bid) / mid) * 100 if mid > 0 else 0.05
+                        spread_pct = min(spread_pct, 1.0)
                     else:
                         mid = ask if ask > 0 else bid
-                        spread_pct = 0.05  # Default 5 bps if no bid-ask
+                        spread_pct = 0.05
                     
                     result[symbol] = {
                         'bid': bid,

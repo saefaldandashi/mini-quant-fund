@@ -83,7 +83,7 @@ class ShortCandidate:
         elif max_score >= 0.45 or self.total_score >= 0.35:
             self.conviction = "medium"
             self.recommended_weight = -0.03  # 3% short
-        elif max_score >= 0.30 or self.total_score >= 0.25:
+        elif max_score >= 0.45 or self.total_score >= 0.40:
             self.conviction = "low"
             self.recommended_weight = -0.02  # 2% short
         else:
@@ -101,10 +101,9 @@ class ShortScannerConfig:
         'technical': 0.30,
     })
     
-    # Minimum scores to be considered - relaxed to generate more shorts
-    min_total_score: float = 0.25
-    min_news_score: float = 0.0     # Allow shorts without news
-    min_sources_agreeing: int = 1    # Only need 1 source to agree (technical OR fundamental)
+    min_total_score: float = 0.50
+    min_news_score: float = 0.0
+    min_sources_agreeing: int = 2    # Require both technical AND fundamental agreement
     
     # News signal thresholds
     news_sentiment_threshold: float = -0.3  # Bearish threshold
@@ -116,9 +115,8 @@ class ShortScannerConfig:
     pe_vs_sector_threshold: float = 1.5     # P/E > 1.5x sector = high
     price_above_200ma_threshold: float = 0.15  # 15% above = extended (was 25%)
     
-    # Technical thresholds - relaxed for more shorts
-    below_200ma_days: int = 3               # Must be below for N days
-    rsi_overbought: float = 65.0            # RSI above = overbought (was 70)
+    below_200ma_days: int = 3
+    rsi_overbought: float = 75.0            # RSI must be clearly overbought
     
     # Risk limits
     max_borrow_rate: float = 10.0           # Skip if > 10% annual
@@ -199,7 +197,7 @@ class ShortScanner:
         
         if regime in ('strong_bull', 'mild_bull') or (spy_change > 0.3 and vix < 22):
             self.config.max_short_candidates = min(2, original_max)
-            self.config.min_total_score = max(0.45, original_min_score)
+            self.config.min_total_score = max(0.50, original_min_score)
             self.config.min_sources_agreeing = max(2, original_min_sources)
             self.config.rsi_overbought = max(75.0, original_rsi)
             logger.info(f"   REGIME GATE: Bull market (SPY {spy_change:+.2f}%, VIX {vix:.1f}, regime={regime})")

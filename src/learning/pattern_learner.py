@@ -251,15 +251,20 @@ class PatternLearner:
                     pattern.confidence = pattern.times_profitable / pattern.times_observed
                 
                 # Update recommended strategies based on what worked
+                # Ensure no strategy appears in both lists (contradiction)
                 for strategy in observation['winning_strategies']:
-                    if strategy not in pattern.recommended_strategies:
-                        if pattern.times_observed >= 3:
+                    if pattern.times_observed >= 3:
+                        if strategy not in pattern.recommended_strategies:
                             pattern.recommended_strategies.append(strategy)
+                        if strategy in pattern.strategies_to_avoid:
+                            pattern.strategies_to_avoid.remove(strategy)
                 
                 for strategy in observation['losing_strategies']:
-                    if strategy not in pattern.strategies_to_avoid:
-                        if pattern.times_observed >= 3:
+                    if pattern.times_observed >= 3:
+                        if strategy not in pattern.strategies_to_avoid:
                             pattern.strategies_to_avoid.append(strategy)
+                        if strategy in pattern.recommended_strategies:
+                            pattern.recommended_strategies.remove(strategy)
     
     def _discover_patterns(self):
         """

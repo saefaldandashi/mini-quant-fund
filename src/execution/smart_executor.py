@@ -598,26 +598,43 @@ class SmartExecutor:
                 result = self.broker.place_market_order(
                     symbol, quantity, order_side, dry_run=False, extended_hours=is_extended
                 )
-                fill_price = result.get('filled_avg_price', current_price) if result else current_price
-                self.log(f"    ✓ Filled at ${fill_price:.2f}")
+                if not result:
+                    self.log(f"    ✗ Order returned None for {symbol}")
+                    return ExecutionResult(
+                        symbol=symbol, side=side, quantity=quantity,
+                        success=False, fill_price=None, order_type=OrderType.MARKET,
+                        filled_at_limit=False, execution_time_ms=0, error="No result from broker",
+                    )
+                
+                order_status = result.get('status', 'unknown')
+                fill_price = result.get('filled_avg_price', None)
+                filled_qty = result.get('qty', quantity)
+                
+                if fill_price and order_status == 'filled':
+                    self.log(f"    ✓ Confirmed fill at ${fill_price:.2f} ({filled_qty} shares)")
+                elif order_status == 'filled':
+                    fill_price = current_price
+                    self.log(f"    ✓ Filled (using decision price ${fill_price:.2f})")
+                else:
+                    self.log(f"    ⚠️ Order submitted but not confirmed filled (status: {order_status})")
+                    return ExecutionResult(
+                        symbol=symbol, side=side, quantity=quantity,
+                        success=False, fill_price=None, order_type=OrderType.MARKET,
+                        filled_at_limit=False, execution_time_ms=0,
+                        error=f"Order not filled, status: {order_status}",
+                    )
             except Exception as e:
                 self.log(f"    ✗ Order failed: {e}")
                 return ExecutionResult(
-                    symbol=symbol,
-                    side=side,
-                    quantity=quantity,
-                    success=False,
-                    fill_price=None,
-                    order_type=OrderType.MARKET,
-                    filled_at_limit=False,
-                    execution_time_ms=0,
-                    error=str(e),
+                    symbol=symbol, side=side, quantity=quantity,
+                    success=False, fill_price=None, order_type=OrderType.MARKET,
+                    filled_at_limit=False, execution_time_ms=0, error=str(e),
                 )
         
         return ExecutionResult(
             symbol=symbol,
             side=side,
-            quantity=quantity,
+            quantity=filled_qty if not self.dry_run else quantity,
             success=True,
             fill_price=fill_price,
             order_type=OrderType.MARKET,

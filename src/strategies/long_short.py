@@ -76,12 +76,13 @@ def _apply_cross_asset_adjustments(
                 reasons.append(f"dxy={dxy_signal:+.2f}")
         
         # Credit adjustment for financials
+        # Positive credit_signal = stress → reduce longs, boost shorts
         if symbol in financial_stocks and abs(credit_signal) > 0.15:
             if weight > 0:  # Long position
-                adjustment_factor *= (1 + credit_signal * 0.25)  # Reduce if credit stress
+                adjustment_factor *= (1 - credit_signal * 0.25)  # Reduce if credit stress
                 reasons.append(f"credit={credit_signal:+.2f}")
             else:  # Short position
-                adjustment_factor *= (1 - credit_signal * 0.25)  # Boost short if credit stress
+                adjustment_factor *= (1 + credit_signal * 0.25)  # Boost short if credit stress
                 reasons.append(f"credit={credit_signal:+.2f}")
         
         if adjustment_factor != 1.0:
@@ -238,7 +239,7 @@ class TimeSeriesMomentumLS(Strategy):
         self.lookback_days = config.get('lookback_days', 126) if config else 126
         self.vol_lookback = config.get('vol_lookback', 21) if config else 21
         self.vol_target = config.get('vol_target', 0.10) if config else 0.10
-        self.max_position = config.get('max_position', 0.15) if config else 0.15
+        self.max_position = config.get('max_position', 0.08) if config else 0.08
         
         self._required_features = ['returns_126d', 'volatility_21d', 'prices']
     

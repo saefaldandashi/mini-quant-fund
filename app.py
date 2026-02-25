@@ -273,19 +273,18 @@ debate_learner = DebateLearner(outputs_dir="outputs"
 # Initialize leverage manager for margin-aware trading
 leverage_manager = LeverageManager(
     config=LeverageConfig(
-        max_leverage_absolute=2.0,
-        max_overnight_leverage=1.5,
+        max_leverage_absolute=config.LEVERAGE_SETTINGS['max_leverage'],
+        max_overnight_leverage=config.LEVERAGE_SETTINGS['max_leverage'],
         min_margin_buffer_pct=20.0,
-        margin_interest_rate=0.07,  # 7% annual
+        margin_interest_rate=0.07,
     ),
     storage_path="outputs/leverage_state.json"
 )
-logging.info("💰 Leverage Manager initialized (max 2x, 20% margin buffer)")
+logging.info(f"💰 Leverage Manager initialized (max {config.LEVERAGE_SETTINGS['max_leverage']}x, 20% margin buffer)")
 
 # Initialize performance optimizations (persist across requests)
 parallel_executor = ParallelStrategyExecutor(max_workers=4, timeout_seconds=30)
 price_cache = PriceDataCache(cache_dir="outputs/cache", memory_ttl_minutes=5)
-# CRITICAL FIX: Disable Kelly in SmartPositionSizer - Kelly is applied in StrategyEnhancer to avoid double application
 smart_sizer = SmartPositionSizer(target_vol=0.12, max_position=0.15, use_kelly=False)
 
 # Initialize News Intelligence Pipeline
@@ -440,13 +439,13 @@ risk_appetite = "aggressive"  # conservative, moderate, aggressive, maximum, alp
 
 # Long/Short & Futures Mode settings
 long_short_settings = {
-    "enable_long_short": True,  # Enable L/S strategies (can short)
-    "enable_futures": True,  # Enable futures strategies (backtest proxies)
-    "enable_shorting": True,  # Allow short positions
-    "max_gross_exposure": 2.5,  # 250% max gross (was 200%)
-    "net_exposure_min": -0.4,  # Can be 40% net short (was -0.3)
-    "net_exposure_max": 1.3,  # Can be 130% net long with leverage (was 1.0)
-    "max_short_per_position": 0.10,  # 10% max per short
+    "enable_long_short": True,
+    "enable_futures": True,
+    "enable_shorting": config.SHORT_SETTINGS.get('enabled', True),
+    "max_gross_exposure": 2.0,
+    "net_exposure_min": -0.30,
+    "net_exposure_max": 1.0,
+    "max_short_per_position": config.SHORT_SETTINGS.get('max_single_short_pct', 0.10),
 }
 
 # === DAILY P&L LIMIT (CRITICAL RISK CONTROL) ===
@@ -1102,6 +1101,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
     """
     global last_ticker_sentiments, trading_mode_setting, capital_exposure_pct
     
+    current_regime = None
+    vix_level = 20.0
+    
     import time as time_module
     rebalance_start_time = time_module.time()
     
@@ -1178,14 +1180,13 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         # Check market hours
         market_open = broker.is_market_open()
-        if not market_open and not allow_after_hours:
-            log("Market is closed. Enable 'Allow After Hours' to proceed.")
-            _rebalance_outcome["early_return"] = True
-            _rebalance_outcome["success"] = True  # Not a failure — expected condition
-            return True, "\n".join(output_lines), None, debate_info
+        analysis_only = not market_open and not allow_after_hours
         
-        if not market_open:
-            log("Market closed, but after-hours enabled. Proceeding...")
+        if analysis_only:
+            log("📊 Market is CLOSED — running strategy analysis only (no trades will execute)")
+            log("   The system will record what it WOULD trade for learning purposes.")
+        elif not market_open:
+            log("Market closed, but after-hours enabled. Proceeding with execution...")
         else:
             log("Market is OPEN")
         
@@ -1345,11 +1346,11 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 log("")
                 log("System is in recovery mode — will exit losers and trade at reduced exposure.")
                 log("Rebalance will CONTINUE to fix the portfolio (not halt).")
-                # Reduce exposure further for recovery mode
+                # Reduce exposure for recovery mode (but not so aggressively that we can't recover)
                 if "CRITICAL" in trade_reason:
-                    capital_exposure_pct = min(capital_exposure_pct, 0.15)
+                    capital_exposure_pct = min(capital_exposure_pct, 0.50)
                 elif "RECOVERY" in trade_reason:
-                    capital_exposure_pct = min(capital_exposure_pct, 0.20)
+                    capital_exposure_pct = min(capital_exposure_pct, 0.65)
                 log(f"  Recovery exposure set to: {capital_exposure_pct*100:.0f}%")
             
             # Exit recommended positions -- these WILL be actioned during rebalance
@@ -2657,10 +2658,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         ensemble = EnsembleOptimizer({
             'max_position': 0.15,
-            'max_leverage': 2.5,   # Was 1.0 — now matches our 3x leverage config (2.5 for ensemble cap)
-            'vol_target': 0.30,    # Was 0.12 — now matches our raised vol target
-            'max_sector_exposure': 0.35,  # Match config
-            'max_turnover': 0.60,  # Allow more turnover for active trading
+            'max_leverage': config.LEVERAGE_SETTINGS['max_leverage'],
+            'vol_target': 0.12,
+            'max_sector_exposure': 0.30,
+            'max_turnover': 0.50,
         })
         
         # Get current positions
@@ -2743,12 +2744,25 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 and (s.desired_weights[symbol] > 0) == is_long
             )
             if agreeing < 2:
-                combined_weights[symbol] = weight * 0.3
+                combined_weights[symbol] = 0.0
                 confluence_filtered += 1
         if confluence_filtered > 0:
-            log(f"  Confluence filter: reduced {confluence_filtered} low-conviction positions (< 2 strategies agree)")
+            log(f"  Confluence filter: BLOCKED {confluence_filtered} low-conviction positions (< 2 strategies agree)")
         
         debate_info["final_weights"] = combined_weights
+        
+        # Fallback attribution: ensure every symbol in combined_weights gets a strategy label
+        for symbol in list(combined_weights.keys()):
+            if symbol not in strategy_attribution and abs(combined_weights.get(symbol, 0)) > 0.001:
+                best_name, best_weight = '', 0.0
+                for name, signal in signals.items():
+                    w = signal.desired_weights.get(symbol, 0)
+                    if abs(w) > abs(best_weight):
+                        best_name, best_weight = name, w
+                if best_name:
+                    strategy_attribution[symbol] = (best_name, best_weight)
+                else:
+                    strategy_attribution[symbol] = ('ensemble_blend', combined_weights[symbol])
         
         # === FUNDAMENTAL SHORT SCANNER ===
         # Add shorts from fundamental analysis (valuation, news, technicals)
@@ -2910,34 +2924,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                             if sym not in combined_weights or abs(combined_weights.get(sym, 0)) < abs(wt):
                                 combined_weights[sym] = wt
                 else:
-                    # === FALLBACK: Generate shorts from overbought RSI when scanner finds nothing ===
-                    # This ensures we ALWAYS consider shorts when market conditions warrant
-                    log("   📉 No scanner shorts - checking RSI fallback...")
-                    fallback_shorts = {}
-                    for symbol, rsi_val in rsi_values.items():
-                        if rsi_val and rsi_val > 68:  # Overbought threshold
-                            # Calculate short weight based on how overbought
-                            if rsi_val >= 80:
-                                weight = -0.04  # 4% short (very overbought)
-                            elif rsi_val >= 75:
-                                weight = -0.03  # 3% short
-                            elif rsi_val >= 70:
-                                weight = -0.02  # 2% short
-                            else:
-                                weight = -0.015  # 1.5% short
-                            
-                            fallback_shorts[symbol] = weight
-                    
-                    if fallback_shorts:
-                        log(f"   🎯 RSI Fallback: Found {len(fallback_shorts)} overbought stocks for shorts")
-                        # Apply top 5 overbought shorts
-                        sorted_overbought = sorted(fallback_shorts.items(), key=lambda x: rsi_values.get(x[0], 0), reverse=True)[:5]
-                        for sym, wt in sorted_overbought:
-                            existing = combined_weights.get(sym, 0)
-                            log(f"      {sym}: RSI={rsi_values.get(sym, 0):.1f}, weight={wt*100:.1f}%")
-                            if existing > 0:
-                                log(f"         ⚠️ OVERRIDING long with RSI-based short")
-                            combined_weights[sym] = wt
+                    log("   📉 No scanner shorts found — RSI-only fallback disabled (requires multi-source conviction)")
                 
             except Exception as e:
                 log(f"⚠️ Short scanner error: {e}")
@@ -2955,7 +2942,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             # IMPROVED: Preserve more earnings signal strength
             # Strong signals (>30%) get scaled to 10% max, weaker ones to 5% max
             STRONG_EARNINGS_THRESHOLD = 0.30  # 30% raw signal
-            STRONG_POSITION_MAX = 0.10  # 10% position for strong signals
+            STRONG_POSITION_MAX = 0.08  # Aligned with max_position_size
             WEAK_POSITION_MAX = 0.05  # 5% position for weaker signals
             
             for symbol, weight in earnings_signals.items():
@@ -3171,16 +3158,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                         # NOTE: Only add bounce positions if we don't already have a SHORT
                         # We don't want to override intentional shorts with bounce longs
                         elif tech_signal < -0.3:
-                            stoch_k = features.stochastic_k.get(symbol, 50)
-                            bb_pct_b = features.bollinger_percent_b.get(symbol, 0.5)
-                            current_weight = combined_weights.get(symbol, 0)
-                            
-                            # Only add bounce if: oversold AND not already a short position
-                            if stoch_k < 20 and bb_pct_b < 0 and current_weight >= 0:
-                                # Potential bounce - add small position (but don't override shorts!)
-                                if symbol not in combined_weights or combined_weights[symbol] < 0.01:
-                                    combined_weights[symbol] = 0.01  # 1% position
-                                    tech_adjustments.append(f"{symbol}:bounce")
+                            pass
                     
                     if bullish_count or bearish_count:
                         log(f"   Technical Adjustments: {bullish_count} bullish, {bearish_count} bearish")
@@ -3258,6 +3236,19 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         if analytics_adjustments:
             log(f"📈 Analytics Adjustments: {len(analytics_adjustments)} applied")
         
+        # === FINAL CONVICTION GATE ===
+        # Catch any positions added after the confluence filter (short scanner, earnings,
+        # technical bounces) that are below the minimum conviction threshold
+        pre_gate_count = len([s for s, w in combined_weights.items() if abs(w) > 0.001])
+        for symbol in list(combined_weights.keys()):
+            w = combined_weights[symbol]
+            if abs(w) > 0.001 and abs(w) < 0.02:
+                combined_weights[symbol] = 0.0
+        post_gate_count = len([s for s, w in combined_weights.items() if abs(w) > 0.001])
+        gated = pre_gate_count - post_gate_count
+        if gated > 0:
+            log(f"🚫 Final conviction gate: removed {gated} sub-2% positions added after confluence filter")
+        
         log("")
         
         # === RISK MANAGEMENT ===
@@ -3265,30 +3256,22 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log("RISK CHECK")
         log("=" * 60)
         
-        # Get dynamic leverage limit from leverage manager
-        try:
-            dynamic_max_leverage = leverage_manager.get_effective_leverage_limit()
-            can_leverage, leverage_reason = leverage_manager.can_use_leverage()
-            if not can_leverage:
-                log(f"  ⚠️ Leverage restricted to 1.0x: {leverage_reason}")
-                dynamic_max_leverage = 1.0
-        except Exception as e:
-            log(f"  ⚠️ Could not get leverage limit: {e}")
-            dynamic_max_leverage = 1.0
+        # Use config-driven leverage limit (not dynamic leverage manager)
+        dynamic_max_leverage = config.LEVERAGE_SETTINGS['max_leverage']
         
         # Create or update persistent risk manager (preserves entry_prices, winner_protected, position_peaks)
         global _persistent_risk_manager
         new_constraints = RiskConstraints(
-            max_position_size=0.15 if dynamic_max_leverage <= 1.0 else 0.10,
-            max_sector_exposure=0.30 if dynamic_max_leverage <= 1.0 else 0.20,
+            max_position_size=0.15,
+            max_sector_exposure=0.30,
             max_leverage=dynamic_max_leverage,
             vol_target=0.12,
+            stop_loss_pct=config.STOP_TAKE_SETTINGS.get("stop_loss_pct", 0.07),
+            trailing_stop_activation=config.STOP_TAKE_SETTINGS.get("trailing_stop_activation", 0.10),
+            trailing_stop_distance=config.STOP_TAKE_SETTINGS.get("trailing_stop_distance", 0.05),
             enable_shorting=long_short_settings.get("enable_shorting", True),
-            max_gross_exposure=min(
-                long_short_settings.get("max_gross_exposure", 2.0),
-                dynamic_max_leverage
-            ),
-            net_exposure_min=long_short_settings.get("net_exposure_min", -0.3),
+            max_gross_exposure=long_short_settings.get("max_gross_exposure", 2.0),
+            net_exposure_min=long_short_settings.get("net_exposure_min", -0.30),
             net_exposure_max=long_short_settings.get("net_exposure_max", 1.0),
             max_short_position=long_short_settings.get("max_short_per_position", 0.10),
         )
@@ -3297,6 +3280,18 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         else:
             _persistent_risk_manager.update_constraints(new_constraints)
         risk_manager = _persistent_risk_manager
+        
+        # Populate entry prices from broker so stop-losses can fire
+        if current_positions:
+            broker_entry_prices = {}
+            for symbol, pos in current_positions.items():
+                entry_p = pos.get('avg_entry_price', 0)
+                if entry_p and float(entry_p) > 0:
+                    broker_entry_prices[symbol] = float(entry_p)
+            if broker_entry_prices:
+                risk_manager.update_entry_prices(current_weights, broker_entry_prices)
+                log(f"  ✓ Stop-loss tracking: {len(broker_entry_prices)} positions with entry prices")
+        
         log(f"  ✓ Shorting: {'ENABLED' if long_short_settings.get('enable_shorting', True) else 'DISABLED'}")
         log(f"  ✓ Max Leverage: {dynamic_max_leverage:.2f}x (dynamic based on VIX/drawdown)")
         
@@ -3346,7 +3341,9 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         # Convert ticker sentiments to dict format for validator
         ticker_sentiments_dict = {}
         for ticker, feat in last_ticker_sentiments.items():
-            if hasattr(feat, 'sentiment_score'):
+            if isinstance(feat, dict):
+                ticker_sentiments_dict[ticker] = feat
+            elif hasattr(feat, 'sentiment_score'):
                 ticker_sentiments_dict[ticker] = {
                     'sentiment_score': feat.sentiment_score,
                     'sentiment_confidence': feat.sentiment_confidence,
@@ -3809,33 +3806,54 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             for _s, _w in _top5:
                 log(f"  DEBUG: {_s}: {_w:+.4%}")
         
-        # Calculate target symbols — use ALL nonzero signals
-        # The position enhancer (enhance_position_sizes) scales small weights up to proper dollar amounts
-        # so we should NOT filter aggressively here — just exclude truly zero signals
-        MIN_WEIGHT_THRESHOLD = 0.0001  # 0.01% — extremely permissive, let enhancer handle sizing
+        # Calculate target symbols — the position sizer's investment floor scales small
+        # ensemble weights up to proper allocations, so we use a low base threshold and
+        # only fall back to a higher one when we already hold positions (no need to churn).
+        STRONG_THRESHOLD = 0.02   # 2% for high-conviction filtering when portfolio is populated
+        BASE_THRESHOLD = 0.0005   # 0.05% to capture real ensemble signals for the position sizer
+        
+        has_current_positions = bool(current_positions) and len(current_positions) > 0
+        
+        # When portfolio is empty, use the low threshold so the position sizer can
+        # apply the investment floor and scale weights up from ensemble averages.
+        # When we already hold positions, use the stronger threshold to avoid noise.
+        if has_current_positions:
+            MIN_WEIGHT_THRESHOLD = STRONG_THRESHOLD
+        else:
+            MIN_WEIGHT_THRESHOLD = BASE_THRESHOLD
+        
         target_symbols = [s for s, w in final_weights.items() if abs(w) > MIN_WEIGHT_THRESHOLD]
         
-        # === RESCUE: If STILL empty, take top signals by raw weight ===
+        # If even the strong threshold produces too few targets, relax it
+        if has_current_positions and len(target_symbols) < 3:
+            target_symbols = [s for s, w in final_weights.items() if abs(w) > BASE_THRESHOLD]
+            if len(target_symbols) > 0:
+                MIN_WEIGHT_THRESHOLD = BASE_THRESHOLD
+                log(f"📊 Few signals above 2% — relaxed threshold to capture {len(target_symbols)} signals")
+        
         if not target_symbols:
-            nonzero_signals = {s: w for s, w in final_weights.items() if abs(w) > 0}
-            if nonzero_signals:
-                sorted_signals = sorted(nonzero_signals.items(), key=lambda x: -abs(x[1]))[:20]
-                target_symbols = [s for s, _ in sorted_signals]
-                log(f"⚠️ RESCUE: Taking top {len(target_symbols)} signals (all very small)")
-                for s, w in sorted_signals[:5]:
-                    log(f"   {s}: {w:.6%}")
+            log(f"📭 No signals above {MIN_WEIGHT_THRESHOLD:.2%} threshold — staying in cash (no noise trades)")
         
         # Apply symbol cooldown filter - prevent over-trading same symbols
         cooldown_symbols = get_symbols_on_cooldown()
         if cooldown_symbols:
-            # Only apply cooldown to NEW positions (not existing ones we're adjusting)
+            # Only apply cooldown to low-conviction NEW positions (not existing ones we're adjusting)
             current_position_symbols = set(current_positions.keys()) if current_positions else set()
-            blocked_symbols = [s for s in target_symbols if s in cooldown_symbols and s not in current_position_symbols]
+            HIGH_CONVICTION_THRESHOLD = 0.04
+            blocked_symbols = [
+                s for s in target_symbols 
+                if s in cooldown_symbols 
+                and s not in current_position_symbols
+                and abs(final_weights.get(s, 0)) < HIGH_CONVICTION_THRESHOLD
+            ]
             if blocked_symbols:
-                log(f"⏳ Cooldown: {len(blocked_symbols)} symbols blocked (recently traded)")
+                log(f"⏳ Cooldown: {len(blocked_symbols)} symbols blocked (recently traded, <{HIGH_CONVICTION_THRESHOLD:.0%} conviction)")
                 for sym in blocked_symbols[:5]:
                     log(f"    {sym}: on cooldown")
                 target_symbols = [s for s in target_symbols if s not in blocked_symbols]
+            exempt = [s for s in target_symbols if s in cooldown_symbols and s not in current_position_symbols]
+            if exempt:
+                log(f"⏳ Cooldown exempt (high conviction): {', '.join(exempt)}")
         
         long_count = len([s for s, w in final_weights.items() if w > MIN_WEIGHT_THRESHOLD and s in target_symbols])
         short_count = len([s for s, w in final_weights.items() if w < -MIN_WEIGHT_THRESHOLD and s in target_symbols])
@@ -3863,13 +3881,19 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         if not target_symbols:
             log("No positions to take - going to cash")
-            # Log WHY for debugging
             all_weights = {s: w for s, w in final_weights.items() if abs(w) > 0}
-            if all_weights:
-                log(f"  ⚠️ WARNING: {len(all_weights)} signals exist but ALL below {MIN_WEIGHT_THRESHOLD:.1%} threshold!")
-                top5 = sorted(all_weights.items(), key=lambda x: -abs(x[1]))[:5]
+            above_threshold = {s: w for s, w in all_weights.items() if abs(w) > MIN_WEIGHT_THRESHOLD}
+            cooldown_blocked_here = {s: w for s, w in above_threshold.items() if s in cooldown_symbols}
+            below_only = {s: w for s, w in all_weights.items() if abs(w) <= MIN_WEIGHT_THRESHOLD}
+            if cooldown_blocked_here:
+                log(f"  ⚠️ {len(cooldown_blocked_here)} signals above threshold but BLOCKED by cooldown:")
+                for s, w in sorted(cooldown_blocked_here.items(), key=lambda x: -abs(x[1])):
+                    log(f"    {s}: {w:.4%} (on cooldown)")
+            if below_only:
+                log(f"  ℹ️ {len(below_only)} signals below {MIN_WEIGHT_THRESHOLD:.1%} threshold")
+                top5 = sorted(below_only.items(), key=lambda x: -abs(x[1]))[:5]
                 for s, w in top5:
-                    log(f"    {s}: {w:.4%} (below threshold)")
+                    log(f"    {s}: {w:.4%}")
             # enhanced_weights already initialized above as {}
         else:
             # Pass the actual weights (not zeros!) to calculate proper share quantities
@@ -3878,14 +3902,24 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             # Apply Smart Position Sizing (Kelly Criterion + vol scaling)
             confidences = {}
             for symbol in target_weights_filtered:
-                # Average confidence from strategies that have this symbol
                 conf_sum = 0
                 conf_count = 0
                 for name, signal in signals.items():
                     if symbol in signal.desired_weights:
                         conf_sum += signal.confidence
                         conf_count += 1
-                confidences[symbol] = conf_sum / max(1, conf_count)
+                if conf_count > 0:
+                    confidences[symbol] = conf_sum / conf_count
+                else:
+                    # Positions from scanners (earnings, short scanner) aren't in strategy
+                    # signals but carry high conviction — use weight magnitude as proxy
+                    weight_mag = abs(target_weights_filtered.get(symbol, 0))
+                    if weight_mag >= 0.05:
+                        confidences[symbol] = 0.70
+                    elif weight_mag >= 0.02:
+                        confidences[symbol] = 0.60
+                    else:
+                        confidences[symbol] = 0.50
             
             # Get volatilities
             volatilities = {s: features.volatility_21d.get(s, 0.20) for s in target_weights_filtered}
@@ -4071,7 +4105,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             # === CALCULATE DYNAMIC LEVERAGE ===
             # Get leverage settings from config
             leverage_settings = getattr(config, 'LEVERAGE_SETTINGS', {})
-            max_leverage = leverage_settings.get('max_leverage', 2.0)
+            max_leverage = leverage_settings.get('max_leverage', 1.0)
             leverage_mode = leverage_settings.get('mode', 'dynamic')
             
             # Update leverage manager with current VIX
@@ -4235,15 +4269,19 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     else:
                         volumes_data[symbol] = 500_000
             
-            # Prepare expected returns (from strategy signals)
+            # Prepare expected returns — use the MAX absolute expected return across
+            # all strategies that include this symbol, so a high-conviction short scanner
+            # signal isn't overridden by a weaker strategy that happens to iterate first.
             exp_returns = {}
             for symbol in enhanced_weights:
+                best_ret = 0.0
                 for name, signal in signals.items():
-                    # SignalOutput has expected_return (float) not expected_returns (dict)
                     if symbol in signal.desired_weights:
-                        exp_returns[symbol] = signal.expected_return
-                        break
-                if symbol not in exp_returns:
+                        if abs(signal.expected_return) > abs(best_ret):
+                            best_ret = signal.expected_return
+                if abs(best_ret) > 0:
+                    exp_returns[symbol] = abs(best_ret)
+                else:
                     exp_returns[symbol] = 0.02  # 2% default
             
             # Prepare confidences
@@ -4507,6 +4545,17 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             if abs(value) < max(100, equity * 0.002):
                 continue
             
+            # === PER-TRADE RISK CAP ===
+            # No single trade can risk more than 1% of equity at the stop-loss distance
+            MAX_LOSS_PCT_PER_TRADE = 0.01
+            stop_loss_pct = config.STOP_TAKE_SETTINGS.get("stop_loss_pct", 0.025)
+            if side in ('buy', 'short') and price > 0 and stop_loss_pct > 0:
+                max_qty_by_risk = int((equity * MAX_LOSS_PCT_PER_TRADE) / (price * stop_loss_pct))
+                if max_qty_by_risk > 0 and qty > max_qty_by_risk:
+                    log(f"  🛡️ {symbol}: Risk cap {qty} → {max_qty_by_risk} shares (max 1% equity loss per trade)")
+                    qty = max_qty_by_risk
+                    value = qty * price
+            
             # Get conviction from final weights (higher weight = higher conviction)
             conviction = min(1.0, abs(final_weights.get(symbol, 0)) * 5)  # Scale to 0-1
             
@@ -4517,12 +4566,15 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     # Use the strategy's expected return weighted by confidence
                     expected_return = max(expected_return, signal.expected_return * signal.confidence)
             
-            # Use REAL bid-ask spread from pre-fetched quotes (much more accurate)
+            # Use REAL bid-ask spread from pre-fetched quotes, with sanity cap
             if symbol in real_quotes:
                 spread_pct = real_quotes[symbol]['spread_pct']
             else:
-                # Fallback to default estimate based on likely liquidity
                 spread_pct = 0.05  # Default 5 bps for liquid stocks
+            
+            MAX_SANE_SPREAD = 0.50 if is_extended_hours else 0.10
+            if spread_pct > MAX_SANE_SPREAD:
+                spread_pct = MAX_SANE_SPREAD
             
             # Estimate transaction cost
             # Adjust holding days based on trading mode (intraday = same day, position = weeks)
@@ -4542,20 +4594,22 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 holding_days=est_holding_days,
             )
             
-            # Check if trade is worth executing
-            # During extended hours, use relaxed thresholds (spreads are capped but wider)
-            cost_result = transaction_cost_model.should_execute_trade(
-                cost_estimate=cost_estimate,
-                expected_return=expected_return,
-                confidence=conviction,
-                is_extended_hours=is_extended_hours,
-            )
+            # Position CLOSURES (sell/cover existing) always execute -- never block exits
+            is_position_close = side in ('sell', 'cover') and symbol in current_shares and current_shares[symbol] != 0
             
-            if not cost_result.should_trade:
-                trades_skipped_by_cost += 1
-                cost_avoided += cost_estimate.total_cost
-                log(f"  ⏭️ Skip {side.upper()} {qty} {symbol}: {cost_result.reason}")
-                continue
+            if not is_position_close:
+                cost_result = transaction_cost_model.should_execute_trade(
+                    cost_estimate=cost_estimate,
+                    expected_return=expected_return,
+                    confidence=conviction,
+                    is_extended_hours=is_extended_hours,
+                )
+                
+                if not cost_result.should_trade:
+                    trades_skipped_by_cost += 1
+                    cost_avoided += cost_estimate.total_cost
+                    log(f"  ⏭️ Skip {side.upper()} {qty} {symbol}: {cost_result.reason}")
+                    continue
             
             total_value += value
             
@@ -4584,7 +4638,20 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         if total_value > 0:
             log(f"   Cost as % of notional: {(total_estimated_cost / total_value) * 100:.2f}%")
         
-        if not orders_to_execute:
+        if analysis_only and orders_to_execute:
+            log("")
+            log("=" * 60)
+            log("📊 ANALYSIS-ONLY MODE (Market Closed)")
+            log("=" * 60)
+            log(f"  Strategy analysis identified {len(orders_to_execute)} potential trades:")
+            for o in orders_to_execute:
+                log(f"    → {o['side'].upper()} {o['quantity']} {o['symbol']} @ ${o['price']:.2f} "
+                    f"(conviction: {o['conviction']:.1%})")
+            log("")
+            log("  These trades will NOT execute until market opens.")
+            log("  Signal data has been recorded for learning.")
+            orders_executed = 0
+        elif not orders_to_execute:
             log("")
             log("=" * 60)
             log("SMART EXECUTION ENGINE")
@@ -4592,9 +4659,16 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             if trades_skipped_by_cost > 0:
                 log(f"  ⚠️ All {trades_skipped_by_cost} trades skipped due to transaction costs")
                 log(f"     Total cost avoided: ${cost_avoided:.2f}")
-                log("     Consider running during market hours for tighter spreads")
+                if not market_open:
+                    log("     Consider running during market hours for tighter spreads")
             else:
-                log("  No trades needed - portfolio already aligned")
+                total_signals = len([w for w in final_weights.values() if abs(w) > 0])
+                if total_signals > 0 and not has_current_positions:
+                    log("  ⚠️ WARNING: Portfolio is EMPTY but all signals were filtered out!")
+                    log(f"     {total_signals} signals generated → 0 survived validation/sizing")
+                    log(f"     Check system validation thresholds — positions should be opening")
+                else:
+                    log("  No trades needed - portfolio already aligned")
             orders_executed = 0
         else:
             # === LEVERAGE/MARGIN PRE-EXECUTION VALIDATION ===
@@ -4717,10 +4791,8 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     # Get holding period for this symbol (if any)
                     hp_info = holding_periods.get(result.symbol, (0, ''))
                     intended_holding = hp_info[0] if hp_info else 0
-                    # Use strategy_attribution for PROPER strategy attribution (works for ALL strategies)
-                    # Fall back to holding_periods only for intraday holding info
                     attr_info = strategy_attribution.get(result.symbol)
-                    entry_strat = attr_info[0] if attr_info else (hp_info[1] if hp_info else '')
+                    entry_strat = attr_info[0] if attr_info else (hp_info[1] if hp_info else 'ensemble_blend')
                     
                     learning_engine.record_trade(
                         symbol=result.symbol,
@@ -5276,13 +5348,16 @@ def auto_rebalance_scheduler():
                         learning_engine.trade_memory._save()
                         logging.info(f"💰 Updated P&L for {pnl_updated} trades in trade memory")
                     
-                    # Close positions no longer held by broker
-                    for symbol, trade in list(learning_engine.trade_memory.open_positions.items()):
-                        if symbol not in current_position_symbols and symbol in current_prices:
-                            price = current_prices[symbol]
-                            learning_engine.trade_memory._close_position(trade, price, 'position_closed')
-                            del learning_engine.trade_memory.open_positions[symbol]
-                            logging.info(f"📉 Closed position tracking for {symbol}")
+                    # Reconcile: close positions no longer held by broker
+                    broker_qty = {}
+                    if positions:
+                        for sym, pos_data in positions.items():
+                            qty = pos_data.get('qty', 0) if isinstance(pos_data, dict) else getattr(pos_data, 'qty', 0)
+                            broker_qty[sym] = int(qty) if qty else 0
+                    learning_engine.trade_memory.reconcile_positions(broker_qty, current_prices)
+                    
+                    # Close positions held longer than 30 days
+                    learning_engine.trade_memory.close_expired_positions(current_prices, max_hold_days=30)
                             
                 except Exception as pnl_e:
                     logging.warning(f"Trade memory P&L update error: {pnl_e}")
@@ -8327,6 +8402,9 @@ def get_ticker_sentiment():
         # Convert to dict for JSON
         stocks_data = {}
         for ticker, feat in last_ticker_sentiments.items():
+            if isinstance(feat, dict):
+                stocks_data[ticker] = feat
+                continue
             stocks_data[ticker] = {
                 'sentiment_score': feat.sentiment_score,
                 'sentiment_confidence': feat.sentiment_confidence,

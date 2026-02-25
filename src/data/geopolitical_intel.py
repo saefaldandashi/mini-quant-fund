@@ -660,17 +660,31 @@ class GeopoliticalIntelligence:
         "gun control", "abortion", "congressional hearing",
         "campaign trail", "polling",
         # Sports/Entertainment
-        "world cup", "olympics", "football", "soccer", "basketball", "baseball",
-        "tennis", "golf", "celebrity", "kardashian", "hollywood", "movie",
-        "concert", "grammy", "oscar", "emmy", "red carpet",
-        # Lifestyle
+        "world cup", "olympics", "olympic gold", "olympic medal", "olympic games",
+        "skating gold", "hockey gold", "swimming gold", "gymnast",
+        "football", "soccer", "basketball", "baseball", "cricket",
+        "tennis", "golf", "rugby", "boxing", "wrestling", "marathon",
+        "celebrity", "kardashian", "hollywood", "movie", "film festival",
+        "concert", "grammy", "oscar", "emmy", "red carpet", "netflix",
+        "prince andrew", "prince harry", "royal family", "monarchy",
+        "bug of the year", "insect", "moth named", "beetle",
+        # Historical / Opinion / Lifestyle
+        "spanish armada", "teaches us about", "lessons from history",
         "recipe", "cooking", "restaurant", "travel tips", "fashion",
         "diet", "workout", "yoga", "meditation", "home decor",
+        # Nature / Weather (not infrastructure)
+        "avalanche", "avalanches", "weather forecast", "sunny", "cloudy",
+        "chance of rain", "wildflower", "wildlife", "zoo ",
+        # UK fluff / campaigns
+        "savvy squirrel",
+        # Crime / Missing persons / Local
+        "missing person", "cold case", "serial killer", "true crime",
+        "record label investment", "eyed record label",
         # Social media / Tech regulation (unless antitrust)
         "social media ban", "under-15", "age verification", "content moderation",
         "parental controls", "screen time", "online safety",
-        # Weather (unless infrastructure impact)
-        "weather forecast", "sunny", "cloudy", "chance of rain",
+        # Podcasts / Media listings
+        "podcast", "(podcast)", "listen now", "episode recap",
         # Obituaries
         "obituary", "funeral", "passed away", "dies at",
         # Business/Corporate (not geopolitical)
@@ -962,6 +976,9 @@ class GeopoliticalIntelligence:
         self.relevance_filter = get_news_filter() if HAS_RELEVANCE_FILTER else None
         self.filtered_events: List[NewsEvent] = []  # High-quality filtered events
         
+        # Story tracking for staleness decay
+        self._story_first_seen: Dict[str, str] = {}  # topic_key -> ISO date first seen
+        
         # Load caches (both raw and filtered)
         self._load_cache()
         self._load_filtered_cache()  # LOAD PERSISTENT FILTERED EVENTS
@@ -1004,6 +1021,8 @@ class GeopoliticalIntelligence:
                 
                 if data.get("last_update"):
                     self.last_update = datetime.fromisoformat(data["last_update"])
+                
+                self._story_first_seen = data.get("story_first_seen", {})
                     
         except Exception as e:
             logging.warning(f"Could not load geopolitical cache: {e}")
@@ -1014,6 +1033,7 @@ class GeopoliticalIntelligence:
             data = {
                 "events": [e.to_dict() for e in self.events_cache],
                 "last_update": datetime.now(pytz.UTC).isoformat(),
+                "story_first_seen": self._story_first_seen,
             }
             with open(self.cache_file, 'w') as f:
                 json.dump(data, f, indent=2)
@@ -1408,6 +1428,84 @@ class GeopoliticalIntelligence:
         
         return regions if regions else ["global"]
     
+    def _is_market_relevant(self, text: str, event_type: str, severity: float,
+                            regions: List[str]) -> bool:
+        """
+        Gate check: does this event have a plausible channel to move US equities?
+        Filters out articles that match escalation keywords but aren't market-moving.
+        
+        An event is relevant if it involves at least one of:
+        - Major economy trade/fiscal policy (US, China, EU, Japan)
+        - Oil/energy supply disruption or pricing
+        - Central bank action or financial system stress
+        - Military action involving a major power or critical chokepoint
+        - Sanctions affecting global trade
+        - Commodity supply disruption
+        """
+        text_lower = text.lower()
+        
+        # Always relevant: involves a major economy directly
+        major_economy_keywords = [
+            "united states", "u.s.", "federal reserve", "fed ", "treasury",
+            "china", "chinese", "beijing", "pboc",
+            "european union", "ecb", "euro zone", "eurozone",
+            "japan", "boj", "bank of japan",
+            "uk ", "bank of england", "g7", "g20",
+        ]
+        if any(kw in text_lower for kw in major_economy_keywords):
+            return True
+        
+        # Always relevant: oil/energy/commodity supply
+        commodity_channels = [
+            "oil price", "crude oil", "oil market", "opec", "oil export",
+            "oil import", "natural gas", "lng ", "pipeline", "refiner",
+            "barrel", "brent", "wti ", "gasoline", "diesel",
+            "strait of hormuz", "suez canal", "panama canal",
+            "shipping lane", "trade route", "supply chain",
+            "commodity", "copper", "lithium", "rare earth", "semiconductor",
+            "wheat", "grain export", "food price", "fertilizer",
+        ]
+        if any(kw in text_lower for kw in commodity_channels):
+            return True
+        
+        # Always relevant: financial system / central bank / sanctions
+        financial_channels = [
+            "central bank", "interest rate", "rate cut", "rate hike",
+            "inflation", "deflation", "recession", "gdp ",
+            "sanctions", "embargo", "tariff", "trade war", "trade deal",
+            "debt crisis", "sovereign debt", "bond yield", "credit rating",
+            "banking crisis", "bank run", "default", "bailout",
+            "currency", "dollar", "yuan", "yen ", "euro ",
+            "stock market", "equity market", "bond market",
+            "capital flight", "capital controls",
+        ]
+        if any(kw in text_lower for kw in financial_channels):
+            return True
+        
+        # Always relevant: military involving major powers or nuclear
+        major_military = [
+            "nato", "nuclear", "us military", "us forces", "pentagon",
+            "china military", "taiwan strait", "south china sea",
+            "russia nato", "article 5", "missile defense",
+            "carrier group", "aircraft carrier", "hypersonic",
+            "cyber attack", "critical infrastructure",
+        ]
+        if any(kw in text_lower for kw in major_military):
+            return True
+        
+        # High-severity events in market-connected regions pass through
+        market_connected_regions = {"americas", "asia", "europe", "russia", "middle_east"}
+        if severity >= 0.6 and any(r in market_connected_regions for r in regions):
+            return True
+        
+        # High-impact event types always pass if severity is decent
+        high_impact_types = {"central_bank", "financial_stress", "energy", "economic"}
+        if event_type in high_impact_types and severity >= 0.35:
+            return True
+        
+        # Everything else: not market-relevant
+        return False
+    
     def _calculate_market_impact(self, event_type: str, severity: float, 
                                   regions: List[str]) -> float:
         """Calculate estimated market impact score."""
@@ -1473,6 +1571,10 @@ class GeopoliticalIntelligence:
                             continue
                         
                         regions = self._identify_regions(full_text)
+                        
+                        if not self._is_market_relevant(full_text, event_type, severity, regions):
+                            continue
+                        
                         market_impact = self._calculate_market_impact(event_type, severity, regions)
                         
                         event = GeopoliticalEvent(
@@ -1565,10 +1667,14 @@ class GeopoliticalIntelligence:
                             full_text = f"{headline} {summary}"
                             event_type, severity, keywords = self._classify_event(full_text)
                             
-                            if severity < 0.3:
+                            if severity < 0.3 or event_type == "irrelevant":
                                 continue
                             
                             regions = self._identify_regions(full_text)
+                            
+                            if not self._is_market_relevant(full_text, event_type, severity, regions):
+                                continue
+                            
                             market_impact = self._calculate_market_impact(event_type, severity, regions)
                             
                             event = GeopoliticalEvent(
@@ -1793,6 +1899,182 @@ class GeopoliticalIntelligence:
             return self.relevance_filter.get_stats()
         return {}
     
+    def _extract_story_keys(self, event) -> set:
+        """Extract topic identifiers for an event for story-level matching."""
+        text_lower = f"{event.headline} {event.summary}".lower()
+        keys = set()
+        
+        # High-signal: known conflict IDs (e.g. "ukraine_russia", "israel_hamas")
+        for conflict_id, conf in self.ACTIVE_CONFLICTS.items():
+            if any(kw in text_lower for kw in conf.get("keywords", [])):
+                keys.add(conflict_id)
+        
+        # Medium-signal: event's own classified keywords
+        for kw in getattr(event, 'keywords', []):
+            if kw and '(' not in kw and len(kw) > 2:
+                keys.add(kw.lower().strip())
+        
+        # Medium-signal: significant headline words (3+ chars, not stopwords)
+        stopwords = {'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all',
+                     'can', 'has', 'her', 'was', 'one', 'our', 'out', 'his',
+                     'how', 'its', 'may', 'new', 'now', 'say', 'says', 'she',
+                     'too', 'use', 'who', 'why', 'will', 'with', 'from', 'have',
+                     'been', 'more', 'than', 'that', 'this', 'what', 'when',
+                     'after', 'about', 'over', 'into', 'also', 'could', 'would',
+                     'should', 'some', 'them', 'they', 'were', 'which', 'their'}
+        headline_words = set()
+        for word in event.headline.lower().split():
+            clean = ''.join(c for c in word if c.isalnum())
+            if len(clean) >= 4 and clean not in stopwords:
+                headline_words.add(clean)
+        keys.update(headline_words)
+        
+        if not keys:
+            keys.add(f"_misc_{event.event_id[:8]}")
+        
+        return keys
+    
+    def _group_into_stories(self, events: list) -> list:
+        """
+        Group events about the same story and keep only the most severe per group.
+        Prevents 10 articles about the same topic from inflating the score 10x.
+        
+        Key design choices to prevent snowballing:
+        - Each event is matched against a story's SEED keys (not accumulated keys)
+        - Requires >= 2 overlapping keys to merge (conflict ID alone is not enough)
+        - Best match wins when multiple stories qualify
+        """
+        if len(events) <= 1:
+            return events
+        
+        try:
+            # (seed_keys, accumulated_keys, all_member_events, best_event)
+            stories = []
+            
+            for event in events:
+                event_keys = self._extract_story_keys(event)
+                
+                best_match_idx = -1
+                best_match_score = 0
+                
+                for i, (seed_keys, _, _, _) in enumerate(stories):
+                    overlap = event_keys & seed_keys
+                    
+                    if len(overlap) >= 2 and len(overlap) > best_match_score:
+                        best_match_score = len(overlap)
+                        best_match_idx = i
+                
+                if best_match_idx >= 0:
+                    seed, acc, members, best = stories[best_match_idx]
+                    acc.update(event_keys)
+                    members.append(event)
+                    if event.market_impact_score > best.market_impact_score:
+                        stories[best_match_idx] = (seed, acc, members, event)
+                else:
+                    stories.append((event_keys.copy(), event_keys.copy(), [event], event))
+            
+            deduped = [best for _, _, _, best in stories]
+            
+            if events and not deduped:
+                return events
+            
+            if len(deduped) < len(events):
+                logging.info(f"Story grouping: {len(events)} events -> {len(deduped)} stories")
+            
+            return deduped
+            
+        except Exception as e:
+            logging.warning(f"Story grouping failed, using raw events: {e}")
+            return events
+    
+    def _get_staleness_multiplier(self, event) -> float:
+        """
+        Returns a decay multiplier (0.15-1.0) based on how long a story topic
+        has been in the news. New stories get full weight; old stories get discounted.
+        """
+        try:
+            text_lower = f"{event.headline} {event.summary}".lower()
+            topic_key = None
+            has_escalation_trigger = False
+            
+            # Identify topic and check for escalation triggers
+            for conflict_id, conf in self.ACTIVE_CONFLICTS.items():
+                if any(kw in text_lower for kw in conf.get("keywords", [])):
+                    topic_key = conflict_id
+                    if any(trigger in text_lower for trigger in conf.get("escalation_triggers", [])):
+                        has_escalation_trigger = True
+                    break
+            
+            if not topic_key:
+                topic_key = f"{getattr(event, 'event_type', 'general')}_{'-'.join(sorted(getattr(event, 'regions', ['global'])))}"
+            
+            today = datetime.now(pytz.UTC).date().isoformat()
+            
+            # New escalation trigger resets the clock
+            if has_escalation_trigger:
+                self._story_first_seen[topic_key] = today
+                return 1.0
+            
+            if topic_key not in self._story_first_seen:
+                self._story_first_seen[topic_key] = today
+                return 1.0
+            
+            first_seen = datetime.fromisoformat(self._story_first_seen[topic_key]).date()
+            days_active = (datetime.now(pytz.UTC).date() - first_seen).days
+            
+            if days_active <= 3:
+                return 1.0
+            elif days_active <= 7:
+                return 0.6
+            elif days_active <= 14:
+                return 0.3
+            else:
+                return 0.15
+                
+        except Exception:
+            return 1.0
+    
+    def _log_prediction(self, overall_risk: float, risk_level: str,
+                        vix_level: float, spy_change: float,
+                        escalation_count: int, de_escalation_count: int):
+        """
+        Log daily geo risk prediction alongside market data for future calibration.
+        Only logs once per day.
+        """
+        try:
+            log_file = Path("outputs/geo_prediction_log.json")
+            log_file.parent.mkdir(parents=True, exist_ok=True)
+            
+            entries = []
+            if log_file.exists():
+                with open(log_file, 'r') as f:
+                    entries = json.load(f)
+            
+            today = datetime.now(pytz.UTC).date().isoformat()
+            
+            # Only log once per day
+            if entries and entries[-1].get("date") == today:
+                return
+            
+            entries.append({
+                "date": today,
+                "overall_risk_score": round(overall_risk, 4),
+                "risk_level": risk_level,
+                "spy_change_pct": round(spy_change, 4),
+                "vix": round(vix_level, 2),
+                "escalation_count": escalation_count,
+                "de_escalation_count": de_escalation_count,
+            })
+            
+            # Keep rolling year
+            entries = entries[-365:]
+            
+            with open(log_file, 'w') as f:
+                json.dump(entries, f, indent=2)
+                
+        except Exception as e:
+            logging.debug(f"Could not log geo prediction: {e}")
+    
     def get_risk_assessment(self, refresh: bool = False) -> GeopoliticalRiskAssessment:
         """
         COMPREHENSIVE Geopolitical Risk Assessment v2.0
@@ -1876,6 +2158,13 @@ class GeopoliticalIntelligence:
                 de_escalation_events.append(event)
             else:
                 neutral_events.append(event)
+        
+        # ================================================================
+        # STEP 1b: STORY-LEVEL DEDUPLICATION
+        # Collapse multiple articles about the same topic into one per story
+        # ================================================================
+        escalation_events = self._group_into_stories(escalation_events)
+        de_escalation_events = self._group_into_stories(de_escalation_events)
         
         # ================================================================
         # STEP 2: CHECK FOR CRITICAL COMBINATIONS (P3 Fix)
@@ -2019,7 +2308,8 @@ class GeopoliticalIntelligence:
             if event in escalation_events:
                 age_hours = (now - event.timestamp.replace(tzinfo=pytz.UTC)).total_seconds() / 3600
                 decay = 2 ** (-age_hours / 3)  # 3-hour half-life for immediate
-                immediate_scores.append(event.market_impact_score * decay * 0.7)  # Dampen slightly
+                staleness = self._get_staleness_multiplier(event)
+                immediate_scores.append(event.market_impact_score * decay * staleness * 0.7)
         
         if immediate_scores:
             max_imm = max(immediate_scores)
@@ -2033,10 +2323,10 @@ class GeopoliticalIntelligence:
         for event in events_48h:
             if event in escalation_events:
                 age_hours = (now - event.timestamp.replace(tzinfo=pytz.UTC)).total_seconds() / 3600
-                # Event-type-specific decay (P1 Fix)
                 half_life = self.TIME_DECAY_HALF_LIFE.get(event.event_type, 12)
                 decay = 2 ** (-age_hours / half_life)
-                situational_scores.append(event.market_impact_score * event.severity * decay * 0.6)
+                staleness = self._get_staleness_multiplier(event)
+                situational_scores.append(event.market_impact_score * event.severity * decay * staleness * 0.6)
         
         if situational_scores:
             max_sit = max(situational_scores)
@@ -2085,6 +2375,7 @@ class GeopoliticalIntelligence:
         vix_level = 20.0  # Default
         vix_multiplier = 1.0
         market_confirms_risk = False
+        spy_change = 0.0
         
         try:
             from src.data.macro_data import MacroDataLoader
@@ -2240,6 +2531,17 @@ class GeopoliticalIntelligence:
             market_confirms_risk=market_confirms_risk,
             vix_level=vix_level,
         )
+        
+        # Log daily prediction for calibration and persist story tracking
+        self._log_prediction(
+            overall_risk=overall_risk,
+            risk_level=risk_level,
+            vix_level=vix_level,
+            spy_change=spy_change,
+            escalation_count=len(escalation_events),
+            de_escalation_count=len(de_escalation_events),
+        )
+        self._save_cache()
         
         return self.last_assessment
     
