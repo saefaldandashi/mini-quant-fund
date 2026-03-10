@@ -90,7 +90,7 @@ from src.news_intelligence import (
     MacroEvent,
 )
 from src.execution import SmartExecutor, ExecutionStrategy, SpreadAnalyzer
-from src.execution.transaction_costs import TransactionCostModel, transaction_cost_model
+from src.execution.transaction_costs import TransactionCostModel, TradeCostResult, transaction_cost_model
 
 # Advanced Analytics (NEW)
 from src.analytics import (
@@ -4597,7 +4597,15 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             # Position CLOSURES (sell/cover existing) always execute -- never block exits
             is_position_close = side in ('sell', 'cover') and symbol in current_shares and current_shares[symbol] != 0
             
-            if not is_position_close:
+            if is_position_close:
+                cost_result = TradeCostResult(
+                    should_trade=True,
+                    cost_estimate=cost_estimate,
+                    expected_benefit=0.0,
+                    net_expected_value=-cost_estimate.total_cost,
+                    reason="Position closure — always execute",
+                )
+            else:
                 cost_result = transaction_cost_model.should_execute_trade(
                     cost_estimate=cost_estimate,
                     expected_return=expected_return,
