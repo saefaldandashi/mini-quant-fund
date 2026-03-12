@@ -174,6 +174,8 @@ class SignalValidator:
             blocking_issues.append(f"Position too large ({signal_weight:.1%} > 25%)")
         
         # === CHECK 6: MOMENTUM CONFIRMATION (Win-Rate Improvement) ===
+        # NOTE: Mean-reversion strategies intentionally trade AGAINST momentum.
+        # We only use momentum as a soft signal (confidence adjustment), never to block.
         if self.require_momentum_confirmation and momentum_signal is not None:
             momentum_aligns = (
                 (signal_direction == 'long' and momentum_signal > 0.1) or
@@ -185,20 +187,14 @@ class SignalValidator:
             )
             
             if momentum_aligns:
-                # Strong momentum confirmation - boost confidence
-                confidence_score = min(1.0, confidence_score * 1.15)
+                confidence_score = min(1.0, confidence_score * 1.10)
                 adjustments['momentum_confirmed'] = True
                 self.momentum_confirmed += 1
             elif momentum_conflicts:
-                # Strong momentum against signal - reduce confidence significantly
                 warnings.append(f"Momentum conflict: {momentum_signal:.2f} vs {signal_direction}")
-                confidence_score *= 0.6
+                confidence_score *= 0.85
                 adjustments['momentum_conflict'] = True
                 self.momentum_rejected += 1
-                
-                # If momentum is VERY strong against us, block the trade
-                if abs(momentum_signal) > 0.5:
-                    blocking_issues.append(f"Strong momentum against signal ({momentum_signal:.2f})")
         
         # === CHECK 7: RSI CONFIRMATION ===
         if rsi is not None:

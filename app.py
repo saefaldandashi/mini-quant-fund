@@ -988,16 +988,16 @@ def get_dynamic_trading_mode(
     if vix_level < 15 and 'range' in str(regime).lower():
         return "hybrid", f"VIX={vix_level:.0f} (<15) + {regime} → HYBRID: Low vol, range-bound"
     
-    # Moderate volatility = intraday (default for HFT-lite focus)
+    # Normal volatility = hybrid (balance intraday + position strategies)
     if 15 <= vix_level <= 20:
-        return "intraday", f"VIX={vix_level:.0f} (15-20) → INTRADAY: Normal conditions, HFT-lite"
+        return "hybrid", f"VIX={vix_level:.0f} (15-20) → HYBRID: Normal conditions, balanced approach"
     
-    # Slightly elevated = intraday with caution
+    # Slightly elevated = hybrid with caution
     if 20 < vix_level <= 25:
-        return "intraday", f"VIX={vix_level:.0f} (20-25) → INTRADAY: Slightly elevated vol"
+        return "hybrid", f"VIX={vix_level:.0f} (20-25) → HYBRID: Slightly elevated vol, balanced"
     
-    # Default: intraday (HFT-lite focus)
-    return "intraday", f"VIX={vix_level:.0f} → INTRADAY: Default HFT-lite mode"
+    # Default: hybrid
+    return "hybrid", f"VIX={vix_level:.0f} → HYBRID: Default balanced mode"
 
 
 def get_strategy_blend_weights(mode: str, vix_level: float) -> Dict[str, float]:
@@ -2906,9 +2906,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 scanner_shorts = short_scanner.get_short_weights()
                 if scanner_shorts:
                     log(f"🎯 Short Scanner found {len(scanner_shorts)} fundamental short candidates:")
-                    for sym, wt in list(scanner_shorts.items())[:5]:
+                    for idx, (sym, wt) in enumerate(scanner_shorts.items()):
                         existing = combined_weights.get(sym, 0)
-                        log(f"    {sym}: {wt*100:+.2f}% (was {existing*100:+.2f}%)")
+                        if idx < 5:
+                            log(f"    {sym}: {wt*100:+.2f}% (was {existing*100:+.2f}%)")
                         
                         if wt < 0:
                             # Count how many strategies agree on this long
@@ -3817,28 +3818,14 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         # Calculate target symbols — the position sizer's investment floor scales small
         # ensemble weights up to proper allocations, so we use a low base threshold and
-        # only fall back to a higher one when we already hold positions (no need to churn).
-        STRONG_THRESHOLD = 0.02   # 2% for high-conviction filtering when portfolio is populated
-        BASE_THRESHOLD = 0.0005   # 0.05% to capture real ensemble signals for the position sizer
+        # Let the strategy enhancer handle position count limits (max_positions=15/20)
+        # Only filter out true noise here — the enhancer's min_position_pct does the real gating
+        WEIGHT_THRESHOLD = 0.003  # 0.3% — matches conviction gate, lets enhancer decide
         
         has_current_positions = bool(current_positions) and len(current_positions) > 0
-        
-        # When portfolio is empty, use the low threshold so the position sizer can
-        # apply the investment floor and scale weights up from ensemble averages.
-        # When we already hold positions, use the stronger threshold to avoid noise.
-        if has_current_positions:
-            MIN_WEIGHT_THRESHOLD = STRONG_THRESHOLD
-        else:
-            MIN_WEIGHT_THRESHOLD = BASE_THRESHOLD
+        MIN_WEIGHT_THRESHOLD = WEIGHT_THRESHOLD
         
         target_symbols = [s for s, w in final_weights.items() if abs(w) > MIN_WEIGHT_THRESHOLD]
-        
-        # If even the strong threshold produces too few targets, relax it
-        if has_current_positions and len(target_symbols) < 3:
-            target_symbols = [s for s, w in final_weights.items() if abs(w) > BASE_THRESHOLD]
-            if len(target_symbols) > 0:
-                MIN_WEIGHT_THRESHOLD = BASE_THRESHOLD
-                log(f"📊 Few signals above 2% — relaxed threshold to capture {len(target_symbols)} signals")
         
         if not target_symbols:
             log(f"📭 No signals above {MIN_WEIGHT_THRESHOLD:.2%} threshold — staying in cash (no noise trades)")
@@ -4056,15 +4043,18 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             except Exception as e:
                 log(f"⚠️ Could not get VIX exposure multiplier: {e}")
             
-            # Apply VIX multiplier to capital exposure
-            adjusted_capital_exposure = capital_exposure_pct * vix_exposure_multiplier
+            # Enhancer normalizes weights to target_exposure as fraction of effective_equity.
+            # Since effective_equity already incorporates exposure reductions (loss awareness, regime),
+            # the enhancer should target ~1.0 (100% of effective_equity).
+            # Apply VIX multiplier as an additional dampener if warranted.
+            enhancer_target = max(0.5, min(1.0, vix_exposure_multiplier))
             
             # Apply strategy enhancer
             try:
                 enhanced_weights, size_reasons = temp_enhancer.enhance_position_sizes(
                     base_weights=kelly_adjusted_weights,
                     confidences=confidences,
-                    target_exposure=adjusted_capital_exposure,  # CRITICAL FIX #8: Use VIX-adjusted exposure
+                    target_exposure=enhancer_target,
                 )
             except Exception as e:
                 log(f"⚠️ Strategy enhancer error: {e}")
@@ -4103,13 +4093,22 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             except:
                 pass
             
-            effective_equity = equity * capital_exposure_pct * regime_multiplier * accel_multiplier
+            # Use the MOST RESTRICTIVE single exposure signal, not the product of all three
+            # Previous bug: 0.65 × 0.75 × 0.65 = 0.317 (only 32% deployed — death spiral)
+            # Fix: take the minimum to avoid triple-compounding
+            exposure_signals = {
+                'loss_awareness': capital_exposure_pct,
+                'regime': regime_multiplier,
+            }
+            binding_constraint = min(exposure_signals, key=exposure_signals.get)
+            combined_exposure = min(exposure_signals.values())
+            
+            effective_equity = equity * combined_exposure * accel_multiplier
             log(f"")
+            log(f"💵 Capital Exposure: {combined_exposure*100:.0f}% (binding: {binding_constraint}) = ${effective_equity:,.2f} available")
+            log(f"   Signals: loss_awareness={capital_exposure_pct*100:.0f}%, regime={regime_multiplier*100:.0f}%")
             if accel_multiplier > 1.0:
-                log(f"💵 Capital Exposure: {capital_exposure_pct*100:.0f}% × {regime_multiplier*100:.0f}% regime × {accel_multiplier*100:.0f}% acceleration = ${effective_equity:,.2f} available")
                 log(f"  🔥 Win acceleration adding {(accel_multiplier-1)*100:.0f}% extra capital deployment")
-            else:
-                log(f"💵 Capital Exposure: {capital_exposure_pct*100:.0f}% × {regime_multiplier*100:.0f}% regime = ${effective_equity:,.2f} available")
             
             # === CALCULATE DYNAMIC LEVERAGE ===
             # Get leverage settings from config

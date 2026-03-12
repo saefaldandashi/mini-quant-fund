@@ -433,12 +433,27 @@ class SectorExposureTracker:
         return SECTOR_MAP.get(symbol, 'Unknown')
     
     def calculate_exposure(self, weights: Dict[str, float]) -> Dict[str, float]:
-        """Calculate current sector exposure from weights."""
-        exposure = {}
+        """Calculate current sector exposure from weights.
+        
+        Uses max(gross_long, gross_short) per sector instead of abs() sum,
+        so hedged L/S positions within a sector aren't double-counted.
+        """
+        sector_long = {}
+        sector_short = {}
         
         for symbol, weight in weights.items():
             sector = self.get_sector(symbol)
-            exposure[sector] = exposure.get(sector, 0) + abs(weight)
+            if weight > 0:
+                sector_long[sector] = sector_long.get(sector, 0) + weight
+            else:
+                sector_short[sector] = sector_short.get(sector, 0) + abs(weight)
+        
+        all_sectors = set(list(sector_long.keys()) + list(sector_short.keys()))
+        exposure = {}
+        for sector in all_sectors:
+            long_exp = sector_long.get(sector, 0)
+            short_exp = sector_short.get(sector, 0)
+            exposure[sector] = max(long_exp, short_exp)
         
         self._current_exposure = exposure
         return exposure

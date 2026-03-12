@@ -206,7 +206,7 @@ class CrossSectionalMomentumLS(Strategy):
             strategy_name=self.name,
             timestamp=t,
             desired_weights=weights,
-            expected_return=spread * 0.5,  # Discount the spread
+            expected_return=min(0.05, (spread * 0.5) / 126.0),  # Daily expected return from 126-day spread
             risk_estimate=risk,
             confidence=confidence,
             regime_fit=0.6,
@@ -412,7 +412,7 @@ class MeanReversionLS(Strategy):
             strategy_name=self.name,
             timestamp=t,
             desired_weights=weights,
-            expected_return=0.05,  # Mean reversion targets smaller, consistent returns
+            expected_return=0.003,  # ~0.3% daily, typical for mean-reversion (was 5% with unclear timeframe)
             risk_estimate=0.08,
             confidence=0.5,
             regime_fit=0.8 if features.regime and features.regime.trend_strength < 0.5 else 0.3,
@@ -639,7 +639,7 @@ class QualityValueLS(Strategy):
             strategy_name=self.name,
             timestamp=t,
             desired_weights=weights,
-            expected_return=0.08,
+            expected_return=0.004,  # ~0.4% daily, quality/value premium (was 8% with unclear timeframe)
             risk_estimate=0.10,
             confidence=0.65 if (longs_with_fundamentals + shorts_with_fundamentals) > len(weights) / 2 else 0.50,
             regime_fit=0.6,
