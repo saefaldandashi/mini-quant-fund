@@ -652,7 +652,7 @@ def _load_auto_rebalance_settings() -> dict:
     default = {
         "enabled": False,
         "interval_minutes": 60,
-        "allow_after_hours": True,
+        "allow_after_hours": False,
         "exposure_pct": 0.95,
         "last_run": None,
         "next_run": None,
@@ -668,6 +668,11 @@ def _load_auto_rebalance_settings() -> dict:
                 logging.info(f"📂 Loaded auto-rebalance settings: enabled={default['enabled']}")
     except Exception as e:
         logging.warning(f"Could not load auto-rebalance settings: {e}")
+    
+    # GUARD: Force after-hours OFF — pre-market trading causes 8-11% spreads and unfilled orders
+    if default.get("allow_after_hours", False):
+        logging.warning("⚠️ Overriding allow_after_hours=True → False (pre-market spreads too wide)")
+        default["allow_after_hours"] = False
     
     # GUARD: Enforce minimum 15-minute interval to prevent churn
     # Previous bug: 5-min interval caused 1000 trades in 2 days
@@ -4341,6 +4346,14 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                             best_ret = signal.expected_return
                 if abs(best_ret) > 0:
                     exp_returns[symbol] = abs(best_ret)
+                elif symbol in earnings_signals:
+                    # Earnings-driven positions: use signal strength as expected return proxy
+                    # Strong earnings moves (~30-50%) are expected over ~5 trading days
+                    exp_returns[symbol] = abs(earnings_signals[symbol]) / 5
+                elif enhanced_weights[symbol] < 0:
+                    # Short scanner positions: scanner conviction implies ~3% expected move
+                    # over 20-day holding period = 0.15% daily
+                    exp_returns[symbol] = 0.03 / 20
                 else:
                     exp_returns[symbol] = 0.02 / 252  # Daily default
             
@@ -4428,10 +4441,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             price = current_prices.get(symbol, 0.0)
             if price > 0 and abs(weight) > 0.001:
                 target_value = investable_equity * weight
-                if weight < 0:
-                    target_shares[symbol] = math.ceil(target_value / price)
-                else:
-                    target_shares[symbol] = math.floor(target_value / price)
+                target_shares[symbol] = math.floor(target_value / price)
         
         # DEBUG: Log target_shares after calculation
         short_shares = {s: q for s, q in target_shares.items() if q < 0}
@@ -6308,8 +6318,8 @@ def run_bot_endpoint():
         data = {}
     
     # Query params override JSON - handle both bool and string values
-    allow_after_hours_val = request.args.get('allow_after_hours', data.get('allow_after_hours', True))
-    allow_after_hours = parse_bool_param(allow_after_hours_val, default=True)
+    allow_after_hours_val = request.args.get('allow_after_hours', data.get('allow_after_hours', False))
+    allow_after_hours = parse_bool_param(allow_after_hours_val, default=False)
     
     force_rebalance_val = request.args.get('force', data.get('force_rebalance', True))
     force_rebalance = parse_bool_param(force_rebalance_val, default=True)
@@ -6401,7 +6411,7 @@ def set_auto_rebalance():
     
     auto_rebalance_settings["enabled"] = data.get('enabled', False)
     auto_rebalance_settings["interval_minutes"] = data.get('interval_minutes', 60)
-    auto_rebalance_settings["allow_after_hours"] = data.get('allow_after_hours', True)
+    auto_rebalance_settings["allow_after_hours"] = data.get('allow_after_hours', False)
     auto_rebalance_settings["exposure_pct"] = data.get('exposure_pct', 0.8)
     auto_rebalance_settings["auto_start_on_boot"] = data.get('auto_start_on_boot', True)
     # NOTE: No dry_run option - always live trading
