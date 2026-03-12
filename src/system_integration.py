@@ -259,79 +259,147 @@ class LiquidityFilter:
 
 # Comprehensive sector mapping
 SECTOR_MAP = {
-    # Technology
-    'AAPL': 'Technology', 'MSFT': 'Technology', 'GOOGL': 'Technology',
-    'META': 'Technology', 'NVDA': 'Technology', 'AMZN': 'Technology',
-    'AMD': 'Technology', 'INTC': 'Technology', 'CRM': 'Technology',
+    # Technology (60)
+    'AAPL': 'Technology', 'MSFT': 'Technology', 'NVDA': 'Technology',
     'AVGO': 'Technology', 'ORCL': 'Technology', 'ADBE': 'Technology',
-    'CSCO': 'Technology', 'ACN': 'Technology', 'IBM': 'Technology',
+    'CRM': 'Technology', 'AMD': 'Technology', 'CSCO': 'Technology',
+    'ACN': 'Technology', 'INTC': 'Technology', 'IBM': 'Technology',
     'QCOM': 'Technology', 'TXN': 'Technology', 'AMAT': 'Technology',
-    'NOW': 'Technology', 'INTU': 'Technology', 'MU': 'Technology',
-    'ADI': 'Technology', 'LRCX': 'Technology', 'KLAC': 'Technology',
+    'LRCX': 'Technology', 'MU': 'Technology', 'INTU': 'Technology',
+    'NOW': 'Technology', 'ADI': 'Technology', 'KLAC': 'Technology',
     'SNPS': 'Technology', 'CDNS': 'Technology', 'PANW': 'Technology',
     'MRVL': 'Technology', 'FTNT': 'Technology', 'NXPI': 'Technology',
-    'PLTR': 'Technology', 'SNOW': 'Technology', 'DDOG': 'Technology',
-    'CRWD': 'Technology', 'ZS': 'Technology', 'NET': 'Technology',
-    'MDB': 'Technology', 'ANET': 'Technology',
-    
-    # Finance
+    'MCHP': 'Technology', 'TEL': 'Technology', 'HPQ': 'Technology',
+    'KEYS': 'Technology', 'ON': 'Technology', 'CTSH': 'Technology',
+    'GLW': 'Technology', 'ANSS': 'Technology', 'ZBRA': 'Technology',
+    'CDW': 'Technology', 'AKAM': 'Technology', 'EPAM': 'Technology',
+    'FFIV': 'Technology', 'JNPR': 'Technology', 'NTAP': 'Technology',
+    'WDC': 'Technology', 'STX': 'Technology', 'SWKS': 'Technology',
+    'QRVO': 'Technology', 'SEDG': 'Technology', 'ENPH': 'Technology',
+    'FSLR': 'Technology', 'RUN': 'Technology', 'ANET': 'Technology',
+    'CRWD': 'Technology', 'DDOG': 'Technology', 'ZS': 'Technology',
+    'OKTA': 'Technology', 'NET': 'Technology', 'MDB': 'Technology',
+    'SNOW': 'Technology', 'PLTR': 'Technology', 'PATH': 'Technology',
+
+    # Finance (50)
     'JPM': 'Finance', 'BAC': 'Finance', 'WFC': 'Finance',
     'GS': 'Finance', 'MS': 'Finance', 'C': 'Finance',
     'BLK': 'Finance', 'SCHW': 'Finance', 'AXP': 'Finance',
     'USB': 'Finance', 'PNC': 'Finance', 'TFC': 'Finance',
-    'COF': 'Finance', 'CME': 'Finance', 'ICE': 'Finance',
-    'MCO': 'Finance', 'SPGI': 'Finance', 'MSCI': 'Finance',
+    'BK': 'Finance', 'COF': 'Finance', 'CME': 'Finance',
+    'ICE': 'Finance', 'MCO': 'Finance', 'SPGI': 'Finance',
+    'MSCI': 'Finance', 'FIS': 'Finance', 'FISV': 'Finance',
+    'ADP': 'Finance', 'PAYX': 'Finance', 'GPN': 'Finance',
+    'FLT': 'Finance', 'SYF': 'Finance', 'DFS': 'Finance',
+    'CFG': 'Finance', 'KEY': 'Finance', 'RF': 'Finance',
+    'HBAN': 'Finance', 'MTB': 'Finance', 'FITB': 'Finance',
+    'ZION': 'Finance', 'CMA': 'Finance', 'NTRS': 'Finance',
+    'STT': 'Finance', 'BRO': 'Finance', 'AJG': 'Finance',
+    'MMC': 'Finance', 'AON': 'Finance', 'WTW': 'Finance',
+    'CINF': 'Finance', 'L': 'Finance', 'ALL': 'Finance',
+    'TRV': 'Finance', 'PGR': 'Finance', 'CB': 'Finance',
+    'MET': 'Finance', 'PRU': 'Finance',
     'V': 'Finance', 'MA': 'Finance', 'PYPL': 'Finance',
-    
-    # Healthcare
+
+    # Healthcare (50)
     'UNH': 'Healthcare', 'LLY': 'Healthcare', 'JNJ': 'Healthcare',
     'MRK': 'Healthcare', 'ABBV': 'Healthcare', 'PFE': 'Healthcare',
     'TMO': 'Healthcare', 'ABT': 'Healthcare', 'DHR': 'Healthcare',
     'BMY': 'Healthcare', 'AMGN': 'Healthcare', 'GILD': 'Healthcare',
-    'VRTX': 'Healthcare', 'REGN': 'Healthcare', 'ISRG': 'Healthcare',
-    'SYK': 'Healthcare', 'MDT': 'Healthcare', 'BSX': 'Healthcare',
-    'ELV': 'Healthcare', 'HUM': 'Healthcare', 'CI': 'Healthcare',
-    'CVS': 'Healthcare', 'MCK': 'Healthcare',
-    
-    # Consumer Discretionary
-    'TSLA': 'Consumer', 'HD': 'Consumer', 'MCD': 'Consumer',
-    'NKE': 'Consumer', 'LOW': 'Consumer', 'SBUX': 'Consumer',
-    'TJX': 'Consumer', 'BKNG': 'Consumer', 'MAR': 'Consumer',
-    'CMG': 'Consumer', 'YUM': 'Consumer', 'F': 'Consumer',
-    'GM': 'Consumer', 'ORLY': 'Consumer', 'AZO': 'Consumer',
-    
-    # Consumer Staples
+    'VRTX': 'Healthcare', 'REGN': 'Healthcare', 'MRNA': 'Healthcare',
+    'BIIB': 'Healthcare', 'ILMN': 'Healthcare', 'DXCM': 'Healthcare',
+    'ISRG': 'Healthcare', 'SYK': 'Healthcare', 'MDT': 'Healthcare',
+    'BSX': 'Healthcare', 'EW': 'Healthcare', 'ZBH': 'Healthcare',
+    'IDXX': 'Healthcare', 'IQV': 'Healthcare', 'A': 'Healthcare',
+    'MTD': 'Healthcare', 'WAT': 'Healthcare', 'HOLX': 'Healthcare',
+    'ALGN': 'Healthcare', 'TECH': 'Healthcare', 'BIO': 'Healthcare',
+    'CRL': 'Healthcare', 'PKI': 'Healthcare', 'ELV': 'Healthcare',
+    'HUM': 'Healthcare', 'CI': 'Healthcare', 'CNC': 'Healthcare',
+    'MOH': 'Healthcare', 'CVS': 'Healthcare', 'MCK': 'Healthcare',
+    'ABC': 'Healthcare', 'CAH': 'Healthcare', 'WBA': 'Healthcare',
+    'VTRS': 'Healthcare', 'ZTS': 'Healthcare', 'CTLT': 'Healthcare',
+    'DGX': 'Healthcare', 'LH': 'Healthcare',
+
+    # Consumer Discretionary (40)
+    'AMZN': 'Consumer', 'TSLA': 'Consumer', 'HD': 'Consumer',
+    'MCD': 'Consumer', 'NKE': 'Consumer', 'LOW': 'Consumer',
+    'SBUX': 'Consumer', 'TJX': 'Consumer', 'BKNG': 'Consumer',
+    'MAR': 'Consumer', 'HLT': 'Consumer', 'CMG': 'Consumer',
+    'YUM': 'Consumer', 'DRI': 'Consumer', 'ORLY': 'Consumer',
+    'AZO': 'Consumer', 'BBY': 'Consumer', 'DHI': 'Consumer',
+    'LEN': 'Consumer', 'PHM': 'Consumer', 'NVR': 'Consumer',
+    'GRMN': 'Consumer', 'POOL': 'Consumer', 'ULTA': 'Consumer',
+    'RCL': 'Consumer', 'CCL': 'Consumer', 'NCLH': 'Consumer',
+    'EXPE': 'Consumer', 'LVS': 'Consumer', 'WYNN': 'Consumer',
+    'MGM': 'Consumer', 'F': 'Consumer', 'GM': 'Consumer',
+    'APTV': 'Consumer', 'BWA': 'Consumer', 'LEA': 'Consumer',
+    'RL': 'Consumer', 'TPR': 'Consumer', 'VFC': 'Consumer',
+    'PVH': 'Consumer', 'TGT': 'Consumer',
+
+    # Consumer Staples (30)
     'PG': 'Staples', 'KO': 'Staples', 'PEP': 'Staples',
     'COST': 'Staples', 'WMT': 'Staples', 'PM': 'Staples',
     'MO': 'Staples', 'MDLZ': 'Staples', 'CL': 'Staples',
     'KMB': 'Staples', 'GIS': 'Staples', 'K': 'Staples',
-    
-    # Energy
+    'CAG': 'Staples', 'SJM': 'Staples', 'HSY': 'Staples',
+    'HRL': 'Staples', 'TSN': 'Staples', 'MNST': 'Staples',
+    'KDP': 'Staples', 'STZ': 'Staples', 'BF.B': 'Staples',
+    'TAP': 'Staples', 'EL': 'Staples', 'CHD': 'Staples',
+    'CLX': 'Staples', 'KHC': 'Staples', 'CPB': 'Staples',
+    'MKC': 'Staples', 'SYY': 'Staples', 'ADM': 'Staples',
+
+    # Energy (20)
     'XOM': 'Energy', 'CVX': 'Energy', 'COP': 'Energy',
-    'EOG': 'Energy', 'SLB': 'Energy', 'MPC': 'Energy',
+    'SLB': 'Energy', 'EOG': 'Energy', 'MPC': 'Energy',
     'PSX': 'Energy', 'VLO': 'Energy', 'OXY': 'Energy',
-    
-    # Industrials
-    'CAT': 'Industrials', 'DE': 'Industrials', 'UNP': 'Industrials',
-    'HON': 'Industrials', 'UPS': 'Industrials', 'RTX': 'Industrials',
-    'BA': 'Industrials', 'LMT': 'Industrials', 'GE': 'Industrials',
-    'MMM': 'Industrials', 'EMR': 'Industrials', 'ETN': 'Industrials',
-    
-    # Utilities
+    'PXD': 'Energy', 'DVN': 'Energy', 'HAL': 'Energy',
+    'BKR': 'Energy', 'FANG': 'Energy', 'HES': 'Energy',
+    'KMI': 'Energy', 'WMB': 'Energy', 'OKE': 'Energy',
+    'TRGP': 'Energy', 'LNG': 'Energy',
+
+    # Industrials (40)
+    'CAT': 'Industrials', 'DE': 'Industrials', 'HON': 'Industrials',
+    'UNP': 'Industrials', 'UPS': 'Industrials', 'RTX': 'Industrials',
+    'LMT': 'Industrials', 'BA': 'Industrials', 'GE': 'Industrials',
+    'GD': 'Industrials', 'NOC': 'Industrials', 'TXT': 'Industrials',
+    'HII': 'Industrials', 'LHX': 'Industrials', 'TDG': 'Industrials',
+    'AXON': 'Industrials', 'ETN': 'Industrials', 'EMR': 'Industrials',
+    'ROK': 'Industrials', 'AME': 'Industrials', 'ITW': 'Industrials',
+    'PH': 'Industrials', 'DOV': 'Industrials', 'FAST': 'Industrials',
+    'ODFL': 'Industrials', 'JBHT': 'Industrials', 'CSX': 'Industrials',
+    'NSC': 'Industrials', 'FDX': 'Industrials', 'CHRW': 'Industrials',
+    'WAB': 'Industrials', 'GWW': 'Industrials', 'CTAS': 'Industrials',
+    'CPRT': 'Industrials', 'PCAR': 'Industrials', 'CARR': 'Industrials',
+    'OTIS': 'Industrials', 'JCI': 'Industrials', 'LII': 'Industrials',
+    'TT': 'Industrials', 'MMM': 'Industrials',
+
+    # Communication (15)
+    'META': 'Communication', 'GOOGL': 'Communication', 'GOOG': 'Communication',
+    'NFLX': 'Communication', 'DIS': 'Communication', 'CMCSA': 'Communication',
+    'TMUS': 'Communication', 'VZ': 'Communication', 'T': 'Communication',
+    'CHTR': 'Communication', 'EA': 'Communication', 'TTWO': 'Communication',
+    'MTCH': 'Communication', 'OMC': 'Communication', 'IPG': 'Communication',
+
+    # Utilities (15)
     'NEE': 'Utilities', 'DUK': 'Utilities', 'SO': 'Utilities',
-    'D': 'Utilities', 'AEP': 'Utilities', 'EXC': 'Utilities',
-    
-    # Real Estate
+    'D': 'Utilities', 'AEP': 'Utilities', 'SRE': 'Utilities',
+    'EXC': 'Utilities', 'XEL': 'Utilities', 'PEG': 'Utilities',
+    'ED': 'Utilities', 'WEC': 'Utilities', 'ES': 'Utilities',
+    'AWK': 'Utilities', 'ATO': 'Utilities', 'NI': 'Utilities',
+
+    # Real Estate (15)
     'PLD': 'RealEstate', 'AMT': 'RealEstate', 'EQIX': 'RealEstate',
     'CCI': 'RealEstate', 'PSA': 'RealEstate', 'SPG': 'RealEstate',
-    
-    # Communication
-    'NFLX': 'Communication', 'DIS': 'Communication', 'CMCSA': 'Communication',
-    'T': 'Communication', 'VZ': 'Communication', 'TMUS': 'Communication',
-    
-    # Materials
+    'O': 'RealEstate', 'WELL': 'RealEstate', 'DLR': 'RealEstate',
+    'AVB': 'RealEstate', 'EQR': 'RealEstate', 'VTR': 'RealEstate',
+    'ARE': 'RealEstate', 'MAA': 'RealEstate', 'UDR': 'RealEstate',
+
+    # Materials (15)
     'LIN': 'Materials', 'APD': 'Materials', 'SHW': 'Materials',
-    'ECL': 'Materials', 'FCX': 'Materials', 'NEM': 'Materials',
+    'ECL': 'Materials', 'DD': 'Materials', 'NEM': 'Materials',
+    'FCX': 'Materials', 'NUE': 'Materials', 'STLD': 'Materials',
+    'VMC': 'Materials', 'MLM': 'Materials', 'ALB': 'Materials',
+    'CF': 'Materials', 'MOS': 'Materials', 'IFF': 'Materials',
 }
 
 # Sector exposure limits
@@ -347,7 +415,7 @@ SECTOR_LIMITS = {
     'RealEstate': 0.15,
     'Communication': 0.20,
     'Materials': 0.15,
-    'Unknown': 0.10,        # Unknown sectors limited
+    'Unknown': 0.25,        # Unknown sectors — broader limit since map may miss some symbols
 }
 
 

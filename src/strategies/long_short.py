@@ -260,6 +260,7 @@ class TimeSeriesMomentumLS(Strategy):
         weights = {}
         expected_returns = {}
         
+        scored_symbols = []
         for symbol in momentum:
             mom = momentum.get(symbol)
             vol = volatility.get(symbol, 0.20)
@@ -267,25 +268,24 @@ class TimeSeriesMomentumLS(Strategy):
             if mom is None or vol is None or vol == 0:
                 continue
             
-            # Direction based on trend sign
             direction = 1 if mom > 0 else -1
-            
-            # Size based on vol targeting
             vol_scalar = self.vol_target / vol if vol > 0 else 0.5
-            
-            # Strength based on momentum magnitude
-            strength = min(1.0, abs(mom) / 0.3)  # Full strength at 30% momentum
-            
-            # Final weight
+            strength = min(1.0, abs(mom) / 0.3)
             raw_weight = direction * vol_scalar * strength * self.max_position
-            
-            # Clip to max
             weight = max(-self.max_position, min(self.max_position, raw_weight))
             
             if abs(weight) > 0.01:
-                weights[symbol] = weight
-                # Cap expected return at realistic levels
-                expected_returns[symbol] = max(-0.50, min(0.50, mom * 0.3))
+                # Convert 126-day return to daily expected return for cost-benefit
+                daily_exp_ret = mom / 126.0
+                scored_symbols.append((symbol, weight, daily_exp_ret, abs(weight)))
+        
+        # Limit to top 20 longs + top 20 shorts by weight magnitude
+        longs = sorted([s for s in scored_symbols if s[1] > 0], key=lambda x: x[3], reverse=True)[:20]
+        shorts = sorted([s for s in scored_symbols if s[1] < 0], key=lambda x: x[3], reverse=True)[:20]
+        
+        for symbol, weight, daily_ret, _ in longs + shorts:
+            weights[symbol] = weight
+            expected_returns[symbol] = max(-0.05, min(0.05, daily_ret))
         
         if not weights:
             return SignalOutput(

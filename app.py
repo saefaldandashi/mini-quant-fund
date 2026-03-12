@@ -2902,9 +2902,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 )
                 
                 # Add fundamental shorts to combined_weights
-                # CRITICAL: Short scanner signals OVERRIDE ensemble longs
-                # This is because the short scanner has done specific technical/fundamental
-                # analysis that identified overbought/overvalued conditions
+                # Short scanner signals: only override if no strong ensemble consensus
                 scanner_shorts = short_scanner.get_short_weights()
                 if scanner_shorts:
                     log(f"🎯 Short Scanner found {len(scanner_shorts)} fundamental short candidates:")
@@ -2912,15 +2910,25 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                         existing = combined_weights.get(sym, 0)
                         log(f"    {sym}: {wt*100:+.2f}% (was {existing*100:+.2f}%)")
                         
-                        # SHORT SIGNALS TAKE PRIORITY over long signals
-                        # If short scanner says SHORT, we SHORT regardless of ensemble
-                        # This prevents the common bug where longs override valid short signals
-                        if wt < 0:  # This is a short recommendation
-                            if existing > 0:
-                                log(f"      ⚠️ OVERRIDING long position with SHORT signal")
-                            combined_weights[sym] = wt  # ALWAYS use short signal
+                        if wt < 0:
+                            # Count how many strategies agree on this long
+                            agreeing_long = sum(
+                                1 for s in signals.values()
+                                if sym in s.desired_weights
+                                and s.desired_weights[sym] > 0.001
+                            )
+                            
+                            if existing > 0 and agreeing_long >= 3:
+                                log(f"      ✋ Short scanner BLOCKED: {agreeing_long} strategies agree on LONG {sym}")
+                            elif existing > 0 and agreeing_long == 2:
+                                blended = existing * 0.5
+                                combined_weights[sym] = blended
+                                log(f"      ⚖️ Blended: reduced long from {existing*100:+.2f}% to {blended*100:+.2f}% (2 strategies vs scanner)")
+                            else:
+                                if existing > 0:
+                                    log(f"      ⚠️ OVERRIDING weak long with SHORT signal (only {agreeing_long} strategy)")
+                                combined_weights[sym] = wt
                         else:
-                            # For any non-short signals, use existing logic
                             if sym not in combined_weights or abs(combined_weights.get(sym, 0)) < abs(wt):
                                 combined_weights[sym] = wt
                 else:
@@ -3237,17 +3245,18 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             log(f"📈 Analytics Adjustments: {len(analytics_adjustments)} applied")
         
         # === FINAL CONVICTION GATE ===
-        # Catch any positions added after the confluence filter (short scanner, earnings,
-        # technical bounces) that are below the minimum conviction threshold
+        # Only remove very tiny positions that are noise (sub-0.3%)
+        # Previous 2% threshold was killing all diversified ensemble positions
+        min_weight_threshold = 0.003
         pre_gate_count = len([s for s, w in combined_weights.items() if abs(w) > 0.001])
         for symbol in list(combined_weights.keys()):
             w = combined_weights[symbol]
-            if abs(w) > 0.001 and abs(w) < 0.02:
+            if abs(w) > 0.001 and abs(w) < min_weight_threshold:
                 combined_weights[symbol] = 0.0
         post_gate_count = len([s for s, w in combined_weights.items() if abs(w) > 0.001])
         gated = pre_gate_count - post_gate_count
         if gated > 0:
-            log(f"🚫 Final conviction gate: removed {gated} sub-2% positions added after confluence filter")
+            log(f"🚫 Final conviction gate: removed {gated} sub-{min_weight_threshold*100:.1f}% noise positions")
         
         log("")
         
@@ -4366,9 +4375,12 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         
         for symbol, weight in enhanced_weights.items():
             price = current_prices.get(symbol, 0.0)
-            if price > 0 and abs(weight) > 0.001:  # Filter by absolute weight
-                target_value = equity * weight
-                target_shares[symbol] = math.floor(target_value / price)
+            if price > 0 and abs(weight) > 0.001:
+                target_value = effective_equity * weight
+                if weight < 0:
+                    target_shares[symbol] = math.ceil(target_value / price)
+                else:
+                    target_shares[symbol] = math.floor(target_value / price)
         
         # DEBUG: Log target_shares after calculation
         short_shares = {s: q for s, q in target_shares.items() if q < 0}

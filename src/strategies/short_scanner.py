@@ -75,15 +75,16 @@ class ShortCandidate:
         # This allows a single strong signal OR multiple weaker signals to trigger
         self.total_score = max(max_score * 0.8, avg_score)
         
-        # Determine conviction based on max score (not total)
-        # Strong technical signal alone should be sufficient
-        if max_score >= 0.6 or self.total_score >= 0.50:
+        # Conviction requires multiple confirming sources, not just one
+        non_zero_count = len([s for s in [self.news_score, self.valuation_score,
+                                          self.technical_score, self.cross_asset_score] if s > 0.1])
+        if max_score >= 0.7 and non_zero_count >= 2:
             self.conviction = "high"
-            self.recommended_weight = -0.05  # 5% short
-        elif max_score >= 0.45 or self.total_score >= 0.35:
+            self.recommended_weight = -0.04  # 4% short
+        elif max_score >= 0.5 and non_zero_count >= 2:
             self.conviction = "medium"
             self.recommended_weight = -0.03  # 3% short
-        elif max_score >= 0.45 or self.total_score >= 0.40:
+        elif self.total_score >= 0.50 and non_zero_count >= 2:
             self.conviction = "low"
             self.recommended_weight = -0.02  # 2% short
         else:
@@ -116,7 +117,7 @@ class ShortScannerConfig:
     price_above_200ma_threshold: float = 0.15  # 15% above = extended (was 25%)
     
     below_200ma_days: int = 3
-    rsi_overbought: float = 75.0            # RSI must be clearly overbought
+    rsi_overbought: float = 80.0            # RSI must be clearly overbought (was 75, too loose)
     
     # Risk limits
     max_borrow_rate: float = 10.0           # Skip if > 10% annual
@@ -476,15 +477,12 @@ class ShortScanner:
         """
         score = 0.0
         
-        # RSI overbought - KEY short signal (works without MA data)
+        # RSI overbought — only trigger on genuinely extreme readings
         if rsi and rsi > self.config.rsi_overbought:
-            # RSI 65-75: moderate signal (0.3-0.45)
-            # RSI 75-85: strong signal (0.45-0.6)
-            # RSI 85+: very strong signal (0.6+)
-            if rsi >= 85:
+            if rsi >= 90:
                 rsi_score = 0.7
-                candidate.technical_signals.append(f"RSI EXTREME: {rsi:.1f} 🔴")
-            elif rsi >= 75:
+                candidate.technical_signals.append(f"RSI EXTREME: {rsi:.1f}")
+            elif rsi >= 85:
                 rsi_score = 0.5
                 candidate.technical_signals.append(f"RSI very overbought: {rsi:.1f}")
             else:
@@ -500,10 +498,9 @@ class ShortScanner:
         if price and ma_value and ma_value > 0:
             pct_from_ma = (price - ma_value) / ma_value
             
-            # Price ABOVE MA (overextended) - prime short candidate
-            if pct_from_ma > 0.10:  # >10% above MA (relaxed from 15%)
-                # Scale score: 10%-50% above maps to 0.2-0.6
-                extended_score = min(0.6, 0.2 + (pct_from_ma - 0.10) * 1.0)
+            # Price ABOVE MA (overextended) — only short truly extreme extensions
+            if pct_from_ma > 0.20:  # >20% above MA
+                extended_score = min(0.6, 0.2 + (pct_from_ma - 0.20) * 1.0)
                 score += extended_score
                 candidate.technical_signals.append(f"Extended {pct_from_ma:.0%} above {ma_label}")
             
