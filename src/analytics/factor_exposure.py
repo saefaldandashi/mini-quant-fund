@@ -280,7 +280,23 @@ class FactorExposureManager:
             return self.symbol_exposures[symbol]
         
         # Create new exposure with defaults
-        sector = self.SECTOR_MAP.get(symbol, Sector.UNKNOWN)
+        # First check local map, then fall back to comprehensive system_integration map
+        sector = self.SECTOR_MAP.get(symbol, None)
+        if sector is None:
+            try:
+                from src.system_integration import SECTOR_MAP as SYS_SECTOR_MAP
+                sys_sector = SYS_SECTOR_MAP.get(symbol, 'Unknown')
+                sector_name_map = {
+                    'Technology': Sector.TECHNOLOGY, 'Finance': Sector.FINANCIALS,
+                    'Healthcare': Sector.HEALTHCARE, 'Consumer': Sector.CONSUMER_DISCRETIONARY,
+                    'Staples': Sector.CONSUMER_STAPLES, 'Industrial': Sector.INDUSTRIALS,
+                    'Energy': Sector.ENERGY, 'Materials': Sector.MATERIALS,
+                    'Utilities': Sector.UTILITIES, 'Real Estate': Sector.REAL_ESTATE,
+                    'Communication': Sector.COMMUNICATION,
+                }
+                sector = sector_name_map.get(sys_sector, Sector.UNKNOWN)
+            except Exception:
+                sector = Sector.UNKNOWN
         
         # Get factor defaults for sector
         sector_factors = self.SECTOR_FACTOR_DEFAULTS.get(sector, {})

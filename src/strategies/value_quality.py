@@ -139,7 +139,7 @@ class ValueQualityTiltStrategy(Strategy):
         for symbol, score in top_assets:
             weight = score / total_score if total_score > 0 else 1.0 / len(top_assets)
             weights[symbol] = weight
-            expected_returns[symbol] = 0.02 + score * 0.04
+            expected_returns[symbol] = (0.02 + score * 0.04) / 252  # Daily scale
         
         exp_ret = self._calculate_expected_return(weights, expected_returns)
         risk = self._calculate_risk(weights, features.covariance_matrix)

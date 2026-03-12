@@ -38,7 +38,7 @@ UNIVERSE = [
     # === CONSUMER STAPLES (30 stocks) ===
     "PG", "KO", "PEP", "COST", "WMT", "PM", "MO", "MDLZ", "CL", "KMB",
     "GIS", "K", "CAG", "SJM", "HSY", "HRL", "TSN", "MNST", "KDP", "STZ",
-    "BF/B", "TAP", "EL", "CHD", "CLX", "KHC", "CPB", "MKC", "SYY", "ADM",
+    "BF.B", "TAP", "EL", "CHD", "CLX", "KHC", "CPB", "MKC", "SYY", "ADM",
     
     # === INDUSTRIALS (40 stocks) ===
     "CAT", "DE", "HON", "UNP", "UPS", "RTX", "LMT", "BA", "GE", "GD",

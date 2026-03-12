@@ -52,7 +52,7 @@ class RiskParityMinVarStrategy(Strategy):
             w = np.clip(weights[i], 0, self.max_weight)
             if w > 0.001:
                 weight_dict[symbol] = w
-                expected_returns[symbol] = 0.05  # Neutral expectation
+                expected_returns[symbol] = 0.05 / 252  # Daily neutral expectation
         
         # Normalize
         total = sum(weight_dict.values())
@@ -166,7 +166,7 @@ class RiskParityMinVarStrategy(Strategy):
             strategy_name=self.name,
             timestamp=t,
             desired_weights=weights,
-            expected_return=0.05,
+            expected_return=0.05 / 252,
             risk_estimate=0.10,
             confidence=0.5,
             explanation={'mode': 'inverse_vol_fallback'},

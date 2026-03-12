@@ -4342,7 +4342,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 if abs(best_ret) > 0:
                     exp_returns[symbol] = abs(best_ret)
                 else:
-                    exp_returns[symbol] = 0.02  # 2% default
+                    exp_returns[symbol] = 0.02 / 252  # Daily default
             
             # Prepare confidences
             conf_data = {}
@@ -4638,7 +4638,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             conviction = min(1.0, abs(final_weights.get(symbol, 0)) * 5)  # Scale to 0-1
             
             # Get expected return for this symbol from signals
-            expected_return = 0.02  # Default 2%
+            expected_return = 0.02 / 252  # Daily default
             for name, signal in signals.items():
                 if symbol in signal.desired_weights:
                     # Use the strategy's expected return weighted by confidence

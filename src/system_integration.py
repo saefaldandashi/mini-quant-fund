@@ -343,7 +343,7 @@ SECTOR_MAP = {
     'KMB': 'Staples', 'GIS': 'Staples', 'K': 'Staples',
     'CAG': 'Staples', 'SJM': 'Staples', 'HSY': 'Staples',
     'HRL': 'Staples', 'TSN': 'Staples', 'MNST': 'Staples',
-    'KDP': 'Staples', 'STZ': 'Staples', 'BF/B': 'Staples',
+    'KDP': 'Staples', 'STZ': 'Staples', 'BF.B': 'Staples',
     'TAP': 'Staples', 'EL': 'Staples', 'CHD': 'Staples',
     'CLX': 'Staples', 'KHC': 'Staples', 'CPB': 'Staples',
     'MKC': 'Staples', 'SYY': 'Staples', 'ADM': 'Staples',
@@ -646,12 +646,14 @@ class TransactionCostEnforcer:
     def __init__(
         self,
         min_benefit_ratio: float = 1.5,  # Expected benefit must be 1.5x cost
-        min_expected_return: float = 0.005,  # 0.5% minimum expected return
+        min_expected_return: float = 0.0003,  # 0.03% daily minimum
         max_cost_bps: float = 50,  # 50 bps max acceptable cost
+        expected_holding_days: int = 20,  # ~1 month typical holding period
     ):
         self.min_benefit_ratio = min_benefit_ratio
         self.min_expected_return = min_expected_return
         self.max_cost_bps = max_cost_bps
+        self.expected_holding_days = expected_holding_days
     
     def should_execute(
         self,
@@ -685,8 +687,8 @@ class TransactionCostEnforcer:
         total_cost = spread_cost + slippage_cost
         total_cost_bps = total_cost / notional * 10000 if notional > 0 else 0
         
-        # Calculate expected benefit
-        expected_benefit = notional * expected_return * confidence
+        # Calculate expected benefit over holding period (returns are daily)
+        expected_benefit = notional * expected_return * confidence * self.expected_holding_days
         
         # Check conditions
         if expected_return < self.min_expected_return:

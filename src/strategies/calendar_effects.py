@@ -88,20 +88,20 @@ class CalendarEffectsStrategy(Strategy):
             for symbol in available_symbols:
                 if symbol in self.SMALL_CAP_ETFS or symbol in ['IWM', 'ARKK']:
                     weights[symbol] = self.base_weight * 0.3
-                    expected_returns[symbol] = 0.03
+                    expected_returns[symbol] = 0.03 / 21  # ~1 month effect
         
         if effects.get('sell_in_may', 0) < 0:
             # May-October: Reduce exposure, prefer defensive
             for symbol in available_symbols:
                 if symbol in self.DEFENSIVE_SECTORS:
                     weights[symbol] = self.base_weight * 0.2
-                    expected_returns[symbol] = 0.01
+                    expected_returns[symbol] = 0.01 / 126  # ~6 month effect
         elif effects.get('sell_in_may', 0) > 0:
             # November-April: More aggressive
             for symbol in available_symbols:
                 if symbol in self.CYCLICAL_SECTORS:
                     weights[symbol] = self.base_weight * 0.25
-                    expected_returns[symbol] = 0.02
+                    expected_returns[symbol] = 0.02 / 126  # ~6 month effect
         
         # Turn of month: Go long broad market
         if effects.get('turn_of_month', 0) > 0:
