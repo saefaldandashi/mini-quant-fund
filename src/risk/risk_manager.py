@@ -87,16 +87,24 @@ class RiskManager:
         self.constraints = constraints or RiskConstraints()
         self.config = config or {}
         
-        # Sector mapping
-        self.sector_map = {
-            'AAPL': 'tech', 'MSFT': 'tech', 'GOOGL': 'tech', 'META': 'tech',
-            'AMZN': 'tech', 'NVDA': 'tech', 'NFLX': 'tech', 'AMD': 'tech', 'INTC': 'tech',
-            'JPM': 'finance', 'BAC': 'finance', 'GS': 'finance', 'MS': 'finance', 'C': 'finance',
-            'XOM': 'energy', 'CVX': 'energy', 'COP': 'energy',
-            'JNJ': 'healthcare', 'PFE': 'healthcare', 'UNH': 'healthcare', 'MRK': 'healthcare',
-            'KO': 'consumer', 'PEP': 'consumer', 'PG': 'consumer', 'WMT': 'consumer', 'HD': 'consumer',
-            'DIS': 'media', 'NFLX': 'media', 'CMCSA': 'media',
-        }
+        # Reuse the comprehensive sector map from system_integration (350 symbols)
+        # instead of a 27-symbol subset that dumps everything else into 'other'
+        try:
+            from src.system_integration import SystemIntegration
+            sys_int = SystemIntegration.__new__(SystemIntegration)
+            sys_int.__init__()
+            self.sector_map = {sym: sys_int.get_sector(sym).lower().replace(' ', '_')
+                               for sym in sys_int.SECTOR_MAP}
+        except Exception:
+            self.sector_map = {
+                'AAPL': 'tech', 'MSFT': 'tech', 'GOOGL': 'tech', 'META': 'tech',
+                'AMZN': 'tech', 'NVDA': 'tech', 'AMD': 'tech', 'INTC': 'tech',
+                'JPM': 'finance', 'BAC': 'finance', 'GS': 'finance', 'MS': 'finance',
+                'XOM': 'energy', 'CVX': 'energy', 'COP': 'energy',
+                'JNJ': 'healthcare', 'PFE': 'healthcare', 'UNH': 'healthcare',
+                'KO': 'consumer', 'PEP': 'consumer', 'PG': 'consumer', 'WMT': 'consumer',
+                'DIS': 'media', 'NFLX': 'media', 'CMCSA': 'media',
+            }
         
         # State tracking
         self.entry_prices: Dict[str, float] = {}
@@ -184,30 +192,40 @@ class RiskManager:
         return result
     
     def _check_position_limits(self, result: RiskCheckResult) -> None:
-        """Check individual position limits."""
-        max_size = self.constraints.max_position_size
+        """Check individual position limits (separate caps for longs and shorts)."""
+        max_long = self.constraints.max_long_position
+        max_short = self.constraints.max_short_position
         
         for symbol, weight in list(result.approved_weights.items()):
-            if abs(weight) > max_size:
-                clipped = np.sign(weight) * max_size
-                result.approved_weights[symbol] = clipped
-                result.adjustments.append(
-                    f"Clipped {symbol}: {weight:.1%} -> {clipped:.1%}"
-                )
+            if weight > 0 and weight > max_long:
+                result.approved_weights[symbol] = max_long
+                result.adjustments.append(f"Clipped long {symbol}: {weight:.1%} -> {max_long:.1%}")
+            elif weight < 0 and abs(weight) > max_short:
+                result.approved_weights[symbol] = -max_short
+                result.adjustments.append(f"Clipped short {symbol}: {weight:.1%} -> {-max_short:.1%}")
     
     def _check_sector_exposure(self, result: RiskCheckResult) -> None:
-        """Check sector exposure limits."""
+        """Check sector exposure limits (max of long/short, not sum of abs)."""
         max_sector = self.constraints.max_sector_exposure
         
-        # Calculate sector exposures
-        sector_exp = {}
+        # Calculate sector exposures using max(long, short) to avoid
+        # double-counting hedged L/S positions within the same sector
+        sector_long = {}
+        sector_short = {}
         for symbol, weight in result.approved_weights.items():
             sector = self.sector_map.get(symbol, 'other')
-            sector_exp[sector] = sector_exp.get(sector, 0) + abs(weight)
+            if weight > 0:
+                sector_long[sector] = sector_long.get(sector, 0) + weight
+            else:
+                sector_short[sector] = sector_short.get(sector, 0) + abs(weight)
+        
+        all_sectors = set(list(sector_long.keys()) + list(sector_short.keys()))
+        sector_exp = {}
+        for sector in all_sectors:
+            sector_exp[sector] = max(sector_long.get(sector, 0), sector_short.get(sector, 0))
         
         result.risk_metrics['sector_exposure'] = sector_exp
         
-        # Check and scale if needed
         for sector, exposure in sector_exp.items():
             if exposure > max_sector:
                 scale = max_sector / exposure

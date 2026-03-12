@@ -36,13 +36,14 @@ class TailRiskOverlayStrategy(Strategy):
         # Exposure scaling: 1.0 = full, min_exposure when max risk
         exposure = 1.0 - (1.0 - self.min_exposure) * tail_risk_score
         
-        # This strategy provides a scaling factor, not specific asset weights
-        # In practice, it would be applied as an overlay to other strategies
-        n_assets = len(features.symbols)
-        base_weight = exposure / n_assets
-        
-        for symbol in features.symbols:
-            weights[symbol] = base_weight
+        # Overlay strategy: only emit weights when tail risk is elevated.
+        # When risk is normal, emit EMPTY weights so this strategy doesn't
+        # inflate confluence vote counts by voting long on every symbol.
+        if tail_risk_score > 0.4:
+            n_assets = len(features.symbols)
+            base_weight = exposure / n_assets
+            for symbol in features.symbols:
+                weights[symbol] = base_weight
         
         # Determine risk status
         if tail_risk_score > 0.7:

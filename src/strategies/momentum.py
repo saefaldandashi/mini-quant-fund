@@ -108,13 +108,9 @@ class TimeSeriesMomentumStrategy(Strategy):
                     consensus_adj = "boosted (peer agreement)"
             
             weights[symbol] = weight
-            # Annualize expected return but CAP at realistic levels
-            # Past momentum doesn't linearly predict future returns
-            raw_exp_ret = ret * 252 / self.lookback
-            # Apply decay factor (momentum has diminishing predictive power)
-            discounted = raw_exp_ret * 0.3  # 30% decay factor
-            # Cap at +/- 50% annualized
-            expected_returns[symbol] = max(-0.50, min(0.50, discounted))
+            # Convert to daily expected return: period return / lookback days, with decay
+            daily_exp_ret = (ret / self.lookback) * 0.3  # 30% decay factor
+            expected_returns[symbol] = max(-0.005, min(0.005, daily_exp_ret))
             explanations[symbol] = {
                 'momentum': ret,
                 'volatility': asset_vol,
@@ -207,13 +203,13 @@ class CrossSectionMomentumStrategy(Strategy):
         
         for symbol, score in winners:
             weights[symbol] = weight_per_stock
-            # Cap expected return at realistic levels (30% discount + 50% cap)
-            expected_returns[symbol] = max(-0.50, min(0.50, score * 0.3))
+            daily_exp = (score * 0.3) / self.lookback
+            expected_returns[symbol] = max(-0.005, min(0.005, daily_exp))
         
         for symbol, score in losers:
             weights[symbol] = -weight_per_stock
-            # For shorts, negative score → positive expected return (capped)
-            expected_returns[symbol] = max(-0.50, min(0.50, -score * 0.3))
+            daily_exp = (-score * 0.3) / self.lookback
+            expected_returns[symbol] = max(-0.005, min(0.005, daily_exp))
         
         # Regime fit
         regime_fit = 0.6

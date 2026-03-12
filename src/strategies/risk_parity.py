@@ -102,7 +102,7 @@ class RiskParityMinVarStrategy(Strategy):
         constraints = [
             {'type': 'eq', 'fun': lambda w: np.sum(w) - 1.0}
         ]
-        bounds = [(0.01, self.max_weight) for _ in range(n)]
+        bounds = [(1e-4, self.max_weight) for _ in range(n)]
         
         try:
             result = minimize(

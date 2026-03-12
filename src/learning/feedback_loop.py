@@ -115,6 +115,10 @@ class FeedbackLoop:
                 
             except Exception as e:
                 logger.warning(f"Could not load feedback data: {e}")
+                # On corruption, set trade count to a high sentinel to prevent
+                # re-processing all historical trades (which causes erratic weight jumps).
+                # The next save will write fresh state and reset normally.
+                self._last_processed_trade_count = 999999
     
     def _save(self):
         """Save feedback data to storage."""
@@ -315,11 +319,9 @@ class FeedbackLoop:
             multiplier = self.get_weight_adjustment(strategy, regime)
             adjusted[strategy] = weight * multiplier
         
-        # Normalize to sum to 1
-        total = sum(adjusted.values())
-        if total > 0:
-            adjusted = {k: v / total for k, v in adjusted.items()}
-        
+        # Don't re-normalize here — the caller (app.py) normalizes after
+        # blending with Thompson Sampling. Normalizing at every intermediate
+        # step dilutes the feedback adjustments to near-zero.
         return adjusted
     
     def get_performance_summary(self) -> Dict:

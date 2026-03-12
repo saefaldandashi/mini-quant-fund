@@ -241,10 +241,11 @@ class SmartPositionSizer:
                 reason=self._sizing_reason(vol_scalar, conviction_scalar, kelly_fraction),
             ))
         
-        # Normalize to sum to 1 (or less if cash buffer)
-        total = sum(adjusted.values())
-        if total > 1.0:
-            adjusted = {k: v / total for k, v in adjusted.items()}
+        # Normalize by GROSS exposure (sum of absolute values) for L/S portfolios
+        gross = sum(abs(v) for v in adjusted.values())
+        if gross > 1.5:
+            scale = 1.5 / gross
+            adjusted = {k: v * scale for k, v in adjusted.items()}
         
         return adjusted, details
     

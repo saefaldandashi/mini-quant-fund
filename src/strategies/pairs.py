@@ -51,12 +51,11 @@ class PairsTradingStrategy(Strategy):
         # Finance
         ('JPM', 'BAC'),
         ('GS', 'MS'),
-        ('V', 'MA'),
         # Consumer
         ('KO', 'PEP'),
         ('HD', 'LOW'),
         ('MCD', 'YUM'),
-        ('WMT', 'TGT'),
+        ('WMT', 'COST'),
         # Energy
         ('XOM', 'CVX'),
         # Healthcare

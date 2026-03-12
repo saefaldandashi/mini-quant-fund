@@ -219,14 +219,10 @@ class StrategyEnhancer:
         return filtered, reasons
     
     def _calibrate_confidence(self, raw_confidence: float) -> float:
-        """Recalibrate confidence scores (they're too conservative)."""
-        # Map 0-0.3 -> 0-0.2, 0.3-0.6 -> 0.3-0.7, 0.6-1.0 -> 0.7-1.0
-        if raw_confidence <= 0.3:
-            return raw_confidence * 0.67
-        elif raw_confidence <= 0.6:
-            return 0.2 + (raw_confidence - 0.3) * 1.33
-        else:
-            return 0.7 + (raw_confidence - 0.6) * 0.75
+        """Recalibrate confidence scores using a smooth sigmoid-like curve.
+        Maps [0, 1] -> [0, 1] with no discontinuities."""
+        # Smooth power curve: x^0.7 compresses low values, stretches high values
+        return max(0.0, min(1.0, raw_confidence ** 0.7))
     
     # =========================================================
     # PHASE 2: SENTIMENT-DRIVEN SELECTION

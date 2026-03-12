@@ -337,6 +337,16 @@ class FeatureStore:
             if len(prices) == 0:
                 continue
             
+            # Skip symbols with stale data (last price > 5 trading days old)
+            if hasattr(prices.index, 'date'):
+                last_date = prices.index[-1]
+                if hasattr(last_date, 'date'):
+                    last_date = last_date.date()
+                from datetime import date, timedelta
+                if (date.today() - last_date) > timedelta(days=7):
+                    logger.warning(f"Skipping {symbol}: last price from {last_date} (stale)")
+                    continue
+            
             features.prices[symbol] = prices.iloc[-1]
             
             # Returns at various horizons

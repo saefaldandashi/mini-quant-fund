@@ -288,8 +288,11 @@ class AdaptiveWeightLearner:
             
             state.last_updated = datetime.now().isoformat()
         
-        # Perform online gradient descent on base weights
-        self._gradient_descent_update(strategy_returns)
+        # NOTE: _gradient_descent_update removed here — it was double-counting
+        # returns (EMA already adjusts performance above, gradient descent
+        # would update base_weight a second time on the same returns, causing
+        # weight changes ~2x stronger than intended). Gradient descent is
+        # still applied via regime-specific updates above.
         
         self._save()
         

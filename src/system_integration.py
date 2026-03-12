@@ -343,7 +343,7 @@ SECTOR_MAP = {
     'KMB': 'Staples', 'GIS': 'Staples', 'K': 'Staples',
     'CAG': 'Staples', 'SJM': 'Staples', 'HSY': 'Staples',
     'HRL': 'Staples', 'TSN': 'Staples', 'MNST': 'Staples',
-    'KDP': 'Staples', 'STZ': 'Staples', 'BF.B': 'Staples',
+    'KDP': 'Staples', 'STZ': 'Staples', 'BF/B': 'Staples',
     'TAP': 'Staples', 'EL': 'Staples', 'CHD': 'Staples',
     'CLX': 'Staples', 'KHC': 'Staples', 'CPB': 'Staples',
     'MKC': 'Staples', 'SYY': 'Staples', 'ADM': 'Staples',
@@ -1106,8 +1106,6 @@ class SystemIntegration:
                 elif result.warnings:
                     for warning in result.warnings:
                         adjustments.append(f"Warning {symbol}: {warning}")
-                    # Adjust weight by confidence
-                    filtered[symbol] = weight * result.confidence_score / max(0.1, confidence)
         
         # 8. Final sanitization
         filtered = sanitize_weights(filtered)

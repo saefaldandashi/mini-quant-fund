@@ -162,7 +162,7 @@ class TransactionCostModel:
         'borrow_rate_annual': 0.02,
         'min_trade_threshold_bps': 500.0,
         'min_benefit_ratio': 0.3,
-        'high_conviction_threshold': 0.40,
+        'high_conviction_threshold': 0.85,
         'small_trade_min_dollars': 50,
     }
     

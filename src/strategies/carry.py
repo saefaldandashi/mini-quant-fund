@@ -113,7 +113,7 @@ class CarryStrategy(Strategy):
         for symbol, div_yield in top_assets:
             weight = div_yield / total_yield if total_yield > 0 else 1.0 / len(top_assets)
             weights[symbol] = weight
-            expected_returns[symbol] = div_yield  # Carry is expected return
+            expected_returns[symbol] = div_yield / 252  # Convert annual yield to daily
         
         exp_ret = self._calculate_expected_return(weights, expected_returns)
         risk = self._calculate_risk(weights, features.covariance_matrix)

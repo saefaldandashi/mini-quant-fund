@@ -48,22 +48,22 @@ class VolatilityRegimeVolTargetStrategy(Strategy):
         n_assets = len(features.symbols)
         base_weight = 1.0 / n_assets
         
+        raw_weights = {}
         for symbol in features.symbols:
             symbol_vol = features.volatility_21d.get(symbol, avg_vol)
             
-            # Inverse vol weighting within the scaled portfolio
             if symbol_vol > 0:
-                vol_weight = (1.0 / symbol_vol)
+                raw_weights[symbol] = 1.0 / symbol_vol
             else:
-                vol_weight = 1.0
-            
-            weights[symbol] = base_weight * scale
-            expected_returns[symbol] = 0.05  # Neutral expectation
+                raw_weights[symbol] = 1.0
+            expected_returns[symbol] = 0.05 / 252  # Daily neutral expectation
         
-        # Normalize to sum to scale
-        total = sum(weights.values())
-        if total > 0:
-            weights = {k: v * scale / total for k, v in weights.items()}
+        # Normalize inverse-vol weights to sum to target scale
+        total_raw = sum(raw_weights.values())
+        if total_raw > 0:
+            weights = {s: (w / total_raw) * scale for s, w in raw_weights.items()}
+        else:
+            weights = {s: base_weight * scale for s in features.symbols}
         
         # Regime adjustment
         regime_fit = 0.7

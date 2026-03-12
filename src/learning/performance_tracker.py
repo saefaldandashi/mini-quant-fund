@@ -10,7 +10,7 @@ Tracks:
 
 import json
 import logging
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field, fields, asdict
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -64,7 +64,11 @@ class StrategyMetrics:
     
     @classmethod
     def from_dict(cls, data: Dict) -> 'StrategyMetrics':
-        return cls(**data)
+        # Filter to only fields this dataclass knows about, so extra keys
+        # from old schema versions don't cause TypeError crashes
+        valid_fields = {f.name for f in fields(cls)}
+        filtered = {k: v for k, v in data.items() if k in valid_fields}
+        return cls(**filtered)
 
 
 class PerformanceTracker:
@@ -103,6 +107,11 @@ class PerformanceTracker:
                 
                 self.prediction_history = defaultdict(list, data.get('history', {}))
                 
+                # Restore symbol performance data
+                for strat, symbols in data.get('symbol_performance', {}).items():
+                    for sym, perf_data in symbols.items():
+                        self.symbol_performance[strat][sym] = perf_data
+                
                 logging.info(f"Loaded performance data for {len(self.metrics)} strategies")
             except Exception as e:
                 logging.warning(f"Could not load performance tracker: {e}")
@@ -110,9 +119,15 @@ class PerformanceTracker:
     def _save(self):
         """Persist performance data to disk."""
         try:
+            # Convert symbol_performance (nested defaultdict) to regular dict for JSON
+            sym_perf = {}
+            for strat, symbols in self.symbol_performance.items():
+                sym_perf[strat] = {sym: dict(data) for sym, data in symbols.items()}
+            
             atomic_json_save(self.storage_path, {
                 'metrics': {name: m.to_dict() for name, m in self.metrics.items()},
                 'history': dict(self.prediction_history),
+                'symbol_performance': sym_perf,
                 'last_updated': datetime.now().isoformat(),
             })
         except Exception as e:

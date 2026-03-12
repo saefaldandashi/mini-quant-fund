@@ -411,7 +411,10 @@ last_macro_features = {
     "last_updated": None,
 }
 
-# Store last run status
+# Store last run status — use threading.Lock for safe concurrent access
+# between Flask request threads and bot worker thread
+import threading
+_status_lock = threading.Lock()
 last_run_status = {
     "running": False,
     "completed": False,
@@ -1423,6 +1426,13 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             if len(invalid_symbols) > 5:
                 log(f"   ... and {len(invalid_symbols) - 5} more")
         
+        # Guard: if the valid universe is dangerously small, abort
+        min_universe_size = 50
+        if len(valid_universe) < min_universe_size:
+            log(f"⛔ ABORT: Only {len(valid_universe)} valid symbols (need {min_universe_size}+). "
+                f"Possible API data issue — skipping rebalance to prevent oversized positions.")
+            return True, output, None, debate_info
+        
         log(f"Fetching data for {len(valid_universe)} valid stocks (filtered from {len(config.UNIVERSE)})...")
         
         # ============================================================
@@ -1990,6 +2000,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             enable_futures=long_short_settings.get('enable_futures', False),
             trading_mode=effective_trading_mode,  # Use dynamic mode
         )
+        # Filter out disabled strategies BEFORE running them — saves compute
+        # and prevents them from influencing peer signals / debate consensus
+        from config import DISABLED_STRATEGIES
+        strategies = [s for s in strategies if s.name not in DISABLED_STRATEGIES]
         log(f"Loaded {len(strategies)} strategies (L/S: {long_short_settings.get('enable_long_short')}, Futures: {long_short_settings.get('enable_futures')})")
         
         # DYNAMIC STRATEGY REGISTRATION: Ensure ALL active strategies are visible to learning
@@ -2533,6 +2547,23 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             market_context=market_context_for_learning,
         )
         
+        # Apply trading mode blend multipliers so the mode actually affects weighting
+        INTRADAY_NAMES = {"IntradayMomentum", "VWAPReversion", "VolumeSpike",
+                          "RelativeStrengthIntraday", "OpeningRangeBreakout", "QuickMeanReversion"}
+        LS_NAMES = {"CS_Momentum_LS", "TS_Momentum_LS", "MeanReversion_LS", "QualityValue_LS"}
+        blend_weights = get_strategy_blend_weights(effective_trading_mode, vix_level)
+        for name in learned_weights:
+            if name in INTRADAY_NAMES:
+                learned_weights[name] *= blend_weights["intraday_strategies"] / 0.33
+            elif name in LS_NAMES:
+                learned_weights[name] *= blend_weights["ls_strategies"] / 0.33
+            else:
+                learned_weights[name] *= blend_weights["position_strategies"] / 0.33
+        # Re-normalize
+        total_lw = sum(learned_weights.values())
+        if total_lw > 0:
+            learned_weights = {k: v / total_lw for k, v in learned_weights.items()}
+        
         # Blend with Thompson Sampling for smarter exploration
         # GUARD: Only blend Thompson when it has REAL data (at least one belief updated beyond prior)
         thompson_has_data = any(
@@ -2730,15 +2761,18 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         )
         
         # === MINIMUM CONFLUENCE FILTER ===
-        # Require at least 2 strategies to agree on direction for any position
-        # This prevents single-strategy-driven trades with low conviction
+        # Require at least 2 FOCUSED strategies to agree on direction.
+        # Broad overlay strategies (VolTarget, RiskParity, TailRisk) that vote
+        # on all/most symbols are excluded — they don't represent independent conviction.
+        BROAD_STRATEGIES = {"VolatilityRegimeVolTarget", "RiskParityMinVar", "TailRiskOverlay"}
+        focused_signals = {k: v for k, v in signals.items() if k not in BROAD_STRATEGIES}
         confluence_filtered = 0
         for symbol, weight in list(combined_weights.items()):
             if abs(weight) < 0.001:
                 continue
             is_long = weight > 0
             agreeing = sum(
-                1 for s in signals.values()
+                1 for s in focused_signals.values()
                 if symbol in s.desired_weights
                 and abs(s.desired_weights[symbol]) > 0.001
                 and (s.desired_weights[symbol] > 0) == is_long
@@ -2747,7 +2781,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 combined_weights[symbol] = 0.0
                 confluence_filtered += 1
         if confluence_filtered > 0:
-            log(f"  Confluence filter: BLOCKED {confluence_filtered} low-conviction positions (< 2 strategies agree)")
+            log(f"  Confluence filter: BLOCKED {confluence_filtered} low-conviction positions (< 2 focused strategies agree)")
         
         debate_info["final_weights"] = combined_weights
         
@@ -2922,9 +2956,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                             if existing > 0 and agreeing_long >= 3:
                                 log(f"      ✋ Short scanner BLOCKED: {agreeing_long} strategies agree on LONG {sym}")
                             elif existing > 0 and agreeing_long == 2:
-                                blended = existing * 0.5
+                                # Blend: weighted average of long (2 strategies) and short (scanner)
+                                blended = (existing * 2 + wt * 1) / 3
                                 combined_weights[sym] = blended
-                                log(f"      ⚖️ Blended: reduced long from {existing*100:+.2f}% to {blended*100:+.2f}% (2 strategies vs scanner)")
+                                log(f"      ⚖️ Blended: {existing*100:+.2f}% → {blended*100:+.2f}% (2 strategies vs scanner {wt*100:+.2f}%)")
                             else:
                                 if existing > 0:
                                     log(f"      ⚠️ OVERRIDING weak long with SHORT signal (only {agreeing_long} strategy)")
@@ -3320,6 +3355,23 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 log(f"  - {adj}")
         
         final_weights = risk_result.approved_weights
+        
+        # Post-risk cleanup: remove positions that risk scaling pushed below conviction gate.
+        # Without this, 0.2% ghost positions survive and generate guaranteed-loss micro trades.
+        post_risk_ghosts = 0
+        for symbol in list(final_weights.keys()):
+            w = final_weights[symbol]
+            if abs(w) > 0.0001 and abs(w) < min_weight_threshold:
+                final_weights[symbol] = 0.0
+                post_risk_ghosts += 1
+        if post_risk_ghosts > 0:
+            log(f"  🧹 Cleaned {post_risk_ghosts} sub-{min_weight_threshold*100:.1f}% ghost positions created by risk scaling")
+        
+        # Safety check: if ALL positions were filtered, log a warning
+        active_count = sum(1 for w in final_weights.values() if abs(w) > 0.001)
+        if active_count == 0 and pre_gate_count > 0:
+            log(f"⚠️ WARNING: All {pre_gate_count} positions were filtered — portfolio going to 100% CASH")
+            log(f"   This may indicate filters are too aggressive for current market conditions")
         
         # CRITICAL FIX: Apply positions_to_exit from loss awareness
         # Previously these were only logged but never zeroed in the weights
@@ -4359,23 +4411,23 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             logging.error(traceback.format_exc())
         
         # Recalculate target shares after validation
-        # CRITICAL: Use math.floor to properly handle negative weights (shorts)
-        # int() truncates toward zero, which would turn -0.5 into 0
-        # floor() rounds toward negative infinity, so -0.5 becomes -1
+        # Uses effective_equity * leverage (matching what broker.calculate_target_shares does)
         import math
         target_shares = {}
+        if effective_equity <= 0:
+            log(f"⛔ CRITICAL: effective_equity is ${effective_equity:,.2f} — halting trade generation")
+            return True, output, None, debate_info
+        investable_equity = effective_equity * effective_leverage
         
-        # DEBUG: Log enhanced_weights before calculating target_shares
         short_weights = {s: w for s, w in enhanced_weights.items() if w < 0}
         long_weights = {s: w for s, w in enhanced_weights.items() if w > 0}
-        log(f"DEBUG: enhanced_weights has {len(long_weights)} longs, {len(short_weights)} shorts")
-        if short_weights:
-            log(f"  DEBUG SHORT WEIGHTS: {list(short_weights.items())[:5]}")
+        log(f"  Target shares: {len(long_weights)} longs, {len(short_weights)} shorts "
+            f"(equity=${effective_equity:,.0f} × {effective_leverage:.2f}x = ${investable_equity:,.0f})")
         
         for symbol, weight in enhanced_weights.items():
             price = current_prices.get(symbol, 0.0)
             if price > 0 and abs(weight) > 0.001:
-                target_value = effective_equity * weight
+                target_value = investable_equity * weight
                 if weight < 0:
                     target_shares[symbol] = math.ceil(target_value / price)
                 else:
@@ -4461,9 +4513,25 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     
             elif current_qty >= 0 and target_qty < 0:
                 # Currently long (or flat), want to go short
-                # Step 1: Close long position (if any)
                 if current_qty > 0:
-                    # First add a SELL order to close the long
+                    # Check holding period before flipping — same rules as normal sell
+                    can_flip = True
+                    if symbol in learning_engine.trade_memory.open_positions:
+                        try:
+                            open_trade = learning_engine.trade_memory.open_positions[symbol]
+                            entry_ts = datetime.fromisoformat(open_trade.timestamp.replace('Z', '+00:00'))
+                            if entry_ts.tzinfo:
+                                entry_ts = entry_ts.replace(tzinfo=None)
+                            held_minutes = (datetime.now() - entry_ts).total_seconds() / 60
+                            if held_minutes < 60:
+                                log(f"  ⏳ {symbol}: Holding period not met for flip ({held_minutes:.0f}m < 60m)")
+                                can_flip = False
+                        except Exception:
+                            pass
+                    
+                    if not can_flip:
+                        continue
+                    
                     orders_to_execute.append({
                         'symbol': symbol,
                         'side': 'sell',
@@ -4476,11 +4544,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                     })
                     log(f"  📉 {symbol}: Closing long {current_qty} shares before shorting")
                 
-                # Step 2: Open short position
-                qty = abs(target_qty)  # target_qty is negative, we short this many
-                side = 'short'  # TRUE SHORT ORDER
+                qty = abs(target_qty)
+                side = 'short'
                 is_short_order = True
-                log(f"  📉 {symbol}: Opening SHORT position for {qty} shares (betting on decline)")
+                log(f"  📉 {symbol}: Opening SHORT for {qty} shares")
                 
             elif current_qty < 0 and target_qty >= 0:
                 # Currently short, want to go long (or flat)
@@ -4982,8 +5049,10 @@ def run_bot_threaded(allow_after_hours=False, force_rebalance=True, cancel_order
         cancel_orders: Cancel existing open orders first
         exposure_pct: Capital exposure percentage (0.0 to 1.0). Default 0.8 = 80%
     """
-    global last_run_status, capital_exposure_pct
-    capital_exposure_pct = exposure_pct  # Store globally for use in rebalancing
+    global last_run_status
+    # Don't override capital_exposure_pct from scheduler — it's managed by
+    # loss awareness (line 1314) and user presets (aggressive/defensive).
+    # The scheduler's exposure_pct is only used if no preset is active.
     
     if last_run_status["running"]:
         return
@@ -5145,35 +5214,37 @@ def auto_rebalance_scheduler():
         logging.info(f"   📅 Next auto-rebalance: {auto_rebalance_settings['next_run']}")
     
     while not scheduler_stop_event.is_set():
-        now = datetime.now()
-        _scheduler_last_heartbeat = now  # Update heartbeat for health monitoring
+        et_tz = pytz.timezone('US/Eastern')
+        now = datetime.now(et_tz)
+        _scheduler_last_heartbeat = datetime.now()  # Heartbeat stays local for uptime tracking
         
         # === DAILY RESET CHECK ===
-        # At the start of each new trading day, ensure a rebalance happens
-        if now.date() > last_daily_check:
-            last_daily_check = now.date()
+        # Use Eastern time for all day-boundary logic to match market calendar
+        et_today = now.date()
+        if et_today > last_daily_check:
+            last_daily_check = et_today
             
-            # Check if it's a trading day (weekday, not a holiday)
-            et_tz_daily = pytz.timezone('US/Eastern')
-            et_date = datetime.now(et_tz_daily).date()
-            if now.weekday() < 5 and not _is_market_holiday(et_date):
-                logging.info(f"📅 NEW TRADING DAY: {now.strftime('%Y-%m-%d')}")
+            if now.weekday() < 5 and not _is_market_holiday(et_today):
+                logging.info(f"📅 NEW TRADING DAY: {et_today.strftime('%Y-%m-%d')} (ET)")
                 
-                # If auto-rebalance is enabled and we haven't run yet today
                 if auto_rebalance_settings.get("enabled"):
                     last_run_str = auto_rebalance_settings.get("last_run")
                     ran_today = False
                     if last_run_str:
                         try:
                             last_run_dt = datetime.fromisoformat(last_run_str)
-                            ran_today = last_run_dt.date() == now.date()
-                        except:
+                            if last_run_dt.tzinfo is None:
+                                last_run_dt = et_tz.localize(last_run_dt)
+                            ran_today = last_run_dt.astimezone(et_tz).date() == et_today
+                        except Exception:
                             pass
                     
-                    if not ran_today and not last_run_status["running"]:
+                    # Wait for market open (9:30 ET) before morning rebalance
+                    market_open_time = now.replace(hour=9, minute=30, second=0, microsecond=0)
+                    if not ran_today and not last_run_status["running"] and now >= market_open_time:
                         logging.info("🌅 Morning rebalance - starting first trade of the day")
                         run_bot_threaded(
-                            allow_after_hours=True,
+                            allow_after_hours=False,
                             force_rebalance=True,
                             cancel_orders=True,
                             exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
@@ -5274,7 +5345,7 @@ def auto_rebalance_scheduler():
                 if not last_run_status["running"]:
                     logging.info("🔄 Auto-rebalance triggered (🔴 LIVE TRADING)")
                     run_bot_threaded(
-                        allow_after_hours=auto_rebalance_settings.get("allow_after_hours", True),
+                        allow_after_hours=auto_rebalance_settings.get("allow_after_hours", False),
                         force_rebalance=True,
                         cancel_orders=True,
                         exposure_pct=auto_rebalance_settings.get("exposure_pct", 0.8),
@@ -5316,8 +5387,8 @@ def auto_rebalance_scheduler():
                                 if prices is not None and not prices.empty and ticker in prices.columns:
                                     ts = prices[ticker].dropna()
                                     if len(ts) >= 2:
-                                        ret_1d = (ts.iloc[-1] / ts.iloc[-2] - 1) * 100
-                                        ret_5d = (ts.iloc[-1] / ts.iloc[0] - 1) * 100 if len(ts) >= 5 else ret_1d
+                                        ret_1d = ts.iloc[-1] / ts.iloc[-2] - 1
+                                        ret_5d = (ts.iloc[-1] / ts.iloc[0] - 1) if len(ts) >= 5 else ret_1d
                                         price_returns[ticker] = {'1d': ret_1d, '5d': ret_5d}
                             except Exception as e:
                                 logging.warning(f"Price fetch failed for {ticker}: {e}")
@@ -5965,15 +6036,9 @@ def get_status():
         except:
             break
     
-    # Build safe status dict (handle None values)
-    safe_status = {}
-    for key, value in last_run_status.items():
-        if value is None:
-            safe_status[key] = None
-        elif isinstance(value, dict):
-            safe_status[key] = value
-        else:
-            safe_status[key] = value
+    # Take a snapshot to avoid dict-changed-size-during-iteration with worker thread
+    with _status_lock:
+        safe_status = dict(last_run_status)
     
     return jsonify({
         **safe_status,
