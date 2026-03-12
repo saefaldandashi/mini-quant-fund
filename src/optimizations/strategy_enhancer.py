@@ -170,13 +170,17 @@ class StrategyEnhancer:
             reasons[s] = f"Not in top {max_shorts} shorts"
         
         # Step 4: Apply investment floor to LONGS only (shorts are separate exposure)
+        # Also apply target_exposure dampener (e.g., VIX-based reduction)
+        effective_floor = self.config.min_investment_floor * target_exposure
         total_long_weight = sum(top_longs.values())
-        if total_long_weight < self.config.min_investment_floor and total_long_weight > 0:
-            scale_factor = self.config.min_investment_floor / total_long_weight
-            top_longs = {s: w * scale_factor for s, w in top_longs.items()}
+        if total_long_weight < effective_floor and total_long_weight > 0:
+            scale_factor = effective_floor / total_long_weight
+            # Cap individual positions at 15% to prevent floor inflation blowing past risk limits
+            max_individual = 0.15
+            top_longs = {s: min(w * scale_factor, max_individual) for s, w in top_longs.items()}
             for s in top_longs:
-                reasons[s] = f"{reasons.get(s, '')} | Scaled {scale_factor:.2f}x for floor"
-            logger.info(f"Applied investment floor to longs: scaled {scale_factor:.2f}x")
+                reasons[s] = f"{reasons.get(s, '')} | Scaled {scale_factor:.2f}x for floor (cap 15%)"
+            logger.info(f"Applied investment floor to longs: scaled {scale_factor:.2f}x (target_exposure={target_exposure:.0%})")
         
         # Step 5: Filter by minimum position size (use ABSOLUTE VALUE for shorts)
         min_weight = self.config.min_position_pct

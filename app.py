@@ -9680,9 +9680,9 @@ def get_capital_deployment():
         # Win acceleration multiplier
         accel_mult = accel.get_multiplier()
         
-        # Calculate effective
+        # Calculate effective — matches rebalance logic: min(loss_awareness, regime) * accel
         base = capital_exposure_pct
-        effective = base * regime_mult * max(perf_mult, 1.0) * accel_mult
+        effective = min(base, regime_mult) * accel_mult
         
         # Get equity
         equity = 100000
