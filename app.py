@@ -910,7 +910,9 @@ def create_strategies(enable_long_short=False, enable_futures=False, trading_mod
         strategies.extend(alpha_strategies)
         logging.info(f"Added {len(alpha_strategies)} Alpha Enhancement strategies")
     
-    logging.info(f"Total strategies created: {len(strategies)} (mode={trading_mode})")
+    from config import DISABLED_STRATEGIES
+    strategies = [s for s in strategies if s.name not in DISABLED_STRATEGIES]
+    logging.info(f"Total strategies created: {len(strategies)} (mode={trading_mode}, {len(DISABLED_STRATEGIES)} disabled filtered out)")
     return strategies
 
 

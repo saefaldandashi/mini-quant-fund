@@ -221,7 +221,7 @@ class EarningsReactor:
         self.last_scan: Optional[datetime] = None
     
     # Common English words that also match company names — require extra context
-    AMBIGUOUS_COMPANIES = {'snap', 'meta', 'uber', 'zoom', 'oracle', 'apple'}
+    AMBIGUOUS_COMPANIES = {'snap', 'meta', 'uber', 'zoom', 'oracle', 'apple', 'target'}
     
     def extract_ticker(self, headline: str) -> Optional[str]:
         """Extract ticker from headline using company name mapping."""
@@ -231,9 +231,12 @@ class EarningsReactor:
         for company, ticker in COMPANY_TICKER_MAP.items():
             if company in self.AMBIGUOUS_COMPANIES:
                 # Ambiguous words: require exact word boundary match
-                # "snaps up" should NOT match "snap", but "Snap Inc" should
                 if re.search(rf'\b{re.escape(company)}\b', headline_lower):
-                    # Additional check: reject if followed by common verb particles
+                    # Reject verb conjugations (targeted, targeting, targets, snaps, etc.)
+                    verb_pattern = rf'\b{re.escape(company)}(ed|ing|s)\b'
+                    if re.search(verb_pattern, headline_lower):
+                        continue
+                    # Reject if followed by common verb particles
                     reject_pattern = rf'\b{re.escape(company)}\s+(up|down|out|in|off|on|back|into|at|to)\b'
                     if re.search(reject_pattern, headline_lower):
                         continue
