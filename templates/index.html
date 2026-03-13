@@ -3603,7 +3603,7 @@
                 const requestBody = {
                     enabled: newState,
                     interval_minutes: interval,
-                    allow_after_hours: true,
+                    allow_after_hours: false,
                     exposure_pct: exposure
                 };
                 console.log('Sending to /api/auto-rebalance:', JSON.stringify(requestBody));

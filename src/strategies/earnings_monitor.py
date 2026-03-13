@@ -207,7 +207,7 @@ class EarningsMonitor:
                 logger.info(f"🎯 Executing auto-rebalance: {reason}")
                 
                 # Call the rebalance function
-                result = self._rebalance_callback(dry_run=False, allow_after_hours=True, force_rebalance=True)
+                result = self._rebalance_callback(dry_run=False, allow_after_hours=False, force_rebalance=True)
                 
                 event.success = result[0] if isinstance(result, tuple) else bool(result)
                 event.result = str(result[1])[:200] if isinstance(result, tuple) and len(result) > 1 else str(result)[:200]

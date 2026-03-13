@@ -473,9 +473,9 @@ class EarningsReactor:
                 # Average with existing
                 weights[symbol] = (weights[symbol] + base_weight) / 2
         
-        # Clamp weights
+        # Clamp weights to portfolio fraction scale (matching other strategies)
         for symbol in weights:
-            weights[symbol] = max(-1.0, min(1.0, weights[symbol]))
+            weights[symbol] = max(-0.15, min(0.15, weights[symbol]))
         
         return weights
     

@@ -150,8 +150,8 @@ long_shares = math.floor(long_val / 200.0)
 test("Long 10% = 20 shares at $200", long_shares == 20, f"got {long_shares}")
 
 short_val = eff_eq * (-0.05)
-short_shares = math.ceil(short_val / 200.0)
-test("Short 5% = -10 shares (ceil)", short_shares == -10, f"got {short_shares}")
+short_shares = math.floor(short_val / 200.0)
+test("Short 5% = -10 shares (floor)", short_shares == -10, f"got {short_shares}")
 
 tiny_val = eff_eq * 0.005
 tiny_shares = math.floor(tiny_val / 500.0)

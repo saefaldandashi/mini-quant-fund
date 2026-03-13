@@ -108,13 +108,13 @@ class CalendarEffectsStrategy(Strategy):
             for symbol in available_symbols:
                 if symbol in ['SPY', 'QQQ', 'AAPL', 'MSFT', 'GOOGL']:
                     weights[symbol] = weights.get(symbol, 0) + self.base_weight * 0.15
-                    expected_returns[symbol] = expected_returns.get(symbol, 0) + 0.005
+                    expected_returns[symbol] = expected_returns.get(symbol, 0) + 0.005 / 5
         
         # Pre-holiday effect: Small long bias
         if effects.get('pre_holiday', 0) > 0:
             for symbol in available_symbols[:5]:  # Top 5 most liquid
                 weights[symbol] = weights.get(symbol, 0) + self.effect_strength
-                expected_returns[symbol] = expected_returns.get(symbol, 0) + 0.003
+                expected_returns[symbol] = expected_returns.get(symbol, 0) + 0.003 / 5
         
         # Day of week adjustment
         dow_effect = effects.get('day_of_week', 0)
@@ -132,7 +132,7 @@ class CalendarEffectsStrategy(Strategy):
             # Default: Equal weight top 5 symbols with base weight
             for symbol in available_symbols[:5]:
                 weights[symbol] = self.base_weight * 0.1
-                expected_returns[symbol] = 0.005
+                expected_returns[symbol] = 0.005 / 21
         
         # Normalize
         total = sum(abs(w) for w in weights.values())

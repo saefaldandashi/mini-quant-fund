@@ -119,7 +119,7 @@ def get_all_strategies(
     enable_alpha: bool = True,
 ):
     """
-    Get all available trading strategies.
+    Get all available trading strategies, excluding disabled ones.
     
     Args:
         enable_intraday: Include intraday/short-term strategies
@@ -128,8 +128,10 @@ def get_all_strategies(
         enable_alpha: Include alpha enhancement strategies (pairs, sector, calendar, orderflow)
         
     Returns:
-        List of strategy instances
+        List of strategy instances (disabled strategies already filtered out)
     """
+    from config import DISABLED_STRATEGIES
+    
     strategies = []
     
     # Intraday strategies (primary for HFT-lite)
@@ -148,4 +150,4 @@ def get_all_strategies(
     if enable_alpha:
         strategies.extend(create_alpha_strategies())
     
-    return strategies
+    return [s for s in strategies if s.name not in DISABLED_STRATEGIES]

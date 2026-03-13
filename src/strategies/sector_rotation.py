@@ -165,7 +165,7 @@ class SectorRotationStrategy(Strategy):
             
             for symbol in symbols:
                 weights[symbol] = weight_per_stock
-                expected_returns[symbol] = combined_scores[sector] * 0.02  # Scaled
+                expected_returns[symbol] = combined_scores[sector] * 0.02 / 252
         
         # Optional: Short bottom sectors (market neutral)
         # Uncomment to enable long/short sector rotation

@@ -101,10 +101,10 @@ class OrderFlowStrategy(Strategy):
         for symbol, data, signal_type in selected:
             if signal_type == 'buy':
                 weights[symbol] = self.position_size
-                expected_returns[symbol] = data.signal_strength * 0.02
+                expected_returns[symbol] = data.signal_strength * 0.02 / 252
             elif signal_type == 'sell':
                 weights[symbol] = -self.position_size
-                expected_returns[symbol] = data.signal_strength * 0.02
+                expected_returns[symbol] = data.signal_strength * 0.02 / 252
             
             # Track signal
             self._last_signals[symbol] = (signal_type, t)

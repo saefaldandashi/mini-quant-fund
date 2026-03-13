@@ -318,24 +318,6 @@ def save_ultrafast_cache(ticker_sents: Dict):
     except Exception as e:
         logging.warning(f"Could not save ultra-fast cache: {e}")
 
-def load_ultrafast_cache(max_age_minutes: int = 30):
-    """Load cached sentiments if fresh enough."""
-    import pickle
-    try:
-        if not _ultrafast_cache_file.exists():
-            return None
-        with open(_ultrafast_cache_file, 'rb') as f:
-            data = pickle.load(f)
-        # Check age
-        cache_time = datetime.fromisoformat(data['timestamp'])
-        age = (datetime.now() - cache_time).total_seconds() / 60
-        if age > max_age_minutes:
-            return None
-        return data['sentiments']
-    except Exception as e:
-        logging.warning(f"Could not load ultra-fast cache: {e}")
-        return None
-
 # Initialize Outcome Tracker (CRITICAL FOR VALIDATING SIGNALS)
 outcome_tracker = OutcomeTracker(storage_path="outputs/signal_outcomes.json")
 
@@ -2005,10 +1987,6 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             enable_futures=long_short_settings.get('enable_futures', False),
             trading_mode=effective_trading_mode,  # Use dynamic mode
         )
-        # Filter out disabled strategies BEFORE running them — saves compute
-        # and prevents them from influencing peer signals / debate consensus
-        from config import DISABLED_STRATEGIES
-        strategies = [s for s in strategies if s.name not in DISABLED_STRATEGIES]
         log(f"Loaded {len(strategies)} strategies (L/S: {long_short_settings.get('enable_long_short')}, Futures: {long_short_settings.get('enable_futures')})")
         
         # DYNAMIC STRATEGY REGISTRATION: Ensure ALL active strategies are visible to learning
@@ -3461,58 +3439,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                         agreeing += 1
             confluence_scores[ticker] = agreeing / max(1, strategy_count)
         
-        # Run validation with new win-rate improvement data
-        validated_weights, validation_warnings = signal_validator.validate_portfolio(
-            signals=validation_signals,
-            ticker_sentiments=ticker_sentiments_dict,
-            macro_sentiment=macro_sent,
-            momentum_signals=momentum_signals,
-            rsi_values=rsi_values,
-            confluence_scores=confluence_scores,
-        )
-        
-        # Log validation results
-        validation_stats = signal_validator.get_stats()
-        log(f"Validated {len(validation_signals)} signals:")
-        log(f"  ✅ Passed: {validation_stats['total_passed']}")
-        log(f"  ❌ Blocked: {validation_stats['total_blocked']}")
-        log(f"  ⚠️ Warnings: {validation_stats['total_warnings']}")
-        log(f"  📈 Momentum Confirmed: {validation_stats.get('momentum_confirmed', 0)}")
-        log(f"  📉 Momentum Rejected: {validation_stats.get('momentum_rejected', 0)}")
-        log(f"  🎯 Confluence Boosted: {validation_stats.get('confluence_boosted', 0)}")
-        
-        for warning in validation_warnings[:10]:  # Limit to first 10
-            log(f"  {warning}")
-        
-        # Apply validated weights — MERGE back into full weight set
-        # validated_weights only contains signals that went through validation (abs > 0.001)
-        # We must preserve signals that were too small for validation but still non-zero
-        pre_validation_weights = dict(final_weights)  # snapshot before overwrite
-        
-        # Start with all pre-validation weights
-        merged_weights = {}
-        for ticker, weight in pre_validation_weights.items():
-            if ticker in validated_weights:
-                # Use validated version (may be 0 if blocked)
-                merged_weights[ticker] = validated_weights[ticker]
-            else:
-                # Preserve signals that were below validation threshold
-                merged_weights[ticker] = weight
-        
-        # Remove truly blocked signals (set to 0 by validator)
-        final_weights = {k: v for k, v in merged_weights.items() if abs(v) > 0}
-        
-        debate_info["final_weights"] = final_weights  # Update with actual final weights
-        
-        # DEBUG: Log weight pipeline state
-        blocked_count = len([v for v in validated_weights.values() if v == 0])
-        surviving = len(final_weights)
-        log(f"📊 Validation result: {len(validated_weights)} validated, {blocked_count} blocked, {surviving} surviving")
-        if surviving > 0:
-            top3 = sorted(final_weights.items(), key=lambda x: -abs(x[1]))[:3]
-            for s, w in top3:
-                log(f"   Top: {s} = {w:.4%}")
-        log("")
+        debate_info["final_weights"] = final_weights
         
         # === RECORD SIGNALS FOR OUTCOME TRACKING ===
         # This is CRITICAL for validating whether our signals are predictive
@@ -3863,16 +3790,6 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         log("EXECUTING TRADES")
         log("=" * 60)
         
-        # DEBUG: Dump final_weights state entering trade execution
-        _fw_nonzero = {s: w for s, w in final_weights.items() if abs(w) > 0}
-        _fw_longs = len([w for w in _fw_nonzero.values() if w > 0])
-        _fw_shorts = len([w for w in _fw_nonzero.values() if w < 0])
-        log(f"DEBUG: final_weights entering execution: {len(_fw_nonzero)} nonzero ({_fw_longs} L, {_fw_shorts} S)")
-        if _fw_nonzero:
-            _top5 = sorted(_fw_nonzero.items(), key=lambda x: -abs(x[1]))[:5]
-            for _s, _w in _top5:
-                log(f"  DEBUG: {_s}: {_w:+.4%}")
-        
         # Calculate target symbols — the position sizer's investment floor scales small
         # ensemble weights up to proper allocations, so we use a low base threshold and
         # Let the strategy enhancer handle position count limits (max_positions=15/20)
@@ -4197,14 +4114,6 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             else:
                 log(f"📈 Leverage: {effective_leverage:.2f}x (mode: {leverage_mode}, max: {max_leverage}x)")
             
-            target_shares = broker.calculate_target_shares(
-                enhanced_weights,
-                effective_equity,
-                cash_buffer_pct=config.CASH_BUFFER_PCT,
-                leverage=effective_leverage
-            )
-            
-            # Log sizing adjustments
             adjusted_count = len([d for d in sizing_details if d.adjusted_weight != d.base_weight])
             log(f"⚡ Smart sizing applied to {len(enhanced_weights)} positions ({adjusted_count} adjusted)")
         
@@ -4357,6 +4266,10 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
                 else:
                     exp_returns[symbol] = 0.02 / 252  # Daily default
             
+            # Safety cap: no expected return should exceed 1% daily
+            for sym in exp_returns:
+                exp_returns[sym] = max(0, min(0.01, exp_returns[sym]))
+            
             # Prepare confidences
             conf_data = {}
             for symbol in enhanced_weights:
@@ -4423,8 +4336,6 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             import traceback
             logging.error(traceback.format_exc())
         
-        # Recalculate target shares after validation
-        # Uses effective_equity * leverage (matching what broker.calculate_target_shares does)
         import math
         target_shares = {}
         if effective_equity <= 0:
@@ -4442,13 +4353,6 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             if price > 0 and abs(weight) > 0.001:
                 target_value = investable_equity * weight
                 target_shares[symbol] = math.floor(target_value / price)
-        
-        # DEBUG: Log target_shares after calculation
-        short_shares = {s: q for s, q in target_shares.items() if q < 0}
-        long_shares = {s: q for s, q in target_shares.items() if q > 0}
-        log(f"DEBUG: target_shares has {len(long_shares)} longs, {len(short_shares)} shorts")
-        if short_shares:
-            log(f"  DEBUG SHORT SHARES: {list(short_shares.items())[:5]}")
         
         log("")
         
@@ -4657,12 +4561,7 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             # Get conviction from final weights (higher weight = higher conviction)
             conviction = min(1.0, abs(final_weights.get(symbol, 0)) * 5)  # Scale to 0-1
             
-            # Get expected return for this symbol from signals
-            expected_return = 0.02 / 252  # Daily default
-            for name, signal in signals.items():
-                if symbol in signal.desired_weights:
-                    # Use the strategy's expected return weighted by confidence
-                    expected_return = max(expected_return, signal.expected_return * signal.confidence)
+            expected_return = exp_returns.get(symbol, 0.02 / 252)
             
             # Use REAL bid-ask spread from pre-fetched quotes, with sanity cap
             if symbol in real_quotes:

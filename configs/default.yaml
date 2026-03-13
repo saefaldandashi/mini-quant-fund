@@ -49,9 +49,9 @@ backtest:
 risk:
   max_position: 0.15  # Max 15% per position
   max_sector: 0.35    # Max 35% per sector (was 30%)
-  max_leverage: 3.0   # 3x leverage (was 1.0)
+  max_leverage: 1.5   # 1.5x leverage (aligned with production config.py)
   max_turnover: 0.60  # Max 60% turnover per rebalance (was 50%)
-  vol_target: 0.30    # 30% annualized vol target (was 12%)
+  vol_target: 0.12    # 12% annualized vol target (aligned with production)
   max_drawdown_trigger: 0.15  # Reduce risk at 15% drawdown
 
 # Strategy configurations

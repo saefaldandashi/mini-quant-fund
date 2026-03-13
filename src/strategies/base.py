@@ -27,6 +27,7 @@ class SignalOutput:
     desired_weights: Dict[str, float] = field(default_factory=dict)
     
     # Expected return (annualized)
+    # Expected return (DAILY scale, e.g. 0.0002 = 0.02% per day)
     expected_return: float = 0.0
     expected_returns_by_asset: Dict[str, float] = field(default_factory=dict)
     

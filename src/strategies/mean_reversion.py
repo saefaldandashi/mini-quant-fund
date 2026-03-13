@@ -100,7 +100,7 @@ class MeanReversionStrategy(Strategy):
                         consensus_note = "Peers disagree - reduced position"
                 
                 weights[symbol] = weight
-                expected_returns[symbol] = -deviation * 0.5  # Expect mean reversion
+                expected_returns[symbol] = max(-0.005, min(0.005, -deviation * 0.5))
                 explanations[symbol] = {
                     'price': price,
                     'ma': ma_val,

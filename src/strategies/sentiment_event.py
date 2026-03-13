@@ -144,7 +144,7 @@ class NewsSentimentEventStrategy(Strategy):
                     weight = np.clip(raw_weight, -self.max_position, self.max_position)
                     
                     weights[symbol] = weight
-                    expected_returns[symbol] = sent_score * 0.25  # Higher expected return with better data
+                    expected_returns[symbol] = sent_score * 0.25 / 252
                     
                     explanations[symbol] = {
                         'sentiment': sent_score,
@@ -182,7 +182,7 @@ class NewsSentimentEventStrategy(Strategy):
                     weight = np.clip(raw_weight, -self.max_position, self.max_position)
                     
                     weights[symbol] = weight
-                    expected_returns[symbol] = sent.sentiment_score * 0.2
+                    expected_returns[symbol] = sent.sentiment_score * 0.2 / 252
                     
                     explanations[symbol] = {
                         'sentiment': sent.sentiment_score,
@@ -200,7 +200,7 @@ class NewsSentimentEventStrategy(Strategy):
             
             for symbol in features.symbols[:n_stocks]:
                 weights[symbol] = weight_per_stock
-                expected_returns[symbol] = bias * 0.1
+                expected_returns[symbol] = bias * 0.1 / 252
                 explanations[symbol] = {'macro_driven': True, 'equity_bias': bias}
         
         # Normalize to prevent over-exposure

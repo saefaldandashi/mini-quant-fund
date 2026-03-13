@@ -161,7 +161,7 @@ class TransactionCostModel:
         'market_impact_coeff': 0.1,
         'borrow_rate_annual': 0.02,
         'min_trade_threshold_bps': 500.0,
-        'min_benefit_ratio': 0.3,
+        'min_benefit_ratio': 1.5,
         'high_conviction_threshold': 0.85,
         'small_trade_min_dollars': 50,
     }
@@ -575,7 +575,7 @@ class TransactionCostModel:
             )
             
             # Check if trade is worthwhile
-            exp_return = expected_returns.get(symbol, 0.02)  # Default 2% expected
+            exp_return = expected_returns.get(symbol, 0.02 / 252)
             confidence = confidences.get(symbol, 0.5)
             
             result = self.should_execute_trade(cost_estimate, exp_return, confidence)
