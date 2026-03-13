@@ -220,14 +220,27 @@ class EarningsReactor:
         self.processed_headlines: set = set()  # Avoid duplicates
         self.last_scan: Optional[datetime] = None
     
+    # Common English words that also match company names — require extra context
+    AMBIGUOUS_COMPANIES = {'snap', 'meta', 'uber', 'zoom', 'oracle', 'apple'}
+    
     def extract_ticker(self, headline: str) -> Optional[str]:
         """Extract ticker from headline using company name mapping."""
         headline_lower = headline.lower()
         
-        # Check company name mapping FIRST (more reliable)
+        # Check company name mapping with WORD BOUNDARY matching
         for company, ticker in COMPANY_TICKER_MAP.items():
-            if company in headline_lower:
-                return ticker
+            if company in self.AMBIGUOUS_COMPANIES:
+                # Ambiguous words: require exact word boundary match
+                # "snaps up" should NOT match "snap", but "Snap Inc" should
+                if re.search(rf'\b{re.escape(company)}\b', headline_lower):
+                    # Additional check: reject if followed by common verb particles
+                    reject_pattern = rf'\b{re.escape(company)}\s+(up|down|out|in|off|on|back|into|at|to)\b'
+                    if re.search(reject_pattern, headline_lower):
+                        continue
+                    return ticker
+            else:
+                if company in headline_lower:
+                    return ticker
         
         # Check for direct ticker mentions with $ prefix (e.g., $MSFT)
         ticker_match = re.search(r'\$([A-Z]{2,5})\b', headline)

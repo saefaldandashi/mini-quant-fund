@@ -977,8 +977,8 @@ def get_dynamic_trading_mode(
     if volatility_regime == 'high_vol' or vix_level > 30:
         return "intraday", f"VIX={vix_level:.0f} (>30) / HIGH VOL → INTRADAY: High vol, quick trades"
     
-    if vix_level > 25:
-        return "intraday", f"VIX={vix_level:.0f} (25-30) → INTRADAY: Elevated vol"
+    if vix_level > 28:
+        return "intraday", f"VIX={vix_level:.0f} (>28) → INTRADAY: Elevated vol"
     
     # CRITICAL FIX #12: Bull regime + Low VIX → position (capture trends)
     if (regime_type == 'bull' or 'bull' in str(regime).lower()) and vix_level < 15:
@@ -4483,6 +4483,8 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
         except Exception as e:
             log(f"⚠️ Could not fetch real quotes: {e} - using estimates")
         
+        MIN_TRADE_NOTIONAL = max(500, equity * 0.005)  # $500 or 0.5% of equity
+        
         for symbol in sorted(all_symbols):
             current_qty = current_shares.get(symbol, 0)
             target_qty = target_shares.get(symbol, 0)
@@ -4492,6 +4494,14 @@ def run_multi_strategy_rebalance(allow_after_hours=False, force_rebalance=True, 
             
             price = current_prices.get(symbol, 0.0)
             if price <= 0:
+                continue
+            
+            # Anti-churn: skip trades with notional change below minimum
+            delta_shares = abs(target_qty - current_qty)
+            delta_notional = delta_shares * price
+            is_full_exit = target_qty == 0 and current_qty != 0
+            is_new_position = current_qty == 0 and target_qty != 0
+            if not is_full_exit and not is_new_position and delta_notional < MIN_TRADE_NOTIONAL:
                 continue
             
             # ================================================================

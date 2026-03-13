@@ -64,16 +64,20 @@ jobs:
             rm -rf $HOME/.cache/* 2>/dev/null || true
             
             if [ -d "$APP_DIR" ]; then
-              # Clean up large output files and caches
+              # Clean up ONLY caches (NOT learning data!)
               rm -rf $APP_DIR/outputs/cache/* 2>/dev/null || true
               rm -rf $APP_DIR/outputs/llm_cache/* 2>/dev/null || true
               rm -rf $APP_DIR/outputs/news_cache/* 2>/dev/null || true
               rm -rf $APP_DIR/outputs/news_filter/* 2>/dev/null || true
-              rm -rf $APP_DIR/outputs/*.json 2>/dev/null || true
+              rm -rf $APP_DIR/outputs/fundamentals_cache/* 2>/dev/null || true
               rm -rf $APP_DIR/.git/objects/pack/*.tmp 2>/dev/null || true
-              rm -f $APP_DIR/server.log 2>/dev/null || true
+              # Truncate (not delete) server log
+              truncate -s 0 $APP_DIR/server.log 2>/dev/null || true
               # Prune git
               cd $APP_DIR && git gc --prune=now 2>/dev/null || true
+              # PRESERVE learning data: trade_memory, signal_outcomes, strategy_performance,
+              # learned_weights, patterns, feedback_loop, thompson_beliefs, loss_awareness,
+              # execution_history, cost_model, leverage_state, debate_history/, learning/
             fi
             
             echo "📊 Disk usage after cleanup:"
